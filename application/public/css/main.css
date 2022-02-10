@@ -1,0 +1,10 @@
+body, html {
+    background-color: #eee;
+    font-family: 'Cinzel', 'serif';
+    margin: 0px 0px;
+    padding: 0px 0px;
+    font-weight: 400;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    line-height: 1.7;
+}

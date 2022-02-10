@@ -16,7 +16,7 @@ app.use('/js', express.static(__dirname + 'public/js'));
 app.use('/img', express.static(__dirname + 'public/img'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
-app.set('layout', path.join(__dirname, '/views/layout.ejs'))
+app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 
 app.use('/', require('./controllers/index'));
 app.use('/users', require('./controllers/users'));

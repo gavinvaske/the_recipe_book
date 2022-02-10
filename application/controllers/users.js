@@ -15,6 +15,6 @@ router.get('/register', (request, response) => {
 
 router.post('/register', (request, response) => {
     response.json('TODO: Build this endpoint');
-})
+});
 
 module.exports = router;

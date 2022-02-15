@@ -16,7 +16,7 @@ describe('validation', () => {
             email: chance.email(),
             password: chance.string({ length: PASSWORD_MIN_LENGTH }),
             userType: chance.pickone(AVAILABLE_USER_TYPES)
-        }
+        };
     });
     describe('successful validation', () => {
         it('should succeed when required attributes are defined', () => {
@@ -36,7 +36,7 @@ describe('validation', () => {
             expect(error).toBe(undefined);
             expect(user.userType).toBe('USER');
         });
-    })
+    });
 
     describe('non-successful validation', () => {
         it('should not allow unknown "userType"', () => {

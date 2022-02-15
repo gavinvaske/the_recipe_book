@@ -13,7 +13,7 @@ module.exports.connectToMongoDatabase = async (databaseUrl) => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-}
+};
 
 module.exports.connectToTestMongoDatabase = async () => {
     mongod = await MongoMemoryServer.create();
@@ -22,19 +22,19 @@ module.exports.connectToTestMongoDatabase = async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-}
+};
 
 module.exports.closeDatabase = async () => {
-    if (process.env.NODE_ENV != TEST_ENVIRONMENT) {
+    if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the database can ONLY be closed manually in test environments');
     }
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
     await mongod.stop();
-}
+};
 
 module.exports.clearDatabase = async () => {
-    if (process.env.NODE_ENV != TEST_ENVIRONMENT) {
+    if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the database can ONLY be cleared manually in test environments');
     }
     const collections = mongoose.connection.collections;
@@ -42,4 +42,4 @@ module.exports.clearDatabase = async () => {
         const collection = collections[key];
         await collection.deleteMany();
     }
-}
+};

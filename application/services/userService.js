@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
-exports.createUser = (user) =>  {
-    const userModel = new User(user);
+exports.createUser = async (userAttributes) => {
+    const userModel = new User(userAttributes);
 
-    return userModel.save();
+    return await userModel.save();
 }

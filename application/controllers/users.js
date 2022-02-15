@@ -14,19 +14,21 @@ router.get('/register', (request, response) => {
     response.render('register');
 });
 
-router.post('/register', (request, response) => {
+router.post('/register', async (request, response) => {
     const {email, password, repeatPassword} = request.body;
-    const user = {
+    const userAttributes = {
         email,
         password
     }
 
-    userService.createUser(user).then((result) => {
-        response.json(result)
-    }).catch((error) => {
-        console.log(JSON.stringify(error));
-        response.json(error);
-    })
+    try {
+        const user = await userService.createUser(userAttributes);
+        response.json(user);
+    } catch(error) {
+        response.status(400).json({
+            message: error.message
+        });
+    }
 });
 
 module.exports = router;

@@ -9,7 +9,7 @@ if (envLoadError) {
     throw new Error('No .env file was found, please add one to the root directory of this project!');
 }
 
-databaseService.connectToMongooseDatabase(process.env.MONGO_DB_URL);
+databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
 
 const defaultPort = 8080;

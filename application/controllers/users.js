@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userService = require('../services/userService');
 
+const BAD_REQUEST_STATUS = 400;  
+
 router.get('/login', (request, response) => {
     response.render('login');
 });
@@ -15,17 +17,17 @@ router.get('/register', (request, response) => {
 });
 
 router.post('/register', async (request, response) => {
-    const {email, password, repeatPassword} = request.body;
+    const {email, password} = request.body;
     const userAttributes = {
         email,
         password
-    }
+    };
 
     try {
         const user = await userService.createUser(userAttributes);
         response.json(user);
-    } catch(error) {
-        response.status(400).json({
+    } catch (error) {
+        response.status(BAD_REQUEST_STATUS).json({
             message: error.message
         });
     }

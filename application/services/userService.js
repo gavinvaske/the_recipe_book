@@ -4,4 +4,4 @@ module.exports.createUser = async (userAttributes) => {
     const userModel = new User(userAttributes);
 
     return await userModel.save();
-}
+};

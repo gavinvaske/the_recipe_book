@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const USER = 'USER';
 const ADMIN = 'ADMIN';
+const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
 const validateEmail = function(email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
+    return EMAIL_VALIDATION_REGEX.test(email)
 };
 
 const userSchema = new Schema({
@@ -17,7 +17,7 @@ const userSchema = new Schema({
         unique: true,
         required: 'Email address is required',
         validate: [validateEmail, 'Please fill a valid email address'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+        match: [EMAIL_VALIDATION_REGEX, 'Please fill a valid email address']
     },
     password: {
         type: String,

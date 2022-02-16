@@ -2,18 +2,46 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const UserModel = require('../models/user');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const BAD_REQUEST_STATUS = 400;
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
 
+const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
 router.get('/login', (request, response) => {
     response.render('login');
 });
 
-router.post('/login', (request, response) => {
-    response.json('TODO: Build this endpoint');
+router.post('/login', async (request, response) => {
+    const {email, password} = request.body;
+
+    const user = await UserModel.findOne({email}).lean();
+
+    if (!user) {
+        return response.json({
+            error: INVALID_USERNAME_PASSWORD_MESSAGE
+        });
+    }
+
+    const isPasswordCorrectForUser = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrectForUser) {
+        return response.json({
+            error: INVALID_USERNAME_PASSWORD_MESSAGE
+        });
+    }
+
+    const token = jwt.sign({
+        id: user._id,
+        email: user.email,
+        userType: user.userType
+    }, process.env.JWT_SECRET)
+    
+    response.json({jwtToken: token});
 });
 
 router.get('/register', (request, response) => {

@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const userService = require('../services/userService');
 const bcrypt = require('bcryptjs');
 const UserModel = require('../models/user');
 
 const BAD_REQUEST_STATUS = 400;
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
+const BCRYPT_SALT_LENGTH = 10;
 
 router.get('/login', (request, response) => {
     response.render('login');
@@ -31,7 +31,7 @@ router.post('/register', async (request, response) => {
         return response.status(BAD_REQUEST_STATUS).send(`password must be at least ${MIN_PASSWORD_LENGTH} characters`);
     }
 
-    const encryptedPassword = await bcrypt.hash(plainTextPassword, 10);
+    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_LENGTH);
 
     try {
         await UserModel.create({

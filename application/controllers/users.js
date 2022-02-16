@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const userService = require('../services/userService');
+const bcrypt = require('bcryptjs');
+const UserModel = require('../models/user');
 
-const BAD_REQUEST_STATUS = 400;  
+const BAD_REQUEST_STATUS = 400;
+const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
+const MIN_PASSWORD_LENGTH = 8;
 
 router.get('/login', (request, response) => {
     response.render('login');
@@ -17,20 +21,32 @@ router.get('/register', (request, response) => {
 });
 
 router.post('/register', async (request, response) => {
-    const {email, password} = request.body;
-    const userAttributes = {
-        email,
-        password
-    };
+    const {email, password: plainTextPassword, repeatPassword} = request.body;
+
+    if (plainTextPassword !== repeatPassword) {
+        return response.status(BAD_REQUEST_STATUS).send('passwords222 do not match');
+    }
+
+    if (plainTextPassword.length < MIN_PASSWORD_LENGTH) {
+        return response.status(BAD_REQUEST_STATUS).send(`password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+    }
+
+    const encryptedPassword = await bcrypt.hash(plainTextPassword, 10);
 
     try {
-        const user = await userService.createUser(userAttributes);
-        response.json(user);
-    } catch (error) {
-        response.status(BAD_REQUEST_STATUS).json({
-            message: error.message
+        await UserModel.create({
+            email,
+            password: encryptedPassword
         });
+    } catch (error) {
+        if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
+            return response.status(BAD_REQUEST_STATUS).send('Username already exists');
+        }
+        console.log('Error creating user: ', error);
+        throw error;
     }
+
+    return response.send('User was registered successfully');
 });
 
 module.exports = router;

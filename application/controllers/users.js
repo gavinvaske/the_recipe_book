@@ -12,6 +12,12 @@ const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
+router.get('/profile', (request, response) => {
+    response.render('profile', {
+        message: 'welcome User'
+    });
+});
+
 router.get('/change-password', (request, response) => {
     response.render('changePassword');
 });
@@ -80,7 +86,8 @@ router.post('/login', async (request, response) => {
         userType: user.userType
     }, process.env.JWT_SECRET);
     
-    response.json({jwtToken: token});
+    response.redirect('/')
+    // response.json({jwtToken: token});
 });
 
 router.get('/register', (request, response) => {

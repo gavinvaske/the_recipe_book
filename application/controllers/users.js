@@ -24,7 +24,7 @@ router.post('/register', async (request, response) => {
     const {email, password: plainTextPassword, repeatPassword} = request.body;
 
     if (plainTextPassword !== repeatPassword) {
-        return response.status(BAD_REQUEST_STATUS).send('passwords222 do not match');
+        return response.status(BAD_REQUEST_STATUS).send('passwords do not match');
     }
 
     if (plainTextPassword.length < MIN_PASSWORD_LENGTH) {

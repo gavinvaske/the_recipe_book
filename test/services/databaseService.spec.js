@@ -11,8 +11,7 @@ beforeAll(() => {
 
 afterEach(() => {
     process.env.NODE_ENV = originalNodeEnv;
-})
-
+});
 
 it('should error if no database url is provided', async () => {
     await expect(databaseService.connectToMongoDatabase(null)).rejects.toThrow('Database URL is not defined');
@@ -48,4 +47,4 @@ describe('test environment database interactions', () => {
         await expect(databaseService.clearDatabase()).rejects.toThrow('the database can ONLY be cleared manually in test environments');
     });
 
-})
+});

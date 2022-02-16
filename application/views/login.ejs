@@ -1,11 +1,42 @@
-<form method="post" action="/users/login">
+<form id="login-form" method="post" action="/users/login">
     <div class="form-group">
         <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" class="form-control" id="email" name="email">
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password">
+        <input type="password" class="form-control" id="password" name="password">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<script>
+    $(document).ready(function(){
+        $("#login-form").submit(function(e) {
+            e.preventDefault();
+
+            const form = $(this).serialize();
+
+            $.ajax({
+                type: "POST",
+                url: '/users/login',
+                data: form,
+                dataType: 'json',
+                success: function(data){
+                    const errorMessage = data.error;
+
+                    if (errorMessage) {
+                        alert(errorMessage);
+                    } else {
+                        alert('successful login');
+                        console.log(data);
+                    }
+                },
+                error: function(error) {
+                    alert('error');
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

@@ -12,6 +12,45 @@ const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
+router.get('/change-password', (request, response) => {
+    response.render('changePassword');
+});
+
+router.post('/change-password', async (request, response) => {
+    const {newPassword, repeatPassword, jwtToken} = request.body;
+
+    if (newPassword !== repeatPassword) {
+        return response.json({
+            error: 'passwords do not match'
+        });
+    }
+
+    if (newPassword.length < MIN_PASSWORD_LENGTH) {
+        return response.json({
+            error: `password must be at least ${MIN_PASSWORD_LENGTH} characters`
+        });
+    }
+    
+    try {
+        const user = jwt.verify(jwtToken, process.env.JWT_SECRET);
+        const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
+
+        await UserModel.updateOne({
+            _id: user.id, 
+        }, {
+            $set: { password: encryptedPassword}
+        });
+    } catch (error) {
+        response.json({
+            error: 'You must log in before you can change your password'
+        });
+    }
+
+    return response.json({
+        message: 'successfully changed password, please login again'
+    });
+});
+
 router.get('/login', (request, response) => {
     response.render('login');
 });

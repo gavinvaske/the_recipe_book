@@ -33,17 +33,17 @@ router.post('/change-password', async (request, response) => {
     
     try {
         const user = jwt.verify(jwtToken, process.env.JWT_SECRET);
-        const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH)
+        const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
 
         await UserModel.updateOne({
             _id: user.id, 
         }, {
             $set: { password: encryptedPassword}
-        })
-    } catch(error) {
+        });
+    } catch (error) {
         response.json({
             error: 'You must log in before you can change your password'
-        })
+        });
     }
 
     return response.json({

@@ -1,4 +1,4 @@
-<form id="login-form" method="post" action="/users/login">
+<form id="login-form">
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" name="email">
@@ -22,14 +22,15 @@
                 url: '/users/login',
                 data: form,
                 dataType: 'json',
-                success: function(data){
-                    const errorMessage = data.error;
+                success: function(response) {
+                    const errorMessage = response.error;
 
                     if (errorMessage) {
                         alert(errorMessage);
                     } else {
+                        localStorage.setItem('jwtToken', response.jwtToken);
                         alert('successful login');
-                        console.log(data);
+                        console.log(response.jwtToken);
                     }
                 },
                 error: function(error) {

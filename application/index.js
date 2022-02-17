@@ -6,6 +6,11 @@ require('dotenv').config();
 const databaseService = require('./services/databaseService');
 const cookieParser = require('cookie-parser');
 
+console.log(`PORT => ${process.env.port}`);
+console.log(`MONGO_DB_URL => ${process.env.MONGO_DB_URL}`);
+console.log(`JWT_SECRET => ${process.env.JWT_SECRET}`);
+
+
 databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
 

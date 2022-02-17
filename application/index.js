@@ -4,6 +4,7 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const {error: envLoadError} = require('dotenv').config();
 const databaseService = require('./services/databaseService');
+const cookieParser = require('cookie-parser');
 
 if (envLoadError) {
     throw new Error('No .env file was found, please add one to the root directory of this project!');
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
+app.use(cookieParser());
 app.use(expressLayouts);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

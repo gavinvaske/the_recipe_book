@@ -4,13 +4,21 @@ const bcrypt = require('bcryptjs');
 const UserModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const {verifyJwtToken} = require('../middleware/authorize');
 
 const BAD_REQUEST_STATUS = 400;
+
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
+router.get('/profile', verifyJwtToken, (request, response) => {
+    response.render('profile', {
+        user: request.user
+    });
+});
 
 router.get('/change-password', (request, response) => {
     response.render('changePassword');
@@ -74,13 +82,17 @@ router.post('/login', async (request, response) => {
         });
     }
 
-    const token = jwt.sign({
+    const jwtToken = jwt.sign({
         id: user._id,
         email: user.email,
         userType: user.userType
     }, process.env.JWT_SECRET);
-    
-    response.json({jwtToken: token});
+
+    response.cookie('jwtToken', jwtToken, {
+        httpOnly: true
+    });
+
+    return response.redirect('/users/profile');
 });
 
 router.get('/register', (request, response) => {

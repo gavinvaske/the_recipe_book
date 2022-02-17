@@ -20,12 +20,12 @@ router.get('/profile', verifyJwtToken, (request, response) => {
     });
 });
 
-router.get('/change-password', (request, response) => {
+router.get('/change-password', verifyJwtToken, (request, response) => {
     response.render('changePassword');
 });
 
-router.post('/change-password', async (request, response) => {
-    const {newPassword, repeatPassword, jwtToken} = request.body;
+router.post('/change-password', verifyJwtToken, async (request, response) => {
+    const {newPassword, repeatPassword} = request.body;
 
     if (newPassword !== repeatPassword) {
         return response.json({
@@ -38,25 +38,20 @@ router.post('/change-password', async (request, response) => {
             error: `password must be at least ${MIN_PASSWORD_LENGTH} characters`
         });
     }
+
+    const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
     
-    try {
-        const user = jwt.verify(jwtToken, process.env.JWT_SECRET);
-        const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
+    const user = request.user;
 
-        await UserModel.updateOne({
-            _id: user.id, 
-        }, {
-            $set: { password: encryptedPassword}
-        });
-    } catch (error) {
-        response.json({
-            error: 'You must log in before you can change your password'
-        });
-    }
-
-    return response.json({
-        message: 'successfully changed password, please login again'
+    await UserModel.updateOne({
+        _id: user.id, 
+    }, {
+        $set: { password: encryptedPassword}
     });
+
+    response.clearCookie('jwtToken');
+
+    return response.redirect('/users/login');
 });
 
 router.get('/login', (request, response) => {
@@ -125,7 +120,7 @@ router.post('/register', async (request, response) => {
         throw error;
     }
 
-    return response.send('User was registered successfully');
+    return response.redirect('/users/login');
 });
 
 module.exports = router;

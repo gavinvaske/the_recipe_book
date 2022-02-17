@@ -2,13 +2,9 @@ const express = require('express');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const {error: envLoadError} = require('dotenv').config();
+require('dotenv').config();
 const databaseService = require('./services/databaseService');
 const cookieParser = require('cookie-parser');
-
-if (envLoadError) {
-    throw new Error('No .env file was found, please add one to the root directory of this project!');
-}
 
 databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;

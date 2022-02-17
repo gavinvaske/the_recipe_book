@@ -12,8 +12,7 @@ module.exports.verifyJwtToken = (request, response, next) => {
     }
 
     try {
-        const user = jwt.verify(token, process.env.JWT_SECRET);
-        request.user = user;
+        request.user = jwt.verify(token, process.env.JWT_SECRET);
         return next();
     } catch (error) {
         response.clearCookie('jwtToken');

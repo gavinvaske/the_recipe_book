@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-UNAUTHORIZED_STATUS_CODE = 401;
-FORBIDDEN_STATUS_CODE = 403;
+const FORBIDDEN_STATUS_CODE = 403;
 
 module.exports.verifyJwtToken = (request, response, next) => {
     const token = request.cookies.jwtToken;
@@ -18,6 +17,6 @@ module.exports.verifyJwtToken = (request, response, next) => {
         return next();
     } catch (error) {
         response.clearCookie('jwtToken');
-        return response.redirect('/')
+        return response.redirect('/');
     }
-}
+};

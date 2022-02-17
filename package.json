@@ -4,8 +4,8 @@
   "description": "An application used to get up and running with a new nodejs project with a linter, test library and basic configuration already setup",
   "main": "app/index.js",
   "engines": {
-    "npm": ">=6.14",
-    "node": ">=16.14"
+    "npm": "6.14.13",
+    "node": "14.17.0"
   },
   "scripts": {
     "start": "node application/index.js",

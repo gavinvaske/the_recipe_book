@@ -8,7 +8,7 @@ module.exports.verifyJwtToken = (request, response, next) => {
     const token = request.cookies.jwtToken;
 
     if (!token) {
-        return response.sendStatus(FORBIDDEN_STATUS_CODE);
+        return response.status(FORBIDDEN_STATUS_CODE).redirect('/');
     }
 
     try {

@@ -31,7 +31,7 @@ app.use((request, response, next) => {
     response.locals.errors = request.flash('errors');
     response.locals.alerts = request.flash('alerts');
     next();
-})
+});
 
 app.use('/css', express.static(__dirname + 'public/css'));
 app.use('/js', express.static(__dirname + 'public/js'));

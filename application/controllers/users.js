@@ -5,12 +5,49 @@ const UserModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const {verifyJwtToken} = require('../middleware/authorize');
+const {sendPasswordResetEmail} = require('../services/emailService');
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
+router.get('/forgot-password', (request, response) => {
+    response.render('forgotPassword');
+});
+
+router.post('/forgot-password', (request, response) => {
+    const {email} = request.body;
+
+    const user = undefined; // TODO: Find the user from the database based on their email
+    
+    if (user) {
+        const secret = process.env.JWT_SECRET + user.password;
+        const payload = {
+            email: user.email,
+            id: user._id
+        };
+        const token = jwt.sign(payload, secret, {expiresIn: '15m'});
+        const link = `http://localhost:8080/reset-password/${user.id}/${token}`;
+
+        sendPasswordResetEmail(email, link);
+    }
+
+
+    request.flash('alerts', ['If an account with that email exists, you will receive an email to reset your password']);
+
+    response.redirect('back');
+});
+
+router.get('/reset-password', (request, response) => {
+    response.send('TODO: Build this route');
+});
+
+router.post('/reset-password', (request, response) => {
+    response.send('TODO: Build this route');
+});
+
 
 router.get('/logout', verifyJwtToken, (request, response) => {
     response.clearCookie('jwtToken');

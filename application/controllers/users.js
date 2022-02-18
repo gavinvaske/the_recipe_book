@@ -12,6 +12,12 @@ const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
+router.get('/logout', verifyJwtToken, (request, response) => {
+    response.clearCookie('jwtToken');
+
+    return response.redirect('/');
+});
+
 router.get('/profile', verifyJwtToken, (request, response) => {
     response.render('profile', {
         user: request.user

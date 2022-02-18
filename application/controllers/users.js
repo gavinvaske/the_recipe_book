@@ -29,7 +29,7 @@ router.post('/forgot-password', async (request, response) => {
             id: user._id
         };
         const token = jwt.sign(payload, secret, {expiresIn: '15m'});
-        const link = `http://localhost:8080/users/reset-password/${user._id}/${token}`;    // TODO: Use a BASE_URL environment variable instead
+        const link = `http://localhost:8080/users/reset-password/${user._id}/${token}`; // TODO: Use a BASE_URL environment variable instead
         console.log(link);
 
         sendPasswordResetEmail(email, link);
@@ -58,9 +58,9 @@ router.get('/reset-password/:id/:token', async (request, response) => {
         response.render('resetPassword', {
             email: user.email
         });
-    } catch(error) {
+    } catch (error) {
         console.log(error);
-        request.flash('errors', ['error occurred while attempting to verify your account, please try again.'])
+        request.flash('errors', ['error occurred while attempting to verify your account, please try again.']);
         response.redirect('back');
     }
 });
@@ -106,9 +106,9 @@ router.post('/reset-password/:id/:token', async (request, response) => {
         request.flash('alerts', ['Password change was successful, please login']);
     
         return response.redirect('/users/login');
-    } catch(error) {
+    } catch (error) {
         console.log(error);
-        request.flash('errors', ['error occurred while attempting to verify your account, please try again.'])
+        request.flash('errors', ['error occurred while attempting to verify your account, please try again.']);
         response.redirect('back');
     }
 

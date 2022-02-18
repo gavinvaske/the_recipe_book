@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const databaseService = require('./services/databaseService');
 const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
@@ -14,10 +16,23 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
-app.use(cookieParser());
 app.use(expressLayouts);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(flash());
+app.use((request, response, next) => {
+    response.locals.errors = request.flash('errors');
+    response.locals.alerts = request.flash('alerts');
+    next();
+})
+
 app.use('/css', express.static(__dirname + 'public/css'));
 app.use('/js', express.static(__dirname + 'public/js'));
 app.use('/img', express.static(__dirname + 'public/img'));

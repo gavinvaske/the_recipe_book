@@ -28,15 +28,15 @@ router.post('/change-password', verifyJwtToken, async (request, response) => {
     const {newPassword, repeatPassword} = request.body;
 
     if (newPassword !== repeatPassword) {
-        return response.json({
-            error: 'passwords do not match'
-        });
+        request.flash('errors', ['passwords do not match'])
+        
+        return response.redirect('back');
     }
 
     if (newPassword.length < MIN_PASSWORD_LENGTH) {
-        return response.json({
-            error: `password must be at least ${MIN_PASSWORD_LENGTH} characters`
-        });
+        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`])
+        
+        return response.redirect('back');
     }
 
     const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
@@ -51,6 +51,8 @@ router.post('/change-password', verifyJwtToken, async (request, response) => {
 
     response.clearCookie('jwtToken');
 
+    request.flash('alerts', ['Password change was successful, please login']);
+
     return response.redirect('/users/login');
 });
 
@@ -64,17 +66,17 @@ router.post('/login', async (request, response) => {
     const user = await UserModel.findOne({email}).lean();
 
     if (!user) {
-        return response.json({
-            error: INVALID_USERNAME_PASSWORD_MESSAGE
-        });
+        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE])
+
+        return response.redirect('back');
     }
 
     const isPasswordCorrectForUser = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrectForUser) {
-        return response.json({
-            error: INVALID_USERNAME_PASSWORD_MESSAGE
-        });
+        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE])
+        
+        return response.redirect('back');
     }
 
     const jwtToken = jwt.sign({
@@ -98,11 +100,15 @@ router.post('/register', async (request, response) => {
     const {email, password: plainTextPassword, repeatPassword} = request.body;
 
     if (plainTextPassword !== repeatPassword) {
-        return response.status(BAD_REQUEST_STATUS).send('passwords do not match');
+        request.flash('errors', ['passwords do not match'])
+        
+        return response.redirect('back');
     }
 
     if (plainTextPassword.length < MIN_PASSWORD_LENGTH) {
-        return response.status(BAD_REQUEST_STATUS).send(`password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`])
+        
+        return response.redirect('back');
     }
 
     const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_LENGTH);
@@ -114,11 +120,15 @@ router.post('/register', async (request, response) => {
         });
     } catch (error) {
         if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
-            return response.status(BAD_REQUEST_STATUS).send('Username already exists');
+            request.flash('errors', ['Username already exists'])
+        
+            return response.redirect('back');
         }
-        console.log('Error creating user: ', error);
+        console.log('Unknown error occurred while creating user: ', error);
         throw error;
     }
+
+    request.flash('alerts', ['Registration was successful, please login']);
 
     return response.redirect('/users/login');
 });

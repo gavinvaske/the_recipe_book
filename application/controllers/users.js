@@ -108,7 +108,7 @@ router.post('/reset-password/:id/:token', async (request, response) => {
         return response.redirect('/users/login');
     } catch (error) {
         console.log(error);
-        request.flash('errors', ['error occurred while attempting to verify your account, please try again.']);
+        request.flash('errors', ['The URL you requested is no longer valid, please try again.']);
         response.redirect('back');
     }
 

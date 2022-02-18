@@ -4,7 +4,7 @@ const chance = require('chance').Chance();
 
 jest.mock('jsonwebtoken');
 
-const sendStatusMock = jest.fn();
+const statusMock = jest.fn();
 const clearCookieMock = jest.fn();
 const redirectMock = jest.fn();
 
@@ -38,12 +38,30 @@ describe('authorization', () => {
     });
 
     it('should send 403 status if JWT cookie is not defined', () => {
+        const FORBIDDEN_STATUS_CODE = 403;
         request.cookies.jwtToken = undefined;
-        response.sendStatus = sendStatusMock;
+        statusMock.mockReturnValue({
+            redirect: jest.fn()
+        });
+        response.status = statusMock;
 
         verifyJwtToken(request, response, next);
 
-        expect(sendStatusMock).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledWith(FORBIDDEN_STATUS_CODE);
+    });
+
+    it('should redirect to homepage if JWT cookie is not defined', () => {
+        request.cookies.jwtToken = undefined;
+        statusMock.mockReturnValue({
+            redirect: redirectMock
+        });
+        response.status = statusMock;
+
+        verifyJwtToken(request, response, next);
+
+        expect(redirectMock).toHaveBeenCalledTimes(1);
+        expect(redirectMock).toHaveBeenCalledWith('/');
     });
 
     it('should use jsonwebtoken library to verify jwtToken', () => {

@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const {verifyJwtToken} = require('../middleware/authorize');
 
-const BAD_REQUEST_STATUS = 400;
-
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
@@ -28,13 +26,13 @@ router.post('/change-password', verifyJwtToken, async (request, response) => {
     const {newPassword, repeatPassword} = request.body;
 
     if (newPassword !== repeatPassword) {
-        request.flash('errors', ['passwords do not match'])
+        request.flash('errors', ['passwords do not match']);
         
         return response.redirect('back');
     }
 
     if (newPassword.length < MIN_PASSWORD_LENGTH) {
-        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`])
+        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`]);
         
         return response.redirect('back');
     }
@@ -66,7 +64,7 @@ router.post('/login', async (request, response) => {
     const user = await UserModel.findOne({email}).lean();
 
     if (!user) {
-        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE])
+        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE]);
 
         return response.redirect('back');
     }
@@ -74,7 +72,7 @@ router.post('/login', async (request, response) => {
     const isPasswordCorrectForUser = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrectForUser) {
-        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE])
+        request.flash('errors', [INVALID_USERNAME_PASSWORD_MESSAGE]);
         
         return response.redirect('back');
     }
@@ -100,13 +98,13 @@ router.post('/register', async (request, response) => {
     const {email, password: plainTextPassword, repeatPassword} = request.body;
 
     if (plainTextPassword !== repeatPassword) {
-        request.flash('errors', ['passwords do not match'])
+        request.flash('errors', ['passwords do not match']);
         
         return response.redirect('back');
     }
 
     if (plainTextPassword.length < MIN_PASSWORD_LENGTH) {
-        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`])
+        request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`]);
         
         return response.redirect('back');
     }
@@ -120,7 +118,7 @@ router.post('/register', async (request, response) => {
         });
     } catch (error) {
         if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
-            request.flash('errors', ['Username already exists'])
+            request.flash('errors', ['Username already exists']);
         
             return response.redirect('back');
         }

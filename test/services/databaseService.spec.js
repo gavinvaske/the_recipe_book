@@ -11,6 +11,7 @@ beforeAll(() => {
 
 afterEach(() => {
     process.env.NODE_ENV = originalNodeEnv;
+    jest.resetAllMocks();
 });
 
 it('should error if no database url is provided', async () => {

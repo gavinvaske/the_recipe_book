@@ -8,6 +8,7 @@ beforeAll(async () => {
 
 afterEach(async () => {
     await databaseService.clearDatabase();
+    jest.resetAllMocks();
 });
 
 afterAll(async () => {

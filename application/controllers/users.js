@@ -29,7 +29,7 @@ router.post('/forgot-password', async (request, response) => {
             id: user._id
         };
         const token = jwt.sign(payload, secret, {expiresIn: '15m'});
-        const link = `http://localhost:8080/users/reset-password/${user._id}/${token}`; // TODO: Use a BASE_URL environment variable instead
+        const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
         console.log(link);
 
         sendPasswordResetEmail(email, link);

@@ -5,12 +5,116 @@ const UserModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const {verifyJwtToken} = require('../middleware/authorize');
+const {sendPasswordResetEmail} = require('../services/emailService');
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
+router.get('/forgot-password', (request, response) => {
+    response.render('forgotPassword');
+});
+
+router.post('/forgot-password', async (request, response) => {
+    const {email} = request.body;
+
+    const user = await UserModel.findOne({email}).lean();
+    
+    if (user) {
+        const secret = process.env.JWT_SECRET + user.password;
+        const payload = {
+            email: user.email,
+            id: user._id
+        };
+        const token = jwt.sign(payload, secret, {expiresIn: '15m'});
+        const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
+        console.log(link);
+
+        sendPasswordResetEmail(email, link);
+    }
+
+
+    request.flash('alerts', ['If an account with that email exists, you will receive an email to reset your password']);
+
+    response.redirect('back');
+});
+
+router.get('/reset-password/:id/:token', async (request, response) => {
+    const {id, token} = request.params;
+
+    const user = await UserModel.findById(id);
+
+    if (id !== user.id) {
+        request.flash('errors', ['Invalid user ID']);
+        return response.redirect('back');
+    }
+
+    const secret = process.env.JWT_SECRET + user.password;
+
+    try {
+        jwt.verify(token, secret);
+        response.render('resetPassword', {
+            email: user.email
+        });
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', ['error occurred while attempting to verify your account, please try again.']);
+        response.redirect('back');
+    }
+});
+
+router.post('/reset-password/:id/:token', async (request, response) => {
+    const {id, token} = request.params;
+    const {password, repeatPassword} = request.body;
+
+    const user = await UserModel.findById(id);
+
+    if (id !== user.id) {
+        request.flash('errors', ['Invalid user ID']);
+        return response.redirect('back');
+    }
+
+    const secret = process.env.JWT_SECRET + user.password;
+
+    try {
+        jwt.verify(token, secret);
+
+        if (password !== repeatPassword) {
+            request.flash('errors', ['passwords do not match']);
+            
+            return response.redirect('back');
+        }
+
+        if (password.length < MIN_PASSWORD_LENGTH) {
+            request.flash('errors', [`password must be at least ${MIN_PASSWORD_LENGTH} characters`]);
+            
+            return response.redirect('back');
+        }
+
+        const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_LENGTH);
+
+        await UserModel.updateOne({
+            _id: user.id, 
+        }, {
+            $set: {password: encryptedPassword}
+        });
+    
+        response.clearCookie('jwtToken');
+    
+        request.flash('alerts', ['Password change was successful, please login']);
+    
+        return response.redirect('/users/login');
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', ['The URL you requested is no longer valid, please try again.']);
+        response.redirect('back');
+    }
+
+
+});
+
 
 router.get('/logout', verifyJwtToken, (request, response) => {
     response.clearCookie('jwtToken');

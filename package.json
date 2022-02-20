@@ -37,7 +37,9 @@
     "express": "4.17.2",
     "express-ejs-layouts": "2.5.1",
     "express-session": "1.17.2",
+    "form-data": "4.0.0",
     "jsonwebtoken": "8.5.1",
+    "mailgun.js": "4.2.2",
     "mongodb-memory-server": "8.3.0",
     "mongoose": "6.2.1"
   }

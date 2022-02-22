@@ -9,7 +9,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
 
         request.flash('alerts', 'Updated successfully');
         response.redirect('/recipes');
-    } catch(error) {
+    } catch (error) {
         request.flash('errors', error.message);
         return response.redirect('back');
     }

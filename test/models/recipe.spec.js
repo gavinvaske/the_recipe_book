@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const RecipeModel = require('../../application/models/recipe');
+const mongoose = require('mongoose');
 
 describe('validation', () => {
     let recipeAttributes;
@@ -11,10 +12,7 @@ describe('validation', () => {
             dieNumber: chance.guid(),
             notes: chance.string(),
             howToVideo: chance.url(),
-            author: {
-                email: chance.email(),
-                password: chance.string({min: 20})
-            }
+            author: new mongoose.Types.ObjectId()
         };
     });
 

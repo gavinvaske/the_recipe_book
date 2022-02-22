@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const UserModel = require('./user');
 
 const recipeSchema = new Schema({
     designNumber: {
@@ -24,7 +23,9 @@ const recipeSchema = new Schema({
         required: false
     },
     author: {
-        type: UserModel.schema,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        unique: false,
         required: true
     }
 }, { timestamps: true });

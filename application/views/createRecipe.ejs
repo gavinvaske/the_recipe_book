@@ -1,0 +1,18 @@
+<h1>Create Recipe</h1>
+
+<form action="", method="POST">
+    <label for="designNumber">Design Number</label>
+    <input type="text" name="designNumber" id="designNumber">
+    <br>
+    <label for="dieNumber">Die Number</label>
+    <input type="text" name="dieNumber" id="dieNumber">
+    <br>
+    <label for="notes">Notes</label>
+    <input type="text" name="notes" id="notes">
+    <br>
+    <label for="howToVideo">How-to-Video</label>
+    <input type="text" name="howToVideo" id="howToVideo">
+    <input type="hidden" name="authorId" id="authorId" value="<%= user.id %>">
+    <br>
+    <input type="submit" value="Create Recipe">
+</form>

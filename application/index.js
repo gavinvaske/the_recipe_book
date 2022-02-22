@@ -42,7 +42,8 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 
 app.use('/', require('./controllers/index'));
-app.use('/users', require('./controllers/users'));
+app.use('/users', require('./controllers/userController'));
+app.use('/recipes', require('./controllers/recipeController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

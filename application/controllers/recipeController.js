@@ -3,6 +3,18 @@ const router = express.Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const RecipeModel = require('../models/recipe');
 
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await RecipeModel.findByIdAndUpdate(request.params.id, request.body);
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect('/recipes');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
         const recipe = await RecipeModel.findById(request.params.id);

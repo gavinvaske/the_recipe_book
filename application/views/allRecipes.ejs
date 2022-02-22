@@ -1,0 +1,28 @@
+<h1>Recipes Table</h1>
+<a class="btn btn-primary" href="/recipes/create" role="button">Create New Recipe</a>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Row #</th>
+        <th scope="col">Design Number</th>
+        <th scope="col">Die Number</th>
+        <th scope="col">How-to-Video</th>
+        <th scope="col">Notes</th>
+        <th scope="col">Author</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if (typeof recipes != 'undefined') { %>
+            <% recipes.forEach((recipe, index) => { %>
+                <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= recipe.designNumber || 'N/A' %></td>
+                    <td><%= recipe.dieNumber || 'N/A' %></td>
+                    <td><%= recipe.howToVideo || 'N/A' %></td>
+                    <td><%= recipe.notes || 'N/A' %></td>
+                    <td><%= recipe.author || 'N/A' %></td>
+                </tr>
+            <% }) %>
+        <% } %>
+    </tbody>
+  </table>

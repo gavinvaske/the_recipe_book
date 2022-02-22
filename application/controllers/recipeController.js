@@ -5,15 +5,21 @@ const RecipeModel = require('../models/recipe');
 
 
 router.get('/', verifyJwtToken, async (request, response) => {
-    RecipeModel.find(async function(error, documents) {
-        if (error) {
-            request.flash('errors', ['Unable to load recipes, the following error(s) occurred:', error.message]);
-            return response.redirect('back');
-        }
+    try {
+        const recipes = await RecipeModel.find()
+            .populate({
+                path: 'author',
+                select: 'email userType'
+            }).exec();
+        
         return response.render('allRecipes', {
-            recipes: documents
+            recipes
         });
-    });
+
+    } catch (error) {
+        request.flash('errors', ['Unable to load recipes, the following error(s) occurred:', error.message]);
+        return response.redirect('back');
+    }
 });
 
 router.get('/create', verifyJwtToken, (request, response) => {

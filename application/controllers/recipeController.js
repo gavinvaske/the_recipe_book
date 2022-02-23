@@ -3,9 +3,21 @@ const router = express.Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const RecipeModel = require('../models/recipe');
 
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await RecipeModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect('/recipes');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 router.post('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        await RecipeModel.findByIdAndUpdate(request.params.id, request.body);
+        await RecipeModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
         request.flash('alerts', 'Updated successfully');
         response.redirect('/recipes');
@@ -17,7 +29,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
 
 router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        const recipe = await RecipeModel.findById(request.params.id);
+        const recipe = await RecipeModel.findById(request.params.id).exec();
 
         return response.render('updateRecipe', {recipe});
     } catch (error) {

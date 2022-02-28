@@ -1,0 +1,21 @@
+<h1>Materials Table</h1>
+
+<a class="btn btn-primary" href="/materials/create" role="button">Create Material</a>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Row #</th>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if (typeof materials != 'undefined') { %>
+            <% materials.forEach((material, index) => { %>
+                <tr>
+                    <td scope="row"><%= index + 1 %></td>
+                    <td><%= material.name || 'N/A' %></td>
+                </tr>
+            <% }) %>
+        <% } %>
+    </tbody>
+  </table>

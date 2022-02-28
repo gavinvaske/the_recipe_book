@@ -17,7 +17,7 @@ router.get('/', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/create', verifyJwtToken, (request, response) => {
-    return response.render('createFinish')
+    return response.render('createFinish');
 });
 
 router.post('/create', verifyJwtToken, async (request, response) => {

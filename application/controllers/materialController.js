@@ -17,7 +17,7 @@ router.get('/', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/create', verifyJwtToken, (request, response) => {
-    return response.render('createMaterial')
+    return response.render('createMaterial');
 });
 
 router.post('/create', verifyJwtToken, async (request, response) => {

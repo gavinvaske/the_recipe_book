@@ -2,6 +2,8 @@ const router = require('express').Router();
 const MachineModel = require('../models/machine');
 const {verifyJwtToken} = require('../middleware/authorize');
 
+const SHOW_ALL_MACHINES_ENDPOINT = '/machines';
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const machines = await MachineModel.find().exec();
@@ -31,7 +33,48 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     }
     request.flash('alerts', ['Machine created successfully']);
 
-    return response.redirect('/machines');
+    return response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
+});
+
+router.get('/update/:id', async (request, response) => {
+    try {
+        const machine = await MachineModel.findById(request.params.id);
+
+        return response.render('updateMachine', {machine});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MachineModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+
+        return response.redirect('back');
+    }
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MachineModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+
+        return response.redirect('back');
+    }
 });
 
 module.exports = router;

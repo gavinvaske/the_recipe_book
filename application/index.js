@@ -44,6 +44,10 @@ app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 app.use('/', require('./controllers/index'));
 app.use('/users', require('./controllers/userController'));
 app.use('/recipes', require('./controllers/recipeController'));
+app.use('/admin', require('./controllers/adminController'));
+app.use('/finishes', require('./controllers/finishController'));
+app.use('/machines', require('./controllers/machineController'));
+app.use('/materials', require('./controllers/materialController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

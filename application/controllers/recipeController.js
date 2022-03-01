@@ -39,7 +39,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
     try {
         const recipes = await RecipeModel.find()
             .populate({

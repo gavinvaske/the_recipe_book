@@ -2,6 +2,8 @@ const router = require('express').Router();
 const MaterialModel = require('../models/material');
 const {verifyJwtToken} = require('../middleware/authorize');
 
+const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const materials = await MaterialModel.find().exec();
@@ -31,7 +33,48 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     }
     request.flash('alerts', ['Material created successfully']);
 
-    return response.redirect('/materials');
+    return response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);
+});
+
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const material = await MaterialModel.findById(request.params.id);
+
+        return response.render('updateMaterial', {material});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MaterialModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+
+        return response.redirect('back');
+    }
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MaterialModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+
+        return response.redirect('back');
+    }
 });
 
 module.exports = router;

@@ -2,6 +2,8 @@ const router = require('express').Router();
 const FinishModel = require('../models/finish');
 const {verifyJwtToken} = require('../middleware/authorize');
 
+const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const finishes = await FinishModel.find().exec();
@@ -31,7 +33,43 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     }
     request.flash('alerts', ['Finish created successfully']);
 
-    return response.redirect('/finishes');
+    return response.redirect(SHOW_ALL_FINISHES_ENDPOINT);
+});
+
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const finish = await FinishModel.findById(request.params.id).exec();
+
+        return response.render('updateFinish', {finish});
+    } catch (error) {
+        request.flash('errors', error.message);
+        
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await FinishModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(SHOW_ALL_FINISHES_ENDPOINT);
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await FinishModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect(SHOW_ALL_FINISHES_ENDPOINT);
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
 });
 
 module.exports = router;

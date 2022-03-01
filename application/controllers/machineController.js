@@ -36,7 +36,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
 });
 
-router.get('/update/:id', async (request, response) => {
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
         const machine = await MachineModel.findById(request.params.id);
 

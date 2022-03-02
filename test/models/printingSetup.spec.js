@@ -114,7 +114,7 @@ describe('validation', () => {
     
             expect(printingSetup.alertTextBox).toBe(alertTextBoxWithoutWhitespace);
         });
-    })
+    });
 
     describe('"difficulty" attribute validation', () => {
         const difficultyOptionsEnum = [
@@ -122,7 +122,7 @@ describe('validation', () => {
             'MEDIUM',
             'HARD',
             'VERY DIFFICULT'
-        ]
+        ];
         it('should fail validation if diffulty is not one of the available enum options', () => {
             printingSetupAttributes.difficulty = chance.string();
             const printingSetup = new PrintingSetupModel(printingSetupAttributes);
@@ -130,7 +130,7 @@ describe('validation', () => {
             const error = printingSetup.validateSync();
     
             expect(error).not.toBe(undefined);
-        })
+        });
 
         it('should have value from enum in "difficulty"', () => {
             const selectedOption = chance.pickone(difficultyOptionsEnum);
@@ -157,7 +157,7 @@ describe('validation', () => {
             const printingSetup = new PrintingSetupModel(printingSetupAttributes);
 
             expect(printingSetup.difficulty).toBe(printingSetup.difficulty.toUpperCase());
-        })
+        });
     });
 
     it('should fail if video is not a valid URL', () => {

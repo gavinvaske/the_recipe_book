@@ -115,7 +115,7 @@ describe('validation', () => {
     
             expect(cuttingSetup.alertTextBox).toBe(alertTextBoxWithoutWhitespace);
         });
-    })
+    });
 
     describe('"difficulty" attribute validation', () => {
         const difficultyOptionsEnum = [
@@ -123,7 +123,7 @@ describe('validation', () => {
             'MEDIUM',
             'HARD',
             'VERY DIFFICULT'
-        ]
+        ];
         it('should fail validation if diffulty is not one of the available enum options', () => {
             cuttingSetupAttributes.difficulty = chance.string();
             const cuttingSetup = new CuttingSetupModel(cuttingSetupAttributes);
@@ -131,7 +131,7 @@ describe('validation', () => {
             const error = cuttingSetup.validateSync();
     
             expect(error).not.toBe(undefined);
-        })
+        });
 
         it('should have value from enum in "difficulty"', () => {
             const selectedOption = chance.pickone(difficultyOptionsEnum);
@@ -158,7 +158,7 @@ describe('validation', () => {
             const cuttingSetup = new CuttingSetupModel(cuttingSetupAttributes);
 
             expect(cuttingSetup.difficulty).toBe(cuttingSetup.difficulty.toUpperCase());
-        })
+        });
     });
     
     describe('attribute "setupFeet"', () => {

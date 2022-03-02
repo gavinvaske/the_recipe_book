@@ -33,9 +33,7 @@ app.use((request, response, next) => {
     next();
 });
 
-app.use('/css', express.static(__dirname + 'public/css'));
-app.use('/js', express.static(__dirname + 'public/js'));
-app.use('/img', express.static(__dirname + 'public/img'));
+app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -48,6 +46,10 @@ app.use('/admin', require('./controllers/adminController'));
 app.use('/finishes', require('./controllers/finishController'));
 app.use('/machines', require('./controllers/machineController'));
 app.use('/materials', require('./controllers/materialController'));
+app.use('/setups', require('./controllers/setupController'));
+app.use('/printing-setups', require('./controllers/printingSetupController'));
+app.use('/cutting-setups', require('./controllers/cuttingSetupController'));
+app.use('/winding-setups', require('./controllers/windingSetupController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

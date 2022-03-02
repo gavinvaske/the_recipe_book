@@ -17,7 +17,7 @@ describe('validation', () => {
             backWinding: chance.bool(),
             alertTextBox: chance.string(),
             defaultMachine: new mongoose.Types.ObjectId()
-        }
+        };
     });
 
     it('should validate when all attributes are defined correctly', () => {

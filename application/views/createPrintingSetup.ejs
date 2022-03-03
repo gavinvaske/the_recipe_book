@@ -1,0 +1,34 @@
+<h1>Creating Printing Setup</h1>
+
+<form action="/printing-setups/create", method="POST">
+    <label for="author">Author (todo)</label>
+    <input type="text" name="author" id="author">
+    <br>
+    <label for="machine">Machine (todo)</label>
+    <input type="text" name="machine" id="machine">
+    <br>
+    <label for="framesToRun">Frames to Run</label>
+    <input type="text" name="framesToRun" id="framesToRun">
+    <br>
+    <label for="notes">Notes</label>
+    <input type="text" name="notes" id="notes">
+    <br>
+    <label for="material">Material (todo)</label>
+    <input type="text" name="material" id="material">
+    <br>
+    <label for="howToVideo">How-to-Video</label>
+    <input type="text" name="howToVideo" id="howToVideo">
+    <br>
+    <label for="difficulty">Difficulty (todo)</label>
+    <input type="text" name="difficulty" id="difficulty">
+    <br>
+    <label for="alertTextBox">Alert Text Box</label>
+    <input type="text" name="alertTextBox" id="alertTextBox">
+    <br>
+    <label for="defaultMachine">Default Machine (todo)</label>
+    <input type="text" name="defaultMachine" id="defaultMachine">
+    <input type="hidden" name="authorId" id="authorId" value="<%= user.id %>">
+    <input type="hidden" name="recipeId" id="recipeId" value="<%= recipeId %>">
+    <br>
+    <input type="submit" value="Create Recipe">
+</form>

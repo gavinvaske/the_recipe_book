@@ -16,7 +16,7 @@ const schema = new Schema({
     },
     machine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine',
+        ref: 'Machine',
         required: true
     },
     notes: {
@@ -25,7 +25,7 @@ const schema = new Schema({
     },
     finish: {
         type: Schema.Types.ObjectId,
-        ref: 'finish',
+        ref: 'Finish',
         required: true
     },
     setupFeet: {
@@ -55,7 +55,7 @@ const schema = new Schema({
     },
     recipe: {
         type: Schema.Types.ObjectId,
-        ref: 'recipe',
+        ref: 'Recipe',
         required: true
     },
     alertTextBox: {
@@ -64,7 +64,7 @@ const schema = new Schema({
     },
     defaultMachine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine'
+        ref: 'Machine'
     }
 }, { timestamps: true });
 

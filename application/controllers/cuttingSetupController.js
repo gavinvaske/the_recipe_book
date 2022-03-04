@@ -63,4 +63,17 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const cuttingSetup = await CuttingSetupModel.findById(request.params.id).exec();
+
+        return response.render('updateCuttingSetup', {cuttingSetup});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

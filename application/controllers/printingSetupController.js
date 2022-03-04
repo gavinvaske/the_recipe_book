@@ -59,4 +59,17 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const printingSetup = await PrintingSetupModel.findById(request.params.id).exec();
+
+        return response.render('updatePrintingSetup', {printingSetup});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

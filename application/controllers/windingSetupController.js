@@ -8,11 +8,11 @@ const FinishModel = require('../models/finish');
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
     const windingSetups = await WindingSetupModel
-                            .find({recipe: request.params.recipeId})
-                            .populate({path: 'author'})
-                            .populate({path: 'machine'})
-                            .populate({path: 'defaultMachine'})
-                            .exec();
+        .find({recipe: request.params.recipeId})
+        .populate({path: 'author'})
+        .populate({path: 'machine'})
+        .populate({path: 'defaultMachine'})
+        .exec();
 
     return response.render('viewWindingSetups', {
         recipeId: request.params.recipeId,
@@ -38,7 +38,7 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
 router.post('/create', verifyJwtToken, async (request, response) => {
     try {
         await WindingSetupModel.create(request.body);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         request.flash('errors', ['Unable to create the Winding Setup, the following error(s) occurred:', error.message]);
         return response.redirect('back');

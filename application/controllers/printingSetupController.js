@@ -7,12 +7,12 @@ const PrintingSetupModel = require('../models/printingSetup');
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
     const printingSetups = await PrintingSetupModel
-                            .find({recipe: request.params.recipeId})
-                            .populate({path: 'author'})
-                            .populate({path: 'machine'})
-                            .populate({path: 'material'})
-                            .populate({path: 'defaultMachine'})
-                            .exec();
+        .find({recipe: request.params.recipeId})
+        .populate({path: 'author'})
+        .populate({path: 'machine'})
+        .populate({path: 'material'})
+        .populate({path: 'defaultMachine'})
+        .exec();
     return response.render('viewPrintingSetups', {
         recipeId: request.params.recipeId,
         printingSetups
@@ -35,7 +35,7 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
 router.post('/create', verifyJwtToken, async (request, response) => {
     try {
         await PrintingSetupModel.create(request.body);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         request.flash('errors', ['Unable to create the Printing Setup, the following error(s) occurred:', error.message]);
         return response.redirect('back');

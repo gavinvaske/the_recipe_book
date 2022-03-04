@@ -23,12 +23,12 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
     const cuttingSetups = await CuttingSetupModel
-                            .find({recipe: request.params.recipeId})
-                            .populate({path: 'author'})
-                            .populate({path: 'finish'})
-                            .populate({path: 'machine'})
-                            .populate({path: 'defaultMachine'})
-                            .exec();
+        .find({recipe: request.params.recipeId})
+        .populate({path: 'author'})
+        .populate({path: 'finish'})
+        .populate({path: 'machine'})
+        .populate({path: 'defaultMachine'})
+        .exec();
 
     return response.render('viewCuttingSetups', {
         recipeId: request.params.recipeId,
@@ -39,7 +39,7 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
 router.post('/create', verifyJwtToken, async (request, response) => {
     try {
         await CuttingSetupModel.create(request.body);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         request.flash('errors', ['Unable to create the Cutting Setup, the following error(s) occurred:', error.message]);
         return response.redirect('back');

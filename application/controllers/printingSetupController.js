@@ -6,7 +6,13 @@ const MaterialModel = require('../models/material');
 const PrintingSetupModel = require('../models/printingSetup');
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
-    const printingSetups = await PrintingSetupModel.find({recipe: request.params.recipeId}).exec();
+    const printingSetups = await PrintingSetupModel
+                            .find({recipe: request.params.recipeId})
+                            .populate({path: 'author'})
+                            .populate({path: 'machine'})
+                            .populate({path: 'material'})
+                            .populate({path: 'defaultMachine'})
+                            .exec();
     return response.render('viewPrintingSetups', {
         recipeId: request.params.recipeId,
         printingSetups

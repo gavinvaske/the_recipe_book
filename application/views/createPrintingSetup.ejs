@@ -1,11 +1,23 @@
 <h1>Creating Printing Setup</h1>
 
 <form action="/printing-setups/create", method="POST">
-    <label for="author">Author (todo)</label>
-    <input type="text" name="author" id="author">
+    <label for="author">Author</label>
+    <select name="author" id="author">
+        <% if (typeof users != 'undefined') { %>
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
     <br>
-    <label for="machine">Machine (todo)</label>
-    <input type="text" name="machine" id="machine">
+    <label for="machine">Machine</label>
+    <select name="machine" id="machine">
+        <% if (typeof machines != 'undefined') { %>
+            <% machines.forEach(machine => { %>
+                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
     <br>
     <label for="framesToRun">Frames to Run</label>
     <input type="text" name="framesToRun" id="framesToRun">
@@ -14,21 +26,37 @@
     <input type="text" name="notes" id="notes">
     <br>
     <label for="material">Material (todo)</label>
-    <input type="text" name="material" id="material">
+    <select name="material" id="material">
+        <% if (typeof materials != 'undefined') { %>
+            <% materials.forEach(material => { %>
+                <option value="<%= material.id %>"><%= material.name || 'N/A' %></option>
+            <% }) %>
+        <% } %>
+      </select>
     <br>
     <label for="howToVideo">How-to-Video</label>
     <input type="text" name="howToVideo" id="howToVideo">
     <br>
     <label for="difficulty">Difficulty (todo)</label>
-    <input type="text" name="difficulty" id="difficulty">
+    <select name="difficulty" id="difficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+        <option value="Very Difficult">Very Difficult</option>
+      </select>
     <br>
     <label for="alertTextBox">Alert Text Box</label>
     <input type="text" name="alertTextBox" id="alertTextBox">
     <br>
     <label for="defaultMachine">Default Machine (todo)</label>
-    <input type="text" name="defaultMachine" id="defaultMachine">
-    <input type="hidden" name="authorId" id="authorId" value="<%= user.id %>">
-    <input type="hidden" name="recipeId" id="recipeId" value="<%= recipeId %>">
+    <select name="defaultMachine" id="defaultMachine">
+        <% if (typeof machines != 'undefined') { %>
+            <% machines.forEach(machine => { %>
+                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
+    <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
     <br>
     <input type="submit" value="Create Recipe">
 </form>

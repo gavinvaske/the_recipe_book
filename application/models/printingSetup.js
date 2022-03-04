@@ -16,7 +16,7 @@ const schema = new Schema({
     },
     machine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine',
+        ref: 'Machine',
         required: true
     },
     framesToRun: {
@@ -29,7 +29,7 @@ const schema = new Schema({
     },
     material: {
         type: Schema.Types.ObjectId,
-        ref: 'material',
+        ref: 'Material',
         required: true
     },
     video: {
@@ -55,11 +55,11 @@ const schema = new Schema({
     },
     defaultMachine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine'
+        ref: 'Machine'
     },
     recipe: {
         type: Schema.Types.ObjectId,
-        ref: 'recipe',
+        ref: 'Recipe',
         required: true
     }
 }, { timestamps: true });

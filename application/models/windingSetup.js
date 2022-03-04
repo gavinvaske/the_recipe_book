@@ -16,7 +16,7 @@ const schema = new Schema({
     },
     machine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine',
+        ref: 'Machine',
         required: true
     },
     notes: {
@@ -60,7 +60,7 @@ const schema = new Schema({
     },
     defaultMachine: {
         type: Schema.Types.ObjectId,
-        ref: 'machine'
+        ref: 'Machine'
     },
 }, { timestamps: true });
 

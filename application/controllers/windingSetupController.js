@@ -62,4 +62,17 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const windingSetup = await WindingSetupModel.findById(request.params.id).exec();
+
+        return response.render('updateWindingSetup', {windingSetup});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

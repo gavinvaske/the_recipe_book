@@ -49,4 +49,16 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(`/winding-setups/all/${request.body.recipe}`);
 });
 
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await WindingSetupModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        return response.redirect('back');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

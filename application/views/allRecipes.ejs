@@ -16,7 +16,7 @@
         <% if (typeof recipes != 'undefined') { %>
             <% recipes.forEach((recipe, index) => { %>
                 <tr>
-                    <th scope="row"><%= index + 1 %></th>
+                    <th scope="row"><a href="/setups/<%= recipe.id %>"><%= index + 1 %></a></th>
                     <td><%= recipe.designNumber || 'N/A' %></td>
                     <td><%= recipe.dieNumber || 'N/A' %></td>
                     <td><%= recipe.howToVideo || 'N/A' %></td>

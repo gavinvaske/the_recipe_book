@@ -1,0 +1,65 @@
+<h1>Creating Cutting Setup</h1>
+
+<form action="/cutting-setups/create", method="POST">
+    <label for="author">Author</label>
+    <select name="author" id="author">
+        <% if (typeof users != 'undefined') { %>
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
+    <br>
+    <label for="machine">Machine</label>
+    <select name="machine" id="machine">
+        <% if (typeof machines != 'undefined') { %>
+            <% machines.forEach(machine => { %>
+                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
+    <br>
+    <label for="notes">Notes</label>
+    <input type="text" name="notes" id="notes">
+    <br>
+    <label for="finish">Finish</label>
+    <select name="finish" id="finish">
+        <% if (typeof finishes != 'undefined') { %>
+            <% finishes.forEach(finish => { %>
+                <option value="<%= finish.id %>"><%= finish.name || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
+    <br>
+    <label for="setupFeet">Setup Feet</label>
+    <input type="text" name="setupFeet" id="setupFeet">
+    <br>
+    <label for="jobSpeed">Job Speed</label>
+    <input type="text" name="jobSpeed" id="jobSpeed">
+    <br>
+    <label for="video">Video</label>
+    <input type="text" name="video" id="video">
+    <br>
+    <label for="difficulty">Difficulty</label>
+    <select name="difficulty" id="difficulty">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+        <option value="Very Difficult">Very Difficult</option>
+      </select>
+    <br>
+    <label for="alertTextBox">Alert Text Box</label>
+    <input type="text" name="alertTextBox" id="alertTextBox">
+    <br>
+    <label for="defaultMachine">Default Machine</label>
+    <select name="defaultMachine" id="defaultMachine">
+        <% if (typeof machines != 'undefined') { %>
+            <% machines.forEach(machine => { %>
+                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+            <% }) %>
+        <% } %>
+      </select>
+    <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
+    <br>
+    <input type="submit" value="Create Recipe">
+</form>

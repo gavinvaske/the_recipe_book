@@ -53,6 +53,7 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
         request.flash('alerts', 'Deletion was successful');
         return response.redirect('back');
     } catch (error) {
+        console.log(error);
         request.flash('errors', error.message);
         return response.redirect('back');
     }

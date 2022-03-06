@@ -1,0 +1,6 @@
+MONGO_DB_URL = 'mongodb+srv://gavinvaske:KingRick-Mo01@dev-cluster.j5chg.mongodb.net/the_recipe_book_db?retryWrites=true&w=majority'
+JWT_SECRET = '3iuh123cbn897angec12933cbado87GNCSDG78Ad96b97c1m7089&*&*%^^&9273916599%^&(#%@^65t(#@%(#23232132vfd***@#'
+SESSION_SECRET = 'apfdsmn##*#!!@!@)!**^#*&@#fdjksfnl3223489##321123$'
+MAILGUN_API_KEY = '4a6c7a7bc0bfc453a23b7ff7d4cd5c58-c3d1d1eb-1efde817'
+MAILGUN_DOMAIN = 'sandbox8c5d3671b7c746e49a1e7b0688b57cb7.mailgun.org'
+BASE_URL = 'http://localhost:8080'

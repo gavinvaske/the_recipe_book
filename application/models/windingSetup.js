@@ -30,8 +30,11 @@ const schema = new Schema({
         trim: true
     },
     watchOutFor: {
-        type: String,
-        uppercase: true,
+        type: [{
+            type: String,
+            trim: true,
+            uppercase: true
+        }],
         enum: [
             'FLAGS',
             'UV MISSING',

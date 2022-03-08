@@ -12,7 +12,10 @@ describe('validation', () => {
             machine: new mongoose.Types.ObjectId(),
             notes: chance.string(),
             video: chance.url(),
-            watchOutFor: 'uv missing',
+            watchOutFor: [
+                'uv missing',
+                'flags'
+            ],
             difficulty: 'medium',
             backWinding: chance.bool(),
             alertTextBox: chance.string(),

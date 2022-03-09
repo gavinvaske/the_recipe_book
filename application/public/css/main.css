@@ -514,7 +514,7 @@ input#password {
     border-top-right-radius: 0
 }
 
-.show-password-frame {
+.show-password-frame, .show-alert-frame {
     border-top: 1px solid #d8d6de;
     border-right: 1px solid #d8d6de;
     border-bottom: 1px solid #d8d6de;
@@ -535,4 +535,53 @@ input:focus {
 
 input:focus + .show-password-frame {
     border-color: #7367f0;
+}
+
+.register-button:hover {
+    cursor: pointer;
+    background-color: #5e50ee;
+    -webkit-box-shadow: 0 8px 25px -8px #7367f0;
+    box-shadow: 0 8px 25px -8px #7367f0;
+}
+
+.feather-eye {
+   stroke: #6e6b7b;
+}
+
+.content.already-have-account {
+    color: #6e6b7b;
+    font-size: 1.17rem;
+}
+
+.content.already-have-account a {
+    color: #7367f0;
+}
+.content.already-have-account a:hover {
+    color: #5e50ee;
+}
+
+.text-danger {
+    color:#ea5455;
+    display: none;
+}
+.text-danger.active {
+    display: block;
+}
+#email.invalid-email,
+.show-alert-frame.invalid-email {
+    border-color: #ea5455;
+}
+.invalid-icon {
+    fill: #ea5455;
+    position: absolute;
+    display:none;
+    right: 15px;
+}
+
+.invalid-icon.active {
+    display: block;
+}
+
+.input-frame.email {
+    position: relative;
 }

@@ -1,16 +1,46 @@
-<form id="registration-form" action="/users/register" method="POST">
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" name="email">
+<section class="registration-section">
+    <div class="container">
+
+        <div class="left-column">
+            hellow
+
+        </div>
+        <div class="right-column">
+
+            <div class="registration-content-frame">
+
+                <h1>Intelligence Starts Here! 🚀</h1>
+                <p>Label intelligence at the tip of your hand.</p>
+
+                <form id="registration-form" action="/users/register" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="form-group password">
+                        <label for="repeatPassword">Re-type Password</label>
+                        <div class="input-frame">
+                            <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
+                            <div class="show-password-frame">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="content">
+                        Already have an account?<a href="/users/login"> Sign in instead</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <div class="form-group">
-        <label for="repeatPassword">Re-type Password</label>
-        <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-    <a href="/users/login"> Already have an Account? </a>
-</form>
+
+</section>
+

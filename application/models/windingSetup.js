@@ -65,6 +65,11 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Machine'
     },
+    recipe: {
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe',
+        required: true
+    }
 }, { timestamps: true });
 
 const windingSetup = mongoose.model('windingSetups', schema);

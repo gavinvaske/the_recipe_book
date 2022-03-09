@@ -33,4 +33,21 @@ $('#repeatPassword').on('click', function(){
     $(this).next('.show-password-frame').addClass('active');
 })
 
+
+$('#email').focusout(function(){
+    $('#email').filter(function(){
+      var email = $('#email').val();
+      var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      if ( !emailReg.test( email ) ) {
+        $('.invalid-icon').addClass('active');
+        $('#email').addClass('invalid-email');
+        $('.text-danger').addClass('active');
+      } else {
+        $('.invalid-icon').removeClass('active');
+        $('#email').removeClass('invalid-email');
+        $('.text-danger').removeClass('active');
+      }
+    });
+  });
+
 });

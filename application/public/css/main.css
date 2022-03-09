@@ -40,6 +40,7 @@
    */
   body {
     margin: 0;
+    color: #6e6b7b;
   }
   /**
    * Render the `main` element consistently in IE.
@@ -452,14 +453,16 @@
     margin-bottom: 1.5rem;
 }
 
-#registration-form .form-group {
+#registration-form .form-group,
+#login-form .form-group {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     margin-bottom: 1rem;
 }
-#registration-form button {
+#registration-form button,
+#login-form button {
     display: block;
     border-color: #7367f0;
     background-color: #7367f0;
@@ -584,4 +587,19 @@ input:focus + .show-password-frame {
 
 .input-frame.email {
     position: relative;
+}
+
+.label-link-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.label-link-wrapper a {
+    color: #7367f0;
+}
+
+.label-link-wrapper a:hover {
+    color: #5e50ee;
 }

@@ -603,3 +603,19 @@ input:focus + .show-password-frame {
 .label-link-wrapper a:hover {
     color: #5e50ee;
 }
+.remember-me-frame {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.remember-me {
+    margin-left: 15px;
+}
+#remember-me {
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    -o-appearance:none;
+    width: 1.285rem;
+    height: 1.285rem;
+    border: 1px solid #d8d6de;
+}

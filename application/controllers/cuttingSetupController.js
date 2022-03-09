@@ -65,13 +65,39 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
 
 router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        const cuttingSetup = await CuttingSetupModel.findById(request.params.id).exec();
+        const users = await UserModel.find().exec();
+        const machines = await MachineModel.find().exec();
+        const finishes = await FinishModel.find().exec();
 
-        return response.render('updateCuttingSetup', {cuttingSetup});
+        const cuttingSetup = await CuttingSetupModel.findById(request.params.id)
+            .populate({path: 'author'})
+            .populate({path: 'machine'})
+            .populate({path: 'finish'})
+            .populate({path: 'defaultMachine'})
+            .exec();
+
+        return response.render('updateCuttingSetup', {
+            cuttingSetup,
+            users,
+            machines,
+            finishes
+        });
     } catch (error) {
         console.log(error);
         request.flash('errors', [error.message]);
 
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await CuttingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(`/cutting-setups/all/${request.body.recipe}`);
+    } catch (error) {
+        request.flash('errors', error.message);
         return response.redirect('back');
     }
 });

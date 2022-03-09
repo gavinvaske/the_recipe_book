@@ -19,7 +19,8 @@ describe('validation', () => {
             difficulty: 'medium',
             backWinding: chance.bool(),
             alertTextBox: chance.string(),
-            defaultMachine: new mongoose.Types.ObjectId()
+            defaultMachine: new mongoose.Types.ObjectId(),
+            recipe: new mongoose.Types.ObjectId()
         };
     });
 

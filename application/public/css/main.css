@@ -484,17 +484,16 @@ label {
 }
 
 input {
-    padding: 0.438rem 1rem;
+    padding: 0 1rem;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #d8d6de;
     border-radius: 0.357rem;
     width: 100%;
-    height: 2.714rem;
+    height: 43px;
     box-sizing: border-box;
     display: block;
     width: 100%;
-    height: 2.714rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.45;
@@ -507,8 +506,9 @@ input {
     align-items: center;
 }
 
-input#repeatPassword {
-    width: calc(100% - 50px);
+input#repeatPassword,
+input#password {
+    width: calc(100% - 43px);
     border-right: none;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0
@@ -519,6 +519,20 @@ input#repeatPassword {
     border-right: 1px solid #d8d6de;
     border-bottom: 1px solid #d8d6de;
     border-bottom-left-radius: 0;
-    border-top-left-radius: 0
-    padding: 0.438rem 1rem;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0.357rem;
+    border-top-right-radius: 0.357rem;
+    width: 43px;
+    height: 41px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input:focus {
+    border-color: #7367f0;
+    box-shadow: none;
+}
+
+input:focus + .show-password-frame {
+    border-color: #7367f0;
 }

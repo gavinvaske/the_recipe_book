@@ -5,7 +5,8 @@
     <select name="author" id="author">
         <% if (typeof users != 'undefined') { %>
             <% users.forEach(user => { %>
-                <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
+                <% const isSelected = user.id == printingSetup.author._id ? 'selected' : ''; %>
+                <option value="<%= user.id %>" <%= isSelected %>><%= user.email || 'N/A' %></option>
             <% }) %>
         <% } %>
       </select>

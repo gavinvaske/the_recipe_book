@@ -61,13 +61,39 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
 
 router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        const printingSetup = await PrintingSetupModel.findById(request.params.id).exec();
+        const users = await UserModel.find().exec();
+        const machines = await MachineModel.find().exec();
+        const materials = await MaterialModel.find().exec();
 
-        return response.render('updatePrintingSetup', {printingSetup});
+        const printingSetup = await PrintingSetupModel.findById(request.params.id)
+            .populate({path: 'author'})
+            .populate({path: 'machine'})
+            .populate({path: 'material'})
+            .populate({path: 'defaultMachine'})
+            .exec();
+
+        return response.render('updatePrintingSetup', {
+            printingSetup,
+            users,
+            machines,
+            materials
+        });
     } catch (error) {
         console.log(error);
         request.flash('errors', [error.message]);
 
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await PrintingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(`/printing-setups/all/${request.body.recipe}`);
+    } catch (error) {
+        request.flash('errors', error.message);
         return response.redirect('back');
     }
 });

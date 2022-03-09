@@ -76,8 +76,6 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
             .populate({path: 'defaultMachine'})
             .exec();
 
-        console.log(users)
-
         return response.render('updateCuttingSetup', {
             cuttingSetup,
             users,

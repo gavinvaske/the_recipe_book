@@ -64,13 +64,37 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
 
 router.get('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        const windingSetup = await WindingSetupModel.findById(request.params.id).exec();
+        const users = await UserModel.find().exec();
+        const machines = await MachineModel.find().exec();
 
-        return response.render('updateWindingSetup', {windingSetup});
+        const windingSetup = await WindingSetupModel.findById(request.params.id)
+            .populate({path: 'author'})
+            .populate({path: 'machine'})
+            .populate({path: 'defaultMachine'})
+            .exec();
+
+        return response.render('updateWindingSetup', {
+            windingSetup,
+            users,
+            machines
+        });
     } catch (error) {
         console.log(error);
         request.flash('errors', [error.message]);
 
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        console.log(request.body);
+        await WindingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(`/winding-setups/all/${request.body.recipe}`);
+    } catch (error) {
+        request.flash('errors', error.message);
         return response.redirect('back');
     }
 });

@@ -26,8 +26,9 @@ Steps
 
 Any work done locally, must be added to a branch before being pushed, the steps below describe how to create a branch and push that branch to github
 
-0) Ensure you are on the `main branch`
+0) Ensure you are on the `main branch` AND that it is up to date with what is on github (**NOTE:** If an error occurs during these steps, running `git stash` BEFORE them may help, but beware [what the command will do](#git-stash))
   - `git checkout main`
+  - `git pull`
 1) checkout a new branch
   - `git checkout -b your-super-cool-branch-name`
 2) make any changes you need locally and then commit those to your branch
@@ -36,9 +37,11 @@ Any work done locally, must be added to a branch before being pushed, the steps 
 3) push your branch up to github
   - `git push`
 
-### Super useful Git Commands that can save you
+### Descriptions of Useful Git Commands
 
+#### Git Stash
 If you have many changes locally and you want to get rid of them ALL (but save them away just-in-case)
   - `git stash`
+
 If you recently ran `git stash` but you now regret that decision and want the stuff back
   - `git stash pop`

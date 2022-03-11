@@ -36,6 +36,7 @@ Any work done locally, must be added to a branch before being pushed, the steps 
   - `git commit -m "maybe you changed the readme, or did something else? type a summary of what you did here"`
 3) push your branch up to github
   - `git push`
+4) After pushing to github, you may encounter a **build error**. These build errors can be caused by Failing [Tests](#what-and-where-are-the-tests) OR [linter](#what-is-a-linter) errors. To see a human-readable reason for what went wrong, run the following command locally: `npm run verify`. That command will run the linter and run the tests and tell you if which of those steps failed, and why. In the event that it is linter issues, you can run the command `npm run fix-lint` to automagically resolve many (not always every) linter issue. Then you will need to manually fix the remaining ones and go back through steps (2) and (3).
 
 ### Descriptions of Useful Git Commands
 
@@ -45,3 +46,14 @@ If you have many changes locally and you want to get rid of them ALL (but save t
 
 If you recently ran `git stash` but you now regret that decision and want the stuff back
   - `git stash pop`
+
+
+### What is a linter
+A dependency called eslint is used in this repository. Its single purpose is to enforce code formatting (i.e. tabs should be 4 spaces, not 2) and simple coding best-practices (i.e. no unused variables).
+
+These "lint rules" are then ran to analyze the code during the CI/CD build and if ANY lint rules are broken (i.e. a file contains used 2 spaces instead of 4 for its indentation), the entire build will be marked as failing.
+
+You can run these "lint rules" against your code locally manually to see if you have broken any using the command `npm run lint`. That command will generate human-readable messages that tell you exactly whcih lint rules were broken and where. If that command runs and no text is displayed describing the errors, that means you don't have any 🎊.
+
+### What and Where are the Tests
+This repo contains many tests which all live in the folder named `test` (pretty logical eh?). The tests in this folder mimick much of the `application` folder structure. To manually run all of the tests locally, execute the command `npm run test`. That command will then execute every test in the `test` folder, and give a human-readable-ish explaination of which tests failed or passed. If any tests fail, you will need to investigate which of your code changes caused the test to fail.

@@ -53,7 +53,7 @@ A dependency called eslint is used in this repository. Its single purpose is to 
 
 These "lint rules" are then ran to analyze the code during the CI/CD build and if ANY lint rules are broken (i.e. a file contains used 2 spaces instead of 4 for its indentation), the entire build will be marked as failing.
 
-You can run these "lint rules" against your code locally manually and see if you have broken any of them. Run the command `npm run lint`. That command will generate human-readable messages that tell you exactly what lint rules were broken and where. If that command runs and no text is displayed describing the errors, that means you don't have any 🎊.
+You can run these "lint rules" against your code locally manually to see if you have broken any using the command `npm run lint`. That command will generate human-readable messages that tell you exactly whcih lint rules were broken and where. If that command runs and no text is displayed describing the errors, that means you don't have any 🎊.
 
 ### What and Where are the Tests
 This repo contains many tests which all live in the folder named `test` (pretty logical eh?). The tests in this folder mimick much of the `application` folder structure. To manually run all of the tests locally, execute the command `npm run test`. That command will then execute every test in the `test` folder, and give a human-readable-ish explaination of which tests failed or passed. If any tests fail, you will need to investigate which of your code changes caused the test to fail.

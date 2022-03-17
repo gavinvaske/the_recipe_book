@@ -1,10 +1,20 @@
-<p>Welcome to Your Profile!</p>
+<%- include('partials/navbarMain.ejs') %>
 
-<p>User Email: <%= user.email %></p>
-<p>Permission Level: <%= user.userType %></p>
-<p>Password: Heavily encrypted and impossible to read :)</p>
 
-<a class="btn btn-primary" href="/users/change-password" role="button">Change Password</a>
-<a class="btn btn-primary" href="/users/logout" role="button">Logout</a>
-<a class="btn btn-secondary" href="/recipes" role="button">View All Recipes</a>
-<a class="btn btn-secondary" href="/admin" role="button">View Admin Panel</a>
+<div class="page-wrapper">
+
+    <div class="card user-profile">
+        <p>Welcome to Your Profile!</p>
+
+        <p>User Email: <%= user.email %></p>
+        <p>Permission Level: <%= user.userType %></p>
+        <p>Password: Heavily encrypted and impossible to read :)</p>
+
+    </div>
+
+
+    <a class="btn btn-primary" href="/users/change-password" role="button">Change Password</a>
+    <a class="btn btn-primary" href="/users/logout" role="button">Logout</a>
+    <a class="btn btn-secondary" href="/admin" role="button">View Admin Panel</a> -->
+
+</div>

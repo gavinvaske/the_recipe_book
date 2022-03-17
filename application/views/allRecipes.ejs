@@ -1,27 +1,51 @@
-<h1>Recipes Table</h1>
-<a class="btn btn-primary" href="/recipes/create" role="button">Create New Recipe</a>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Row #</th>
-        <th scope="col">Design Number</th>
-        <th scope="col">Die Number</th>
-        <th scope="col">How-to-Video</th>
-        <th scope="col">Notes</th>
-        <th scope="col">Author</th>
-        <th scope="col">Actions</th>
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper all-recipes">
+
+  <div class="table-wrapper">
+    <div class="table-header">
+      <div class="left-column">
+        ABC
+      </div>
+
+      <div class="right-column">
+        <input type="search" class=" recipe-search-bar" id="query" name="q" placeholder="Search...">
+        <a class="btn btn-primary create-new-recipe" href="/recipes/create" role="button">New Recipe</a>
+      </div>
+
+    </div>
+<table class="table recipes">
+    <thead role="rowgroup">
+      <tr role="row">
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Row #</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Design Number</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Die Number</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>How-to-Video</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Notes</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Author</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Actions</div></th>
       </tr>
     </thead>
     <tbody>
         <% if (typeof recipes != 'undefined') { %>
             <% recipes.forEach((recipe, index) => { %>
-                <tr>
-                    <th scope="row"><a href="/setups/<%= recipe.id %>"><%= index + 1 %></a></th>
+                <tr onclick="window.location='/setups/<%= recipe.id %>';">
+                    <td scope="row"><%= index + 1 %></td>
                     <td><%= recipe.designNumber || 'N/A' %></td>
                     <td><%= recipe.dieNumber || 'N/A' %></td>
-                    <td><%= recipe.howToVideo || 'N/A' %></td>
+                    <!-- <td><%= recipe.howToVideo || 'N/A' %></td> -->
+                    <td>
+                      <% if (recipe.howToVideo) { %>
+                        <div class="video-link-box">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="#28c76f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play-circle"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                          <a href="<%= recipe.howToVideo %>" target="_blank">View Video</a>
+                        </div>
+                      <%} else { %>
+                        N/A
+                        <% } %>
+                    </td>
                     <td><%= recipe.notes || 'N/A' %></td>
-                    <td><%= recipe.author.email || 'N/A' %></td>
+                    <td><div class="media-box"><div class="user-face"></div><%= recipe.author.email || 'N/A' %></div></td>
                     <td>
                       <a href="/recipes/update/<%= recipe.id %>">
                         <svg href="/" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -40,3 +64,7 @@
         <% } %>
     </tbody>
   </table>
+</div>
+
+</div>
+

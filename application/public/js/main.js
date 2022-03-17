@@ -60,7 +60,7 @@ $( document ).ready(function() {
         });
     });
 
-    $(".user-frame").on('click', function(){
+    $('.user-frame').on('click', function(){
         $('.dropdown-menu').toggleClass('active');
     });
 

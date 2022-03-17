@@ -10,6 +10,17 @@ $( document ).ready(function() {
         }
     });
 
+    $('.show-password-1').on('click', function(){
+        var passInput=$('#newPassword');
+        if (passInput.attr('type')==='password')
+        {
+            passInput.attr('type','text');
+        } else {
+            passInput.attr('type','password');
+        }
+    });
+
+
     $('.show-password-2').on('click', function(){
         var passInput=$('#repeatPassword');
         if (passInput.attr('type')==='password')
@@ -21,6 +32,10 @@ $( document ).ready(function() {
     });
 
     $('#password').on('click', function(){
+        $(this).next('.show-password-frame').addClass('active');
+    });
+
+    $('#newPassword').on('click', function(){
         $(this).next('.show-password-frame').addClass('active');
     });
 
@@ -44,5 +59,25 @@ $( document ).ready(function() {
             }
         });
     });
+
+    $('.user-frame').on('click', function(){
+        $('.dropdown-menu').toggleClass('active');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });

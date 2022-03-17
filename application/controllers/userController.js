@@ -6,12 +6,53 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {sendPasswordResetEmail} = require('../services/emailService');
+const { response } = require('express');
+const {upload} = require('../middleware/upload');
+const fs = require('fs');
+const path = require('path');
+
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
 
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
+function deleteFileFromFileSystem(path) {
+    fs.unlinkSync(path);
+}
+
+router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
+    const maxImageSizeInBytes = 3500000;
+    const imageFilePath = path.join(path.resolve(__dirname, "../../") + '/uploads/' + request.file.filename);
+  
+    try {
+        const base64EncodedImage = fs.readFileSync(imageFilePath)
+
+        if (request.file.size > maxImageSizeInBytes) {
+            request.flash('errors', ['File size is too big', 'Please use an image that is less than 3.5MB']);
+            return response.redirect('back');
+        }
+
+        const user = await UserModel.findById(request.user.id);
+        user.profilePicture = {
+            data: base64EncodedImage,
+            contentType: request.file.mimetype
+        }
+
+        await user.save();
+
+        request.flash('alerts', ['Profile picture updated successfully']);
+
+        return response.redirect('/users/profile');
+    } catch (error) {
+        request.flash('errors', ['The following error occurred while attempting to update your profile picture', error.message]);
+
+        return response.redirect('back');
+    } finally{
+        deleteFileFromFileSystem(imageFilePath)
+    }
+});
 
 router.get('/forgot-password', (request, response) => {
     response.render('forgotPassword');
@@ -122,7 +163,7 @@ router.get('/logout', verifyJwtToken, (request, response) => {
     return response.redirect('/');
 });
 
-router.get('/profile', verifyJwtToken, (request, response) => {
+router.get('/profile', verifyJwtToken, async (request, response) => {
     response.render('profile', {
         user: request.user
     });

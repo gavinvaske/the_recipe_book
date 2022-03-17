@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {sendPasswordResetEmail} = require('../services/emailService');
-const { response } = require('express');
 const {upload} = require('../middleware/upload');
 const fs = require('fs');
 const path = require('path');
@@ -24,10 +23,10 @@ function deleteFileFromFileSystem(path) {
 
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 3500000;
-    const imageFilePath = path.join(path.resolve(__dirname, "../../") + '/uploads/' + request.file.filename);
+    const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   
     try {
-        const base64EncodedImage = fs.readFileSync(imageFilePath)
+        const base64EncodedImage = fs.readFileSync(imageFilePath);
 
         if (request.file.size > maxImageSizeInBytes) {
             request.flash('errors', ['File size is too big', 'Please use an image that is less than 3.5MB']);
@@ -38,7 +37,7 @@ router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (r
         user.profilePicture = {
             data: base64EncodedImage,
             contentType: request.file.mimetype
-        }
+        };
 
         await user.save();
 
@@ -49,8 +48,8 @@ router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (r
         request.flash('errors', ['The following error occurred while attempting to update your profile picture', error.message]);
 
         return response.redirect('back');
-    } finally{
-        deleteFileFromFileSystem(imageFilePath)
+    } finally {
+        deleteFileFromFileSystem(imageFilePath);
     }
 });
 

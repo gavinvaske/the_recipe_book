@@ -28,6 +28,16 @@ const userSchema = new Schema({
         type: String,
         enum: [USER, ADMIN],
         default: USER
+    },
+    profilePicture:
+    {
+        data: {
+            type: Buffer
+        },
+        contentType: {
+            type: String,
+            enum: ['image/png', 'image/jpeg', 'image/jpg']
+        }
     }
 }, { timestamps: true });
 

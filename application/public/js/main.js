@@ -65,6 +65,14 @@ $( document ).ready(function() {
     });
 
 
+    $('.options-reveal-box').on('click', function(){
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+        } else {
+            $('.options-reveal-box').removeClass('active');
+            $(this).addClass('active');
+        }
+    });
 
 
 
@@ -72,6 +80,8 @@ $( document ).ready(function() {
 
 
 
+
+    
 
 
 
@@ -81,3 +91,18 @@ $( document ).ready(function() {
 
 
 });
+
+
+window.onload = function() {
+    what();
+    function what(){
+        let d;
+        d = new Date();
+        // console.log(d.toString());
+        var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+        var mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
+        var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+        document.getElementById('current-date').innerHTML = mo + ' ' + da + '' + ',' + ' ' + ye;
+    };
+};
+

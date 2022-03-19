@@ -1,61 +1,68 @@
-<h1>Creating Winding Setup</h1>
+<%- include('partials/navbarMain.ejs') %>
 
-<form action="/winding-setups/create", method="POST">
-    <label for="author">Author</label>
-    <select name="author" id="author">
-        <% if (typeof users != 'undefined') { %>
-            <% users.forEach(user => { %>
-                <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
-            <% }) %>
-        <% } %>
-      </select>
-    <br>
-    <label for="machine">Machine</label>
-    <select name="machine" id="machine">
-        <% if (typeof machines != 'undefined') { %>
-            <% machines.forEach(machine => { %>
-                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
-            <% }) %>
-        <% } %>
-      </select>
-    <br>
-    <label for="notes">Notes</label>
-    <input type="text" name="notes" id="notes">
-    <br>
-    <label for="video">Video</label>
-    <input type="text" name="video" id="video">
-    <br>
-    <label for="video">Watch out For</label>
-    <select name="watchOutFor" id="watchOutFor" multiple>
-        <option value="Flags">Flags</option>
-        <option value="UV Missing">UV Missing</option>
-        <option value="Butt Cut">Butt Cut</option>
-        <option value="Missing Labels">Missing Labels</option>
-        <option value="Labels Cut Off">Labels Cut Off</option>
-    </select>
-    <br>
-    <label for="difficulty">Difficulty</label>
-    <select name="difficulty" id="difficulty">
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-        <option value="Very Difficult">Very Difficult</option>
-    </select>
-    <br>
-    <input type="checkbox" id="backWinding" name="backWinding" value="true">
-    <label for="backWinding">Back Winding?</label><br>
-    <label for="alertTextBox">Alert Text Box</label>
-    <input type="text" name="alertTextBox" id="alertTextBox">
-    <br>
-    <label for="defaultMachine">Default Machine</label>
-    <select name="defaultMachine" id="defaultMachine">
-        <% if (typeof machines != 'undefined') { %>
-            <% machines.forEach(machine => { %>
-                <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
-            <% }) %>
-        <% } %>
-      </select>
-    <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
-    <br>
-    <input type="submit" value="Create Recipe">
-</form>
+<div class="page-wrapper create-winding-recipe">
+
+    <div class="card">
+        <h1>Creating Winding Setup</h1>
+
+        <form action="/winding-setups/create", method="POST">
+            <label for="author">Author</label>
+            <select name="author" id="author">
+                <% if (typeof users != 'undefined') { %>
+                    <% users.forEach(user => { %>
+                        <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
+                    <% }) %>
+                <% } %>
+            </select>
+            <br>
+            <label for="machine">Machine</label>
+            <select name="machine" id="machine">
+                <% if (typeof machines != 'undefined') { %>
+                    <% machines.forEach(machine => { %>
+                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+                    <% }) %>
+                <% } %>
+            </select>
+            <br>
+            <label for="notes">Notes</label>
+            <input type="text" name="notes" id="notes">
+            <br>
+            <label for="video">Video</label>
+            <input type="text" name="video" id="video">
+            <br>
+            <label for="video">Watch out For</label>
+            <select name="watchOutFor" id="watchOutFor" multiple>
+                <option value="Flags">Flags</option>
+                <option value="UV Missing">UV Missing</option>
+                <option value="Butt Cut">Butt Cut</option>
+                <option value="Missing Labels">Missing Labels</option>
+                <option value="Labels Cut Off">Labels Cut Off</option>
+            </select>
+            <br>
+            <label for="difficulty">Difficulty</label>
+            <select name="difficulty" id="difficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+                <option value="Very Difficult">Very Difficult</option>
+            </select>
+            <br>
+            <input type="checkbox" id="backWinding" name="backWinding" value="true">
+            <label for="backWinding">Back Winding?</label><br>
+            <label for="alertTextBox">Alert Text Box</label>
+            <input type="text" name="alertTextBox" id="alertTextBox">
+            <br>
+            <label for="defaultMachine">Default Machine</label>
+            <select name="defaultMachine" id="defaultMachine">
+                <% if (typeof machines != 'undefined') { %>
+                    <% machines.forEach(machine => { %>
+                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+                    <% }) %>
+                <% } %>
+            </select>
+            <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
+            <br>
+            <input type="submit" value="Create Recipe">
+        </form>
+    </div>
+</div>

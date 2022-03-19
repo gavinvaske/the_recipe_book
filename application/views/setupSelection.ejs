@@ -1,5 +1,17 @@
-<h1>Setup Selection</h1>
+<%- include('partials/navbarMain.ejs') %>
 
-<a class="btn btn-primary" href="/printing-setups/all/<%= recipeId %>" role="button">Printing Setups</a>
-<a class="btn btn-success" href="/cutting-setups/all/<%= recipeId %>" role="button">Cutting Setups</a>
-<a class="btn btn-danger" href="/winding-setups/all/<%= recipeId %>" role="button">Winding Setups</a>
+<div class="page-wrapper machine-selection">
+    <div class="card machine-setup-options">
+        <h1>Setup Selection</h1>
+        <p>Choose which machine you would like to setup a recipe for.</p>
+
+        <div class="setup-option-box">
+            <a class="setup-machine-btn printing border-purple text-purple" href="/printing-setups/all/<%= recipeId %>">Printing Setups</a>
+            <a class="setup-machine-btn cutting border-orange text-orange" href="/cutting-setups/all/<%= recipeId %>">Cutting Setups</a>
+            <a class="setup-machine-btn rewinding border-blue text-blue" href="/winding-setups/all/<%= recipeId %>">Winding Setups</a>
+        </div>
+
+    </div>
+
+    
+</div>

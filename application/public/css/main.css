@@ -20,7 +20,8 @@
 
   /* Document
      ========================================================================== */
-  
+/* apply a natural box layout model to all elements, but allowing components to change */
+
   /**
    * 1. Correct the line height in all browsers.
    * 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -408,6 +409,12 @@ table {
 	max-width: 100%;
 	font-weight: 400;
 }
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 /**
   * Remove the margin in all browsers.
   */
@@ -415,6 +422,27 @@ table {
   margin: 0;
   color: #6e6b7b;
   background: #f8f8f8;
+}
+
+  /* FRAME WORK
+========================================================================== */
+.border-orange {
+  border: 1px solid #f89d47;
+}
+.border-blue {
+  border: 1px solid #39c2dd;
+}
+.border-purple {
+  border: 1px solid #6a68af;
+}
+.text-orange {
+  color: #f89d47;
+}
+.text-purple {
+  color: #6a68af;
+}
+.text-blue {
+  color: #39c2dd;
 }
 .page-wrapper {
   padding: 120px 2rem 0 2rem;
@@ -471,17 +499,25 @@ table {
     font-family: Montserrat-Medium;
     font-size: 1.714rem;
     color: #5e5873;
-    margin-bottom: 1rem;
+}
+.registration-content-frame h1 span {
+  color: #7367f0;
+}
+.registration-content-frame h2 {
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  margin-bottom: 2rem;
 }
 
 .registration-content-frame p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 #registration-form .form-group,
 #login-form .form-group,
 #change-password-form .form-group,
-#create-new-recipe-form .form-group {
+#create-new-recipe-form .form-group,
+#user-info-form .form-group {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -770,12 +806,14 @@ input:focus + .show-password-frame {
   transition: .3s;
 }
 
-.dropdown-menu li {
+.dropdown-menu li,
+.options-dropdown li {
   height: 50px;
   width: 100%;
 }
 
-.dropdown-menu li a {
+.dropdown-menu li a,
+.options-dropdown li a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -792,17 +830,20 @@ input:focus + .show-password-frame {
   white-space: nowrap;
 }
 
-.dropdown-menu li a svg {
+.dropdown-menu li a svg,
+.options-dropdown li a svg {
   margin-right: 10px;
   margin-left: 25px
 }
 
-.dropdown-menu li a:hover {
+.dropdown-menu li a:hover,
+.options-dropdown li a:hover {
   background-color: rgba(115,103,240,.12);
   color: #7567F6;
 }
 
-.dropdown-menu li a:hover svg {
+.dropdown-menu li a:hover svg
+.options-dropdown li a:hover svg {
   stroke: #7567F6;
 }
 
@@ -848,8 +889,7 @@ input:focus + .show-password-frame {
 }
 
 .btn-primary.create-new-recipe {
-  width: 109px;
-  min-width: 109px;
+  width: 170px;
   margin: 0;
 }
 .btn-primary {
@@ -919,12 +959,19 @@ input:focus + .show-password-frame {
 }
 .table.recipes thead tr th:last-of-type {
   background-image: none;
+  text-align: center;
 }
 
 .table.recipes tbody tr td {
   padding: 0.72rem 2rem;
   border-top: 1px solid #ebe9f1;
   vertical-align: middle;
+}
+.table.recipes tbody tr td:nth-child(-n+3) {
+  cursor: pointer;
+}
+.table.recipes tbody tr td:nth-child(5) {
+  cursor: pointer;
 }
 .media-box {
   display: flex;
@@ -1011,6 +1058,10 @@ input:focus + .show-password-frame {
   align-items: center;
   flex-direction: row;
 }
+.video-link-box:hover,
+.options-reveal-box:hover {
+  cursor: pointer;
+}
 .video-link-box svg {
   margin-right: 8px
 }
@@ -1018,4 +1069,184 @@ input:focus + .show-password-frame {
   color: #6e6b7b;
 }
 
-[data-href] { cursor: pointer; }
+.options-reveal-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.options-dropdown {
+    position: absolute;
+    top:0;
+    z-index: 10;
+    min-width: 10rem;
+    font-size: 1rem;
+    color: #6e6b7b;
+    padding: 0.5rem 0;
+    margin: 0 0 0;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(34,41,47,.05);
+    border-radius: 0.358rem;
+    box-shadow: 0 5px 25px rgb(34 41 47 / 10%);
+    width: 10rem;
+    margin-top: 35px;
+    right: 0;
+    visibility: hidden;
+}
+
+
+.options-reveal-box.active .options-dropdown {
+  visibility: visible;
+  transition: .3s;
+}
+
+.table.recipes tbody tr:hover {
+  background: rgba(115,103,240,.12);
+}
+.card.user-profile-picture-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 550px;
+  height: 250px;
+}
+
+.card.user-profile-picture-box .picture-box {
+  background-color: #7367f0;
+  height: 140px;
+  width: 140px;
+  border: 5px solid #6e6b7b;
+  position: relative;
+
+  border: 0.357rem solid #f8f8f8;
+  background-color: #fff;
+  border-radius: 0.428rem;
+  -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+}
+
+.camera-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  background-color: #f3f3f9;
+  position: absolute;
+  right: 3px;
+  bottom: 7px;
+}
+.name-role-box {
+  margin-top: 25px;
+  text-align: center;
+}
+.name-role-box h5 {
+  font-size: 1.286rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #5e5873;
+}
+.page-wrapper.profile {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.page-wrapper.profile .card {
+  margin-right: 2rem;
+  min-width: 590px;
+}
+
+.static-navbar-entry {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position:absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: 72px;
+}
+
+.static-navbar-entry svg { 
+ margin-left: 50px;
+}
+
+.static-navbar-entry h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+#image{
+  width: 300px;
+}
+.card h4 {
+  font-weight: 500;
+  font-size: 1.285rem;
+  margin-bottom: 1.5rem;
+}
+
+.card.greeting-date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.card.greeting-date h3{
+  font-size: 2.5rem;
+}
+.card.greeting-date h2 {
+  font-size: 3rem;
+}
+.page-wrapper.machine-selection h1 {
+  font-weight: 500;
+  color: #636363;
+  font-size: 1.714rem;
+  line-height: 1.2;
+}
+
+.setup-machine-btn {
+  height: 180px;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.285rem;
+  margin-right: 2rem;
+  border-width: 3px;
+}
+
+.setup-machine-btn.border-orange:hover {
+  background: #f89d47;
+  color: white;
+}
+.setup-machine-btn.border-purple:hover {
+  background: #6a68af;
+  color: white;
+}
+.setup-machine-btn.border-blue:hover {
+  background: #39c2dd;
+  color: white;
+}
+.setup-option-box {
+  display: flex;
+  width: 100%;
+}
+a.storm {
+  height: 400px;
+  width: 400px;
+  background-color: green;
+}
+.card.machine-setup-options h1 {
+  margin-bottom: 1rem;
+}
+.card.machine-setup-options p {
+  margin-bottom: 2rem;
+}

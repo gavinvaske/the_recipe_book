@@ -66,7 +66,7 @@ $( document ).ready(function() {
 
 
     $('.options-reveal-box').on('click', function(){
-        if($(this).hasClass('active')) {
+        if ($(this).hasClass('active')) {
             $(this).removeClass('active');
         } else {
             $('.options-reveal-box').removeClass('active');
@@ -104,5 +104,5 @@ window.onload = function() {
         var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
         document.getElementById('current-date').innerHTML = mo + ' ' + da + '' + ',' + ' ' + ye;
     };
-}
+};
 

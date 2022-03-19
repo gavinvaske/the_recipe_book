@@ -163,8 +163,10 @@ router.get('/logout', verifyJwtToken, (request, response) => {
 });
 
 router.get('/profile', verifyJwtToken, async (request, response) => {
+    const user = await UserModel.findById(request.user.id);
+
     response.render('profile', {
-        user: request.user
+        user
     });
 });
 

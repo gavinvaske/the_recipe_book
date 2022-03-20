@@ -86,12 +86,12 @@ $( document ).ready(function() {
 
     $('.admin-options li').on('click', function(){
         $(this).each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".table-wrapper").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".table-wrapper").hide();
+            var optionValue = $(this).attr('value');
+            if (optionValue){
+                $('.table-wrapper').not('.' + optionValue).hide();
+                $('.' + optionValue).show();
+            } else {
+                $('.table-wrapper').hide();
             }
         });
     }).change();

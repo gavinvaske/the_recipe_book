@@ -517,7 +517,8 @@ html {
 #login-form .form-group,
 #change-password-form .form-group,
 #create-new-recipe-form .form-group,
-#user-info-form .form-group {
+#user-info-form .form-group,
+#create-material-form .form-group {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -527,7 +528,8 @@ html {
 #registration-form button,
 #login-form button,
 .submit-button,
-.create-new-recipe {
+.create-new-recipe,
+.create-entry {
     display: block;
     border-color: #7367f0;
     background-color: #7367f0;
@@ -540,6 +542,9 @@ html {
     font-weight: 500;
     font-size: 1rem;
     margin-top: 1rem;
+}
+.submit-button {
+  width: 150px;
 }
 label {
     color: #5e5873;
@@ -1249,4 +1254,78 @@ a.storm {
 }
 .card.machine-setup-options p {
   margin-bottom: 2rem;
+}
+
+.content-header-title {
+  font-weight: 500;
+  color: #636363;
+  border-right: 1px solid #d6dce1;
+  font-size: 1.714rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.page-wrapper.admin-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.column-wrapper {
+  width: 100%;
+  display: flex;
+}
+.page-wrapper.admin-panel .column-left,
+.page-wrapper.admin-panel .column-right {
+  width: 50%;
+  display: flex;
+}
+
+.page-wrapper.admin-panel .column-left {
+  flex-direction: column;
+  width: 25%;
+  padding-right: 2rem;
+}
+.page-wrapper.admin-panel .column-right {
+  width: 75%;
+}
+.page-wrapper.admin-panel .column-right .card {
+  width: 100%;
+}
+
+.admin-options li span {
+  font-size: 1rem;
+  line-height: 1rem;
+  color: #5e5873;
+  font-weight: 500;
+}
+
+.admin-options li {
+  padding: 0.786rem 1.5rem;
+}
+.admin-options li:hover {
+  cursor: pointer;
+}
+
+.admin-options li.active {
+  color: white;
+  border-color: #7367f0;
+  -webkit-box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
+  box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
+  background-color: #7367f0;
+  border-radius: 0.358rem;
+}
+.admin-options li.active span {
+  color: white;
+}
+
+.materials-table,
+.finish-table,
+.machines-table {
+  display: none;
+}
+
+.materials-table.active,
+.finish-table.active,
+.machines-table.active {
+  display: block;
 }

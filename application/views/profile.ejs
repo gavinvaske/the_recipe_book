@@ -4,8 +4,8 @@
 <div class="page-wrapper profile">
 
     <div class="card user-profile-picture-box">
-        <div class="picture-box">
-
+        <div class="picture-box" <% if (user.profilePicture) { %>style="background:url('data:image/<%=user.profilePicture.contentType%>;base64,<%=user.profilePicture.data.toString('base64')%>') center center no-repeat; background-size: cover;"<% } %>>
+            
             <div class="camera-upload"><svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
 
         </div>
@@ -76,9 +76,6 @@
 
 </div>
 
-<br>
-<br>
-
 <h1>Profile Picture Upload</h1>
 <div>
     <form action="/users/profile-picture" method="POST" enctype="multipart/form-data">
@@ -92,14 +89,4 @@
     </form>
 </div>
 
-<% if (user.profilePicture) { %>
-    
-    <h1>Profile Picture </h1>
-    <div>
-        <div>
-            <img src="data:image/<%=user.profilePicture.contentType%>;base64,
-                    <%=user.profilePicture.data.toString('base64')%>">
-        </div>
-    </div>
-<% } %>
 

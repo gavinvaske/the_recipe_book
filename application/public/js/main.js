@@ -74,6 +74,27 @@ $( document ).ready(function() {
         }
     });
 
+    $('.admin-options li').on('click', function(){
+        $('.admin-options li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    // $('.admin-options li').on('click', function(){
+    //     var optionValue = $(this).attr("value");
+    //     alert(optionValue);
+    // });
+
+    $('.admin-options li').on('click', function(){
+        $(this).each(function(){
+            var optionValue = $(this).attr('value');
+            if (optionValue){
+                $('.table-wrapper').not('.' + optionValue).hide();
+                $('.' + optionValue).show();
+            } else {
+                $('.table-wrapper').hide();
+            }
+        });
+    }).change();
 
 
 

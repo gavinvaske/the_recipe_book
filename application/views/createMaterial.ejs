@@ -1,7 +1,20 @@
-<h1>Create Material</h1>
+<%- include('partials/navbarMain.ejs') %>
 
-<form action="/materials/create", method="POST">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name">
-    <input type="submit" value="Create Material">
-</form>
+<div class="page-wrapper create-table-entry">
+
+    <h2 class="content-header-title">Creating New Materials</h2>
+
+    <div class="card">
+        <h4>Create A New Material</h4>
+
+        <form id="create-material-form" action="/materials/create", method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name">
+             </div>
+            <button class="create-entry submit-button" type="submit" value="Create Material">Create</button>
+        </form>
+
+    </div>
+
+</div>

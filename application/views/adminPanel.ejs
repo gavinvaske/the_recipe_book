@@ -1,9 +1,30 @@
-<h1> Welcome to the Admin Panel </h1>
+<%- include('partials/navbarMain.ejs') %>
 
-<a class="btn btn-primary" href="/finishes/create" role="button">Create Finish</a>
-<a class="btn btn-primary" href="/machines/create" role="button">Create Machine</a>
-<a class="btn btn-primary" href="/materials/create" role="button">Create Material</a>
+<div class="page-wrapper admin-panel">
 
-<a class="btn btn-primary" href="/finishes/" role="button">View Finishes</a>
-<a class="btn btn-primary" href="/machines/" role="button">View Machines</a>
-<a class="btn btn-primary" href="/materials/" role="button">View Materials</a>
+    <h2 class="content-header-title"> Welcome to the admin panel</h2>
+
+    <div class="column-wrapper">
+
+        <div class="column-left">
+
+            <a class="btn btn-primary" href="/finishes/" role="button">View Finishes</a>
+            <a class="btn btn-primary" href="/machines/" role="button">View Machines</a>
+            <a class="btn btn-primary" href="/materials/" role="button">View Materials</a>
+            
+        </div>
+
+        <div class="column-right">
+
+            <div class="card">
+
+                <h1> View Options Below </h1>
+
+                
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

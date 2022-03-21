@@ -1,92 +1,116 @@
 <%- include('partials/navbarMain.ejs') %>
 
 
-<div class="page-wrapper profile">
+<div class="page-wrapper account-settings">
 
-    <div class="card user-profile-picture-box">
-        <div class="picture-box" <% if (user.profilePicture) { %>style="background:url('data:image/<%=user.profilePicture.contentType%>;base64,<%=user.profilePicture.data.toString('base64')%>') center center no-repeat; background-size: cover;"<% } %>>
-            
-            <div class="camera-upload"><svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
+    <div class="banner-header greeting-banner card">
+        <h4>Good Morning, Users Full Name.</h4>
+    </div>
 
+    <h2 class="content-header-title"> Account Settings</h2>
+
+    <div class="column-wrapper">
+        <div class="column-left">
+            <ul class="account-options list-options">
+                <li class="active" value="general">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-50 feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>General</span>
+                </li>
+                <li value="change-password">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-50 feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Change Password</span>
+                </li>
+                <li value="notifications">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-50 feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span>Notifications</span>
+                </li>
+            </ul>
         </div>
-        <div class="name-role-box">
-            <h5>First Last Name</h5>
-            <p>Company Role</p>
-        </div>
-    </div>
-    <div class="card greeting-date">
-        <h3>Good Morning!</h3>
-        <h2 id="current-date">Monday, January 25.</h2>
-    </div>
-    <div class="card user-profile">
-        <p>Welcome to Your Profile!</p>
-
-        <p>User Email: <%= user.email %></p>
-        <p>Permission Level: <%= user.userType %></p>
-        <p>Password: Heavily encrypted and impossible to read :)</p>
-
-    </div>
-
-
-    <div class="card reset-password">
-        <h4>Change Password</h4>
-        <form id="change-password-form" action="/users/change-password" method="POST">
-
-            <div class="form-group password">
-                <label for="newPassword">New Password</label>
-                <div class="input-frame">
-                    <input type="password" class="form-control" id="newPassword" name="newPassword">
-                    <div class="show-password-frame">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-eye show-password-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <div class="column-right">
+            <div class="content-box active general full-width card">
+                <div class="user-profile-picture-box full-width">
+                    <div class="picture-box" <% if (user.profilePicture) { %>style="background:url('data:image/<%=user.profilePicture.contentType%>;base64,<%=user.profilePicture.data.toString('base64')%>') center center no-repeat; background-size: cover;"<% } %>>
+                        <div class="camera-upload">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                        </div>
+                    </div> 
+                    <div class="photo-details">
+                        <form action="/users/profile-picture" method="POST" enctype="multipart/form-data">
+ 
+                            <input type="file" id="image" name="image" value="" accept="image/png, image/jpg, image/jpeg" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                        <p>Permission Level: <b><%= user.userType %></b></p>
+                        <p>Allowed JPG, GIF, or PNG. Max size 800kb.</p>
                     </div>
                 </div>
-            </div>
-            <div class="form-group password">
-                <label for="repeatPassword">Re-type Password</label>
-                <div class="input-frame">
-                    <input type="password" class="form-control repeat-password" id="repeatPassword" name="repeatPassword">
-                    <div class="show-password-frame">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-eye show-password-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <form id="user-info-form" action="" method="POST">
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <div class="input-frame">
+                            <input type="text" class="form-control" id="userName" name="userName">
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <label for="fullUserName">Full Name</label>
+                        <div class="input-frame">
+                            <input type="text" class="form-control" id="fullUserName" name="fullUserName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobRole">Job Role</label>
+                        <div class="input-frame">
+                            <input type="text" class="form-control" id="jobRole" name="jobRole">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate">Birthday</label>
+                        <div class="input-frame">
+                            <input type="date" class="form-control" id="birthDate" name="birthDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cellPhone">Phone</label>
+                        <div class="input-frame">
+                            <input type="text" class="form-control" id="cellPhone" name="cellPhone">
+                        </div>
+                    </div>
+                    <div class="button-frame full-width">
+                        <button type="submit" class="btn btn-primary save-form-button">Save Changes</button>
+                    </div>
+                </form>
+                <div class="update-user-info">
+                    
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary submit-button">Submit</button>
-        </form>
-    </div>
+            <div class="content-box change-password full-width card">
+                <form id="change-password-form" action="/users/change-password" method="POST">
 
-    <div class="card reset-password">
-        <h4>Update Info</h4>
-        <form id="user-info-form" action="" method="POST">
-
-            <div class="form-group">
-                <label for="fullUserName">User Name</label>
-                <div class="input-frame">
-                    <input type="text" class="form-control" id="fullUserName" name="fullUserName">
-                </div>
+                    <div class="form-group password">
+                        <label for="newPassword">New Password</label>
+                        <div class="input-frame">
+                            <input type="password" class="form-control" id="newPassword" name="newPassword">
+                            <div class="show-password-frame">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-eye show-password-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group password">
+                        <label for="repeatPassword">Re-type Password</label>
+                        <div class="input-frame">
+                            <input type="password" class="form-control repeat-password" id="repeatPassword" name="repeatPassword">
+                            <div class="show-password-frame">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer feather feather-eye show-password-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary save-form-button">Submit</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="jobRole">Job Role</label>
-                <div class="input-frame">
-                    <input type="text" class="form-control" id="jobRole" name="jobRole">
-                </div>
+            <div class="content-box notifications full-width card">
+                <h1>Future Notifications Settings</h1>
             </div>
-            <button type="submit" class="btn btn-primary submit-button">Submit</button>
-        </form>
-    </div>
-
-</div>
-
-<h1>Profile Picture Upload</h1>
-<div>
-    <form action="/users/profile-picture" method="POST" enctype="multipart/form-data">
-        <div>
-            <label for="image">Upload Image</label>
-            <input type="file" id="image" name="image" value="" accept="image/png, image/jpg, image/jpeg" required>
         </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
-    </form>
+    </div>
 </div>
-
 

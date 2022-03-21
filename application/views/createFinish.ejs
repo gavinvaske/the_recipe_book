@@ -7,6 +7,10 @@
     <div class="card">
         <h4>Create A New Finish</h4>
 
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
+
         <form id="create-material-form" action="/finishes/create", method="POST">
             <div class="form-group">
                 <label for="name">Name</label>

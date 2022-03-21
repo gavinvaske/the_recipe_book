@@ -74,8 +74,8 @@ $( document ).ready(function() {
         }
     });
 
-    $('.admin-options li').on('click', function(){
-        $('.admin-options li').removeClass('active');
+    $('.list-options li').on('click', function(){
+        $('.list-options li').removeClass('active');
         $(this).addClass('active');
     });
 
@@ -84,14 +84,14 @@ $( document ).ready(function() {
     //     alert(optionValue);
     // });
 
-    $('.admin-options li').on('click', function(){
+    $('.list-options li').on('click', function(){
         $(this).each(function(){
             var optionValue = $(this).attr('value');
             if (optionValue){
-                $('.table-wrapper').not('.' + optionValue).hide();
+                $('.content-box').not('.' + optionValue).hide();
                 $('.' + optionValue).show();
             } else {
-                $('.table-wrapper').hide();
+                $('.content-box').hide();
             }
         });
     }).change();

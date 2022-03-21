@@ -6,7 +6,9 @@
 
     <div class="card">
         <h4>Create A New Material</h4>
-
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
         <form id="create-material-form" action="/materials/create", method="POST">
             <div class="form-group">
                 <label for="name">Name</label>

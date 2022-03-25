@@ -21,6 +21,26 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.post('/profile', verifyJwtToken, async (request, response) => {
+    const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
+    const user = await UserModel.findById(request.user.id);
+    user.username = userName;
+    user.fullName = fullUserName;
+    user.jobRole = jobRole;
+    user.birthDate = birthDate;
+    user.phoneNumber = cellPhone;
+    
+    try {
+        await user.save();
+        request.flash('alerts', ['Profile updated successfully']);
+
+        return response.redirect('/users/profile');
+    } catch(error) {
+        request.flash('errors', ['The following error occurred while attempting to update your profile', error.message]);
+        return response.redirect('back');
+    }
+})
+
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 3500000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
@@ -151,10 +171,7 @@ router.post('/reset-password/:id/:token', async (request, response) => {
         request.flash('errors', ['The URL you requested is no longer valid, please try again.']);
         response.redirect('back');
     }
-
-
 });
-
 
 router.get('/logout', verifyJwtToken, (request, response) => {
     response.clearCookie('jwtToken');

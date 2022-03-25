@@ -7,6 +7,10 @@
         <h4>Good Morning, Users Full Name.</h4>
     </div>
 
+    <div class="alert-box">
+        <%- include ("flashMessages") %>
+    </div>
+
     <h2 class="content-header-title"> Account Settings</h2>
 
     <div class="column-wrapper">
@@ -44,35 +48,35 @@
                         <p>Allowed JPG, GIF, or PNG. Max size 800kb.</p>
                     </div>
                 </div>
-                <form id="user-info-form" action="" method="POST">
+                <form id="user-info-form" action="/users/profile" method="POST">
                     <div class="form-group">
                         <label for="userName">User Name</label>
                         <div class="input-frame">
-                            <input type="text" class="form-control" id="userName" name="userName">
+                            <input type="text" class="form-control" id="userName" name="userName" value="<%= user.username %>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="fullUserName">Full Name</label>
                         <div class="input-frame">
-                            <input type="text" class="form-control" id="fullUserName" name="fullUserName">
+                            <input type="text" class="form-control" id="fullUserName" name="fullUserName" value="<%= user.fullName %>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="jobRole">Job Role</label>
                         <div class="input-frame">
-                            <input type="text" class="form-control" id="jobRole" name="jobRole">
+                            <input type="text" class="form-control" id="jobRole" name="jobRole" value="<%= user.jobRole %>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="birthDate">Birthday</label>
                         <div class="input-frame">
-                            <input type="date" class="form-control" id="birthDate" name="birthDate">
+                            <input type="date" class="form-control" id="birthDate" name="birthDate" value="<%= new Date(user.birthDate).toISOString().substring(0, 10) %>"> 
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="cellPhone">Phone</label>
                         <div class="input-frame">
-                            <input type="text" class="form-control" id="cellPhone" name="cellPhone">
+                            <input type="text" class="form-control" id="cellPhone" name="cellPhone" value="<%= user.phoneNumber %>">
                         </div>
                     </div>
                     <div class="button-frame full-width">

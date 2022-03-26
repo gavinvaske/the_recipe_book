@@ -2,13 +2,13 @@
 
 <div class="page-wrapper machine-selection">
     <div class="card machine-setup-options">
-        <h1>Setup Selection - <span class="red">Design: 767D-4564</span> / <span class="red">Die: DR-002</span></h1>
+        <h1>Setup Selection - <span class="red">Design: <%= recipe.designNumber || 'N/A' %> </span> / <span class="red">Die: <%= recipe.dieNumber || 'N/A' %></span></h1>
         <p>Choose which machine you would like to view or setup a recipe for.</p>
 
         <div class="setup-option-box">
-            <a class="setup-machine-btn printing border-purple text-purple" href="/printing-setups/all/<%= recipeId %>">Printing Recipes</a>
-            <a class="setup-machine-btn cutting border-orange text-orange" href="/cutting-setups/all/<%= recipeId %>">Cutting Recipes</a>
-            <a class="setup-machine-btn rewinding border-blue text-blue" href="/winding-setups/all/<%= recipeId %>">Winding Recipes</a>
+            <a class="setup-machine-btn printing border-purple text-purple" href="/printing-setups/all/<%= recipe.id %>">Printing Recipes</a>
+            <a class="setup-machine-btn cutting border-orange text-orange" href="/cutting-setups/all/<%= recipe.id %>">Cutting Recipes</a>
+            <a class="setup-machine-btn rewinding border-blue text-blue" href="/winding-setups/all/<%= recipe.id %>">Winding Recipes</a>
         </div>
 
     </div>

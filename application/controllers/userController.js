@@ -35,11 +35,11 @@ router.post('/profile', verifyJwtToken, async (request, response) => {
         request.flash('alerts', ['Profile updated successfully']);
 
         return response.redirect('/users/profile');
-    } catch(error) {
+    } catch (error) {
         request.flash('errors', ['The following error occurred while attempting to update your profile', error.message]);
         return response.redirect('back');
     }
-})
+});
 
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 3500000;

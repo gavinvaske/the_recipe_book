@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const RecipeModel = require('../models/recipe');
 
-router.get('/:id', (request, response) => {
+router.get('/:id', async (request, response) => {
+    const recipe = await RecipeModel.findById(request.params.id).exec();
+
     response.render('setupSelection', {
-        recipeId: request.params.id
+        recipe
     });
 });
 

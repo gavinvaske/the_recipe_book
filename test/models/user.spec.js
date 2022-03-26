@@ -139,7 +139,7 @@ describe('validation', () => {
             userAttributes.phoneNumber = ' ' + phoneNumber + ' ';
             const user = new UserModel(userAttributes);
 
-            const error = user.validateSync();
+            user.validateSync();
 
             expect(user.phoneNumber).toBe(phoneNumber);
         });
@@ -171,7 +171,7 @@ describe('validation', () => {
             userAttributes.birthDate = ' ' + birthDate + ' ';
             const user = new UserModel(userAttributes);
 
-            const error = user.validateSync();
+            user.validateSync();
 
             expect(new Date(user.birthDate).getTime() === new Date(birthDate).getTime()).toBeTruthy();
         });

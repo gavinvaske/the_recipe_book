@@ -10,8 +10,8 @@ const validatePhone = function(phoneNumber) {
     if (!phoneNumber) {
         return true;
     }
-    return PHONE_VALIDATION_REGEX.test(phoneNumber)
-}
+    return PHONE_VALIDATION_REGEX.test(phoneNumber);
+};
 
 const validateEmail = function(email) {
     return EMAIL_VALIDATION_REGEX.test(email);
@@ -24,7 +24,7 @@ const checkForSpaces = function(text) {
     const isValid = !text.includes(' ');
 
     return isValid;
-}
+};
 
 const userSchema = new Schema({
     email: {

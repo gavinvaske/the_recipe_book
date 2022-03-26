@@ -4,9 +4,26 @@ const Schema = mongoose.Schema;
 const USER = 'USER';
 const ADMIN = 'ADMIN';
 const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const PHONE_VALIDATION_REGEX = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
+const validatePhone = function(phoneNumber) {
+    if (!phoneNumber) {
+        return true;
+    }
+    return PHONE_VALIDATION_REGEX.test(phoneNumber);
+};
 
 const validateEmail = function(email) {
     return EMAIL_VALIDATION_REGEX.test(email);
+};
+
+const checkForSpaces = function(text) {
+    if (!text) {
+        return true;
+    }
+    const isValid = !text.includes(' ');
+
+    return isValid;
 };
 
 const userSchema = new Schema({
@@ -29,8 +46,7 @@ const userSchema = new Schema({
         enum: [USER, ADMIN],
         default: USER
     },
-    profilePicture:
-    {
+    profilePicture: {
         data: {
             type: Buffer
         },
@@ -38,6 +54,32 @@ const userSchema = new Schema({
             type: String,
             enum: ['image/png', 'image/jpeg', 'image/jpg']
         }
+    },
+    username: {
+        type: String,
+        unique: true,
+        trim: true,
+        validate: [{
+            validator: checkForSpaces, 
+            msg: 'Your username must not contain spaces'
+        }]
+    },
+    fullName: {
+        type: String,
+        trim: true
+    },
+    jobRole: {
+        type: String,
+        trim: true
+    },
+    phoneNumber: {
+        type: String,
+        trim: true,
+        validate: [validatePhone, 'Your phone number must be 10 digits and/or formatted correctly']
+    },
+    birthDate: {
+        type: Date,
+        trim: true
     }
 }, { timestamps: true });
 

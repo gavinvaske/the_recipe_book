@@ -191,6 +191,9 @@ router.get('/logout', verifyJwtToken, (request, response) => {
 router.get('/profile', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
+    delete user.password;
+    delete user.profilePicture;
+
     response.render('profile', {
         user
     });

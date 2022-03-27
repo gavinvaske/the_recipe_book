@@ -18,10 +18,14 @@ router.post('/query', verifyJwtToken, async (request, response) => {
     try {
         const searchResults = await RecipeModel
             .find(searchCriteria)
+            .populate({
+                path: 'author',
+                select: 'email'
+            })
             .skip(numberOfResultsToSkip)
             .limit(resultsPerPage)
             .exec();
-            
+
         return response.send(searchResults);
     } catch (error) {
         request.flash('errors', ['A problem occurred while performing your search:', error.message]);

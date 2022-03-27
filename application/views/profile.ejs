@@ -120,25 +120,20 @@
 <script>
     $(document).ready(() => {
         const shouldFindUsersProfilePicture = $('.profile-picture').length;
-        console.log('in function')
-        console.log(`shouldFindUsersProfilePicture is ${true == shouldFindUsersProfilePicture}`)
+
         if (shouldFindUsersProfilePicture) {
             $.ajax({
                 url: `/users/profile-picture`,
                 type: 'GET',
                 success: function(profilePicture) {
-                    const contentType = "<%=user.profilePicture.contentType%>";
+                    const contentType = profilePicture.imageType;
                     const imageData = profilePicture.imageData;
-
-                    console.log(`profilePicture => ${JSON.stringify(profilePicture)}`);
-                    console.log(`contentType => ${contentType}`);
-                    console.log(`imageData => ${imageData}`);
 
                     $('.profile-picture').css('background', `url('data:image/${contentType};base64,${imageData}') center center no-repeat`);
                     $('.profile-picture').css('background-size', 'cover');
                 },
                 error: function(error) {
-                    console.log(`An error occurred while fetching your profile picture: ${JSON.stringify(error)}`)
+                    console.log(`An error occurred while fetching your profile picture: ${JSON.stringify(error)}`);
                 }
             });
         }

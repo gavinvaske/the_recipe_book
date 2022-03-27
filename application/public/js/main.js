@@ -1,10 +1,10 @@
 $( document ).ready(function() {
 
     const shouldDisplayProfilePicture = $('.profile-picture').length;
-    
+
     if (shouldDisplayProfilePicture) {
         $.ajax({
-            url: `/users/profile-picture`,
+            url: '/users/profile-picture',
             type: 'GET',
             success: function(profilePicture) {
                 const contentType = profilePicture.imageType;

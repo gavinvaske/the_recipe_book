@@ -19,9 +19,9 @@ $( document ).ready(function() {
             },
             success: function(searchResults) {
                 searchResults.forEach((result, index) => {
-                    const resultAsHtml = `<div> Result #: ${index+1}; Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`
+                    const resultAsHtml = `<div> Result #: ${index+1}; Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;
                     $('#search-results').append(resultAsHtml);
-                })
+                });
             },
             error: function() {
                 alert('Uh oh, the search feature is currently unavailable');

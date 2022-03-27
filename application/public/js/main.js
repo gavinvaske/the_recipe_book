@@ -7,7 +7,7 @@ $( document ).ready(function() {
             url: '/users/profile-picture',
             type: 'GET',
             success: function(profilePicture) {
-                const noProfilePictureExists = !profilePicture || !profilePicture.imageType || !profilePicture.imageData
+                const noProfilePictureExists = !profilePicture || !profilePicture.imageType || !profilePicture.imageData;
                 
                 if (noProfilePictureExists) {
                     return;

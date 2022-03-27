@@ -1,5 +1,34 @@
 $( document ).ready(function() {
 
+    $('.recipe-search-bar').on('keyup', () => {
+        const query = $('.recipe-search-bar').val().trim();
+        const pageNumber = 1; // TODO STORM: Set this variable dynamically
+        const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
+
+        if (!query) {
+            return;
+        }
+
+        $.ajax({
+            url: '/recipes/query',
+            type: 'POST',
+            data: {
+                query,
+                pageNumber,
+                resultsPerPage
+            },
+            success: function(searchResults) {
+                searchResults.forEach((result, index) => {
+                    const resultAsHtml = `<div> Result #: ${index+1}; Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;
+                    $('#search-results').append(resultAsHtml);
+                });
+            },
+            error: function() {
+                alert('Uh oh, the search feature is currently unavailable');
+            }
+        });
+    });
+
     const shouldDisplayProfilePicture = $('.profile-picture').length;
 
     if (shouldDisplayProfilePicture) {

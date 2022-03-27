@@ -3,6 +3,35 @@ const router = express.Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const RecipeModel = require('../models/recipe');
 
+router.post('/query', verifyJwtToken, async (request, response) => {
+    const {query, pageNumber, resultsPerPage} = request.body;
+
+    const searchCriteria = {
+        $or:[
+            {designNumber: {$regex: query, $options: 'i'}},
+            {dieNumber: {$regex: query, $options: 'i'}},
+            {notes: {$regex: query, $options: 'i'}},
+            {howToVideo: {$regex: query, $options: 'i'}}
+        ]};
+    const numberOfResultsToSkip = [(pageNumber - 1) * resultsPerPage];
+
+    try {
+        const searchResults = await RecipeModel
+            .find(searchCriteria)
+            .populate({
+                path: 'author',
+                select: 'email'
+            })
+            .skip(numberOfResultsToSkip)
+            .limit(resultsPerPage)
+            .exec();
+
+        return response.send(searchResults);
+    } catch (error) {
+        request.flash('errors', ['A problem occurred while performing your search:', error.message]);
+    }
+});
+
 router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     try {
         await RecipeModel.findByIdAndDelete(request.params.id).exec();

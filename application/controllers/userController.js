@@ -41,6 +41,15 @@ router.post('/profile', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/profile-picture', verifyJwtToken, async (request, response) => {
+    const user = await UserModel.findById(request.user.id);
+
+    return response.json({
+        imageType: user.profilePicture.contentType,
+        imageData: user.profilePicture.data.toString('base64')
+    });
+});
+
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 3500000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);

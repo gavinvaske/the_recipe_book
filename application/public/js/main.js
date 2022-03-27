@@ -1,5 +1,31 @@
 $( document ).ready(function() {
 
+    $('.recipe-search-bar').on('keyup', () => {
+        const query = $('.recipe-search-bar').val().trim();
+        const pageNumber = 1; // TODO STORM: Set this variable dynamically
+        const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
+
+        if (!query) {
+            return;
+        }
+
+        $.ajax({
+            url: '/recipes/query',
+            type: 'POST',
+            data: {
+                query,
+                pageNumber,
+                resultsPerPage
+            },
+            success: function(searchResults) {
+                console.log(searchResults); // TODO STORM: Use jquery to put these search results somewhere
+            },
+            error: function() {
+                alert('Uh oh, the search feature is currently unavailable');
+            }
+        });
+    });
+
     const shouldDisplayProfilePicture = $('.profile-picture').length;
 
     if (shouldDisplayProfilePicture) {

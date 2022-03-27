@@ -1,5 +1,30 @@
 $( document ).ready(function() {
 
+    const shouldDisplayProfilePicture = $('.profile-picture').length;
+
+    if (shouldDisplayProfilePicture) {
+        $.ajax({
+            url: '/users/profile-picture',
+            type: 'GET',
+            success: function(profilePicture) {
+                const noProfilePictureExists = !profilePicture || !profilePicture.imageType || !profilePicture.imageData;
+                
+                if (noProfilePictureExists) {
+                    return;
+                }
+
+                const contentType = profilePicture.imageType;
+                const imageData = profilePicture.imageData;
+
+                $('.profile-picture').css('background', `url('data:image/${contentType};base64,${imageData}') center center no-repeat`);
+                $('.profile-picture').css('background-size', 'cover');
+            },
+            error: function(error) {
+                console.log(`An error occurred while fetching your profile picture: ${JSON.stringify(error)}`);
+            }
+        });
+    }
+
     $('.show-password-1').on('click', function(){
         var passInput=$('#password');
         if (passInput.attr('type')==='password')

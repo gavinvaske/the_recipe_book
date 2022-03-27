@@ -44,7 +44,7 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
         const recipes = await RecipeModel.find()
             .populate({
                 path: 'author',
-                select: 'email userType'
+                select: 'email userType profilePicture'
             }).exec();
         
         return response.render('allRecipes', {

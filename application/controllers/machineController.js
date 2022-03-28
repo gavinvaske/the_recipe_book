@@ -4,6 +4,19 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const SHOW_ALL_MACHINES_ENDPOINT = '/machines';
 
+router.get('/all', verifyJwtToken, async (request, response) => {
+    try {
+        
+        const machines = await MachineModel.find().exec();
+        
+        return response.send(machines);
+
+    } catch (error) {
+        request.flash('errors', ['Unable to search Machines, the following error(s) occurred:', error.message]);
+        return response.redirect('back');
+    }
+});
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const machines = await MachineModel.find().exec();

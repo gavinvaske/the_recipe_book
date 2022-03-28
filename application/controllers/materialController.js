@@ -4,6 +4,19 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 
+router.get('/all', verifyJwtToken, async (request, response) => {
+    try {
+        
+        const materials = await MaterialModel.find().exec();
+        
+        return response.send(materials);
+
+    } catch (error) {
+        request.flash('errors', ['Unable to search Materials, the following error(s) occurred:', error.message]);
+        return response.redirect('back');
+    }
+});
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const materials = await MaterialModel.find().exec();

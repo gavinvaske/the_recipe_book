@@ -3,6 +3,9 @@ const router = express.Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const RecipeModel = require('../models/recipe');
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_RESULTS_PER_PAGE = 2;
+
 router.post('/query', verifyJwtToken, async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
 
@@ -13,7 +16,7 @@ router.post('/query', verifyJwtToken, async (request, response) => {
             {notes: {$regex: query, $options: 'i'}},
             {howToVideo: {$regex: query, $options: 'i'}}
         ]};
-    const numberOfResultsToSkip = [(pageNumber - 1) * resultsPerPage];
+    const numberOfResultsToSkip = (pageNumber - 1) * resultsPerPage;
 
     try {
         const searchResults = await RecipeModel
@@ -29,6 +32,9 @@ router.post('/query', verifyJwtToken, async (request, response) => {
         return response.send(searchResults);
     } catch (error) {
         request.flash('errors', ['A problem occurred while performing your search:', error.message]);
+        return response.json({
+            error
+        });
     }
 });
 
@@ -69,17 +75,28 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
+    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+
+    const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+
+    const numberOfRecordsInDatabase = await RecipeModel.countDocuments({});
+    const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
+
     try {
         const recipes = await RecipeModel.find()
             .populate({
                 path: 'author',
                 select: 'email userType profilePicture'
-            }).exec();
+            })
+            .skip(numberOfResultsToSkip)
+            .limit(DEFAULT_RESULTS_PER_PAGE)
+            .exec();
         
         return response.render('allRecipes', {
-            recipes
+            recipes,
+            pageNumber,
+            totalNumberOfPages
         });
-
     } catch (error) {
         request.flash('errors', ['Unable to load recipes, the following error(s) occurred:', error.message]);
         return response.redirect('back');

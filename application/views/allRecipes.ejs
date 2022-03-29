@@ -95,7 +95,13 @@
         <% } %>
     </tbody>
   </table>
+  <div class="pagination">
+    <a href="#">&laquo;</a>
+    <% for (let i = 1; i <= numberOfPages; i++ ){ %>
+      <a href="/recipes?pageNumber=<%= i %>"><%= i %></a> 
+    <% } %>
+    <a href="#">&raquo;</a>
+  </div>
 </div>
 
 </div>
-

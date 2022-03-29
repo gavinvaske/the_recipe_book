@@ -5,17 +5,31 @@ const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
 const PrintingSetupModel = require('../models/printingSetup');
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_RESULTS_PER_PAGE = 2;
+
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+    const searchQuery = {recipe: request.params.recipeId};
+    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+
+    const numberOfRecordsInDatabase = await PrintingSetupModel.countDocuments(searchQuery);
+    const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
+
     const printingSetups = await PrintingSetupModel
-        .find({recipe: request.params.recipeId})
+        .find(searchQuery)
         .populate({path: 'author'})
         .populate({path: 'machine'})
         .populate({path: 'material'})
         .populate({path: 'defaultMachine'})
+        .skip(numberOfResultsToSkip)
+        .limit(DEFAULT_RESULTS_PER_PAGE)
         .exec();
     return response.render('viewPrintingSetups', {
         recipeId: request.params.recipeId,
-        printingSetups
+        printingSetups,
+        pageNumber,
+        totalNumberOfPages
     });
 });
 

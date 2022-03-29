@@ -6,17 +6,31 @@ const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
 const FinishModel = require('../models/finish');
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_RESULTS_PER_PAGE = 2;
+
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+    const searchQuery = {recipe: request.params.recipeId};
+    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+
+    const numberOfRecordsInDatabase = await WindingSetupModel.countDocuments(searchQuery);
+    const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
+
     const windingSetups = await WindingSetupModel
         .find({recipe: request.params.recipeId})
         .populate({path: 'author'})
         .populate({path: 'machine'})
         .populate({path: 'defaultMachine'})
+        .skip(numberOfResultsToSkip)
+        .limit(DEFAULT_RESULTS_PER_PAGE)
         .exec();
 
     return response.render('viewWindingSetups', {
         recipeId: request.params.recipeId,
-        windingSetups
+        windingSetups,
+        pageNumber,
+        totalNumberOfPages
     });
 });
 

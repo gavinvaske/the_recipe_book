@@ -73,6 +73,19 @@
     <% } %>
     </tbody>
   </table>
+  <div>
+  <% if (pageNumber> 1) { %>
+    <a href="/winding-setups/all/<%= recipeId %>?pageNumber=<%= parseInt(pageNumber) - 1 %>">&laquo;</a>
+  <% } %>
+  <% for (let i=1; i <=totalNumberOfPages; i++ ){ %>
+    <a href="/winding-setups/all/<%= recipeId %>?pageNumber=<%= i %>">
+      <%= i %>
+    </a>
+  <% } %>
+  <% if (pageNumber < totalNumberOfPages) { %>
+    <a href="/winding-setups/all/<%= recipeId %>?pageNumber=<%= parseInt(pageNumber) + 1 %>">&raquo;</a>
+  <% } %>
+</div>
 </div>
 
 </div>

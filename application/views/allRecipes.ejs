@@ -95,7 +95,17 @@
         <% } %>
     </tbody>
   </table>
+  <div>
+    <% if (pageNumber > 1) { %>
+      <a href="/recipes?pageNumber=<%= parseInt(pageNumber) - 1 %>">&laquo;</a>
+    <% } %>
+    <% for (let i = 1; i <= totalNumberOfPages; i++ ){ %>
+      <a href="/recipes?pageNumber=<%= i %>"><%= i %></a> 
+    <% } %>
+    <% if (pageNumber < totalNumberOfPages) { %>
+      <a href="/recipes?pageNumber=<%= parseInt(pageNumber) + 1 %>">&raquo;</a>
+    <% } %>
+  </div>
 </div>
 
 </div>
-

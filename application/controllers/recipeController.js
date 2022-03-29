@@ -4,7 +4,7 @@ const {verifyJwtToken} = require('../middleware/authorize');
 const RecipeModel = require('../models/recipe');
 
 const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_RESULTS_PER_PAGE = 15;
+const DEFAULT_RESULTS_PER_PAGE = 2;
 
 router.post('/query', verifyJwtToken, async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
@@ -75,7 +75,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
-    const pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
 
     const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
 
@@ -95,7 +95,7 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
         return response.render('allRecipes', {
             recipes,
             pageNumber,
-            numberOfPages: totalNumberOfPages
+            totalNumberOfPages
         });
     } catch (error) {
         request.flash('errors', ['Unable to load recipes, the following error(s) occurred:', error.message]);

@@ -6,6 +6,9 @@ const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
 const FinishModel = require('../models/finish');
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_RESULTS_PER_PAGE = 2;
+
 router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
     const users = await UserModel.find().exec();
     const machines = await MachineModel.find().exec();
@@ -22,17 +25,28 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+    const searchQuery = {recipe: request.params.recipeId};
+    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+
+    const numberOfRecordsInDatabase = await CuttingSetupModel.countDocuments(searchQuery);
+    const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
+
     const cuttingSetups = await CuttingSetupModel
-        .find({recipe: request.params.recipeId})
+        .find(searchQuery)
         .populate({path: 'author'})
         .populate({path: 'finish'})
         .populate({path: 'machine'})
         .populate({path: 'defaultMachine'})
+        .skip(numberOfResultsToSkip)
+        .limit(DEFAULT_RESULTS_PER_PAGE)
         .exec();
 
     return response.render('viewCuttingSetups', {
         recipeId: request.params.recipeId,
-        cuttingSetups
+        cuttingSetups,
+        pageNumber,
+        totalNumberOfPages
     });
 });
 

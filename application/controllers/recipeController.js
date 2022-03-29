@@ -34,7 +34,7 @@ router.post('/query', verifyJwtToken, async (request, response) => {
         request.flash('errors', ['A problem occurred while performing your search:', error.message]);
         return response.json({
             error
-        })
+        });
     }
 });
 

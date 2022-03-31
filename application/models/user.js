@@ -62,7 +62,8 @@ const userSchema = new Schema({
         validate: [{
             validator: checkForSpaces, 
             msg: 'Your username must not contain spaces'
-        }]
+        }],
+        sparse: true
     },
     fullName: {
         type: String,

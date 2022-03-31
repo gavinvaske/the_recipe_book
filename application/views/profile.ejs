@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <label for="birthDate">Birthday</label>
                         <div class="input-frame">
-                            <input type="date" class="form-control" id="birthDate" name="birthDate" value="<%= new Date(user.birthDate).toISOString().substring(0, 10) %>"> 
+                            <input type="date" class="form-control" id="birthDate" name="birthDate" value="<%= user.birthDate && new Date(user.birthDate).toISOString().substring(0, 10) %>"> 
                         </div>
                     </div>
                     <div class="form-group">

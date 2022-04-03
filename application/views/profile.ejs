@@ -1,10 +1,32 @@
 <%- include('partials/navbarMain.ejs') %>
 
+<script>
+window.addEventListener('load', (event) => {
+    function profileGreeting(){
+        var myDate = new Date();
+        var hrs = myDate.getHours();
+
+        var greet;
+
+        if (hrs < 12)
+            greet = 'Good Morning,';
+        else if (hrs >= 12 && hrs <= 17)
+            greet = 'Good Afternoon,';
+        else if (hrs >= 17 && hrs <= 24)
+            greet = 'Good Evening,';
+
+        document.getElementById('lblGreetings').innerHTML = greet;
+
+    }
+
+    profileGreeting();
+});
+</script>
 
 <div class="page-wrapper account-settings">
 
     <div class="banner-header greeting-banner card">
-        <h4>Good Morning, <%= user.fullName %>.</h4>
+        <h4><span id="lblGreetings">Greeting,</span> <b><% if(user.fullName) { %><%= user.fullName %><%} else { %> Create Username <% } %></b>.</h4>
     </div>
 
     <div class="alert-box">

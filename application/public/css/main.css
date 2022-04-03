@@ -969,7 +969,18 @@ input:focus + .show-password-frame {
   text-transform: uppercase;
   font-size: .857rem;
   letter-spacing: .5px;
+}
+
+.table.recipes thead tr [aria-sort=none] {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='26'%3E%3Cg stroke='%23C6C4D0' stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 19l6 6 6-6M13 7L7 1 1 7'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.table.recipes thead tr [aria-sort=ascending] {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='26'%3E%3Cg stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 19l6 6 6-6' stroke='%23C6C4D0'/%3E%3Cpath d='M13 7L7 1 1 7' stroke='%235E5873'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.table.recipes thead tr [aria-sort=descending] {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='26'%3E%3Cg stroke-width='2' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 19l6 6 6-6' stroke='%235E5873'/%3E%3Cpath d='M13 7L7 1 1 7' stroke='%23C6C4D0'/%3E%3C/g%3E%3C/svg%3E");
 }
 .table.recipes thead tr th:last-of-type {
   background-image: none;
@@ -1024,6 +1035,9 @@ input:focus + .show-password-frame {
 .header p b {
   color: #7367F6;
   font-weight: 500;
+}
+.table th div {
+  font-weight: bold;
 }
 
 .page-wrapper.new-recipe form,
@@ -1483,4 +1497,114 @@ a.storm {
 } */
 .alert-warning {
   color: #ea5455;
+}
+
+.alert.alert-success {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(40,199,111,.12);
+  -webkit-box-shadow: rgb(40 199 111 / 40%) 0 6px 15px -7px;
+  box-shadow: 0 6px 15px -7px rgb(40 199 111 / 40%);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.71rem 1rem;
+  margin-bottom: 5px;
+  color:#28c76f;
+}
+
+.pagination-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+}
+.arrow-box {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3f2f7;
+  border-radius: 50%;
+}
+
+.arrow-box.arrow-left {
+  margin-right: 15px;
+}
+
+.arrow-box.arrow-right {
+  margin-left: 15px;
+}
+
+.pagination-box .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-number-frame:not(:first-child):not(:last-child) {
+  background: #f3f2f7;
+}
+
+.pagination-number {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6e6b7b;
+}
+.pagination-number-frame:first-of-type,
+.pagination-number-frame:last-of-type {
+  height: 40px;
+  width: 40px;
+  background-color: #f3f2f7;
+}
+.pagination-number-frame:first-of-type {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.pagination-number-frame:last-of-type {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.pagination-number.active {
+  background: #7367f0!important;
+  color: white;
+  border-radius: 50%;
+}
+
+.arrow-box svg {
+  fill: #6e6b7b;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.arrow-box.arrow-right svg {
+  margin-left: 3px;
+}
+.arrow-box.arrow-left svg {
+  margin-right: 3px;
+}
+.arrow-box:hover {
+  background: #7367f0;
+}
+.arrow-box:hover svg {
+  fill: white;
+}
+.arrow-box.deactivate-me svg {
+  fill: #b9b9c3;
+}
+.arrow-box.deactivate-me:hover  {
+  background: #f3f2f7;
+}
+
+.arrow-box.deactivate-me:hover svg {
+  fill: #b9b9c3;
+}
+
+.greeting-banner h4 b {
+  color: #7367f0;
+  font-weight: bold;
 }

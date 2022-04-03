@@ -55,6 +55,21 @@ $( document ).ready(function() {
         });
     }
 
+    $('.table th').on('click', function(){
+        let sortingId = $(this).attr('id');
+        if($(this).attr('aria-sort') == "none") {
+            $('.table th').attr('aria-sort', 'none');
+            $(this).attr('aria-sort', 'ascending');
+        } else if($(this).attr('aria-sort') == "ascending") {
+            $('.table th').attr('aria-sort', 'none');
+            $(this).attr('aria-sort', 'descending');
+        } else if($(this).attr('aria-sort') == "descending") {
+            $('.table th').attr('aria-sort', 'none');
+            $(this).attr('aria-sort', 'ascending');
+        }
+        alert("Sorting Row ID:" + " " + sortingId);
+    });
+
     $('.show-password-1').on('click', function(){
         var passInput=$('#password');
         if (passInput.attr('type')==='password')

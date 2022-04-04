@@ -131,7 +131,12 @@ $( document ).ready(function() {
     });
 
     $('.user-frame').on('click', function(){
-        $('.dropdown-menu').toggleClass('active');
+        $('.dropdown-menu.user-options').toggleClass('active');
+    });
+
+    $('#recipe-dropdown-trigger').on('click', function(){
+        $('.dropdown-menu.recipe-dropdown').toggleClass('active');
+        $('#recipe-dropdown-trigger').toggleClass('active');
     });
 
 

@@ -1,5 +1,24 @@
 $( document ).ready(function() {
 
+    const shouldDisplayUserDetails = $('.user-details').length;
+
+    if (shouldDisplayUserDetails) {
+        $.ajax({
+            url: '/users/logged-in-user-details',
+            type: 'GET',
+            success: function(userDetails) {
+                if (userDetails) {
+                    $('.user-name').text(userDetails.username ? userDetails.username : userDetails.email);
+                    $('.job-role').text(userDetails.jobRole ? userDetails.jobRole : 'N/A');
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('An error occurred while loading user details');
+            }
+        });
+    }
+
     $('.recipe-search-bar').on('keyup', () => {
         const query = $('.recipe-search-bar').val().trim();
         const pageNumber = 1; // TODO STORM: Set this variable dynamically

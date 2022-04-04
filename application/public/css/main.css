@@ -644,19 +644,16 @@ input:focus + .show-password-frame {
 .feather-eye {
    stroke: #6e6b7b;
 }
-
 .content.already-have-account {
     color: #6e6b7b;
     font-size: 1.17rem;
 }
-
 .content.already-have-account a {
     color: #7367f0;
 }
 .content.already-have-account a:hover {
     color: #5e50ee;
 }
-
 .text-danger {
     color:#ea5455;
     display: none;
@@ -674,26 +671,21 @@ input:focus + .show-password-frame {
     display:none;
     right: 15px;
 }
-
 .invalid-icon.active {
     display: block;
 }
-
 .input-frame.email {
     position: relative;
 }
-
 .label-link-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-
 .label-link-wrapper a {
     color: #7367f0;
 }
-
 .label-link-wrapper a:hover {
     color: #5e50ee;
 }
@@ -713,7 +705,6 @@ input:focus + .show-password-frame {
     height: 1.285rem;
     border: 1px solid #d8d6de;
 }
-
 .navbar-main {
   top: 0;
   left:0;
@@ -721,7 +712,8 @@ input:focus + .show-password-frame {
   position: fixed;
   width: 100%;
   height: 80px;
-  padding: 0 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   background-color:white;
   display: flex;
   justify-content: space-between;
@@ -730,12 +722,38 @@ input:focus + .show-password-frame {
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   z-index: 8;
 }
-
+.navbar-main .column-left .feather-chevron-down {
+  margin-left: 7px;
+  margin-right: 0!important;
+}
 .navbar-main .column {
   width: 33.33333%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.navbar-main .column-left .navbar-links {
+  padding: 12px 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.navbar-main .column-left .navbar-links:hover {
+  background-color:#f8f8f8;
+  transition: .3s;
+  cursor: pointer;
+}
+.navbar-main .column-left .navbar-links.active {
+  background-color:#f8f8f8;
+}
+.navbar-main .column-left a,
+.navbar-main .column-left div.recipes {
+  color: #6e6b7b;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.navbar-main .column-left a svg,
+.navbar-main .column-left div.recipes svg {
+  margin-right: 7px;
 }
 .navbar-main .column-right {
   display: flex;
@@ -788,11 +806,12 @@ input:focus + .show-password-frame {
   bottom: -2px;
   right: -3px;
 }
-
 .user-frame:hover {
   cursor: pointer;
 }
-
+#recipe-dropdown-trigger {
+  position: relative;
+}
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 5px);
@@ -813,19 +832,27 @@ input:focus + .show-password-frame {
   right: 0;
   visibility: hidden;
 }
-.dropdown-menu.active {
+.dropdown-menu.user-options.active {
   visibility: visible;
   margin-top: 10px;
   transition: .3s;
   z-index: 888;
 }
-
+.dropdown-menu.recipe-dropdown {
+  left: 0;
+  width: 18rem;
+}
+.dropdown-menu.recipe-dropdown.active {
+  visibility: visible;
+  margin-top: 10px;
+  transition: .3s;
+  z-index: 888;
+}
 .dropdown-menu li,
 .options-dropdown li {
   height: 50px;
   width: 100%;
 }
-
 .dropdown-menu li a,
 .options-dropdown li a {
   display: flex;
@@ -843,31 +870,26 @@ input:focus + .show-password-frame {
   color: #6e6b7b;
   white-space: nowrap;
 }
-
 .dropdown-menu li a svg,
 .options-dropdown li a svg {
   margin-right: 10px;
   margin-left: 25px
 }
-
 .dropdown-menu li a:hover,
 .options-dropdown li a:hover {
   background-color: rgba(115,103,240,.12);
   color: #7567F6;
 }
-
 .dropdown-menu li a:hover svg
 .options-dropdown li a:hover svg {
   stroke: #7567F6;
 }
-
 .dropdown-menu {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-
 .card {
   padding: 1.5rem;
   border: none;
@@ -1607,4 +1629,178 @@ a.storm {
 .greeting-banner h4 b {
   color: #7367f0;
   font-weight: bold;
+}
+
+/* FRAMEWORK */
+.flex {
+	display: flex;
+}
+.flex-center-center-row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-center-right-row {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-center-space-between-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-top-space-between-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-center-space-around-row {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-top-space-around-row {
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-center-space-evenly-row {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-left-space-evenly-row {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-top-space-evenly-row {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-top-space-between-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-center-center-column {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.flex-top-center-column {
+	display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.flex-top-center-row {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-top-left-column {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+}
+.flex-top-right-column {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-direction: column
+}
+.flex-top-left-row {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-top-right-row {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+	flex-direction: row;
+}
+.flex-bottom-center-row {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	flex-direction: row;
+}
+.flex-bottom-center-column {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction: column;
+}
+.flex-bottom-left-row {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-direction: row;
+}
+.flex-bottom-right-column {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	flex-direction: column;
+}
+.flex-top-left-column {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+}
+.flex-top-left-column-reverse {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column-reverse;
+}
+.flex-center-left-column {
+	display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.flex-center-right-column {
+	display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.flex-center-left-row {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+}
+.flex-wrap {
+	flex-wrap: wrap;
+}
+/* TEXT ALIGN CLASSES */
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
+.text-center {
+	text-align: center;
 }

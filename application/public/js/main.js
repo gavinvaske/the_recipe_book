@@ -14,7 +14,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                alert(`An error occurred while loading user details`);
+                alert('An error occurred while loading user details');
             }
         });
     }

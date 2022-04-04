@@ -21,6 +21,13 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.get('/logged-in-user-details', verifyJwtToken, async (request, response) => {
+    const user = await UserModel.findById(request.user.id, 'email username fullName userType jobRole');
+    delete user.profilePicture.data;
+
+    return response.json(user);
+});
+
 router.post('/profile', verifyJwtToken, async (request, response) => {
     const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
     const user = await UserModel.findById(request.user.id);

@@ -5,6 +5,11 @@ const RecipeModel = require('../models/recipe');
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
+const DEFAULT_SORT_METHOD = 'ascending';
+const MONGOOSE_SORT_METHODS = {
+    'ascending': 1,
+    'descending': -1
+};
 
 router.post('/query', verifyJwtToken, async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
@@ -75,7 +80,17 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
-    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    const queryParams = request.query;
+    const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
+    const sortBy = queryParams.sortBy;
+    const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
+    let sortQuery = {};
+
+    if (sortBy && sortMethod) {
+        sortQuery = {
+            [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
+        };
+    }
 
     const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
 
@@ -83,7 +98,9 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
     const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
 
     try {
-        const recipes = await RecipeModel.find()
+        const recipes = await RecipeModel
+            .find()
+            .sort(sortQuery)
             .populate({
                 path: 'author',
                 select: 'email userType profilePicture'
@@ -95,7 +112,9 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
         return response.render('allRecipes', {
             recipes,
             pageNumber,
-            totalNumberOfPages
+            totalNumberOfPages,
+            sortBy,
+            sortMethod
         });
     } catch (error) {
         request.flash('errors', ['Unable to load recipes, the following error(s) occurred:', error.message]);

@@ -74,8 +74,14 @@ $( document ).ready(function() {
         });
     }
 
-    $('.table th').on('click', function(){
-        let sortingId = $(this).attr('id');
+    $('.table th').on('click', function() {
+        const columnToSortBy = $(this).attr('id');
+        const columnCannotBeSorted = !columnToSortBy;
+
+        if (columnCannotBeSorted) {
+            return;
+        }
+
         if ($(this).attr('aria-sort') === 'none') {
             $('.table th').attr('aria-sort', 'none');
             $(this).attr('aria-sort', 'ascending');
@@ -86,7 +92,10 @@ $( document ).ready(function() {
             $('.table th').attr('aria-sort', 'none');
             $(this).attr('aria-sort', 'ascending');
         }
-        alert('Sorting Row ID:' + ' ' + sortingId);
+
+        let sortMethod = $(this).attr('aria-sort');
+
+        window.location.href = `/recipes?pageNumber=1&sortBy=${columnToSortBy}&sortMethod=${sortMethod}`;
     });
 
     $('.show-password-1').on('click', function(){

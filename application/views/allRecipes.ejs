@@ -29,13 +29,27 @@
 <table class="table recipes">
     <thead role="rowgroup">
       <tr role="row">
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="row-number"><div>Row #</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="design-number"><div>Design Number</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="die-number"><div>Die Number</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="how-to-video"><div>How-to-Video</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="notes"><div>Notes</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="author"><div>Author</div></th>
-        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="" id="actions"><div>Actions</div></th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+          <div>Row #</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'designNumber') ? sortMethod : "none" %>" class="" id="designNumber">
+          <div>Design Number</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'dieNumber') ? sortMethod : "none" %>" class="" id="dieNumber">
+          <div>Die Number</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'howToVideo') ? sortMethod : "none" %>" class="" id="howToVideo">
+          <div>How-to-Video</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'notes') ? sortMethod : "none" %>" class="" id="notes">
+          <div>Notes</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'author') ? sortMethod : "none" %>" class="" id="author">
+          <div>Author</div>
+        </th>
+        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+          <div>Actions</div>
+        </th>
       </tr>
     </thead>
     <tbody>

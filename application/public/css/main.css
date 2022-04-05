@@ -1804,3 +1804,13 @@ a.storm {
 .text-center {
 	text-align: center;
 }
+
+.foreign-icon-size {
+  width: 24px;
+  fill: #6e6b7b;
+  margin-right: 7px;
+}
+
+.recipe-dropdown li a:hover .foreign-icon-size {
+  fill: #7567F6;
+}

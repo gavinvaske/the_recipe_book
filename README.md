@@ -15,6 +15,7 @@ Steps
      - `cd the_recipe_book`
   4. Install Dependencies using:
      - `npm run install`
+  5. Create a `.env` file in the root directory and populate it with all the variables found in `.env.example` (you'll need to replace all the 'TODO' valued variables. You'll need to decide the values they need to be.)
   5. start the application using:
      - `npm run start`
   6. open a browser window and enter the url: 

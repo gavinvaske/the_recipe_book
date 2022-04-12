@@ -9,6 +9,9 @@
             </div>
             <p>Make changes to the recipe below and hit 'update' for them to take affect. Remember, you're <b>awesome :)</b></p>
         </div>
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
         <form class="create-new-machine-recipe flex-center-center-column full-width" action="/printing-setups/create", method="POST">
             <div class="column-wrapper flex-top-center-row full-width">
                 <div class="half-width form-column-left flex-top-left-row flex-wrap">
@@ -32,6 +35,18 @@
                                 <option value="Medium">Medium</option>
                                 <option value="Hard">Hard</option>
                                 <option value="Very Difficult">Very Difficult</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="machine">Machine</label>
+                        <div class="custom-select full-width">
+                            <select name="machine" id="machine">
+                                <% if (typeof machines != 'undefined') { %>
+                                    <% machines.forEach(machine => { %>
+                                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+                                    <% }) %>
+                                <% } %>
                             </select>
                         </div>
                     </div>

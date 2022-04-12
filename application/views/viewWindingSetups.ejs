@@ -35,7 +35,7 @@
           <% windingSetups.forEach((windingSetup, index) => { %>
               <tr>
                   <td scope="row"><%= index + 1 %></td>
-                  <td><%= windingSetup.createdAt || 'N/A' %></td>
+                  <td><%= windingSetup.createdAt ? windingSetup.createdAt.toLocaleString() : 'N/A' %></td>
                   <td><div class="media-box"><div class="user-face" <% if (windingSetup.author.profilePicture && windingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= windingSetup.author.profilePicture.contentType %>;base64,<%= windingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= windingSetup.author.fullName || 'N/A' %></div></td>
                   <td><%= windingSetup.machine && windingSetup.machine.name || 'N/A' %></td>
                   <td <% if (windingSetup.notes) { %>onclick="window.open('<%= windingSetup.notes %>')"<%} else { %><% } %>>

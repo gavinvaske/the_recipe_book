@@ -8,6 +8,11 @@ const FinishModel = require('../models/finish');
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
+const DEFAULT_SORT_METHOD = 'ascending';
+const MONGOOSE_SORT_METHODS = {
+    'ascending': 1,
+    'descending': -1
+};
 
 router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
     const users = await UserModel.find().exec();
@@ -25,8 +30,19 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
 });
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+    const queryParams = request.query;
+    const sortBy = queryParams.sortBy;
+    const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
+    let sortQuery = {};
+
+    if (sortBy && sortMethod) {
+        sortQuery = {
+            [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
+        };
+    }
+
     const searchQuery = {recipe: request.params.recipeId};
-    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    let pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
     const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
 
     const numberOfRecordsInDatabase = await CuttingSetupModel.countDocuments(searchQuery);
@@ -34,6 +50,7 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
 
     const cuttingSetups = await CuttingSetupModel
         .find(searchQuery)
+        .sort(sortQuery)
         .populate({path: 'author'})
         .populate({path: 'finish'})
         .populate({path: 'machine'})
@@ -46,7 +63,9 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
         recipeId: request.params.recipeId,
         cuttingSetups,
         pageNumber,
-        totalNumberOfPages
+        totalNumberOfPages,
+        sortBy,
+        sortMethod
     });
 });
 

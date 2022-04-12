@@ -16,7 +16,7 @@ $( document ).ready(function() {
                 </svg>
                 </a>
             </td>
-        </tr>`
+        </tr>`;
     }
 
     function createRowForFinishesTable(finish, rowNumber) {
@@ -36,7 +36,7 @@ $( document ).ready(function() {
                 </svg>
                 </a>
             </td>
-        </tr>`
+        </tr>`;
     }
 
     function createRowForMachinesTable(machine, rowNumber) {
@@ -56,14 +56,14 @@ $( document ).ready(function() {
                 </svg>
                 </a>
             </td>
-        </tr>`
+        </tr>`;
     }
 
     function populateMaterialsTable() {
         $.ajax({
             url: '/materials/all',
             type: 'GET',
-            success: function(materials, index) {
+            success: function(materials) {
                 materials.forEach((material, index) => {
                     const htmlRow = createRowForMaterialsTable(material, index + 1);
                     $('#materials-table tr:last').after(htmlRow);
@@ -82,7 +82,7 @@ $( document ).ready(function() {
                 finishes.forEach((finish, index) => {
                     const htmlRow = createRowForFinishesTable(finish, index + 1);
                     $('#finishes-table tr:last').after(htmlRow);
-                })
+                });
             },
             error: function(error) {
                 alert(`Error => ${JSON.stringify(error)}`);

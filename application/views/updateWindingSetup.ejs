@@ -1,80 +1,118 @@
-<h1>Update Winding Setup</h1>
+<%- include('partials/navbarMain.ejs') %>
+<div class="page-wrapper update-cutting-recipe update-recipe">
+    <div class="card">
+        <div class="header">
+            <div class="title-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <h1>Edit Winding Recipe <span class="red">Design #</span></h1>
+            </div>
+            <p>Make changes to the recipe below and hit 'update' for them to take affect. Remember, you're <b>awesome :)</b></p>
+        </div>
 
-<form action="/winding-setups/update/<%= windingSetup.id %>", method="POST">
-    <label for="author">Author</label>
-    <select name="author" id="author">
-        <% if (typeof users != 'undefined') { %>
-            <% users.forEach(user => { %>
-                <% const isSelected = user.id == windingSetup.author._id ? 'selected' : ''; %>
-                <option value="<%= user.id %>" <%= isSelected %>><%= user.email || 'N/A' %></option>
-            <% }) %>
-        <% } %>
-      </select>
-    <br>
-    <label for="machine">Machine</label>
-    <select name="machine" id="machine">
-        <% if (typeof machines != 'undefined') { %>
-            <% machines.forEach(machine => { %>
-                <% const isSelected = machine.id == windingSetup.machine._id ? 'selected' : ''; %>
-                <option value="<%= machine.id %>" <%= isSelected %>><%= machine.name || 'N/A' %></option>
-            <% }) %>
-        <% } %>
-      </select>
-    <br>
-    <label for="notes">Notes</label>
-    <input type="text" name="notes" id="notes" value="<%= windingSetup.notes %>">
-    <br>
-    <label for="video">Video</label>
-    <input type="text" name="video" id="video" value="<%= windingSetup.video %>">
-    <br>
-    <label for="video">Watch out For</label>
-    <select name="watchOutFor" id="watchOutFor" multiple>
-        <% const watchOutForEnum = ['FLAGS', 'UV MISSING', 'BUTT CUT', 'MISSING LABELS', 'LABELS CUT OFF']; %>
-        <% watchOutForEnum.forEach((watchOutFor) => { %>
-            <% let isSelected = ''; %>
-            <% if (windingSetup.watchOutFor.includes(watchOutFor.toUpperCase())) { %>
-                <% isSelected = 'selected'; %>
-            <% } %>
-            <option value="<%= watchOutFor %>" <%= isSelected %>><%= watchOutFor %></option>
-        <% }) %>
-    </select>
-    <br>
-    <label for="difficulty">Difficulty</label>
-    <select name="difficulty" id="difficulty">
-        <% const difficultyEnum = ['Easy', 'Medium', 'Hard', 'Very Difficult']; %>
-        <% difficultyEnum.forEach(difficulty => { %>
-            <% let isSelected = ''; %>
-            <% if (difficulty.toUpperCase() === windingSetup.difficulty.toUpperCase()) { %>
-                <% isSelected = 'selected'; %>
-            <% } %>
-            <option value="<%= difficulty %>" <%= isSelected %>><%= difficulty %></option>
-        <% }) %>
-    </select>
-    <br>
-    <label for="difficulty">Is Backwinding Required?</label>
-    <select name="backWinding" id="backWinding">
-        <% if (windingSetup.backWinding) { %>
-            <option value="true" selected>Yes</option>
-            <option value="false">No</option>
-        <% } else { %>
-            <option value="true">Yes</option>
-            <option value="false" selected>No</option>
-        <% } %>
-    </select>
-    <br>
-    <label for="alertTextBox">Alert Text Box</label>
-    <input type="text" name="alertTextBox" id="alertTextBox" value="<%= windingSetup.alertTextBox %>">
-    <br>
-    <label for="defaultMachine">Default Machine</label>
-    <select name="defaultMachine" id="defaultMachine">
-        <% if (typeof machines != 'undefined') { %>
-            <% machines.forEach(machine => { %>
-                <% const isSelected = machine.id == windingSetup.defaultMachine._id ? 'selected' : ''; %>
-                <option value="<%= machine.id %>" <%= isSelected %>><%= machine.name || 'N/A' %></option>
-            <% }) %>
-        <% } %>
-      </select>
-      <input type="hidden" name="recipe" id="recipe" value="<%= windingSetup.recipe %>">
-    <br>
-    <input type="submit" value="Update Winding Setup">
-</form>
+        <form action="/winding-setups/update/<%= windingSetup.id %>", method="POST">
+            <div class="form-column-wrapper flex-top-center-row full-width">
+                <div class="half-width form-column-left flex-top-left-row flex-wrap">
+                    <div class="field-label-wrapper half-width">
+                        <label for="author">Author</label>
+                        <div class="custom-select full-width">
+                            <select name="author" id="author">
+                                <% if (typeof users != 'undefined') { %>
+                                    <% users.forEach(user => { %>
+                                        <% const isSelected = user.id == windingSetup.author._id ? 'selected' : ''; %>
+                                        <option value="<%= user.id %>" <%= isSelected %>><%= user.email || 'N/A' %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="machine">Machine</label>
+                        <div class="custom-select full-width">
+                            <select name="machine" id="machine">
+                                <% if (typeof machines != 'undefined') { %>
+                                    <% machines.forEach(machine => { %>
+                                        <% const isSelected = machine.id == windingSetup.machine._id ? 'selected' : ''; %>
+                                        <option value="<%= machine.id %>" <%= isSelected %>><%= machine.name || 'N/A' %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="difficulty">Difficulty</label>
+                        <div class="custom-select full-width">
+                            <select name="difficulty" id="difficulty">
+                                <% const difficultyEnum = ['Easy', 'Medium', 'Hard', 'Very Difficult']; %>
+                                <% difficultyEnum.forEach(difficulty => { %>
+                                    <% let isSelected = ''; %>
+                                    <% if (difficulty.toUpperCase() === windingSetup.difficulty.toUpperCase()) { %>
+                                        <% isSelected = 'selected'; %>
+                                    <% } %>
+                                    <option value="<%= difficulty %>" <%= isSelected %>><%= difficulty %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="defaultMachine">Default Machine</label>
+                        <div class="custom-select full-width">
+                            <select name="defaultMachine" id="defaultMachine">
+                                <% if (typeof machines != 'undefined') { %>
+                                    <% machines.forEach(machine => { %>
+                                        <% const isSelected = machine.id == windingSetup.defaultMachine._id ? 'selected' : ''; %>
+                                        <option value="<%= machine.id %>" <%= isSelected %>><%= machine.name || 'N/A' %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper back-winding">
+                        <span>Back Winding</span>
+                        <label class="checkbox-label-wrapper" for="backWinding">
+                            <input type="checkbox" id="backWinding" name="backWinding" <% if (windingSetup.backWinding) { %>checked="checked"<% } else { %>value="false"<% } %>>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="half-width form-column-right flex-top-right-row flex-wrap">
+                    <div class="field-label-wrapper full-width">
+                        <label for="video">Watch out For</label>
+                        <div class="custom-select full-width">
+                            <select name="watchOutFor" id="watchOutFor" multiple>
+                                <% const watchOutForEnum = ['FLAGS', 'UV MISSING', 'BUTT CUT', 'MISSING LABELS', 'LABELS CUT OFF']; %>
+                                <% watchOutForEnum.forEach((watchOutFor) => { %>
+                                    <% let isSelected = ''; %>
+                                    <% if (windingSetup.watchOutFor.includes(watchOutFor.toUpperCase())) { %>
+                                        <% isSelected = 'selected'; %>
+                                    <% } %>
+                                    <option value="<%= watchOutFor %>" <%= isSelected %>><%= watchOutFor %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper full-width">
+                        <label for="video">Video</label>
+                        <div class="custom-select full-width">
+                            <input type="text" name="video" id="video" value="<%= windingSetup.video %>">
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper full-width">
+                        <label for="alertTextBox">Alert Text Box</label>
+                        <div class="custom-select full-width">
+                            <input type="text" name="alertTextBox" id="alertTextBox" value="<%= windingSetup.alertTextBox %>">
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper full-width">
+                        <label for="notes">Notes</label>
+                        <div class="custom-select full-width">
+                            <input type="text" name="notes" id="notes" value="<%= windingSetup.notes %>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="recipe" id="recipe" value="<%= windingSetup.recipe %>">
+            <br>
+            <button type="submit" class="btn btn-primary save-form-button" value="Update Winding Setup">Update Recipe</button>
+        </form>
+    </div>
+</div>

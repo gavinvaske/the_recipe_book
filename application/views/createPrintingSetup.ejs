@@ -1,72 +1,88 @@
 <%- include('partials/navbarMain.ejs') %>
 
-<div class="page-wrapper create-printing-recipe">
-
+<div class="page-wrapper create-printing-recipe create-recipe-wrapper">
     <div class="card">
-
-        <h1>Creating Printing Recipe</h1>
-
-        <form action="/printing-setups/create", method="POST">
-            <label for="author">Author</label>
-            <select name="author" id="author">
-                <% if (typeof users != 'undefined') { %>
-                    <% users.forEach(user => { %>
-                        <option value="<%= user.id %>"><%= user.email || 'N/A' %> </option>
-                    <% }) %>
-                <% } %>
-            </select>
-            <br>
-            <label for="machine">Machine</label>
-            <select name="machine" id="machine">
-                <% if (typeof machines != 'undefined') { %>
-                    <% machines.forEach(machine => { %>
-                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
-                    <% }) %>
-                <% } %>
-            </select>
-            <br>
-            <label for="framesToRun">Frames to Run</label>
-            <input type="text" name="framesToRun" id="framesToRun">
-            <br>
-            <label for="notes">Notes</label>
-            <input type="text" name="notes" id="notes">
-            <br>
-            <label for="material">Material (todo)</label>
-            <select name="material" id="material">
-                <% if (typeof materials != 'undefined') { %>
-                    <% materials.forEach(material => { %>
-                        <option value="<%= material.id %>"><%= material.name || 'N/A' %></option>
-                    <% }) %>
-                <% } %>
-            </select>
-            <br>
-            <label for="video">Video</label>
-            <input type="text" name="video" id="video">
-            <br>
-            <label for="difficulty">Difficulty (todo)</label>
-            <select name="difficulty" id="difficulty">
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-                <option value="Very Difficult">Very Difficult</option>
-            </select>
-            <br>
-            <label for="alertTextBox">Alert Text Box</label>
-            <input type="text" name="alertTextBox" id="alertTextBox">
-            <br>
-            <label for="defaultMachine">Default Machine (todo)</label>
-            <select name="defaultMachine" id="defaultMachine">
-                <% if (typeof machines != 'undefined') { %>
-                    <% machines.forEach(machine => { %>
-                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
-                    <% }) %>
-                <% } %>
-            </select>
-            <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
-            <br>
-            <input type="submit" value="Create Recipe">
+        <div class="header">
+            <div class="title-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <h1>Create Recipe For <span class="red">Design #</span></h1>
+            </div>
+            <p>Make changes to the recipe below and hit 'update' for them to take affect. Remember, you're <b>awesome :)</b></p>
+        </div>
+        <form class="create-new-machine-recipe flex-center-center-column full-width" action="/printing-setups/create", method="POST">
+            <div class="column-wrapper flex-top-center-row full-width">
+                <div class="half-width form-column-left flex-top-left-row flex-wrap">
+                    <div class="field-label-wrapper half-width">
+                        <label for="author">Author</label>
+                        <div class="custom-select full-width">
+                            <select name="author" id="author">
+                                <% if (typeof users != 'undefined') { %>
+                                    <% users.forEach(user => { %>
+                                        <option value="<%= user.id %>"><%= user.fullName || 'N/A' %> </option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="difficulty">Difficulty</label>
+                        <div class="custom-select full-width">
+                            <select name="difficulty" id="difficulty">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                                <option value="Very Difficult">Very Difficult</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="defaultMachine">Default Machine</label>
+                        <div class="custom-select full-width">
+                            <select name="defaultMachine" id="defaultMachine">
+                                <% if (typeof machines != 'undefined') { %>
+                                    <% machines.forEach(machine => { %>
+                                        <option value="<%= machine.id %>"><%= machine.name || 'N/A' %> </option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="framesToRun">Frames to Run</label>
+                        <input type="text" name="framesToRun" id="framesToRun">
+                    </div>
+                    <div class="field-label-wrapper half-width">
+                        <label for="material">Material (todo)</label>
+                        <div class="custom-select full-width">
+                            <select name="material" id="material">
+                                <% if (typeof materials != 'undefined') { %>
+                                    <% materials.forEach(material => { %>
+                                        <option value="<%= material.id %>"><%= material.name || 'N/A' %></option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="half-width form-column-right flex-top-left-column full-width">
+                    <div class="field-label-wrapper full-width">
+                        <label for="notes">Notes</label>
+                        <input type="text" name="notes" id="notes">
+                    </div>
+                    <div class="field-label-wrapper full-width">
+                        <label for="video">Video</label>
+                        <input type="text" name="video" id="video">
+                    </div>
+                    <div class="field-label-wrapper full-width">
+                        <label for="alertTextBox">Alert Text Box</label>
+                        <input type="text" name="alertTextBox" id="alertTextBox">
+                    </div>
+                    <input type="hidden" name="recipe" id="recipe" value="<%= recipeId %>">
+                </div>
+            </div>
+            <div class="full-width flex-center-left-row">
+                <button class="btn btn-primary save-form-button" type="submit" value="Create Recipe">Save Recipe</button>
+            </div>
         </form>
-
     </div>
-
 </div>

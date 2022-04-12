@@ -8,7 +8,7 @@ $( document ).ready(function() {
             type: 'GET',
             success: function(userDetails) {
                 if (userDetails) {
-                    $('.user-name').text(userDetails.username ? userDetails.username : userDetails.email);
+                    $('.user-name').text(userDetails.fullName ? userDetails.fullName : userDetails.email);
                     $('.job-role').text(userDetails.jobRole ? userDetails.jobRole : 'N/A');
                 }
             },
@@ -182,11 +182,6 @@ $( document ).ready(function() {
         $(this).addClass('active');
     });
 
-    // $('.admin-options li').on('click', function(){
-    //     var optionValue = $(this).attr("value");
-    //     alert(optionValue);
-    // });
-
     $('.list-options li').on('click', function(){
         $(this).each(function(){
             var optionValue = $(this).attr('value');
@@ -200,33 +195,10 @@ $( document ).ready(function() {
     }).change();
 
 
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
 });
 
 
-window.onload = function() {
-    what();
-    function what(){
-        let d;
-        d = new Date();
-        // console.log(d.toString());
-        var ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        var mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(d);
-        var da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        document.getElementById('current-date').innerHTML = mo + ' ' + da + '' + ',' + ' ' + ye;
-    };
-};
+
+
+
 

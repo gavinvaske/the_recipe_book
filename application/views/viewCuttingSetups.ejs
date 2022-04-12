@@ -7,12 +7,10 @@
       <div class="left-column">
         ABC
       </div>
-
       <div class="right-column">
         <input type="search" class=" recipe-search-bar" id="query" name="q" placeholder="Search...">
         <a class="btn btn-primary create-new-recipe" href="/cutting-setups/create/<%= recipeId %>" role="button">New Recipe</a>
       </div>
-
     </div>
     <table class="table recipes">
       <thead role="rowgroup">
@@ -38,7 +36,7 @@
               <tr>
                   <td scope="row"><%= index + 1 %></td>
                   <td><%= cuttingSetup.createdAt.getFullYear() || 'N/A' %></td>
-                  <td><%= cuttingSetup.author && cuttingSetup.author.email || 'N/A' %></td>
+                  <td><div class="media-box"><div class="user-face" <% if (cuttingSetup.author.profilePicture && cuttingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= cuttingSetup.author.profilePicture.contentType %>;base64,<%= cuttingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= cuttingSetup.author.fullName || 'N/A' %></div></td>
                   <td><%= cuttingSetup.machine && cuttingSetup.machine.name || 'N/A' %></td>
                   <td <% if (cuttingSetup.notes) { %>onclick="window.open('<%= cuttingSetup.notes %>')"<%} else { %><% } %>>
                     <% if (cuttingSetup.notes) { %>
@@ -93,9 +91,7 @@
       <% } %>
       </tbody>
     </table>
-
-
-    <div class="full-width pagination-box"> 
+    <div class="full-width pagination-box">
       
       <a class="arrow-box arrow-left <% if (pageNumber <= 1) { %>deactivate-me<% } %>" <% if (pageNumber > 1) { %>href="/cutting-setups/all/<%= recipeId %>?pageNumber=<%= parseInt(pageNumber) - 1 %>"<% } %>><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 325.92 325.92"><defs><style>.cls-1{fill:transparent;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M235.71,325.92H0V0H325.92V325.92H236.34q8.72-7.82,17.41-15.65l-.36-2.06L107.29,163.56,252.23,18.11,236.34,2.05,72.93,163.86a20.79,20.79,0,0,1,3.62,2.29Q155,244.74,233.33,323.39C234.15,324.21,234.92,325.08,235.71,325.92Z"/><path d="M235.71,325.92c-.79-.84-1.56-1.71-2.38-2.53Q155,244.76,76.55,166.15a20.79,20.79,0,0,0-3.62-2.29L236.34,2.05l15.89,16.06L107.29,163.56l146.1,144.65.36,2.06q-8.7,7.83-17.41,15.65Z"/></g></g></svg></a>
       

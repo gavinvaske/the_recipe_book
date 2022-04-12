@@ -15,40 +15,40 @@
         </div>
 
       </div>
-      <table class="table recipes">
+      <table class="table recipes" data-endpoint="/printing-setups/all/<%= recipeId %>">
         <thead role="rowgroup">
           <tr role="row">
             <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
               <div>Row #</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'createdAt') ? sortMethod : "none" %>" class="" id="createdAt">
               <div>Date Created</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'author') ? sortMethod : "none" %>" class="" id="author">
               <div>Author</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'machine') ? sortMethod : "none" %>" class="" id="machine">
               <div>Machine</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'framesToRun') ? sortMethod : "none" %>" class="" id="framesToRun">
               <div>Frames To Run</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'notes') ? sortMethod : "none" %>" class="" id="notes">
               <div>Notes</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'material') ? sortMethod : "none" %>" class="" id="material">
               <div>Material</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'video') ? sortMethod : "none" %>" class="" id="video">
               <div>Video</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'difficulty') ? sortMethod : "none" %>" class="" id="difficulty">
               <div>Difficulty</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'alertTextBox') ? sortMethod : "none" %>" class="" id="alertTextBox">
               <div>Alert</div>
             </th>
-            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+            <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'defaultMachine') ? sortMethod : "none" %>" class="" id="defaultMachine">
               <div>Default Machine</div>
             </th>
             <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">

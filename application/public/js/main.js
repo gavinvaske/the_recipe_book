@@ -21,8 +21,8 @@ $( document ).ready(function() {
 
     $('.recipe-search-bar').on('keyup', () => {
         const query = $('.recipe-search-bar').val().trim();
-        const pageNumber = 1; // TODO STORM: Set this variable dynamically
-        const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
+        const pageNumber = 1;
+        const resultsPerPage = 15;  // TODO STORM: Set this number to be whatever you think is best
 
         if (!query) {
             return;
@@ -77,6 +77,7 @@ $( document ).ready(function() {
     $('.table th').on('click', function() {
         const columnToSortBy = $(this).attr('id');
         const columnCannotBeSorted = !columnToSortBy;
+        const endpoint = $('.table').data('endpoint')
 
         if (columnCannotBeSorted) {
             return;
@@ -95,7 +96,7 @@ $( document ).ready(function() {
 
         let sortMethod = $(this).attr('aria-sort');
 
-        window.location.href = `/recipes?pageNumber=1&sortBy=${columnToSortBy}&sortMethod=${sortMethod}`;
+        window.location.href = `${endpoint}?pageNumber=1&sortBy=${columnToSortBy}&sortMethod=${sortMethod}`;
     });
 
     $('.show-password-1').on('click', function(){

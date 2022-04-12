@@ -8,10 +8,26 @@ const FinishModel = require('../models/finish');
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
+const DEFAULT_SORT_METHOD = 'ascending';
+const MONGOOSE_SORT_METHODS = {
+    'ascending': 1,
+    'descending': -1
+};
 
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+    const queryParams = request.query;
+    const sortBy = queryParams.sortBy;
+    const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
+    let sortQuery = {};
+
+    if (sortBy && sortMethod) {
+        sortQuery = {
+            [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
+        };
+    }
+
     const searchQuery = {recipe: request.params.recipeId};
-    let pageNumber = request.query.pageNumber || DEFAULT_PAGE_NUMBER;
+    let pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
     const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
 
     const numberOfRecordsInDatabase = await WindingSetupModel.countDocuments(searchQuery);
@@ -19,6 +35,7 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
 
     const windingSetups = await WindingSetupModel
         .find({recipe: request.params.recipeId})
+        .sort(sortQuery)
         .populate({path: 'author'})
         .populate({path: 'machine'})
         .populate({path: 'defaultMachine'})
@@ -30,7 +47,9 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
         recipeId: request.params.recipeId,
         windingSetups,
         pageNumber,
-        totalNumberOfPages
+        totalNumberOfPages,
+        sortBy,
+        sortMethod
     });
 });
 

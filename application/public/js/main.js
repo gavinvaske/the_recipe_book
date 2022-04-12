@@ -22,7 +22,7 @@ $( document ).ready(function() {
     $('.recipe-search-bar').on('keyup', () => {
         const query = $('.recipe-search-bar').val().trim();
         const pageNumber = 1;
-        const resultsPerPage = 15;  // TODO STORM: Set this number to be whatever you think is best
+        const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
 
         if (!query) {
             return;
@@ -77,7 +77,7 @@ $( document ).ready(function() {
     $('.table th').on('click', function() {
         const columnToSortBy = $(this).attr('id');
         const columnCannotBeSorted = !columnToSortBy;
-        const endpoint = $('.table').data('endpoint')
+        const endpoint = $('.table').data('endpoint');
 
         if (columnCannotBeSorted) {
             return;

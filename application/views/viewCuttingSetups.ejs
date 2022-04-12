@@ -12,21 +12,21 @@
         <a class="btn btn-primary create-new-recipe" href="/cutting-setups/create/<%= recipeId %>" role="button">New Recipe</a>
       </div>
     </div>
-    <table class="table recipes">
+    <table class="table recipes" data-endpoint="/cutting-setups/all/<%= recipeId %>">
       <thead role="rowgroup">
         <tr role="row">
           <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Row #</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Date Created</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Author</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Machine</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Notes</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Material</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Setup Feet</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Avg Speed</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Video</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Difficulty</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Alert</div></th>
-          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Default Machine</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'createdAt') ? sortMethod : "none" %>" class="" id="createdAt"><div>Date Created</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'author') ? sortMethod : "none" %>" class="" id="author"><div>Author</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'machine') ? sortMethod : "none" %>" class="" id="machine"><div>Machine</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'notes') ? sortMethod : "none" %>" class="" id="notes"><div>Notes</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'finish') ? sortMethod : "none" %>" class="" id="finish"><div>Material</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'setupFeet') ? sortMethod : "none" %>" class="" id="setupFeet"><div>Setup Feet</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'jobSpeed') ? sortMethod : "none" %>" class="" id="jobSpeed"><div>Avg Speed</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'video') ? sortMethod : "none" %>" class="" id="video"><div>Video</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'difficulty') ? sortMethod : "none" %>" class="" id="difficulty"><div>Difficulty</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'alertTextBox') ? sortMethod : "none" %>" class="" id="alertTextBox"><div>Alert</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'defaultMachine') ? sortMethod : "none" %>" class="" id="defaultMachine"><div>Default Machine</div></th>
           <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Actions</div></th>
         </tr>
       </thead>

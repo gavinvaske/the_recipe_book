@@ -79,7 +79,7 @@ $( document ).ready(function() {
         const columnCannotBeSorted = !columnToSortBy;
         const endpoint = $('.table').data('endpoint');
 
-        if (columnCannotBeSorted) {
+        if (columnCannotBeSorted || !endpoint) {
             return;
         }
 

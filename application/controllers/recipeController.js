@@ -109,7 +109,7 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
             .limit(DEFAULT_RESULTS_PER_PAGE)
             .exec();
         
-        return response.render('allRecipes', {
+        return response.render('viewRecipes', {
             recipes,
             pageNumber,
             totalNumberOfPages,

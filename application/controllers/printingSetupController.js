@@ -26,7 +26,7 @@ router.get('/:printingSetupId', verifyJwtToken, async (request, response) => {
         return response.render('viewOnePrintingSetup', {printingSetup});
     } catch (error) {
         console.log(error);
-        request.flash('errors', 'unable to find object using the ID which was provided');
+        request.flash('errors', 'Unable to find object using the ID which was provided');
 
         return response.redirect('back');
     }

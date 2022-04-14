@@ -59,7 +59,7 @@
         <tbody>
           <% if (typeof printingSetups !='undefined' ) { %>
             <% printingSetups.forEach((printingSetup, index)=> { %>
-              <tr>
+              <tr onclick="window.location='/printing-setups/<%= printingSetup.id %>'">
                 <td scope="row" id="row">
                   <%= index + 1 %>
                 </td>

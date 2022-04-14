@@ -13,6 +13,25 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
+router.get('/:printingSetupId', verifyJwtToken, async (request, response) => {
+    try {
+        const printingSetup = await PrintingSetupModel
+            .findById(request.params.printingSetupId)
+            .populate({path: 'author'})
+            .populate({path: 'machine'})
+            .populate({path: 'material'})
+            .populate({path: 'defaultMachine'})
+            .exec();
+
+        return response.render('viewOnePrintingSetup', {printingSetup});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', 'unable to find object using the ID which was provided');
+
+        return response.redirect('back');
+    }
+});
+
 router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
     const queryParams = request.query;
     const sortBy = queryParams.sortBy;

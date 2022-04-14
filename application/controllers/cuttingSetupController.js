@@ -14,6 +14,23 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
+router.get('/:cuttingSetupId', verifyJwtToken, async (request, response) => {
+    try {
+        const cuttingSetup = await CuttingSetupModel
+            .findById(request.params.cuttingSetupId)
+            .populate({path: 'author'})
+            .populate({path: 'finish'})
+            .populate({path: 'machine'})
+            .populate({path: 'defaultMachine'})
+            .exec();
+
+        return response.render('viewOneCuttingSetup', {cuttingSetup});
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', 'Unable to load the object using the ID which was provided');
+    }
+});
+
 router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
     const users = await UserModel.find().exec();
     const machines = await MachineModel.find().exec();

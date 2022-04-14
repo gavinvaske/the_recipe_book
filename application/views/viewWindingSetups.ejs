@@ -1,6 +1,9 @@
 <%- include('partials/navbarMain.ejs') %>
 <div class="page-wrapper all-recipes">
   <h2 class="content-header-title"> View All Winding Recipes</h2>
+  <div class="alert-box full-width">
+    <%- include ("flashMessages") %>
+  </div>
   <div class="table-wrapper">
     <div class="table-header">
       <div class="left-column">
@@ -33,7 +36,7 @@
       <tbody>
         <% if (typeof windingSetups != 'undefined') { %>
           <% windingSetups.forEach((windingSetup, index) => { %>
-              <tr>
+              <tr onclick="window.location='/winding-setups/<%= windingSetup.id %>'">
                   <td scope="row"><%= index + 1 %></td>
                   <td><%= windingSetup.createdAt ? windingSetup.createdAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A' %></td>
                   <td><div class="media-box"><div class="user-face" <% if (windingSetup.author.profilePicture && windingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= windingSetup.author.profilePicture.contentType %>;base64,<%= windingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= windingSetup.author.fullName || 'N/A' %></div></td>

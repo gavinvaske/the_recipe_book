@@ -50,4 +50,30 @@ router.get('/all', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const vendor = await VendorModel.findById(request.params.id).exec();
+
+        return response.render('updateVendor', {
+            vendor
+        });
+    } catch (error) {
+        request.flash('errors', error.message);
+        
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await VendorModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

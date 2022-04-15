@@ -1,0 +1,104 @@
+<!-- <a class="btn btn-primary" href="/material-orders/create" role="button">New Material Order</a> -->
+
+<div class="page-wrapper all-recipes">
+
+    <div id="search-results"></div>
+
+    <div class="table-wrapper">
+        <div class="table-header">
+          <div class="left-column">
+            ABC
+          </div>
+    
+          <div class="right-column">
+            <input type="search" class=" recipe-search-bar" id="query" name="q" placeholder="Search...">
+            <a class="btn btn-primary create-new-recipe" href="/material-orders/create" role="button">New Material Order</a>
+          </div>
+    
+        </div>
+
+        <table class="table recipes" data-endpoint="/recipes">
+            <thead role="rowgroup">
+            <tr role="row">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>P.O. Number</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Material</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Total Rolls</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Feet Per Roll</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Date Ordered</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Arrival Date</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Author</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Total Cost</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Notes</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Vendor</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Status</div>
+                </th>
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                    <div>Actions</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <% if (typeof materialOrders != 'undefined') { %>
+                    <% materialOrders.forEach((materialOrder, index) => { %>
+                        <tr>
+                            <td><%= materialOrder.purchaseOrderNumber || 'N/A' %></td>
+                            <td><%= materialOrder.material && materialOrder.material.name || 'N/A' %></td>
+                            <td><%= materialOrder.totalRolls || 'N/A' %></td>
+                            <td><%= materialOrder.feetPerRoll || 'N/A' %></td>
+                            <td><%= materialOrder.orderDate && materialOrder.orderDate.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) || 'N/A' %></td>
+                            <td><%= materialOrder.arrivalDate && materialOrder.arrivalDate.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) || 'N/A' %></td>
+                            <td><%= materialOrder.author && materialOrder.author.email || 'N/A' %></td>
+                            <td><%= materialOrder.totalCost || 'N/A' %></td>
+                            <td><%= materialOrder.notes || 'N/A' %></td>
+                            <td><%= materialOrder.vendor && materialOrder.vendor.name || 'N/A' %></td>
+                            <td><%= materialOrder.hasArrived ? 'Arrived' : 'Not Arrived' %></td>
+                            <td>
+                                <div class="options-reveal-box">
+                                <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical"><circle data-v-32017d0f="" cx="12" cy="12" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="5" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="19" r="1"></circle></svg>
+                                <ul class="options-dropdown">
+                                    <li>
+                                    <a href="/material-orders/<%= materialOrder.id %>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View
+                                    </a>
+                                    </li>
+                                    <li>
+                                    <a href="/material-orders/update/<%= materialOrder.id %>">
+                                        <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path data-v-32017d0f="" d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path data-v-32017d0f="" d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit
+                                    </a>
+                                    </li>
+                                    <li>
+                                    <a href="/material-orders/delete/<%= materialOrder.id %>">
+                                        <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline data-v-32017d0f="" points="3 6 5 6 21 6"></polyline><path data-v-32017d0f="" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Delete
+                                    </a>
+                                    </li>
+                                </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %> 
+            </tbody>
+        </table>
+    </div>
+</div>

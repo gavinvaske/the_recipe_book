@@ -1,1 +1,18 @@
 <a class="btn btn-primary" href="/material-orders/create" role="button">New Material Order</a>
+
+<% if (typeof materialOrders != 'undefined') { %>
+    <% materialOrders.forEach((materialOrder, index) => { %>
+        <h1> <%= materialOrder.purchaseOrderNumber ?? 'N/A' %> </h1>
+        <h1> <%= materialOrder.material ?? 'N/A' %> </h1>
+        <h1> Rolls: <%= materialOrder.totalRolls ?? 'N/A' %> </h1>
+        <h1> Total Feet: <%= materialOrder.totalRolls * materialOrder.feetPerRoll %> </h1>
+        <h1> Date Ordered: <%= materialOrder.dateOrdered ?? 'N/A' %> </h1>
+        <h1> Arrival Date: <%= materialOrder.arrivalDate ?? 'N/A' %> </h1>
+        <h1> Author: <%= 'TODO' %> </h1>
+        <h1> Total Cost: <%= materialOrder.totalCost ?? 'N/A' %> </h1>
+        <h1> Notes: <%= materialOrder.notes ?? 'N/A' %> </h1>
+        <h1> Vendor: <%= materialOrder.vendor ?? 'N/A' %> </h1>
+        <h1> Status: <%= materialOrder.status ? 'Arrived' : 'Not Arrived' %> </h1>
+        <h1> Actions: TODO </h1>
+    <% }) %>
+<% } %> 

@@ -5,18 +5,21 @@ const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 
 router.get('/', verifyJwtToken, async (request, response) => {
-    const materialOrders = await MaterialOrderModel
-        .find()
-        .populate({path: 'author'})
-        .populate({path: 'vendor'})
-        .populate({path: 'material'})
-        .exec();
+    try {
+        const materialOrders = await MaterialOrderModel
+            .find()
+            .populate({path: 'author'})
+            .populate({path: 'vendor'})
+            .populate({path: 'material'})
+            .exec();
 
-    console.log(materialOrders);
-
-    return response.render('viewMaterialOrders', {
-        materialOrders
-    });
+        return response.render('viewMaterialOrders', {
+            materialOrders
+        });
+    } catch (error) {
+        request.flash('errors', ['Unable to load Material Orders, the following error(s) occurred:', error.message]);
+        return response.redirect('back');
+    }
 });
 
 router.get('/create', verifyJwtToken, async (request, response) => {

@@ -81,13 +81,12 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
         await MachineModel.findByIdAndDelete(request.params.id).exec();
 
         request.flash('alerts', 'Deletion was successful');
-        response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
     } catch (error) {
         console.log(error);
         request.flash('errors', error.message);
-
-        return response.redirect('back');
     }
+    
+    return response.redirect('back');
 });
 
 module.exports = router;

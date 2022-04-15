@@ -20,6 +20,11 @@
                         <span>Machines</span>
                     </div>
                 </li>
+                <li value="vendors">
+                    <div class="">
+                        <span>Vendors</span>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="column-right">
@@ -85,6 +90,30 @@
               
                 </div>
                 <table id="machines-table" class="table recipes">
+                    <thead role="rowgroup">
+                        <tr role="row">
+                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Row #</div></th>
+                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Name</div></th>
+                        <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Actions</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-wrapper content-box vendors-table vendors">
+                <div class="table-header">
+                    <div class="left-column">
+                      ABC
+                    </div>
+              
+                    <div class="right-column">
+                      <input type="search" class=" recipe-search-bar" id="query" name="q" placeholder="Search...">
+                      <a class="btn btn-primary create-new-recipe" href="/vendors/create" role="button">New Vendor</a>
+                    </div>
+              
+                </div>
+                <table id="vendors-table" class="table recipes">
                     <thead role="rowgroup">
                         <tr role="row">
                         <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Row #</div></th>

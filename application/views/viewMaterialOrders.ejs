@@ -4,6 +4,10 @@
 
     <div id="search-results"></div>
 
+    <div class="alert-box full-width">
+        <%- include ("flashMessages") %>
+    </div>
+
     <div class="table-wrapper">
         <div class="table-header">
           <div class="left-column">
@@ -12,7 +16,7 @@
     
           <div class="right-column">
             <input type="search" class=" recipe-search-bar" id="query" name="q" placeholder="Search...">
-            <a class="btn btn-primary create-new-recipe" href="/material-orders/create" role="button">New Material Order</a>
+            <a class="btn btn-primary create-new-recipe" href="/material-orders/create" role="button">Create Material Order</a>
           </div>
     
         </div>
@@ -21,28 +25,28 @@
             <thead role="rowgroup">
             <tr role="row">
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>P.O. Number</div>
+                    <div>P.O. #</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                     <div>Material</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>Total Rolls</div>
+                    <div>Rolls</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>Feet Per Roll</div>
+                    <div>Feet</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                     <div>Date Ordered</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>Arrival Date</div>
+                    <div>Expected Arrival</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                     <div>Author</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>Total Cost</div>
+                    <div>Cost</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                     <div>Notes</div>
@@ -54,7 +58,7 @@
                     <div>Status</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
-                    <div>Actions</div>
+                    <div>Action</div>
                 </th>
             </tr>
             </thead>
@@ -72,7 +76,7 @@
                             <td><%= materialOrder.totalCost || 'N/A' %></td>
                             <td><%= materialOrder.notes || 'N/A' %></td>
                             <td><%= materialOrder.vendor && materialOrder.vendor.name || 'N/A' %></td>
-                            <td><%= materialOrder.hasArrived ? 'Arrived' : 'Not Arrived' %></td>
+                            <td><%= materialOrder.hasArrived ? 'Opened' : 'Closed' %></td>
                             <td>
                                 <div class="options-reveal-box">
                                 <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical"><circle data-v-32017d0f="" cx="12" cy="12" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="5" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="19" r="1"></circle></svg>

@@ -85,4 +85,17 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MaterialOrderModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        return response.redirect('back');
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

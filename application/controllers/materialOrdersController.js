@@ -4,17 +4,31 @@ const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_RESULTS_PER_PAGE = 2;
+
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
+        const queryParams = request.query;
+        const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
+        const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+
+        const numberOfRecordsInDatabase = await MaterialOrderModel.countDocuments({});
+        const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
+
         const materialOrders = await MaterialOrderModel
             .find()
             .populate({path: 'author'})
             .populate({path: 'vendor'})
             .populate({path: 'material'})
+            .skip(numberOfResultsToSkip)
+            .limit(DEFAULT_RESULTS_PER_PAGE)
             .exec();
 
         return response.render('viewMaterialOrders', {
-            materialOrders
+            materialOrders,
+            pageNumber,
+            totalNumberOfPages
         });
     } catch (error) {
         request.flash('errors', ['Unable to load Material Orders, the following error(s) occurred:', error.message]);

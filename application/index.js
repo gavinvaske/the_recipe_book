@@ -50,6 +50,7 @@ app.use('/setups', require('./controllers/setupController'));
 app.use('/printing-setups', require('./controllers/printingSetupController'));
 app.use('/cutting-setups', require('./controllers/cuttingSetupController'));
 app.use('/winding-setups', require('./controllers/windingSetupController'));
+app.use('/vendors', require('./controllers/vendorController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

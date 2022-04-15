@@ -2,21 +2,21 @@
 
 <div class="page-wrapper create-table-entry">
 
-    <h2 class="content-header-title">Creating New Finish</h2>
+    <h2 class="content-header-title">Creating New Vendor</h2>
 
     <div class="card">
-        <h4>Create A New Finish</h4>
+        <h4>Create A New Vendor</h4>
 
         <div class="alert-box">
             <%- include ("flashMessages") %>
         </div>
 
-        <form id="create-material-form" action="/finishes/create", method="POST">
+        <form id="create-vendor-form" action="/vendors/create", method="POST">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name">
              </div>
-            <button class="create-entry submit-button" type="submit" value="Create Finish">Create</button>
+            <button class="create-entry submit-button" type="submit" value="Create Vendor">Create</button>
         </form>
 
     </div>

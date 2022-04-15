@@ -64,7 +64,7 @@
                   <%= index + 1 %>
                 </td>
                 <td id="created">
-                  <%= printingSetup.createdAt ? printingSetup.createdAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A' %>
+                  <%= printingSetup.createdAt ? printingSetup.createdAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) : 'N/A' %>
                 </td>
                 <td><div class="media-box"><div class="user-face" <% if (printingSetup.author.profilePicture && printingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= printingSetup.author.profilePicture.contentType %>;base64,<%= printingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= printingSetup.author.fullName || 'N/A' %></div></td>
                 <td id="machine-name">

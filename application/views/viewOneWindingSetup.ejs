@@ -8,5 +8,5 @@
 <h3>AlertTextBox: <%= windingSetup.alertTextBox || 'N/A' %></h3>
 <h3>Default Machine: <%= windingSetup.defaultMachine && windingSetup.defaultMachine.name || 'N/A' %></h3>
 <h3>Recipe ID: <%= windingSetup.recipe %></h3>
-<h3>Creation Date: <%= windingSetup.createdAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) %></h3>
-<h3>Last Updated: <%= windingSetup.updatedAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) %></h3>
+<h3>Creation Date: <%= windingSetup.createdAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) %></h3>
+<h3>Last Updated: <%= windingSetup.updatedAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) %></h3>

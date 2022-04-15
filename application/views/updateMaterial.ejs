@@ -1,5 +1,9 @@
 <h1>Update Material</h1>
 
+<div class="alert-box">
+    <%- include ("flashMessages") %>
+</div>
+
 <form action="/materials/update/<%= material.id %>", method="POST">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" value="<%= material.name %>">

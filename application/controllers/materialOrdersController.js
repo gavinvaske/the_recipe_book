@@ -47,4 +47,55 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect('/material-orders');
 });
 
+router.get('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const vendors = await VendorModel.find().exec();
+        const materials = await MaterialModel.find().exec();
+        const materialOrder = await MaterialOrderModel
+            .findById(request.params.id)
+            .populate({path: 'author'})
+            .populate({path: 'vendor'})
+            .populate({path: 'material'})
+            .exec();
+        const user = request.user;
+
+        return response.render('updateMaterialOrder', {
+            vendors,
+            materials,
+            materialOrder,
+            user
+        });
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', [error.message]);
+
+        return response.redirect('back');
+    }
+});
+
+router.post('/update/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body).exec();
+
+        request.flash('alerts', 'Updated successfully');
+        response.redirect('/material-orders');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await MaterialOrderModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        return response.redirect('back');
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

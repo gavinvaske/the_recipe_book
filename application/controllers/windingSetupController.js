@@ -139,7 +139,6 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
 
 router.post('/update/:id', verifyJwtToken, async (request, response) => {
     try {
-        console.log(request.body);
         await WindingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
         request.flash('alerts', 'Updated successfully');

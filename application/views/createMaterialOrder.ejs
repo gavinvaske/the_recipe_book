@@ -11,9 +11,9 @@
         </div>
         <form action="/material-orders/create", method="POST">
             <div class="field-label-wrapper half-width">
-                <label for="author">Material:</label>
+                <label for="material">Material:</label>
                 <div class="custom-select full-width">
-                    <select name="author" id="author">
+                    <select name="material" id="material">
                         <option value="">-</option>
                         <% if (typeof materials != 'undefined') { %>
                             <% materials.forEach(material => { %>
@@ -71,6 +71,7 @@
                 <label for="notes">Notes</label>
                 <input type="text" name="notes" id="notes">
             </div>
+            <input type="hidden" name="author" id="author" value="<%= user.id %>">
             <button class="create-entry submit-button" type="submit" value="Create Material Order">Create</button>
         </form>
 

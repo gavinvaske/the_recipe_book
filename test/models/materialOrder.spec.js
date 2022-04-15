@@ -22,7 +22,8 @@ describe('materialOrder validation', () => {
             totalCost: chance.floating({min: TOTAL_COST_MIN, max: TOTAL_COST_MAX}),
             vendor: new mongoose.Types.ObjectId(),
             hasArrived: chance.bool(),
-            notes: chance.string()
+            notes: chance.string(),
+            author: new mongoose.Types.ObjectId()
         };
     });
 
@@ -282,6 +283,18 @@ describe('materialOrder validation', () => {
 
             expect(error).toBe(undefined);
             expect(materialOrder.notes).toBe(notesWithoutSpaces);
+        });
+    });
+
+    describe('materialOrder.author validation', () => {
+        it('should fail validation if author is not defined', () => {
+            delete materialOrderAttributes.author;
+
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            const error = materialOrder.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
     

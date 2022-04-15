@@ -5,7 +5,12 @@ const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 
 router.get('/', verifyJwtToken, async (request, response) => {
-    const materialOrders = await MaterialOrderModel.find().exec();
+    const materialOrders = await MaterialOrderModel
+        .find()
+        .populate({path: 'author'})
+        .populate({path: 'vendor'})
+        .populate({path: 'material'})
+        .exec();
 
     console.log(materialOrders);
 

@@ -5,11 +5,11 @@ const schema = new Schema({
     material: {
         type: Schema.Types.ObjectId,
         ref: 'Material',
-        required: true
+        required: [true, 'MATERIAL is required']
     },
     purchaseOrderNumber: {
         type: Number,
-        required: true,
+        required: [true, 'P.O. NUMBER is required'],
         validate : {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer'
@@ -17,20 +17,20 @@ const schema = new Schema({
     },
     orderDate: {
         type: Date,
-        required: true
+        required: [true, 'ORDER DATE is required'],
     },
     arrivalDate: {
         type: Date,
-        required: true
+        required: [true, 'ARRIVAL DATE is required'],
     },
     feetPerRoll: {
         type: Number,
-        required: true,
+        required: [true, 'FEET PER ROLL is required'],
         min: 0
     },
     totalRolls: {
         type: Number,
-        required: true,
+        required: [true, 'TOTAL ROLLS is required'],
         min: [1, 'Total Rolls cannot be less than 1'],
         max: [100, 'Total Rolls cannot be greater than 100'],
         validate : {
@@ -40,14 +40,14 @@ const schema = new Schema({
     },
     totalCost: {
         type: Number,
-        required: true,
+        required: [true, 'TOTAL COST is required'],
         min: [1, 'Total Cost must be more than $1'],
         max: [500000, 'Total Cost must be less than $500,000']
     },
     vendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
-        required: true
+        required: [true, 'VENDOR is required'],
     },
     hasArrived: {
         type: Boolean,

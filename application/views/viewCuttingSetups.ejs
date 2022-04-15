@@ -35,7 +35,7 @@
           <% cuttingSetups.forEach((cuttingSetup, index) => { %>
               <tr onclick="window.location='/cutting-setups/<%= cuttingSetup.id %>'">
                   <td scope="row"><%= index + 1 %></td>
-                  <td><%= cuttingSetup.createdAt ? cuttingSetup.createdAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A' %></td>
+                  <td><%= cuttingSetup.createdAt ? cuttingSetup.createdAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) : 'N/A' %></td>
                   <td><div class="media-box"><div class="user-face" <% if (cuttingSetup.author.profilePicture && cuttingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= cuttingSetup.author.profilePicture.contentType %>;base64,<%= cuttingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= cuttingSetup.author.fullName || 'N/A' %></div></td>
                   <td><%= cuttingSetup.machine && cuttingSetup.machine.name || 'N/A' %></td>
                   <td <% if (cuttingSetup.notes) { %>onclick="window.open('<%= cuttingSetup.notes %>')"<%} else { %><% } %>>

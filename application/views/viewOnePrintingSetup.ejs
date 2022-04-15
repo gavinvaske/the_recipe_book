@@ -8,5 +8,5 @@
 <h3>Alert Text Box: <%= printingSetup.alertTextBox || 'N/A' %></h3>
 <h3>Default Machine Name: <%= printingSetup.defaultMachine && printingSetup.defaultMachine.name || 'N/A' %></h3>
 <h3>Recipe ID: <%= printingSetup.recipe %></h3>
-<h3>Creation Date: <%= printingSetup.createdAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) %></h3>
-<h3>Last Updated: <%= printingSetup.updatedAt.toLocaleString("en-US", {year: 'numeric', month: 'long', day: 'numeric' }) %></h3>
+<h3>Creation Date: <%= printingSetup.createdAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) %></h3>
+<h3>Last Updated: <%= printingSetup.updatedAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) %></h3>

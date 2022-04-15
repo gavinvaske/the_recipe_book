@@ -1,0 +1,7 @@
+<h1>Update Vendor</h1>
+
+<form action="/vendors/update/<%= vendor.id %>", method="POST">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="<%= vendor.name %>">
+    <input type="submit" value="Update Vendor">
+</form>

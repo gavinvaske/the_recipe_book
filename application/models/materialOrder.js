@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const TOTAL_ROLLS_MIN = 1;
+const TOTAL_ROLLS_MAX = 100;
+
+const TOTAL_COST_MIN = 1;
+const TOTAL_COST_MAX = 500000;
+
 const schema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
@@ -36,8 +42,8 @@ const schema = new Schema({
     totalRolls: {
         type: Number,
         required: [true, 'TOTAL ROLLS is required'],
-        min: [1, 'Total Rolls cannot be less than 1'],
-        max: [100, 'Total Rolls cannot be greater than 100'],
+        min: [TOTAL_ROLLS_MIN, 'Total Rolls cannot be less than 1'],
+        max: [TOTAL_ROLLS_MAX, 'Total Rolls cannot be greater than 100'],
         validate : {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer'
@@ -46,8 +52,8 @@ const schema = new Schema({
     totalCost: {
         type: Number,
         required: [true, 'TOTAL COST is required'],
-        min: [1, 'Total Cost must be more than $1'],
-        max: [500000, 'Total Cost must be less than $500,000']
+        min: [TOTAL_COST_MIN, 'Total Cost must be more than $1'],
+        max: [TOTAL_COST_MAX, 'Total Cost must be less than $500,000']
     },
     vendor: {
         type: Schema.Types.ObjectId,

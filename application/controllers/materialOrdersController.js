@@ -41,7 +41,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
 
     request.flash('alerts', ['Material Order created successfully']);
 
-    return response.redirect(`/material-orders`);
+    return response.redirect('/material-orders');
 });
 
 module.exports = router;

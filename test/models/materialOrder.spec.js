@@ -2,11 +2,11 @@ const chance = require('chance').Chance();
 const MaterialOrderModel = require('../../application/models/materialOrder');
 const mongoose = require('mongoose');
 
-TOTAL_ROLLS_MIN = 1;
-TOTAL_ROLLS_MAX = 100;
+const TOTAL_ROLLS_MIN = 1;
+const TOTAL_ROLLS_MAX = 100;
 
-TOTAL_COST_MIN = 1;
-TOTAL_COST_MAX = 500000;
+const TOTAL_COST_MIN = 1;
+const TOTAL_COST_MAX = 500000;
 
 describe('materialOrder validation', () => {
     let materialOrderAttributes;
@@ -43,7 +43,7 @@ describe('materialOrder validation', () => {
             const error = materialOrder.validateSync();
 
             expect(error).not.toBe(undefined);
-        })
+        });
     });
 
     describe('materialOrder.purchaseOrderNumber validation', () => {
@@ -58,7 +58,7 @@ describe('materialOrder validation', () => {
         });
 
         it('should fail validation if purchaseOrderNumber is not an integer', () => {
-            materialOrderAttributes.purchaseOrderNumber = chance.floating()
+            materialOrderAttributes.purchaseOrderNumber = chance.floating();
 
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 
@@ -68,7 +68,7 @@ describe('materialOrder validation', () => {
         });
 
         it('should fail validation if purchaseOrderNumber contains non-numberic characters', () => {
-            materialOrderAttributes.purchaseOrderNumber = `${chance.integer()}${chance.word()}`
+            materialOrderAttributes.purchaseOrderNumber = `${chance.integer()}${chance.word()}`;
 
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 
@@ -141,7 +141,7 @@ describe('materialOrder validation', () => {
             const error = materialOrder.validateSync();
 
             expect(error).toBe(undefined);
-        })
+        });
         
         it('should fail validation if feetPerRoll is less than 0', () => {
             materialOrderAttributes.feetPerRoll = chance.floating({min: -10000, max: 0});
@@ -151,7 +151,7 @@ describe('materialOrder validation', () => {
             const error = materialOrder.validateSync();
 
             expect(error).not.toBe(undefined);
-        })
+        });
     });
 
     describe('materialOrder.totalRolls validation', () => {
@@ -285,4 +285,4 @@ describe('materialOrder validation', () => {
         });
     });
     
-})
+});

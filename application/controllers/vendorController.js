@@ -76,4 +76,16 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await VendorModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 module.exports = router;

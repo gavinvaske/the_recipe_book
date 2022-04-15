@@ -78,7 +78,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
         await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
         request.flash('alerts', 'Updated successfully');
-        response.redirect(`/material-orders`);
+        response.redirect('/material-orders');
     } catch (error) {
         request.flash('errors', error.message);
         return response.redirect('back');

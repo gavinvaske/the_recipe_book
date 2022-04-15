@@ -21,7 +21,8 @@ describe('materialOrder validation', () => {
             totalRolls: chance.integer({min: TOTAL_ROLLS_MIN, max: TOTAL_ROLLS_MAX}),
             totalCost: chance.floating({min: TOTAL_COST_MIN, max: TOTAL_COST_MAX}),
             vendor: new mongoose.Types.ObjectId(),
-            hasArrived: chance.bool()
+            hasArrived: chance.bool(),
+            notes: chance.string()
         };
     });
 
@@ -257,6 +258,30 @@ describe('materialOrder validation', () => {
             const error = materialOrder.validateSync();
 
             expect(error).toBe(undefined);
+        });
+    });
+
+    describe('materialOrder.notes validation', () => {
+        it('should NOT fail validation if notes is not defined', () => {
+            delete materialOrderAttributes.notes;
+
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            const error = materialOrder.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should trim leading/trailing spaces', () => {
+            const notesWithoutSpaces = materialOrderAttributes.notes;
+            materialOrderAttributes.notes = ' ' + notesWithoutSpaces + '  ';
+
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            const error = materialOrder.validateSync();
+
+            expect(error).toBe(undefined);
+            expect(materialOrder.notes).toBe(notesWithoutSpaces);
         });
     });
     

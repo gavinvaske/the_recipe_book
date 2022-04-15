@@ -52,6 +52,11 @@ const schema = new Schema({
     hasArrived: {
         type: Boolean,
         required: false
+    },
+    notes: {
+        type: String,
+        required: false,
+        trim: true
     }
 }, { timestamps: true });
 

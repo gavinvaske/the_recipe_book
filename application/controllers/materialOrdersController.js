@@ -36,6 +36,25 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const materialOrder = await MaterialOrderModel
+            .findById(request.params.id)
+            .populate({path: 'author'})
+            .populate({path: 'vendor'})
+            .populate({path: 'material'})
+            .exec();
+
+        return response.render('viewOneMaterialOrder', {
+            materialOrder
+        });
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
+        return response.redirect('back');
+    }
+});
+
 router.get('/create', verifyJwtToken, async (request, response) => {
     const materials = await MaterialModel.find().exec();
     const vendors = await VendorModel.find().exec();

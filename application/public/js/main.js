@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-
     const shouldDisplayUserDetails = $('.user-details').length;
 
     if (shouldDisplayUserDetails) {
@@ -19,18 +18,28 @@ $( document ).ready(function() {
         });
     }
 
+    function buildResultHtmlAccordingToObject(result, endpoint) {
+        if (endpoint === '/recipes/query') {
+            return `<div> Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`
+        } else {
+            return '<div> N/A </div>'
+        }
+    }
+
     $('.recipe-search-bar').on('keyup', () => {
         const query = $('.recipe-search-bar').val().trim();
         const pageNumber = 1;
         const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
+        const searchEndpoint = $('.recipe-search-bar').data('search-endpoint');
+        console.log(`search endpoint = ${searchEndpoint}`)
 
-        if (!query) {
+        if (!query || !searchEndpoint) {
             $('#search-results').empty();
             return;
         }
 
         $.ajax({
-            url: '/recipes/query',
+            url: searchEndpoint,
             type: 'POST',
             data: {
                 query,
@@ -41,7 +50,7 @@ $( document ).ready(function() {
                 console.log(JSON.stringify(searchResults))
                 $('#search-results').empty();
                 searchResults.forEach((result, index) => {
-                    const resultAsHtml = `<div> Result #: ${index+1}; Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;
+                    const resultAsHtml = buildResultHtmlAccordingToObject(result, searchEndpoint);
                     $('#search-results').append(resultAsHtml);
                 });
             },

@@ -6,18 +6,33 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
+const DEFAULT_SORT_METHOD = 'ascending';
+const MONGOOSE_SORT_METHODS = {
+    'ascending': 1,
+    'descending': -1
+};
 
 router.get('/', verifyJwtToken, async (request, response) => {
     try {
         const queryParams = request.query;
         const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
-        const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
+        const sortBy = queryParams.sortBy;
+        const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
+        let sortQuery = {};
+    
+        if (sortBy && sortMethod) {
+            sortQuery = {
+                [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
+            };
+        }
 
+        const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
         const numberOfRecordsInDatabase = await MaterialOrderModel.countDocuments({});
         const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
 
         const materialOrders = await MaterialOrderModel
             .find()
+            .sort(sortQuery)
             .populate({path: 'author'})
             .populate({path: 'vendor'})
             .populate({path: 'material'})
@@ -28,7 +43,9 @@ router.get('/', verifyJwtToken, async (request, response) => {
         return response.render('viewMaterialOrders', {
             materialOrders,
             pageNumber,
-            totalNumberOfPages
+            totalNumberOfPages,
+            sortBy,
+            sortMethod
         });
     } catch (error) {
         request.flash('errors', ['Unable to load Material Orders, the following error(s) occurred:', error.message]);

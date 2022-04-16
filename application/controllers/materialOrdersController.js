@@ -53,6 +53,17 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
+router.get('/create', verifyJwtToken, async (request, response) => {
+    const materials = await MaterialModel.find().exec();
+    const vendors = await VendorModel.find().exec();
+
+    return response.render('createMaterialOrder', {
+        materials,
+        vendors,
+        user: request.user
+    });
+});
+
 router.get('/:id', verifyJwtToken, async (request, response) => {
     try {
         const materialOrder = await MaterialOrderModel
@@ -70,17 +81,6 @@ router.get('/:id', verifyJwtToken, async (request, response) => {
         request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
         return response.redirect('back');
     }
-});
-
-router.get('/create', verifyJwtToken, async (request, response) => {
-    const materials = await MaterialModel.find().exec();
-    const vendors = await VendorModel.find().exec();
-
-    return response.render('createMaterialOrder', {
-        materials,
-        vendors,
-        user: request.user
-    });
 });
 
 router.post('/create', verifyJwtToken, async (request, response) => {

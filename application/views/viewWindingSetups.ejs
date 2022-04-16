@@ -36,7 +36,7 @@
       <tbody>
         <% if (typeof windingSetups != 'undefined') { %>
           <% windingSetups.forEach((windingSetup, index) => { %>
-              <tr onclick="window.location='/winding-setups/<%= windingSetup.id %>'">
+              <tr>
                   <td scope="row"><%= index + 1 %></td>
                   <td><%= windingSetup.createdAt ? windingSetup.createdAt.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) : 'N/A' %></td>
                   <td><div class="media-box"><div class="user-face" <% if (windingSetup.author.profilePicture && windingSetup.author.profilePicture.data) { %>style="background: url('data:image/<%= windingSetup.author.profilePicture.contentType %>;base64,<%= windingSetup.author.profilePicture.data.toString('base64') %>') center center no-repeat; background-size: cover;"<% } %>></div><%= windingSetup.author.fullName || 'N/A' %></div></td>

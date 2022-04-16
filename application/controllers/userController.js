@@ -9,6 +9,7 @@ const {sendPasswordResetEmail} = require('../services/emailService');
 const {upload} = require('../middleware/upload');
 const fs = require('fs');
 const path = require('path');
+const {isUserLoggedIn} = require('../services/userService');
 
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
@@ -279,6 +280,10 @@ router.post('/login', async (request, response) => {
 });
 
 router.get('/register', (request, response) => {
+    if (isUserLoggedIn(request.cookies.jwtToken, process.env.JWT_SECRET)) {
+        return response.redirect('/users/profile');
+    }
+
     response.render('register');
 });
 

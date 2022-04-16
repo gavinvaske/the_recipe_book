@@ -13,8 +13,7 @@ module.exports.isUserLoggedIn = (jwtToken, jwtSecret) => {
     }
 
     try {
-        const resp = jwt.verify(jwtToken, jwtSecret);
-        console.log(`here is the jwt.verify response => ${JSON.stringify(resp)}`);
+        jwt.verify(jwtToken, jwtSecret);
         return true;
     } catch (error) {
         console.log(`error during isJwtTokenValid(): ${JSON.stringify(error)}`);

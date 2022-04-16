@@ -25,6 +25,7 @@ $( document ).ready(function() {
         const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
 
         if (!query) {
+            $('#search-results').empty();
             return;
         }
 
@@ -37,6 +38,7 @@ $( document ).ready(function() {
                 resultsPerPage
             },
             success: function(searchResults) {
+                console.log(JSON.stringify(searchResults))
                 $('#search-results').empty();
                 searchResults.forEach((result, index) => {
                     const resultAsHtml = `<div> Result #: ${index+1}; Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;

@@ -71,7 +71,7 @@
                             <td><%= materialOrder.feetPerRoll * materialOrder.totalRolls %></td>
                             <td><%= materialOrder.orderDate && materialOrder.orderDate.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) || 'N/A' %></td>
                             <td><%= materialOrder.arrivalDate && materialOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'}) || 'N/A' %></td>
-                            <td><%= materialOrder.author && materialOrder.author.email || 'N/A' %></td>
+                            <td><%= materialOrder.author && materialOrder.author.fullName || materialOrder.author.email %></td>
                             <td><%= materialOrder.totalCost || 'N/A' %></td>
                             <td><%= materialOrder.notes || 'N/A' %></td>
                             <td><%= materialOrder.vendor && materialOrder.vendor.name || 'N/A' %></td>

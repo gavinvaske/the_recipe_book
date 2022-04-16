@@ -14,6 +14,12 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
+router.post('/:recipeId/query', verifyJwtToken, async (request, response) => {
+    const hardCodedSearchResults = [{}, {}, {}];
+
+    return response.send(hardCodedSearchResults);
+});
+
 router.get('/:windingSetupId', verifyJwtToken, async (request, response) => {
     try {
         const windingSetup = await WindingSetupModel

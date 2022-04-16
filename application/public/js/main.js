@@ -22,7 +22,7 @@ $( document ).ready(function() {
         if (endpoint === '/recipes/query') {
             return `<div> Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`
         } else {
-            return '<div> N/A </div>'
+            return '<div> TODO </div>'
         }
     }
 

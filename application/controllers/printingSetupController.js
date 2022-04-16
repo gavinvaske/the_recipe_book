@@ -13,6 +13,12 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
+router.post('/:recipeId/query', verifyJwtToken, async (request, response) => {
+    const hardCodedSearchResults = [{}, {}, {}];
+
+    return response.send(hardCodedSearchResults);
+});
+
 router.get('/:printingSetupId', verifyJwtToken, async (request, response) => {
     try {
         const printingSetup = await PrintingSetupModel

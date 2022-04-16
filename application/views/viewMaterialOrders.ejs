@@ -20,40 +20,40 @@
           </div>
         </div>
 
-        <table class="table recipes" data-endpoint="/recipes">
+        <table class="table recipes" data-endpoint="/material-orders">
             <thead role="rowgroup">
             <tr role="row">
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'purchaseOrderNumber') ? sortMethod : "none" %>" class="" id="purchaseOrderNumber">
                     <div>P.O. #</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'material') ? sortMethod : "none" %>" class="" id="material">
                     <div>Material</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'totalRolls') ? sortMethod : "none" %>" class="" id="totalRolls">
                     <div>Rolls</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                     <div>Feet</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'orderDate') ? sortMethod : "none" %>" class="" id="orderDate">
                     <div>Date Ordered</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'arrivalDate') ? sortMethod : "none" %>" class="" id="arrivalDate">
                     <div>Expected Arrival</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'author') ? sortMethod : "none" %>" class="" id="author">
                     <div>Author</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'totalCost') ? sortMethod : "none" %>" class="" id="totalCost">
                     <div>Cost</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'notes') ? sortMethod : "none" %>" class="" id="notes">
                     <div>Notes</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'vendor') ? sortMethod : "none" %>" class="" id="vendor">
                     <div>Vendor</div>
                 </th>
-                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="<%= (sortBy && sortBy == 'hasArrived') ? sortMethod : "none" %>" class="" id="hasArrived">
                     <div>Status</div>
                 </th>
                 <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">

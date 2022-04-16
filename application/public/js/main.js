@@ -18,11 +18,11 @@ $( document ).ready(function() {
         });
     }
 
-    function buildResultHtmlAccordingToObject(result, endpoint) {
+    function buildResultHtmlAccordingToObject(result, endpoint) { // eslint-disable-line complexity
         if (endpoint === '/recipes/query') {
-            return `<div> Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`
+            return `<div> Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;
         } else {
-            return '<div> TODO </div>'
+            return '<div> TODO </div>';
         }
     }
 
@@ -31,7 +31,7 @@ $( document ).ready(function() {
         const pageNumber = 1;
         const resultsPerPage = 15; // TODO STORM: Set this number to be whatever you think is best
         const searchEndpoint = $('.recipe-search-bar').data('search-endpoint');
-        console.log(`search endpoint = ${searchEndpoint}`)
+        console.log(`search endpoint = ${searchEndpoint}`);
 
         if (!query || !searchEndpoint) {
             $('#search-results').empty();
@@ -47,9 +47,9 @@ $( document ).ready(function() {
                 resultsPerPage
             },
             success: function(searchResults) {
-                console.log(JSON.stringify(searchResults))
+                console.log(JSON.stringify(searchResults));
                 $('#search-results').empty();
-                searchResults.forEach((result, index) => {
+                searchResults.forEach((result) => {
                     const resultAsHtml = buildResultHtmlAccordingToObject(result, searchEndpoint);
                     $('#search-results').append(resultAsHtml);
                 });

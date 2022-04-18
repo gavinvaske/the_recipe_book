@@ -21,8 +21,8 @@ $( document ).ready(function() {
     function buildResultHtmlAccordingToObject(result, endpoint) { // eslint-disable-line complexity
         if (endpoint === '/recipes/query') {
             return `<div> Design Number: ${result.designNumber || 'N/A'}; Die Number: ${result.dieNumber || 'N/A'}; How-to-Video: ${result.howToVideo || 'N/A'}; Notes: ${result.notes || 'N/A'}; Author: ${result.author.email || 'N/A'}; </div>`;
-        } else {
-            return '<div> TODO </div>';
+        } else if (endpoint === '/material-orders/query') {
+            return `<div> P.O #: ${result.purchaseOrderNumber}; author: ${result.author.email}; ECT... </div>`;
         }
     }
 
@@ -37,6 +37,8 @@ $( document ).ready(function() {
             $('#search-results').empty();
             return;
         }
+
+        console.log(searchEndpoint)
 
         $.ajax({
             url: searchEndpoint,

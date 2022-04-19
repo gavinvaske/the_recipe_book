@@ -7,14 +7,14 @@ const TOTAL_ROLLS_MAX = 100;
 const TOTAL_COST_MIN = 1;
 const TOTAL_COST_MAX = 500000;
 
-const ONLY_NUMBERS_REGEX = /^[0-9]*$/
+const ONLY_NUMBERS_REGEX = /^[0-9]*$/;
 
 const validatePurchaseOrderNumber = function(text) {
     if (!text) {
         return false;
     }
     return ONLY_NUMBERS_REGEX.test(text);
-}
+};
 
 const schema = new Schema({
     author: {

@@ -38,7 +38,7 @@ $( document ).ready(function() {
             return;
         }
 
-        console.log(searchEndpoint)
+        console.log(searchEndpoint);
 
         $.ajax({
             url: searchEndpoint,

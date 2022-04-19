@@ -22,8 +22,6 @@ router.post('/query', verifyJwtToken, async (request, response) => {
         ]};
     const numberOfResultsToSkip = (pageNumber - 1) * resultsPerPage;
 
-    console.log(`query => ${query}`)
-
     try {
         const searchResults = await MaterialOrderModel
             .find(searchCriteria)
@@ -34,7 +32,7 @@ router.post('/query', verifyJwtToken, async (request, response) => {
             .limit(resultsPerPage)
             .exec();
 
-        console.log(JSON.stringify(searchResults) + '\n\n\n\n')
+        console.log(JSON.stringify(searchResults) + '\n\n\n\n');
 
         return response.send(searchResults);
     } catch (error) {

@@ -13,9 +13,33 @@ const MONGOOSE_SORT_METHODS = {
 };
 
 router.post('/query', verifyJwtToken, async (request, response) => {
-    const hardCodedSearchResults = [{}, {}, {}];
+    const {query, pageNumber, resultsPerPage} = request.body;
 
-    return response.send(hardCodedSearchResults);
+    const searchCriteria = {
+        $or:[
+            {purchaseOrderNumber: {$regex: query, $options: 'i'}},
+            {notes: {$regex: query, $options: 'i'}}
+        ]};
+    const numberOfResultsToSkip = (pageNumber - 1) * resultsPerPage;
+
+    try {
+        const searchResults = await MaterialOrderModel
+            .find(searchCriteria)
+            .populate({path: 'author', select: 'fullName email'})
+            .populate({path: 'vendor'})
+            .populate({path: 'material'})
+            .skip(numberOfResultsToSkip)
+            .limit(resultsPerPage)
+            .exec();
+
+        return response.send(searchResults);
+    } catch (error) {
+        console.log(error);
+        request.flash('errors', ['A problem occurred while performing your search:', error.message]);
+        return response.json({
+            error
+        });
+    }
 });
 
 router.get('/', verifyJwtToken, async (request, response) => {

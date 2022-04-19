@@ -7,6 +7,15 @@ const TOTAL_ROLLS_MAX = 100;
 const TOTAL_COST_MIN = 1;
 const TOTAL_COST_MAX = 500000;
 
+const ONLY_NUMBERS_REGEX = /^[0-9]*$/;
+
+const validatePurchaseOrderNumber = function(text) {
+    if (!text) {
+        return false;
+    }
+    return ONLY_NUMBERS_REGEX.test(text);
+};
+
 const schema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
@@ -19,11 +28,11 @@ const schema = new Schema({
         required: [true, 'MATERIAL is required']
     },
     purchaseOrderNumber: {
-        type: Number,
+        type: String,
         required: [true, 'P.O. NUMBER is required'],
         validate : {
-            validator : Number.isInteger,
-            message   : '{VALUE} is not an integer'
+            validator : validatePurchaseOrderNumber,
+            message   : 'P.O Number must ONLY contain numbers'
         }
     },
     orderDate: {

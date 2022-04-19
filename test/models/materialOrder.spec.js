@@ -14,7 +14,7 @@ describe('materialOrder validation', () => {
     beforeEach(() => {
         materialOrderAttributes = {
             material: new mongoose.Types.ObjectId(),
-            purchaseOrderNumber: chance.integer(),
+            purchaseOrderNumber: `${chance.integer({min: 0})}`,
             orderDate: chance.date({string: true}),
             arrivalDate: chance.date({string: true}),
             feetPerRoll: chance.integer({min: 0}),

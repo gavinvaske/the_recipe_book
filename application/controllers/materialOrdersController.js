@@ -32,8 +32,6 @@ router.post('/query', verifyJwtToken, async (request, response) => {
             .limit(resultsPerPage)
             .exec();
 
-        console.log(JSON.stringify(searchResults) + '\n\n\n\n');
-
         return response.send(searchResults);
     } catch (error) {
         console.log(error);
@@ -42,10 +40,6 @@ router.post('/query', verifyJwtToken, async (request, response) => {
             error
         });
     }
-
-    // const hardCodedSearchResults = [{}, {}, {}];
-
-    // return response.send(hardCodedSearchResults);
 });
 
 router.get('/', verifyJwtToken, async (request, response) => {

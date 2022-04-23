@@ -1,0 +1,10 @@
+<h1>Upload Job</h1>
+
+<div class="alert-box full-width">
+    <%- include ("flashMessages") %>
+</div>
+
+<form action="/jobs/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="job-xml"><br>
+    <input type="submit">
+</form>

@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
-const mongoose = require('mongoose');
 
 function convertNumberToString(value) {
     return `${value}`;

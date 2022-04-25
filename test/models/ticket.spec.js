@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
-const mongoose = require('mongoose');
 
 function convertNumberToString(value) {
     return `${value}`;
@@ -33,7 +32,7 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
-        }
+        };
     });
 
     it('should validate if all attributes are defined successfully', () => {

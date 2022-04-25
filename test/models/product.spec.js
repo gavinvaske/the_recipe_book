@@ -53,6 +53,7 @@ describe('validation', () => {
 
             expect(product.productNumber).toBeDefined();
         });
+
         it('should fail validation if attribute is missing', () => {
             delete productAttributes.ProductNumber;
             const product = new ProductModel(productAttributes);

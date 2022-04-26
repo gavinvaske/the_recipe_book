@@ -5,35 +5,41 @@ function convertNumberToString(value) {
     return `${value}`;
 }
 
+function getRandomNumberOfDigits() {
+    return chance.integer({min: 0})
+}
+
 describe('validation', () => {
     let productAttributes;
 
     beforeEach(() => {
+        const validProductDies = ['DD-123', 'DO-98839'];
+
         productAttributes = {
-            ProductNumber: chance.string(),
-            ToolNo1: chance.string(),
+            ProductNumber: chance.pickone(['1245D-100', '767D-2672', '767D-001']),
+            ToolNo1: chance.pickone(validProductDies),
             StockNum2: chance.string(),
-            InkType: {}, // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
-            SizeAcross: convertNumberToString(chance.floating()),
-            SizeAround: convertNumberToString(chance.floating()),
-            NoAcross: convertNumberToString(chance.floating()),
-            NoAround: convertNumberToString(chance.floating()),
-            CornerRadius: convertNumberToString(chance.floating()),
+            InkType: {},
+            SizeAcross: convertNumberToString(chance.floating({min: 0.1})),
+            SizeAround: convertNumberToString(chance.floating({min: 0.1})),
+            NoAcross: convertNumberToString(chance.floating({min: 0.1})),
+            NoAround: convertNumberToString(chance.floating({min: 0.1})),
+            CornerRadius: convertNumberToString(chance.floating({min: 0, max: 0.99})),
             FinalUnwind: chance.string(),
             ColSpace: convertNumberToString(chance.floating()),
             RowSpace: convertNumberToString(chance.floating()),
             Description: chance.string(),
-            OrderQuantity: convertNumberToString(chance.floating()),
-            FinishNotes: {}, // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
-            StockNotes: {}, // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
-            Notes: [{}, {}], // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
-            Hidden_Notes: chance.string(), // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
-            NoColors: convertNumberToString(chance.floating()),
-            LabelsPer_: convertNumberToString(chance.floating()),
+            OrderQuantity: convertNumberToString(chance.integer({min: 0})),
+            FinishNotes: {},
+            StockNotes: {},
+            Notes: [{}, {}],
+            Hidden_Notes: chance.string(),
+            NoColors: convertNumberToString(chance.integer({min: 0})),
+            LabelsPer_: convertNumberToString(chance.integer({min: 0})),
             FinishType: chance.string(),
             PriceM: convertNumberToString(chance.floating()),
             PriceMode: chance.string(),
-            ToolNo2: chance.string(),
+            ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: chance.string(),
             Plate_ID: chance.string()
         };
@@ -48,6 +54,24 @@ describe('validation', () => {
     });
 
     describe('attribute: productNumber (aka ProductNumber)', () => {
+        it('should fail validation if string does not start with 3 or 4 digits followed by a "D-" follows by 1 or more digits', () => {
+            const slightlyInvalidProductNumbers = chance.pickone([`12D-${getRandomNumberOfDigits()}`, `123-${getRandomNumberOfDigits()}`])
+            productAttributes.ProductNumber = slightlyInvalidProductNumbers;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+        it('should validate if correct Regex format is provided', () => {
+            const validProductNumber = chance.pickone([`1245d-${getRandomNumberOfDigits()}`, `767d-${getRandomNumberOfDigits()}`, `767d-${getRandomNumberOfDigits()}`])
+            productAttributes.ProductNumber = validProductNumber;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+            expect(error).toBe(undefined);
+        })
+
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -71,6 +95,25 @@ describe('validation', () => {
     });
     
     describe('attribute: productDie (aka ToolNo1)', () => {
+        it('should fail validation if productDie prefix is invalid', () => {
+            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `zzz-${getRandomNumberOfDigits()}`])
+            productAttributes.ToolNo1 = invalidProductDie;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if correct Regex format is provided', () => {
+            const validProductDie = chance.pickone([`dd-${getRandomNumberOfDigits()}`, `do-${getRandomNumberOfDigits()}`])
+            productAttributes.ToolNo1 = validProductDie;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+            expect(error).toBe(undefined);
+        })
+
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -137,6 +180,15 @@ describe('validation', () => {
         });
     });
     describe('attribute: SizeAcross (aka sizeAcross)', () => {
+        it('should not less than or equal to zero', () => {
+            productAttributes.SizeAcross = 0
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -165,6 +217,15 @@ describe('validation', () => {
             expect(product.sizeAround).toBeDefined();
         });
 
+        it('should not less than or equal to zero', () => {
+            productAttributes.SizeAround = 0
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should fail validation if attribute is missing', () => {
             delete productAttributes.SizeAround;
             const product = new ProductModel(productAttributes);
@@ -185,6 +246,15 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.labelsAcross).toBeDefined();
+        });
+
+        it('should not less than or equal to zero', () => {
+            productAttributes.NoAcross = 0
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {
@@ -209,6 +279,16 @@ describe('validation', () => {
             expect(product.labelsAround).toBeDefined();
         });
 
+        it('should not less than or equal to zero', () => {
+            productAttributes.NoAround = 0
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+
         it('should fail validation if attribute is missing', () => {
             delete productAttributes.NoAround;
             const product = new ProductModel(productAttributes);
@@ -229,6 +309,33 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.cornerRadius).toBeDefined();
+        });
+
+        it('should not be less than 0', () => {
+            productAttributes.CornerRadius = chance.floating({min: -0.01})
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        })
+
+        it('should be valid if number is zero', () => {
+            productAttributes.CornerRadius = 0
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should be valid if number less than 1 and greater than or equal to 0', () => {
+            productAttributes.CornerRadius = chance.floating({min: 0, max: 0.99999})
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {
@@ -341,6 +448,24 @@ describe('validation', () => {
             expect(product.labelQty).toBeDefined();
         });
 
+        it('should fail if attribute is not an integer', () => {
+            productAttributes.OrderQuantity = chance.floating();
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail if attribute is less than zero', () => {
+            productAttributes.OrderQuantity = chance.integer({max: 0});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should fail validation if attribute is missing', () => {
             delete productAttributes.OrderQuantity;
             const product = new ProductModel(productAttributes);
@@ -430,6 +555,24 @@ describe('validation', () => {
             expect(product.numberOfColors).toBeDefined();
         });
 
+        it('should fail if attribute is not an integer', () => {
+            productAttributes.NoColors = chance.floating();
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail if attribute is less than zero', () => {
+            productAttributes.NoColors = chance.integer({max: 0});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should pass validation if attribute is missing', () => {
             delete productAttributes.NoColors;
             const product = new ProductModel(productAttributes);
@@ -450,6 +593,24 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.labelsPerRoll).toBeDefined();
+        });
+
+        it('should fail if attribute is not an integer', () => {
+            productAttributes.LabelsPer_ = chance.floating();
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail if attribute is less than zero', () => {
+            productAttributes.LabelsPer_ = chance.integer({max: 0});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {
@@ -521,12 +682,31 @@ describe('validation', () => {
             expect(product.priceMode).toEqual(expect.any(String));
         });
     });
-    describe('attribute: dieTwo (aka ToolNo2)', () => {
+    describe('attribute: productDieTwo (aka ToolNo2)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.dieTwo).toBeDefined();
+            expect(product.productDieTwo).toBeDefined();
         });
+
+        it('should fail validation if productDie prefix is invalid', () => {
+            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `zzz-${getRandomNumberOfDigits()}`])
+            productAttributes.ToolNo2 = invalidProductDie;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if correct Regex format is provided', () => {
+            const validProductDie = chance.pickone([`dd-${getRandomNumberOfDigits()}`, `do-${getRandomNumberOfDigits()}`])
+            productAttributes.ToolNo2 = validProductDie;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+            expect(error).toBe(undefined);
+        })
 
         it('should pass validation if attribute is missing', () => {
             delete productAttributes.ToolNo2;

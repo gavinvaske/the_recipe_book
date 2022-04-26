@@ -29,7 +29,7 @@ describe('validation', () => {
             Notes: [{}, {}], // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
             Hidden_Notes: chance.string(), // TODO: re-evaluate (The xml->json conversion may be defaulting to an object when it reallly should be a string)
             NoColors: convertNumberToString(chance.floating()),
-            LabelsPer_Roll: convertNumberToString(chance.floating()),
+            LabelsPer_: convertNumberToString(chance.floating()),
             FinishType: chance.string(),
             PriceM: convertNumberToString(chance.floating()),
             PriceMode: chance.string(),
@@ -445,7 +445,7 @@ describe('validation', () => {
             expect(product.numberOfColors).toEqual(expect.any(Number));
         });
     });
-    describe('attribute: labelsPerRoll (aka LabelsPer_Roll)', () => {
+    describe('attribute: labelsPerRoll (aka LabelsPer_)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -453,7 +453,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if attribute is missing', () => {
-            delete productAttributes.LabelsPer_Roll;
+            delete productAttributes.LabelsPer_;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();

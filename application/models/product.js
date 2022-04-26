@@ -98,7 +98,7 @@ const schema = new Schema({
     labelsPerRoll: {
         type: Number,
         required: true,
-        alias: 'LabelsPer_Roll'
+        alias: 'LabelsPer_'
     },
     finishType: {
         type: String,

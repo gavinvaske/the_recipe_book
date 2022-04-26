@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
-PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}/
-PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(\d{1,})/
+PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}/;
+PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(\d{1,})/;
 
 function validateProductNumber(productNumber) {
     return PRODUCT_NUMBER_REGEX.test(productNumber);
@@ -14,11 +14,11 @@ function validateProductDie(productDie) {
 }
 
 function numberMustBeGreaterThanZero(number) {
-    return number > 0;
+    return number > 0; // eslint-disable-line no-magic-numbers
 }
 
 function validateCornerRadius(cornerRadius) {
-    const greaterThanOrEqualToZero = cornerRadius >= 0
+    const greaterThanOrEqualToZero = cornerRadius >= 0; // eslint-disable-line no-magic-numbers
     const lessThanOne = cornerRadius < 1;
 
     return greaterThanOrEqualToZero && lessThanOne;
@@ -51,32 +51,32 @@ const schema = new Schema({
     },
     sizeAcross: {
         type: Number,
-        validate: [numberMustBeGreaterThanZero, "Size Across must be greater than 0"],
+        validate: [numberMustBeGreaterThanZero, 'Size Across must be greater than 0'],
         required: true,
         alias: 'SizeAcross'
     },
     sizeAround: {
         type: Number,
-        validate: [numberMustBeGreaterThanZero, "Size Around must be greater than 0"],
+        validate: [numberMustBeGreaterThanZero, 'Size Around must be greater than 0'],
         required: true,
         alias: 'SizeAround'
     },
     labelsAcross: {
         type: Number,
-        validate: [numberMustBeGreaterThanZero, "Size Around must be greater than 0"],
+        validate: [numberMustBeGreaterThanZero, 'Size Around must be greater than 0'],
         required: true,
         alias: 'NoAcross'
     },
     labelsAround: {
         type: Number,
-        validate: [numberMustBeGreaterThanZero, "Size Around must be greater than 0"],
+        validate: [numberMustBeGreaterThanZero, 'Size Around must be greater than 0'],
         required: true,
         alias: 'NoAround'
     },
     cornerRadius: {
         type: Number,
         required: true,
-        validate: [validateCornerRadius, "Corner Radius must be between 0 and 1"],
+        validate: [validateCornerRadius, 'Corner Radius must be between 0 and 1'],
         alias: 'CornerRadius'
     },
     unwindDirection: {

@@ -240,7 +240,7 @@ describe('materialOrder validation', () => {
         });
 
         it('should fail validation if vendor not the correct type', () => {
-            materialOrderAttributes.vendor = chance.string();
+            materialOrderAttributes.vendor = chance.word();
 
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 

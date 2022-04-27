@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// For help deciphering these regex expressions, visit: https://regexr.com/
+TICKET_NUMBER_REGEX = /^\d{1,}$/;
+
+function stringOnlyContainsDigits(ticketNumber) {
+    return TICKET_NUMBER_REGEX.test(ticketNumber);
+}
+
 const schema = new Schema({
     products: {
         type: [
@@ -12,6 +19,7 @@ const schema = new Schema({
     },
     ticketNumber: {
         type: String,
+        validate: [stringOnlyContainsDigits, 'Ticket Number must only contain digits'],
         required: true,
         alias: 'TicketNumber'
     },

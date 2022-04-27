@@ -10,7 +10,7 @@ describe('validation', () => {
 
     beforeEach(() => {
         ticketAttributes = {
-            TicketNumber: chance.string(),
+            TicketNumber:  convertNumberToString(chance.integer({min: 0})),
             Ship_by_Date: chance.string(),
             OrderDate: chance.string(),
             EstFootage: convertNumberToString(chance.floating()),
@@ -48,6 +48,17 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.ticketNumber).toBeDefined();
+        });
+
+        it('should fail if ticketNumber does not contain ONLY digits', () => {
+            const validTicketNumber = chance.integer({min: 0});
+            const invalidTicketNumber = validTicketNumber + chance.word();
+            ticketAttributes.TicketNumber = invalidTicketNumber;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {

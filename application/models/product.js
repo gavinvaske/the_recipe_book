@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
-PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}/;
+PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(\d{1,})/;
 
 function validateProductNumber(productNumber) {

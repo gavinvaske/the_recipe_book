@@ -55,7 +55,7 @@ describe('validation', () => {
 
     describe('attribute: productNumber (aka ProductNumber)', () => {
         it('should fail validation if string does not start with 3 or 4 digits followed by a "D-" follows by 1 or more digits', () => {
-            const slightlyInvalidProductNumbers = chance.pickone([`12D-${getRandomNumberOfDigits()}`, `123-${getRandomNumberOfDigits()}`]);
+            const slightlyInvalidProductNumbers = chance.pickone([`12D-${getRandomNumberOfDigits()}`, `123D-${getRandomNumberOfDigits()}xxxxx`]);
             productAttributes.ProductNumber = slightlyInvalidProductNumbers;
             const product = new ProductModel(productAttributes);
 
@@ -96,7 +96,7 @@ describe('validation', () => {
     
     describe('attribute: productDie (aka ToolNo1)', () => {
         it('should fail validation if productDie prefix is invalid', () => {
-            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `zzz-${getRandomNumberOfDigits()}`]);
+            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `XLDR-${getRandomNumberOfDigits()}xxxxxx`]);
             productAttributes.ToolNo1 = invalidProductDie;
             const product = new ProductModel(productAttributes);
 
@@ -106,7 +106,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if correct Regex format is provided', () => {
-            const validProductDie = chance.pickone([`dd-${getRandomNumberOfDigits()}`, `do-${getRandomNumberOfDigits()}`]);
+            const validProductDie = chance.pickone([`dd-${getRandomNumberOfDigits()}xxx`, `do-${getRandomNumberOfDigits()}`]);
             productAttributes.ToolNo1 = validProductDie;
             const product = new ProductModel(productAttributes);
 

@@ -3,7 +3,20 @@ const Schema = mongoose.Schema;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
-PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(\d{1,})/;
+PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
+
+function cannotBeFalsy(value) {
+    if (!value) {
+        return false;
+    }
+    return true;
+}
+
+function convertStringCurrency(numberAsString) {
+    const currencyWithoutCommas = numberAsString.split(",").join("")
+
+    return Number(currencyWithoutCommas * 100)
+}
 
 function validateProductNumber(productNumber) {
     return PRODUCT_NUMBER_REGEX.test(productNumber);
@@ -22,6 +35,10 @@ function validateCornerRadius(cornerRadius) {
     const lessThanOne = cornerRadius < 1;
 
     return greaterThanOrEqualToZero && lessThanOne;
+}
+
+function numberCannotBeNegative(number) {
+    return number >= 0;
 }
 
 const schema = new Schema({
@@ -154,6 +171,18 @@ const schema = new Schema({
     },
     price: {
         type: Number,
+        validate: [
+            {
+                validator: cannotBeFalsy,
+                message: 'Price cannot be 0 or blank'
+            },
+            {
+                validator: numberMustBeGreaterThanZero,
+                message: 'Price cannot be negative'
+            }
+        ],
+        get: amount => Number((amount / 100).toFixed(2)),
+        set: convertStringCurrency,
         required: true,
         alias: 'PriceM'
     },

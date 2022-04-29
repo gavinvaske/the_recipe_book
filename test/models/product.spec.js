@@ -1,12 +1,8 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
 
-function convertNumberToString(value) {
-    return `${value}`;
-}
-
 function getRandomNumberOfDigits() {
-    return chance.integer({min: 0});
+    return chance.integer({min: 1});
 }
 
 describe('validation', () => {
@@ -20,24 +16,24 @@ describe('validation', () => {
             ToolNo1: chance.pickone(validProductDies),
             StockNum2: chance.string(),
             InkType: {},
-            SizeAcross: convertNumberToString(chance.floating({min: 0.1})),
-            SizeAround: convertNumberToString(chance.floating({min: 0.1})),
-            NoAcross: convertNumberToString(chance.floating({min: 0.1})),
-            NoAround: convertNumberToString(chance.floating({min: 0.1})),
-            CornerRadius: convertNumberToString(chance.floating({min: 0, max: 0.99})),
+            SizeAcross: String(chance.floating({min: 0.1})),
+            SizeAround: String(chance.floating({min: 0.1})),
+            NoAcross: String(chance.floating({min: 0.1})),
+            NoAround: String(chance.floating({min: 0.1})),
+            CornerRadius: String(chance.floating({min: 0, max: 0.99})),
             FinalUnwind: chance.string(),
-            ColSpace: convertNumberToString(chance.floating()),
-            RowSpace: convertNumberToString(chance.floating()),
+            ColSpace: String(chance.floating()),
+            RowSpace: String(chance.floating()),
             Description: chance.string(),
-            OrderQuantity: convertNumberToString(chance.integer({min: 0})),
+            OrderQuantity: String(chance.integer({min: 0})),
             FinishNotes: {},
             StockNotes: {},
             Notes: [{}, {}],
             Hidden_Notes: chance.string(),
-            NoColors: convertNumberToString(chance.integer({min: 0})),
-            LabelsPer_: convertNumberToString(chance.integer({min: 0})),
+            NoColors: String(chance.integer({min: 0})),
+            LabelsPer_: String(chance.integer({min: 0})),
             FinishType: chance.string(),
-            PriceM: convertNumberToString(chance.floating()),
+            PriceM: String(chance.integer({min: 0})),
             PriceMode: chance.string(),
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: chance.string(),
@@ -96,7 +92,7 @@ describe('validation', () => {
     
     describe('attribute: productDie (aka ToolNo1)', () => {
         it('should fail validation if productDie prefix is invalid', () => {
-            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `XLDR-${getRandomNumberOfDigits()}xxxxxx`]);
+            const invalidProductDie = chance.pickone([`RW-${getRandomNumberOfDigits()}`, `XLDR${getRandomNumberOfDigits()}xxxxxx`]);
             productAttributes.ToolNo1 = invalidProductDie;
             const product = new ProductModel(productAttributes);
 
@@ -449,8 +445,10 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is not an integer', () => {
-            productAttributes.OrderQuantity = chance.floating();
+            productAttributes.OrderQuantity = chance.floating({fixed: 8});
             const product = new ProductModel(productAttributes);
+
+            console.log(`productAttributes.OrderQuantity => ${productAttributes.OrderQuantity}`);
 
             const error = product.validateSync();
 
@@ -556,7 +554,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is not an integer', () => {
-            productAttributes.NoColors = chance.floating();
+            productAttributes.NoColors = chance.floating({fixed: 8});
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -596,7 +594,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is not an integer', () => {
-            productAttributes.LabelsPer_ = chance.floating();
+            productAttributes.LabelsPer_ = chance.floating({fixed: 8});
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -650,6 +648,36 @@ describe('validation', () => {
 
             expect(product.price).toBeDefined();
         });
+
+        it('should not store floating points of more than 2 decimal places', () => {
+            const priceWithWayTooManyDecimals = "100.112222222";
+            productAttributes.PriceM = priceWithWayTooManyDecimals;
+            const expectedPrice = 100.11
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.price).toEqual(expectedPrice);
+        });
+        
+        it('should fail validation if negative price is used', () => {
+            const negativePrice = chance.integer({max: -1});
+            productAttributes.PriceM = negativePrice;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should remove commas from price', () => {
+            const currencyWithCommas = "1,192,123.83";
+            const currencyWithoutCommas = 1192123.83;
+            productAttributes.PriceM = currencyWithCommas;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.price).toEqual(currencyWithoutCommas);
+        });
         
         it('should fail validation if attribute is missing', () => {
             delete productAttributes.PriceM;
@@ -658,6 +686,32 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if price is a non-number', () => {
+            const invalidPrice = chance.word();
+            productAttributes.PriceM = invalidPrice;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if price is empty', () => {
+            const invalidPrice = '';
+            productAttributes.PriceM = invalidPrice;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.price).toEqual(expect.any(Number));
         });
     });
     describe('attribute: priceMode (aka PriceMode)', () => {

@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
 
+const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
+const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
+
 function cannotBeFalsy(value) {
     if (!value) {
         return false;
@@ -13,9 +16,9 @@ function cannotBeFalsy(value) {
 }
 
 function convertStringCurrency(numberAsString) {
-    const currencyWithoutCommas = numberAsString.split(",").join("")
+    const currencyWithoutCommas = numberAsString.split(',').join('');
 
-    return Number(currencyWithoutCommas * 100)
+    return Number(currencyWithoutCommas * NUMBER_OF_PENNIES_IN_A_DOLLAR);
 }
 
 function validateProductNumber(productNumber) {
@@ -35,10 +38,6 @@ function validateCornerRadius(cornerRadius) {
     const lessThanOne = cornerRadius < 1;
 
     return greaterThanOrEqualToZero && lessThanOne;
-}
-
-function numberCannotBeNegative(number) {
-    return number >= 0;
 }
 
 const schema = new Schema({
@@ -181,7 +180,7 @@ const schema = new Schema({
                 message: 'Price cannot be negative'
             }
         ],
-        get: amount => Number((amount / 100).toFixed(2)),
+        get: amountInDollars => Number((amountInDollars / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
         set: convertStringCurrency,
         required: true,
         alias: 'PriceM'

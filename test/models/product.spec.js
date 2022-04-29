@@ -650,9 +650,9 @@ describe('validation', () => {
         });
 
         it('should not store floating points of more than 2 decimal places', () => {
-            const priceWithWayTooManyDecimals = "100.112222222";
+            const priceWithWayTooManyDecimals = '100.112222222';
             productAttributes.PriceM = priceWithWayTooManyDecimals;
-            const expectedPrice = 100.11
+            const expectedPrice = 100.11;
 
             const product = new ProductModel(productAttributes);
 
@@ -670,7 +670,7 @@ describe('validation', () => {
         });
 
         it('should remove commas from price', () => {
-            const currencyWithCommas = "1,192,123.83";
+            const currencyWithCommas = '1,192,123.83';
             const currencyWithoutCommas = 1192123.83;
             productAttributes.PriceM = currencyWithCommas;
 

@@ -24,18 +24,23 @@ const schema = new Schema({
         alias: 'TicketNumber'
     },
     shipDate: {
-        type: String,
+        type: Date,
         required: true,
         alias: 'Ship_by_Date'
     },
     orderDate: {
-        type: String,
+        type: Date,
         required: false,
         alias: 'OrderDate'
     },
     estimatedFootage: {
         type: Number,
         required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : 'Estimated Footage must be an integer'
+        },
+        min: 1,
         alias: 'EstFootage'
     },
     poNumber: {

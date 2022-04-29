@@ -1,19 +1,15 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
 
-function convertNumberToString(value) {
-    return `${value}`;
-}
-
 describe('validation', () => {
     let ticketAttributes;
 
     beforeEach(() => {
         ticketAttributes = {
-            TicketNumber:  convertNumberToString(chance.integer({min: 0})),
-            Ship_by_Date: chance.string(),
-            OrderDate: chance.string(),
-            EstFootage: convertNumberToString(chance.floating()),
+            TicketNumber:  String(chance.integer({min: 0})),
+            Ship_by_Date: chance.date({string: true}),
+            OrderDate: chance.date({string: true}),
+            EstFootage: String(chance.integer({min: 1})),
             PO_Number: chance.string(),
             Priority: chance.string(),
             Notes: chance.string(),
@@ -84,6 +80,16 @@ describe('validation', () => {
             expect(ticket.shipDate).toBeDefined();
         });
 
+        it('should fail if date is invalid', () => {
+            const invalidDate = chance.word();
+            ticketAttributes.Ship_by_Date = invalidDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should fail validation if attribute is missing', () => {
             delete ticketAttributes.Ship_by_Date;
             const ticket = new TicketModel(ticketAttributes);
@@ -101,6 +107,16 @@ describe('validation', () => {
             expect(ticket.orderDate).toBeDefined();
         });
 
+        it('should fail if date is invalid', () => {
+            const invalidDate = chance.word();
+            ticketAttributes.OrderDate = invalidDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should pass validation if attribute is missing', () => {
             delete ticketAttributes.OrderDate;
             const ticket = new TicketModel(ticketAttributes);
@@ -116,6 +132,24 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.estimatedFootage).toBeDefined();
+        });
+
+        it('should fail if attribute is not an integer', () => {
+            ticketAttributes.EstFootage = chance.floating({fixed: 8});
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail if attribute is less than zero', () => {
+            ticketAttributes.EstFootage = chance.integer({max: 0});
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {

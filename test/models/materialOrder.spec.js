@@ -59,7 +59,8 @@ describe('materialOrder validation', () => {
         });
 
         it('should fail validation if purchaseOrderNumber is not an integer', () => {
-            materialOrderAttributes.purchaseOrderNumber = chance.floating();
+            const randomFloatingNumber = chance.floating({fixed: 8});
+            materialOrderAttributes.purchaseOrderNumber = randomFloatingNumber;
 
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 

@@ -8,6 +8,10 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
+function arrayMustHaveAtLeastOneItem(array) {
+    return array.length > 0;
+}
+
 const schema = new Schema({
     products: {
         type: [
@@ -15,7 +19,8 @@ const schema = new Schema({
                 type : Schema.Types.ObjectId, 
                 ref: 'Product' 
             }
-        ]
+        ],
+        validate: [arrayMustHaveAtLeastOneItem, '{PATH} must have at least one item']
     },
     ticketNumber: {
         type: String,

@@ -13,14 +13,12 @@ describe('pre-parsing ticket object', () => {
                     'attribute3': '',
                     'attribute4': {}
                 }
-        ]};
+            ]};
     });
 
     it('should remove attributes whose value is an empty object', () => {
         const expectedNumberOfAttributesToBeRemoved = 1;
         const numberOfKeysBeforeDeletion = Object.keys(ticket[ticketItemKey][0]).length;
-
-        console.log(`numberOfKeysBeforeDeletion: `, numberOfKeysBeforeDeletion);
         
         ticketService.removeEmptyObjectAttributes(ticket);
 

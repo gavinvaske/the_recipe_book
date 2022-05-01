@@ -13,6 +13,6 @@ module.exports.removeEmptyObjectAttributes = (ticketObject) => {
             if (isEmptyObject(ticketItem[key])) {
                 delete ticketObject[ticketItemKey][index][key];
             }
-        })
+        });
     });
-}
+};

@@ -61,7 +61,7 @@ const schema = new Schema({
         alias: 'StockNum2'
     },
     uvFinish: {
-        type: Object,
+        type: String,
         required: false,
         alias: 'InkType'
     },
@@ -126,21 +126,21 @@ const schema = new Schema({
         alias: 'OrderQuantity'
     },
     windingNotes: {
-        type: Object,
+        type: String,
         required: false,
         alias: 'FinishNotes'
     },
     dieCuttingNotes: {
-        type: Object,
+        type: String,
         required: false,
         alias: 'StockNotes'
     },
     prePrintingNotes: {
-        type: [Object],
+        type: [String],
         alias: 'Notes'
     },
     printingNotes: {
-        type: Object,
+        type: String,
         alias: 'Hidden_Notes'
     },
     numberOfColors: {

@@ -15,7 +15,7 @@ describe('validation', () => {
             ProductNumber: chance.pickone(['1245D-100', '767D-2672', '767D-001']),
             ToolNo1: chance.pickone(validProductDies),
             StockNum2: chance.string(),
-            InkType: {},
+            InkType: chance.string(),
             SizeAcross: String(chance.floating({min: 0.1})),
             SizeAround: String(chance.floating({min: 0.1})),
             NoAcross: String(chance.floating({min: 0.1})),
@@ -26,9 +26,9 @@ describe('validation', () => {
             RowSpace: String(chance.floating()),
             Description: chance.string(),
             OrderQuantity: String(chance.integer({min: 0})),
-            FinishNotes: {},
-            StockNotes: {},
-            Notes: [{}, {}],
+            FinishNotes: chance.string(),
+            StockNotes: chance.string(),
+            Notes: [chance.string(), chance.string()],
             Hidden_Notes: chance.string(),
             NoColors: String(chance.integer({min: 0})),
             LabelsPer_: String(chance.integer({min: 0})),
@@ -172,7 +172,7 @@ describe('validation', () => {
         it('should be of type Object', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.uvFinish).toEqual(expect.any(Object));
+            expect(product.uvFinish).toEqual(expect.any(String));
         });
     });
     describe('attribute: SizeAcross (aka sizeAcross)', () => {
@@ -495,10 +495,10 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should be of type Object', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.windingNotes).toEqual(expect.any(Object));
+            expect(product.windingNotes).toEqual(expect.any(String));
         });
     });
     describe('attribute: dieCuttingNotes (aka StockNotes)', () => {
@@ -517,10 +517,10 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should be of type Object', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.dieCuttingNotes).toEqual(expect.any(Object));
+            expect(product.dieCuttingNotes).toEqual(expect.any(String));
         });
     });
     describe('attribute: prePrintingNotes (aka Notes)', () => {
@@ -538,12 +538,25 @@ describe('validation', () => {
 
             expect(error).toBe(undefined);
         });
+
+        it('should be an array of Strings', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.prePrintingNotes[0]).toEqual(expect.any(String));
+            expect(product.prePrintingNotes[1]).toEqual(expect.any(String));
+        });
     });
     describe('attribute: printingNotes (aka Hidden_Notes)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.printingNotes).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.printingNotes).toEqual(expect.any(String));
         });
     });
     describe('attribute: numberOfColors (aka NoColors)', () => {

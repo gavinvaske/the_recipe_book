@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const productSchema = require('./product').schema;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -8,19 +9,9 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
-function arrayMustHaveAtLeastOneItem(array) {
-    return array.length > 0;
-}
-
-const schema = new Schema({
+const ticketSchema = new Schema({
     products: {
-        type: [
-            {
-                type : Schema.Types.ObjectId, 
-                ref: 'Product' 
-            }
-        ],
-        validate: [arrayMustHaveAtLeastOneItem, '{PATH} must have at least one item']
+        type: [productSchema],
     },
     ticketNumber: {
         type: String,
@@ -51,17 +42,12 @@ const schema = new Schema({
     poNumber: {
         type: String,
         required: true,
-        alias: 'PO_Number'
+        alias: 'CustPONum'
     },
     priority: {
         type: String,
         required: true,
         alias: 'Priority'
-    },
-    notes: {
-        type: String,
-        required: false,
-        alias: 'Notes'
     },
     billingZipCode: {
         type: String,
@@ -96,7 +82,7 @@ const schema = new Schema({
     shipState: {
         type: String,
         required: false,
-        alias: 'ShipState'
+        alias: 'ShipSt'
     },
     shipCity: {
         type: String,
@@ -121,7 +107,7 @@ const schema = new Schema({
     shippingInstructions: {
         type: String,
         required: false,
-        alias: 'ShipInstruc'
+        alias: 'ShippingInstruc'
     },
     shippingMethod: {
         type: String,
@@ -140,6 +126,6 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const Ticket = mongoose.model('Ticket', schema);
+const Ticket = mongoose.model('Ticket', ticketSchema);
 
 module.exports = Ticket;

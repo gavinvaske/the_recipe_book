@@ -196,16 +196,6 @@ const schema = new Schema({
         uppercase: true,
         required: false,
         alias: 'ToolNo2'
-    },
-    toolNumberAround: {
-        type: String,
-        required: false,
-        alias: 'Tool_NumberAround'
-    },
-    plateId: {
-        type: String,
-        required: false,
-        alias: 'Plate_ID'
     }
 }, { timestamps: true });
 

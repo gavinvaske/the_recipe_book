@@ -7,26 +7,24 @@ describe('validation', () => {
 
     beforeEach(() => {
         ticketAttributes = {
-            products: [new mongoose.Types.ObjectId()],
             TicketNumber:  String(chance.integer({min: 0})),
             Ship_by_Date: chance.date({string: true}),
             OrderDate: chance.date({string: true}),
             EstFootage: String(chance.integer({min: 1})),
-            PO_Number: chance.string(),
+            CustPONum: chance.string(),
             Priority: chance.string(),
-            Notes: chance.string(),
             BillZip: chance.string(),
             BillCity: chance.string(),
             BillAddr1: chance.string(),
             BillAddr2: chance.string(),
             BillLocation: chance.string(),
             ShipZip: chance.string(),
-            ShipState: chance.string(),
+            ShipSt: chance.string(),
             ShipCity: chance.string(),
             ShipAddr1: chance.string(),
             ShipAddr2: chance.string(),
             ShipLocation: chance.string(),
-            ShipInstruc: chance.string(),
+            ShippingInstruc: chance.string(),
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
@@ -41,40 +39,40 @@ describe('validation', () => {
         expect(error).toBe(undefined);
     });
 
-    describe('attribute: products', () => {
-        it('should contain attribute', () => {
-            const ticket = new TicketModel(ticketAttributes);
+    // describe('attribute: products', () => {
+    //     it('should contain attribute', () => {
+    //         const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.products).toBeDefined();
-        });
+    //         expect(ticket.products).toBeDefined();
+    //     });
 
-        it('should fail validation if attribute does not exist', () => {
-            delete ticketAttributes.products;
-            const ticket = new TicketModel(ticketAttributes);
+    //     it('should fail validation if attribute does not exist', () => {
+    //         delete ticketAttributes.products;
+    //         const ticket = new TicketModel(ticketAttributes);
 
-            const error = ticket.validateSync();
+    //         const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
-        });
+    //         expect(error).not.toBe(undefined);
+    //     });
 
-        it('should fail validation if attribute is empty', () => {
-            ticketAttributes.products = [];
-            const ticket = new TicketModel(ticketAttributes);
+    //     it('should fail validation if attribute is empty', () => {
+    //         ticketAttributes.products = [];
+    //         const ticket = new TicketModel(ticketAttributes);
 
-            const error = ticket.validateSync();
+    //         const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
-        });
+    //         expect(error).not.toBe(undefined);
+    //     });
 
-        it('should fail if values in array are not mongoose Object Ids', () => {
-            ticketAttributes.products.push(chance.word());
-            const ticket = new TicketModel(ticketAttributes);
+    //     it('should fail if values in array are not mongoose Object Ids', () => {
+    //         ticketAttributes.products.push(chance.word());
+    //         const ticket = new TicketModel(ticketAttributes);
 
-            const error = ticket.validateSync();
+    //         const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
-        });
-    });
+    //         expect(error).not.toBe(undefined);
+    //     });
+    // });
 
     describe('attribute: ticketNumber (aka TicketNumber)', () => {
         it('should contain attribute', () => {
@@ -205,7 +203,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: poNumber (aka PO_Number)', () => {
+    describe('attribute: poNumber (aka CustPONum)', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
@@ -213,7 +211,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if attribute is missing', () => {
-            delete ticketAttributes.PO_Number;
+            delete ticketAttributes.CustPONum;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -248,29 +246,6 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.priority).toEqual(expect.any(String));
-        });
-    });
-
-    describe('attribute: notes (aka Notes)', () => {
-        it('should contain attribute', () => {
-            const ticket = new TicketModel(ticketAttributes);
-
-            expect(ticket.notes).toBeDefined();
-        });
-
-        it('should pass validation if attribute is missing', () => {
-            delete ticketAttributes.Notes;
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should be of type String', () => {
-            const ticket = new TicketModel(ticketAttributes);
-
-            expect(ticket.notes).toEqual(expect.any(String));
         });
     });
 
@@ -376,7 +351,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: shipState (aka ShipState)', () => {
+    describe('attribute: shipState (aka ShippingInstruc)', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
@@ -384,7 +359,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if attribute is missing', () => {
-            delete ticketAttributes.ShipState;
+            delete ticketAttributes.ShippingInstruc;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -461,7 +436,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: shippingInstructions (aka ShipInstruc)', () => {
+    describe('attribute: shippingInstructions (aka ShippingInstruc)', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
@@ -469,7 +444,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if attribute is missing', () => {
-            delete ticketAttributes.ShipInstruc;
+            delete ticketAttributes.ShippingInstruc;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();

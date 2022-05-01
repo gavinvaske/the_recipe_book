@@ -35,9 +35,7 @@ describe('validation', () => {
             FinishType: chance.string(),
             PriceM: String(chance.integer({min: 0})),
             PriceMode: chance.string(),
-            ToolNo2: chance.pickone(validProductDies),
-            Tool_NumberAround: chance.string(),
-            Plate_ID: chance.string()
+            ToolNo2: chance.pickone(validProductDies)
         };
     });
 
@@ -782,51 +780,6 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
-        });
-    });
-    describe('attribute: toolNumberAround (aka Tool_NumberAround)', () => {
-        it('should contain attribute', () => {
-            const product = new ProductModel(productAttributes);
-
-            expect(product.toolNumberAround).toBeDefined();
-        });
-
-        it('should pass validation if attribute is missing', () => {
-            delete productAttributes.Tool_NumberAround;
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should be of type String', () => {
-            const product = new ProductModel(productAttributes);
-
-            expect(product.toolNumberAround).toEqual(expect.any(String));
-        });
-    });
-
-    describe('attribute: plateId (aka Plate_ID)', () => {
-        it('should contain attribute', () => {
-            const product = new ProductModel(productAttributes);
-
-            expect(product.plateId).toBeDefined();
-        });
-
-        it('should pass validation if attribute is missing', () => {
-            delete productAttributes.Plate_ID;
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should be of type String', () => {
-            const product = new ProductModel(productAttributes);
-
-            expect(product.plateId).toEqual(expect.any(String));
         });
     });
 });

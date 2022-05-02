@@ -52,6 +52,7 @@ app.use('/cutting-setups', require('./controllers/cuttingSetupController'));
 app.use('/winding-setups', require('./controllers/windingSetupController'));
 app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
+app.use('/tickets', require('./controllers/ticketController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

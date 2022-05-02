@@ -33,7 +33,7 @@ function getStandardProduct() {
 
 function getExtraCharge() {
     const product = getStandardProduct();
-    product.ProductNumber = 'blah-r';
+    product.ProductNumber = chance.word() + `-${chance.letter()}`;
 
     return product;
 }

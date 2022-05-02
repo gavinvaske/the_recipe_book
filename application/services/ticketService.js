@@ -1,5 +1,4 @@
-const ProductModel = require('../models/product');
-const TicketModel = require('../models/ticket');
+const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
 
 function isEmptyObject(value) {
     if (!value) {
@@ -40,7 +39,7 @@ function parseTicketAttributesOffOfProducts(product) {
         ShipVia: product.ShipVia,
         ShipAttn_EmailAddress: product.ShipAttn_EmailAddress,
         BillState: product.BillState
-    }
+    };
 }
 
 module.exports.removeEmptyObjectAttributes = (ticketObject) => {
@@ -55,20 +54,22 @@ module.exports.removeEmptyObjectAttributes = (ticketObject) => {
     });
 };
 
-module.exports.convertRawJsonIntoTicketObject = (ticketAsJson) => {
+module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) => {
     let ticketAttributesPulledFromProducts;
     let products = [];
+    let extraCharges = [];
 
-    ticketAsJson['TicketItem'].forEach((productAttributes, index) => {
-        if (index === 0) {
-            ticketAttributesPulledFromProducts = parseTicketAttributesOffOfProducts(productAttributes)
+    rawUploadedTicket['TicketItem'].forEach((item, index) => {
+        if (index === 0) { // eslint-disable-line no-magic-numbers
+            ticketAttributesPulledFromProducts = parseTicketAttributesOffOfProducts(item);
         }
 
-        products.push(productAttributes);
+        PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(item['ProductNumber']) ? extraCharges.push(item) : products.push(item);
     });
 
     return {
         ...ticketAttributesPulledFromProducts,
-        products
+        products,
+        extraCharges
     };
 };

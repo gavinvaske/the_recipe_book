@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
-const mongoose = require('mongoose');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -38,41 +37,6 @@ describe('validation', () => {
 
         expect(error).toBe(undefined);
     });
-
-    // describe('attribute: products', () => {
-    //     it('should contain attribute', () => {
-    //         const ticket = new TicketModel(ticketAttributes);
-
-    //         expect(ticket.products).toBeDefined();
-    //     });
-
-    //     it('should fail validation if attribute does not exist', () => {
-    //         delete ticketAttributes.products;
-    //         const ticket = new TicketModel(ticketAttributes);
-
-    //         const error = ticket.validateSync();
-
-    //         expect(error).not.toBe(undefined);
-    //     });
-
-    //     it('should fail validation if attribute is empty', () => {
-    //         ticketAttributes.products = [];
-    //         const ticket = new TicketModel(ticketAttributes);
-
-    //         const error = ticket.validateSync();
-
-    //         expect(error).not.toBe(undefined);
-    //     });
-
-    //     it('should fail if values in array are not mongoose Object Ids', () => {
-    //         ticketAttributes.products.push(chance.word());
-    //         const ticket = new TicketModel(ticketAttributes);
-
-    //         const error = ticket.validateSync();
-
-    //         expect(error).not.toBe(undefined);
-    //     });
-    // });
 
     describe('attribute: ticketNumber (aka TicketNumber)', () => {
         it('should contain attribute', () => {

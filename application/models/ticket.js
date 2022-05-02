@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
+const chargeSchema = require('./charge').schema;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -12,6 +13,9 @@ function stringOnlyContainsDigits(ticketNumber) {
 const ticketSchema = new Schema({
     products: {
         type: [productSchema],
+    },
+    extraCharges: {
+        type: [chargeSchema]
     },
     ticketNumber: {
         type: String,

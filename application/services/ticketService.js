@@ -58,13 +58,19 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
     let ticketAttributesPulledFromProducts;
     let products = [];
     let extraCharges = [];
+    let hasParsedTicketAttributes = false;
 
-    rawUploadedTicket['TicketItem'].forEach((item, index) => {
-        if (index === 0) { // eslint-disable-line no-magic-numbers
+    rawUploadedTicket['TicketItem'].forEach((item) => {
+        console.log(`isitemAnExtraCharge = ${PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(item['ProductNumber'])}; itemp['ProductNumber'] = ${item['ProductNumber']}`);
+
+        const isItemAnExtraCharge = PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(item['ProductNumber']);
+
+        if (!hasParsedTicketAttributes && !isItemAnExtraCharge) { // eslint-disable-line no-magic-numbers
             ticketAttributesPulledFromProducts = parseTicketAttributesOffOfProducts(item);
+            hasParsedTicketAttributes = true;
         }
 
-        PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(item['ProductNumber']) ? extraCharges.push(item) : products.push(item);
+        isItemAnExtraCharge ? extraCharges.push(item) : products.push(item);
     });
 
     return {

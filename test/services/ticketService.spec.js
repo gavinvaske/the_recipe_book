@@ -43,7 +43,6 @@ describe('ticketService test suite', () => {
 
     describe('pre-parsing ticket object', () => {
 
-
         beforeEach(() => {
             ticket = {
                 [TICKET_ITEM_KEY]: [

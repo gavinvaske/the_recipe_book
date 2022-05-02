@@ -165,7 +165,7 @@ const schema = new Schema({
     },
     finishType: {
         type: String,
-        required: true,
+        required: false,
         alias: 'FinishType'
     },
     price: {

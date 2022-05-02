@@ -644,13 +644,13 @@ describe('validation', () => {
             expect(product.finishType).toBeDefined();
         });
 
-        it('should fail validation if attribute is missing', () => {
+        it('should NOT fail validation if attribute is missing', () => {
             delete productAttributes.FinishType;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBe(undefined);
         });
     });
     describe('attribute: price (aka PriceM)', () => {

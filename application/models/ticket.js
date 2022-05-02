@@ -45,7 +45,7 @@ const ticketSchema = new Schema({
     },
     poNumber: {
         type: String,
-        required: true,
+        required: false,
         alias: 'CustPONum'
     },
     priority: {

@@ -196,6 +196,25 @@ const schema = new Schema({
         uppercase: true,
         required: false,
         alias: 'ToolNo2'
+    },
+    Tool_NumberAround: {
+        type: Number,
+        validate : [
+            {
+                validator : Number.isInteger,
+                message   : 'Tool Number Around must be an integer'
+            },
+            {
+                validator: numberMustBeGreaterThanZero,
+                message: 'Tool Number Around cannot be negative'
+            }
+        ],
+        required: false,
+        alias: 'toolNumberAround'
+    },
+    Plate_ID: {
+        type: String,
+        alias: 'plateId'
     }
 }, { timestamps: true });
 

@@ -35,7 +35,9 @@ describe('validation', () => {
             FinishType: chance.string(),
             PriceM: String(chance.integer({min: 0})),
             PriceMode: chance.string(),
-            ToolNo2: chance.pickone(validProductDies)
+            ToolNo2: chance.pickone(validProductDies),
+            Tool_NumberAround: String(chance.integer()),
+            Plate_ID: ''
         };
     });
 
@@ -780,6 +782,62 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: toolNumberAround (aka Tool_NumberAround)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolNumberAround).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete productAttributes.Tool_NumberAround;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail if attribute is not an integer', () => {
+            productAttributes.Tool_NumberAround = chance.floating({fixed: 8});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if negative price is used', () => {
+            const negativeValue = chance.integer({max: -1});
+            productAttributes.Tool_NumberAround = negativeValue;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolNumberAround).toEqual(expect.any(Number));
+        });
+    });
+
+    describe('attribute: plateId (aka PlateID)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.plateId).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.plateId).toEqual(expect.any(String));
         });
     });
 });

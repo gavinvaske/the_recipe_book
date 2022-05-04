@@ -37,7 +37,7 @@ describe('validation', () => {
             PriceMode: chance.string(),
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: String(chance.integer()),
-            Plate_ID: ''
+            Plate_ID: chance.string()
         };
     });
 

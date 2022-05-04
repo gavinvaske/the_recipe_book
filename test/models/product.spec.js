@@ -36,7 +36,7 @@ describe('validation', () => {
             PriceM: String(chance.integer({min: 0})),
             PriceMode: chance.string(),
             ToolNo2: chance.pickone(validProductDies),
-            Tool_NumberAround: String(chance.integer()),
+            Tool_NumberAround: String(chance.integer({min: 0})),
             Plate_ID: chance.string()
         };
     });

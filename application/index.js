@@ -1,3 +1,31 @@
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+const UserModel = require('./models/user');
+
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/index.html');
+// });
+
+io.on('connection', (socket) => {
+    console.log(`The connection is liveeeee!!`)
+
+    socket.on('chat message', msg => {
+        console.log(`You chatted something: ${msg}`);
+        io.emit('chat message', msg);
+  });
+});
+
+UserModel.watch().on('change', async (change) => {
+    console.log(`Change to a User in database ${JSON.stringify(change)}`);
+    if (change.operationType === 'update'){
+        const user = await UserModel.findById(change.documentKey._id);
+
+        io.emit(change.documentKey._id, user);
+    }
+});
+
 const express = require('express');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
@@ -13,8 +41,6 @@ const databaseConnection = mongoose.connection;
 
 const defaultPort = 8080;
 const PORT = process.env.PORT || defaultPort;
-
-const app = express();
 
 app.use(expressLayouts);
 app.use(express.json());
@@ -53,13 +79,14 @@ app.use('/winding-setups', require('./controllers/windingSetupController'));
 app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
+app.use('/socket-practice', require('./controllers/socketPracticeController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);
 });
 
 databaseConnection.on('open', () => {
-    app.listen(PORT, () => {
-        console.log(`Server started listening on PORT ${PORT}. Visit http://localhost:${PORT} in your browser`);
-    });
+    http.listen(PORT, () => {
+        console.log(`Socket.IO server running at http://localhost:${PORT}/`);
+      });
 });

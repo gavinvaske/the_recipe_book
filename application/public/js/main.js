@@ -1,6 +1,8 @@
 $( document ).ready(function() {
     const shouldDisplayUserDetails = $('.user-details').length;
 
+    console.log(`ShouldDisplayUserDetails => ${shouldDisplayUserDetails}`)
+
     if (shouldDisplayUserDetails) {
         $.ajax({
             url: '/users/logged-in-user-details',

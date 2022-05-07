@@ -13,6 +13,19 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.get('/update/:id', async (request, response) => {
+    try {
+        const ticket = await TicketModel
+            .findById(request.params.id)
+            .exec();
+
+        response.render('updateTicket', {ticket});
+    } catch(error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 router.get('/upload', (request, response) => {
     response.render('uploadTicket');
 });

@@ -36,9 +36,8 @@ router.get('/create', verifyJwtToken, (request, response) => {
 });
 
 router.post('/create', verifyJwtToken, async (request, response) => {
-    const {name} = request.body;
     try {
-        await MaterialModel.create({name});
+        await MaterialModel.create(request.body);
     } catch (error) {
         request.flash('errors', ['Unable to save the Material, the following error(s) occurred:', error.message]);
 

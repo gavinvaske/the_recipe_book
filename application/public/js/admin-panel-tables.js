@@ -3,6 +3,7 @@ $( document ).ready(function() {
         return `<tr>
             <td scope="row">${rowNumber}</td>
             <td>${material.name || 'N/A'}</td>
+            <td>${material.materialId || 'N/A'}</td>
             <td>
             <a href="/materials/update/${material._id || 'N/A'}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

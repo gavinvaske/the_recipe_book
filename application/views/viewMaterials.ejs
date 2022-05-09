@@ -20,6 +20,7 @@
         <tr role="row">
           <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Row #</div></th>
           <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Name</div></th>
+          <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Material ID</div></th>
           <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class=""><div>Actions</div></th>
         </tr>
       </thead>
@@ -29,6 +30,7 @@
               <tr>
                   <td scope="row"><%= index + 1 %></td>
                   <td><%= material.name || 'N/A' %></td>
+                  <td><%= material.materialId || 'N/A' %></td>
                   <td>
                     <a href="/materials/update/<%= material.id %>">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

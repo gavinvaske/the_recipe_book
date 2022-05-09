@@ -467,4 +467,46 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
     });
+    describe('attribute: totalLabelQty', () => {
+        beforeEach(() => {
+            ticketAttributes.products = [{labelQty: 99}, {labelQty: 13}];
+        });
+
+        it('should be a number', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(expect.any(Number));
+        });
+
+        it('should compute the attribute correctly when products exist', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(ticketAttributes.products[0].labelQty + ticketAttributes.products[1].labelQty);
+        });
+
+        it('should compute the attribute correctly when NO products exist', async () => {
+            delete ticketAttributes.products;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(0); // eslint-disable-line no-magic-numbers
+        });
+    });
+
+    describe('attribute: totalWindingRolls', () => {
+        beforeEach(() => {
+            ticketAttributes.products = [{totalWindingRolls: chance.integer({min: 1})}, {totalWindingRolls: chance.integer({min: 1})}];
+        });
+        it('should be a number', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalWindingRolls).toEqual(expect.any(Number));
+        });
+
+        it('should compute the attribute correctly', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalWindingRolls).toEqual(ticketAttributes.products[0].totalWindingRolls + ticketAttributes.products[1].totalWindingRolls);
+        });
+
+    });
 });

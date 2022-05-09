@@ -840,4 +840,42 @@ describe('validation', () => {
             expect(product.plateId).toEqual(expect.any(String));
         });
     });
+
+    describe('attribute: totalLabelQty', () => {
+
+        it('should be a number', async () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalWindingRolls).toEqual(expect.any(Number));
+        });
+        it('should compute attribute correctly', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalWindingRolls).toEqual(Math.ceil(product.labelQty / product.labelsPerRoll));
+        });
+    });
+
+    describe('attribute: coreHeight', () => {
+        it('should be required if FinishType attribute equals "Roll"', () => {
+            productAttributes.FinishType = 'Roll';
+            delete productAttributes.coreHeight;
+
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should NOT BE required if FinishType DOES NOT equal "Roll"', () => {
+            productAttributes.FinishType = chance.string();
+            delete productAttributes.coreHeight;
+
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    });
 });

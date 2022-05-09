@@ -8,7 +8,7 @@ const schema = new Schema({
         required: true
     },
     materialId: {
-        type: Number,
+        type: String,
         required: true,
         trim: true
 

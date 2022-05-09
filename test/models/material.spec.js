@@ -5,7 +5,6 @@ describe('validation', () => {
     let materialAttributes;
 
     beforeEach(() => {
-        jest.resetAllMocks();
         materialAttributes = {
             name: chance.string(),
             materialId: chance.string()
@@ -33,16 +32,16 @@ describe('validation', () => {
 
     describe('attribute: materialId', () => {
         it('should be a string', () => {
-            const finish = new MaterialModel(materialAttributes);
+            const material = new MaterialModel(materialAttributes);
 
-            expect(finish.materialId).toEqual(expect.any(String));
+            expect(material.materialId).toEqual(expect.any(String));
         });
 
         it('should be required', () => {
             delete materialAttributes.materialId;
-            const finish = new MaterialModel(materialAttributes);
+            const material = new MaterialModel(materialAttributes);
     
-            const error = finish.validateSync();
+            const error = material.validateSync();
     
             expect(error).not.toBe(undefined);
         });
@@ -51,9 +50,9 @@ describe('validation', () => {
             const materialIdWithoutWhitespace = materialAttributes.materialId;
             materialAttributes.materialId = '  ' + materialIdWithoutWhitespace + '  ';
 
-            const finish = new MaterialModel(materialAttributes);
+            const material = new MaterialModel(materialAttributes);
     
-            expect(finish.materialId).toEqual(materialIdWithoutWhitespace);
+            expect(material.materialId).toEqual(materialIdWithoutWhitespace);
         });
     });
 });

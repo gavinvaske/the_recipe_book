@@ -5,9 +5,9 @@ describe('validation', () => {
     let materialAttributes;
 
     beforeEach(() => {
-        jest.resetAllMocks();
         materialAttributes = {
-            name: chance.string()
+            name: chance.string(),
+            materialId: chance.string()
         };
     });
 
@@ -27,6 +27,32 @@ describe('validation', () => {
             const material = new MaterialModel(materialAttributes);
 
             expect(material.name).toBe(name);
+        });
+    });
+
+    describe('attribute: materialId', () => {
+        it('should be a string', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialId).toEqual(expect.any(String));
+        });
+
+        it('should be required', () => {
+            delete materialAttributes.materialId;
+            const material = new MaterialModel(materialAttributes);
+    
+            const error = material.validateSync();
+    
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should trim whitespace', () => {
+            const materialIdWithoutWhitespace = materialAttributes.materialId;
+            materialAttributes.materialId = '  ' + materialIdWithoutWhitespace + '  ';
+
+            const material = new MaterialModel(materialAttributes);
+    
+            expect(material.materialId).toEqual(materialIdWithoutWhitespace);
         });
     });
 });

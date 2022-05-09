@@ -127,6 +127,32 @@ const ticketSchema = new Schema({
         type: String,
         required: false,
         alias: 'BillState'
+    },
+    totalLabelQty: {
+        type: Number,
+        default: function() {
+            let sum = 0; // eslint-disable-line no-magic-numbers
+
+            if (this.products.length) {
+                this.products.forEach((product) => {
+                    sum = sum + product.labelQty;
+                });
+            }
+            return sum;
+        }
+    },
+    totalWindingRolls: {
+        type: Number,
+        default: function() {
+            let sum = 0; // eslint-disable-line no-magic-numbers
+
+            if (this.products.length) {
+                this.products.forEach((product) => {
+                    sum = sum + product.totalWindingRolls;
+                });
+            }
+            return sum;
+        }
     }
 }, { timestamps: true });
 

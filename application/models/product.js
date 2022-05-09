@@ -215,6 +215,18 @@ const schema = new Schema({
     Plate_ID: {
         type: String,
         alias: 'plateId'
+    },
+    totalWindingRolls: {
+        type: Number,
+        default: function() {
+            return Math.ceil(this.labelQty / this.labelsPerRoll);
+        }
+    },
+    coreHeight: {
+        type: Number,
+        required: function() {
+            return this.finishType && this.finishType.toUpperCase() === 'ROLL';
+        }
     }
 }, { timestamps: true });
 

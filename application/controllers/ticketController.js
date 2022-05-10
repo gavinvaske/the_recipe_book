@@ -21,7 +21,7 @@ router.get('/update/:id', async (request, response) => {
             .exec();
 
         response.render('updateTicket', {ticket});
-    } catch(error) {
+    } catch (error) {
         request.flash('errors', error.message);
         return response.redirect('back');
     }

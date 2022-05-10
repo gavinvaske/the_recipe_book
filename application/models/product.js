@@ -19,7 +19,7 @@ function cannotBeFalsy(value) {
 async function validateMaterialExists(materialId) {
     const searchCriteria = {
         materialId: {$regex: materialId, $options: 'i'}
-    }
+    };
     
     try {
         console.log(`incoming materialId => ${materialId}`);

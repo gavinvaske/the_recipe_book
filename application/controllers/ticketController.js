@@ -6,6 +6,7 @@ const fs = require('fs');
 const parser = require('xml2json');
 const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
+const mongooseService = require('../services/mongooseService');
 
 router.use(verifyJwtToken);
 
@@ -45,10 +46,10 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
 
         await TicketModel.create(ticket);
 
-        response.json(ticket);
+        return response.redirect(`/tickets/update/${ticket._id}`);
     } catch (error) {
         console.log(`Error uploading job file: ${JSON.stringify(error)}`);
-        request.flash('errors', ['The following error occurred while uploading the file:', error.message]);
+        request.flash('errors', ['The following error occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
     
         return response.redirect('/tickets/upload');
     } finally {

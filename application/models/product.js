@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
@@ -13,6 +14,21 @@ function cannotBeFalsy(value) {
         return false;
     }
     return true;
+}
+
+async function validateMaterialExists(materialId) {
+    const searchCriteria = {
+        materialId: {$regex: materialId, $options: 'i'}
+    }
+    
+    try {
+        console.log(`incoming materialId => ${materialId}`);
+        const material = await MaterialModel.findOne(searchCriteria).exec();
+
+        return !material ? false : true;
+    } catch (error) {
+        return false;
+    }
 }
 
 function convertStringCurrency(numberAsString) {
@@ -57,6 +73,7 @@ const schema = new Schema({
     },
     primaryMaterial: {
         type: String,
+        validate: [validateMaterialExists, 'Please add the Material ID (aka stockNum2) thru the admin panel before uploading the XML'],
         required: false,
         alias: 'StockNum2'
     },

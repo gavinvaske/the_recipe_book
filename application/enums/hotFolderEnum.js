@@ -80,4 +80,4 @@ module.exports.hotFolders = {
     '175': SEMI_GLOSS,
     '200': SEMI_GLOSS,
     '9066': SEMI_GLOSS
-}
+};

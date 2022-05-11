@@ -37,7 +37,8 @@ describe('validation', () => {
             PriceMode: chance.string(),
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: String(chance.integer({min: 0})),
-            Plate_ID: chance.string()
+            Plate_ID: chance.string(),
+            alerts: []
         };
     });
 
@@ -861,10 +862,6 @@ describe('validation', () => {
             delete productAttributes.coreHeight;
 
             const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).not.toBe(undefined);
         });
 
         it('should NOT BE required if FinishType DOES NOT equal "Roll"', () => {
@@ -872,10 +869,99 @@ describe('validation', () => {
             delete productAttributes.coreHeight;
 
             const product = new ProductModel(productAttributes);
+        });
+    });
 
+    describe('attribute: alerts', () => {
+        let productAlerts;
+        const validDepartmentsEnum = [
+            'ART PREP',
+            'PRE-PRESS',
+            'PRINTING',
+            'CUTTING',
+            'WINDING',
+            'SHIPPING',
+            'BILLING',
+            'COMPLETE'
+        ];
+
+        beforeEach(() => {
+            productAlerts = [
+                {
+                    department: chance.pickone(validDepartmentsEnum),
+                    message: chance.string()
+                }
+            ];
+        });
+
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts).toBeDefined();
+        });
+
+        it('should contain an object with the correct attributes', () => {
+            productAttributes.alerts = productAlerts;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts.length).toEqual(1);
+            expect(product.alerts[0].department).toEqual(productAlerts[0].department);
+            expect(product.alerts[0].message).toEqual(productAlerts[0].message);
+        });
+
+        it('should fail validation if an alert has a "department" attribute which IS NOT an accepted enum', () => {
+            const invalidDepartment = chance.string();
+
+            productAttributes.alerts = [
+                {
+                    ...productAlerts[0],
+                    department:invalidDepartment
+                }
+            ];
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if an alert has a "department" attribute which IS an accepted enum', () => {
+            productAttributes.alerts = productAlerts;
+
+            const product = new ProductModel(productAttributes);
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if an alert is missing "department" attribute', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].department;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should not fail validation if an alert is missing "message" attribute', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].message;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should default alerts.message attribute to be an empty string IF not defined', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].message;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts[0].message).toEqual('');
         });
     });
 });

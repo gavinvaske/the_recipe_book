@@ -56,7 +56,32 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
+const alertSchema = new Schema({
+    department: {
+        type: String,
+        required: true,
+        enum: [
+            'ART PREP',
+            'PRE-PRESS',
+            'PRINTING',
+            'CUTTING',
+            'WINDING',
+            'SHIPPING',
+            'BILLING',
+            'COMPLETE',
+        ]
+    },
+    message: {
+        type: String,
+        required: false,
+        default: ''
+    }
+}, { timestamps: true });
+
 const schema = new Schema({
+    alerts: {
+        type: [alertSchema]
+    },
     productNumber: {
         type: String,
         validate: [validateProductNumber, 'Product Number is in the wrong format'],

@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
+const {hotFolders} = require('../../application/enums/hotFolderEnum');
 
 function getRandomNumberOfDigits() {
     return chance.integer({min: 1});
@@ -14,7 +15,7 @@ describe('validation', () => {
         productAttributes = {
             ProductNumber: chance.pickone(['1245D-100', '767D-2672', '767D-001']),
             ToolNo1: chance.pickone(validProductDies),
-            StockNum2: chance.string(),
+            StockNum2: chance.pickone(Object.keys(hotFolders)),
             InkType: chance.string(),
             SizeAcross: String(chance.floating({min: 0.1})),
             SizeAround: String(chance.floating({min: 0.1})),
@@ -962,6 +963,31 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.alerts[0].message).toEqual('');
+        });
+    });
+
+    describe('attribute: hotFolder', () => {
+        it('should contain attribute which is computed automatically', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).toBeDefined();
+        });
+
+        it('should not be defined if the variable it depends upon is undefined', () => {
+            delete productAttributes.StockNum2;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).not.toBeDefined();
+        });
+
+        it('should return correct hotFolder which the primaryMaterial (aka "StockNum2") is mapped to', () => {
+            const materialIds = Object.keys(hotFolders);
+            const materialId = chance.pickone(materialIds);
+            productAttributes.StockNum2 = materialId;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).toBe(hotFolders[materialId]);
         });
     });
 });

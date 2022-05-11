@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
+const {hotFolders} = require('../enums/hotFolderEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
@@ -79,6 +80,13 @@ const alertSchema = new Schema({
 }, { timestamps: true });
 
 const schema = new Schema({
+    hotFolder: {
+        type: String,
+        required: false,
+        default: function() {
+            return hotFolders[this.primaryMaterial];
+        }
+    },
     alerts: {
         type: [alertSchema]
     },

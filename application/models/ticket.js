@@ -11,6 +11,20 @@ function stringOnlyContainsDigits(ticketNumber) {
 }
 
 const ticketSchema = new Schema({
+    printingType: {
+        type: String,
+        required: false,
+        enum: [
+            'CMYK',
+            'CMYK + W',
+            'BLANKS',
+            'CMYK OV + W',
+            'BLACK ONLY',
+            'EPM',
+            'BLACK & WHITE',
+            'CMYK OV',
+        ]
+    },
     products: {
         type: [productSchema],
     },

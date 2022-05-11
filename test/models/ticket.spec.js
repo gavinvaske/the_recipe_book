@@ -27,6 +27,7 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
+            printingType: "BLACK & WHITE"
         };
     });
 
@@ -467,6 +468,7 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
     });
+
     describe('attribute: totalLabelQty', () => {
         beforeEach(() => {
             ticketAttributes.products = [{labelQty: 99}, {labelQty: 13}];
@@ -507,6 +509,40 @@ describe('validation', () => {
 
             expect(ticket.totalWindingRolls).toEqual(ticketAttributes.products[0].totalWindingRolls + ticketAttributes.products[1].totalWindingRolls);
         });
+    });
 
+    describe('attribute: printingType', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.printingType).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.printingType;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if attribute IS NOT an accepted value', () => {
+            ticketAttributes.printingType = chance.string();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if attribute IS an accepted value', () => {
+            ticketAttributes.printingType = "CMYK OV + W";
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
     });
 });

@@ -27,7 +27,7 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
-            printingType: "BLACK & WHITE"
+            printingType: 'BLACK & WHITE'
         };
     });
 
@@ -537,7 +537,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if attribute IS an accepted value', () => {
-            ticketAttributes.printingType = "CMYK OV + W";
+            ticketAttributes.printingType = 'CMYK OV + W';
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();

@@ -863,6 +863,10 @@ describe('validation', () => {
             delete productAttributes.coreHeight;
 
             const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should NOT BE required if FinishType DOES NOT equal "Roll"', () => {
@@ -870,6 +874,10 @@ describe('validation', () => {
             delete productAttributes.coreHeight;
 
             const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
         });
     });
 

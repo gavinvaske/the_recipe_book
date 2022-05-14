@@ -1,3 +1,5 @@
+<%= JSON.stringify(materialIds) %> 
+
 <form class="" action="", method="POST">
     <div class="form-column-wrapper flex-top-center-row full-width">
         <div class="half-width column-left">
@@ -19,7 +21,10 @@
             <div class="form-group">
                 <label for="material">Material</label>
                 <select name="material" id="material">
-                    <option value="TODO"><%= 'TODO' %></option>
+                    <option value="-">-</option>
+                    <% materialIds.forEach((materialId) => { %>
+                        <option value="<%= materialId %>"><%= materialId %></option>
+                    <% }) %>
                 </select>
             </div>
 
@@ -45,21 +50,50 @@
             </div>
         </div>
     </div>
-    <a href="/tickets/upload" value="Back">Back</button>
+    <a href="/tickets/upload" value="Back">Back</a>
     <button type="submit" class="btn btn-primary save-form-button" value="Complete">Complete</button>
 </form>
 
-<h1>Products: </h1>
+    <h1>Products: </h1>
 
-<% ticket.products && ticket.products.forEach((product, index) => { %>
-    #: <%= index + 1 %>
-    <br>
-    Product Name: <%= product.productNumber %>
-    <br>
-    Proof: TODO
-    <br>
-    Alert: TODO
-    <br>
-    <br>
-<% }) %>
+    <% ticket.products && ticket.products.forEach((product, index) => { %>
+        #: <%= index + 1 %>
+        <br>
+        Product Name: <%= product.productNumber %>
+        <br>
+        Proof:
+        <!-- <input type="file" id="image" name="image" value="" accept="application/pdf" required> -->
+        <br>
+        Alert: TODO
+        <br>
+        <br>
+    <% }) %>
 
+    <input type="file" id="proof" name="proof" value="" accept="application/pdf"/>
+    <button id="upload-button" onclick="uploadFile()" > Upload </button>
+
+<script>
+    function uploadFile() {
+        let formData = new FormData(); 
+        formData.append("proof", proof.files[0]);
+
+        $.ajax({
+            url: `/products/<%= ticket.products[0].productNumber %>/upload-proof`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    alert('Upload was successful');
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred');
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+</script>

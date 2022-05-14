@@ -1011,7 +1011,7 @@ describe('validation', () => {
             const invalidType = chance.word();
             productAttributes.proof = {
                 contentType: invalidType
-            }
+            };
 
             const product = new ProductModel(productAttributes);
             const error = product.validateSync();
@@ -1023,12 +1023,12 @@ describe('validation', () => {
             const validContentType = 'application/pdf';
             productAttributes.proof = {
                 contentType: validContentType
-            }
+            };
 
             const product = new ProductModel(productAttributes);
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
         });
-    })
+    });
 });

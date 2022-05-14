@@ -7,6 +7,7 @@ const parser = require('xml2json');
 const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
+const MaterialModel = require('../models/material');
 
 router.use(verifyJwtToken);
 
@@ -16,13 +17,17 @@ function deleteFileFromFileSystem(path) {
 
 router.get('/update/:id', async (request, response) => {
     try {
-        const ticket = await TicketModel
-            .findById(request.params.id)
-            .exec();
+        const ticket = await TicketModel.findById(request.params.id).exec();
+        const materials = await MaterialModel.find().exec();
 
-        response.render('updateTicket', {ticket});
+        const materialIds = materials.map(material => material.materialId);
+
+        response.render('updateTicket', {
+            ticket,
+            materialIds
+        });
     } catch (error) {
-        request.flash('errors', error.message);
+        request.flash('errors', [error.message]);
         return response.redirect('back');
     }
 });

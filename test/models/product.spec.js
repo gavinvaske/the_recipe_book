@@ -998,4 +998,37 @@ describe('validation', () => {
             expect(product.hotFolder).toBe(hotFolders[materialId]);
         });
     });
+
+    describe('attribute: proof', () => {
+        it('should be an empty object if attribute was not explicilty set', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proof).toBeDefined();
+            expect(product.proof).toEqual({});
+        });
+
+        it('should fail validation if wrong contentType is used', () => {
+            const invalidType = chance.word();
+            productAttributes.proof = {
+                contentType: invalidType
+            }
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if contentType is an accepted value', () => {
+            const validContentType = 'application/pdf';
+            productAttributes.proof = {
+                contentType: validContentType
+            }
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    })
 });

@@ -23,7 +23,6 @@ async function validateMaterialExists(materialId) {
     };
     
     try {
-        console.log(`incoming materialId => ${materialId}`);
         const material = await MaterialModel.findOne(searchCriteria).exec();
 
         return !material ? false : true;
@@ -80,6 +79,15 @@ const alertSchema = new Schema({
 }, { timestamps: true });
 
 const schema = new Schema({
+    proof: {
+        data: {
+            type: Buffer
+        },
+        contentType: {
+            type: String,
+            enum: ['application/pdf']
+        }
+    },
     hotFolder: {
         type: String,
         required: false,

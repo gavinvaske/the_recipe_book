@@ -1,4 +1,32 @@
 $( document ).ready(function() {
+    $('.proof-upload').on('change', function(e) {
+        const productNumber = $(this).attr('id');
+        let uploadedFile = this.files[0];
+        console.log(`woooo, something changed with an id of ${productNumber}`);
+
+        let formData = new FormData();
+        formData.append("proof", uploadedFile);
+
+        $.ajax({
+            url: `/products/${productNumber}/upload-proof`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    alert('Upload was successful. TODO: implement a success flash message @Storm');
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred');
+                console.log(JSON.stringify(error));
+            }
+        });
+    })
+
     const shouldDisplayUserDetails = $('.user-details').length;
 
     if (shouldDisplayUserDetails) {

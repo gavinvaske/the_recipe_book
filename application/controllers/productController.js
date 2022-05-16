@@ -16,7 +16,6 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
     const productNumber = request.params.productNumber;
     
     try {
-        
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
         console.log(base64EncodedPdf);
         console.log(`${productNumber}`);

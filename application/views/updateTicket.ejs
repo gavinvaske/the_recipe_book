@@ -62,38 +62,9 @@
         Product Name: <%= product.productNumber %>
         <br>
         Proof:
-        <!-- <input type="file" id="image" name="image" value="" accept="application/pdf" required> -->
+        <input class="proof-upload" type="file" id="<%= product.productNumber %>" name="proof" value="" accept="application/pdf"/>
         <br>
         Alert: TODO
         <br>
         <br>
     <% }) %>
-
-    <input type="file" id="proof" name="proof" value="" accept="application/pdf"/>
-    <button id="upload-button" onclick="uploadFile()" > Upload </button>
-
-<script>
-    function uploadFile() {
-        let formData = new FormData(); 
-        formData.append("proof", proof.files[0]);
-
-        $.ajax({
-            url: `/products/<%= ticket.products[0].productNumber %>/upload-proof`,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
-                } else {
-                    alert('Upload was successful');
-                }
-            },
-            error: function(error) {
-                alert('Uh oh, an unknown error occurred');
-                console.log(JSON.stringify(error));
-            }
-        });
-    }
-</script>

@@ -2,7 +2,10 @@ $( document ).ready(function() {
     $('.proof-upload').on('change', function() {
         const productNumber = $(this).attr('id');
         let uploadedFile = this.files[0];
-        console.log(`woooo, something changed with an id of ${productNumber}`);
+        
+        if (!uploadedFile) {
+            return;
+        }
 
         let formData = new FormData();
         formData.append('proof', uploadedFile);

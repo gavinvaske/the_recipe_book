@@ -1,11 +1,11 @@
 $( document ).ready(function() {
-    $('.proof-upload').on('change', function(e) {
+    $('.proof-upload').on('change', function() {
         const productNumber = $(this).attr('id');
         let uploadedFile = this.files[0];
         console.log(`woooo, something changed with an id of ${productNumber}`);
 
         let formData = new FormData();
-        formData.append("proof", uploadedFile);
+        formData.append('proof', uploadedFile);
 
         $.ajax({
             url: `/products/${productNumber}/upload-proof`,
@@ -25,7 +25,7 @@ $( document ).ready(function() {
                 console.log(JSON.stringify(error));
             }
         });
-    })
+    });
 
     const shouldDisplayUserDetails = $('.user-details').length;
 

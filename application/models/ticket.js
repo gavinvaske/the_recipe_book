@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
+const {departmentsEnum} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -10,7 +11,38 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
+function departmentIsValid(destination) {
+    const department = destination.department;
+    const subDepartment = destination.subDepartment;
+    const bothAttributesAreEmpty = !department && !subDepartment;
+    const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
+
+    if (bothAttributesAreEmpty) {
+        return true;
+    }
+
+    if (oneAttributeIsDefinedButNotTheOther) {
+        return false;
+    }
+
+    departmentsEnum[department].includes(subDepartment);
+}
+
+const destinationSchema = new Schema({
+    department: {
+        type: String,
+    },
+    subDepartment: {
+        type: String
+    }
+}, { timestamps: true })
+
 const ticketSchema = new Schema({
+    destination: {
+        type: destinationSchema,
+        required: false,
+        validate: [departmentIsValid, 'Invalid Department/Sub-department combination'],
+    },
     printingType: {
         type: String,
         required: false,

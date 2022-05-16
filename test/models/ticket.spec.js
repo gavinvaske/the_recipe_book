@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
+const {departments} = require('../../application/enums/departmentsEnum');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -27,7 +28,8 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
-            printingType: 'BLACK & WHITE'
+            printingType: 'BLACK & WHITE',
+            destination: {}
         };
     });
 
@@ -545,4 +547,79 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
     });
+
+    describe('attribute: destination', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.destination).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.destination;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation if attribute exists but department/subdepartment are both not defined', () => {
+            ticketAttributes.destination = {};
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if subDepartment attribute IS NOT an accepted value', () => {
+            const validDepartment = chance.pickone(Object.keys(departments))
+            const invalidSubDepartment = chance.string();
+
+            ticketAttributes.destination = {
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if department attribute IS NOT an accepted value', () => {
+            const validDepartment = chance.pickone(Object.keys(departments))
+            const invalidDepartment = chance.string();
+            const validSubDepartment = chance.pickone(departments[validDepartment])
+
+            ticketAttributes.destination = {
+                department: invalidDepartment,
+                subDepartment: validSubDepartment
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
+            const validDepartment = chance.pickone(Object.keys(departments))
+            const validSubDepartment = chance.pickone(departments[validDepartment])
+            const department = chance.pickone(validDepartment, undefined);
+            const subDepartment = !department ? validSubDepartment : undefined;
+
+            ticketAttributes.destination = {
+                department,
+                subDepartment
+            }
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+    })
 });

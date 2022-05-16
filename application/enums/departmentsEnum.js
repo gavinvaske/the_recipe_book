@@ -20,7 +20,7 @@ const READY_FOR_SHIPPING = 'READY FOR SHIPPING';
 const TOOL_ARRIVALS = 'TOOL ARRIVALS';
 const READY_FOR_BILLING = 'READY FOR BILLING';
 
-module.exports.hotFolders = {
+module.exports.departments = {
     "ORDER PREP": [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,

@@ -1000,16 +1000,29 @@ describe('validation', () => {
     });
 
     describe('attribute: proof', () => {
-        it('should be an empty object if attribute was not explicilty set', () => {
-            const product = new ProductModel(productAttributes);
+        let proof;
 
-            expect(product.proof).toBeDefined();
-            expect(product.proof).toEqual({});
+        beforeEach(() => {
+            proof = {
+                contentType: 'application/pdf',
+                data: 10101,
+                fileName: chance.word(),
+            };
+        });
+
+        it('should pass validation if all attributes are defined correctly', () => {
+            productAttributes.proof = proof;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
         });
 
         it('should fail validation if wrong contentType is used', () => {
             const invalidType = chance.word();
             productAttributes.proof = {
+                ...proof,
                 contentType: invalidType
             };
 
@@ -1022,6 +1035,7 @@ describe('validation', () => {
         it('should pass validation if contentType is an accepted value', () => {
             const validContentType = 'application/pdf';
             productAttributes.proof = {
+                ...proof,
                 contentType: validContentType
             };
 
@@ -1029,6 +1043,36 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should be an object with the correct attributes', () => {
+            productAttributes.proof = proof;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proof.contentType).toBe(proof.contentType);
+            expect(product.proof.data).toBeDefined();
+            expect(product.proof.fileName).toBe(proof.fileName);
+        });
+
+        it('should fail validation if data is provided but contentType is not', () => {
+            delete proof.contentType;
+            productAttributes.proof = proof;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if data is provided but fileName is not', () => {
+            delete proof.fileName;
+            productAttributes.proof = proof;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
 });

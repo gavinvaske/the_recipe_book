@@ -56,6 +56,33 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
+function ensureAllFieldsAreCompletedCorrectly(proof) {
+    if (!proof) {
+        return true;
+    }
+
+    const fileNameOrContentTypeIsMissing = !proof.fileName || !proof.contentType;
+
+    if (fileNameOrContentTypeIsMissing) {
+        return false;
+    }
+
+    return true;
+}
+
+const proofSchema = new Schema({
+    data: {
+        type: Buffer
+    },
+    contentType: {
+        type: String,
+        enum: ['application/pdf']
+    },
+    fileName: {
+        type: String
+    }
+}, { timestamps: true });
+
 const alertSchema = new Schema({
     department: {
         type: String,
@@ -80,13 +107,8 @@ const alertSchema = new Schema({
 
 const schema = new Schema({
     proof: {
-        data: {
-            type: Buffer
-        },
-        contentType: {
-            type: String,
-            enum: ['application/pdf']
-        }
+        type: proofSchema,
+        validate: [ensureAllFieldsAreCompletedCorrectly, 'FileName or ContentType are not defined on the Proof']
     },
     hotFolder: {
         type: String,

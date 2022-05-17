@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departmentsEnum} = require('../enums/departmentsEnum');
+const {departments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -25,7 +25,7 @@ function departmentIsValid(destination) {
         return false;
     }
 
-    departmentsEnum[department].includes(subDepartment);
+    departments[department].includes(subDepartment);
 }
 
 const destinationSchema = new Schema({
@@ -35,7 +35,7 @@ const destinationSchema = new Schema({
     subDepartment: {
         type: String
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
 const ticketSchema = new Schema({
     destination: {

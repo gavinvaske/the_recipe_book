@@ -1,4 +1,43 @@
 $( document ).ready(function() {
+    function populateSubDepartmentsDropdown(departmentName) {
+        $.ajax({
+            url: '/tickets/find-subdepartments',
+            type: 'POST',
+            data: {
+                departmentName: departmentName
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    const subDepartments = response.subDepartments;
+                    const subDepartmentDropdown = $('#subdepartments-dropdown');
+
+                    subDepartmentDropdown.empty();
+                    subDepartmentDropdown.append($('<option />').val('').text('-'));
+
+                    subDepartments.forEach((subDepartment) => {
+                        subDepartmentDropdown.append($('<option />').val(subDepartment).text(subDepartment));
+                    });
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred, see the console for more details');
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+
+    $('#departments-dropdown').on('change', () => {
+        const selectedDepartmentName = $('#departments-dropdown').val();
+
+        if (!selectedDepartmentName) {
+            return;
+        }
+        populateSubDepartmentsDropdown(selectedDepartmentName);
+        console.log(`something changed => ${selectedDepartmentName}`);
+    });
+
     $('.proof-upload').on('change', function() {
         const productNumber = $(this).attr('id');
         let uploadedFile = this.files[0];

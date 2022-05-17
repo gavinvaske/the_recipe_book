@@ -574,7 +574,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if subDepartment attribute IS NOT an accepted value', () => {
-            const validDepartment = chance.pickone(Object.keys(departments))
+            const validDepartment = chance.pickone(Object.keys(departments));
             const invalidSubDepartment = chance.string();
 
             ticketAttributes.destination = {
@@ -589,9 +589,9 @@ describe('validation', () => {
         });
 
         it('should fail validation if department attribute IS NOT an accepted value', () => {
-            const validDepartment = chance.pickone(Object.keys(departments))
+            const validDepartment = chance.pickone(Object.keys(departments));
             const invalidDepartment = chance.string();
-            const validSubDepartment = chance.pickone(departments[validDepartment])
+            const validSubDepartment = chance.pickone(departments[validDepartment]);
 
             ticketAttributes.destination = {
                 department: invalidDepartment,
@@ -605,15 +605,15 @@ describe('validation', () => {
         });
 
         it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
-            const validDepartment = chance.pickone(Object.keys(departments))
-            const validSubDepartment = chance.pickone(departments[validDepartment])
+            const validDepartment = chance.pickone(Object.keys(departments));
+            const validSubDepartment = chance.pickone(departments[validDepartment]);
             const department = chance.pickone(validDepartment, undefined);
             const subDepartment = !department ? validSubDepartment : undefined;
 
             ticketAttributes.destination = {
                 department,
                 subDepartment
-            }
+            };
 
             const ticket = new TicketModel(ticketAttributes);
 
@@ -621,5 +621,5 @@ describe('validation', () => {
 
             expect(error).not.toBe(undefined);
         });
-    })
+    });
 });

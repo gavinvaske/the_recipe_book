@@ -41,14 +41,24 @@
             </div>
 
             <div class="form-group">
-                <label for="ticketDesination">Ticket Destination</label>
-                <select name="ticketDesination" id="ticketDesination">
-                    <option value="TODO"><%= 'TODO' %></option>
+                <label for="department">Department:</label>
+                <select name="destination[department]" id="departments-dropdown">
+                    <option value=""><%= '-' %></option>
+                    <% if (typeof departmentNames != 'undefined') { %>
+                        <% departmentNames.forEach(departmentName => { %>
+                            <option value="<%= departmentName %>"><%= departmentName || 'N/A' %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+
+                <label for="subDepartment">SubDepartment:</label>
+                <select name="destination[subDepartment]" id="subdepartments-dropdown">
+                    <option value=""><%= 'Please Select a Department First' %></option>
                 </select>
             </div>
         </div>
     </div>
-    <a href="/tickets/upload" value="Back">Back</a>
+    <a href="/tickets/update/<%= ticket.id %>" value="Back">Back</a>
     <button type="submit" class="btn btn-primary save-form-button" value="Complete">Complete</button>
 </form>
 

@@ -8,6 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
+const {departments} = require('../enums/departmentsEnum');
 
 router.use(verifyJwtToken);
 
@@ -15,16 +16,42 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.post('/find-subdepartments', (request, response) => {
+    const departmentName = request.body.departmentName;
+    const subDepartments = departments[departmentName];
+
+    try {
+        if (!subDepartments) {
+            throw new Error(`No subdepartments found for the department named "${departmentName}"`);
+        }
+    } catch (error) {
+        return response.json({
+            error: error.message
+        });
+    }
+
+    return response.json({
+        subDepartments
+    });
+});
+
+router.post('/update/:id', async (request, response) => {
+    console.log(request.body);
+    response.send('hi');
+});
+
 router.get('/update/:id', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(request.params.id).exec();
         const materials = await MaterialModel.find().exec();
+        const departmentNames = Object.keys(departments);
 
         const materialIds = materials.map(material => material.materialId);
 
         response.render('updateTicket', {
             ticket,
-            materialIds
+            materialIds,
+            departmentNames
         });
     } catch (error) {
         request.flash('errors', [error.message]);

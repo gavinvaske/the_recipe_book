@@ -21,7 +21,7 @@ const TOOL_ARRIVALS = 'TOOL ARRIVALS';
 const READY_FOR_BILLING = 'READY FOR BILLING';
 
 module.exports.departments = {
-    "ORDER PREP": [
+    'ORDER PREP': [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,
         WAITING_ON_APPROVAL,
@@ -29,19 +29,19 @@ module.exports.departments = {
         READY_TO_ORDER_PLATE_OR_DIE,
         IN_PROGRESS
     ],
-    "ART PREP": [
+    'ART PREP': [
         NEEDS_ATTENTION,
         IN_PROGRESS,
         NEEDS_PROOF,
         NEEDS_DIE_LINE,
         NEEDS_PLATE
     ],
-    "PRE-PRESS": [
+    'PRE-PRESS': [
         NEEDS_ATTENTION,
         IN_PROGRESS,
         SEND_TO_PRESS
     ],
-    "PRINTING": [
+    'PRINTING': [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         SCHEDULE_PRESS_ONE,
@@ -49,7 +49,7 @@ module.exports.departments = {
         SCHEDULE_PRESS_THREE,
         ON_HOLD
     ],
-    "CUTTING": [
+    'CUTTING': [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         SCHEDULE_DELTA_ONE,
@@ -57,20 +57,20 @@ module.exports.departments = {
         SCHEDULE_ROTOFLEX,
         ON_HOLD
     ],
-    "WINDING": [
+    'WINDING': [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         ON_HOLD
     ],
-    "SHIPPING": [
+    'SHIPPING': [
         IN_PROGRESS,
         READY_FOR_SHIPPING,
         ON_HOLD,
         TOOL_ARRIVALS
     ],
-    "BILLING": [
+    'BILLING': [
         IN_PROGRESS,
         READY_FOR_BILLING
     ],
-    "COMPLETE": []
-}
+    'COMPLETE': []
+};

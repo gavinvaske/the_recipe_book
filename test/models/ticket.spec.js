@@ -574,7 +574,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if subDepartment attribute IS NOT an accepted value', () => {
-            const validDepartment = chance.pickone(Object.keys(departments));
+            const validDepartment = 'PRE-PRESS';
             const invalidSubDepartment = chance.string();
 
             ticketAttributes.destination = {
@@ -589,7 +589,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if department attribute IS NOT an accepted value', () => {
-            const validDepartment = chance.pickone(Object.keys(departments));
+            const validDepartment = 'ART PREP';
             const invalidDepartment = chance.string();
             const validSubDepartment = chance.pickone(departments[validDepartment]);
 
@@ -605,7 +605,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
-            const validDepartment = chance.pickone(Object.keys(departments));
+            const validDepartment = 'ORDER PREP';
             const validSubDepartment = chance.pickone(departments[validDepartment]);
             const department = chance.pickone(validDepartment, undefined);
             const subDepartment = !department ? validSubDepartment : undefined;

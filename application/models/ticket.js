@@ -25,7 +25,7 @@ function departmentIsValid(destination) {
         return false;
     }
 
-    departments[department].includes(subDepartment);
+    return departments[department].includes(subDepartment);
 }
 
 const destinationSchema = new Schema({

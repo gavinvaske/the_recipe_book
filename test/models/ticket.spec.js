@@ -29,7 +29,8 @@ describe('validation', () => {
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
             printingType: 'BLACK & WHITE',
-            destination: {}
+            destination: {},
+            departmentNotes: {}
         };
     });
 
@@ -620,6 +621,53 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: departmentNotes', () => {
+        let departmentNotes;
+
+        beforeEach(() => {
+            departmentNotes = {
+                orderPrep: chance.string(),
+                artPrep: chance.string(),
+                prePress: chance.string(),
+                printing: chance.string(),
+                cutting: chance.string(),
+                winding: chance.string(),
+                shipping: chance.string(),
+                billing: chance.string(),
+            };
+        });
+
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.departmentNotes).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.departmentNotes;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should store all notes for every department', () => {
+            ticketAttributes.departmentNotes = departmentNotes;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.departmentNotes.orderPrep).toEqual(departmentNotes.orderPrep);
+            expect(ticket.departmentNotes.artPrep).toEqual(departmentNotes.artPrep);
+            expect(ticket.departmentNotes.prePress).toEqual(departmentNotes.prePress);
+            expect(ticket.departmentNotes.printing).toEqual(departmentNotes.printing);
+            expect(ticket.departmentNotes.cutting).toEqual(departmentNotes.cutting);
+            expect(ticket.departmentNotes.winding).toEqual(departmentNotes.winding);
+            expect(ticket.departmentNotes.shipping).toEqual(departmentNotes.shipping);
+            expect(ticket.departmentNotes.billing).toEqual(departmentNotes.billing);
         });
     });
 });

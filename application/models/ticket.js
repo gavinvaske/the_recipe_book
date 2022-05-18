@@ -28,6 +28,33 @@ function departmentIsValid(destination) {
     return departments[department].includes(subDepartment);
 }
 
+const departmentNotesSchema = new Schema({
+    orderPrep: {
+        type: String
+    },
+    artPrep: {
+        type: String
+    },
+    prePress: {
+        type: String
+    },
+    printing: {
+        type: String
+    },
+    cutting: {
+        type: String
+    },
+    winding: {
+        type: String
+    },
+    shipping: {
+        type: String
+    },
+    billing: {
+        type: String
+    }
+}, { timestamps: true });
+
 const destinationSchema = new Schema({
     department: {
         type: String,
@@ -38,6 +65,10 @@ const destinationSchema = new Schema({
 }, { timestamps: true });
 
 const ticketSchema = new Schema({
+    departmentNotes: {
+        type: departmentNotesSchema,
+        required: false
+    },
     destination: {
         type: destinationSchema,
         required: false,

@@ -1,3 +1,4 @@
+// subDepartments
 const NEEDS_ATTENTION = 'NEEDS ATTENTION';
 const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
 const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
@@ -20,8 +21,31 @@ const READY_FOR_SHIPPING = 'READY FOR SHIPPING';
 const TOOL_ARRIVALS = 'TOOL ARRIVALS';
 const READY_FOR_BILLING = 'READY FOR BILLING';
 
+// departments
+const ORDER_PREP_DEPARTMENT = 'ORDER PREP';
+const ART_PREP_DEPARTMENT = 'ART PREP';
+const PRE_PRESS_DEPARTMENT = 'PRE-PRESS';
+const PRINTING_DEPARTMENT = 'PRINTING';
+const CUTTING_DEPARTMENT = 'CUTTING';
+const WINDING_DEPARTMENT = 'WINDING';
+const SHIPPING_DEPARTMENT = 'SHIPPING';
+const BILLING_DEPARTMENT = 'BILLING';
+const COMPLETE_DEPARTMENT = 'COMPLETE';
+
+const DEPARTMENT_KEYS = {
+    orderPrep: ORDER_PREP_DEPARTMENT,
+    artPrep: ART_PREP_DEPARTMENT,
+    prePress: PRE_PRESS_DEPARTMENT,
+    printing: PRINTING_DEPARTMENT,
+    cutting: CUTTING_DEPARTMENT,
+    winding: WINDING_DEPARTMENT,
+    shipping: SHIPPING_DEPARTMENT,
+    billing: BILLING_DEPARTMENT,
+    complete: COMPLETE_DEPARTMENT,
+};
+
 module.exports.departments = {
-    'ORDER PREP': [
+    [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,
         WAITING_ON_APPROVAL,
@@ -29,19 +53,19 @@ module.exports.departments = {
         READY_TO_ORDER_PLATE_OR_DIE,
         IN_PROGRESS
     ],
-    'ART PREP': [
+    [ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         IN_PROGRESS,
         NEEDS_PROOF,
         NEEDS_DIE_LINE,
         NEEDS_PLATE
     ],
-    'PRE-PRESS': [
+    [PRE_PRESS_DEPARTMENT]: [
         NEEDS_ATTENTION,
         IN_PROGRESS,
         SEND_TO_PRESS
     ],
-    'PRINTING': [
+    [PRINTING_DEPARTMENT]: [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         SCHEDULE_PRESS_ONE,
@@ -49,7 +73,7 @@ module.exports.departments = {
         SCHEDULE_PRESS_THREE,
         ON_HOLD
     ],
-    'CUTTING': [
+    [CUTTING_DEPARTMENT]: [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         SCHEDULE_DELTA_ONE,
@@ -57,20 +81,30 @@ module.exports.departments = {
         SCHEDULE_ROTOFLEX,
         ON_HOLD
     ],
-    'WINDING': [
+    [WINDING_DEPARTMENT]: [
         IN_PROGRESS,
         READY_FOR_SCHEDULING,
         ON_HOLD
     ],
-    'SHIPPING': [
+    [SHIPPING_DEPARTMENT]: [
         IN_PROGRESS,
         READY_FOR_SHIPPING,
         ON_HOLD,
         TOOL_ARRIVALS
     ],
-    'BILLING': [
+    [BILLING_DEPARTMENT]: [
         IN_PROGRESS,
         READY_FOR_BILLING
     ],
-    'COMPLETE': []
+    [COMPLETE_DEPARTMENT]: []
+};
+
+module.exports.findDeparmentNameUsingKey = (key) => {
+    const department = DEPARTMENT_KEYS[key];
+
+    if (!department) {
+        throw new Error(`No department found using the key = ${key}`);
+    }
+
+    return department;
 };

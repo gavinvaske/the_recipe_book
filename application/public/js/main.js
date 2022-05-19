@@ -1,4 +1,30 @@
 $( document ).ready(function() {
+    $('.department-alert-notes').on('blur', function() {
+        const userInput = this.value;
+        const departmentkey = this.id;
+
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        $.ajax({
+            url: `/tickets/update/${ticketId}/notes`,
+            type: 'POST',
+            data: {
+                departmentNotes: {
+                    [departmentkey]: userInput
+                }
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('An error occurred while attempting to save the notes');
+            }
+        });
+    });
+
     function populateSubDepartmentsDropdown(departmentName) {
         $.ajax({
             url: '/tickets/find-subdepartments',

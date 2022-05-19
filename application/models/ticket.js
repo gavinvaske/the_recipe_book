@@ -53,7 +53,10 @@ const departmentNotesSchema = new Schema({
     billing: {
         type: String
     }
-}, { timestamps: true });
+}, { 
+    timestamps: true,
+    strict: 'throw'
+});
 
 const destinationSchema = new Schema({
     department: {

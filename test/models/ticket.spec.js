@@ -669,5 +669,17 @@ describe('validation', () => {
             expect(ticket.departmentNotes.shipping).toEqual(departmentNotes.shipping);
             expect(ticket.departmentNotes.billing).toEqual(departmentNotes.billing);
         });
+
+        it('should fail validation if unknown key is used', () => {
+            const unknownKey = chance.word();
+            ticketAttributes.departmentNotes = {
+                [unknownKey]: chance.string()
+            }
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
     });
 });

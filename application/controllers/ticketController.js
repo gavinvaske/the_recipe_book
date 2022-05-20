@@ -65,8 +65,21 @@ router.post('/find-subdepartments', (request, response) => {
 });
 
 router.post('/update/:id', async (request, response) => {
+    const ticketId = request.params.id;
+
     console.log(request.body);
-    response.send('hi');
+
+    try {
+        await TicketModel.findOneAndUpdate({_id: ticketId}, {$set: request.body}, {runValidators: true}).exec();
+
+        return response.json({});
+    } catch (error) {
+        console.log(`Failed to update ticket with id ${ticketId}: ${error.message}`);
+        request.flash('errors', [error.message]);
+        return response.json({
+            error: error.message
+        });
+    }
 });
 
 router.get('/update/:id', async (request, response) => {
@@ -75,14 +88,28 @@ router.get('/update/:id', async (request, response) => {
         const materials = await MaterialModel.find().exec();
         const departmentNames = Object.keys(departments);
 
+        const ticketDestination = ticket.destination;
+        const selectedPrintingType = ticket.printingType;
+        const selectedDepartment = ticketDestination && ticketDestination.department;
+        const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
+
+        const subDepartments = departments ? departments[selectedDepartment] : undefined;
+
+        console.log(`${selectedPrintingType} - ${selectedDepartment} - ${selectedSubDepartment}`);
+
         const materialIds = materials.map(material => material.materialId);
 
         response.render('updateTicket', {
             ticket,
             materialIds,
-            departmentNames
+            departmentNames,
+            selectedPrintingType,
+            selectedDepartment,
+            selectedSubDepartment,
+            subDepartments
         });
     } catch (error) {
+        console.log(`Error rendering ticket update page: ${error.message}`);
         request.flash('errors', [error.message]);
         return response.redirect('back');
     }

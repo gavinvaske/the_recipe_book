@@ -1,4 +1,53 @@
 $( document ).ready(function() {
+    function updateTicket(ticketAttributes, ticketId) {
+        $.ajax({
+            url: `/tickets/update/${ticketId}`,
+            type: 'POST',
+            data: ticketAttributes,
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('An error occurred while attempting to update the ticket');
+            }
+        });
+    }
+
+    $('#material-selection').change(function() {
+        const selectedMaterialId = $('#material-selection').val();
+
+        console.log(`selectedMaterialId => ${selectedMaterialId}`);
+    });
+
+    $('#printing-type-selection').change(function() {
+        const selectedPrintingType = $('#printing-type-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        const ticketAttributes = {
+            printingType: selectedPrintingType
+        };
+        
+        updateTicket(ticketAttributes, ticketId);
+    });
+
+    $('#subdepartment-selection').change(function() {
+        const selectedDepartment = $('#department-selection').val();
+        const selectedSubDepartment = $('#subdepartment-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        const ticketAttributes = {
+            destination: {
+                department: selectedDepartment,
+                subDepartment: selectedSubDepartment
+            }
+        };
+        
+        updateTicket(ticketAttributes, ticketId);
+    });
+
     $('.department-alert-notes').on('blur', function() {
         const userInput = this.value;
         const departmentkey = this.id;
@@ -37,7 +86,7 @@ $( document ).ready(function() {
                     alert(`An error occurred: ${response.error}`);
                 } else {
                     const subDepartments = response.subDepartments;
-                    const subDepartmentDropdown = $('#subdepartments-dropdown');
+                    const subDepartmentDropdown = $('#subdepartment-selection');
 
                     subDepartmentDropdown.empty();
                     subDepartmentDropdown.append($('<option />').val('').text('-'));
@@ -54,14 +103,13 @@ $( document ).ready(function() {
         });
     }
 
-    $('#departments-dropdown').on('change', () => {
-        const selectedDepartmentName = $('#departments-dropdown').val();
+    $('#department-selection').on('change', () => {
+        const selectedDepartmentName = $('#department-selection').val();
 
         if (!selectedDepartmentName) {
             return;
         }
         populateSubDepartmentsDropdown(selectedDepartmentName);
-        console.log(`something changed => ${selectedDepartmentName}`);
     });
 
     $('.proof-upload').on('change', function() {

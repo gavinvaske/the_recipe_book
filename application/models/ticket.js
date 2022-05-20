@@ -75,7 +75,7 @@ const ticketSchema = new Schema({
     destination: {
         type: destinationSchema,
         required: false,
-        validate: [departmentIsValid, 'Invalid Department/Sub-department combination'],
+        validate: [departmentIsValid, 'Invalid Department/Sub-department combination']
     },
     printingType: {
         type: String,

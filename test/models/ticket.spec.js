@@ -674,7 +674,7 @@ describe('validation', () => {
             const unknownKey = chance.word();
             ticketAttributes.departmentNotes = {
                 [unknownKey]: chance.string()
-            }
+            };
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();

@@ -136,7 +136,7 @@ const schema = new Schema({
     },
     primaryMaterial: {
         type: String,
-        validate: [validateMaterialExists, 'Please add the Material ID (aka stockNum2) thru the admin panel before uploading the XML'],
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID (aka stockNum2) thru the admin panel before uploading the XML'],
         required: false,
         alias: 'StockNum2'
     },

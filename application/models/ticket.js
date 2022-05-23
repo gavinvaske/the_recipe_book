@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departments} = require('../enums/departmentsEnum');
+const {departments, getAllSubDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -11,21 +11,24 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
-function departmentIsValid(destination) {
+function destinationsAreValid(destination) {
     const department = destination.department;
     const subDepartment = destination.subDepartment;
-    const bothAttributesAreEmpty = !department && !subDepartment;
     const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
-
-    if (bothAttributesAreEmpty) {
-        return true;
-    }
 
     if (oneAttributeIsDefinedButNotTheOther) {
         return false;
     }
 
-    return departments[department].includes(subDepartment);
+    return true;
+}
+
+function departmentIsValid(department) {
+    return Object.keys(departments).includes(department)
+}
+
+function subDepartmentIsValid(subDepartment) {
+    return getAllSubDepartments().includes(subDepartment);
 }
 
 const departmentNotesSchema = new Schema({
@@ -61,9 +64,11 @@ const departmentNotesSchema = new Schema({
 const destinationSchema = new Schema({
     department: {
         type: String,
+        validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
     },
     subDepartment: {
-        type: String
+        type: String,
+        validate: [subDepartmentIsValid, 'The provided sub-department "{VALUE}" is not accepted']
     }
 }, { timestamps: true });
 
@@ -75,7 +80,7 @@ const ticketSchema = new Schema({
     destination: {
         type: destinationSchema,
         required: false,
-        validate: [departmentIsValid, 'Invalid Department/Sub-department combination']
+        validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
     },
     printingType: {
         type: String,

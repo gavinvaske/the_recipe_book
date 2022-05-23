@@ -607,13 +607,11 @@ describe('validation', () => {
 
         it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
             const validDepartment = 'ORDER PREP';
-            const validSubDepartment = chance.pickone(departments[validDepartment]);
-            const department = chance.pickone(validDepartment, undefined);
-            const subDepartment = !department ? validSubDepartment : undefined;
+            const invalidSubDepartment = undefined;
 
             ticketAttributes.destination = {
-                department,
-                subDepartment
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
             };
 
             const ticket = new TicketModel(ticketAttributes);

@@ -57,7 +57,7 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
-function ensureAllFieldsAreCompletedCorrectly(proof) {
+function validateProofAttributes(proof) {
     if (!proof) {
         return true;
     }
@@ -100,7 +100,7 @@ const alertSchema = new Schema({
 const schema = new Schema({
     proof: {
         type: proofSchema,
-        validate: [ensureAllFieldsAreCompletedCorrectly, 'FileName or ContentType are not defined on the Proof']
+        validate: [validateProofAttributes, 'FileName or ContentType are not defined on the Proof']
     },
     hotFolder: {
         type: String,

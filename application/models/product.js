@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
 const {hotFolders} = require('../enums/hotFolderEnum');
+const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
@@ -87,16 +88,7 @@ const alertSchema = new Schema({
     department: {
         type: String,
         required: true,
-        enum: [
-            'ART PREP',
-            'PRE-PRESS',
-            'PRINTING',
-            'CUTTING',
-            'WINDING',
-            'SHIPPING',
-            'BILLING',
-            'COMPLETE',
-        ]
+        enum: getAllDepartments()
     },
     message: {
         type: String,

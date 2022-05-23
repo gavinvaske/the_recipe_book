@@ -1,4 +1,4 @@
-const {findDeparmentNameUsingKey, getAllSubDepartments} = require('../../application/enums/departmentsEnum');
+const {findDeparmentNameUsingKey, getAllSubDepartments, getAllDepartments} = require('../../application/enums/departmentsEnum');
 const chance = require('chance').Chance();
 
 describe('departmentsEnum', () => {
@@ -34,5 +34,13 @@ describe('departmentsEnum', () => {
 
         expect(subDepartments.length).toBe(expectedNumberOfSubDepartments);
         expect(uniqueSubDepartments.size).toBe(expectedNumberOfUniqueSubDepartments);
+    });
+
+    it('should return the list of departments', () => {
+        const expectedNumberOfDepartments = 9;
+
+        const departments = getAllDepartments();
+
+        expect(departments.length).toBe(expectedNumberOfDepartments);
     });
 });

@@ -118,3 +118,7 @@ module.exports.getAllSubDepartments = () => {
 
     return allSubDepartments;
 };
+
+module.exports.getAllDepartments = () => {
+    return Object.keys(this.departments);
+};

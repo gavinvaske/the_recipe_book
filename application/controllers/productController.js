@@ -17,9 +17,6 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
     
     try {
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
-        console.log(base64EncodedPdf);
-        console.log(`fileName => ${request.file.originalname}`);
-        console.log(`${productNumber}`);
         
         const ticket = await TicketModel.findOne({
             'product.productNumber': productNumber

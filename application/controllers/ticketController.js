@@ -67,8 +67,6 @@ router.post('/find-subdepartments', (request, response) => {
 router.post('/update/:id', async (request, response) => {
     const ticketId = request.params.id;
 
-    console.log(request.body);
-
     try {
         await TicketModel.findOneAndUpdate({_id: ticketId}, {$set: request.body}, {runValidators: true}).exec();
 
@@ -94,8 +92,6 @@ router.get('/update/:id', async (request, response) => {
         const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
 
         const subDepartments = departments ? departments[selectedDepartment] : undefined;
-
-        console.log(`${selectedPrintingType} - ${selectedDepartment} - ${selectedSubDepartment}`);
 
         const materialIds = materials.map(material => material.materialId);
 

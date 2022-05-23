@@ -24,7 +24,7 @@ function destinationsAreValid(destination) {
 }
 
 function departmentIsValid(department) {
-    return Object.keys(departments).includes(department)
+    return Object.keys(departments).includes(department);
 }
 
 function subDepartmentIsValid(subDepartment) {

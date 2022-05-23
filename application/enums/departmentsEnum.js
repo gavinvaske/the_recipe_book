@@ -113,8 +113,8 @@ module.exports.getAllSubDepartments = () => {
     let allSubDepartments = [];
 
     Object.values(this.departments).forEach((subDepartmentsForOneDepartment) => {
-        allSubDepartments.push(...subDepartmentsForOneDepartment)
-    })
+        allSubDepartments.push(...subDepartmentsForOneDepartment);
+    });
 
     return allSubDepartments;
 };

@@ -30,9 +30,9 @@ describe('departmentsEnum', () => {
         const subDepartments = getAllSubDepartments();
         const uniqueSubDepartments = new Set(subDepartments);
 
-        console.log(uniqueSubDepartments.size)
+        console.log(uniqueSubDepartments.size);
 
         expect(subDepartments.length).toBe(expectedNumberOfSubDepartments);
-        expect(uniqueSubDepartments.size).toBe(expectedNumberOfUniqueSubDepartments)
-    })
+        expect(uniqueSubDepartments.size).toBe(expectedNumberOfUniqueSubDepartments);
+    });
 });

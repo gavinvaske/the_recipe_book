@@ -16,6 +16,16 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.get('/', async (request, response) => {
+    const tickets = await TicketModel.find({}, '-products').exec(); // TODO: Products is removed to avoid loading every proof per page load
+
+    console.log(tickets);
+
+    return response.render('viewTickets', {
+        tickets
+    });
+});
+
 router.post('/update/:ticketId/notes', async (request, response) => {
     try {
         const departmentKey = Object.keys(request.body.departmentNotes)[0];

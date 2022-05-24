@@ -1,0 +1,27 @@
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper">
+    <div class="alert-box full-width">
+        <%- include ("flashMessages") %>
+    </div>
+    
+    <h1>TODO: View all Tickets</h1>
+    <h1>Number of Tickets: <%= tickets.length %> </h1>
+    <br>
+
+    <% if (typeof tickets != 'undefined') { %>
+        <% tickets.forEach((ticket, index) => { %>
+            <p>PO Number: <%= ticket.poNumber || 'N/A' %> </p>
+            <p>Printing Type: <%= ticket.printingType || 'N/A' %> </p>
+
+            <% if (typeof ticket.products != 'undefined') { %>
+                <% ticket.products.forEach((product, index) => { %>
+                    <p>Product Proofs: <%= product.proof || 'N/A' %> </p>
+                <% }); %>
+            <% } %>
+            <br>
+        <% }); %>
+    <% } %>
+</div>
+
+

@@ -81,3 +81,8 @@ module.exports.hotFolders = {
     '200': SEMI_GLOSS,
     '9066': SEMI_GLOSS
 };
+
+module.exports.getUniqueHotFolders = () => {
+    const hotFoldersAsASet = new Set(Object.values(this.hotFolders));
+    return [...hotFoldersAsASet];
+};

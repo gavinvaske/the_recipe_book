@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
-const {hotFolders} = require('../enums/hotFolderEnum');
+const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -107,7 +107,8 @@ const schema = new Schema({
         required: false,
         default: function() {
             return hotFolders[this.primaryMaterial];
-        }
+        },
+        enum: getUniqueHotFolders()
     },
     alerts: {
         type: [alertSchema]

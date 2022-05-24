@@ -997,6 +997,16 @@ describe('validation', () => {
 
             expect(product.hotFolder).toBe(hotFolders[materialId]);
         });
+
+        it('should fail validation if hotFolder is not an accepted value', () => {
+            const hotFolder = chance.word();
+            productAttributes.hotFolder = hotFolder;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
     });
 
     describe('attribute: proof', () => {

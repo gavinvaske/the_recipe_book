@@ -47,5 +47,4 @@ describe('test environment database interactions', () => {
 
         await expect(databaseService.clearDatabase()).rejects.toThrow('the database can ONLY be cleared manually in test environments');
     });
-
 });

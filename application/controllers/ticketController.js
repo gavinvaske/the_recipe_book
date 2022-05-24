@@ -90,6 +90,7 @@ router.get('/update/:id', async (request, response) => {
         const selectedPrintingType = ticket.printingType;
         const selectedDepartment = ticketDestination && ticketDestination.department;
         const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
+        const selectedMaterial = ticket.primaryMaterial;
 
         const subDepartments = departments ? departments[selectedDepartment] : undefined;
 
@@ -102,7 +103,8 @@ router.get('/update/:id', async (request, response) => {
             selectedPrintingType,
             selectedDepartment,
             selectedSubDepartment,
-            subDepartments
+            subDepartments,
+            selectedMaterial
         });
     } catch (error) {
         console.log(`Error rendering ticket update page: ${error.message}`);

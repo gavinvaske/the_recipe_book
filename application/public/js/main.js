@@ -18,8 +18,13 @@ $( document ).ready(function() {
 
     $('#material-selection').change(function() {
         const selectedMaterialId = $('#material-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
 
-        console.log(`selectedMaterialId => ${selectedMaterialId}`);
+        const ticketAttributes = {
+            primaryMaterial: selectedMaterialId
+        };
+
+        updateTicket(ticketAttributes, ticketId);
     });
 
     $('#printing-type-selection').change(function() {

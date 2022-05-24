@@ -18,9 +18,10 @@
         <div class="form-group">
             <label for="material-selection">Material</label>
             <select name="material" id="material-selection" data-ticket-id="<%= ticket.id %>">
-                <option value="-">-</option>
+                <option value="">-</option>
                 <% materialIds.forEach((materialId) => { %>
-                    <option value="<%= materialId %>"><%= materialId %></option>
+                    <% const isSelected = materialId === selectedMaterial ? 'selected' : ''; %>
+                    <option value="<%= materialId %>" <%= isSelected %>><%= materialId %></option>
                 <% }) %>
             </select>
         </div>
@@ -28,7 +29,7 @@
         <div class="form-group">
             <label for="printing-type-selection">Printing Type</label>
             <select name="printingType" id="printing-type-selection" data-ticket-id="<%= ticket.id %>">
-                <option value="-"><%= '-' %></option>
+                <option value=""><%= '-' %></option>
                 <option value="CMYK" <%= selectedPrintingType === 'CMYK' ? 'selected' : '' %>><%= 'CMYK' %></option>
                 <option value="CMYK + W" <%= selectedPrintingType === 'CMYK + W' ? 'selected' : '' %>><%= 'CMYK + W' %></option>
                 <option value="BLANKS" <%= selectedPrintingType === 'BLANKS' ? 'selected' : '' %>><%= 'Blanks' %></option>

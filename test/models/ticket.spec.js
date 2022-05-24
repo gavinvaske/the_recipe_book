@@ -1,6 +1,7 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
 const {departments} = require('../../application/enums/departmentsEnum');
+const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -678,6 +679,55 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: primaryMaterial', () => {
+
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        it('should contain attribute', () => {
+            ticketAttributes.primaryMaterial = 'blah';
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.primaryMaterial).toBeDefined();
+        });
+
+        it('should default the ticket.primaryMaterial to product[0].primaryMaterial', async () => {
+            delete ticketAttributes.primaryMaterial;
+
+            ticketAttributes.products = [
+                {primaryMaterial: chance.word()}
+            ];
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.primaryMaterial).toBe(ticketAttributes.products[0].primaryMaterial);
+        });
+
+        it('should use the ticket.primaryMaterial to override all ticket.products[n].primaryMaterial before saving', async () => {
+            const materialA = chance.word();
+            const materialB = chance.word();
+
+            ticketAttributes.primaryMaterial = materialA;
+
+            ticketAttributes.products = [
+                {primaryMaterial: materialB},
+                {primaryMaterial: materialB},
+                {primaryMaterial: undefined},
+            ];
+            const ticket = new TicketModel(ticketAttributes);
+
+            const savedTicket = await ticket.save({validateBeforeSave: false});
+
+            expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
+            expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
+            expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
         });
     });
 });

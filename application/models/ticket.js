@@ -73,6 +73,15 @@ const destinationSchema = new Schema({
 }, { timestamps: true });
 
 const ticketSchema = new Schema({
+    primaryMaterial: {
+        type: String,
+        required: false,
+        default: function() {
+            if (this.products && this.products.length > 0) { // eslint-disable-line no-magic-numbers
+                return this.products[0].primaryMaterial;
+            }
+        }
+    },
     departmentNotes: {
         type: departmentNotesSchema,
         required: false
@@ -240,6 +249,14 @@ const ticketSchema = new Schema({
         }
     }
 }, { timestamps: true });
+
+ticketSchema.pre('save', function(next) {
+    this.products && this.products.forEach((product) => {
+        product.primaryMaterial = this.primaryMaterial;
+    });
+
+    next();
+});
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

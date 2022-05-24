@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
+const {departments, getAllSubDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -10,7 +11,91 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
+function destinationsAreValid(destination) {
+    const department = destination.department;
+    const subDepartment = destination.subDepartment;
+    const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
+
+    if (oneAttributeIsDefinedButNotTheOther) {
+        return false;
+    }
+
+    return true;
+}
+
+function departmentIsValid(department) {
+    return Object.keys(departments).includes(department);
+}
+
+function subDepartmentIsValid(subDepartment) {
+    return getAllSubDepartments().includes(subDepartment);
+}
+
+const departmentNotesSchema = new Schema({
+    orderPrep: {
+        type: String
+    },
+    artPrep: {
+        type: String
+    },
+    prePress: {
+        type: String
+    },
+    printing: {
+        type: String
+    },
+    cutting: {
+        type: String
+    },
+    winding: {
+        type: String
+    },
+    shipping: {
+        type: String
+    },
+    billing: {
+        type: String
+    }
+}, { 
+    timestamps: true,
+    strict: 'throw'
+});
+
+const destinationSchema = new Schema({
+    department: {
+        type: String,
+        validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
+    },
+    subDepartment: {
+        type: String,
+        validate: [subDepartmentIsValid, 'The provided sub-department "{VALUE}" is not accepted']
+    }
+}, { timestamps: true });
+
 const ticketSchema = new Schema({
+    departmentNotes: {
+        type: departmentNotesSchema,
+        required: false
+    },
+    destination: {
+        type: destinationSchema,
+        required: false,
+        validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
+    },
+    printingType: {
+        type: String,
+        required: false,
+        enum: [
+            'CMYK',
+            'CMYK + W',
+            'BLANKS',
+            'CMYK OV + W',
+            'BLACK ONLY',
+            'EPM',
+            'BLACK & WHITE',
+            'CMYK OV',
+        ]
+    },
     products: {
         type: [productSchema],
     },

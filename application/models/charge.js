@@ -39,7 +39,7 @@ const chargeSchema = new Schema({
         alias: 'PriceM',
         required: true
     }
-});
+}, { timestamps: true });
 
 const Charge = mongoose.model('Charge', chargeSchema);
 

@@ -107,7 +107,6 @@ router.post('/forgot-password', async (request, response) => {
         };
         const token = jwt.sign(payload, secret, {expiresIn: '15m'});
         const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
-        console.log(link);
 
         sendPasswordResetEmail(email, link);
     }

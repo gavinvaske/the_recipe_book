@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const MaterialModel = require('../models/material');
+const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
+const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
@@ -13,6 +16,20 @@ function cannotBeFalsy(value) {
         return false;
     }
     return true;
+}
+
+async function validateMaterialExists(materialId) {
+    const searchCriteria = {
+        materialId: {$regex: materialId, $options: 'i'}
+    };
+    
+    try {
+        const material = await MaterialModel.findOne(searchCriteria).exec();
+
+        return !material ? false : true;
+    } catch (error) {
+        return false;
+    }
 }
 
 function convertStringCurrency(numberAsString) {
@@ -40,7 +57,62 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
+function validateProofAttributes(proof) {
+    if (!proof) {
+        return true;
+    }
+
+    const fileNameOrContentTypeIsMissing = !proof.fileName || !proof.contentType;
+
+    if (fileNameOrContentTypeIsMissing) {
+        return false;
+    }
+
+    return true;
+}
+
+const proofSchema = new Schema({
+    data: {
+        type: Buffer
+    },
+    contentType: {
+        type: String,
+        enum: ['application/pdf']
+    },
+    fileName: {
+        type: String
+    }
+}, { timestamps: true });
+
+const alertSchema = new Schema({
+    department: {
+        type: String,
+        required: true,
+        enum: getAllDepartments()
+    },
+    message: {
+        type: String,
+        required: false,
+        default: ''
+    }
+}, { timestamps: true });
+
 const schema = new Schema({
+    proof: {
+        type: proofSchema,
+        validate: [validateProofAttributes, 'FileName or ContentType are not defined on the Proof']
+    },
+    hotFolder: {
+        type: String,
+        required: false,
+        default: function() {
+            return hotFolders[this.primaryMaterial];
+        },
+        enum: getUniqueHotFolders()
+    },
+    alerts: {
+        type: [alertSchema]
+    },
     productNumber: {
         type: String,
         validate: [validateProductNumber, 'Product Number is in the wrong format'],
@@ -57,6 +129,7 @@ const schema = new Schema({
     },
     primaryMaterial: {
         type: String,
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID (aka stockNum2) thru the admin panel before uploading the XML'],
         required: false,
         alias: 'StockNum2'
     },

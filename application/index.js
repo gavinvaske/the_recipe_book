@@ -53,6 +53,7 @@ app.use('/winding-setups', require('./controllers/windingSetupController'));
 app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
+app.use('/products', require('./controllers/productController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

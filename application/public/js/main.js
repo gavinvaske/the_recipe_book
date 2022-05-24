@@ -1,4 +1,148 @@
 $( document ).ready(function() {
+    function updateTicket(ticketAttributes, ticketId) {
+        $.ajax({
+            url: `/tickets/update/${ticketId}`,
+            type: 'POST',
+            data: ticketAttributes,
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('An error occurred while attempting to update the ticket');
+            }
+        });
+    }
+
+    $('#material-selection').change(function() {
+        const selectedMaterialId = $('#material-selection').val();
+
+        console.log(`selectedMaterialId => ${selectedMaterialId}`);
+    });
+
+    $('#printing-type-selection').change(function() {
+        const selectedPrintingType = $('#printing-type-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        const ticketAttributes = {
+            printingType: selectedPrintingType
+        };
+        
+        updateTicket(ticketAttributes, ticketId);
+    });
+
+    $('#subdepartment-selection').change(function() {
+        const selectedDepartment = $('#department-selection').val();
+        const selectedSubDepartment = $('#subdepartment-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        const ticketAttributes = {
+            destination: {
+                department: selectedDepartment,
+                subDepartment: selectedSubDepartment
+            }
+        };
+        
+        updateTicket(ticketAttributes, ticketId);
+    });
+
+    $('.department-alert-notes').on('blur', function() {
+        const userInput = this.value;
+        const departmentkey = this.id;
+
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        $.ajax({
+            url: `/tickets/update/${ticketId}/notes`,
+            type: 'POST',
+            data: {
+                departmentNotes: {
+                    [departmentkey]: userInput
+                }
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+                alert('An error occurred while attempting to save the notes');
+            }
+        });
+    });
+
+    function populateSubDepartmentsDropdown(departmentName) {
+        $.ajax({
+            url: '/tickets/find-subdepartments',
+            type: 'POST',
+            data: {
+                departmentName: departmentName
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    const subDepartments = response.subDepartments;
+                    const subDepartmentDropdown = $('#subdepartment-selection');
+
+                    subDepartmentDropdown.empty();
+                    subDepartmentDropdown.append($('<option />').val('').text('-'));
+
+                    subDepartments.forEach((subDepartment) => {
+                        subDepartmentDropdown.append($('<option />').val(subDepartment).text(subDepartment));
+                    });
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred, see the console for more details');
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+
+    $('#department-selection').on('change', () => {
+        const selectedDepartmentName = $('#department-selection').val();
+
+        if (!selectedDepartmentName) {
+            return;
+        }
+        populateSubDepartmentsDropdown(selectedDepartmentName);
+    });
+
+    $('.proof-upload').on('change', function() {
+        const productNumber = $(this).attr('id');
+        let uploadedFile = this.files[0];
+        
+        if (!uploadedFile) {
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('proof', uploadedFile);
+
+        $.ajax({
+            url: `/products/${productNumber}/upload-proof`,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    alert('Upload was successful. TODO: implement a success flash message @Storm');
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred');
+                console.log(JSON.stringify(error));
+            }
+        });
+    });
+
     const shouldDisplayUserDetails = $('.user-details').length;
 
     if (shouldDisplayUserDetails) {

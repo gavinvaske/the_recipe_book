@@ -693,10 +693,37 @@ describe('validation', () => {
         });
 
         it('should contain attribute', () => {
-            ticketAttributes.primaryMaterial = 'blah';
+            ticketAttributes.primaryMaterial = chance.word();
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.primaryMaterial).toBeDefined();
+        });
+
+        it('should not fail validation if blank', () => {
+            ticketAttributes.primaryMaterial = '';
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if primaryMaterial is not an existing material ID', async () => {
+            ticketAttributes.primaryMaterial = chance.word();
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation if primaryMaterial is not an existing material ID', async () => {
+            ticketAttributes.primaryMaterial = chance.word();
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
         });
 
         it('should default the ticket.primaryMaterial to product[0].primaryMaterial', async () => {

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
 const {departments, getAllSubDepartments} = require('../enums/departmentsEnum');
+const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -29,6 +30,22 @@ function departmentIsValid(department) {
 
 function subDepartmentIsValid(subDepartment) {
     return getAllSubDepartments().includes(subDepartment);
+}
+
+async function validateMaterialExists(materialId) {
+    const searchCriteria = {
+        materialId: {$regex: materialId, $options: 'i'}
+    };
+
+    console.log(searchCriteria);
+    
+    try {
+        const material = await MaterialModel.findOne(searchCriteria).exec();
+
+        return !material ? false : true;
+    } catch (error) {
+        return false;
+    }
 }
 
 const departmentNotesSchema = new Schema({
@@ -80,7 +97,8 @@ const ticketSchema = new Schema({
             if (this.products && this.products.length > 0) { // eslint-disable-line no-magic-numbers
                 return this.products[0].primaryMaterial;
             }
-        }
+        },
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID thru the admin panel before uploading the XML'],
     },
     departmentNotes: {
         type: departmentNotesSchema,

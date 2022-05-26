@@ -38,6 +38,23 @@ $( document ).ready(function() {
         updateTicket(ticketAttributes, ticketId);
     });
 
+    $('#department-selection').change(function() {
+        const selectedDepartment = $('#department-selection').val();
+        const ticketId = $('#department-notes').data('ticket-id');
+
+        if (selectedDepartment !== 'COMPLETED') {
+            return;
+        }
+        
+        const ticketAttributes = {
+            destination: {
+                department: selectedDepartment
+            }
+        };
+
+        updateTicket(ticketAttributes, ticketId);
+    });
+
     $('#subdepartment-selection').change(function() {
         const selectedDepartment = $('#department-selection').val();
         const selectedSubDepartment = $('#subdepartment-selection').val();
@@ -49,7 +66,7 @@ $( document ).ready(function() {
                 subDepartment: selectedSubDepartment
             }
         };
-        
+
         updateTicket(ticketAttributes, ticketId);
     });
 

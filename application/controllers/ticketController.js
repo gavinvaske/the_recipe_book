@@ -16,6 +16,26 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.get('/', async (request, response) => {
+    const tickets = await TicketModel.find({}, 'ticketNumber destination').exec();
+
+    return response.render('viewTickets', {
+        tickets
+    });
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await TicketModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect('/tickets');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
+});
+
 router.post('/update/:ticketId/notes', async (request, response) => {
     try {
         const departmentKey = Object.keys(request.body.departmentNotes)[0];
@@ -141,6 +161,15 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
     } finally {
         deleteFileFromFileSystem(jobFilePath);
     }    
+});
+
+router.get('/:id', verifyJwtToken, async (request, response) => {
+    try {
+        response.send('TODO: Build this page');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
 });
 
 module.exports = router;

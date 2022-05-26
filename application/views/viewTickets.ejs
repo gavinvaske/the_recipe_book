@@ -1,0 +1,58 @@
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper">
+    <div class="alert-box full-width">
+        <%- include ("flashMessages") %>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table recipes" data-endpoint="/recipes">
+            <thead role="rowgroup">
+                <tr role="row">
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>Ticket Number</div>
+                    </th>
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>Department</div>
+                    </th>
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>SubDepartment</div>
+                    </th>
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>Actions</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (typeof tickets != 'undefined') { %>
+                    <% tickets.forEach((ticket) => { %>
+                        <tr>
+                            <td><%= ticket.ticketNumber %></td>
+                            <td><%= ticket.destination && ticket.destination.department %></td>
+                            <td><%= ticket.destination && ticket.destination.subDepartment %></td>
+                            <td>
+                                <div class="options-reveal-box">
+                                    <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical"><circle data-v-32017d0f="" cx="12" cy="12" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="5" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="19" r="1"></circle></svg>
+                                    <ul class="options-dropdown">
+                                      <li>
+                                        <a href="/tickets/<%= ticket.id %>">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="/tickets/delete/<%= ticket.id %>">
+                                          <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline data-v-32017d0f="" points="3 6 5 6 21 6"></polyline><path data-v-32017d0f="" d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Delete
+                                        </a>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

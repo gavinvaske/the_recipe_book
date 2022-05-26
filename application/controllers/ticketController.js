@@ -17,13 +17,25 @@ function deleteFileFromFileSystem(path) {
 }
 
 router.get('/', async (request, response) => {
-    const tickets = await TicketModel.find({}, '-products').exec(); // TODO: Products is removed to avoid loading every proof per page load
+    const tickets = await TicketModel.find({}, 'ticketNumber').exec(); // TODO: only select attributes that are required to be returned (i.e. 'ticketNumber')
 
-    console.log(tickets);
+    console.log(tickets)
 
     return response.render('viewTickets', {
         tickets
     });
+});
+
+router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+    try {
+        await TicketModel.findByIdAndDelete(request.params.id).exec();
+
+        request.flash('alerts', 'Deletion was successful');
+        response.redirect('/tickets');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
 });
 
 router.post('/update/:ticketId/notes', async (request, response) => {
@@ -151,6 +163,17 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
     } finally {
         deleteFileFromFileSystem(jobFilePath);
     }    
+});
+
+router.get('/:id', verifyJwtToken, async (request, response) => {
+    try {
+        const ticket = await TicketModel.findById(request.params.id).exec();
+
+        response.send('TODO: Build this page');
+    } catch (error) {
+        request.flash('errors', error.message);
+        return response.redirect('back');
+    }
 });
 
 module.exports = router;

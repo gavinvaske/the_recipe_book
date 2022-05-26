@@ -4,7 +4,9 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const SHOW_ALL_MACHINES_ENDPOINT = '/machines';
 
-router.get('/all', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.get('/all', async (request, response) => {
     try {
         
         const machines = await MachineModel.find().exec();
@@ -17,7 +19,7 @@ router.get('/all', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const machines = await MachineModel.find().exec();
         
@@ -31,11 +33,11 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, (request, response) => {
+router.get('/create', (request, response) => {
     return response.render('createMachine');
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     const {name} = request.body;
     try {
         await MachineModel.create({name});
@@ -49,7 +51,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(SHOW_ALL_MACHINES_ENDPOINT);
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const machine = await MachineModel.findById(request.params.id);
 
@@ -62,7 +64,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await MachineModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -76,7 +78,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await MachineModel.findByIdAndDelete(request.params.id).exec();
 

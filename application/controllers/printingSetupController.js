@@ -13,13 +13,15 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
-router.post('/:recipeId/query', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.post('/:recipeId/query', async (request, response) => {
     const hardCodedSearchResults = [{}, {}, {}];
 
     return response.send(hardCodedSearchResults);
 });
 
-router.get('/:printingSetupId', verifyJwtToken, async (request, response) => {
+router.get('/:printingSetupId', async (request, response) => {
     try {
         const printingSetup = await PrintingSetupModel
             .findById(request.params.printingSetupId)
@@ -38,7 +40,7 @@ router.get('/:printingSetupId', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
+router.get('/all/:recipeId', async (request, response) => {
     const queryParams = request.query;
     const sortBy = queryParams.sortBy;
     const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
@@ -76,7 +78,7 @@ router.get('/all/:recipeId', verifyJwtToken, async (request, response) => {
     });
 });
 
-router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
+router.get('/create/:recipeId', async (request, response) => {
     const users = await UserModel.find().exec();
     const machines = await MachineModel.find().exec();
     const materials = await MaterialModel.find().exec();
@@ -89,7 +91,7 @@ router.get('/create/:recipeId', verifyJwtToken, async (request, response) => {
     });
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     try {
         await PrintingSetupModel.create(request.body);
     } catch (error) {
@@ -103,7 +105,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(`/printing-setups/all/${request.body.recipe}`);
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await PrintingSetupModel.findByIdAndDelete(request.params.id).exec();
 
@@ -116,7 +118,7 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const users = await UserModel.find().exec();
         const machines = await MachineModel.find().exec();
@@ -143,7 +145,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await PrintingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
 

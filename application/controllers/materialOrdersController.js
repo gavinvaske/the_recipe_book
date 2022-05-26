@@ -12,7 +12,9 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
-router.post('/query', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.post('/query', async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
 
     const searchCriteria = {
@@ -42,7 +44,7 @@ router.post('/query', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const queryParams = request.query;
         const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
@@ -83,7 +85,7 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, async (request, response) => {
+router.get('/create', async (request, response) => {
     const materials = await MaterialModel.find().exec();
     const vendors = await VendorModel.find().exec();
 
@@ -94,7 +96,7 @@ router.get('/create', verifyJwtToken, async (request, response) => {
     });
 });
 
-router.get('/:id', verifyJwtToken, async (request, response) => {
+router.get('/:id', async (request, response) => {
     try {
         const materialOrder = await MaterialOrderModel
             .findById(request.params.id)
@@ -113,7 +115,7 @@ router.get('/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     try {
         await MaterialOrderModel.create(request.body);
     } catch (error) {
@@ -127,7 +129,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect('/material-orders');
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const vendors = await VendorModel.find().exec();
         const materials = await MaterialModel.find().exec();
@@ -153,7 +155,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -165,7 +167,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await MaterialOrderModel.findByIdAndDelete(request.params.id).exec();
 

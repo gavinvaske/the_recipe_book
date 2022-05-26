@@ -165,8 +165,6 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
 
 router.get('/:id', verifyJwtToken, async (request, response) => {
     try {
-        const ticket = await TicketModel.findById(request.params.id).exec();
-
         response.send('TODO: Build this page');
     } catch (error) {
         request.flash('errors', error.message);

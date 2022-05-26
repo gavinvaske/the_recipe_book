@@ -623,19 +623,19 @@ describe('validation', () => {
         });
 
         it('should fail validation if department is COMPLETED and subDepartment is defined', () => {
-                const validDepartment = 'COMPLETED';
-                const invalidSubDepartment = chance.word();
+            const validDepartment = 'COMPLETED';
+            const invalidSubDepartment = chance.word();
     
-                ticketAttributes.destination = {
-                    department: validDepartment,
-                    subDepartment: invalidSubDepartment
-                };
+            ticketAttributes.destination = {
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
+            };
     
-                const ticket = new TicketModel(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
     
-                const error = ticket.validateSync();
+            const error = ticket.validateSync();
     
-                expect(error).not.toBe(undefined);
+            expect(error).not.toBe(undefined);
         });
 
         it('should pass validation if department is COMPLETED and subDepartment not defined', () => {

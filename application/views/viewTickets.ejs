@@ -13,6 +13,12 @@
                         <div>Ticket Number</div>
                     </th>
                     <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>Department</div>
+                    </th>
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
+                        <div>SubDepartment</div>
+                    </th>
+                    <th role="columnheader" scope="col" tabindex="0" aria-colindex="1" aria-sort="none" class="">
                         <div>Actions</div>
                     </th>
                 </tr>
@@ -22,6 +28,8 @@
                     <% tickets.forEach((ticket) => { %>
                         <tr>
                             <td><%= ticket.ticketNumber %></td>
+                            <td><%= ticket.destination && ticket.destination.department %></td>
+                            <td><%= ticket.destination && ticket.destination.subDepartment %></td>
                             <td>
                                 <div class="options-reveal-box">
                                     <svg data-v-32017d0f="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-body feather feather-more-vertical"><circle data-v-32017d0f="" cx="12" cy="12" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="5" r="1"></circle><circle data-v-32017d0f="" cx="12" cy="19" r="1"></circle></svg>

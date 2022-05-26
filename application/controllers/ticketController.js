@@ -17,9 +17,7 @@ function deleteFileFromFileSystem(path) {
 }
 
 router.get('/', async (request, response) => {
-    const tickets = await TicketModel.find({}, 'ticketNumber').exec(); // TODO: only select attributes that are required to be returned (i.e. 'ticketNumber')
-
-    console.log(tickets)
+    const tickets = await TicketModel.find({}, 'ticketNumber destination').exec();
 
     return response.render('viewTickets', {
         tickets

@@ -891,7 +891,7 @@ describe('validation', () => {
             'WINDING',
             'SHIPPING',
             'BILLING',
-            'COMPLETE'
+            'COMPLETED'
         ];
 
         beforeEach(() => {

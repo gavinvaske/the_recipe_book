@@ -16,6 +16,11 @@ function destinationsAreValid(destination) {
     const department = destination.department;
     const subDepartment = destination.subDepartment;
     const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
+    const isInCompletedState = department === 'COMPLETED';
+
+    if (isInCompletedState) {
+        return true;
+    }
 
     if (oneAttributeIsDefinedButNotTheOther) {
         return false;

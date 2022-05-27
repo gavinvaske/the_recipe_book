@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const {isUserLoggedIn} = require('../services/userService');
 
-router.use(verifyJwtToken);
+// router.use(verifyJwtToken);
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
@@ -22,14 +22,14 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
-router.get('/logged-in-user-details', async (request, response) => {
+router.get('/logged-in-user-details', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id, 'email username fullName userType jobRole');
     delete user.profilePicture.data;
 
     return response.json(user);
 });
 
-router.post('/profile', async (request, response) => {
+router.post('/profile', verifyJwtToken, async (request, response) => {
     const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
     const user = await UserModel.findById(request.user.id);
     user.username = userName;
@@ -49,7 +49,7 @@ router.post('/profile', async (request, response) => {
     }
 });
 
-router.get('/profile-picture', async (request, response) => {
+router.get('/profile-picture', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
     return response.json({
@@ -58,7 +58,7 @@ router.get('/profile-picture', async (request, response) => {
     });
 });
 
-router.post('/profile-picture', upload.single('image'), async (request, response) => {
+router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 3500000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   
@@ -189,13 +189,13 @@ router.post('/reset-password/:id/:token', async (request, response) => {
     }
 });
 
-router.get('/logout', (request, response) => {
+router.get('/logout', verifyJwtToken, (request, response) => {
     response.clearCookie('jwtToken');
 
     return response.redirect('/');
 });
 
-router.get('/profile', async (request, response) => {
+router.get('/profile', verifyJwtToken, verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
     delete user.password;
@@ -206,11 +206,11 @@ router.get('/profile', async (request, response) => {
     });
 });
 
-router.get('/change-password', (request, response) => {
+router.get('/change-password', verifyJwtToken, (request, response) => {
     response.render('changePassword');
 });
 
-router.post('/change-password', async (request, response) => {
+router.post('/change-password', verifyJwtToken, async (request, response) => {
     const {newPassword, repeatPassword} = request.body;
 
     if (newPassword !== repeatPassword) {

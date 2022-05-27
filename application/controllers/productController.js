@@ -4,6 +4,7 @@ const {upload} = require('../middleware/upload');
 const path = require('path');
 const fs = require('fs');
 const TicketModel = require('../models/ticket');
+const s3Service = require('../services/s3Service');
 
 router.use(verifyJwtToken);
 
@@ -17,18 +18,17 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
     
     try {
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
+        const fileName = request.file.originalname;
         
         const ticket = await TicketModel.findOne({
             'product.productNumber': productNumber
         }).exec();
 
+        const {Location: urlWhereTheFileIsStored} = await s3Service.storeFileInS3(fileName, base64EncodedPdf);
+
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = {
-            data: base64EncodedPdf,
-            contentType: request.file.mimetype,
-            fileName: request.file.originalname
-        };
+        ticket.products[index].proof = urlWhereTheFileIsStored;
 
         await ticket.save();
 

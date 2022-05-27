@@ -11,8 +11,6 @@ const fs = require('fs');
 const path = require('path');
 const {isUserLoggedIn} = require('../services/userService');
 
-// router.use(verifyJwtToken);
-
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;

@@ -160,14 +160,21 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
         return response.redirect('/tickets/upload');
     } finally {
         deleteFileFromFileSystem(jobFilePath);
-    }    
+    }
 });
 
 router.get('/:id', async (request, response) => {
     try {
-        response.send('TODO: Build this page');
+        const ticket = await TicketModel
+            .findById(request.params.id, 'ticketNumber destination')
+            .exec();
+
+        return response.render('viewOneTicket', {
+            ticket
+        });
     } catch (error) {
-        request.flash('errors', error.message);
+        console.log(error);
+        request.flash('errors', ['An error occurred while loading the requested ticket:', error.message]);
         return response.redirect('back');
     }
 });

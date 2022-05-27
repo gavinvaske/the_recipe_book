@@ -75,11 +75,22 @@ const alertSchema = new Schema({
     }
 }, { timestamps: true });
 
+const proofSchema = new Schema({
+    url: {
+        type: String,
+        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL'],
+        required: true
+    },
+    fileName: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
+
 const schema = new Schema({
     proof: {
-        type: String,
-        required: false,
-        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL']
+        type: proofSchema,
+        required: false
     },
     hotFolder: {
         type: String,

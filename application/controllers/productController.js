@@ -28,7 +28,10 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = urlWhereTheFileIsStored;
+        ticket.products[index].proof = {
+            url: urlWhereTheFileIsStored,
+            fileName
+        };
 
         await ticket.save();
 

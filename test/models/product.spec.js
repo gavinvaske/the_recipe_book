@@ -1010,30 +1010,20 @@ describe('validation', () => {
     });
 
     describe('attribute: proof', () => {
+        let proof;
 
-        it('should contain attribute which is computed automatically', () => {
-            productAttributes.proof = chance.word();
+        beforeEach(() => {
+            proof = {
+                url: chance.url(),
+                fileName: chance.word()
+            };
+        });
+
+        it('should contain attribute', () => {
+            productAttributes.proof = proof;
             const product = new ProductModel(productAttributes);
 
             expect(product.proof).toBeDefined();
-        });
-
-        it('should fail validation if proof is not a valid URL', () => {
-            productAttributes.proof = chance.word();
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should pass validation if proof is a valid URL', () => {
-            productAttributes.proof = chance.url();
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).not.toBeDefined();
         });
 
         it('should pass validation if proof is not defined', () => {
@@ -1043,6 +1033,47 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if proof.url is not a valid URL', () => {
+            proof.url = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if proof is a valid URL', () => {
+            proof.url = chance.url();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if proof.url is defined but fileName is not', () => {
+            delete proof.fileName;
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if proof.fileName is defined but url is not', () => {
+            delete proof.url;
+            proof.fileName = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 });

@@ -4,7 +4,9 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 
-router.get('/all', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.get('/all', async (request, response) => {
     try {
         
         const materials = await MaterialModel.find().exec();
@@ -17,7 +19,7 @@ router.get('/all', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const materials = await MaterialModel.find().exec();
         
@@ -31,11 +33,11 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, (request, response) => {
+router.get('/create', (request, response) => {
     return response.render('createMaterial');
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     try {
         await MaterialModel.create(request.body);
     } catch (error) {
@@ -48,7 +50,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const material = await MaterialModel.findById(request.params.id);
 
@@ -61,7 +63,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await MaterialModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -75,7 +77,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await MaterialModel.findByIdAndDelete(request.params.id).exec();
 

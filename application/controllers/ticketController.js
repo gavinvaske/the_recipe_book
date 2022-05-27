@@ -24,7 +24,7 @@ router.get('/', async (request, response) => {
     });
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await TicketModel.findByIdAndDelete(request.params.id).exec();
 
@@ -163,7 +163,7 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
     }    
 });
 
-router.get('/:id', verifyJwtToken, async (request, response) => {
+router.get('/:id', async (request, response) => {
     try {
         response.send('TODO: Build this page');
     } catch (error) {

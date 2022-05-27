@@ -1014,75 +1014,66 @@ describe('validation', () => {
 
         beforeEach(() => {
             proof = {
-                contentType: 'application/pdf',
-                data: 10101,
-                fileName: chance.word(),
+                url: chance.url(),
+                fileName: chance.word()
             };
         });
 
-        it('should pass validation if all attributes are defined correctly', () => {
+        it('should contain attribute', () => {
             productAttributes.proof = proof;
-
             const product = new ProductModel(productAttributes);
-            const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(product.proof).toBeDefined();
         });
 
-        it('should fail validation if wrong contentType is used', () => {
-            const invalidType = chance.word();
-            productAttributes.proof = {
-                ...proof,
-                contentType: invalidType
-            };
-
+        it('should pass validation if proof is not defined', () => {
+            delete productAttributes.proof;
             const product = new ProductModel(productAttributes);
+
             const error = product.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).not.toBeDefined();
         });
 
-        it('should pass validation if contentType is an accepted value', () => {
-            const validContentType = 'application/pdf';
-            productAttributes.proof = {
-                ...proof,
-                contentType: validContentType
-            };
-
-            const product = new ProductModel(productAttributes);
-            const error = product.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should be an object with the correct attributes', () => {
+        it('should fail validation if proof.url is not a valid URL', () => {
+            proof.url = chance.word();
             productAttributes.proof = proof;
-
             const product = new ProductModel(productAttributes);
 
-            expect(product.proof.contentType).toBe(proof.contentType);
-            expect(product.proof.data).toBeDefined();
-            expect(product.proof.fileName).toBe(proof.fileName);
-        });
-
-        it('should fail validation if data is provided but contentType is not', () => {
-            delete proof.contentType;
-            productAttributes.proof = proof;
-
-            const product = new ProductModel(productAttributes);
             const error = product.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBeDefined();
         });
 
-        it('should fail validation if data is provided but fileName is not', () => {
+        it('should pass validation if proof is a valid URL', () => {
+            proof.url = chance.url();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if proof.url is defined but fileName is not', () => {
             delete proof.fileName;
             productAttributes.proof = proof;
-
             const product = new ProductModel(productAttributes);
+
             const error = product.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if proof.fileName is defined but url is not', () => {
+            delete proof.url;
+            proof.fileName = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 });

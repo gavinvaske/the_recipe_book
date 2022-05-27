@@ -7,6 +7,7 @@ const {getAllDepartments} = require('../enums/departmentsEnum');
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
+URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
@@ -57,32 +58,9 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
-function validateProofAttributes(proof) {
-    if (!proof) {
-        return true;
-    }
-
-    const fileNameOrContentTypeIsMissing = !proof.fileName || !proof.contentType;
-
-    if (fileNameOrContentTypeIsMissing) {
-        return false;
-    }
-
-    return true;
+function validateUrl(url) {
+    return URL_VALIDATION_REGEX.test(url);
 }
-
-const proofSchema = new Schema({
-    data: {
-        type: Buffer
-    },
-    contentType: {
-        type: String,
-        enum: ['application/pdf']
-    },
-    fileName: {
-        type: String
-    }
-}, { timestamps: true });
 
 const alertSchema = new Schema({
     department: {
@@ -97,10 +75,22 @@ const alertSchema = new Schema({
     }
 }, { timestamps: true });
 
+const proofSchema = new Schema({
+    url: {
+        type: String,
+        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL'],
+        required: true
+    },
+    fileName: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
+
 const schema = new Schema({
     proof: {
         type: proofSchema,
-        validate: [validateProofAttributes, 'FileName or ContentType are not defined on the Proof']
+        required: false
     },
     hotFolder: {
         type: String,

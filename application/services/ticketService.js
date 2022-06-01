@@ -77,3 +77,25 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
         extraCharges
     };
 };
+
+module.exports.groupTicketsByDepartment = (tickets, departments) => {
+    let ticketsGroupedByDepartment = [];
+    const inProgress = 'IN PROGRESS';
+    ticketsGroupedByDepartment[inProgress] = [];
+
+    departments.forEach((department) => {
+        ticketsGroupedByDepartment[department] = [];
+    });
+
+    tickets.forEach((ticket) => {
+        const destination = ticket.destination;
+
+        if (destination && destination.department) {
+            ticketsGroupedByDepartment[destination.department].push(ticket);
+        } else {
+            ticketsGroupedByDepartment[inProgress].push(ticket);
+        }
+    });
+
+    return ticketsGroupedByDepartment;
+};

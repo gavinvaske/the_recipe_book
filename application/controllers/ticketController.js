@@ -8,7 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departments} = require('../enums/departmentsEnum');
+const {departments, getAllDepartments} = require('../enums/departmentsEnum');
 
 router.use(verifyJwtToken);
 
@@ -17,10 +17,16 @@ function deleteFileFromFileSystem(path) {
 }
 
 router.get('/', async (request, response) => {
-    const tickets = await TicketModel.find({}, 'ticketNumber destination').exec();
+    const tickets = await TicketModel
+        .find()
+        .exec();
+
+    const departments = getAllDepartments();
+
+    const ticketsGroupedByDepartment = ticketService.groupTicketsByDepartment(tickets, departments);
 
     return response.render('viewTickets', {
-        tickets
+        ticketsGroupedByDepartment
     });
 });
 

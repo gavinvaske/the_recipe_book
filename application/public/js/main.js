@@ -1,12 +1,13 @@
 $( document ).ready(function() {
     $('.department-option').on('click', function() {
         const selectedDepartment = $(this).data('selected-department');
+        const timeToShowAnimationInMs = 200;
 
         console.log(`You selected ${selectedDepartment}`);
 
-        $('table').hide(200)
+        $('table').hide(timeToShowAnimationInMs);
 
-        $(`#${selectedDepartment}`).show(200);
+        $(`#${selectedDepartment}`).show(timeToShowAnimationInMs);
     });
 
     function updateTicket(ticketAttributes, ticketId) {

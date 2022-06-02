@@ -117,7 +117,7 @@ describe('ticketService test suite', () => {
         let ticketsWithoutDepartments;
         let allTickets;
         let departmentNames;
-        const defaultDepartmentName = 'IN PROGRESS';
+        const defaultDepartmentName = 'IN-PROGRESS';
 
         beforeEach(() => {
             departmentNames = [chance.word(), chance.word(), chance.word()];

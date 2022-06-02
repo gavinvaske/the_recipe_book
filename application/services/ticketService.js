@@ -80,7 +80,7 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
 
 module.exports.groupTicketsByDepartment = (tickets, departments) => {
     let ticketsGroupedByDepartment = [];
-    const inProgress = 'IN PROGRESS';
+    const inProgress = 'IN-PROGRESS';
     ticketsGroupedByDepartment[inProgress] = [];
 
     departments.forEach((department) => {

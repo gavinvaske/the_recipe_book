@@ -1,4 +1,14 @@
 $( document ).ready(function() {
+    $('.department-option').on('click', function() {
+        const selectedDepartment = $(this).data('selected-department');
+
+        console.log(`You selected ${selectedDepartment}`);
+
+        $('table').hide(200)
+
+        $(`#${selectedDepartment}`).show(200);
+    });
+
     function updateTicket(ticketAttributes, ticketId) {
         $.ajax({
             url: `/tickets/update/${ticketId}`,

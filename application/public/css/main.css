@@ -2003,7 +2003,9 @@ a.storm {
 
 /* When the checkbox is checked, add a blue background */
 .create-recipe-wrapper .checkbox-label-wrapper input:checked ~ .checkmark,
-.update-cutting-recipe .checkbox-label-wrapper input:checked ~ .checkmark {
+.update-cutting-recipe .checkbox-label-wrapper input:checked ~ .checkmark,
+.create-purchase-order-entry .checkbox-label-wrapper input:checked ~ .checkmark,
+.update-purchase-order-entry .checkbox-label-wrapper input:checked ~ .checkmark {
   background-color: #39c2dd;
 }
 

@@ -22,8 +22,8 @@ const TOOL_ARRIVALS = 'TOOL ARRIVALS';
 const READY_FOR_BILLING = 'READY FOR BILLING';
 
 // departments
-const ORDER_PREP_DEPARTMENT = 'ORDER PREP';
-const ART_PREP_DEPARTMENT = 'ART PREP';
+const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
+const ART_PREP_DEPARTMENT = 'ART-PREP';
 const PRE_PRESS_DEPARTMENT = 'PRE-PRESS';
 const PRINTING_DEPARTMENT = 'PRINTING';
 const CUTTING_DEPARTMENT = 'CUTTING';
@@ -31,18 +31,6 @@ const WINDING_DEPARTMENT = 'WINDING';
 const SHIPPING_DEPARTMENT = 'SHIPPING';
 const BILLING_DEPARTMENT = 'BILLING';
 const COMPLETE_DEPARTMENT = 'COMPLETED';
-
-const DEPARTMENT_KEYS = {
-    orderPrep: ORDER_PREP_DEPARTMENT,
-    artPrep: ART_PREP_DEPARTMENT,
-    prePress: PRE_PRESS_DEPARTMENT,
-    printing: PRINTING_DEPARTMENT,
-    cutting: CUTTING_DEPARTMENT,
-    winding: WINDING_DEPARTMENT,
-    shipping: SHIPPING_DEPARTMENT,
-    billing: BILLING_DEPARTMENT,
-    complete: COMPLETE_DEPARTMENT,
-};
 
 module.exports.departments = {
     [ORDER_PREP_DEPARTMENT]: [
@@ -97,16 +85,6 @@ module.exports.departments = {
         READY_FOR_BILLING
     ],
     [COMPLETE_DEPARTMENT]: []
-};
-
-module.exports.findDeparmentNameUsingKey = (key) => {
-    const department = DEPARTMENT_KEYS[key];
-
-    if (!department) {
-        throw new Error(`No department found using the key = ${key}`);
-    }
-
-    return department;
 };
 
 module.exports.getAllSubDepartments = () => {

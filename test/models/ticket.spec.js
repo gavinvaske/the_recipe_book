@@ -591,7 +591,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if department attribute IS NOT an accepted value', () => {
-            const validDepartment = 'ART PREP';
+            const validDepartment = 'ART-PREP';
             const invalidDepartment = chance.string();
             const validSubDepartment = chance.pickone(departments[validDepartment]);
 

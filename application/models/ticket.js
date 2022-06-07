@@ -41,8 +41,6 @@ async function validateMaterialExists(materialId) {
     const searchCriteria = {
         materialId: {$regex: materialId, $options: 'i'}
     };
-
-    console.log(searchCriteria);
     
     try {
         const material = await MaterialModel.findOne(searchCriteria).exec();

@@ -14,17 +14,17 @@
       </div>
       <div class='worlkflow-navigation'>
         <ul class='navigation-list full-width'>
-          <li>Order Prep</li>
-          <li>Art Prep</li>
-          <li>Pre-Press</li>
-          <li>Printing</li>
-          <li>Cutting</li>
-          <li>Winding</li>
-          <li>Shipping</li>
-          <li>Billing</li>
+          <li data-department="ORDER-PREP">Order Prep</li>
+          <li data-department="ART-PREP">Art Prep</li>
+          <li data-department="PRE-PRESS">Pre-Press</li>
+          <li data-department="PRINTING">Printing</li>
+          <li data-department="CUTTING">Cutting</li>
+          <li data-department="WINDING">Winding</li>
+          <li data-department="SHIPPING">Shipping</li>
+          <li data-department="BILLING">Billing</li>
         </ul>
-  
       </div>
+
       <div class='workflow-filter flex-center-left-row'>
   
         <button class='create bg-blue text-white border-blue btn-create'>Create <i class="fa-regular fa-plus"></i></button>
@@ -68,7 +68,7 @@
       <% if (typeof ticketsGroupedByDepartment != 'undefined') { %>
         <% Object.keys(ticketsGroupedByDepartment).forEach((department) => { %>
           <div class="table-wrapper">
-            <table class="table recipes">
+            <table id="<%= department %>" class="table recipes">
               <caption>Department: <%= department %></caption>
               <thead role="rowgroup">
                   <tr role="row">

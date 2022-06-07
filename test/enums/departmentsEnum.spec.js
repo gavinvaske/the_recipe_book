@@ -1,5 +1,4 @@
 const {getAllSubDepartments, getAllDepartments} = require('../../application/enums/departmentsEnum');
-const chance = require('chance').Chance();
 
 describe('departmentsEnum', () => {
     it('should return the list of subdepartments', () => {

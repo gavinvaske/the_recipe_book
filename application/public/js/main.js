@@ -1,4 +1,13 @@
 $( document ).ready(function() {
+    $('.worlkflow-navigation ul li').on('click', function() {
+        const selectedDepartment = $(this).data('department');
+        const cssTransitionDelayInMs = 200;
+
+        $('table').hide(cssTransitionDelayInMs);
+
+        $(`#${selectedDepartment}`).show(cssTransitionDelayInMs);
+    });
+
     function updateTicket(ticketAttributes, ticketId) {
         $.ajax({
             url: `/tickets/update/${ticketId}`,

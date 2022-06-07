@@ -884,7 +884,7 @@ describe('validation', () => {
     describe('attribute: alerts', () => {
         let productAlerts;
         const validDepartmentsEnum = [
-            'ART PREP',
+            'ART-PREP',
             'PRE-PRESS',
             'PRINTING',
             'CUTTING',

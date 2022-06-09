@@ -128,9 +128,8 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  function refreshTicketOn(ticket) {
-    console.log('This is kinda dope, right?');
-    console.log(ticket);
+  function handleTicketUpdatedEvent(ticketId, updatedTicketAttributes) {
+    console.log(`A ticket has been updated in the database: ${ticketId} - ${JSON.stringify(updatedTicketAttributes)}`);
   }
 
     const socket = io();
@@ -138,11 +137,9 @@
     const ticketIdsAsArray = ticketIdsAsString.split(',');
 
     ticketIdsAsArray.forEach((ticketId) => {
-      socket.on(ticketId, function(ticket) {
-        refreshTicketOn(ticket);
+      socket.on(ticketId, function(updatedTicketAttributes) {
+        handleTicketUpdatedEvent(ticketId, updatedTicketAttributes);
       });
     });
-
-
 </script>
 

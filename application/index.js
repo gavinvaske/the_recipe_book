@@ -31,9 +31,10 @@ TicketModel.watch().on('change', async (change) => {
     console.log(`Change to a Ticket in database ${JSON.stringify(change)}`);
 
     if (change.operationType === 'update'){
-        const user = await TicketModel.findById(change.documentKey._id);
+        const updatedFields = change.updateDescription.updatedFields ? change.updateDescription.updatedFields : [];
+        const ticketId = change.documentKey._id;
 
-        io.emit(change.documentKey._id, user);
+        io.emit(ticketId, updatedFields);
     }
 });
 

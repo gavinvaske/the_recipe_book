@@ -24,9 +24,13 @@ router.get('/', async (request, response) => {
     const departments = getAllDepartments();
 
     const ticketsGroupedByDepartment = ticketService.groupTicketsByDepartment(tickets, departments);
+    const ticketIds = tickets.map((ticket) => {
+        return ticket.id;
+    });
 
     return response.render('viewTickets', {
-        ticketsGroupedByDepartment
+        ticketsGroupedByDepartment,
+        ticketIds
     });
 });
 

@@ -3,24 +3,35 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const UserModel = require('./models/user');
+const TicketModel = require('./models/ticket');
 
 // app.get('/', (req, res) => {
 //   res.sendFile(__dirname + '/index.html');
 // });
 
 io.on('connection', (socket) => {
-    console.log(`The connection is liveeeee!!`)
+    console.log('The connection is liveeeee!!');
 
     socket.on('chat message', msg => {
         console.log(`You chatted something: ${msg}`);
         io.emit('chat message', msg);
-  });
+    });
 });
 
 UserModel.watch().on('change', async (change) => {
     console.log(`Change to a User in database ${JSON.stringify(change)}`);
     if (change.operationType === 'update'){
         const user = await UserModel.findById(change.documentKey._id);
+
+        io.emit(change.documentKey._id, user);
+    }
+});
+
+TicketModel.watch().on('change', async (change) => {
+    console.log(`Change to a Ticket in database ${JSON.stringify(change)}`);
+
+    if (change.operationType === 'update'){
+        const user = await TicketModel.findById(change.documentKey._id);
 
         io.emit(change.documentKey._id, user);
     }
@@ -89,5 +100,5 @@ databaseConnection.on('error', (error) => {
 databaseConnection.on('open', () => {
     http.listen(PORT, () => {
         console.log(`Socket.IO server running at http://localhost:${PORT}/`);
-      });
+    });
 });

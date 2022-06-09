@@ -176,7 +176,7 @@ $( document ).ready(function() {
 
     const shouldDisplayUserDetails = $('.user-details').length;
 
-    console.log(`ShouldDisplayUserDetails => ${shouldDisplayUserDetails}`)
+    console.log(`ShouldDisplayUserDetails => ${shouldDisplayUserDetails}`);
 
     if (shouldDisplayUserDetails) {
         $.ajax({

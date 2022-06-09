@@ -126,4 +126,23 @@
       <% } %>
 </div>
 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  function refreshTicketOn(ticket) {
+    console.log('This is kinda dope, right?');
+    console.log(ticket);
+  }
+
+    const socket = io();
+    const ticketIdsAsString = '<%= ticketIds.toString() %>';
+    const ticketIdsAsArray = ticketIdsAsString.split(',');
+
+    ticketIdsAsArray.forEach((ticketId) => {
+      socket.on(ticketId, function(ticket) {
+        refreshTicketOn(ticket);
+      });
+    });
+
+
+</script>
 

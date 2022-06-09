@@ -11,11 +11,9 @@ const fs = require('fs');
 const path = require('path');
 const {isUserLoggedIn} = require('../services/userService');
 
-
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_LENGTH = 10;
-
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
 function deleteFileFromFileSystem(path) {
@@ -59,7 +57,7 @@ router.get('/profile-picture', verifyJwtToken, async (request, response) => {
 });
 
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
-    const maxImageSizeInBytes = 3500000;
+    const maxImageSizeInBytes = 800000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   
     try {
@@ -107,7 +105,6 @@ router.post('/forgot-password', async (request, response) => {
         };
         const token = jwt.sign(payload, secret, {expiresIn: '15m'});
         const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
-        console.log(link);
 
         sendPasswordResetEmail(email, link);
     }
@@ -196,7 +193,7 @@ router.get('/logout', verifyJwtToken, (request, response) => {
     return response.redirect('/');
 });
 
-router.get('/profile', verifyJwtToken, async (request, response) => {
+router.get('/profile', verifyJwtToken, verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
     delete user.password;

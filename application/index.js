@@ -79,6 +79,7 @@ app.use('/winding-setups', require('./controllers/windingSetupController'));
 app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
+app.use('/products', require('./controllers/productController'));
 app.use('/socket-practice', require('./controllers/socketPracticeController'));
 
 databaseConnection.on('error', (error) => {

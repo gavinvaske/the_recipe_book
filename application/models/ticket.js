@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
+const {departments, getAllSubDepartments} = require('../enums/departmentsEnum');
+const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -10,7 +12,120 @@ function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
 
+function destinationsAreValid(destination) {
+    const department = destination.department;
+    const subDepartment = destination.subDepartment;
+    const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
+    const isInCompletedState = department === 'COMPLETED';
+
+    if (isInCompletedState) {
+        return true;
+    }
+
+    if (oneAttributeIsDefinedButNotTheOther) {
+        return false;
+    }
+
+    return true;
+}
+
+function departmentIsValid(department) {
+    return Object.keys(departments).includes(department);
+}
+
+function subDepartmentIsValid(subDepartment) {
+    return getAllSubDepartments().includes(subDepartment);
+}
+
+async function validateMaterialExists(materialId) {
+    const searchCriteria = {
+        materialId: {$regex: materialId, $options: 'i'}
+    };
+    
+    try {
+        const material = await MaterialModel.findOne(searchCriteria).exec();
+
+        return !material ? false : true;
+    } catch (error) {
+        return false;
+    }
+}
+
+const departmentNotesSchema = new Schema({
+    orderPrep: {
+        type: String
+    },
+    artPrep: {
+        type: String
+    },
+    prePress: {
+        type: String
+    },
+    printing: {
+        type: String
+    },
+    cutting: {
+        type: String
+    },
+    winding: {
+        type: String
+    },
+    shipping: {
+        type: String
+    },
+    billing: {
+        type: String
+    }
+}, { 
+    timestamps: true,
+    strict: 'throw'
+});
+
+const destinationSchema = new Schema({
+    department: {
+        type: String,
+        validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
+    },
+    subDepartment: {
+        type: String,
+        validate: [subDepartmentIsValid, 'The provided sub-department "{VALUE}" is not accepted']
+    }
+}, { timestamps: true });
+
 const ticketSchema = new Schema({
+    primaryMaterial: {
+        type: String,
+        required: false,
+        default: function() {
+            if (this.products && this.products.length > 0) { // eslint-disable-line no-magic-numbers
+                return this.products[0].primaryMaterial;
+            }
+        },
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID thru the admin panel before uploading the XML'],
+    },
+    departmentNotes: {
+        type: departmentNotesSchema,
+        required: false
+    },
+    destination: {
+        type: destinationSchema,
+        required: false,
+        validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
+    },
+    printingType: {
+        type: String,
+        required: false,
+        enum: [
+            'CMYK',
+            'CMYK + W',
+            'BLANKS',
+            'CMYK OV + W',
+            'BLACK ONLY',
+            'EPM',
+            'BLACK & WHITE',
+            'CMYK OV',
+        ]
+    },
     products: {
         type: [productSchema],
     },
@@ -127,8 +242,42 @@ const ticketSchema = new Schema({
         type: String,
         required: false,
         alias: 'BillState'
+    },
+    totalLabelQty: {
+        type: Number,
+        default: function() {
+            let sum = 0; // eslint-disable-line no-magic-numbers
+
+            if (this.products.length) {
+                this.products.forEach((product) => {
+                    sum = sum + product.labelQty;
+                });
+            }
+            return sum;
+        }
+    },
+    totalWindingRolls: {
+        type: Number,
+        default: function() {
+            let sum = 0; // eslint-disable-line no-magic-numbers
+
+            if (this.products.length) {
+                this.products.forEach((product) => {
+                    sum = sum + product.totalWindingRolls;
+                });
+            }
+            return sum;
+        }
     }
 }, { timestamps: true });
+
+ticketSchema.pre('save', function(next) {
+    this.products && this.products.forEach((product) => {
+        product.primaryMaterial = this.primaryMaterial;
+    });
+
+    next();
+});
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

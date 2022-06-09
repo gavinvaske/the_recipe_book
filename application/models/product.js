@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const MaterialModel = require('../models/material');
+const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
+const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
+URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
@@ -13,6 +17,20 @@ function cannotBeFalsy(value) {
         return false;
     }
     return true;
+}
+
+async function validateMaterialExists(materialId) {
+    const searchCriteria = {
+        materialId: {$regex: materialId, $options: 'i'}
+    };
+    
+    try {
+        const material = await MaterialModel.findOne(searchCriteria).exec();
+
+        return !material ? false : true;
+    } catch (error) {
+        return false;
+    }
 }
 
 function convertStringCurrency(numberAsString) {
@@ -40,7 +58,51 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
+function validateUrl(url) {
+    return URL_VALIDATION_REGEX.test(url);
+}
+
+const alertSchema = new Schema({
+    department: {
+        type: String,
+        required: true,
+        enum: getAllDepartments()
+    },
+    message: {
+        type: String,
+        required: false,
+        default: ''
+    }
+}, { timestamps: true });
+
+const proofSchema = new Schema({
+    url: {
+        type: String,
+        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL'],
+        required: true
+    },
+    fileName: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
+
 const schema = new Schema({
+    proof: {
+        type: proofSchema,
+        required: false
+    },
+    hotFolder: {
+        type: String,
+        required: false,
+        default: function() {
+            return hotFolders[this.primaryMaterial];
+        },
+        enum: getUniqueHotFolders()
+    },
+    alerts: {
+        type: [alertSchema]
+    },
     productNumber: {
         type: String,
         validate: [validateProductNumber, 'Product Number is in the wrong format'],
@@ -57,6 +119,7 @@ const schema = new Schema({
     },
     primaryMaterial: {
         type: String,
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID (aka stockNum2) thru the admin panel before uploading the XML'],
         required: false,
         alias: 'StockNum2'
     },
@@ -215,6 +278,18 @@ const schema = new Schema({
     Plate_ID: {
         type: String,
         alias: 'plateId'
+    },
+    totalWindingRolls: {
+        type: Number,
+        default: function() {
+            return Math.ceil(this.labelQty / this.labelsPerRoll);
+        }
+    },
+    coreHeight: {
+        type: Number,
+        required: function() {
+            return this.finishType && this.finishType.toUpperCase() === 'ROLL';
+        }
     }
 }, { timestamps: true });
 

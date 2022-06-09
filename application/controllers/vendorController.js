@@ -3,9 +3,11 @@ const router = express.Router();
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 
+router.use(verifyJwtToken);
+
 const SHOW_ALL_VENDORS_ENDPOINT = '/vendors';
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const vendors = await VendorModel.find().exec();
         
@@ -19,11 +21,11 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, (request, response) => {
+router.get('/create', (request, response) => {
     return response.render('createVendor');
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     const {name} = request.body;
     try {
         await VendorModel.create({name});
@@ -37,7 +39,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
 });
 
-router.get('/all', verifyJwtToken, async (request, response) => {
+router.get('/all', async (request, response) => {
     try {
         
         const vendors = await VendorModel.find().exec();
@@ -50,7 +52,7 @@ router.get('/all', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const vendor = await VendorModel.findById(request.params.id).exec();
 
@@ -64,7 +66,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await VendorModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -76,7 +78,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await VendorModel.findByIdAndDelete(request.params.id).exec();
 

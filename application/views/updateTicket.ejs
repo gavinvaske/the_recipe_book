@@ -1,0 +1,114 @@
+<div class="form-column-wrapper flex-top-center-row full-width">
+    <div class="half-width column-left">
+        <div class="form-group">
+            <label for="ticketNumber">Ticket Number</label>
+            <input type="text" name="ticketNumber" id="ticketNumber" value="<%= ticket.ticketNumber || 'N/A' %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfProducts">Number of Products</label>
+            <input type="text" name="numberOfProducts" id="numberOfProducts" value="<%= (ticket.products && ticket.products.length) || 'N/A' %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="customerName">Customer Name</label>
+            <input type="text" name="customerName" id="customerName" value="<%= ticket.poNumber || 'N/A' %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="material-selection">Material</label>
+            <select name="material" id="material-selection" data-ticket-id="<%= ticket.id %>">
+                <option value="">-</option>
+                <% materialIds.forEach((materialId) => { %>
+                    <% const isSelected = materialId === selectedMaterial ? 'selected' : ''; %>
+                    <option value="<%= materialId %>" <%= isSelected %>><%= materialId %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="printing-type-selection">Printing Type</label>
+            <select name="printingType" id="printing-type-selection" data-ticket-id="<%= ticket.id %>">
+                <option value=""><%= '-' %></option>
+                <option value="CMYK" <%= selectedPrintingType === 'CMYK' ? 'selected' : '' %>><%= 'CMYK' %></option>
+                <option value="CMYK + W" <%= selectedPrintingType === 'CMYK + W' ? 'selected' : '' %>><%= 'CMYK + W' %></option>
+                <option value="BLANKS" <%= selectedPrintingType === 'BLANKS' ? 'selected' : '' %>><%= 'Blanks' %></option>
+                <option value="CMYK OV + W" <%= selectedPrintingType === 'CMYK OV + W' ? 'selected' : '' %>><%= 'CMYK OV + W' %></option>
+                <option value="BLACK ONLY" <%= selectedPrintingType === 'BLACK ONLY' ? 'selected' : '' %>><%= 'Black Only' %></option>
+                <option value="EPM" <%= selectedPrintingType === 'EPM' ? 'selected' : '' %>><%= 'EPM' %></option>
+                <option value="BLACK & WHITE" <%= selectedPrintingType === 'BLACK & WHITE' ? 'selected' : '' %>><%= 'Black & White' %></option>
+                <option value="CMYK OV" <%= selectedPrintingType === 'CMYK OV' ? 'selected' : '' %>><%= 'CMYK OV' %></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="department-selection">Department:</label>
+            <select name="destination[department]" id="department-selection" data-ticket-id="<%= ticket.id %>">
+                <option value=""><%= '-' %></option>
+                <% if (typeof departmentNames != 'undefined') { %>
+                    <% departmentNames.forEach(departmentName => { %>
+                        <% const isSelected = departmentName === selectedDepartment ? 'selected' : ''; %>
+                        <option value="<%= departmentName %>" <%= isSelected %>><%= departmentName || 'N/A' %></option>
+                    <% }) %>
+                <% } %>
+            </select>
+
+            <label for="subdepartment-selection">SubDepartment:</label>
+            <select name="destination[subDepartment]" id="subdepartment-selection" data-ticket-id="<%= ticket.id %>">
+                <% if (typeof subDepartments != 'undefined') { %>
+                    <% subDepartments.forEach(subDepartmentName => { %>
+                        <% const isSelected = subDepartmentName == selectedSubDepartment ? 'selected' : ''; %>
+                        <option value="<%= subDepartmentName %>" <%= isSelected %>><%= subDepartmentName || 'N/A' %></option>
+                    <% }) %>
+                <% } else { %>
+                    <option value=""><%= 'Please Select a Department First' %></option>
+                <% } %>
+            </select>
+        </div>
+    </div>
+</div>
+
+<br>
+<a href="/tickets" class="btn btn-primary">Back to Tickets</a>
+<br>
+
+<h1>Department Notes:</h1>
+
+<div id="department-notes" data-ticket-id="<%= ticket.id %>">
+    <label for="orderPrep">Order Prep</label>
+    <input class="department-alert-notes" type="text" id="orderPrep" value="<%= ticket.departmentNotes && ticket.departmentNotes['orderPrep'] %>"><br>
+
+    <label for="artPrep">Art Prep</label>
+    <input class="department-alert-notes" type="text" id="artPrep" value="<%= ticket.departmentNotes && ticket.departmentNotes['artPrep'] %>"><br>
+
+    <label for="prePress">Pre Press</label>
+    <input class="department-alert-notes" type="text" id="prePress" value="<%= ticket.departmentNotes && ticket.departmentNotes['prePress'] %>"><br>
+
+    <label for="printing">Printing</label>
+    <input class="department-alert-notes" type="text" id="printing" value="<%= ticket.departmentNotes && ticket.departmentNotes['printing'] %>"><br>
+
+    <label for="cutting">Cutting</label>
+    <input class="department-alert-notes" type="text" id="cutting" value="<%= ticket.departmentNotes && ticket.departmentNotes['cutting'] %>"><br>
+
+    <label for="winding">Winding</label>
+    <input class="department-alert-notes" type="text" id="winding" value="<%= ticket.departmentNotes && ticket.departmentNotes['winding'] %>"><br>
+
+    <label for="shipping">Shipping</label>
+    <input class="department-alert-notes" type="text" id="shipping" value="<%= ticket.departmentNotes && ticket.departmentNotes['shipping'] %>"><br>
+
+    <label for="billing">Billing</label>
+    <input class="department-alert-notes" type="text" id="billing" value="<%= ticket.departmentNotes && ticket.departmentNotes['billing'] %>"><br>
+</div>
+
+    <h1>Products: </h1>
+    <br>
+
+    <% ticket.products && ticket.products.forEach((product, index) => { %>
+        #: <%= index + 1 %>
+        <br>
+        Product Name: <%= product.productNumber %>
+        <br>
+        Proof:
+        <input class="proof-upload" type="file" id="<%= product.productNumber %>" name="proof" value="" accept="application/pdf"/>
+        <br>
+    <% }) %>

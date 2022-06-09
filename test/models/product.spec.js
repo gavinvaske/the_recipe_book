@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
+const {hotFolders} = require('../../application/enums/hotFolderEnum');
 
 function getRandomNumberOfDigits() {
     return chance.integer({min: 1});
@@ -14,7 +15,7 @@ describe('validation', () => {
         productAttributes = {
             ProductNumber: chance.pickone(['1245D-100', '767D-2672', '767D-001']),
             ToolNo1: chance.pickone(validProductDies),
-            StockNum2: chance.string(),
+            StockNum2: chance.pickone(Object.keys(hotFolders)),
             InkType: chance.string(),
             SizeAcross: String(chance.floating({min: 0.1})),
             SizeAround: String(chance.floating({min: 0.1})),
@@ -37,7 +38,8 @@ describe('validation', () => {
             PriceMode: chance.string(),
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: String(chance.integer({min: 0})),
-            Plate_ID: chance.string()
+            Plate_ID: chance.string(),
+            alerts: []
         };
     });
 
@@ -838,6 +840,240 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.plateId).toEqual(expect.any(String));
+        });
+    });
+
+    describe('attribute: totalLabelQty', () => {
+
+        it('should be a number', async () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalWindingRolls).toEqual(expect.any(Number));
+        });
+        it('should compute attribute correctly', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalWindingRolls).toEqual(Math.ceil(product.labelQty / product.labelsPerRoll));
+        });
+    });
+
+    describe('attribute: coreHeight', () => {
+        it('should be required if FinishType attribute equals "Roll"', () => {
+            productAttributes.FinishType = 'Roll';
+            delete productAttributes.coreHeight;
+
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should NOT BE required if FinishType DOES NOT equal "Roll"', () => {
+            productAttributes.FinishType = chance.string();
+            delete productAttributes.coreHeight;
+
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: alerts', () => {
+        let productAlerts;
+        const validDepartmentsEnum = [
+            'ART-PREP',
+            'PRE-PRESS',
+            'PRINTING',
+            'CUTTING',
+            'WINDING',
+            'SHIPPING',
+            'BILLING',
+            'COMPLETED'
+        ];
+
+        beforeEach(() => {
+            productAlerts = [
+                {
+                    department: chance.pickone(validDepartmentsEnum),
+                    message: chance.string()
+                }
+            ];
+        });
+
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts).toBeDefined();
+        });
+
+        it('should contain an object with the correct attributes', () => {
+            productAttributes.alerts = productAlerts;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts.length).toEqual(1);
+            expect(product.alerts[0].department).toEqual(productAlerts[0].department);
+            expect(product.alerts[0].message).toEqual(productAlerts[0].message);
+        });
+
+        it('should fail validation if an alert has a "department" attribute which IS NOT an accepted enum', () => {
+            const invalidDepartment = chance.string();
+
+            productAttributes.alerts = [
+                {
+                    ...productAlerts[0],
+                    department:invalidDepartment
+                }
+            ];
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if an alert has a "department" attribute which IS an accepted enum', () => {
+            productAttributes.alerts = productAlerts;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if an alert is missing "department" attribute', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].department;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should not fail validation if an alert is missing "message" attribute', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].message;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should default alerts.message attribute to be an empty string IF not defined', () => {
+            productAttributes.alerts = productAlerts;
+            delete productAttributes.alerts[0].message;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.alerts[0].message).toEqual('');
+        });
+    });
+
+    describe('attribute: hotFolder', () => {
+        it('should contain attribute which is computed automatically', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).toBeDefined();
+        });
+
+        it('should not be defined if the variable it depends upon is undefined', () => {
+            delete productAttributes.StockNum2;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).not.toBeDefined();
+        });
+
+        it('should return correct hotFolder which the primaryMaterial (aka "StockNum2") is mapped to', () => {
+            const materialIds = Object.keys(hotFolders);
+            const materialId = chance.pickone(materialIds);
+            productAttributes.StockNum2 = materialId;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.hotFolder).toBe(hotFolders[materialId]);
+        });
+
+        it('should fail validation if hotFolder is not an accepted value', () => {
+            const hotFolder = chance.word();
+            productAttributes.hotFolder = hotFolder;
+
+            const product = new ProductModel(productAttributes);
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: proof', () => {
+        let proof;
+
+        beforeEach(() => {
+            proof = {
+                url: chance.url(),
+                fileName: chance.word()
+            };
+        });
+
+        it('should contain attribute', () => {
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proof).toBeDefined();
+        });
+
+        it('should pass validation if proof is not defined', () => {
+            delete productAttributes.proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if proof.url is not a valid URL', () => {
+            proof.url = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if proof is a valid URL', () => {
+            proof.url = chance.url();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if proof.url is defined but fileName is not', () => {
+            delete proof.fileName;
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if proof.fileName is defined but url is not', () => {
+            delete proof.url;
+            proof.fileName = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 });

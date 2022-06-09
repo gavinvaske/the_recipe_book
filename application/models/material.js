@@ -7,6 +7,12 @@ const schema = new Schema({
         trim: true,
         required: true
     },
+    materialId: {
+        type: String,
+        required: true,
+        trim: true
+
+    }
 }, { timestamps: true });
 
 const Material = mongoose.model('Material', schema);

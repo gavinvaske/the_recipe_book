@@ -11,7 +11,9 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
-router.post('/query', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.post('/query', async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
 
     const searchCriteria = {
@@ -43,7 +45,7 @@ router.post('/query', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await RecipeModel.findByIdAndDelete(request.params.id).exec();
 
@@ -55,7 +57,7 @@ router.get('/delete/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await RecipeModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -67,7 +69,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const recipe = await RecipeModel.findById(request.params.id).exec();
 
@@ -79,7 +81,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     const queryParams = request.query;
     const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
     const sortBy = queryParams.sortBy;
@@ -122,13 +124,13 @@ router.get('/', verifyJwtToken, verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, (request, response) => {
+router.get('/create', (request, response) => {
     response.render('createRecipe', {
         user: request.user
     });
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     const {designNumber, dieNumber, notes, howToVideo, authorId} = request.body;
     try {
         await RecipeModel.create({

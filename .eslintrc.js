@@ -12,7 +12,7 @@ module.exports = {
     'rules': {
         'semi': ['error', 'always'],
         'quotes': ['error', 'single'],
-        'complexity': ['error', {'max': 6 }],
+        'complexity': ['error', {'max': 8 }],
         'eqeqeq': ['error', 'always', {'null': 'ignore'}],
         'no-magic-numbers': ['error', {
             'ignore': [1], 

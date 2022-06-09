@@ -7,5 +7,7 @@
 <form action="/materials/update/<%= material.id %>", method="POST">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" value="<%= material.name %>">
+    <label for="name">Material ID</label>
+    <input type="text" name="materialId" id="materialId" value="<%= material.materialId %>">
     <input type="submit" value="Update Material">
 </form>

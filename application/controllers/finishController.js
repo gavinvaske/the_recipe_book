@@ -4,7 +4,9 @@ const {verifyJwtToken} = require('../middleware/authorize');
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 
-router.get('/all', verifyJwtToken, async (request, response) => {
+router.use(verifyJwtToken);
+
+router.get('/all', async (request, response) => {
     try {
         
         const finishes = await FinishModel.find().exec();
@@ -17,7 +19,7 @@ router.get('/all', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/', verifyJwtToken, async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         const finishes = await FinishModel.find().exec();
         
@@ -31,11 +33,11 @@ router.get('/', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/create', verifyJwtToken, (request, response) => {
+router.get('/create', (request, response) => {
     return response.render('createFinish');
 });
 
-router.post('/create', verifyJwtToken, async (request, response) => {
+router.post('/create', async (request, response) => {
     const {name} = request.body;
     try {
         await FinishModel.create({name});
@@ -49,7 +51,7 @@ router.post('/create', verifyJwtToken, async (request, response) => {
     return response.redirect(SHOW_ALL_FINISHES_ENDPOINT);
 });
 
-router.get('/update/:id', verifyJwtToken, async (request, response) => {
+router.get('/update/:id', async (request, response) => {
     try {
         const finish = await FinishModel.findById(request.params.id).exec();
 
@@ -61,7 +63,7 @@ router.get('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.post('/update/:id', verifyJwtToken, async (request, response) => {
+router.post('/update/:id', async (request, response) => {
     try {
         await FinishModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
@@ -73,7 +75,7 @@ router.post('/update/:id', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/delete/:id', verifyJwtToken, async (request, response) => {
+router.get('/delete/:id', async (request, response) => {
     try {
         await FinishModel.findByIdAndDelete(request.params.id).exec();
 

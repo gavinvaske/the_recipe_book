@@ -1,5 +1,7 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
+const {departments} = require('../../application/enums/departmentsEnum');
+const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -27,6 +29,9 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
+            printingType: 'BLACK & WHITE',
+            destination: {},
+            departmentNotes: {}
         };
     });
 
@@ -465,6 +470,321 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: totalLabelQty', () => {
+        beforeEach(() => {
+            ticketAttributes.products = [{labelQty: 99}, {labelQty: 13}];
+        });
+
+        it('should be a number', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(expect.any(Number));
+        });
+
+        it('should compute the attribute correctly when products exist', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(ticketAttributes.products[0].labelQty + ticketAttributes.products[1].labelQty);
+        });
+
+        it('should compute the attribute correctly when NO products exist', async () => {
+            delete ticketAttributes.products;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalLabelQty).toEqual(0); // eslint-disable-line no-magic-numbers
+        });
+    });
+
+    describe('attribute: totalWindingRolls', () => {
+        beforeEach(() => {
+            ticketAttributes.products = [{totalWindingRolls: chance.integer({min: 1})}, {totalWindingRolls: chance.integer({min: 1})}];
+        });
+        it('should be a number', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalWindingRolls).toEqual(expect.any(Number));
+        });
+
+        it('should compute the attribute correctly', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalWindingRolls).toEqual(ticketAttributes.products[0].totalWindingRolls + ticketAttributes.products[1].totalWindingRolls);
+        });
+    });
+
+    describe('attribute: printingType', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.printingType).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.printingType;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if attribute IS NOT an accepted value', () => {
+            ticketAttributes.printingType = chance.string();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if attribute IS an accepted value', () => {
+            ticketAttributes.printingType = 'CMYK OV + W';
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: destination', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.destination).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.destination;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation if attribute exists but department/subdepartment are both not defined', () => {
+            ticketAttributes.destination = {};
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if subDepartment attribute IS NOT an accepted value', () => {
+            const validDepartment = 'PRE-PRESS';
+            const invalidSubDepartment = chance.string();
+
+            ticketAttributes.destination = {
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if department attribute IS NOT an accepted value', () => {
+            const validDepartment = 'ART-PREP';
+            const invalidDepartment = chance.string();
+            const validSubDepartment = chance.pickone(departments[validDepartment]);
+
+            ticketAttributes.destination = {
+                department: invalidDepartment,
+                subDepartment: validSubDepartment
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
+            const validDepartment = 'ORDER PREP';
+            const invalidSubDepartment = undefined;
+
+            ticketAttributes.destination = {
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
+            };
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if department is COMPLETED and subDepartment is defined', () => {
+            const validDepartment = 'COMPLETED';
+            const invalidSubDepartment = chance.word();
+    
+            ticketAttributes.destination = {
+                department: validDepartment,
+                subDepartment: invalidSubDepartment
+            };
+    
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if department is COMPLETED and subDepartment not defined', () => {
+            const validDepartment = 'COMPLETED';
+
+            ticketAttributes.destination = {
+                department: validDepartment
+            };
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: departmentNotes', () => {
+        let departmentNotes;
+
+        beforeEach(() => {
+            departmentNotes = {
+                orderPrep: chance.string(),
+                artPrep: chance.string(),
+                prePress: chance.string(),
+                printing: chance.string(),
+                cutting: chance.string(),
+                winding: chance.string(),
+                shipping: chance.string(),
+                billing: chance.string(),
+            };
+        });
+
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.departmentNotes).toBeDefined();
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete ticketAttributes.departmentNotes;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should store all notes for every department', () => {
+            ticketAttributes.departmentNotes = departmentNotes;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.departmentNotes.orderPrep).toEqual(departmentNotes.orderPrep);
+            expect(ticket.departmentNotes.artPrep).toEqual(departmentNotes.artPrep);
+            expect(ticket.departmentNotes.prePress).toEqual(departmentNotes.prePress);
+            expect(ticket.departmentNotes.printing).toEqual(departmentNotes.printing);
+            expect(ticket.departmentNotes.cutting).toEqual(departmentNotes.cutting);
+            expect(ticket.departmentNotes.winding).toEqual(departmentNotes.winding);
+            expect(ticket.departmentNotes.shipping).toEqual(departmentNotes.shipping);
+            expect(ticket.departmentNotes.billing).toEqual(departmentNotes.billing);
+        });
+
+        it('should fail validation if unknown key is used', () => {
+            const unknownKey = chance.word();
+            ticketAttributes.departmentNotes = {
+                [unknownKey]: chance.string()
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: primaryMaterial', () => {
+
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        it('should contain attribute', () => {
+            ticketAttributes.primaryMaterial = chance.word();
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.primaryMaterial).toBeDefined();
+        });
+
+        it('should not fail validation if blank', () => {
+            ticketAttributes.primaryMaterial = '';
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if primaryMaterial is not an existing material ID', async () => {
+            ticketAttributes.primaryMaterial = chance.word();
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation if primaryMaterial is not an existing material ID', async () => {
+            ticketAttributes.primaryMaterial = chance.word();
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should default the ticket.primaryMaterial to product[0].primaryMaterial', async () => {
+            delete ticketAttributes.primaryMaterial;
+
+            ticketAttributes.products = [
+                {primaryMaterial: chance.word()}
+            ];
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.primaryMaterial).toBe(ticketAttributes.products[0].primaryMaterial);
+        });
+
+        it('should use the ticket.primaryMaterial to override all ticket.products[n].primaryMaterial before saving', async () => {
+            const materialA = chance.word();
+            const materialB = chance.word();
+
+            ticketAttributes.primaryMaterial = materialA;
+
+            ticketAttributes.products = [
+                {primaryMaterial: materialB},
+                {primaryMaterial: materialB},
+                {primaryMaterial: undefined},
+            ];
+            const ticket = new TicketModel(ticketAttributes);
+
+            const savedTicket = await ticket.save({validateBeforeSave: false});
+
+            expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
+            expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
+            expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
         });
     });
 });

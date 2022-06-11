@@ -1,5 +1,7 @@
 # the_recipe_book
 
+[Click here](https://the-recipe-book-heroku-app.herokuapp.com/) to view the website hosted on Heroku.
+
 
 ## Getting Started
 

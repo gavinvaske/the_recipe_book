@@ -384,6 +384,110 @@ $( document ).ready(function() {
     }).change();
 
 
+
+    $(function () {
+
+        $('.quick-filter').click(function() {
+            event.stopPropagation();
+            $('.person-filter-wrapper .dropdown').removeClass('active');
+            $('.person-filter-wrapper .filter').removeClass('active');
+            $('.sort-wrapper').removeClass('active');
+            $('.sort-dropdown').removeClass('active');
+            $('.filter-btn-wrapper').addClass('active');
+            if ($('.quick-filter-dropdown').hasClass('active')) {
+                $('.filter-btn-wrapper').removeClass('active');
+                $('.quick-filter-dropdown').removeClass('active');
+            } else if ($('.advanced-filter-dropdown').hasClass('active')){
+                $('.quick-filter-dropdown').addClass('active');
+                $('.advanced-filter-dropdown').removeClass('active');
+            } else {
+                $('.quick-filter-dropdown').addClass('active');
+            }
+        });
+    
+        $('.btn-advanced-filter').click(function() {
+            event.stopPropagation();
+            $('.person-filter-wrapper .dropdown').removeClass('active');
+            $('.person-filter-wrapper .filter').removeClass('active');
+            $('.sort-wrapper').removeClass('active');
+            $('.sort-dropdown').removeClass('active');
+            $('.filter-btn-wrapper').addClass('active');
+            if ($('.advanced-filter-dropdown').hasClass('active')) {
+                $('.filter-btn-wrapper').removeClass('active');
+                $('.advanced-filter-dropdown').removeClass('active');
+            } else if ($('.quick-filter-dropdown').hasClass('active')){
+                $('.advanced-filter-dropdown').addClass('active');
+                $('.quick-filter-dropdown').removeClass('active');
+            } else {
+                $('.advanced-filter-dropdown').addClass('active');
+            }
+        });
+    
+        $('.btn-person-filter').click(function(){
+            event.stopPropagation();
+            $('.split-btn-frame.btn-filter .filter-btn-wrapper').removeClass('active');
+            $('.split-btn-frame.btn-filter .dropdown').removeClass('active');
+            $('.sort-wrapper').removeClass('active');
+            $('.sort-dropdown').removeClass('active');
+            $(this).toggleClass('active');
+            $('.person-filter-dropdown').toggleClass('active');
+        });
+    
+        $('.sort-wrapper').click(function(){
+            event.stopPropagation();
+            $('.split-btn-frame.btn-filter .filter-btn-wrapper').removeClass('active');
+            $('.split-btn-frame.btn-filter .dropdown').removeClass('active');
+            $('.person-filter-dropdown').removeClass('active');
+            $('.btn-person-filter').removeClass('active');
+            $(this).toggleClass('active');
+            $('.sort-dropdown').toggleClass('active');
+    
+        });
+    
+        $('.search-wrapper').click(function(){
+            event.stopPropagation();
+            $(this).addClass('active');
+            $('.search-input').addClass('active');
+        });
+    
+        $('.expanded-options-wrapper').click(function(){
+            if ($(this).hasClass('active')){
+                $(this).removeClass('active');
+            } else {
+                $('.expanded-options-wrapper').removeClass('active');
+                $(this).addClass('active');
+            }
+        });
+    
+        $('.column-td-a').click(function(){
+            if ($(this).hasClass('active')){
+                $(this).removeClass('active');
+            } else {
+                $('.column-td-a').removeClass('active');
+                $(this).addClass('active');
+            }
+        });
+    
+        $('.workflow-order-header ul li').click(function(){
+            $('.workflow-order-header ul li').removeClass('active');
+            $(this).addClass('active');
+        });
+    
+    
+        function closeMenu(){
+            $('.dropdown, .filter-btn-wrapper, .btn-person-filter, .search-input, .search-wrapper').removeClass('active');
+        }
+    
+        $(document.body).click( function() {
+            closeMenu();
+        });
+    
+        $('.dropdown').click( function() {
+            event.stopPropagation();
+        });
+    });
+
+
 });
 
 

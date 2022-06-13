@@ -1,6 +1,7 @@
 <%- include('partials/navbarMain.ejs') %>
 
 <div class="page-wrapper">
+  <div class='card'>
     <div class="alert-box full-width">
         <%- include ("flashMessages") %>
     </div>
@@ -85,392 +86,16 @@
     <br>
     <br>
     <br>
-    <h1>Printing Department (Label for Gavin) </h1>
-    <!-- Printing Department-->
-
-    <div class='department-section department-section-a'>
-      <div class='header flex-center-left-row'>
-        <div class='expanded-options-wrapper'>
-          <div class='expanded-options-btn flex-center-center-row'>
-            <i class="fa-solid fa-caret-down"></i>
-          </div>
-          <div class='expanded-options-dropdown dropdown'>
-            <ul>
-              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-              <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
-      </div>
-      <div class='table ticket-container flex-top-center-column'>
-        <div class='table-header flex-center-center-row'>
-          <div class='column-header column-header-a'></div>
-          <div class='column-header column-header-b'>#</div>
-          <div class='column-header column-header-c'>Ticket Number</div>
-          <div class='column-header column-header-d'>Status</div>
-          <div class='column-header column-header-e'>Location</div>
-          <div class='column-header column-header-f'>Length</div>
-          <div class='column-header column-header-g'>Material</div>
-          <div class='column-header column-header-h'>Products</div>
-          <div class='column-header column-header-i'>Due Date</div>
-        </div>
-        <div class='table-body flex-center-center-column'>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a'>
-              <i class='fa-light fa-ellipsis-vertical text-white'></i>
-              <div class='ticket-dropdown-options dropdown'>
-                <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                  <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                  <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-                </ul>
-              </div>
+    <!-- Order Prep Department -->
+    <h1>Order Prep Department (label for Gavin)</h1>
+    <div class='department-order-prep-wrapper'>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
             </div>
-            <div class='column-td column-td-b bg-white'>1</div>
-            <div class='column-td column-td-c bg-white'>#47001</div>
-            <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-            <div class='column-td column-td-e bg-white'>
-              <div class='user-cell bg-blue tooltip'>SV
-                <span class="tooltiptext">Storm Vaske</span>
-              </div><span class='machine-name'>Press 1</span>
-            </div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9111</div>
-            <div class='column-td column-td-h bg-white'>4</div>
-            <div class='column-td column-td-i bg-white'>July 4</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-red text-white'>Hot</div>
-            <div class='column-td column-td-e bg-white'>
-              <div class='user-cell bg-blue tooltip'>ES
-                <span class="tooltiptext">Ethan Sherwood</span>
-              </div><span class='machine-name'>Press 2</span>
-            </div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='department-section department-section-b'>
-      <div class='header flex-center-left-row'>
-        <div class='expanded-options-wrapper'>
-          <div class='expanded-options-btn flex-center-center-row'>
-            <i class="fa-solid fa-caret-down"></i>
-          </div>
-          <div class='expanded-options-dropdown dropdown'>
-            <ul>
-              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-              <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
-      </div>
-      <div class='table ticket-container flex-top-center-column'>
-        <div class='table-header flex-center-center-row'>
-          <div class='column-header column-header-a'></div>
-          <div class='column-header column-header-b'>#</div>
-          <div class='column-header column-header-c'>Ticket Number</div>
-          <div class='column-header column-header-d'>Status</div>
-          <div class='column-header column-header-e'></div>
-          <div class='column-header column-header-f'>Length</div>
-          <div class='column-header column-header-g'>Material</div>
-          <div class='column-header column-header-h'>Products</div>
-          <div class='column-header column-header-i'>Due Date</div>
-        </div>
-        <div class='table-body flex-center-center-column'>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>1</div>
-            <div class='column-td column-td-c bg-white'>#47001</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9111</div>
-            <div class='column-td column-td-h bg-white'>4</div>
-            <div class='column-td column-td-i bg-white'>July 4</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-red text-white'>Hot</div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='department-section department-section-c'>
-      <div class='header flex-center-left-row'>
-        <div class='expanded-options-wrapper'>
-          <div class='expanded-options-btn flex-center-center-row'>
-            <i class="fa-solid fa-caret-down"></i>
-          </div>
-          <div class='expanded-options-dropdown dropdown'>
-            <ul>
-              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-              <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class='category-header text-purple'>Scheduled Press One - <span class='category-ticket-count'>3</span></h3>
-      </div>
-      <div class='table ticket-container flex-top-center-column'>
-        <div class='table-header flex-center-center-row'>
-          <div class='column-header column-header-a'></div>
-          <div class='column-header column-header-b'>#</div>
-          <div class='column-header column-header-c'>Ticket Number</div>
-          <div class='column-header column-header-d'>Status</div>
-          <div class='column-header column-header-e'></div>
-          <div class='column-header column-header-f'>Length</div>
-          <div class='column-header column-header-g'>Material</div>
-          <div class='column-header column-header-h'>Products</div>
-          <div class='column-header column-header-i'>Due Date</div>
-        </div>
-        <div class='table-body flex-center-center-column'>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>1</div>
-            <div class='column-td column-td-c bg-white'>#47001</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9111</div>
-            <div class='column-td column-td-h bg-white'>4</div>
-            <div class='column-td column-td-i bg-white'>July 4</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-red text-white'>Hot</div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='department-section department-section-d'>
-      <div class='header flex-center-left-row'>
-        <div class='expanded-options-wrapper'>
-          <div class='expanded-options-btn flex-center-center-row'>
-            <i class="fa-solid fa-caret-down"></i>
-          </div>
-          <div class='expanded-options-dropdown dropdown'>
-            <ul>
-              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-              <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class='category-header text-purple'>Scheduled Press Two - <span class='category-ticket-count'>3</span></h3>
-      </div>
-      <div class='table ticket-container flex-top-center-column'>
-        <div class='table-header flex-center-center-row'>
-          <div class='column-header column-header-a'></div>
-          <div class='column-header column-header-b'>#</div>
-          <div class='column-header column-header-c'>Ticket Number</div>
-          <div class='column-header column-header-d'>Status</div>
-          <div class='column-header column-header-e'></div>
-          <div class='column-header column-header-f'>Length</div>
-          <div class='column-header column-header-g'>Material</div>
-          <div class='column-header column-header-h'>Products</div>
-          <div class='column-header column-header-i'>Due Date</div>
-        </div>
-        <div class='table-body flex-center-center-column'>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>1</div>
-            <div class='column-td column-td-c bg-white'>#47001</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9111</div>
-            <div class='column-td column-td-h bg-white'>4</div>
-            <div class='column-td column-td-i bg-white'>July 4</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-red text-white'>Hot</div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='department-section department-section-e'>
-      <div class='header flex-center-left-row'>
-        <div class='expanded-options-wrapper'>
-          <div class='expanded-options-btn flex-center-center-row'>
-            <i class="fa-solid fa-caret-down"></i>
-          </div>
-          <div class='expanded-options-dropdown dropdown'>
-            <ul>
-              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-              <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
-      </div>
-      <div class='table ticket-container flex-top-center-column'>
-        <div class='table-header flex-center-center-row'>
-          <div class='column-header column-header-a'></div>
-          <div class='column-header column-header-b'>#</div>
-          <div class='column-header column-header-c'>Ticket Number</div>
-          <div class='column-header column-header-d'>Status</div>
-          <div class='column-header column-header-e'>Hold Status</div>
-          <div class='column-header column-header-f'>Length</div>
-          <div class='column-header column-header-g'>Material</div>
-          <div class='column-header column-header-h'>Products</div>
-          <div class='column-header column-header-i'>Due Date</div>
-        </div>
-        <div class='table-body flex-center-center-column'>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>1</div>
-            <div class='column-td column-td-c bg-white'>#47001</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9111</div>
-            <div class='column-td column-td-h bg-white'>4</div>
-            <div class='column-td column-td-i bg-white'>July 4</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-          <div class='table-row flex-center-center-row'>
-            <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-            <div class='column-td column-td-b bg-white'>2</div>
-            <div class='column-td column-td-c bg-white'>#47321</div>
-            <div class='column-td column-td-d bg-red text-white'>Hot</div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'>1,920 ft</div>
-            <div class='column-td column-td-g bg-white'>9124</div>
-            <div class='column-td column-td-h bg-white'>13</div>
-            <div class='column-td column-td-i bg-white'>July 16</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  <!-- Cutting Department -->
-
-<br>
-<br>
-<br>
-  <h1>Cutting Department (Label for Gavin) </h1>
-
-  <div class='department-section department-section-a'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'>Location</div>
-        <div class='column-header column-header-f'>Die</div>
-        <div class='column-header column-header-g'>Length</div>
-        <div class='column-header column-header-h'>Finish</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a'>
-            <i class='fa-light fa-ellipsis-vertical text-white'></i>
-            <div class='ticket-dropdown-options dropdown'>
+            <div class='expanded-options-dropdown dropdown'>
               <ul>
                 <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                 <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
@@ -479,377 +104,1962 @@
               </ul>
             </div>
           </div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-          <div class='column-td column-td-e bg-white'>
-            <div class='user-cell bg-blue tooltip'>SV
-              <span class="tooltiptext">Storm Vaske</span>
-            </div><span class='machine-name'>Press 1</span>
+          <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>4</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'>From</div>
+            <div class='column-header column-header-i'>Due Date</div>
           </div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'>
-            <div class='user-cell bg-blue tooltip'>ES
-              <span class="tooltiptext">Ethan Sherwood</span>
-            </div><span class='machine-name'>Press 2</span>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
           </div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Waiting On Approval- <span class='category-ticket-count'>4</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Follow Up Date </div>
+            <div class='column-header column-header-h'>Sent Date</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>July 2</div>
+              <div class='column-td column-td-h bg-white'>July 1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-c'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Waiting On Customer- <span class='category-ticket-count'>4</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Follow Up Date</div>
+            <div class='column-header column-header-h'>Sent Date</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>July 2</div>
+              <div class='column-td column-td-h bg-white'>July 1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-d'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Ready To Order Plate / Die - <span class='category-ticket-count'>4</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Type</div>
+            <div class='column-header column-header-d'></div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'></div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>Plate</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'></div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>Die</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <br>
+    <br>
+    <br>
+    <h1>Art Department (Label For Gavin)</h1>
+    <!-- Art Department -->
+    <div class='department-art-wrapper'>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'>From</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Needs Proof - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Follow Up Date </div>
+            <div class='column-header column-header-h'>Sent Date</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>July 2</div>
+              <div class='column-td column-td-h bg-white'>July 1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-c'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Needs Die Line - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Follow Up Date</div>
+            <div class='column-header column-header-h'>Sent Date</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>July 2</div>
+              <div class='column-td column-td-h bg-white'>July 1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-d'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Needs Plate - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Type</div>
+            <div class='column-header column-header-d'></div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'></div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>Plate</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'></div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>Die</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h1>Pre Pess Department (Label for Gavin)</h1>
+
+    <div class='department-pre-press-wrapper'>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>2</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Send To Press - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'> </div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h1>Printing Department (Label for Gavin) </h1>
+    <!-- Printing Department-->
+    <div class='printing-department-wrapper'>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Location</div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'>
+                <div class='user-cell bg-blue tooltip'>ES
+                  <span class="tooltiptext">Ethan Sherwood</span>
+                </div><span class='machine-name'>Press 2</span>
+              </div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-c'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Scheduled Press One - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-d'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Scheduled Press Two - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Hold Status</div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- Cutting Department -->
+    <br>
+    <br>
+    <br>
+    <h1>Cutting Department (Label for Gavin) </h1>
+    <div class='cutting-department-wrapper'>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Location</div>
+            <div class='column-header column-header-f'>Die</div>
+            <div class='column-header column-header-g'>Length</div>
+            <div class='column-header column-header-h'>Finish</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'>
+                <div class='user-cell bg-blue tooltip'>ES
+                  <span class="tooltiptext">Ethan Sherwood</span>
+                </div><span class='machine-name'>Press 2</span>
+              </div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Die</div>
+            <div class='column-header column-header-g'>Length</div>
+            <div class='column-header column-header-h'>Finish</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-c'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Scheduled Delta One - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Die</div>
+            <div class='column-header column-header-g'>Length</div>
+            <div class='column-header column-header-h'>Finish</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-d'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Scheduled Delta Two - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Die</div>
+            <div class='column-header column-header-g'>Length</div>
+            <div class='column-header column-header-h'>Finish</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-f'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Scheduled Rofoflex - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'>Length</div>
+            <div class='column-header column-header-g'>Material</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Hold Status</div>
+            <div class='column-header column-header-f'>Die</div>
+            <div class='column-header column-header-g'>Length</div>
+            <div class='column-header column-header-h'>Finish</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9111</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>#47321</div>
+              <div class='column-td column-td-d bg-red text-white'>Hot</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'>1,920 ft</div>
+              <div class='column-td column-td-g bg-white'>9124</div>
+              <div class='column-td column-td-h bg-white'>13</div>
+              <div class='column-td column-td-i bg-white'>July 16</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h1>Winding Department (Label for Gavin)</h1>
+    <!-- Winding Department -->
+    <div class='department-winding-wrapper'>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Location</div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Rolls</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'>
+                <div class='user-cell bg-blue tooltip'>SV
+                  <span class="tooltiptext">Storm Vaske</span>
+                </div><span class='machine-name'>Press 1</span>
+              </div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>18</div>
+              <div class='column-td column-td-h bg-white'>4</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Ready For Scheduling - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Location</div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Rolls</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>24</div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'>Location</div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Rolls</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>3</div>
+              <div class='column-td column-td-h bg-white'>1</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'>7</div>
+              <div class='column-td column-td-h bg-white'>2</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h1>Shipping Department (Label For Gavin)</h1>
+    <!-- Shipping Department -->
+    <div class='department-shipping-wrapper'>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Grouped</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-b'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Ready For Shipping - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Grouped</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-e'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'>Grouped</div>
+            <div class='column-header column-header-h'>Products</div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>3</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'>2</div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='department-section department-section-c'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-purple'>Arrival Plate / Die - <span class='category-ticket-count'>1</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Type</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'>Arrival Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>Plate</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>2</div>
+              <div class='column-td column-td-c bg-white'>Die</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <h1>Billing Department (Label For Gavin)</h1>
+
+    <!-- Billing Department -->
+    <div class='department-billing-wrapper'>
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>Ready For Processing - <span class='category-ticket-count'>2</span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'></div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                  <ul>
+                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  </ul>
+                </div>
+              </div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>
+            </div>
+            <div class='table-row flex-center-center-row'>
+              <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+              <div class='column-td column-td-b bg-white'>1</div>
+              <div class='column-td column-td-c bg-white'>#47001</div>
+              <div class='column-td column-td-d bg-white'></div>
+              <div class='column-td column-td-e bg-white'></div>
+              <div class='column-td column-td-f bg-white'></div>
+              <div class='column-td column-td-g bg-white'></div>
+              <div class='column-td column-td-h bg-white'></div>
+              <div class='column-td column-td-i bg-white'>July 4</div>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-
-  <div class='department-section department-section-b'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'></div>
-        <div class='column-header column-header-f'>Die</div>
-        <div class='column-header column-header-g'>Length</div>
-        <div class='column-header column-header-h'>Finish</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class='department-section department-section-c'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-purple'>Scheduled Delta One - <span class='category-ticket-count'>3</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'></div>
-        <div class='column-header column-header-f'>Die</div>
-        <div class='column-header column-header-g'>Length</div>
-        <div class='column-header column-header-h'>Finish</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class='department-section department-section-d'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-purple'>Scheduled Delta Two - <span class='category-ticket-count'>3</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'></div>
-        <div class='column-header column-header-f'>Die</div>
-        <div class='column-header column-header-g'>Length</div>
-        <div class='column-header column-header-h'>Finish</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class='department-section department-section-f'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-purple'>Scheduled Rofoflex - <span class='category-ticket-count'>3</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'></div>
-        <div class='column-header column-header-f'>Length</div>
-        <div class='column-header column-header-g'>Material</div>
-        <div class='column-header column-header-h'>Products</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class='department-section department-section-e'>
-    <div class='header flex-center-left-row'>
-      <div class='expanded-options-wrapper'>
-        <div class='expanded-options-btn flex-center-center-row'>
-          <i class="fa-solid fa-caret-down"></i>
-        </div>
-        <div class='expanded-options-dropdown dropdown'>
-          <ul>
-            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-          </ul>
-        </div>
-      </div>
-      <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
-    </div>
-    <div class='table ticket-container flex-top-center-column'>
-      <div class='table-header flex-center-center-row'>
-        <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'>Hold Status</div>
-        <div class='column-header column-header-f'>Die</div>
-        <div class='column-header column-header-g'>Length</div>
-        <div class='column-header column-header-h'>Finish</div>
-        <div class='column-header column-header-i'>Due Date</div>
-      </div>
-      <div class='table-body flex-center-center-column'>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>1</div>
-          <div class='column-td column-td-c bg-white'>#47001</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9111</div>
-          <div class='column-td column-td-h bg-white'>4</div>
-          <div class='column-td column-td-i bg-white'>July 4</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-white'></div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-        <div class='table-row flex-center-center-row'>
-          <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-          <div class='column-td column-td-b bg-white'>2</div>
-          <div class='column-td column-td-c bg-white'>#47321</div>
-          <div class='column-td column-td-d bg-red text-white'>Hot</div>
-          <div class='column-td column-td-e bg-white'></div>
-          <div class='column-td column-td-f bg-white'>1,920 ft</div>
-          <div class='column-td column-td-g bg-white'>9124</div>
-          <div class='column-td column-td-h bg-white'>13</div>
-          <div class='column-td column-td-i bg-white'>July 16</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-   
-
-
 </div>
 
 

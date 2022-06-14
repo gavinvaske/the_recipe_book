@@ -1,0 +1,24 @@
+<h1>Hello mars!</h1>
+
+<div class="user-frame">
+    <div class="user-details">
+     <span id="name" class="user-name"></span>
+     <span class="job-role"></span>
+    </div>
+    <div class="user-profile-picture profile-picture">
+        <div class="active-user"></div>
+    </div>
+</div>
+
+<span id="how-cool"></span>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+
+    socket.on('6214421227f833ad15186885', function(user) {
+        console.log('An update was made by someone else!')
+        $('#name').text(user.fullName);
+        $('#how-cool').text('No page refresh required ;)')
+    });
+</script>

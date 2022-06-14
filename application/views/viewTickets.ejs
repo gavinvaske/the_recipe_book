@@ -161,7 +161,7 @@
                     </ul>
                   </div>
                 </div>
-                <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>4</span></h3>
+                <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
               </div>
               <div class='table ticket-container flex-top-center-column'>
                 <div class='table-header flex-center-center-row'>
@@ -214,7 +214,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -284,7 +284,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Waiting On Approval- <span class='category-ticket-count'>4</span></h3>
+              <h3 class='category-header text-purple'>Waiting On Approval- <span class='category-ticket-count'><%= orderPrepWaitingOnApprovalTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -333,7 +333,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Waiting On Customer- <span class='category-ticket-count'>4</span></h3>
+              <h3 class='category-header text-purple'>Waiting On Customer- <span class='category-ticket-count'><%= orderPrepWaitingOnCustomerTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -382,7 +382,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Ready To Order Plate / Die - <span class='category-ticket-count'>4</span></h3>
+              <h3 class='category-header text-purple'>Ready To Order Plate / Die - <span class='category-ticket-count'><%= orderPrepReadyToOrderTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -454,7 +454,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -522,7 +522,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= artPrepInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -592,7 +592,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Needs Proof - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Needs Proof - <span class='category-ticket-count'><%= artPrepNeedsProofTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -641,7 +641,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Needs Die Line - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Needs Die Line - <span class='category-ticket-count'><%= artPrepNeedsDieLineTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -690,7 +690,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Needs Plate - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-purple'>Needs Plate - <span class='category-ticket-count'><%= artPrepNeedsPlateTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -761,7 +761,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= prePressNeedsAttentionTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -821,7 +821,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= prePressInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -891,7 +891,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Send To Press - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Send To Press - <span class='category-ticket-count'><%= prePressSendToPressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -952,7 +952,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= printingInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1030,7 +1030,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'><%= printingReadyForSchedulingTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1101,7 +1101,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Scheduled Press One - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Scheduled Press One - <span class='category-ticket-count'><%= printingSchedulePressOneTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1172,7 +1172,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Scheduled Press Two - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Scheduled Press Two - <span class='category-ticket-count'><%= printingSchedulePressTwoTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1243,7 +1243,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= printingOnHoldTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1326,7 +1326,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= cuttingInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1404,7 +1404,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'><%= cuttingReadyForSchedulingTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1475,7 +1475,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Scheduled Delta One - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Scheduled Delta One - <span class='category-ticket-count'><%= cuttingScheduleDeltaOneTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1546,7 +1546,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Scheduled Delta Two - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Scheduled Delta Two - <span class='category-ticket-count'><%= cuttingScheduleDeltaTwoTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1617,7 +1617,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Scheduled Rofoflex - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>Scheduled Rofoflex - <span class='category-ticket-count'><%= cuttingScheduleRotoflexTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1688,7 +1688,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>3</span></h3>
+              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= cuttingOnHoldTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1770,7 +1770,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= windingInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1844,7 +1844,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Ready For Scheduling - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Ready For Scheduling - <span class='category-ticket-count'><%= windingReadyForSchedulingTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1893,7 +1893,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= windingOnHoldTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -1964,7 +1964,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= shippingInProgressTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -2034,7 +2034,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Ready For Shipping - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Ready For Shipping - <span class='category-ticket-count'><%= shippingReadyForShippingTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -2083,7 +2083,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= shippingOnHoldTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -2143,7 +2143,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-purple'>Arrival Plate / Die - <span class='category-ticket-count'>1</span></h3>
+              <h3 class='category-header text-purple'>Arrival Plate / Die - <span class='category-ticket-count'><%= shippingToolArrivalTickets.length %></span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>

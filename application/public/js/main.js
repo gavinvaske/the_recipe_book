@@ -3,9 +3,9 @@ $( document ).ready(function() {
         const selectedDepartment = $(this).data('department');
         const cssTransitionDelayInMs = 200;
 
-        $('table').hide(cssTransitionDelayInMs);
-
-        $(`#${selectedDepartment}`).show(cssTransitionDelayInMs);
+        $('.department-wrapper').hide(cssTransitionDelayInMs);
+        
+        $(`.department-wrapper*[data-department="${selectedDepartment}"]`).show(cssTransitionDelayInMs);
     });
 
     function updateTicket(ticketAttributes, ticketId) {

@@ -78,24 +78,29 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
     };
 };
 
-module.exports.groupTicketsByDepartment = (tickets, departments) => {
-    let ticketsGroupedByDepartment = [];
-    const inProgress = 'IN-PROGRESS';
-    ticketsGroupedByDepartment[inProgress] = [];
-
-    departments.forEach((department) => {
-        ticketsGroupedByDepartment[department] = [];
-    });
+module.exports.groupTicketsByDestination = (tickets) => {
+    const ticketsGroupedByDestination = {};
 
     tickets.forEach((ticket) => {
-        const destination = ticket.destination;
+        const department = ticket.destination ? ticket.destination.department : undefined;
+        const subDepartment = ticket.destination ? ticket.destination.subDepartment : undefined;
 
-        if (destination && destination.department) {
-            ticketsGroupedByDepartment[destination.department].push(ticket);
-        } else {
-            ticketsGroupedByDepartment[inProgress].push(ticket);
+        if (department && subDepartment) {
+            const isFirstTicketFoundForThisDepartment = !ticketsGroupedByDestination[department];
+
+            if (isFirstTicketFoundForThisDepartment) {
+                ticketsGroupedByDestination[department] = {};
+            }
+
+            const isFirstTicketFoundForThisSubDepartment = !ticketsGroupedByDestination[department][subDepartment];
+
+            if (isFirstTicketFoundForThisSubDepartment) {
+                ticketsGroupedByDestination[department][subDepartment] = [];
+            }
+
+            ticketsGroupedByDestination[department][subDepartment].push(ticket);
         }
     });
-
-    return ticketsGroupedByDepartment;
+    
+    return ticketsGroupedByDestination;
 };

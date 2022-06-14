@@ -117,24 +117,27 @@ describe('ticketService test suite', () => {
         let ticketsWithoutDepartments;
         let allTickets;
         let departmentNames;
-        const defaultDepartmentName = 'IN-PROGRESS';
 
         beforeEach(() => {
             departmentNames = [chance.word(), chance.word(), chance.word()];
+            subDepartmentNames = [chance.word(), chance.word(), chance.word()];
             ticketsWithDepartments = [
                 {
                     destination: {
-                        department: departmentNames[0]
+                        department: departmentNames[0],
+                        subDepartment: subDepartmentNames[0],
                     }
                 },
                 {
                     destination: {
-                        department: departmentNames[1]
+                        department: departmentNames[1],
+                        subDepartment: subDepartmentNames[1],
                     }
                 },
                 {
                     destination: {
-                        department: departmentNames[2]
+                        department: departmentNames[2],
+                        subDepartment: subDepartmentNames[2],
                     }
                 }
             ];
@@ -144,22 +147,51 @@ describe('ticketService test suite', () => {
         });
 
         it('should generate correct department names', () => {
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDepartment(allTickets, departmentNames);
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
 
-            expect(Object.keys(groupedTicketsByDepartment)).toEqual(expect.arrayContaining([departmentNames[0], departmentNames[1], departmentNames[2], defaultDepartmentName]));
+            console.log(groupedTicketsByDepartment);
+
+            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(departmentNames.length);
+            expect(Object.keys(groupedTicketsByDepartment)).toEqual(expect.arrayContaining([departmentNames[0], departmentNames[1], departmentNames[2]]));
         });
 
         it('should map list of tickets according to department', () => {
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDepartment(allTickets, departmentNames);
-            const numberOfDepartmentNamesPlusTheDefaultName = departmentNames.length + 1;
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
 
-            expect(Object.keys(groupedTicketsByDepartment).length).toBe(numberOfDepartmentNamesPlusTheDefaultName);
+            expect(Object.keys(groupedTicketsByDepartment).length).toBe(departmentNames.length);
         });
 
-        it('should group tickets without a known department to be placed into a group with some default group name', () => {
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDepartment(allTickets, departmentNames);
+        it('should ignore tickets whose department and/or subDepartment is unknown', () => {
+            const numberOfTicketsWithAValidDepartmentAndSubDepartment = allTickets.length;
 
-            expect(groupedTicketsByDepartment[defaultDepartmentName].length).toBe(ticketsWithoutDepartments.length);
+            ticketsWithoutADepartmentOrSubDepartment = [
+                {
+                    destination: {
+                        department: chance.word(),
+                        subDepartment: undefined,
+                    }
+                },
+                {
+                    destination: {
+                        department: undefined,
+                        subDepartment: chance.word(),
+                    }
+                },
+                {
+                    destination: {
+                        department: undefined,
+                        subDepartment: undefined,
+                    }
+                }
+            ];
+
+            allTickets = [
+                ...allTickets,
+                ...ticketsWithoutADepartmentOrSubDepartment
+            ];
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
+
+            expect(groupedTicketsByDepartment.length).toBe(numberOfTicketsWithAValidDepartmentAndSubDepartment.length);
         });
     });
 });

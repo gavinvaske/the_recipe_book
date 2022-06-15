@@ -143,7 +143,7 @@
     <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
-        <h1>Order Prep Department (label for Gavin)</h1>
+        <h1>Order Prep Department</h1>
 
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
           <div class='department-section department-section-e'>
@@ -176,21 +176,21 @@
                   <div class='column-header column-header-i'>Due Date</div>
                 </div>
                 <div class='table-body flex-center-center-column'>
-                  <% orderPrepNeedsAttentionTickets.forEach((ticket) => { %>
+                  <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
                     <div class='table-row flex-center-center-row'>
                       <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                      <div class='column-td column-td-b bg-white'>1</div>
-                      <div class='column-td column-td-c bg-white'>#47001</div>
+                      <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                      <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                       <div class='column-td column-td-d bg-white'></div>
                       <div class='column-td column-td-e bg-white'></div>
                       <div class='column-td column-td-f bg-white'></div>
                       <div class='column-td column-td-g bg-white'></div>
                       <div class='column-td column-td-h bg-white'>
                         <div class='user-cell bg-blue tooltip'>SV
-                          <span class="tooltiptext">Storm Vaske</span>
-                        </div><span class='machine-name'>Press 1</span>
+                          <span class="tooltiptext">TODO</span>
+                        </div><span class='machine-name'>Press 1 (TODO)</span>
                       </div>
-                      <div class='column-td column-td-i bg-white'>July 4</div>
+                      <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                     </div>
                   <% }) %>
                 </div>
@@ -229,7 +229,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% orderPrepSendToCustomerTickets.forEach((ticket) => { %>
+                <% orderPrepSendToCustomerTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -242,27 +242,16 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                  <div class='column-td column-td-b bg-white'>1</div>
-                  <div class='column-td column-td-c bg-white'>#47001</div>
-                  <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white'>July 4</div>  
-                </div>
               </div>
             </div>
           </div>
@@ -299,17 +288,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% orderPrepWaitingOnApprovalTickets.forEach((ticket) => { %>
+                <% orderPrepWaitingOnApprovalTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>July 2</div>
-                    <div class='column-td column-td-h bg-white'>July 1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -348,17 +337,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% orderPrepWaitingOnCustomerTickets.forEach((ticket) => { %>
+                <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>July 2</div>
-                    <div class='column-td column-td-h bg-white'>July 1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -397,22 +386,11 @@
                 <div class='column-header column-header-i'></div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% orderPrepReadyToOrderTickets.forEach((ticket) => { %>
+                <% orderPrepReadyToOrderTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>Plate</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'></div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>Die</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -436,7 +414,7 @@
     <% if (artPrepTicketsGroupedBySubDepartment && Object.keys(artPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Art Department -->
       <div class='department-wrapper' data-department="ART-PREP">
-        <h1>Art Department (Label For Gavin)</h1>
+        <h1>Art Department</h1>
 
         <% if (artPrepNeedsAttentionTickets && artPrepNeedsAttentionTickets.length) { %>
           <div class='department-section department-section-e'>
@@ -469,36 +447,21 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% artPrepNeedsAttentionTickets.forEach((ticket) => { %>
+                <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">Storm Vaske</span>
-                      </div><span class='machine-name'>Press 1</span>
+                        <span class="tooltiptext">Storm Vaske (TODO)</span>
+                      </div><span class='machine-name'>Press 1 (TODO)</span>
                     </div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>
-                      <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">Storm Vaske</span>
-                      </div><span class='machine-name'>Press 1</span>
-                    </div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -537,7 +500,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% artPrepInProgressTickets.forEach((ticket) => { %>
+                <% artPrepInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -550,25 +513,14 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>  
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -607,17 +559,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% artPrepNeedsProofTickets.forEach((ticket) => { %>
+                <% artPrepNeedsProofTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>July 2</div>
-                    <div class='column-td column-td-h bg-white'>July 1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -656,17 +608,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% artPrepNeedsDieLineTickets.forEach((ticket) => { %>
+                <% artPrepNeedsDieLineTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>July 2</div>
-                    <div class='column-td column-td-h bg-white'>July 1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -705,22 +657,11 @@
                 <div class='column-header column-header-i'></div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% artPrepNeedsPlateTickets.forEach((ticket) => { %>
+                <% artPrepNeedsPlateTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>Plate</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'></div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>Die</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -743,7 +684,7 @@
     <% if (prePressTicketsGroupedBySubDepartment && Object.keys(prePressTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Pre Press Department-->
       <div class='department-wrapper' data-department="PRE-PRESS">
-        <h1>Pre Pess Department (Label for Gavin)</h1>
+        <h1>Pre Pess Department</h1>
 
         <% if (prePressNeedsAttentionTickets && prePressNeedsAttentionTickets.length) { %>
           <div class='department-section department-section-e'>
@@ -776,28 +717,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% prePressNeedsAttentionTickets.forEach((ticket) => { %>
+                <% prePressNeedsAttentionTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>2</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -836,7 +766,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% prePressInProgressTickets.forEach((ticket) => { %>
+                <% prePressInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -849,25 +779,14 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>  
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -906,17 +825,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% prePressSendToPressTickets.forEach((ticket) => { %>
+                <% prePressSendToPressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -934,7 +853,7 @@
     <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Printing Department-->
       <div class='department-wrapper' data-department="PRINTING">
-        <h1>Printing Department (Label for Gavin) </h1>
+        <h1>Printing Department</h1>
 
         <% if (printingInProgressTickets && printingInProgressTickets.length) { %>  <!-- TODO: This .each looks unique - investigate -->
           <div class='department-section department-section-a'>
@@ -967,7 +886,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% printingInProgressTickets.forEach((ticket) => { %>
+                <% printingInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -980,33 +899,18 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %> </div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">Storm Vaske</span>
-                      </div><span class='machine-name'>Press 1</span>
+                        <span class="tooltiptext">Storm Vaske (TODO)</span>
+                      </div><span class='machine-name'>Press 1 (TODO)</span>
                     </div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'>
-                      <div class='user-cell bg-blue tooltip'>ES
-                        <span class="tooltiptext">Ethan Sherwood</span>
-                      </div><span class='machine-name'>Press 2</span>
-                    </div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1045,39 +949,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% printingReadyForSchedulingTickets.forEach((ticket) => { %>
+                <% printingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1116,39 +998,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% printingSchedulePressOneTickets.forEach((ticket) => { %>
+                <% printingSchedulePressOneTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1187,39 +1047,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% printingSchedulePressTwoTickets.forEach((ticket) => { %>
+                <% printingSchedulePressTwoTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1258,39 +1096,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% printingOnHoldTickets.forEach((ticket) => { %>
+                <% printingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1308,7 +1124,7 @@
     <% if (cuttingTicketsGroupedBySubDepartment && Object.keys(cuttingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Cutting Department -->
       <div class='department-wrapper' data-department="CUTTING">
-        <h1>Cutting Department (Label for Gavin) </h1>
+        <h1>Cutting Department</h1>
 
         <% if (cuttingInProgressTickets && cuttingInProgressTickets.length) { %>
           <div class='department-section department-section-a'>
@@ -1341,7 +1157,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingInProgressTickets.forEach((ticket) => { %>
+                <% cuttingInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1354,33 +1170,18 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">Storm Vaske</span>
-                      </div><span class='machine-name'>Press 1</span>
+                        <span class="tooltiptext">Storm Vaske (TODO)</span>
+                      </div><span class='machine-name'>Press 1 (TODO)</span>
                     </div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'>
-                      <div class='user-cell bg-blue tooltip'>ES
-                        <span class="tooltiptext">Ethan Sherwood</span>
-                      </div><span class='machine-name'>Press 2</span>
-                    </div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1419,39 +1220,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingReadyForSchedulingTickets.forEach((ticket) => { %>
+                <% cuttingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1490,39 +1269,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingScheduleDeltaOneTickets.forEach((ticket) => { %>
+                <% cuttingScheduleDeltaOneTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1561,39 +1318,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingScheduleDeltaTwoTickets.forEach((ticket) => { %>
+                <% cuttingScheduleDeltaTwoTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1632,39 +1367,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingScheduleRotoflexTickets.forEach((ticket) => { %>
+                <% cuttingScheduleRotoflexTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1703,39 +1416,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% cuttingOnHoldTickets.forEach((ticket) => { %>
+                <% cuttingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9111</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>#47321</div>
-                    <div class='column-td column-td-d bg-red text-white'>Hot</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'>1,920 ft</div>
-                    <div class='column-td column-td-g bg-white'>9124</div>
-                    <div class='column-td column-td-h bg-white'>13</div>
-                    <div class='column-td column-td-i bg-white'>July 16</div>
+                    <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>4 (TODO)</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1752,7 +1443,7 @@
     <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Winding Department -->
       <div class='department-wrapper' data-department="WINDING">
-        <h1>Winding Department (Label for Gavin)</h1>
+        <h1>Winding Department</h1>
 
         <% if (windingInProgressTickets && windingInProgressTickets.length) { %>
           <div class='department-section department-section-a'> <!-- TODO: This .each Looks different -->
@@ -1785,7 +1476,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% windingInProgressTickets.forEach((ticket) => { %>
+                <% windingInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1798,29 +1489,18 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">Storm Vaske</span>
-                      </div><span class='machine-name'>Press 1</span>
+                        <span class="tooltiptext">Storm Vaske (TODO)</span>
+                      </div><span class='machine-name'>Press 1 (TODO)</span>
                     </div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>18</div>
-                    <div class='column-td column-td-h bg-white'>4</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>  
+                    <div class='column-td column-td-g bg-white'>18 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1859,17 +1539,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% windingReadyForSchedulingTickets.forEach((ticket) => { %>
+                <% windingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>24</div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>24 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'>3 <%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1908,28 +1588,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% windingOnHoldTickets.forEach((ticket) => { %>
+                <% windingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>3</div>
-                    <div class='column-td column-td-h bg-white'>1</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'>7</div>
-                    <div class='column-td column-td-h bg-white'>2</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-g bg-white'>3 (TODO)</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -1946,7 +1615,7 @@
     <% if (shippingTicketsGroupedBySubDepartment && Object.keys(shippingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Shipping Department -->
       <div class='department-wrapper' data-department="SHIPPING">
-        <h1>Shipping Department (Label For Gavin)</h1>
+        <h1>Shipping Department</h1>
 
         <% if (shippingInProgressTickets && shippingInProgressTickets.length) { %>
           <div class='department-section department-section-a'> <!-- TODO: This .each is unique? why -->
@@ -1979,7 +1648,7 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% shippingInProgressTickets.forEach((ticket) => { %>
+                <% shippingInProgressTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1992,25 +1661,14 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>  
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -2049,17 +1707,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% shippingReadyForShippingTickets.forEach((ticket) => { %>
+                <% shippingReadyForShippingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -2098,28 +1756,17 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% shippingOnHoldTickets.forEach((ticket) => { %>
+                <% shippingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>3</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>#47001</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>2</div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -2158,28 +1805,17 @@
                 <div class='column-header column-header-i'>Arrival Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <% shippingToolArrivalTickets.forEach((ticket) => { %>
+                <% shippingToolArrivalTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>1</div>
-                    <div class='column-td column-td-c bg-white'>Plate</div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
-                  </div>
-                  <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                    <div class='column-td column-td-b bg-white'>2</div>
-                    <div class='column-td column-td-c bg-white'>Die</div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4</div>
+                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                   </div>
                 <% }) %>
               </div>
@@ -2196,9 +1832,9 @@
     <% if (billingTicketsGroupedBySubDepartment && Object.keys(billingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Billing Department -->
       <div class='department-wrapper' data-department="BILLING">
-        <h1>Billing Department (Label For Gavin)</h1>
+        <h1>Billing Department (TODO Storm: this second's subdepartments appear incorrect)</h1>
 
-        <% if (false) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
+        <% if (true) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>

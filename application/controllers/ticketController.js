@@ -8,7 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departments, getAllDepartments} = require('../enums/departmentsEnum');
+const {subDepartmentsGroupedByDepartment} = require('../enums/departmentsEnum');
 
 router.use(verifyJwtToken);
 
@@ -21,12 +21,10 @@ router.get('/', async (request, response) => {
         .find()
         .exec();
 
-    const departments = getAllDepartments();
-
-    const ticketsGroupedByDepartment = ticketService.groupTicketsByDepartment(tickets, departments);
+    const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
 
     return response.render('viewTickets', {
-        ticketsGroupedByDepartment
+        ticketsGroupedByDestination
     });
 });
 
@@ -73,7 +71,7 @@ router.post('/update/:ticketId/notes', async (request, response) => {
 
 router.post('/find-subdepartments', (request, response) => {
     const departmentName = request.body.departmentName;
-    const subDepartments = departments[departmentName];
+    const subDepartments = subDepartmentsGroupedByDepartment[departmentName];
 
     try {
         if (!subDepartments) {
@@ -110,7 +108,7 @@ router.get('/update/:id', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(request.params.id).exec();
         const materials = await MaterialModel.find().exec();
-        const departmentNames = Object.keys(departments);
+        const departmentNames = Object.keys(subDepartmentsGroupedByDepartment);
 
         const ticketDestination = ticket.destination;
         const selectedPrintingType = ticket.printingType;
@@ -118,7 +116,7 @@ router.get('/update/:id', async (request, response) => {
         const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
         const selectedMaterial = ticket.primaryMaterial;
 
-        const subDepartments = departments ? departments[selectedDepartment] : undefined;
+        const subDepartments = subDepartmentsGroupedByDepartment ? subDepartmentsGroupedByDepartment[selectedDepartment] : undefined;
 
         const materialIds = materials.map(material => material.materialId);
 

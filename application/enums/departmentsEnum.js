@@ -11,7 +11,7 @@ const SEND_TO_PRESS = 'SEND TO PRESS';
 const READY_FOR_SCHEDULING = 'READY FOR SCHEDULING';
 const SCHEDULE_PRESS_ONE = 'SCHEDULE PRESS ONE';
 const SCHEDULE_PRESS_TWO = 'SCHEDULE PRESS TWO';
-const SCHEDULE_PRESS_THREE = 'SCHEDULE_PRESS_THREE';
+const SCHEDULE_PRESS_THREE = 'SCHEDULE PRESS THREE';
 const NEEDS_PROOF = 'NEEDS PROOF';
 const ON_HOLD = 'ON HOLD';
 const SCHEDULE_DELTA_ONE = 'SCHEDULE DELTA ONE';
@@ -32,7 +32,7 @@ const SHIPPING_DEPARTMENT = 'SHIPPING';
 const BILLING_DEPARTMENT = 'BILLING';
 const COMPLETE_DEPARTMENT = 'COMPLETED';
 
-module.exports.departments = {
+module.exports.subDepartmentsGroupedByDepartment = {
     [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,
@@ -90,7 +90,7 @@ module.exports.departments = {
 module.exports.getAllSubDepartments = () => {
     let allSubDepartments = [];
 
-    Object.values(this.departments).forEach((subDepartmentsForOneDepartment) => {
+    Object.values(this.subDepartmentsGroupedByDepartment).forEach((subDepartmentsForOneDepartment) => {
         allSubDepartments.push(...subDepartmentsForOneDepartment);
     });
 
@@ -98,5 +98,5 @@ module.exports.getAllSubDepartments = () => {
 };
 
 module.exports.getAllDepartments = () => {
-    return Object.keys(this.departments);
+    return Object.keys(this.subDepartmentsGroupedByDepartment);
 };

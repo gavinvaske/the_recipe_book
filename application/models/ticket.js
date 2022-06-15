@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departments, getAllSubDepartments} = require('../enums/departmentsEnum');
+const {subDepartmentsGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
 const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -30,7 +30,7 @@ function destinationsAreValid(destination) {
 }
 
 function departmentIsValid(department) {
-    return Object.keys(departments).includes(department);
+    return Object.keys(subDepartmentsGroupedByDepartment).includes(department);
 }
 
 function subDepartmentIsValid(subDepartment) {

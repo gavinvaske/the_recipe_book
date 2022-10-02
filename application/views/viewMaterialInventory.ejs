@@ -1,0 +1,15 @@
+<h1>
+    Welcome to the Material Inventory Page
+</h1>
+
+<br>
+<br>
+
+<h2>Material Inventory Information:</h2>
+
+<% materialInventories && materialInventories.forEach(materialInventory => { %>
+
+    <h5> Material Name: <%= materialInventory.materialName %> </h3>
+    <h5> Total Rolls Purchased: <%= materialInventory.totalRollsPurchased %> </h3>
+    <br>
+<% }) %>

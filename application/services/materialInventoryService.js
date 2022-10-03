@@ -1,20 +1,5 @@
-const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
-
-async function computeTotalRollsPurchasedForAMaterial(materialId) {
-    const searchQuery = {material: materialId};
-    const materialPurchaseOrders = await MaterialOrderModel
-        .find(searchQuery)
-        .exec();
-    
-    let totalRollsPurchased = 0;
-
-    materialPurchaseOrders.forEach((materialPurchaseOrder) => {
-        totalRollsPurchased += materialPurchaseOrder.totalRolls;
-    });
-
-    return totalRollsPurchased;
-}
+const materialOrderService = require('../services/materialOrderService');
 
 module.exports.getAllMaterialInventoryData = async () => {
     let materialInventories = [];
@@ -23,11 +8,14 @@ module.exports.getAllMaterialInventoryData = async () => {
     for (let i = 0; i < materials.length; i++) {
         const material = materials[i];
 
-        const totalRollsPurchased = await computeTotalRollsPurchasedForAMaterial(material._id);
+        const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(material._id);
+        const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(material._id);
 
         materialInventories.push({
             materialName: material.name,
-            totalRollsPurchased
+            materialId: material.materialId,
+            lengthOfMaterialOrdered,
+            lengthOfMaterialInStock
         });
     }
 

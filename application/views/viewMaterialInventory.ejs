@@ -3,13 +3,26 @@
 </h1>
 
 <br>
+
+<div>
+    <p>Length in Inventory: <%= lengthOfAllMaterialsInInventory || 'N/A' %> feet</p>
+    <p>Length on Order: <%= lengthOfAllMaterialsOrdered || 'N/A' %> feet</p>
+    <p>Total POs: <%= totalPurchaseOrders || 'N/A' %></p>
+</div>
+
 <br>
 
 <h2>Material Inventory Information:</h2>
 
-<% materialInventories && materialInventories.forEach(materialInventory => { %>
+<br>
 
-    <h5> Material Name: <%= materialInventory.materialName %> </h3>
-    <h5> Total Rolls Purchased: <%= materialInventory.totalRollsPurchased %> </h3>
+<% materialInventories && materialInventories.forEach(materialInventory => { %>
+    <div>
+        <p>Material Id: <%= materialInventory.materialId || 'N/A' %></p>
+        <p>Material Name: <%= materialInventory.materialName || 'N/A' %></p>
+        <p>Length in Inventory: <%= materialInventory.lengthOfMaterialInStock %> feet</p>
+        <p>Length Ordered: <%= materialInventory.lengthOfMaterialOrdered %> feet</p>
+    </div>
+
     <br>
 <% }) %>

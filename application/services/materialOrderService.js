@@ -25,7 +25,7 @@ module.exports.getLengthOfOneMaterialOrdered = async (materialId) => {
     });
 
     return totalRollsPurchased;
-}
+};
 
 module.exports.getLengthOfOneMaterialInInventory = async (materialId) => {
     const searchQuery = {
@@ -44,7 +44,7 @@ module.exports.getLengthOfOneMaterialInInventory = async (materialId) => {
     });
 
     return totalLength;
-}
+};
 
 module.exports.getLengthOfAllMaterialsInInventory = async () => {
     const purchaseOrders = await getAllPurchaseOrders();
@@ -58,7 +58,7 @@ module.exports.getLengthOfAllMaterialsInInventory = async () => {
     });
 
     return totalFeetOnHand;
-}
+};
 
 module.exports.getLengthOfAllMaterialsOrdered = async () => {
     const purchaseOrders = await getAllPurchaseOrders();
@@ -78,4 +78,4 @@ module.exports.getNumberOfPurchaseOrders = async () => {
     const purchaseOrders = await getAllPurchaseOrders();
         
     return purchaseOrders.length;
-}
+};

@@ -16,6 +16,37 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+const PurchaseOrderModel = require('./models/materialOrder');
+
+PurchaseOrderModel.watch().on('change', async (change) => {
+    console.log(`Change to a PurchaseOrder in database ${JSON.stringify(change)}`)
+    
+    const operationType = change.operationType;
+    const purchaseOrderObjectId = change.documentKey._id;
+    let purchaseOrder = null;
+
+    if (operationType === 'delete') {
+        console.log(`PurchaseOrder was deleted: ${JSON.stringify(change)}`)
+        io.emit(purchaseOrderObjectId, purchaseOrder);
+
+        return;
+    }
+
+    purchaseOrder = await PurchaseOrderModel
+        .findById(change.documentKey._id)
+        .populate({path: 'material'});
+
+    if (operationType === 'update') {
+        console.log(`P.O has been updated`);
+        io.emit('test', purchaseOrder);
+    } else if (operationType === 'insert') {
+        console.log(`P.O has been created`);
+    }
+});
+
 app.use(expressLayouts);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,7 +92,7 @@ databaseConnection.on('error', (error) => {
 });
 
 databaseConnection.on('open', () => {
-    app.listen(PORT, () => {
+    http.listen(PORT, () => {
         console.log(`Server started listening on PORT ${PORT}. Visit http://localhost:${PORT} in your browser`);
     });
 });

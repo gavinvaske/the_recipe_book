@@ -19,7 +19,10 @@
                                 <option value="">-</option>
                                 <% if (typeof materials != 'undefined') { %>
                                     <% materials.forEach(material => { %>
-                                        <% const isSelected = material.id == materialOrder.material._id ? 'selected' : ''; %>
+                                        <% let isSelected = false %>
+                                        <%  if (materialOrder.material) { %>
+                                            <% isSelected = material.id == materialOrder.material._id ? 'selected' : ''; %>
+                                        <% } %>
                                         <option value="<%= material.id %>" <%= isSelected %>><%= material.name || 'N/A' %> </option>
                                     <% }) %>
                                 <% } %>

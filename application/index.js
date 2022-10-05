@@ -18,7 +18,7 @@ const app = express();
 
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-require('./services/socketService')(io);    // Initalize sockets listeners/emitters
+require('./services/socketService')(io); // Initalize sockets listeners/emitters
 
 app.use(expressLayouts);
 app.use(express.json());

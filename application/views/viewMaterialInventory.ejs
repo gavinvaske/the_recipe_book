@@ -5,9 +5,9 @@
 <br>
 
 <div>
-    <p>Length in Inventory: <%= lengthOfAllMaterialsInInventory || 'N/A' %> feet</p>
-    <p>Length on Order: <%= lengthOfAllMaterialsOrdered || 'N/A' %> feet</p>
-    <p>Total POs: <%= totalPurchaseOrders || 'N/A' %></p>
+    <p>Length in Inventory: <span class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></span> feet</p>
+    <p>Length on Order: <span class='total-length-of-material-ordered'><%= lengthOfAllMaterialsOrdered || 'N/A' %></span> feet</p>
+    <p>Total POs: <span class='total-purchase-ordered'><%= totalPurchaseOrders || 'N/A' %></span></p>
 </div>
 
 <br>
@@ -19,10 +19,10 @@
 <div id="material-inventories">
     <% materialInventories && materialInventories.forEach(materialInventory => { %>
         <div id="<%= materialInventory._id %>">
-            <p class='material-id'>Material Id: <%= materialInventory.materialId || 'N/A' %></p>
-            <p class='material-name'>Material Name: <%= materialInventory.name || 'N/A' %></p>
-            <p class='material-length-in-stock'>Length in Inventory: <%= materialInventory.lengthOfMaterialInStock %> feet</p>
-            <p class='material-length-ordered'>Length Ordered: <%= materialInventory.lengthOfMaterialOrdered %> feet</p>
+            <p>Material Id: <span class='material-id'><%= materialInventory.materialId || 'N/A' %></span></p>
+            <p>Material Name: <span class='material-name'><%= materialInventory.name || 'N/A' %></span></p>
+            <p>Length in Inventory: <span class='material-length-in-stock'><%= materialInventory.lengthOfMaterialInStock %></span> feet</p>
+            <p>Length Ordered: <span class='material-length-ordered'><%= materialInventory.lengthOfMaterialOrdered %></span> feet</p>
         </div>
 
         <br>
@@ -33,23 +33,31 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<script>
-    function handlePurchaseOrderChangeEvent(purchaseOrderId, purchaseOrder) {
-      console.log(`A PurchaseOrder has been Created/Updated/Deleted in the database: ${purchaseOrderId} - ${JSON.stringify(purchaseOrder)}`);
-    }
-    
+<script>    
     const socket = io();
     const materialIdsAsString = '<%= materialInventories.map((material) => {return material._id}) %>';
     const materialIdsAsArray = materialIdsAsString.split(',');
 
-    console.log(materialIdsAsString);
-    console.log(materialIdsAsArray);
-
     materialIdsAsArray.forEach((materialObjectId) => {
         console.log(`creating socket listener for materialObjectId = ${materialObjectId}`);
 
-        socket.on(materialObjectId, function(purchaseOrder) {
-          handlePurchaseOrderChangeEvent(materialObjectId, purchaseOrder);
+        socket.on(materialObjectId, function(materialInventoryInformation) {
+            const {
+                lengthOfMaterialOrder, 
+                lengthOfMaterialInStock,
+                lengthOfAllMaterialsInInventory,
+                lengthOfAllMaterialsOrdered,
+                totalPurchaseOrders
+            } = materialInventoryInformation;
+
+            console.log(`lengthOfMaterialOrder => ${lengthOfMaterialOrder}; lengthOfMaterialInStock => ${lengthOfMaterialInStock}`);
+            
+            $(`#${materialObjectId} .material-length-in-stock`).text(lengthOfMaterialInStock);
+            $(`#${materialObjectId} .material-length-ordered`).text(lengthOfMaterialOrder);
+
+            $(`.total-length-of-material-in-inventory`).text(lengthOfAllMaterialsInInventory);
+            $(`.total-length-of-material-ordered`).text(lengthOfAllMaterialsOrdered);
+            $(`.total-purchase-ordered`).text(totalPurchaseOrders);
         });
     })
 </script>

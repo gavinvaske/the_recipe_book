@@ -21,30 +21,36 @@ const io = require('socket.io')(http);
 
 const PurchaseOrderModel = require('./models/materialOrder');
 
+const materialOrderService = require('./services/materialOrderService')
+
 PurchaseOrderModel.watch().on('change', async (change) => {
     console.log(`Change to a PurchaseOrder in database ${JSON.stringify(change)}`)
-    
-    const operationType = change.operationType;
-    const purchaseOrderObjectId = change.documentKey._id;
-    let purchaseOrder = null;
 
-    if (operationType === 'delete') {
-        console.log(`PurchaseOrder was deleted: ${JSON.stringify(change)}`)
-        io.emit(purchaseOrderObjectId, purchaseOrder);
+    const purchaseOrder = await PurchaseOrderModel
+        .findById(change.documentKey._id)
+        .populate({path: 'material'})
+        .lean()
+        .exec();
 
+    const materialObjectId = purchaseOrder.material ? purchaseOrder.material._id : null;
+
+    if (!materialObjectId) {
         return;
     }
 
-    purchaseOrder = await PurchaseOrderModel
-        .findById(change.documentKey._id)
-        .populate({path: 'material'});
+    const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(materialObjectId);
+    const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(materialObjectId);
+    const lengthOfAllMaterialsInInventory = await materialOrderService.getLengthOfAllMaterialsInInventory();
+    const lengthOfAllMaterialsOrdered = await materialOrderService.getLengthOfAllMaterialsOrdered();
+    const totalPurchaseOrders = await materialOrderService.getNumberOfPurchaseOrders();
 
-    if (operationType === 'update') {
-        console.log(`P.O has been updated`);
-        io.emit('test', purchaseOrder);
-    } else if (operationType === 'insert') {
-        console.log(`P.O has been created`);
-    }
+    io.emit(materialObjectId, {
+        lengthOfMaterialOrdered,
+        lengthOfMaterialInStock,
+        lengthOfAllMaterialsInInventory,
+        lengthOfAllMaterialsOrdered,
+        totalPurchaseOrders
+    })
 });
 
 app.use(expressLayouts);

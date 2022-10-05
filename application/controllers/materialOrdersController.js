@@ -157,6 +157,10 @@ router.get('/update/:id', async (request, response) => {
 
 router.post('/update/:id', async (request, response) => {
     try {
+        if (!request.body.hasArrived) {
+            request.body.hasArrived = false;
+        }
+
         await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body).exec();
 
         request.flash('alerts', 'Updated successfully');

@@ -13,22 +13,22 @@ describe('materialInventoryService test suite', () => {
         materialsInDatabase;
 
         
-        afterEach(() => {
-            jest.resetAllMocks();
-        });
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
         
-        beforeEach(() => {
+    beforeEach(() => {
         materialsInDatabase = [];
         execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
         leanFunction = jest.fn().mockImplementation(() => {
             return {
                 exec: execFunction
-            }
+            };
         });
         findFunction = jest.fn().mockImplementation(() => {
             return {
                 lean: leanFunction
-            }
+            };
         });
 
         mockMaterialModel.find.mockImplementation(findFunction);
@@ -53,7 +53,7 @@ describe('materialInventoryService test suite', () => {
             const materials = await materialInventoryService.getAllMaterialInventoryData();
 
             expect(materials).toBeDefined();
-            expect(materials.length).toBe(0);
+            expect(materials.length).toBe(0); // eslint-disable-line no-magic-numbers
         });
 
         it ('should return correct data', async () => {
@@ -66,8 +66,8 @@ describe('materialInventoryService test suite', () => {
             const expectedLengthOfMaterialInInventory = 23;
             execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
 
-            mockMaterialOrderService.getLengthOfOneMaterialOrdered.mockReturnValue(expectedLengthOfMaterialOrdered)
-            mockMaterialOrderService.getLengthOfOneMaterialInInventory.mockReturnValue(expectedLengthOfMaterialInInventory)
+            mockMaterialOrderService.getLengthOfOneMaterialOrdered.mockReturnValue(expectedLengthOfMaterialOrdered);
+            mockMaterialOrderService.getLengthOfOneMaterialInInventory.mockReturnValue(expectedLengthOfMaterialInInventory);
         
             const materials = await materialInventoryService.getAllMaterialInventoryData();
 
@@ -78,8 +78,8 @@ describe('materialInventoryService test suite', () => {
                     ...materialsInDatabase[0],
                     lengthOfMaterialOrdered: expectedLengthOfMaterialOrdered,
                     lengthOfMaterialInStock: expectedLengthOfMaterialInInventory
-            }
-        ]);
-        })
-    })
+                }
+            ]);
+        });
+    });
 });

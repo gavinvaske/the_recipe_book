@@ -34,7 +34,8 @@ module.exports = function(io){
             lengthOfMaterialInStock,
             lengthOfAllMaterialsInInventory,
             lengthOfAllMaterialsOrdered,
-            totalPurchaseOrders
+            totalPurchaseOrders,
+            purchaseOrder
         });
     });
 };

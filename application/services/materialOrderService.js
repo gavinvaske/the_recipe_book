@@ -1,7 +1,7 @@
-const MaterialOrderModel = require('../models/materialOrder');
+const PurchaseOrderModel = require('../models/materialOrder');
 
 async function getAllPurchaseOrders() {
-    return await MaterialOrderModel
+    return await PurchaseOrderModel
         .find()
         .exec();
 }
@@ -10,13 +10,18 @@ function getTotalLengthOfMaterial({totalRolls, feetPerRoll}) {
     return totalRolls * feetPerRoll;
 }
 
-module.exports.getLengthOfOneMaterialOrdered = async (materialId) => {
+module.exports.findPurchaseOrdersByMaterial = async (materialId) => {
     const searchQuery = {
         material: materialId
     };
-    const purchaseOrders = await MaterialOrderModel
+
+    return await PurchaseOrderModel
         .find(searchQuery)
         .exec();
+};
+
+module.exports.getLengthOfOneMaterialOrdered = async (materialId) => {
+    const purchaseOrders = await this.findPurchaseOrdersByMaterial(materialId);
     
     let totalRollsPurchased = 0;
 
@@ -31,7 +36,7 @@ module.exports.getLengthOfOneMaterialInInventory = async (materialId) => {
     const searchQuery = {
         material: materialId
     };
-    const purchaseOrders = await MaterialOrderModel
+    const purchaseOrders = await PurchaseOrderModel
         .find(searchQuery)
         .exec();
     

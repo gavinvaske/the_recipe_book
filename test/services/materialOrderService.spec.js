@@ -120,7 +120,7 @@ describe('materialOrderService test suite', () => {
 
             await materialOrderService.getLengthOfOneMaterialInInventory(materialId);
 
-            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery));
         });
 
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {
@@ -160,7 +160,7 @@ describe('materialOrderService test suite', () => {
 
             await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
 
-            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery));
         });
 
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {
@@ -204,7 +204,7 @@ describe('materialOrderService test suite', () => {
 
             await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
 
-            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery));
         });
 
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {

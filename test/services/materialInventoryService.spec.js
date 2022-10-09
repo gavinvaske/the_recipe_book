@@ -11,7 +11,6 @@ describe('materialInventoryService test suite', () => {
         findFunction, 
         leanFunction,
         materialsInDatabase;
-
         
     afterEach(() => {
         jest.resetAllMocks();

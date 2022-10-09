@@ -7,13 +7,15 @@ jest.mock('../../application/models/materialOrder');
 describe('materialOrderService test suite', () => {
     let purchaseOrdersInDatabase,
         execFunction,
-        findFunction;
+        findFunction,
+        materialId;
 
     afterEach(() => {
         jest.resetAllMocks();
     });
 
     beforeEach(() => {
+        materialId = chance.string();
         purchaseOrdersInDatabase = [];
         execFunction = jest.fn().mockResolvedValue(purchaseOrdersInDatabase);
         findFunction = jest.fn().mockImplementation(() => {
@@ -107,8 +109,6 @@ describe('materialOrderService test suite', () => {
     });
 
     describe('getLengthOfOneMaterialInInventory()', () => {
-        const materialId = chance.string();
-
         it('should not throw error if purchase order is not found using the provided materialId', async () => {
             await expect(materialOrderService.getLengthOfOneMaterialInInventory(materialId)).resolves.not.toThrowError();   
         });
@@ -139,8 +139,6 @@ describe('materialOrderService test suite', () => {
     });
 
     describe('getLengthOfOneMaterialOrdered()', () => {
-        const materialId = chance.string();
-
         it('should not throw error if purchase order is not found using the provided materialId', async () => {
             await expect(materialOrderService.getLengthOfOneMaterialOrdered(materialId)).resolves.not.toThrowError();   
         });
@@ -168,6 +166,30 @@ describe('materialOrderService test suite', () => {
             const actualLength = await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
 
             expect(actualLength).toBe(expectedLength);
+        });
+    });
+
+    describe('findPurchaseOrdersByMaterial()', () => {
+        it('should not throw error if purchase order is not found using the provided materialId', async () => {
+            await expect(materialOrderService.findPurchaseOrdersByMaterial(materialId)).resolves.not.toThrowError();   
+        });
+
+        it('should return length of 0 if no purchase order is found for the given materialId', async () => {
+            const expectedNumberOfPurchaseOrdersFound = 0;
+
+            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+
+            expect(purchaseOrdersFound.length).toBe(expectedNumberOfPurchaseOrdersFound);
+        });
+
+        it('should return the correct number of purchaseOrders queried for using materialId', async () => {
+            purchaseOrdersInDatabase = chance.n(buildPurchaseOrderObject, chance.integer({min: 1, max: 100}));
+            const expectedLength = purchaseOrdersInDatabase.length;
+            execFunction = jest.fn().mockResolvedValue(purchaseOrdersInDatabase);
+
+            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+
+            expect(purchaseOrdersFound.length).toBe(expectedLength);
         });
     });
 });

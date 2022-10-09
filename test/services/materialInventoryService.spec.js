@@ -75,7 +75,7 @@ describe('materialInventoryService test suite', () => {
             expect(materials.length).toBe(1);
             expect(materials).toEqual([
                 {
-                    ...materialsInDatabase[0],
+                    material: materialsInDatabase[0],
                     lengthOfMaterialOrdered: expectedLengthOfMaterialOrdered,
                     lengthOfMaterialInStock: expectedLengthOfMaterialInInventory
                 }

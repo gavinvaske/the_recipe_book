@@ -1,4 +1,5 @@
 const MaterialModel = require('../models/material');
+const PurchaseOrderModel  = require('../models/materialOrder');
 const materialOrderService = require('../services/materialOrderService');
 
 module.exports.getAllMaterialInventoryData = async () => {
@@ -14,7 +15,16 @@ module.exports.getAllMaterialInventoryData = async () => {
 
         const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
         const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(materialId);
-        const purchaseOrdersForMaterial = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+
+        const searchQuery = {
+            $and:[
+                {material: materialId},
+                {hasArrived: false},
+            ]};
+    
+        const purchaseOrdersForMaterial = await PurchaseOrderModel
+            .find(searchQuery)
+            .exec();
 
         materialInventories.push({
             material,

@@ -113,6 +113,16 @@ describe('materialOrderService test suite', () => {
             await expect(materialOrderService.getLengthOfOneMaterialInInventory(materialId)).resolves.not.toThrowError();   
         });
 
+        it('should use the correct query when performing the search', async () => {
+            const expectedQuery = {
+                material: materialId
+            };
+
+            await materialOrderService.getLengthOfOneMaterialInInventory(materialId);
+
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
+        });
+
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {
             const expectedLength = 0;
 
@@ -143,6 +153,16 @@ describe('materialOrderService test suite', () => {
             await expect(materialOrderService.getLengthOfOneMaterialOrdered(materialId)).resolves.not.toThrowError();   
         });
 
+        it('should use the correct query when performing the search', async () => {
+            const expectedQuery = {
+                material: materialId
+            };
+
+            await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
+
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
+        });
+
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {
             const expectedLength = 0;
 
@@ -169,15 +189,28 @@ describe('materialOrderService test suite', () => {
         });
     });
 
-    describe('findPurchaseOrdersByMaterial()', () => {
+    describe('findPurchaseOrdersByMaterialThatHaveNotArrived()', () => {
         it('should not throw error if purchase order is not found using the provided materialId', async () => {
-            await expect(materialOrderService.findPurchaseOrdersByMaterial(materialId)).resolves.not.toThrowError();   
+            await expect(materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId)).resolves.not.toThrowError();   
+        });        
+        
+        it('should use the correct query when performing the search', async () => {
+            const expectedQuery = {
+                $and:[
+                    {material: materialId},
+                    {hasArrived: false},
+                ]
+            };
+
+            await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
+
+            expect(JSON.stringify(findFunction.mock.calls[0][0])).toBe(JSON.stringify(expectedQuery))
         });
 
         it('should return length of 0 if no purchase order is found for the given materialId', async () => {
             const expectedNumberOfPurchaseOrdersFound = 0;
 
-            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
 
             expect(purchaseOrdersFound.length).toBe(expectedNumberOfPurchaseOrdersFound);
         });
@@ -187,7 +220,7 @@ describe('materialOrderService test suite', () => {
             const expectedLength = purchaseOrdersInDatabase.length;
             execFunction = jest.fn().mockResolvedValue(purchaseOrdersInDatabase);
 
-            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+            const purchaseOrdersFound = await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
 
             expect(purchaseOrdersFound.length).toBe(expectedLength);
         });

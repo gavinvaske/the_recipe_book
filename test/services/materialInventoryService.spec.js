@@ -61,12 +61,14 @@ describe('materialInventoryService test suite', () => {
                     [chance.string()]: chance.string()
                 }
             ];
+            const purchaseOrdersInDatabase = [];
             const expectedLengthOfMaterialOrdered = 87;
             const expectedLengthOfMaterialInInventory = 23;
             execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
 
             mockMaterialOrderService.getLengthOfOneMaterialOrdered.mockReturnValue(expectedLengthOfMaterialOrdered);
             mockMaterialOrderService.getLengthOfOneMaterialInInventory.mockReturnValue(expectedLengthOfMaterialInInventory);
+            mockMaterialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived.mockReturnValue(purchaseOrdersInDatabase);
         
             const materials = await materialInventoryService.getAllMaterialInventoryData();
 
@@ -76,7 +78,8 @@ describe('materialInventoryService test suite', () => {
                 {
                     material: materialsInDatabase[0],
                     lengthOfMaterialOrdered: expectedLengthOfMaterialOrdered,
-                    lengthOfMaterialInStock: expectedLengthOfMaterialInInventory
+                    lengthOfMaterialInStock: expectedLengthOfMaterialInInventory,
+                    purchaseOrdersForMaterial: purchaseOrdersInDatabase
                 }
             ]);
         });

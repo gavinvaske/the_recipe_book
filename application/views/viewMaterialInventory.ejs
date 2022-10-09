@@ -18,9 +18,11 @@
 
 <div id="material-inventories">
     <% materialInventories && materialInventories.forEach(materialInventory => { %>
-        <div id="<%= materialInventory._id %>">
-            <p>Material Id: <span class='material-id'><%= materialInventory.materialId || 'N/A' %></span></p>
-            <p>Material Name: <span class='material-name'><%= materialInventory.name || 'N/A' %></span></p>
+        <% const {material} = materialInventory; %>
+
+        <div id="<%= material._id %>">
+            <p>Material Id: <span class='material-id'><%= material.materialId || 'N/A' %></span></p>
+            <p>Material Name: <span class='material-name'><%= material.name || 'N/A' %></span></p>
             <p>Length in Inventory: <span class='material-length-in-stock'><%= materialInventory.lengthOfMaterialInStock %></span></p>
             <p>Length Ordered: <span class='material-length-ordered'><%= materialInventory.lengthOfMaterialOrdered %></span></p>
         </div>
@@ -46,7 +48,7 @@
 
 <script>    
     const socket = io();
-    const materialIdsAsString = '<%= materialInventories.map((material) => {return material._id}) %>';
+    const materialIdsAsString = '<%= materialInventories.map(({material}) => {return material._id}) %>';
     const materialIdsAsArray = materialIdsAsString.split(',');
 
     materialIdsAsArray.forEach((materialObjectId) => {

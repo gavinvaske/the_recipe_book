@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
     } catch (error) {
         console.log(`An error occurred while attempting to load /material-inventory: ${error}`);
 
-        request.flash('errors', ['The following error(s) occurred:', error]);
+        request.flash('errors', [`The following error occurred: ${error}`]);
         return response.redirect('back');
     }
 });

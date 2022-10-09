@@ -16,6 +16,10 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+require('./services/socketService')(io); // Initalize sockets listeners/emitters
+
 app.use(expressLayouts);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -54,13 +58,14 @@ app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
 app.use('/products', require('./controllers/productController'));
+app.use('/material-inventory', require('./controllers/materialInventory'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);
 });
 
 databaseConnection.on('open', () => {
-    app.listen(PORT, () => {
+    http.listen(PORT, () => {
         console.log(`Server started listening on PORT ${PORT}. Visit http://localhost:${PORT} in your browser`);
     });
 });

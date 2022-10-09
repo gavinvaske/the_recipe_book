@@ -1,0 +1,86 @@
+<h1>
+    Welcome to the Material Inventory Page
+</h1>
+
+<br>
+
+<div>
+    <p>Feet on Hand: <span class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></span></p>
+    <p>Feet on Order: <span class='total-length-of-material-ordered'><%= lengthOfAllMaterialsOrdered || 'N/A' %></span></p>
+    <p>Total POs: <span class='total-purchase-ordered'><%= totalPurchaseOrders || 'N/A' %></span></p>
+</div>
+
+<br>
+
+<h2>Material Inventory Information:</h2>
+
+<br>
+
+<div id="material-inventories">
+    <% materialInventories && materialInventories.forEach(materialInventory => { %>
+        <% const {material} = materialInventory; %>
+
+        <div id="<%= material._id %>">
+            <p>Material Id: <span class='material-id'><%= material.materialId || 'N/A' %></span></p>
+            <p>Material Name: <span class='material-name'><%= material.name || 'N/A' %></span></p>
+            <p>Length in Inventory: <span class='material-length-in-stock'><%= materialInventory.lengthOfMaterialInStock %></span></p>
+            <p>Length Ordered: <span class='material-length-ordered'><%= materialInventory.lengthOfMaterialOrdered %></span></p>
+        </div>
+
+        <br>
+
+        <div>
+            <% materialInventory.purchaseOrdersForMaterial.forEach((purchaseOrder) => { %>
+                <div class="<%= purchaseOrder._id %>"> 
+                    <p>PO Number: <span class="po-number"><%= purchaseOrder.purchaseOrderNumber ?? 'N/A' %></span></p>
+                    <p>Arrival Date: <span class="po-arrival-date"><%= purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'}) || 'N/A' %></span></p>
+                    <p>Feet: <span class="po-total-length"><%= purchaseOrder.feetPerRoll * purchaseOrder.totalRolls ?? 'N/A' %></span></p>
+                </div>
+                <br>
+            <% }) %>
+        </div>
+
+        <p>================================================================</p>
+    <% }) %>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>    
+    const socket = io();
+    const materialIdsAsString = '<%= materialInventories.map(({material}) => {return material._id}) %>';
+    const materialIdsAsArray = materialIdsAsString.split(',');
+
+    materialIdsAsArray.forEach((materialObjectId) => {
+        console.log(`creating socket listener for materialObjectId = ${materialObjectId}`);
+
+        socket.on(materialObjectId, function(materialInventoryInformation) {
+            console.log(`socket.on('${materialObjectId}') received; Data => ${JSON.stringify(materialInventoryInformation)}`);
+
+            const {
+                lengthOfAllMaterialsInInventory,
+                lengthOfAllMaterialsOrdered,
+                totalPurchaseOrders,
+                lengthOfMaterialInStock,
+                lengthOfMaterialOrdered,
+                purchaseOrdersForMaterial,
+                purchaseOrder
+            } = materialInventoryInformation
+
+            $(`.total-length-of-material-in-inventory`).text(lengthOfAllMaterialsInInventory);
+            $(`.total-length-of-material-ordered`).text(lengthOfAllMaterialsOrdered);
+            $(`.total-purchase-ordered`).text(totalPurchaseOrders);
+
+            $(`#${materialObjectId} .material-length-in-stock`).text(lengthOfMaterialInStock);
+            $(`#${materialObjectId} .material-length-ordered`).text(lengthOfMaterialOrdered);
+
+            $(`.${purchaseOrder._id} .po-number`).text(purchaseOrder.purchaseOrderNumber);
+            
+            const purchaseOrderArrivalDate = new Date(purchaseOrder.arrivalDate).toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'}).substring(0, 10)
+            $(`.${purchaseOrder._id} .po-arrival-date`).text(purchaseOrderArrivalDate);
+            
+            const purchaseOrderTotalLength = purchaseOrder.feetPerRoll * purchaseOrder.totalRolls;
+            $(`.${purchaseOrder._id} .po-total-length`).text(purchaseOrderTotalLength);
+        });
+    })
+</script>

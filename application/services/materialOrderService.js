@@ -10,7 +10,7 @@ function getTotalLengthOfMaterial({totalRolls, feetPerRoll}) {
     return totalRolls * feetPerRoll;
 }
 
-module.exports.findPurchaseOrdersByMaterial = async (materialId) => {
+async function findPurchaseOrdersByMaterial(materialId) {
     const searchQuery = {
         material: materialId
     };
@@ -20,8 +20,20 @@ module.exports.findPurchaseOrdersByMaterial = async (materialId) => {
         .exec();
 };
 
+module.exports.findPurchaseOrdersByMaterialThatHaveNotArrived = async (materialId) => {
+    const searchQuery = {
+        $and:[
+            {material: materialId},
+            {hasArrived: false},
+        ]};
+
+    return await PurchaseOrderModel
+        .find(searchQuery)
+        .exec();
+};
+
 module.exports.getLengthOfOneMaterialOrdered = async (materialId) => {
-    const purchaseOrders = await this.findPurchaseOrdersByMaterial(materialId);
+    const purchaseOrders = await findPurchaseOrdersByMaterial(materialId);
     
     let totalRollsPurchased = 0;
 

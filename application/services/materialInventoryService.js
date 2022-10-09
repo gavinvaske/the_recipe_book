@@ -14,7 +14,7 @@ module.exports.getAllMaterialInventoryData = async () => {
 
         const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
         const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(materialId);
-        const purchaseOrdersForMaterial = await materialOrderService.findPurchaseOrdersByMaterial(materialId);
+        const purchaseOrdersForMaterial = await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
 
         materialInventories.push({
             material,

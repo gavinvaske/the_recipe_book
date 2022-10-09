@@ -42,22 +42,22 @@
         console.log(`creating socket listener for materialObjectId = ${materialObjectId}`);
 
         socket.on(materialObjectId, function(materialInventoryInformation) {
+            console.log(`socket.on('${materialObjectId}') received; Data => ${JSON.stringify(materialInventoryInformation)}`);
+
             const {
-                lengthOfMaterialOrder, 
-                lengthOfMaterialInStock,
                 lengthOfAllMaterialsInInventory,
                 lengthOfAllMaterialsOrdered,
-                totalPurchaseOrders
-            } = materialInventoryInformation;
-
-            console.log(`lengthOfMaterialOrder => ${lengthOfMaterialOrder}; lengthOfMaterialInStock => ${lengthOfMaterialInStock}`);
-            
-            $(`#${materialObjectId} .material-length-in-stock`).text(lengthOfMaterialInStock);
-            $(`#${materialObjectId} .material-length-ordered`).text(lengthOfMaterialOrder);
+                totalPurchaseOrders,
+                lengthOfMaterialInStock,
+                lengthOfMaterialOrdered
+            } = materialInventoryInformation
 
             $(`.total-length-of-material-in-inventory`).text(lengthOfAllMaterialsInInventory);
             $(`.total-length-of-material-ordered`).text(lengthOfAllMaterialsOrdered);
             $(`.total-purchase-ordered`).text(totalPurchaseOrders);
+
+            $(`#${materialObjectId} .material-length-in-stock`).text(lengthOfMaterialInStock);
+            $(`#${materialObjectId} .material-length-ordered`).text(lengthOfMaterialOrdered);
         });
     })
 </script>

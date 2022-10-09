@@ -13,6 +13,10 @@ module.exports = function(io){
             .lean()
             .exec();
 
+        if (!purchaseOrder) {
+            return;
+        }
+
         const materialObjectId = purchaseOrder.material ? purchaseOrder.material._id : null;
 
         if (!materialObjectId) {

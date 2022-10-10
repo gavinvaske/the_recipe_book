@@ -173,7 +173,7 @@ router.get('/:id', async (request, response) => {
             .findById(request.params.id)
             .exec();
 
-        const calculatedAttributes = {};    // TODO (10-9-2022): Do this
+        const calculatedAttributes = {}; // TODO (10-9-2022): Do this
 
         return response.render('viewOneTicket', {
             ticket,

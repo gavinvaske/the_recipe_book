@@ -487,6 +487,18 @@ $( document ).ready(function() {
         });
     });
 
+    $('.material-card-section .card .card-header .col-right').click(function(){
+
+		let activeCard = $(this).parents('.card');
+		if($(activeCard).hasClass('active')) {
+			$(activeCard).removeClass('active');
+		} else if (!$(activeCard).hasClass('active')){
+			$('.card').removeClass('active'); 
+			$(activeCard).addClass('active'); 
+		}
+		
+	});
+
 
 });
 

@@ -2466,3 +2466,228 @@ a.storm {
 	visibility: visible;
 	opacity: 1;
 }
+
+
+
+
+.material-header {
+  background-color: white; 
+  border-radius: 10px; 
+  padding: 15px; 
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+.material-header .col {
+	width: 33.333%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+}
+
+.material-header .col span {
+	font-weight: 500;
+	color: #5e5873;
+	font-size: 16px;
+}
+
+.material-header .col h1 {
+	color: #00cfe8;
+	font-weight: 800;
+}
+
+.material-card-section {
+	margin-top: 25px;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.material-page .workflow-filter  {
+	margin-top: 25px;
+}
+.material-page .quick-filter-dropdown a {
+	border: 1px solid #5e5873;
+	padding: 2px 4px;
+}
+.material-card-section .card {
+	margin-bottom: 1rem;
+	width: calc(33.333% - 1rem);
+	background: purple;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	background-color: white; 
+	border-radius: 10px; 
+	padding: 15px 30px;
+	box-sizing: border-box;
+	height: 250px;
+}
+.fa-light.fa-calendar {
+	color: #5e5873;
+}
+.fa-light.fa-calendar:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+.material-card-section .card .card-header {
+	width: 100%;
+}
+.material-card-section .card .card-header h2 {
+	margin-bottom: 0;
+	font-weight: bold;
+	color: #7367f0;
+}
+.material-card-section .card .card-header .col {
+	width: 50%;
+	display: flex;
+}
+
+.material-card-section .card .card-header .col-left {
+	justify-content: flex-start;
+}
+
+.material-card-section .card .card-header .col-right {
+	justify-content: flex-end;
+}
+
+.material-card-section .card .actual-vs-ordered-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	margin-top: 25px;
+	position: relative;
+}
+
+.material-card-section .card .actual-vs-ordered-container .col {
+	width: 50%;
+	text-align: center;
+}
+.material-card-section .card .actual-vs-ordered-container .col span {
+	color: #5e5873;
+	font-weight: 400;
+}
+.material-card-section .card .actual-vs-ordered-container .col h2 {
+	font-weight: bold;
+}
+.material-card-section .card .actual-vs-ordered-container .col-left h2 {
+	color: #28c76f;
+}
+.material-card-section .card .actual-vs-ordered-container .col-right h2 {
+	color: #ff8510;
+}
+.material-card-section .material-description {
+/*	margin-top: 10px;*/
+	font-size: 20px;
+	color: #5e5873;
+	font-weight: 400;
+}
+
+.divide-line {
+	width: 1px;
+	height: 100px;
+	background: #6e6b7b;
+}
+
+.po-date-container {
+	position: absolute;
+	background: white;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	display: none;
+}
+.card.active .po-date-container {
+	display: block;
+}
+.card.low-material-alert {
+	background: #ff8510!important;
+	color: white!important;
+	/* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: 1;
+}	
+.card.low-material-alert .material-description,
+.card.low-material-alert h2,
+.card.low-material-alert .actual-vs-ordered-container .col span {
+	color:  white!important;
+}
+.card.low-material-alert .divide-line {
+	background: white!important;
+}
+
+.card.no-material-alert {
+	background: #ea5455!important;
+	color: white!important;
+	/* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: 5;
+}	
+.card.no-material-alert .material-description,
+.card.no-material-alert h2,
+.card.no-material-alert .actual-vs-ordered-container .col span {
+	color:  white!important;
+}
+.card.no-material-alert .divide-line {
+	background: white!important;
+}
+
+.po-list-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.po-list-header .col {
+	font-weight: 600;
+	color: #5e5873;
+}
+.po-list-header .col-one {
+	text-align: left!important;
+}
+.po-list-container {
+	width: 100%;
+}
+.po-row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin-top: 7px;
+}
+.po-col {
+	width: 33.333%;
+	text-align: center;
+}
+.po-col:first-of-type {
+	text-align: left;
+}
+
+.card.low-material-alert:hover,
+.card.no-material-alert:hover {
+	/* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: 1s;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

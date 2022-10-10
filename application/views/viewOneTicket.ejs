@@ -1,3 +1,107 @@
-<p>Ticket Number: <%= ticket.ticketNumber || 'N/A' %></p>
-<p>Department: <%= ticket.destination && ticket.destination.department || 'N/A' %></p>
-<p>Sub Department: <%= ticket.destination && ticket.destination.subDepartment || 'N/A' %></p>
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper">
+
+    <h1>Order Workflow - <%= ticket.destination && ticket.destination.department || 'N/A' %> - #<%= ticket.ticketNumber || 'N/A' %></h1>
+    <p>All details for printing can be found below. See full ticket here.</p>
+    
+    <br>
+    
+    <div>
+        <h2>Pre-Press Section:</h2>
+    
+        <p>Hot Folder: TODO</p>
+        <p>Unwind: TODO</p>
+        <p>Corner Radius: TODO</p>
+        <p>OV/EPM: TODO</p>
+        <p>Top/Bottom: TODO</p>
+        <p>Left/Right: TODO</p>
+        <p>Frame Repeat: TODO</p>
+        <p>Pre-Press Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['prePress'] : 'N/A' %></p>
+    </div>
+    
+    <br>
+    
+    <div>
+        <h2>Printing Section</h2>
+    
+        <p>Material: <%= ticket.primaryMaterial || 'N/A' %></p>
+        <div>
+            <p>Label Across: TODO</p>
+            <p>Matrix Across: TODO</p>
+            <p>Measure Across: TODO</p>
+    
+            <p>Label Around: TODO</p>
+            <p>Matrix Around: TODO</p>
+            <p>Measure Around: TODO</p>
+    
+            <p>Labels Across: TODO</p>
+            <p>Labels Around: TODO</p>
+            <p>Labels Per Frame: TODO</p>
+        </div>
+        <p>Frames: TODO</p>
+        <p>Unwind: TODO</p>
+        <p>Frame Repeat: TODO</p>
+        <p>Feet: TODO</p>
+        <p>Quantity: TODO</p>
+        <p>Printing Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['printing'] : 'N/A' %></p>
+        <p>Printing Type: TODO</p>
+    </div>
+    
+    <br>
+    
+    <div>
+        <h2>Cutting Section</h2>
+    
+        <p>Die: TODO</p>
+        <p>Labels Per Repeat: TODO</p>
+        <p>Finish: TODO</p>
+        <p>Varnish: TODO</p>
+        <p>Delta Repeat: TODO</p>
+        <p>Roto Repeat: TODO</p>
+        <p>Finish Type: TODO</p>
+        <p>Cutting Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['cutting'] : 'N/A' %></p>
+    </div>
+    
+    <br>
+    
+    <div>
+        <h2>Winding Section</h2>
+    
+        <p>Finished QTY: TODO</p>
+        <p>QTY/Roll: TODO</p>
+        <p>Press Count: TODO</p>
+        <p>Unwind Direction: TODO</p>
+        <p>Core Height: TODO</p>
+        <p># of Cores: TODO</p>
+        <p>Overun: TODO</p>
+        <p>Winding Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['winding'] : 'N/A' %></p>
+        <p>QTY/Roll: TODO</p>
+        <p>Product QTY: TODO</p>
+        <p>Overun: TODO</p>
+        <p>Unwind Direction: TODO</p>
+    </div>
+    
+    <br>
+    
+    <div>
+        <h2>Shipping Section?</h2>
+    
+        <p>Shipping Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['shipping'] : 'N/A' %></p>
+    </div>
+    
+    <br>
+    
+    <div>
+        <h2>Billing Section</h2>
+    
+        <p>Billing Addresse: <%= ticket.billingAddress || 'N/A' %> </p>
+        <p>Shipping Address: <%= ticket.shippingAddress || 'N/A' %></p>
+        <p>QTY: TODO (What does this refer to?)</p>
+        <p>Additional Charges: TODO</p>
+        <p>Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['billing'] : 'N/A' %></p>
+    </div>
+</div>
+
+<!-- TODO: Questions for Storm
+    - This view is missing some of the notes (i.e. ticket.departmentNotes['orderPrep'], ect). Is this an issue? -->

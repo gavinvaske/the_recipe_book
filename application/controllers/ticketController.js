@@ -170,11 +170,14 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
 router.get('/:id', async (request, response) => {
     try {
         const ticket = await TicketModel
-            .findById(request.params.id, 'ticketNumber destination')
+            .findById(request.params.id)
             .exec();
 
+        const calculatedAttributes = {};    // TODO (10-9-2022): Do this
+
         return response.render('viewOneTicket', {
-            ticket
+            ticket,
+            ...calculatedAttributes
         });
     } catch (error) {
         console.log(error);

@@ -122,21 +122,22 @@
               </div>
             </div>
             <div class='po-list-container'>
-                <% if (materialInventory.purchaseOrdersForMaterial < 1) { %>
-                    hello   
-                            <h1>0</h1>
-                            <%} else { %>
-                    <% materialInventory.purchaseOrdersForMaterial.forEach((purchaseOrder) => { %>
-                    
-                        
-                        
-                        <div class='po-row'>
-                            <div class='po-col <%= purchaseOrder._id %>'><%= purchaseOrder.purchaseOrderNumber ?? 'N/A' %></div>
-                            <div class='po-col'><%= purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'}) || 'N/A' %></div>
-                            <div class='po-col'><%= purchaseOrder.feetPerRoll * purchaseOrder.totalRolls ?? 'N/A' %></div>
-                        </div>
-                    <% } %>
+
+              <% if (materialInventory.purchaseOrdersForMaterial) { %>
+                <% materialInventory.purchaseOrdersForMaterial.forEach((purchaseOrder) => { %> 
+                    <div class='po-row'>
+                        <div class='po-col <%= purchaseOrder._id %>'><%= purchaseOrder.purchaseOrderNumber ?? 'N/A' %></div>
+                        <div class='po-col'><%= purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'}) || 'N/A' %></div>
+                        <div class='po-col'><%= purchaseOrder.feetPerRoll * purchaseOrder.totalRolls ?? 'N/A' %></div>
+                    </div>
                 <% }) %>
+
+                <%} else { %>
+                  hello mars
+
+                    
+                    <% } %>
+
             </div>
 
           </div>

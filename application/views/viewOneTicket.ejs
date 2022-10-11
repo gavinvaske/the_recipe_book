@@ -2,7 +2,16 @@
 
 <div class="page-wrapper">
 
-    <h1>Order Workflow - <%= ticket.destination && ticket.destination.department || 'N/A' %> - #<%= ticket.ticketNumber || 'N/A' %></h1>
+
+    <div>
+        <h2>PlayGround Section</h2>
+        <p>destination: <%= ticket.destination %> </p>
+        <p>printingType: <%= ticket.printingType %> </p>
+        <p>extraCharges: <%= ticket.extraCharges %> </p>
+        <p>total extra charges: <%= ticket.extraCharges && ticket.extraCharges.reduce((sum, charge) => {return sum + charge.price;}, 0) %>  </p>
+    </div>
+
+    <h1>Order Workflow - <%= ticket.destination && ticket.destination.department || 'N/A' %> - #<%= ticket.ticketNumber || 'N/A' %> (TODO: is this ticketNumber or PONumber?)</h1>
     <p>All details for printing can be found below. See full ticket here.</p>
     
     <br>
@@ -45,7 +54,7 @@
         <p>Feet: TODO</p>
         <p>Quantity: TODO</p>
         <p>Printing Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['printing'] : 'N/A' %></p>
-        <p>Printing Type: TODO</p>
+        <p>Printing Type: <%= ticket.printingType || 'N/A' %></p>
     </div>
     
     <br>
@@ -98,10 +107,7 @@
         <p>Billing Addresse: <%= ticket.billingAddress || 'N/A' %> </p>
         <p>Shipping Address: <%= ticket.shippingAddress || 'N/A' %></p>
         <p>QTY: TODO (What does this refer to?)</p>
-        <p>Additional Charges: TODO</p>
+        <p>Additional Charges: $<%= ticket.extraCharges && ticket.extraCharges.reduce((sum, charge) => {return sum + charge.price;}, 0) %></p>
         <p>Notes: <%= ticket.departmentNotes ? ticket.departmentNotes['billing'] : 'N/A' %></p>
     </div>
 </div>
-
-<!-- TODO: Questions for Storm
-    - This view is missing some of the notes (i.e. ticket.departmentNotes['orderPrep'], ect). Is this an issue? -->

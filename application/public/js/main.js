@@ -488,7 +488,6 @@ $( document ).ready(function() {
     });
 
     $('.material-card-section .card .card-header .col-right').click(function(){
-
         let activeCard = $(this).parents('.card');
         if ($(activeCard).hasClass('active')) {
             $(activeCard).removeClass('active');
@@ -526,5 +525,4 @@ $( document ).ready(function() {
         $('.department-section').removeClass('hide-all');
         $('.department-section').removeClass('hide');
     });
-
 });

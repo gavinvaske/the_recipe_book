@@ -356,6 +356,11 @@ $( document ).ready(function() {
         $('#recipe-dropdown-trigger').toggleClass('active');
     });
 
+    $('#material-dropdown-trigger').on('click', function(){
+        $('.dropdown-menu.material-dropdown').toggleClass('active');
+        $('#material-dropdown-trigger').toggleClass('active');
+    });
+
 
     $('.options-reveal-box').on('click', function(){
         if ($(this).hasClass('active')) {

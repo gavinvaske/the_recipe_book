@@ -810,7 +810,8 @@ input:focus + .show-password-frame {
 .user-frame:hover {
   cursor: pointer;
 }
-#recipe-dropdown-trigger {
+#recipe-dropdown-trigger,
+#material-dropdown-trigger {
   position: relative;
 }
 .dropdown-menu {
@@ -839,11 +840,13 @@ input:focus + .show-password-frame {
   transition: .3s;
   z-index: 888;
 }
-.dropdown-menu.recipe-dropdown {
+.dropdown-menu.recipe-dropdown,
+.dropdown-menu.material-dropdown {
   left: 0;
   width: 18rem;
 }
-.dropdown-menu.recipe-dropdown.active {
+.dropdown-menu.recipe-dropdown.active,
+.dropdown-menu.material-dropdown.active {
   visibility: visible;
   margin-top: 10px;
   transition: .3s;
@@ -2503,6 +2506,7 @@ a.storm {
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
+
 .material-page .workflow-filter  {
 	margin-top: 25px;
 }
@@ -2523,6 +2527,7 @@ a.storm {
 	padding: 15px 30px;
 	box-sizing: border-box;
 	height: 250px;
+  max-width: 500px;
 }
 .fa-light.fa-calendar {
 	color: #5e5873;
@@ -2653,6 +2658,8 @@ a.storm {
 }
 .po-list-container {
 	width: 100%;
+  max-height: 83px;
+  overflow: scroll;
 }
 .po-row {
 	display: flex;
@@ -2690,4 +2697,33 @@ a.storm {
   80% { transform: translate(-1px, -1px) rotate(1deg); }
   90% { transform: translate(1px, 2px) rotate(0deg); }
   100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+
+.new-po-btn {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-po-btn i {
+  margin-left: 5px;
+}
+
+.filter-option {
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid #f5f6f8;
+  padding: 2px 5px;
+  box-sizing: content-box;
+  margin-bottom: 4px;
+  color: #323338;
+  background-color: #f5f6f8;
+}
+
+.filter-option:hover {
+  background-color: #dcdfec;
+  color: #323338;
 }

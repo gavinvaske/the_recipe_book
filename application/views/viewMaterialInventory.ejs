@@ -18,21 +18,12 @@
 
     <div class="workflow-filter flex-center-left-row full-width">
 
-        <button class="create bg-blue text-white border-blue btn-create">Create <i class="fa-regular fa-plus"></i></button>
+        <a class="create bg-blue text-white border-blue btn-create new-po-btn" href="/material-orders/create">PO <i class="fa-regular fa-plus"></i></a>
+
+        <a class="create bg-blue text-white border-blue btn-create new-po-btn" href="/materials/create" role="button">Material <i class="fa-regular fa-plus"></i></a>
 
         <div class="search-wrapper flex-center-left-row">
           <i class="fa-regular fa-magnifying-glass flex-center-center-row"></i><input placeholder="Search" value="" class="search-input">
-        </div>
-
-        <div class="person-filter-wrapper tooltip">
-          <button class="filter btn-person-filter">
-            <span class="tooltiptext">Filter by person</span>
-            <i class="fa-regular fa-circle-user"></i> Person
-          </button>
-          <div class="person-filter-dropdown dropdown">
-            <h5><b>Quick person filter</b></h5>
-            <p>Filter items and subitems by person.</p>
-          </div>
         </div>
 
         <div class="split-btn-frame btn-filter flex-center-center-row tooltip">
@@ -47,20 +38,12 @@
           <div class="quick-filter-dropdown dropdown">
             <h5><b>Quick Filter</b></h5>
             <p>Testing how big the dropdown box can be</p>
-            <a href="">Semi-Gloss</a>
-            <a href="">Matte Paper</a>
-            <a href="">Bopp/Film</a>
-            <a href="">Sivler Metalized Paper</a>
-            <a href="">Dull Gold Metalized Paper</a>
-            <a href="">Silver Metalized Film</a>
-            <a href="">Clear Film</a>
-            <a href="">Wine</a>
-            <a href="">Thermal Materials</a>
-            <a href="">Hologram Film</a>
-            <a href="">Lamination</a>
-            <a href="">Non Pressure Sensitive</a>
-            <a href="">Flourescent</a>
-            <a href="">Piggyback</a>
+
+            <% materialInventories && materialInventories.forEach(materialInventory => { %>
+              <% const {material} = materialInventory; %>
+              <a class="<%= material.name || 'N/A' %> filter-option" href=""><%= material.name || 'N/A' %></a>
+            <% }) %>
+
           </div>
 
           <div class="advanced-filter-dropdown dropdown">
@@ -81,11 +64,6 @@
         <div class="all-wrapper tooltip">
           <span class="tooltiptext">See All</span>
           <button class="sort btn-sort"><i class="fa-solid fa-layer-group"></i> See All</button>
-        </div>
-
-        <div class="completed-wrapper tooltip">
-          <span class="tooltiptext">See All Completed Tickets</span>
-          <button class="completed btn-completed"><i class="fa-regular fa-hexagon-check"></i> Completed</button>
         </div>
 
       </div>
@@ -136,7 +114,7 @@
                   hello mars
 
                     
-                    <% } %>
+                <% } %>
 
             </div>
 

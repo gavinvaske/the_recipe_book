@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
 const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
+const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -60,6 +61,10 @@ function validateCornerRadius(cornerRadius) {
 
 function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
+}
+
+function validateColor(nameOfColor) {
+    return Object.values(numberToColorEnum).includes(nameOfColor);
 }
 
 const alertSchema = new Schema({
@@ -207,12 +212,17 @@ const schema = new Schema({
         alias: 'Hidden_Notes'
     },
     numberOfColors: {
-        type: Number,
-        validate : {
-            validator : Number.isInteger,
-            message   : 'Number of Colors must be an integer'
+        type: String,
+        validate : [
+            {
+                validator : validateColor,
+                message   : 'Number of Colors does not map to any color'
+            }
+        ],
+        set: function (integerRepresentingAColor) {
+            const nameOfColor = numberToColorEnum[integerRepresentingAColor];
+            return nameOfColor ? nameOfColor : '';
         },
-        min: 0,
         required: false,
         alias: 'NoColors'
     },

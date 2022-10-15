@@ -1,6 +1,7 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
 const {hotFolders} = require('../../application/enums/hotFolderEnum');
+const {idToColorEnum} = require('../../application/enums/idToColorEnum');
 
 function getRandomNumberOfDigits() {
     return chance.integer({min: 1});
@@ -31,7 +32,7 @@ describe('validation', () => {
             StockNotes: chance.string(),
             Notes: [chance.string(), chance.string()],
             Hidden_Notes: chance.string(),
-            NoColors: String(chance.integer({min: 0})),
+            NoColors: chance.pickone(Object.keys(idToColorEnum)),
             LabelsPer_: String(chance.integer({min: 0})),
             FinishType: chance.string(),
             PriceM: String(chance.integer({min: 0})),
@@ -568,17 +569,20 @@ describe('validation', () => {
             expect(product.numberOfColors).toBeDefined();
         });
 
-        it('should fail if attribute is not an integer', () => {
-            productAttributes.NoColors = chance.floating({fixed: 8});
+        it('should pass validation if integer is mapped to the correct color', () => {
+            const colorId = 5;
+            productAttributes.NoColors = colorId;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBe(undefined);
+            expect(product.numberOfColors).toBe(idToColorEnum[colorId]);
         });
 
-        it('should fail if attribute is less than zero', () => {
-            productAttributes.NoColors = chance.integer({max: 0});
+        it('should fail validation if integer is not mapped to any color', () => {
+            const invalidColorId = 9999999999;
+            productAttributes.NoColors = invalidColorId;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -596,11 +600,14 @@ describe('validation', () => {
         });
 
         it('should be of type Number', () => {
+            const colorId = 5;
+            productAttributes.numberOfColors = colorId;
             const product = new ProductModel(productAttributes);
 
-            expect(product.numberOfColors).toEqual(expect.any(Number));
+            expect(product.numberOfColors).toEqual(expect.any(String));
         });
     });
+
     describe('attribute: labelsPerRoll (aka LabelsPer_)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
@@ -635,7 +642,7 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should be of type Number', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.labelsPerRoll).toEqual(expect.any(Number));

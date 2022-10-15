@@ -570,7 +570,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if integer is mapped to the correct color', () => {
-            const colorId = 5;
+            const colorId = chance.pickone(Object.keys(idToColorEnum));
             productAttributes.NoColors = colorId;
             const product = new ProductModel(productAttributes);
 
@@ -600,8 +600,6 @@ describe('validation', () => {
         });
 
         it('should be of type Number', () => {
-            const colorId = 5;
-            productAttributes.numberOfColors = colorId;
             const product = new ProductModel(productAttributes);
 
             expect(product.numberOfColors).toEqual(expect.any(String));

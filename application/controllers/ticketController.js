@@ -111,7 +111,6 @@ router.get('/update/:id', async (request, response) => {
         const departmentNames = Object.keys(subDepartmentsGroupedByDepartment);
 
         const ticketDestination = ticket.destination;
-        const selectedPrintingType = ticket.printingType;
         const selectedDepartment = ticketDestination && ticketDestination.department;
         const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
         const selectedMaterial = ticket.primaryMaterial;
@@ -124,7 +123,6 @@ router.get('/update/:id', async (request, response) => {
             ticket,
             materialIds,
             departmentNames,
-            selectedPrintingType,
             selectedDepartment,
             selectedSubDepartment,
             subDepartments,

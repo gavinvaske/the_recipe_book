@@ -27,21 +27,6 @@
         </div>
 
         <div class="form-group">
-            <label for="printing-type-selection">Printing Type</label>
-            <select name="printingType" id="printing-type-selection" data-ticket-id="<%= ticket.id %>">
-                <option value=""><%= '-' %></option>
-                <option value="CMYK" <%= selectedPrintingType === 'CMYK' ? 'selected' : '' %>><%= 'CMYK' %></option>
-                <option value="CMYK + W" <%= selectedPrintingType === 'CMYK + W' ? 'selected' : '' %>><%= 'CMYK + W' %></option>
-                <option value="BLANKS" <%= selectedPrintingType === 'BLANKS' ? 'selected' : '' %>><%= 'Blanks' %></option>
-                <option value="CMYK OV + W" <%= selectedPrintingType === 'CMYK OV + W' ? 'selected' : '' %>><%= 'CMYK OV + W' %></option>
-                <option value="BLACK ONLY" <%= selectedPrintingType === 'BLACK ONLY' ? 'selected' : '' %>><%= 'Black Only' %></option>
-                <option value="EPM" <%= selectedPrintingType === 'EPM' ? 'selected' : '' %>><%= 'EPM' %></option>
-                <option value="BLACK & WHITE" <%= selectedPrintingType === 'BLACK & WHITE' ? 'selected' : '' %>><%= 'Black & White' %></option>
-                <option value="CMYK OV" <%= selectedPrintingType === 'CMYK OV' ? 'selected' : '' %>><%= 'CMYK OV' %></option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <label for="department-selection">Department:</label>
             <select name="destination[department]" id="department-selection" data-ticket-id="<%= ticket.id %>">
                 <option value=""><%= '-' %></option>

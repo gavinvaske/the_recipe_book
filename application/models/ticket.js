@@ -112,20 +112,6 @@ const ticketSchema = new Schema({
         required: false,
         validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
     },
-    printingType: {
-        type: String,
-        required: false,
-        enum: [
-            'CMYK',
-            'CMYK + W',
-            'BLANKS',
-            'CMYK OV + W',
-            'BLACK ONLY',
-            'EPM',
-            'BLACK & WHITE',
-            'CMYK OV',
-        ]
-    },
     products: {
         type: [productSchema],
     },
@@ -268,6 +254,9 @@ const ticketSchema = new Schema({
             }
             return sum;
         }
+    },
+    labelRepeat: {
+
     }
 }, { timestamps: true });
 

@@ -1155,7 +1155,7 @@ describe('validation', () => {
 
         it('should convert attribute from integer to percent', () => {
             const overRun = chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX});
-            const overRunAsPercentage = overRun / 100;
+            const overRunAsPercentage = overRun / 100; // eslint-disable-line no-magic-numbers
             productAttributes.OverRun = overRun;
             const product = new ProductModel(productAttributes);
 

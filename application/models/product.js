@@ -311,7 +311,7 @@ const schema = new Schema({
         min: 0,
         max: 100,
         set: function (overRun) {
-            return overRun / 100;
+            return overRun / 100; // eslint-disable-line no-magic-numbers
         },
         required: false,
         alias: 'OverRun'

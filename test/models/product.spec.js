@@ -46,8 +46,9 @@ describe('validation', () => {
             alerts: [],
             LabelRepeat: String(chance.floating({min: 0.1})),
             OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX})),
-            ColorDescr: chance.string(),
-            CoreDiameter: chance.integer()
+            ColorDescr: String(chance.string()),
+            CoreDiameter: String(chance.integer()),
+            NoLabAcrossFin: String(chance.integer())
         };
     });
 
@@ -1200,6 +1201,29 @@ describe('validation', () => {
         
         it('should fail validation if attribute is not defined', () => {
             delete productAttributes.CoreDiameter;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: numberAcross', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberAcross).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberAcross).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.NoLabAcrossFin;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();

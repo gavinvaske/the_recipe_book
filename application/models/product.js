@@ -325,6 +325,11 @@ const schema = new Schema({
         type: Number,
         required: true,
         alias: 'CoreDiameter'
+    },
+    numberAcross: {
+        type: Number,
+        required: true,
+        alias: 'NoLabAcrossFin'
     }
 }, { timestamps: true });
 

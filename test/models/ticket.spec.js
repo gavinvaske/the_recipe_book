@@ -30,7 +30,8 @@ describe('validation', () => {
             ShipAttn_EmailAddress: chance.string(),
             BillState: chance.string(),
             destination: {},
-            departmentNotes: {}
+            departmentNotes: {},
+            CustomerCompany: chance.string()
         };
     });
 
@@ -749,6 +750,38 @@ describe('validation', () => {
             expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
             expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
             expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
+        });
+    });
+
+    describe('attribute: customerName', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.customerName).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.customerName).toEqual(expect.any(String));
+        });
+
+        it('should not fail validation if attribute is missing', () => {
+            delete ticketAttributes.CustomerCompany;
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
+        });
+
+        it('should not fail validation if attribute is blank', () => {
+            ticketAttributes.CustomerCompany = '';
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBe(undefined);
         });
     });
 });

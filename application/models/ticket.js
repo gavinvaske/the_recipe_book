@@ -255,9 +255,11 @@ const ticketSchema = new Schema({
             return sum;
         }
     },
-    labelRepeat: {
-
-    }
+    customerName: {
+        type: String,
+        alias: 'CustomerCompany',
+        required: false,
+    },
 }, { timestamps: true });
 
 ticketSchema.pre('save', function(next) {

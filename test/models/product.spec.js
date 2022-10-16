@@ -45,7 +45,8 @@ describe('validation', () => {
             Plate_ID: chance.string(),
             alerts: [],
             LabelRepeat: String(chance.floating({min: 0.1})),
-            OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX}))
+            OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX})),
+            ColorDescr: chance.string()
         };
     });
 
@@ -1157,6 +1158,29 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.overRun).toBe(overRunAsPercentage);
+        });
+    });
+
+    describe('attribute: varnish', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.ColorDescr;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
         });
     });
 });

@@ -315,6 +315,11 @@ const schema = new Schema({
         },
         required: false,
         alias: 'OverRun'
+    },
+    varnish: {
+        type: String,
+        required: false,
+        alias: 'ColorDescr'
     }
 }, { timestamps: true });
 

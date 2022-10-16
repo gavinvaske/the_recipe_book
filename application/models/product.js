@@ -12,6 +12,7 @@ URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0
 
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
+const FRAME_REPEAT_SCALAR = 25.4;
 
 function cannotBeFalsy(value) {
     if (!value) {
@@ -311,6 +312,7 @@ const schema = new Schema({
         type: Number,
         min: 0,
         max: 100,
+        default: 0,
         set: function (overRun) {
             return overRun / 100; // eslint-disable-line no-magic-numbers
         },
@@ -363,33 +365,72 @@ const schema = new Schema({
     },
     labelsPerFrame: {
         type: Number,
+        min: 1,
         required: true,
         default: function() {
-            return this.labelsAround * this.labelsAcross;
+            return Math.floor(this.labelsAround * this.labelsAcross);
         }
     },
     measureAcross: {
         type: Number,
         required: true,
         default: function() {
-            return this.labelsAcross + this.matrixAcross;
+            const decimalPositionToRound = 4;
+            const measureAcrossBeforeRounding = this.labelsAcross + this.matrixAcross;
+            return roundValueToNearestDecimalPlace(measureAcrossBeforeRounding, decimalPositionToRound);
         }
     },
     measureAround: {
         type: Number,
         required: true,
         default: function() {
-            return this.labelsAround + this.matrixAround;
+            const decimalPositionToRound = 4;
+            const measureAroundBeforeRounding = this.labelsAround + this.matrixAround;
+            return roundValueToNearestDecimalPlace(measureAroundBeforeRounding, decimalPositionToRound);
         }
     },
     framesPlusOverRun: {
         type: Number,
         required: true,
         default: function() {
-            return (this.frameCount * this.overRun) + this.frameCount;
+            return Math.ceil((this.frameCount * this.overRun) + this.frameCount);
+        }
+    },
+    topBottomBleed: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const topBottomBleedBeforeRound = this.matrixAcross / 2; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(topBottomBleedBeforeRound, decimalPositionToRound);
+        }
+    },
+    leftRightBleed: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const leftRightBleedBeforeRound = this.matrixAround / 2; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(leftRightBleedBeforeRound, decimalPositionToRound);
+        }
+    },
+    frameRepeat: {
+        type: Number,
+        required: true,
+        default: function() {
+            const frameRepeatBeforeRounding = this.labelsAround * this.labelRepeat * FRAME_REPEAT_SCALAR;
+            const frameRepeatRoundedUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
+            return frameRepeatRoundedUpToSecondDecimalPlace;
         }
     }
 }, { timestamps: true });
+
+function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound) {
+    const precision = Math.pow(10, decimalPositionToRound); // eslint-disable-line no-magic-numbers
+
+    return Math.round(unRoundedValue * precision) / precision;
+}
+
 
 const Product = mongoose.model('Product', schema);
 

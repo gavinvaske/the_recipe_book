@@ -9,6 +9,7 @@ function getRandomNumberOfDigits() {
 
 const OVERRUN_MIN = 0;
 const OVERRUN_MAX = 100;
+const FRAME_REPEAT_SCALAR = 25.4;
 
 describe('validation', () => {
     let productAttributes;
@@ -1124,16 +1125,16 @@ describe('validation', () => {
         it('should be of type Number', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.LabelRepeat).toEqual(expect.any(Number));
+            expect(product.labelRepeat).toEqual(expect.any(Number));
         });
         
-        it('should pass validation if attribute is not defined', () => {
+        it('should fail validation if attribute is not defined', () => {
             delete productAttributes.LabelRepeat;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).not.toBeDefined();
+            expect(error).toBeDefined();
         });
     });
 
@@ -1157,6 +1158,13 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+
+        it('should default to 0 if not defined', () => {
+            delete productAttributes.OverRun;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(0); // eslint-disable-line no-magic-numbers
         });
 
         it('should fail validation if overRun is less than 0', () => {
@@ -1385,7 +1393,7 @@ describe('validation', () => {
 
             const product = new ProductModel(productAttributes);
 
-            expect(product.frameCount).toBe(Math.ceil(frameCount))
+            expect(product.frameCount).toBe(Math.ceil(frameCount));
         });
 
         it('should fail validation if attribute is negative', () => {
@@ -1412,14 +1420,29 @@ describe('validation', () => {
         });
         
         it('should be calculated correctly', () => {
-            const labelsAcross = chance.floating({min: 0.1});
-            const labelsAround = chance.floating({min: 0.1});
-            productAttributes.NoAround = labelsAround;
-            productAttributes.NoAcross = labelsAcross;
-
+            const labelsAcross = 12;
+            const labelsAround = .999;
+            productAttributes.NoAround = labelsAcross;
+            productAttributes.NoAcross = labelsAround;
+            const expectedLabelsPerFrame = Math.floor(labelsAcross * labelsAround);
+            
             const product = new ProductModel(productAttributes);
 
-            expect(product.labelsPerFrame).toEqual(labelsAcross * labelsAround);
+            expect(product.labelsPerFrame).toEqual(expectedLabelsPerFrame);
+        });
+
+        it('should fail validation if attribute is less than 1', () => {
+            const labelsAcross = .25;
+            const labelsAround = .25;
+            productAttributes.NoAround = labelsAcross;
+            productAttributes.NoAcross = labelsAround;
+            const expectedLabelsPerFrame = Math.floor(labelsAcross * labelsAround);
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(product.labelsPerFrame).toEqual(expectedLabelsPerFrame);
+            expect(error).toBeDefined();
         });
     });
 
@@ -1437,14 +1460,15 @@ describe('validation', () => {
         });
         
         it('should be calculated correctly', () => {
-            const labelsAcross = chance.floating({min: 0.1});
-            const matrixAcross = chance.floating({min: 0.1});
+            const labelsAcross = 0.111;
+            const matrixAcross = 99.00005;
             productAttributes.NoAcross = labelsAcross;
             productAttributes.ColSpace = matrixAcross;
+            const expectedMeasureAcross = 99.1111;
 
             const product = new ProductModel(productAttributes);
 
-            expect(product.measureAcross).toEqual(labelsAcross + matrixAcross);
+            expect(product.measureAcross).toEqual(expectedMeasureAcross);
         });
     });
 
@@ -1462,14 +1486,13 @@ describe('validation', () => {
         });
         
         it('should be calculated correctly', () => {
-            const labelsAround = chance.floating({min: 0.1});
-            const matrixAround = chance.floating({min: 0});
-            productAttributes.NoAround = labelsAround;
-            productAttributes.RowSpace = matrixAround;
+            productAttributes.NoAround = 6.222;
+            productAttributes.RowSpace = 5.00005;
+            const expectedMeasureAround = 11.2221;
 
             const product = new ProductModel(productAttributes);
 
-            expect(product.measureAround).toEqual(labelsAround + matrixAround);
+            expect(product.measureAround).toEqual(expectedMeasureAround);
         });
     });
 
@@ -1488,9 +1511,122 @@ describe('validation', () => {
         
         it('should be calculated correctly', () => {
             const product = new ProductModel(productAttributes);
-            const expectedFramesPlusOverRun = (product.frameCount * product.overRun) + product.frameCount;
+            const expectedFramesPlusOverRun = Math.ceil((product.frameCount * product.overRun) + product.frameCount);
 
             expect(product.framesPlusOverRun).toEqual(expectedFramesPlusOverRun);
+        });
+    });
+
+    describe('attribute: topBottomBleed', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
+            const matrixAcross = 10.8888888888;
+            productAttributes.ColSpace = matrixAcross;
+            const product = new ProductModel(productAttributes);
+            const expectedTopBottomBleed = 5.4444;
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
+            const matrixAcross = 10.001111111;
+            productAttributes.ColSpace = matrixAcross;
+            const product = new ProductModel(productAttributes);
+            const expectedTopBottomBleed = 5.0006;
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
+            const matrixAcross = 10.9999999999;
+            productAttributes.ColSpace = matrixAcross;
+            const product = new ProductModel(productAttributes);
+            const expectedTopBottomBleed = 5.5000;
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+    });
+
+    describe('attribute: leftRightBleed', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
+            const matrixAround = 4.7777777;
+            productAttributes.RowSpace = matrixAround;
+            const product = new ProductModel(productAttributes);
+            const expectedLeftRightBleed = 2.3889;
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
+            const matrixAround = 3.862475;
+            productAttributes.RowSpace = matrixAround;
+            const product = new ProductModel(productAttributes);
+            const expectedLeftRightBleed = 1.9312;
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
+            const matrixAround = 10.9999999999;
+            productAttributes.RowSpace = matrixAround;
+            const product = new ProductModel(productAttributes);
+            const expectedLeftRightBleed = 5.5000;
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+    });
+
+    describe('attribute: frameRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded up (math.ceil) to the second decimal place correctly (test 1)', () => {
+            productAttributes.NoAround = 1;
+            productAttributes.LabelRepeat = .01;
+            const expectedFrameRepeat = 0.26; // eslint-disable-line no-magic-numbers
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(Number(expectedFrameRepeat));
+        });
+
+        it('should be calculated and rounded up (math.ceil) to the second decimal place correctly (test 2)', () => {
+            const frameRepeatBeforeRounding = productAttributes.NoAround * productAttributes.LabelRepeat * FRAME_REPEAT_SCALAR;
+            const expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(Number(expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace));
         });
     });
 });

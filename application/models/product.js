@@ -222,10 +222,9 @@ const schema = new Schema({
             }
         ],
         set: function (integerRepresentingAColor) {
-            const nameOfColor = numberToColorEnum[integerRepresentingAColor];
-            return nameOfColor ? nameOfColor : '';
+            return numberToColorEnum[integerRepresentingAColor];
         },
-        required: false,
+        required: true,
         alias: 'NoColors'
     },
     labelsPerRoll: {
@@ -353,6 +352,15 @@ const schema = new Schema({
         required: true,
         alias: 'ToolingNotes'
     },
+    frameCount: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: function(frameCount) {
+            return Math.ceil(frameCount);
+        },
+        alias: 'MachineCount'
+    },
     labelsPerFrame: {
         type: Number,
         required: true,
@@ -365,6 +373,20 @@ const schema = new Schema({
         required: true,
         default: function() {
             return this.labelsAcross + this.matrixAcross;
+        }
+    },
+    measureAround: {
+        type: Number,
+        required: true,
+        default: function() {
+            return this.labelsAround + this.matrixAround;
+        }
+    },
+    framesPlusOverRun: {
+        type: Number,
+        required: true,
+        default: function() {
+            return (this.frameCount * this.overRun) + this.frameCount;
         }
     }
 }, { timestamps: true });

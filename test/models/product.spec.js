@@ -31,6 +31,7 @@ describe('validation', () => {
             RowSpace: String(chance.floating({min: 0})),
             Description: chance.string(),
             OrderQuantity: String(chance.integer({min: 0})),
+            MachineCount: String(chance.floating({min: 0})),
             FinishNotes: chance.string(),
             StockNotes: chance.string(),
             Notes: [chance.string(), chance.string()],
@@ -592,6 +593,7 @@ describe('validation', () => {
             expect(product.printingNotes).toEqual(expect.any(String));
         });
     });
+
     describe('attribute: numberOfColors (aka NoColors)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
@@ -620,13 +622,13 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should pass validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.NoColors;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).not.toBe(undefined);
         });
 
         it('should be of type Number', () => {
@@ -1355,6 +1357,47 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: frameCount (aka MachineCount)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.MachineCount;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should round up floating point to nearest whole number', () => {
+            const frameCount = chance.floating({min: 1});
+            productAttributes.MachineCount = frameCount;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toBe(Math.ceil(frameCount))
+        });
+
+        it('should fail validation if attribute is negative', () => {
+            productAttributes.MachineCount = chance.floating({max: -1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
     describe('attribute: labelsPerFrame', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
@@ -1402,6 +1445,52 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.measureAcross).toEqual(labelsAcross + matrixAcross);
+        });
+    });
+
+    describe('attribute: measureAround', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const labelsAround = chance.floating({min: 0.1});
+            const matrixAround = chance.floating({min: 0});
+            productAttributes.NoAround = labelsAround;
+            productAttributes.RowSpace = matrixAround;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toEqual(labelsAround + matrixAround);
+        });
+    });
+
+    describe('attribute: framesPlusOverRun', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.framesPlusOverRun).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.framesPlusOverRun).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const product = new ProductModel(productAttributes);
+            const expectedFramesPlusOverRun = (product.frameCount * product.overRun) + product.frameCount;
+
+            expect(product.framesPlusOverRun).toEqual(expectedFramesPlusOverRun);
         });
     });
 });

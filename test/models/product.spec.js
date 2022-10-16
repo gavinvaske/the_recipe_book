@@ -40,7 +40,8 @@ describe('validation', () => {
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: String(chance.integer({min: 0})),
             Plate_ID: chance.string(),
-            alerts: []
+            alerts: [],
+            LabelRepeat: String(chance.floating({min: 0.1}))
         };
     });
 
@@ -1079,6 +1080,29 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: labelRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.LabelRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.LabelRepeat;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
         });
     });
 });

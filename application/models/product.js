@@ -300,6 +300,11 @@ const schema = new Schema({
         required: function() {
             return this.finishType && this.finishType.toUpperCase() === 'ROLL';
         }
+    },
+    labelRepeat: {
+        type: Number,
+        required: false,
+        alias: 'LabelRepeat'
     }
 }, { timestamps: true });
 

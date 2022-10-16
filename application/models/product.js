@@ -305,6 +305,16 @@ const schema = new Schema({
         type: Number,
         required: false,
         alias: 'LabelRepeat'
+    },
+    overRun: {
+        type: Number,
+        min: 0,
+        max: 100,
+        set: function (overRun) {
+            return overRun / 100;
+        },
+        required: false,
+        alias: 'OverRun'
     }
 }, { timestamps: true });
 

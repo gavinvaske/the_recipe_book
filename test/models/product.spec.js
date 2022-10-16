@@ -7,6 +7,9 @@ function getRandomNumberOfDigits() {
     return chance.integer({min: 1});
 }
 
+const OVERRUN_MIN = 0;
+const OVERRUN_MAX = 100;
+
 describe('validation', () => {
     let productAttributes;
 
@@ -41,7 +44,8 @@ describe('validation', () => {
             Tool_NumberAround: String(chance.integer({min: 0})),
             Plate_ID: chance.string(),
             alerts: [],
-            LabelRepeat: String(chance.floating({min: 0.1}))
+            LabelRepeat: String(chance.floating({min: 0.1})),
+            OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX}))
         };
     });
 
@@ -1103,6 +1107,56 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: overRun', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toEqual(expect.any(Number));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.OverRun;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should fail validation if overRun is less than 0', () => {
+            productAttributes.OverRun = chance.integer({max: OVERRUN_MIN - 1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if overRun greater than 100', () => {
+            productAttributes.OverRun = chance.integer({min: OVERRUN_MAX + 1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should convert attribute from integer to percent', () => {
+            const overRun = chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX});
+            const overRunAsPercentage = overRun / 100;
+            productAttributes.OverRun = overRun;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(overRunAsPercentage);
         });
     });
 });

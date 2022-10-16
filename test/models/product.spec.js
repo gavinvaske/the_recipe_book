@@ -27,8 +27,8 @@ describe('validation', () => {
             NoAround: String(chance.floating({min: 0.1})),
             CornerRadius: String(chance.floating({min: 0, max: 0.99})),
             FinalUnwind: chance.string(),
-            ColSpace: String(chance.floating()),
-            RowSpace: String(chance.floating()),
+            ColSpace: String(chance.floating({min: 0})),
+            RowSpace: String(chance.floating({min: 0})),
             Description: chance.string(),
             OrderQuantity: String(chance.integer({min: 0})),
             FinishNotes: chance.string(),
@@ -402,6 +402,15 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
+        it('should fail validation if attribute negative', () => {
+            productAttributes.ColSpace = chance.floating({max: -0.1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should be of type Number', () => {
             const product = new ProductModel(productAttributes);
 
@@ -428,6 +437,15 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.matrixAround).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute negative', () => {
+            productAttributes.RowSpace = chance.floating({max: -0.1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
     describe('attribute: description (aka Description)', () => {
@@ -1334,6 +1352,56 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: labelsPerFrame', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const labelsAcross = chance.floating({min: 0.1});
+            const labelsAround = chance.floating({min: 0.1});
+            productAttributes.NoAround = labelsAround;
+            productAttributes.NoAcross = labelsAcross;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toEqual(labelsAcross * labelsAround);
+        });
+    });
+
+    describe('attribute: measureAcross', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const labelsAcross = chance.floating({min: 0.1});
+            const matrixAcross = chance.floating({min: 0.1});
+            productAttributes.NoAcross = labelsAcross;
+            productAttributes.ColSpace = matrixAcross;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toEqual(labelsAcross + matrixAcross);
         });
     });
 });

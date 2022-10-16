@@ -170,11 +170,13 @@ const schema = new Schema({
     },
     matrixAcross: {
         type: Number,
+        min: 0,
         required: true,
         alias: 'ColSpace'
     },
     matrixAround: {
         type: Number,
+        min: 0,
         required: true,
         alias: 'RowSpace'
     },
@@ -350,6 +352,20 @@ const schema = new Schema({
         type: String,
         required: true,
         alias: 'ToolingNotes'
+    },
+    labelsPerFrame: {
+        type: Number,
+        required: true,
+        default: function() {
+            return this.labelsAround * this.labelsAcross;
+        }
+    },
+    measureAcross: {
+        type: Number,
+        required: true,
+        default: function() {
+            return this.labelsAcross + this.matrixAcross;
+        }
     }
 }, { timestamps: true });
 

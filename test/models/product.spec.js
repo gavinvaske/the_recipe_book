@@ -51,7 +51,8 @@ describe('validation', () => {
             NoLabAcrossFin: String(chance.integer()),
             ShipAttn: chance.string(),
             StockNum3: chance.string(),
-            StockNum: chance.string()
+            StockNum: chance.string(),
+            ToolingNotes: chance.string()
         };
     });
 
@@ -1093,7 +1094,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: labelRepeat', () => {
+    describe('attribute: labelRepeat (aka LabelRepeat)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1116,7 +1117,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: overRun', () => {
+    describe('attribute: overRun (aka OverRun)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1166,7 +1167,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: varnish', () => {
+    describe('attribute: varnish (aka ColorDescr)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1189,7 +1190,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: coreDiameter', () => {
+    describe('attribute: coreDiameter (aka CoreDiameter)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1212,7 +1213,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: numberAcross', () => {
+    describe('attribute: numberAcross (aka NoLabAcrossFin)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1235,7 +1236,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: shippingAttention', () => {
+    describe('attribute: shippingAttention (aka ShipAttn)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1267,7 +1268,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: dieCuttingMarriedMaterial', () => {
+    describe('attribute: dieCuttingMarriedMaterial (aka StockNum3)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1290,7 +1291,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: dieCuttingFinish', () => {
+    describe('attribute: dieCuttingFinish (aka StockNum)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
@@ -1310,6 +1311,29 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: toolingNotes (aka ToolingNotes)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolingNotes).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolingNotes).toEqual(expect.any(String));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.ToolingNotes;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 });

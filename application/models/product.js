@@ -345,6 +345,11 @@ const schema = new Schema({
         type: String,
         required: false,
         alias: 'StockNum'
+    },
+    toolingNotes: {
+        type: String,
+        required: true,
+        alias: 'ToolingNotes'
     }
 }, { timestamps: true });
 

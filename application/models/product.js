@@ -320,6 +320,11 @@ const schema = new Schema({
         type: String,
         required: false,
         alias: 'ColorDescr'
+    },
+    coreDiameter: {
+        type: Number,
+        required: true,
+        alias: 'CoreDiameter'
     }
 }, { timestamps: true });
 

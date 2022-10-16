@@ -46,7 +46,8 @@ describe('validation', () => {
             alerts: [],
             LabelRepeat: String(chance.floating({min: 0.1})),
             OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX})),
-            ColorDescr: chance.string()
+            ColorDescr: chance.string(),
+            CoreDiameter: chance.integer()
         };
     });
 
@@ -1181,6 +1182,29 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: coreDiameter', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.CoreDiameter;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 });

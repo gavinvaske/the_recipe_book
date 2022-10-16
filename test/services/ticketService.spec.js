@@ -147,6 +147,7 @@ describe('ticketService test suite', () => {
         });
 
         it('should generate correct department names', () => {
+            console.log(`allTickets => ${JSON.stringify(allTickets)}`);
             const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
 
             console.log(groupedTicketsByDepartment);

@@ -330,6 +330,21 @@ const schema = new Schema({
         type: Number,
         required: true,
         alias: 'NoLabAcrossFin'
+    },
+    shippingAttention: {
+        type: String,
+        required: false,
+        alias: 'ShipAttn'
+    },
+    dieCuttingMarriedMaterial: {
+        type: String,
+        required: false,
+        alias: 'StockNum3'
+    },
+    dieCuttingFinish: {
+        type: String,
+        required: false,
+        alias: 'StockNum'
     }
 }, { timestamps: true });
 

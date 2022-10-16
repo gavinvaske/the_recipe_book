@@ -48,7 +48,10 @@ describe('validation', () => {
             OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX})),
             ColorDescr: String(chance.string()),
             CoreDiameter: String(chance.integer()),
-            NoLabAcrossFin: String(chance.integer())
+            NoLabAcrossFin: String(chance.integer()),
+            ShipAttn: chance.string(),
+            StockNum3: chance.string(),
+            StockNum: chance.string()
         };
     });
 
@@ -180,7 +183,7 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should be of type Object', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.uvFinish).toEqual(expect.any(String));
@@ -648,7 +651,7 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should be of type String', () => {
+        it('should be of type Number', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.labelsPerRoll).toEqual(expect.any(Number));
@@ -1170,7 +1173,7 @@ describe('validation', () => {
             expect(product.varnish).toBeDefined();
         });
 
-        it('should be of type Number', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.varnish).toEqual(expect.any(String));
@@ -1229,6 +1232,84 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: shippingAttention', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.shippingAttention).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.shippingAttention).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.ShipAttn;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should pass validation if attribute is empty', () => {
+            productAttributes.ShipAttn = '';
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: dieCuttingMarriedMaterial', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingMarriedMaterial).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingMarriedMaterial).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.StockNum3;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: dieCuttingFinish', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingFinish).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingFinish).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.StockNum;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
         });
     });
 });

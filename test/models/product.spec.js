@@ -1629,4 +1629,140 @@ describe('validation', () => {
             expect(product.frameRepeat).toEqual(Number(expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace));
         });
     });
+
+    describe('attribute: extraFrames', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            delete productAttributes.ColorDescr;
+            delete productAttributes.FinishType;
+            const expectedExtraFrames = 25;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.ColorDescr = 'Anything UV';
+            delete productAttributes.FinishType;
+            const expectedExtraFrames = 75;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 3)', () => {
+            delete productAttributes.ColorDescr;
+            productAttributes.FinishType = 'Sheeted';
+            const expectedExtraFrames = 125;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 3)', () => {
+            productAttributes.ColorDescr = 'Anything UV';
+            productAttributes.FinishType = 'Sheeted';
+            const expectedExtraFrames = 175;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+    });
+
+    describe('attribute: totalFrames', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFrames).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFrames).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const product = new ProductModel(productAttributes);
+            const expectedTotalFrames = product.framesPlusOverRun + product.extraFrames;
+
+            expect(product.totalFrames).toEqual(expectedTotalFrames);
+        });
+    });
+
+    describe('attribute: totalFeet', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFeet).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFeet).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const inchesPerFoot = 12;
+            const product = new ProductModel(productAttributes);
+            const expectedTotalFeet = (product.measureAround * product.labelsAround * product.totalFrames) / inchesPerFoot;
+
+            expect(product.totalFeet).toEqual(expectedTotalFeet);
+        });
+    });
+
+    describe('attribute: numberOfRolls', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            const totalFeet = 5001;
+            productAttributes.totalFeet = totalFeet;
+
+            const product = new ProductModel(productAttributes);
+            const expectedNumberOfRolls = 1.00;
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            const totalFeet = 9862;
+            productAttributes.totalFeet = totalFeet;
+
+            const product = new ProductModel(productAttributes);
+            const expectedNumberOfRolls = 1.97;
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });        
+        it('should be calculated correctly (test 3)', () => {
+            const totalFeet = 977686;
+            productAttributes.totalFeet = totalFeet;
+
+            const product = new ProductModel(productAttributes);
+            const expectedNumberOfRolls = 195.54;
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });
+    });
 });

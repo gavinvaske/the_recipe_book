@@ -13,6 +13,7 @@ URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
 const FRAME_REPEAT_SCALAR = 25.4;
+const FEET_PER_ROLL = 5000;
 
 function cannotBeFalsy(value) {
     if (!value) {
@@ -421,6 +422,50 @@ const schema = new Schema({
             const frameRepeatBeforeRounding = this.labelsAround * this.labelRepeat * FRAME_REPEAT_SCALAR;
             const frameRepeatRoundedUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
             return frameRepeatRoundedUpToSecondDecimalPlace;
+        }
+    },
+    extraFrames: {
+        type: Number,
+        required: true,
+        default: function() {
+            const defaultNumberOfExtraFrames = 25;
+            const extraFramesForUvVarnish = 50;
+            const extraFramesForSheetedFinishType = 100;
+            let extraFrames = defaultNumberOfExtraFrames;
+
+            if (this.varnish && this.varnish.toLowerCase().includes('anything uv')) {
+                extraFrames += extraFramesForUvVarnish;
+            }
+            if (this.finishType && this.finishType.toLowerCase().includes('sheeted')) {
+                extraFrames += extraFramesForSheetedFinishType;
+            }
+
+            return extraFrames;
+        }
+    },
+    totalFrames: {
+        type: Number,
+        required: true,
+        default: function() {
+            return this.framesPlusOverRun + this.extraFrames;
+        }
+    },
+    totalFeet: {
+        type: Number,
+        required: true,
+        default: function() {
+            const inchesPerFoot = 12;
+            const totalFeetBeforeRounding = (this.measureAround * this.labelsAround * this.totalFrames) / inchesPerFoot;
+            return Math.ceil(totalFeetBeforeRounding);
+        }
+    },
+    numberOfRolls: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 2;
+            const numberOfRollsBeforeRounding = this.totalFeet / FEET_PER_ROLL;
+            return roundValueToNearestDecimalPlace(numberOfRollsBeforeRounding, decimalPositionToRound);
         }
     }
 }, { timestamps: true });

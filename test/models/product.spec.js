@@ -1250,6 +1250,15 @@ describe('validation', () => {
 
             expect(error).toBeDefined();
         });
+
+        it('should round to the correct decimal position', () => {
+            productAttributes.CoreDiameter = 99.00005;
+            const expectedCoreDiameter = 99.0001
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toEqual(expectedCoreDiameter);
+        });
     });
 
     describe('attribute: numberAcross (aka NoLabAcrossFin)', () => {
@@ -1267,6 +1276,15 @@ describe('validation', () => {
         
         it('should fail validation if attribute is not defined', () => {
             delete productAttributes.NoLabAcrossFin;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if attribute is not an integer', () => {
+            productAttributes.NoLabAcrossFin = chance.floating({min: 1});
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();

@@ -330,11 +330,20 @@ const schema = new Schema({
     coreDiameter: {
         type: Number,
         required: true,
+        set: function(coreDiameter) {
+            const decimalPositionToRound = 4;
+
+            return roundValueToNearestDecimalPlace(coreDiameter, decimalPositionToRound);
+        },
         alias: 'CoreDiameter'
     },
     numberAcross: {
         type: Number,
         required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : '"NoLabAcrossFin" (aka "Number Across") must be an integer'
+        },
         alias: 'NoLabAcrossFin'
     },
     shippingAttention: {

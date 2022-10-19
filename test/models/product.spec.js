@@ -832,13 +832,13 @@ describe('validation', () => {
             expect(product.toolNumberAround).toBeDefined();
         });
 
-        it('should pass validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.Tool_NumberAround;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail if attribute is not an integer', () => {
@@ -1189,9 +1189,20 @@ describe('validation', () => {
             const overRun = chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX});
             const overRunAsPercentage = overRun / 100; // eslint-disable-line no-magic-numbers
             productAttributes.OverRun = overRun;
+
             const product = new ProductModel(productAttributes);
 
             expect(product.overRun).toBe(overRunAsPercentage);
+        });
+
+        it('should convert attribute from floating point to percent', () => {
+            const overRun = 97.5;
+            const expectedOverRun = 0.98; // eslint-disable-line no-magic-numbers
+            productAttributes.OverRun = overRun;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(expectedOverRun);
         });
     });
 
@@ -1533,8 +1544,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
             const matrixAcross = 10.8888888888;
             productAttributes.ColSpace = matrixAcross;
-            const product = new ProductModel(productAttributes);
             const expectedTopBottomBleed = 5.4444;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
         });
@@ -1542,8 +1554,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
             const matrixAcross = 10.001111111;
             productAttributes.ColSpace = matrixAcross;
-            const product = new ProductModel(productAttributes);
             const expectedTopBottomBleed = 5.0006;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
         });
@@ -1551,8 +1564,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
             const matrixAcross = 10.9999999999;
             productAttributes.ColSpace = matrixAcross;
-            const product = new ProductModel(productAttributes);
             const expectedTopBottomBleed = 5.5000;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
         });
@@ -1574,8 +1588,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
             const matrixAround = 4.7777777;
             productAttributes.RowSpace = matrixAround;
-            const product = new ProductModel(productAttributes);
             const expectedLeftRightBleed = 2.3889;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
         });
@@ -1583,8 +1598,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
             const matrixAround = 3.862475;
             productAttributes.RowSpace = matrixAround;
-            const product = new ProductModel(productAttributes);
             const expectedLeftRightBleed = 1.9312;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
         });
@@ -1592,8 +1608,9 @@ describe('validation', () => {
         it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
             const matrixAround = 10.9999999999;
             productAttributes.RowSpace = matrixAround;
-            const product = new ProductModel(productAttributes);
             const expectedLeftRightBleed = 5.5000;
+
+            const product = new ProductModel(productAttributes);
 
             expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
         });
@@ -1616,6 +1633,7 @@ describe('validation', () => {
             productAttributes.NoAround = 1;
             productAttributes.LabelRepeat = .01;
             const expectedFrameRepeat = 0.26; // eslint-disable-line no-magic-numbers
+
             const product = new ProductModel(productAttributes);
 
             expect(product.frameRepeat).toEqual(Number(expectedFrameRepeat));
@@ -1624,6 +1642,7 @@ describe('validation', () => {
         it('should be calculated and rounded up (math.ceil) to the second decimal place correctly (test 2)', () => {
             const frameRepeatBeforeRounding = productAttributes.NoAround * productAttributes.LabelRepeat * FRAME_REPEAT_SCALAR;
             const expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
+
             const product = new ProductModel(productAttributes);
 
             expect(product.frameRepeat).toEqual(Number(expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace));
@@ -1647,6 +1666,7 @@ describe('validation', () => {
             delete productAttributes.ColorDescr;
             delete productAttributes.FinishType;
             const expectedExtraFrames = 25;
+
             const product = new ProductModel(productAttributes);
 
             expect(product.extraFrames).toEqual(expectedExtraFrames);
@@ -1656,6 +1676,7 @@ describe('validation', () => {
             productAttributes.ColorDescr = 'Anything UV';
             delete productAttributes.FinishType;
             const expectedExtraFrames = 75;
+
             const product = new ProductModel(productAttributes);
 
             expect(product.extraFrames).toEqual(expectedExtraFrames);
@@ -1665,6 +1686,7 @@ describe('validation', () => {
             delete productAttributes.ColorDescr;
             productAttributes.FinishType = 'Sheeted';
             const expectedExtraFrames = 125;
+
             const product = new ProductModel(productAttributes);
 
             expect(product.extraFrames).toEqual(expectedExtraFrames);
@@ -1674,6 +1696,7 @@ describe('validation', () => {
             productAttributes.ColorDescr = 'Anything UV';
             productAttributes.FinishType = 'Sheeted';
             const expectedExtraFrames = 175;
+
             const product = new ProductModel(productAttributes);
 
             expect(product.extraFrames).toEqual(expectedExtraFrames);
@@ -1739,9 +1762,9 @@ describe('validation', () => {
         it('should be calculated correctly (test 1)', () => {
             const totalFeet = 5001;
             productAttributes.totalFeet = totalFeet;
+            const expectedNumberOfRolls = 1.00;
 
             const product = new ProductModel(productAttributes);
-            const expectedNumberOfRolls = 1.00;
 
             expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
         });
@@ -1749,20 +1772,87 @@ describe('validation', () => {
         it('should be calculated correctly (test 2)', () => {
             const totalFeet = 9862;
             productAttributes.totalFeet = totalFeet;
+            const expectedNumberOfRolls = 1.97;
 
             const product = new ProductModel(productAttributes);
-            const expectedNumberOfRolls = 1.97;
 
             expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
         });        
         it('should be calculated correctly (test 3)', () => {
             const totalFeet = 977686;
             productAttributes.totalFeet = totalFeet;
-
-            const product = new ProductModel(productAttributes);
             const expectedNumberOfRolls = 195.54;
 
+            const product = new ProductModel(productAttributes);
+
             expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });
+    });
+
+    describe('attribute: rotoRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            productAttributes.LabelRepeat = 0.99999;
+            productAttributes.Tool_NumberAround = 0.3344334;
+            const expectedRotoRepeat = 0.334;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.LabelRepeat = 7.0009;
+            productAttributes.Tool_NumberAround = 1.0001;
+            const expectedRotoRepeat = 7.002;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+     
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.LabelRepeat = 0.00001;
+            productAttributes.Tool_NumberAround = 0.00009;
+
+            const product = new ProductModel(productAttributes);
+            const expectedRotoRepeat = 0.000;
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+    });
+
+    describe('attribute: deltaRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should have its value equal to the "labelRepeat" attribute', () => {
+            const expectedValue = chance.floating({min: 0.1});
+            productAttributes.LabelRepeat = expectedValue;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toEqual(expectedValue);
         });
     });
 });

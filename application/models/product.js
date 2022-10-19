@@ -273,7 +273,7 @@ const schema = new Schema({
         required: false,
         alias: 'ToolNo2'
     },
-    Tool_NumberAround: {
+    toolNumberAround: {
         type: Number,
         validate : [
             {
@@ -285,12 +285,12 @@ const schema = new Schema({
                 message: 'Tool Number Around cannot be negative'
             }
         ],
-        required: false,
-        alias: 'toolNumberAround'
+        required: true,
+        alias: 'Tool_NumberAround'
     },
-    Plate_ID: {
+    plateId: {
         type: String,
-        alias: 'plateId'
+        alias: 'Plate_ID'
     },
     totalWindingRolls: {
         type: Number,
@@ -315,7 +315,9 @@ const schema = new Schema({
         max: 100,
         default: 0,
         set: function (overRun) {
-            return overRun / 100; // eslint-disable-line no-magic-numbers
+            const decimalPositionToRound = 2;
+            const overRunBeforeRounding = overRun / 100; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(overRunBeforeRounding, decimalPositionToRound);
         },
         required: false,
         alias: 'OverRun'
@@ -467,8 +469,25 @@ const schema = new Schema({
             const numberOfRollsBeforeRounding = this.totalFeet / FEET_PER_ROLL;
             return roundValueToNearestDecimalPlace(numberOfRollsBeforeRounding, decimalPositionToRound);
         }
+    },
+    rotoRepeat: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 3;
+            const rotoRepeatBeforeRounding = this.labelRepeat * this.toolNumberAround;
+            return roundValueToNearestDecimalPlace(rotoRepeatBeforeRounding, decimalPositionToRound);
+        }
+    },
+    deltaRepeat: {
+        type: Number,
+        required: false,
+        default: function(){
+            return this.labelRepeat;
+        }
     }
 }, { timestamps: true });
+
 
 function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound) {
     const precision = Math.pow(10, decimalPositionToRound); // eslint-disable-line no-magic-numbers

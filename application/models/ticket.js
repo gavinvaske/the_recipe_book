@@ -250,6 +250,7 @@ const ticketSchema = new Schema({
     },
     totalWindingRolls: {
         type: Number,
+        required: true,
         default: function() {
             let sum = 0; // eslint-disable-line no-magic-numbers
 

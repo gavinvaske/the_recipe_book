@@ -101,7 +101,7 @@ const schema = new Schema({
     },
     hotFolder: {
         type: String,
-        required: false,
+        required: true,
         default: function() {
             return hotFolders[this.primaryMaterial];
         },
@@ -241,7 +241,7 @@ const schema = new Schema({
     },
     finishType: {
         type: String,
-        required: false,
+        required: true,
         alias: 'FinishType'
     },
     price: {
@@ -306,7 +306,7 @@ const schema = new Schema({
     },
     labelRepeat: {
         type: Number,
-        required: false,
+        required: true,
         alias: 'LabelRepeat'
     },
     overRun: {

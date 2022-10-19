@@ -155,13 +155,13 @@ describe('validation', () => {
             expect(product.primaryMaterial).toBeDefined();
         });
 
-        it('should pass validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.StockNum2;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).toBeDefined();
         });
 
         it('should be of type String', () => {
@@ -686,13 +686,13 @@ describe('validation', () => {
             expect(product.finishType).toBeDefined();
         });
 
-        it('should NOT fail validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.FinishType;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).toBeDefined();
         });
     });
     describe('attribute: price (aka PriceM)', () => {

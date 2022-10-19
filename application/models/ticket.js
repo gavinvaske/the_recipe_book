@@ -7,10 +7,15 @@ const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
+const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
+
+const validateEmail = function(email) {
+    return EMAIL_VALIDATION_REGEX.test(email);
+};
 
 function destinationsAreValid(destination) {
     const department = destination.department;
@@ -222,6 +227,7 @@ const ticketSchema = new Schema({
     shippingEmailAddress: {
         type: String,
         required: false,
+        validate: [validateEmail, '"ShipAttn_EmailAddress" must be a valid email address'],
         alias: 'ShipAttn_EmailAddress'
     },
     billingState: {

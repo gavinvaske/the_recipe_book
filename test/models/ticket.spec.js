@@ -27,7 +27,7 @@ describe('validation', () => {
             ShipLocation: chance.string(),
             ShippingInstruc: chance.string(),
             ShipVia: chance.string(),
-            ShipAttn_EmailAddress: chance.string(),
+            ShipAttn_EmailAddress: chance.email(),
             BillState: chance.string(),
             destination: {},
             departmentNotes: {},
@@ -453,6 +453,15 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if attribute is defined but not a valid email address', () => {
+            ticketAttributes.ShipAttn_EmailAddress = chance.string();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 

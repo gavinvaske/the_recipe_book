@@ -1253,7 +1253,7 @@ describe('validation', () => {
 
         it('should round to the correct decimal position', () => {
             productAttributes.CoreDiameter = 99.00005;
-            const expectedCoreDiameter = 99.0001
+            const expectedCoreDiameter = 99.0001;
 
             const product = new ProductModel(productAttributes);
 

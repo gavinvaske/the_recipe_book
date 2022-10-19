@@ -31,7 +31,7 @@ describe('validation', () => {
             BillState: chance.string(),
             destination: {},
             departmentNotes: {},
-            CustomerCompany: chance.string()
+            Company: chance.string()
         };
     });
 
@@ -753,21 +753,21 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: customerName', () => {
+    describe('attribute: Company', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.customerName).toBeDefined();
+            expect(ticket.Company).toBeDefined();
         });
 
         it('should be of type String', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.customerName).toEqual(expect.any(String));
+            expect(ticket.Company).toEqual(expect.any(String));
         });
 
         it('should not fail validation if attribute is missing', () => {
-            delete ticketAttributes.CustomerCompany;
+            delete ticketAttributes.Company;
             const ticket = new TicketModel(ticketAttributes);
     
             const error = ticket.validateSync();
@@ -776,7 +776,7 @@ describe('validation', () => {
         });
 
         it('should not fail validation if attribute is blank', () => {
-            ticketAttributes.CustomerCompany = '';
+            ticketAttributes.Company = '';
             const ticket = new TicketModel(ticketAttributes);
     
             const error = ticket.validateSync();

@@ -263,8 +263,8 @@ const ticketSchema = new Schema({
     },
     customerName: {
         type: String,
-        alias: 'Company',
-        required: false,
+        required: true,
+        alias: 'Company'
     },
 }, { timestamps: true });
 

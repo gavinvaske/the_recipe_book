@@ -775,22 +775,13 @@ describe('validation', () => {
             expect(ticket.Company).toEqual(expect.any(String));
         });
 
-        it('should not fail validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete ticketAttributes.Company;
             const ticket = new TicketModel(ticketAttributes);
     
             const error = ticket.validateSync();
     
-            expect(error).toBe(undefined);
-        });
-
-        it('should not fail validation if attribute is blank', () => {
-            ticketAttributes.Company = '';
-            const ticket = new TicketModel(ticketAttributes);
-    
-            const error = ticket.validateSync();
-    
-            expect(error).toBe(undefined);
+            expect(error).toBeDefined();
         });
     });
 });

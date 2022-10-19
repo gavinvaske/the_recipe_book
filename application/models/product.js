@@ -217,6 +217,7 @@ const schema = new Schema({
     },
     numberOfColors: {
         type: String,
+        required: true,
         validate : [
             {
                 validator : validateColor,
@@ -226,7 +227,6 @@ const schema = new Schema({
         set: function (integerRepresentingAColor) {
             return numberToColorEnum[integerRepresentingAColor];
         },
-        required: true,
         alias: 'NoColors'
     },
     labelsPerRoll: {
@@ -490,7 +490,7 @@ const schema = new Schema({
     },
     deltaRepeat: {
         type: Number,
-        required: false,
+        required: true,
         default: function(){
             return this.labelRepeat;
         }

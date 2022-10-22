@@ -1384,13 +1384,13 @@ describe('validation', () => {
             expect(product.toolingNotes).toEqual(expect.any(String));
         });
         
-        it('should fail validation if attribute is not defined', () => {
+        it('should NOT fail validation if attribute is not defined', () => {
             delete productAttributes.ToolingNotes;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).not.toBeDefined();
         });
     });
 

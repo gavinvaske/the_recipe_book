@@ -38,7 +38,8 @@ function parseTicketAttributesOffOfProducts(product) {
         ShippingInstruc: product.ShippingInstruc,
         ShipVia: product.ShipVia,
         ShipAttn_EmailAddress: product.ShipAttn_EmailAddress,
-        BillState: product.BillState
+        BillState: product.BillState,
+        Company: product.Company
     };
 }
 

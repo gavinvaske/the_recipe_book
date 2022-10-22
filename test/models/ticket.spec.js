@@ -202,13 +202,13 @@ describe('validation', () => {
             expect(ticket.priority).toBeDefined();
         });
 
-        it('should fail validation if attribute is missing', () => {
+        it('should NOT fail validation if attribute is missing', () => {
             delete ticketAttributes.Priority;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBe(undefined);
         });
 
         it('should be of type String', () => {

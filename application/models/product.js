@@ -363,7 +363,7 @@ const schema = new Schema({
     },
     toolingNotes: {
         type: String,
-        required: true,
+        required: false,
         alias: 'ToolingNotes'
     },
     frameCount: {

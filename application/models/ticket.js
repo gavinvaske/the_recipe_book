@@ -7,10 +7,15 @@ const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
+const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
+
+const validateEmail = function(email) {
+    return EMAIL_VALIDATION_REGEX.test(email);
+};
 
 function destinationsAreValid(destination) {
     const department = destination.department;
@@ -112,20 +117,6 @@ const ticketSchema = new Schema({
         required: false,
         validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
     },
-    printingType: {
-        type: String,
-        required: false,
-        enum: [
-            'CMYK',
-            'CMYK + W',
-            'BLANKS',
-            'CMYK OV + W',
-            'BLACK ONLY',
-            'EPM',
-            'BLACK & WHITE',
-            'CMYK OV',
-        ]
-    },
     products: {
         type: [productSchema],
     },
@@ -165,7 +156,7 @@ const ticketSchema = new Schema({
     },
     priority: {
         type: String,
-        required: true,
+        required: false,
         alias: 'Priority'
     },
     billingZipCode: {
@@ -236,6 +227,7 @@ const ticketSchema = new Schema({
     shippingEmailAddress: {
         type: String,
         required: false,
+        validate: [validateEmail, '"ShipAttn_EmailAddress" must be a valid email address'],
         alias: 'ShipAttn_EmailAddress'
     },
     billingState: {
@@ -258,6 +250,7 @@ const ticketSchema = new Schema({
     },
     totalWindingRolls: {
         type: Number,
+        required: true,
         default: function() {
             let sum = 0; // eslint-disable-line no-magic-numbers
 
@@ -268,7 +261,12 @@ const ticketSchema = new Schema({
             }
             return sum;
         }
-    }
+    },
+    customerName: {
+        type: String,
+        required: true,
+        alias: 'Company'
+    },
 }, { timestamps: true });
 
 ticketSchema.pre('save', function(next) {

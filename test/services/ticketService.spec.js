@@ -105,8 +105,6 @@ describe('ticketService test suite', () => {
         it('should return an object with the correct number of products and charges defined', () => {
             const ticket = ticketService.convertedUploadedTicketDataToProperFormat(rawTicket);
 
-            console.log(`ticket => ${JSON.stringify(ticket)}`);
-
             expect(ticket.products.length).toBe(numberOfProducts);
             expect(ticket.extraCharges.length).toBe(numberOfCharges);
         });
@@ -147,6 +145,7 @@ describe('ticketService test suite', () => {
         });
 
         it('should generate correct department names', () => {
+            console.log(`allTickets => ${JSON.stringify(allTickets)}`);
             const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
 
             console.log(groupedTicketsByDepartment);

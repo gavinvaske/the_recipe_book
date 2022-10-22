@@ -27,11 +27,11 @@ describe('validation', () => {
             ShipLocation: chance.string(),
             ShippingInstruc: chance.string(),
             ShipVia: chance.string(),
-            ShipAttn_EmailAddress: chance.string(),
+            ShipAttn_EmailAddress: chance.email(),
             BillState: chance.string(),
-            printingType: 'BLACK & WHITE',
             destination: {},
-            departmentNotes: {}
+            departmentNotes: {},
+            Company: chance.string()
         };
     });
 
@@ -202,13 +202,13 @@ describe('validation', () => {
             expect(ticket.priority).toBeDefined();
         });
 
-        it('should fail validation if attribute is missing', () => {
+        it('should NOT fail validation if attribute is missing', () => {
             delete ticketAttributes.Priority;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error).toBe(undefined);
         });
 
         it('should be of type String', () => {
@@ -454,6 +454,15 @@ describe('validation', () => {
 
             expect(error).toBe(undefined);
         });
+
+        it('should fail validation if attribute is defined but not a valid email address', () => {
+            ticketAttributes.ShipAttn_EmailAddress = chance.string();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
     });
 
     describe('attribute: billingState (aka BillState)', () => {
@@ -512,41 +521,6 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.totalWindingRolls).toEqual(ticketAttributes.products[0].totalWindingRolls + ticketAttributes.products[1].totalWindingRolls);
-        });
-    });
-
-    describe('attribute: printingType', () => {
-        it('should contain attribute', () => {
-            const ticket = new TicketModel(ticketAttributes);
-
-            expect(ticket.printingType).toBeDefined();
-        });
-
-        it('should pass validation if attribute is missing', () => {
-            delete ticketAttributes.printingType;
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should fail validation if attribute IS NOT an accepted value', () => {
-            ticketAttributes.printingType = chance.string();
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should pass validation if attribute IS an accepted value', () => {
-            ticketAttributes.printingType = 'CMYK OV + W';
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBe(undefined);
         });
     });
 
@@ -785,6 +759,29 @@ describe('validation', () => {
             expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
             expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
             expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
+        });
+    });
+
+    describe('attribute: Company', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.Company).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.Company).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is missing', () => {
+            delete ticketAttributes.Company;
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).toBeDefined();
         });
     });
 });

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
 const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
+const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -11,6 +12,8 @@ URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0
 
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
+const FRAME_REPEAT_SCALAR = 25.4;
+const FEET_PER_ROLL = 5000;
 
 function cannotBeFalsy(value) {
     if (!value) {
@@ -62,6 +65,10 @@ function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
 }
 
+function validateColor(nameOfColor) {
+    return Object.values(numberToColorEnum).includes(nameOfColor);
+}
+
 const alertSchema = new Schema({
     department: {
         type: String,
@@ -94,7 +101,7 @@ const schema = new Schema({
     },
     hotFolder: {
         type: String,
-        required: false,
+        required: true,
         default: function() {
             return hotFolders[this.primaryMaterial];
         },
@@ -165,11 +172,13 @@ const schema = new Schema({
     },
     matrixAcross: {
         type: Number,
+        min: 0,
         required: true,
         alias: 'ColSpace'
     },
     matrixAround: {
         type: Number,
+        min: 0,
         required: true,
         alias: 'RowSpace'
     },
@@ -207,13 +216,17 @@ const schema = new Schema({
         alias: 'Hidden_Notes'
     },
     numberOfColors: {
-        type: Number,
-        validate : {
-            validator : Number.isInteger,
-            message   : 'Number of Colors must be an integer'
+        type: String,
+        required: true,
+        validate : [
+            {
+                validator : validateColor,
+                message   : 'Number of Colors does not map to any color'
+            }
+        ],
+        set: function (integerRepresentingAColor) {
+            return numberToColorEnum[integerRepresentingAColor];
         },
-        min: 0,
-        required: false,
         alias: 'NoColors'
     },
     labelsPerRoll: {
@@ -228,7 +241,7 @@ const schema = new Schema({
     },
     finishType: {
         type: String,
-        required: false,
+        required: true,
         alias: 'FinishType'
     },
     price: {
@@ -260,7 +273,7 @@ const schema = new Schema({
         required: false,
         alias: 'ToolNo2'
     },
-    Tool_NumberAround: {
+    toolNumberAround: {
         type: Number,
         validate : [
             {
@@ -272,12 +285,12 @@ const schema = new Schema({
                 message: 'Tool Number Around cannot be negative'
             }
         ],
-        required: false,
-        alias: 'toolNumberAround'
+        required: true,
+        alias: 'Tool_NumberAround'
     },
-    Plate_ID: {
+    plateId: {
         type: String,
-        alias: 'plateId'
+        alias: 'Plate_ID'
     },
     totalWindingRolls: {
         type: Number,
@@ -290,8 +303,207 @@ const schema = new Schema({
         required: function() {
             return this.finishType && this.finishType.toUpperCase() === 'ROLL';
         }
+    },
+    labelRepeat: {
+        type: Number,
+        required: true,
+        alias: 'LabelRepeat'
+    },
+    overRun: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0,
+        set: function (overRun) {
+            const decimalPositionToRound = 2;
+            const overRunBeforeRounding = overRun / 100; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(overRunBeforeRounding, decimalPositionToRound);
+        },
+        required: false,
+        alias: 'OverRun'
+    },
+    varnish: {
+        type: String,
+        required: false,
+        alias: 'ColorDescr'
+    },
+    coreDiameter: {
+        type: Number,
+        required: true,
+        set: function(coreDiameter) {
+            const decimalPositionToRound = 4;
+
+            return roundValueToNearestDecimalPlace(coreDiameter, decimalPositionToRound);
+        },
+        alias: 'CoreDiameter'
+    },
+    numberAcross: {
+        type: Number,
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : '"NoLabAcrossFin" (aka "Number Across") must be an integer'
+        },
+        alias: 'NoLabAcrossFin'
+    },
+    shippingAttention: {
+        type: String,
+        required: false,
+        alias: 'ShipAttn'
+    },
+    dieCuttingMarriedMaterial: {
+        type: String,
+        required: false,
+        alias: 'StockNum3'
+    },
+    dieCuttingFinish: {
+        type: String,
+        required: false,
+        alias: 'StockNum'
+    },
+    toolingNotes: {
+        type: String,
+        required: false,
+        alias: 'ToolingNotes'
+    },
+    frameCount: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: function(frameCount) {
+            return Math.ceil(frameCount);
+        },
+        alias: 'MachineCount'
+    },
+    labelsPerFrame: {
+        type: Number,
+        min: 1,
+        required: true,
+        default: function() {
+            return Math.floor(this.labelsAround * this.labelsAcross);
+        }
+    },
+    measureAcross: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const measureAcrossBeforeRounding = this.labelsAcross + this.matrixAcross;
+            return roundValueToNearestDecimalPlace(measureAcrossBeforeRounding, decimalPositionToRound);
+        }
+    },
+    measureAround: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const measureAroundBeforeRounding = this.labelsAround + this.matrixAround;
+            return roundValueToNearestDecimalPlace(measureAroundBeforeRounding, decimalPositionToRound);
+        }
+    },
+    framesPlusOverRun: {
+        type: Number,
+        required: true,
+        default: function() {
+            return Math.ceil((this.frameCount * this.overRun) + this.frameCount);
+        }
+    },
+    topBottomBleed: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const topBottomBleedBeforeRound = this.matrixAcross / 2; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(topBottomBleedBeforeRound, decimalPositionToRound);
+        }
+    },
+    leftRightBleed: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 4;
+            const leftRightBleedBeforeRound = this.matrixAround / 2; // eslint-disable-line no-magic-numbers
+            return roundValueToNearestDecimalPlace(leftRightBleedBeforeRound, decimalPositionToRound);
+        }
+    },
+    frameRepeat: {
+        type: Number,
+        required: true,
+        default: function() {
+            const frameRepeatBeforeRounding = this.labelsAround * this.labelRepeat * FRAME_REPEAT_SCALAR;
+            const frameRepeatRoundedUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
+            return frameRepeatRoundedUpToSecondDecimalPlace;
+        }
+    },
+    extraFrames: {
+        type: Number,
+        required: true,
+        default: function() {
+            const defaultNumberOfExtraFrames = 25;
+            const extraFramesForUvVarnish = 50;
+            const extraFramesForSheetedFinishType = 100;
+            let extraFrames = defaultNumberOfExtraFrames;
+
+            if (this.varnish && this.varnish.toLowerCase().includes('anything uv')) {
+                extraFrames += extraFramesForUvVarnish;
+            }
+            if (this.finishType && this.finishType.toLowerCase().includes('sheeted')) {
+                extraFrames += extraFramesForSheetedFinishType;
+            }
+
+            return extraFrames;
+        }
+    },
+    totalFrames: {
+        type: Number,
+        required: true,
+        default: function() {
+            return this.framesPlusOverRun + this.extraFrames;
+        }
+    },
+    totalFeet: {
+        type: Number,
+        required: true,
+        default: function() {
+            const inchesPerFoot = 12;
+            const totalFeetBeforeRounding = (this.measureAround * this.labelsAround * this.totalFrames) / inchesPerFoot;
+            return Math.ceil(totalFeetBeforeRounding);
+        }
+    },
+    numberOfRolls: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 2;
+            const numberOfRollsBeforeRounding = this.totalFeet / FEET_PER_ROLL;
+            return roundValueToNearestDecimalPlace(numberOfRollsBeforeRounding, decimalPositionToRound);
+        }
+    },
+    rotoRepeat: {
+        type: Number,
+        required: true,
+        default: function() {
+            const decimalPositionToRound = 3;
+            const rotoRepeatBeforeRounding = this.labelRepeat * this.toolNumberAround;
+            return roundValueToNearestDecimalPlace(rotoRepeatBeforeRounding, decimalPositionToRound);
+        }
+    },
+    deltaRepeat: {
+        type: Number,
+        required: true,
+        default: function(){
+            return this.labelRepeat;
+        }
     }
 }, { timestamps: true });
+
+
+function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound) {
+    const precision = Math.pow(10, decimalPositionToRound); // eslint-disable-line no-magic-numbers
+
+    return Math.round(unRoundedValue * precision) / precision;
+}
+
 
 const Product = mongoose.model('Product', schema);
 

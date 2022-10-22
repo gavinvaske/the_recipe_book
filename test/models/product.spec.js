@@ -1,10 +1,15 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/product');
 const {hotFolders} = require('../../application/enums/hotFolderEnum');
+const {idToColorEnum} = require('../../application/enums/idToColorEnum');
 
 function getRandomNumberOfDigits() {
     return chance.integer({min: 1});
 }
+
+const OVERRUN_MIN = 0;
+const OVERRUN_MAX = 100;
+const FRAME_REPEAT_SCALAR = 25.4;
 
 describe('validation', () => {
     let productAttributes;
@@ -23,15 +28,16 @@ describe('validation', () => {
             NoAround: String(chance.floating({min: 0.1})),
             CornerRadius: String(chance.floating({min: 0, max: 0.99})),
             FinalUnwind: chance.string(),
-            ColSpace: String(chance.floating()),
-            RowSpace: String(chance.floating()),
+            ColSpace: String(chance.floating({min: 0})),
+            RowSpace: String(chance.floating({min: 0})),
             Description: chance.string(),
             OrderQuantity: String(chance.integer({min: 0})),
+            MachineCount: String(chance.floating({min: 0})),
             FinishNotes: chance.string(),
             StockNotes: chance.string(),
             Notes: [chance.string(), chance.string()],
             Hidden_Notes: chance.string(),
-            NoColors: String(chance.integer({min: 0})),
+            NoColors: chance.pickone(Object.keys(idToColorEnum)),
             LabelsPer_: String(chance.integer({min: 0})),
             FinishType: chance.string(),
             PriceM: String(chance.integer({min: 0})),
@@ -39,7 +45,16 @@ describe('validation', () => {
             ToolNo2: chance.pickone(validProductDies),
             Tool_NumberAround: String(chance.integer({min: 0})),
             Plate_ID: chance.string(),
-            alerts: []
+            alerts: [],
+            LabelRepeat: String(chance.floating({min: 0.1})),
+            OverRun: String(chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX})),
+            ColorDescr: String(chance.string()),
+            CoreDiameter: String(chance.integer()),
+            NoLabAcrossFin: String(chance.integer()),
+            ShipAttn: chance.string(),
+            StockNum3: chance.string(),
+            StockNum: chance.string(),
+            ToolingNotes: chance.string()
         };
     });
 
@@ -140,13 +155,13 @@ describe('validation', () => {
             expect(product.primaryMaterial).toBeDefined();
         });
 
-        it('should pass validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.StockNum2;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).toBeDefined();
         });
 
         it('should be of type String', () => {
@@ -171,7 +186,7 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should be of type Object', () => {
+        it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.uvFinish).toEqual(expect.any(String));
@@ -389,6 +404,15 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
+        it('should fail validation if attribute negative', () => {
+            productAttributes.ColSpace = chance.floating({max: -0.1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should be of type Number', () => {
             const product = new ProductModel(productAttributes);
 
@@ -415,6 +439,15 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.matrixAround).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute negative', () => {
+            productAttributes.RowSpace = chance.floating({max: -0.1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
     describe('attribute: description (aka Description)', () => {
@@ -561,6 +594,7 @@ describe('validation', () => {
             expect(product.printingNotes).toEqual(expect.any(String));
         });
     });
+
     describe('attribute: numberOfColors (aka NoColors)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
@@ -568,39 +602,43 @@ describe('validation', () => {
             expect(product.numberOfColors).toBeDefined();
         });
 
-        it('should fail if attribute is not an integer', () => {
-            productAttributes.NoColors = chance.floating({fixed: 8});
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should fail if attribute is less than zero', () => {
-            productAttributes.NoColors = chance.integer({max: 0});
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should pass validation if attribute is missing', () => {
-            delete productAttributes.NoColors;
+        it('should pass validation if integer is mapped to the correct color', () => {
+            const colorId = chance.pickone(Object.keys(idToColorEnum));
+            productAttributes.NoColors = colorId;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
+            expect(product.numberOfColors).toBe(idToColorEnum[colorId]);
+        });
+
+        it('should fail validation if integer is not mapped to any color', () => {
+            const invalidColorId = 9999999999;
+            productAttributes.NoColors = invalidColorId;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should fail validation if attribute is missing', () => {
+            delete productAttributes.NoColors;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should be of type Number', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.numberOfColors).toEqual(expect.any(Number));
+            expect(product.numberOfColors).toEqual(expect.any(String));
         });
     });
+
     describe('attribute: labelsPerRoll (aka LabelsPer_)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
@@ -648,13 +686,13 @@ describe('validation', () => {
             expect(product.finishType).toBeDefined();
         });
 
-        it('should NOT fail validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.FinishType;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).toBeDefined();
         });
     });
     describe('attribute: price (aka PriceM)', () => {
@@ -794,13 +832,13 @@ describe('validation', () => {
             expect(product.toolNumberAround).toBeDefined();
         });
 
-        it('should pass validation if attribute is missing', () => {
+        it('should fail validation if attribute is missing', () => {
             delete productAttributes.Tool_NumberAround;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
-            expect(error).toBe(undefined);
+            expect(error).not.toBe(undefined);
         });
 
         it('should fail if attribute is not an integer', () => {
@@ -1074,6 +1112,765 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: labelRepeat (aka LabelRepeat)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.LabelRepeat;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overRun (aka OverRun)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toEqual(expect.any(Number));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.OverRun;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should default to 0 if not defined', () => {
+            delete productAttributes.OverRun;
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(0); // eslint-disable-line no-magic-numbers
+        });
+
+        it('should fail validation if overRun is less than 0', () => {
+            productAttributes.OverRun = chance.integer({max: OVERRUN_MIN - 1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if overRun greater than 100', () => {
+            productAttributes.OverRun = chance.integer({min: OVERRUN_MAX + 1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should convert attribute from integer to percent', () => {
+            const overRun = chance.integer({min: OVERRUN_MIN, max: OVERRUN_MAX});
+            const overRunAsPercentage = overRun / 100; // eslint-disable-line no-magic-numbers
+            productAttributes.OverRun = overRun;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(overRunAsPercentage);
+        });
+
+        it('should convert attribute from floating point to percent', () => {
+            const overRun = 97.5;
+            const expectedOverRun = 0.98; // eslint-disable-line no-magic-numbers
+            productAttributes.OverRun = overRun;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.overRun).toBe(expectedOverRun);
+        });
+    });
+
+    describe('attribute: varnish (aka ColorDescr)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.ColorDescr;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: coreDiameter (aka CoreDiameter)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.CoreDiameter;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should round to the correct decimal position', () => {
+            productAttributes.CoreDiameter = 99.00005;
+            const expectedCoreDiameter = 99.0001;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreDiameter).toEqual(expectedCoreDiameter);
+        });
+    });
+
+    describe('attribute: numberAcross (aka NoLabAcrossFin)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberAcross).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberAcross).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.NoLabAcrossFin;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if attribute is not an integer', () => {
+            productAttributes.NoLabAcrossFin = chance.floating({min: 1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: shippingAttention (aka ShipAttn)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.shippingAttention).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.shippingAttention).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.ShipAttn;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should pass validation if attribute is empty', () => {
+            productAttributes.ShipAttn = '';
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: dieCuttingMarriedMaterial (aka StockNum3)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingMarriedMaterial).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingMarriedMaterial).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.StockNum3;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: dieCuttingFinish (aka StockNum)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingFinish).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.dieCuttingFinish).toEqual(expect.any(String));
+        });
+        
+        it('should pass validation if attribute is not defined', () => {
+            delete productAttributes.StockNum;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: toolingNotes (aka ToolingNotes)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolingNotes).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.toolingNotes).toEqual(expect.any(String));
+        });
+        
+        it('should NOT fail validation if attribute is not defined', () => {
+            delete productAttributes.ToolingNotes;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: frameCount (aka MachineCount)', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toEqual(expect.any(Number));
+        });
+        
+        it('should fail validation if attribute is not defined', () => {
+            delete productAttributes.MachineCount;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should round up floating point to nearest whole number', () => {
+            const frameCount = chance.floating({min: 1});
+            productAttributes.MachineCount = frameCount;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameCount).toBe(Math.ceil(frameCount));
+        });
+
+        it('should fail validation if attribute is negative', () => {
+            productAttributes.MachineCount = chance.floating({max: -1});
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: labelsPerFrame', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const labelsAcross = 12;
+            const labelsAround = .999;
+            productAttributes.NoAround = labelsAcross;
+            productAttributes.NoAcross = labelsAround;
+            const expectedLabelsPerFrame = Math.floor(labelsAcross * labelsAround);
+            
+            const product = new ProductModel(productAttributes);
+
+            expect(product.labelsPerFrame).toEqual(expectedLabelsPerFrame);
+        });
+
+        it('should fail validation if attribute is less than 1', () => {
+            const labelsAcross = .25;
+            const labelsAround = .25;
+            productAttributes.NoAround = labelsAcross;
+            productAttributes.NoAcross = labelsAround;
+            const expectedLabelsPerFrame = Math.floor(labelsAcross * labelsAround);
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(product.labelsPerFrame).toEqual(expectedLabelsPerFrame);
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: measureAcross', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const labelsAcross = 0.111;
+            const matrixAcross = 99.00005;
+            productAttributes.NoAcross = labelsAcross;
+            productAttributes.ColSpace = matrixAcross;
+            const expectedMeasureAcross = 99.1111;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAcross).toEqual(expectedMeasureAcross);
+        });
+    });
+
+    describe('attribute: measureAround', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            productAttributes.NoAround = 6.222;
+            productAttributes.RowSpace = 5.00005;
+            const expectedMeasureAround = 11.2221;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.measureAround).toEqual(expectedMeasureAround);
+        });
+    });
+
+    describe('attribute: framesPlusOverRun', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.framesPlusOverRun).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.framesPlusOverRun).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const product = new ProductModel(productAttributes);
+            const expectedFramesPlusOverRun = Math.ceil((product.frameCount * product.overRun) + product.frameCount);
+
+            expect(product.framesPlusOverRun).toEqual(expectedFramesPlusOverRun);
+        });
+    });
+
+    describe('attribute: topBottomBleed', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
+            const matrixAcross = 10.8888888888;
+            productAttributes.ColSpace = matrixAcross;
+            const expectedTopBottomBleed = 5.4444;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
+            const matrixAcross = 10.001111111;
+            productAttributes.ColSpace = matrixAcross;
+            const expectedTopBottomBleed = 5.0006;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
+            const matrixAcross = 10.9999999999;
+            productAttributes.ColSpace = matrixAcross;
+            const expectedTopBottomBleed = 5.5000;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.topBottomBleed).toEqual(expectedTopBottomBleed);
+        });
+    });
+
+    describe('attribute: leftRightBleed', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded to the fourth decimal place correctly (test 1)', () => {
+            const matrixAround = 4.7777777;
+            productAttributes.RowSpace = matrixAround;
+            const expectedLeftRightBleed = 2.3889;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 2)', () => {
+            const matrixAround = 3.862475;
+            productAttributes.RowSpace = matrixAround;
+            const expectedLeftRightBleed = 1.9312;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+
+        it('should be calculated and rounded to the fourth decimal place correctly (test 3)', () => {
+            const matrixAround = 10.9999999999;
+            productAttributes.RowSpace = matrixAround;
+            const expectedLeftRightBleed = 5.5000;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.leftRightBleed).toEqual(expectedLeftRightBleed);
+        });
+    });
+
+    describe('attribute: frameRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated and rounded up (math.ceil) to the second decimal place correctly (test 1)', () => {
+            productAttributes.NoAround = 1;
+            productAttributes.LabelRepeat = .01;
+            const expectedFrameRepeat = 0.26; // eslint-disable-line no-magic-numbers
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(Number(expectedFrameRepeat));
+        });
+
+        it('should be calculated and rounded up (math.ceil) to the second decimal place correctly (test 2)', () => {
+            const frameRepeatBeforeRounding = productAttributes.NoAround * productAttributes.LabelRepeat * FRAME_REPEAT_SCALAR;
+            const expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace = (Math.ceil(frameRepeatBeforeRounding * 100) / 100); // eslint-disable-line no-magic-numbers
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.frameRepeat).toEqual(Number(expectedFrameRepeatAfterRoundingUpToSecondDecimalPlace));
+        });
+    });
+
+    describe('attribute: extraFrames', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            delete productAttributes.ColorDescr;
+            delete productAttributes.FinishType;
+            const expectedExtraFrames = 25;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.ColorDescr = 'Anything UV';
+            delete productAttributes.FinishType;
+            const expectedExtraFrames = 75;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 3)', () => {
+            delete productAttributes.ColorDescr;
+            productAttributes.FinishType = 'Sheeted';
+            const expectedExtraFrames = 125;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+
+        it('should be calculated correctly (test 3)', () => {
+            productAttributes.ColorDescr = 'Anything UV';
+            productAttributes.FinishType = 'Sheeted';
+            const expectedExtraFrames = 175;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.extraFrames).toEqual(expectedExtraFrames);
+        });
+    });
+
+    describe('attribute: totalFrames', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFrames).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFrames).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const product = new ProductModel(productAttributes);
+            const expectedTotalFrames = product.framesPlusOverRun + product.extraFrames;
+
+            expect(product.totalFrames).toEqual(expectedTotalFrames);
+        });
+    });
+
+    describe('attribute: totalFeet', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFeet).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.totalFeet).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly', () => {
+            const inchesPerFoot = 12;
+            const product = new ProductModel(productAttributes);
+            const expectedTotalFeet = (product.measureAround * product.labelsAround * product.totalFrames) / inchesPerFoot;
+
+            expect(product.totalFeet).toEqual(expectedTotalFeet);
+        });
+    });
+
+    describe('attribute: numberOfRolls', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            const totalFeet = 5001;
+            productAttributes.totalFeet = totalFeet;
+            const expectedNumberOfRolls = 1.00;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            const totalFeet = 9862;
+            productAttributes.totalFeet = totalFeet;
+            const expectedNumberOfRolls = 1.97;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });        
+        it('should be calculated correctly (test 3)', () => {
+            const totalFeet = 977686;
+            productAttributes.totalFeet = totalFeet;
+            const expectedNumberOfRolls = 195.54;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfRolls).toEqual(expectedNumberOfRolls);
+        });
+    });
+
+    describe('attribute: rotoRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should be calculated correctly (test 1)', () => {
+            productAttributes.LabelRepeat = 0.99999;
+            productAttributes.Tool_NumberAround = 0.3344334;
+            const expectedRotoRepeat = 0.334;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.LabelRepeat = 7.0009;
+            productAttributes.Tool_NumberAround = 1.0001;
+            const expectedRotoRepeat = 7.002;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+     
+        it('should be calculated correctly (test 2)', () => {
+            productAttributes.LabelRepeat = 0.00001;
+            productAttributes.Tool_NumberAround = 0.00009;
+
+            const product = new ProductModel(productAttributes);
+            const expectedRotoRepeat = 0.000;
+
+            expect(product.rotoRepeat).toEqual(expectedRotoRepeat);
+        });
+    });
+
+    describe('attribute: deltaRepeat', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toEqual(expect.any(Number));
+        });
+        
+        it('should have its value equal to the "labelRepeat" attribute', () => {
+            const expectedValue = chance.floating({min: 0.1});
+            productAttributes.LabelRepeat = expectedValue;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.deltaRepeat).toEqual(expectedValue);
         });
     });
 });

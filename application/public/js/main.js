@@ -36,17 +36,6 @@ $( document ).ready(function() {
         updateTicket(ticketAttributes, ticketId);
     });
 
-    $('#printing-type-selection').change(function() {
-        const selectedPrintingType = $('#printing-type-selection').val();
-        const ticketId = $('#department-notes').data('ticket-id');
-
-        const ticketAttributes = {
-            printingType: selectedPrintingType
-        };
-        
-        updateTicket(ticketAttributes, ticketId);
-    });
-
     $('#department-selection').change(function() {
         const selectedDepartment = $('#department-selection').val();
         const ticketId = $('#department-notes').data('ticket-id');

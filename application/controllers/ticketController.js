@@ -156,7 +156,7 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
 
         return response.redirect(`/tickets/update/${ticket._id}`);
     } catch (error) {
-        console.log(`Error uploading job file: ${JSON.stringify(error)}`);
+        console.log(`Error uploading job file: ${error}`);
         request.flash('errors', ['The following error occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
     
         return response.redirect('/tickets/upload');

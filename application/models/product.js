@@ -6,7 +6,6 @@ const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
-PRODUCT_NUMBER_REGEX = /^\d{3,4}D-\d{1,}$/;
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
 URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
@@ -40,10 +39,6 @@ function convertStringCurrency(numberAsString) {
     const currencyWithoutCommas = numberAsString.split(',').join('');
 
     return Number(currencyWithoutCommas * NUMBER_OF_PENNIES_IN_A_DOLLAR);
-}
-
-function validateProductNumber(productNumber) {
-    return PRODUCT_NUMBER_REGEX.test(productNumber);
 }
 
 function validateProductDie(productDie) {
@@ -112,7 +107,6 @@ const schema = new Schema({
     },
     productNumber: {
         type: String,
-        validate: [validateProductNumber, 'Product Number is in the wrong format'],
         required: true,
         uppercase: true,
         alias: 'ProductNumber'

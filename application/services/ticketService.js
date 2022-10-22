@@ -46,6 +46,10 @@ function parseTicketAttributesOffOfProducts(product) {
 module.exports.removeEmptyObjectAttributes = (ticketObject) => {
     const ticketItemKey = 'TicketItem';
 
+    if (!Array.isArray(ticketObject[ticketItemKey])) {
+        ticketObject[ticketItemKey] = [ticketObject[ticketItemKey]];
+    }
+
     ticketObject[ticketItemKey].forEach((ticketItem, index) => {
         Object.keys(ticketItem).forEach((key) => {
             if (isEmptyObject(ticketItem[key]) || isArrayContainingOnlyEmptyObjects(ticketItem[key])) {

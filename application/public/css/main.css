@@ -2727,3 +2727,116 @@ a.storm {
   background-color: #dcdfec;
   color: #323338;
 }
+
+.completed-wrapper .tooltiptext {
+	width: 230px;
+	margin-left: -115px;
+}
+
+.completed-wrapper.active .btn-completed {
+	background-color: #cce5ff;
+}
+.btn-completed:hover {
+	background-color: #dcdfec;
+	cursor: pointer;
+}
+.btn-completed {
+	height: 33px;
+	min-width: 100px;
+	border-radius: 3px;
+}
+.table-row-wrapper.active {
+	height: auto;
+}
+.full-width {
+	width: 100%;
+}
+/*.ticket-products-wrapper {
+	width: 90%;
+}*/
+
+.ticket-products-wrapper .table-header,
+.product-wrapper {
+	width: 95%;
+}
+
+.ticket-products-wrapper {
+	display: none;
+	margin-bottom: 25px;
+}
+
+.table-row-wrapper.active .ticket-products-wrapper {
+	display: flex;
+}
+
+
+.column-td-i .fa-image-polaroid {
+	font-size: 25px;
+}
+
+.column-td-c:hover {
+	cursor: pointer;
+}
+
+
+
+.quick-product-view-wrapper {
+	display: none;
+	background-color: #f8f8f8;
+	width: 100%;
+}
+.product-wrapper.active .table-row {
+	margin-bottom: 0;
+}
+.quick-product-view {
+	width: calc(100% - 10px);
+}
+.quick-product-view-wrapper.active {
+	display: flex;
+}
+
+.product-wrapper:last-of-type .quick-product-view-wrapper .quick-product-view {
+	margin-bottom: 3px;
+}
+.quick-product-view .table-header {
+	width: 100%;
+}
+
+.quick-product-view .column-header-a,
+.quick-product-view .column-td-a,
+.quick-product-view .column-header-b,
+.quick-product-view .column-td-b,
+.quick-product-view .column-header-c,
+.quick-product-view .column-td-c,
+.quick-product-view .column-header-d,
+.quick-product-view .column-td-d,
+.quick-product-view .column-header-e,
+.quick-product-view .column-td-e,
+.quick-product-view .column-header-f,
+.quick-product-view .column-td-f {
+	/*width: 150px;*/
+	width: 100%;
+	padding: 0;
+	justify-content: center;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+.quick-product-view .column-header-f,
+.quick-product-view .column-td-f,
+.quick-product-view .column-header-g,
+.quick-product-view .column-td-g {
+	margin-right: 0;
+}
+.quick-product-view .column-header-a,
+.quick-product-view .column-td-a {
+	margin-left: 0;
+}
+
+.ticket-products-wrapper .column-td-c {
+	font-size: 16px;
+}
+
+.quick-product-view-wrapper .table-body .table-row {
+	height: auto;
+}
+

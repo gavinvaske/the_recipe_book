@@ -504,6 +504,18 @@ $( document ).ready(function() {
 		
 	});
 
+    $('.ticket-number-column').click(function(){
+		let currentActive = $(this).closest('.table-row-wrapper');
+		if($(currentActive).hasClass('active')) {
+			$('.table-row-wrapper').removeClass('active');
+		} else {
+			$('.table-row-wrapper').removeClass('active');
+			$(currentActive).addClass('active');
+		}
+		
+	});
+
+
 
 });
 

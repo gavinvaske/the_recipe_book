@@ -1,5 +1,6 @@
 const productService = require('../../application/services/productService');
 const chance = require('chance').Chance();
+var mongoose = require('mongoose');
 
 describe('productService test suite', () => {
     let products,
@@ -20,10 +21,17 @@ describe('productService test suite', () => {
             expect(() => productService.selectProductFromTicket(ticket, productNumber)).not.toThrow();
         });
 
-        it('should find the correct product given a productNumber', () => {
+        it('should not throw error if ticket is not defined', () => {
             const productNumber = chance.string();
+            ticket = undefined;
+
+            expect(() => productService.selectProductFromTicket(ticket, productNumber)).not.toThrow();
+        });
+
+        it('should find the correct product given a productNumber', () => {
+            const _id = new mongoose.Types.ObjectId();
             const expectedProduct = createProduct({
-                productNumber
+                _id
             });
             ticket.products = [
                 createProduct(),
@@ -31,7 +39,7 @@ describe('productService test suite', () => {
                 createProduct()
             ];
 
-            const actualProduct = productService.selectProductFromTicket(ticket, productNumber);
+            const actualProduct = productService.selectProductFromTicket(ticket, _id.toString());
 
             expect(actualProduct).toBe(expectedProduct);
         });

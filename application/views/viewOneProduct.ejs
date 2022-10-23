@@ -1,0 +1,89 @@
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper all-recipes">
+
+    <div class="alert-box full-width">
+        <%- include ("flashMessages") %>
+    </div>
+
+    <h1>Order Workflow - <%= ticket.destination && ticket.destination.department || 'N/A' %> - #<%= ticket.ticketNumber || 'N/A' %> - <%= product.productNumber || 'N/A' %> - <%= ticket.customerName || 'N/A' %> </h1>
+    <p>Description: <%= product.description || 'N/A' %> (Storm: Should the description default to 'N/A' if it doesn't exist?)</p>
+    
+    <br>
+    
+    <div>
+        <h2>Pre-Press Section:</h2>
+
+        <p>Hot Folder: <%= product.hotFolder || 'N/A' %> (E)</p>
+        <p>Unwind: <%= product.unwindDirection || 'N/A' %> (F)</p>
+        <p>Corner Radius: <%= product.cornerRadius || 'N/A' %> (G)</p>
+        <p>Printing Type: <%= product.numberOfColors || 'N/A' %> (H)</p>
+        <p>Frame Repeat: <%= product.frameRepeat || 'N/A' %> (I)</p>
+
+        <div>
+            <p>Label Across: <%= product.sizeAcross || 'N/A' %> (J)</p>
+            <p>Label Around: <%= product.sizeAround || 'N/A' %> (K)</p>
+            <p>Labels Across: <%= product.labelsAcross || 'N/A' %> (L)</p>
+            <p>Matrix Across: <%= product.matrixAcross || 'N/A' %> (M)</p>
+            <p>Matrix Around: <%= product.matrixAround || 'N/A' %> (N)</p>
+            <p>Labels Around: <%= product.labelsAround || 'N/A' %> (O)</p>
+            <p>Top/Bottom: <%= product.topBottomBleed || 'N/A' %> (P)</p>
+            <p>Left/Right: <%= product.leftRightBleed || 'N/A' %> (Q)</p>
+            <p>Labels Per Frame: <%= product.labelsPerFrame || 'N/A' %> (R)</p>
+        </div>
+
+        <p>Material: <%= product.primaryMaterial || 'N/A' %> (S)</p>
+        <p>QTY/Roll: <%= product.labelsPerRoll || 'N/A' %> (AP)</p>
+        <p>Pre-Press Notes: <%= product.prePrintingNotes || 'N/A' %> (T)</p>
+    </div>
+
+    <br>
+
+    <div>
+        <h2>Printing Section</h2>
+
+        <p>Material: <%= product.primaryMaterial || 'N/A' %> (???)</p>
+
+        <div>
+            <p>Label Across: <%= product.sizeAcross || 'N/A' %> (J)</p>
+            <p>Label Around: <%= product.sizeAround || 'N/A' %> (K)</p>
+            <p>Labels Across: <%= product.labelsAcross || 'N/A' %> (L)</p>
+            <p>Matrix Across: <%= product.matrixAcross || 'N/A' %> (M)</p>
+            <p>Matrix Around: <%= product.matrixAround || 'N/A' %> (N)</p>
+            <p>Labels Around: <%= product.labelsAround || 'N/A' %> (O)</p>
+            <p>Measure Across: <%= product.measureAcross || 'N/A' %> (U)</p>
+            <p>Measure Around: <%= product.measureAround || 'N/A' %> (V)</p>
+            <p>Labels Per Frame: <%= product.labelsPerFrame || 'N/A' %> (R)</p>
+        </div>
+        
+        <p>Frames: <%= product.framesPlusOverRun || 'N/A'%> (W)</p>
+        <p>Extra Frames: <%= product.extraFrames || 'N/A'%> (X)</p>
+        <p>Total Frames: <%= product.totalFrames || 'N/A'%> (Y)</p>
+        <p>Total Feet: <%= product.totalFeet || 'N/A'%> (Z)</p>
+        <p>Quantity: <%= product.labelQty || 'N/A'%> (AA)</p>
+        <p>Frame Repeat: <%= product.frameRepeat || 'N/A'%> (I)</p>
+        <p>Printing Notes: <%= product.printingNotes || 'N/A'%> (AB)</p>
+        <p>Color Sample: <%= product.toolingNotes || 'N/A'%> (ACC)</p>
+        <p>Printing Type: <%= product.numberOfColors || 'N/A'%> (H)</p>
+        <p>Unwind: <%= product.unwindDirection || 'N/A'%> (F)</p>
+        <p># of Rolls: <%= product.numberOfRolls || 'N/A'%> (AC)</p>
+    </div>
+
+    <br>
+
+    <did>
+        <h2>Cutting Section:</h2>
+
+        <p>Die #1: <%= product.productDie || 'N/A' %> (AD)</p>
+        <p>Material #1: <%= product.dieCuttingFinish || 'N/A' %> (AE)</p>
+        <p>Varnish: <%= product.varnish || 'N/A' %> (AF)</p>
+        <p>Finish Type: <%= product.finishType || 'N/A' %> (AG)</p>
+        <p>Die #2: <%= product.productDieTwo || 'N/A' %> (AH)</p>
+        <p>Material #2: <%= product.dieCuttingMarriedMaterial || 'N/A' %> (AI)</p>
+        <p>Delta Repeat: <%= product.deltaRepeat || 'N/A' %> (AJ)</p>
+        <p>Roto Repeat: <%= product.rotoRepeat || 'N/A' %> (AK)</p>
+        <p>Die Around: <%= product.toolNumberAround || 'N/A' %> (AL)</p>
+        <p>Plate ID: <%= product.plateId || 'N/A' %> (AM)</p>
+        <p>Cutting Notes: <%= product.dieCuttingNotes || 'N/A' %> (AN)</p>
+    </did>
+</div>

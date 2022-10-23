@@ -345,6 +345,11 @@ $( document ).ready(function() {
         $('#recipe-dropdown-trigger').toggleClass('active');
     });
 
+    $('#material-dropdown-trigger').on('click', function(){
+        $('.dropdown-menu.material-dropdown').toggleClass('active');
+        $('#material-dropdown-trigger').toggleClass('active');
+    });
+
 
     $('.options-reveal-box').on('click', function(){
         if ($(this).hasClass('active')) {
@@ -475,6 +480,30 @@ $( document ).ready(function() {
             event.stopPropagation();
         });
     });
+
+    $('.material-card-section .card .card-header .col-right').click(function(){
+
+        let activeCard = $(this).parents('.card');
+        if ($(activeCard).hasClass('active')) {
+            $(activeCard).removeClass('active');
+        } else if (!$(activeCard).hasClass('active')){
+            $('.card').removeClass('active'); 
+            $(activeCard).addClass('active'); 
+        }
+		
+    });
+
+    $('.ticket-number-column').click(function(){
+        let currentActive = $(this).closest('.table-row-wrapper');
+        if ($(currentActive).hasClass('active')) {
+            $('.table-row-wrapper').removeClass('active');
+        } else {
+            $('.table-row-wrapper').removeClass('active');
+            $(currentActive).addClass('active');
+        }
+		
+    });
+
 
 
 });

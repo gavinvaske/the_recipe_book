@@ -142,101 +142,93 @@
     <% const billingReadyForBillingTickets = billingTicketsGroupedBySubDepartment['READY FOR BILLING'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
 
 
-    <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
+      <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
         <h1>Order Prep Department</h1>
-
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
-          <div class='department-section department-section-e'>
-            <div class='header flex-center-left-row'>
-              <div class='expanded-options-wrapper'>
-                <div class='expanded-options-btn flex-center-center-row'>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class='expanded-options-dropdown dropdown'>
-                  <ul>
-                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-                    </ul>
-                  </div>
-                </div>
-                <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
+        <div class='department-section department-section-e'>
+          <div class='header flex-center-left-row'>
+            <div class='expanded-options-wrapper'>
+              <div class='expanded-options-btn flex-center-center-row'>
+                <i class="fa-solid fa-caret-down"></i>
               </div>
-              <div class='table ticket-container flex-top-center-column'>
-                <div class='table-header flex-center-center-row'>
+              <div class='expanded-options-dropdown dropdown'>
+                <ul>
+                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                  <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                  <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                </ul>
+              </div>
+            </div>
+            <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
+          </div>
+          <div class='table ticket-container flex-top-center-column'>
+            <div class='table-header flex-center-center-row'>
+              <div class='column-header column-header-a'></div>
+              <div class='column-header column-header-b'>#</div>
+              <div class='column-header column-header-c'>Ticket Number</div>
+              <div class='column-header column-header-d'>Status</div>
+              <div class='column-header column-header-e'></div>
+              <div class='column-header column-header-f'></div>
+              <div class='column-header column-header-g'></div>
+              <div class='column-header column-header-h'>From</div>
+              <div class='column-header column-header-i'>Due Date</div>
+            </div>
+            <div class='table-body flex-center-center-column'>
+              <div class='table-row-wrapper full-width'>
+              <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
+              <div class='table-row flex-center-center-column'>
+                <div class='flex-center-center-row ticket-wrapper full-width'>
+                  <div class='column-td column-td-a bg-green'>
+                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                    <div class='ticket-dropdown-options dropdown'>
+                      <ul>
+                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                        <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                        <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-f bg-white'></div>
+                  <div class='column-td column-td-g bg-white'></div>
+                  <div class='column-td column-td-h bg-white'>
+                    <div class='user-cell bg-blue tooltip'>SV
+                      <span class="tooltiptext">TODO</span>
+                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                  </div>
+                  <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
+                </div>
+              </div>
+              <% }) %>
+              <div class='ticket-products-wrapper flex-center-right-column full-width'>
+                <div class='table-header secondary-table-header flex-center-center-row'>
                   <div class='column-header column-header-a'></div>
                   <div class='column-header column-header-b'>#</div>
-                  <div class='column-header column-header-c'>Ticket Number</div>
-                  <div class='column-header column-header-d'>Status</div>
+                  <div class='column-header column-header-c'>Products</div>
+                  <div class='column-header column-header-d'></div>
                   <div class='column-header column-header-e'></div>
                   <div class='column-header column-header-f'></div>
-                  <div class='column-header column-header-g'></div>
-                  <div class='column-header column-header-h'>From</div>
-                  <div class='column-header column-header-i'>Due Date</div>
+                  <div class='column-header column-header-g'>Frames</div>
+                  <div class='column-header column-header-h'>Quantity</div>
+                  <div class='column-header column-header-i'>Artwork</div>
                 </div>
-                <div class='table-body flex-center-center-column'>
-                  <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-                    <div class='table-row flex-center-center-row'>
-                      <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
-                      <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                      <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                      <div class='column-td column-td-d bg-white'></div>
-                      <div class='column-td column-td-e bg-white'></div>
-                      <div class='column-td column-td-f bg-white'></div>
-                      <div class='column-td column-td-g bg-white'></div>
-                      <div class='column-td column-td-h bg-white'>
-                        <div class='user-cell bg-blue tooltip'>SV
-                          <span class="tooltiptext">TODO</span>
-                        </div><span class='machine-name'>Press 1 (TODO)</span>
-                      </div>
-                      <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
-                    </div>
-                  <% }) %>
-                </div>
-              </div>
-            </div>
-        <% } %>
 
-        <% if (orderPrepSendToCustomerTickets && orderPrepSendToCustomerTickets.length) { %>  <!-- TODO: This one is goofy, relook at the .each block -->
-          <div class='department-section department-section-a'>
-            <div class='header flex-center-left-row'>
-              <div class='expanded-options-wrapper'>
-                <div class='expanded-options-btn flex-center-center-row'>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class='expanded-options-dropdown dropdown'>
-                  <ul>
-                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                    <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                    <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
-                  </ul>
-                </div>
-              </div>
-              <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
-            </div>
-            <div class='table ticket-container flex-top-center-column'>
-              <div class='table-header flex-center-center-row'>
-                <div class='column-header column-header-a'></div>
-                <div class='column-header column-header-b'>#</div>
-                <div class='column-header column-header-c'>Ticket Number</div>
-                <div class='column-header column-header-d'>Status</div>
-                <div class='column-header column-header-e'></div>
-                <div class='column-header column-header-f'></div>
-                <div class='column-header column-header-g'></div>
-                <div class='column-header column-header-h'></div>
-                <div class='column-header column-header-i'>Due Date</div>
-              </div>
-              <div class='table-body flex-center-center-column'>
-                <% orderPrepSendToCustomerTickets.forEach((ticket, index) => { %>
+                <!--Gavin this where you would loop through and display products that belong to a ticket -->
+                <div class='product-wrapper flex-top-center-column'>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a'>
+                    <div class='column-td column-td-a bg-green'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Product</li>
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -244,20 +236,83 @@
                         </ul>
                       </div>
                     </div>
-                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                    <div class='column-td column-td-b bg-white'>1</div>
+                    <div class='column-td column-td-c product-number-column bg-white'>767D-001</div>
+                    <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'></div>
-                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
+                    <div class='column-td column-td-g bg-white'>100</div>
+                    <div class='column-td column-td-h bg-white'>4000</div>
+                    <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                   </div>
-                <% }) %>
+                </div>
+
               </div>
             </div>
           </div>
-        <% } %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if (orderPrepSendToCustomerTickets && orderPrepSendToCustomerTickets.length) { %>  <!-- TODO: This one is goofy, relook at the .each block -->
+      <div class='department-section department-section-a'>
+        <div class='header flex-center-left-row'>
+          <div class='expanded-options-wrapper'>
+            <div class='expanded-options-btn flex-center-center-row'>
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class='expanded-options-dropdown dropdown'>
+              <ul>
+                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
+        </div>
+        <div class='table ticket-container flex-top-center-column'>
+          <div class='table-header flex-center-center-row'>
+            <div class='column-header column-header-a'></div>
+            <div class='column-header column-header-b'>#</div>
+            <div class='column-header column-header-c'>Ticket Number</div>
+            <div class='column-header column-header-d'>Status</div>
+            <div class='column-header column-header-e'></div>
+            <div class='column-header column-header-f'></div>
+            <div class='column-header column-header-g'></div>
+            <div class='column-header column-header-h'></div>
+            <div class='column-header column-header-i'>Due Date</div>
+          </div>
+          <div class='table-body flex-center-center-column'>
+            <% orderPrepSendToCustomerTickets.forEach((ticket, index) => { %>
+              <div class='table-row flex-center-center-row'>
+                <div class='column-td column-td-a'>
+                  <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                  <div class='ticket-dropdown-options dropdown'>
+                    <ul>
+                      <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                      <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                      <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                      <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                      <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                <div class='column-td column-td-e bg-white'></div>
+                <div class='column-td column-td-f bg-white'></div>
+                <div class='column-td column-td-g bg-white'></div>
+                <div class='column-td column-td-h bg-white'></div>
+                <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+      <% } %>
 
         <% if (orderPrepWaitingOnApprovalTickets && orderPrepWaitingOnApprovalTickets.length) { %>
           <div class='department-section department-section-b'>
@@ -292,9 +347,20 @@
               <div class='table-body flex-center-center-column'>
                 <% orderPrepWaitingOnApprovalTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                        </ul>
+                      </div>
+                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -341,9 +407,20 @@
               <div class='table-body flex-center-center-column'>
                 <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                        </ul>
+                      </div>
+                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -390,9 +467,20 @@
               <div class='table-body flex-center-center-column'>
                 <% orderPrepReadyToOrderTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                        </ul>
+                      </div>
+                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -451,9 +539,20 @@
               <div class='table-body flex-center-center-column'>
                 <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -516,7 +615,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -565,7 +664,7 @@
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -612,9 +711,20 @@
               <div class='table-body flex-center-center-column'>
                 <% artPrepNeedsDieLineTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -661,9 +771,20 @@
               <div class='table-body flex-center-center-column'>
                 <% artPrepNeedsPlateTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -721,9 +842,20 @@
               <div class='table-body flex-center-center-column'>
                 <% prePressNeedsAttentionTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -782,7 +914,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -831,7 +963,7 @@
                   <div class='table-row flex-center-center-row'>
                     <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -894,6 +1026,7 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -902,7 +1035,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
@@ -953,9 +1086,20 @@
               <div class='table-body flex-center-center-column'>
                 <% printingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1002,9 +1146,20 @@
               <div class='table-body flex-center-center-column'>
                 <% printingSchedulePressOneTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1051,9 +1206,20 @@
               <div class='table-body flex-center-center-column'>
                 <% printingSchedulePressTwoTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1100,9 +1266,20 @@
               <div class='table-body flex-center-center-column'>
                 <% printingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1165,6 +1342,7 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -1173,7 +1351,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
@@ -1224,9 +1402,20 @@
               <div class='table-body flex-center-center-column'>
                 <% cuttingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1273,9 +1462,20 @@
               <div class='table-body flex-center-center-column'>
                 <% cuttingScheduleDeltaOneTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1322,9 +1522,20 @@
               <div class='table-body flex-center-center-column'>
                 <% cuttingScheduleDeltaTwoTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1371,9 +1582,20 @@
               <div class='table-body flex-center-center-column'>
                 <% cuttingScheduleRotoflexTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1420,9 +1642,20 @@
               <div class='table-body flex-center-center-column'>
                 <% cuttingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
@@ -1484,6 +1717,7 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -1492,7 +1726,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
@@ -1543,9 +1777,20 @@
               <div class='table-body flex-center-center-column'>
                 <% windingReadyForSchedulingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                        </ul>
+                      </div>
+                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1592,9 +1837,20 @@
               <div class='table-body flex-center-center-column'>
                 <% windingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1656,6 +1912,7 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -1664,7 +1921,7 @@
                       </div>
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1711,9 +1968,20 @@
               <div class='table-body flex-center-center-column'>
                 <% shippingReadyForShippingTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                        </ul>
+                      </div>
+                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1760,9 +2028,20 @@
               <div class='table-body flex-center-center-column'>
                 <% shippingOnHoldTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
-                    <div class='column-td column-td-c bg-white'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1809,9 +2088,20 @@
               <div class='table-body flex-center-center-column'>
                 <% shippingToolArrivalTickets.forEach((ticket, index) => { %>
                   <div class='table-row flex-center-center-row'>
-                    <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                    <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white'>Plate (TODO)</div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
                     <div class='column-td column-td-d bg-white'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
@@ -1872,6 +2162,7 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
+                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
@@ -1880,7 +2171,7 @@
                     </div>
                   </div>
                   <div class='column-td column-td-b bg-white'>1</div>
-                  <div class='column-td column-td-c bg-white'>#47001</div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
                   <div class='column-td column-td-d bg-white'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
@@ -1889,9 +2180,20 @@
                   <div class='column-td column-td-i bg-white'>July 4</div>
                 </div>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'><i class="fa-light fa-ellipsis-vertical text-white"></i></div>
+                  <div class='column-td column-td-a'>
+                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                        <div class='ticket-dropdown-options dropdown'>
+                          <ul>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                          </ul>
+                        </div>
+                      </div>
                   <div class='column-td column-td-b bg-white'>1</div>
-                  <div class='column-td column-td-c bg-white'>#47001</div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
                   <div class='column-td column-td-d bg-white'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>

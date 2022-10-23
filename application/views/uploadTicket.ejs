@@ -1,10 +1,20 @@
-<h1>Upload Job</h1>
+<div class='page-wrapper full-width create-ticket-wrapper'>
+    <div class='container full-width flex-center-center-row'>
+        <div class='column col-left half-width flex-center-center-column'>
+            <i class="fa-duotone fa-file-import"></i>
+            <h1>Upload Job</h1>
 
-<div class="alert-box full-width">
-    <%- include ("flashMessages") %>
+            <div class="alert-box two-third-width">
+                <%- include ("flashMessages") %>
+            </div>
+
+            <form action="/tickets/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="job-xml"><br>
+                <input type="submit">
+            </form>
+        </div>
+        <div class='column col-right half-width flex-center-center-row'>
+        
+        </div>
+    </div>
 </div>
-
-<form action="/tickets/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="job-xml"><br>
-    <input type="submit">
-</form>

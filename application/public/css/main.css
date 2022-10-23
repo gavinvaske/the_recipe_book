@@ -2315,10 +2315,16 @@ a.storm {
 
 
 
+.btn-create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
-
-
+.view-tickets .workflow-order-header {
+  margin-bottom: 50px;
+}
 
 .worlkflow-navigation {
 	margin: 25px 0;
@@ -2838,5 +2844,9 @@ a.storm {
 
 .quick-product-view-wrapper .table-body .table-row {
 	height: auto;
+}
+
+.department-wrapper {
+  margin-bottom: 50px;
 }
 

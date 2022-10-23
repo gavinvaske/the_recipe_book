@@ -494,26 +494,26 @@ $( document ).ready(function() {
 
     $('.material-card-section .card .card-header .col-right').click(function(){
 
-		let activeCard = $(this).parents('.card');
-		if($(activeCard).hasClass('active')) {
-			$(activeCard).removeClass('active');
-		} else if (!$(activeCard).hasClass('active')){
-			$('.card').removeClass('active'); 
-			$(activeCard).addClass('active'); 
-		}
+        let activeCard = $(this).parents('.card');
+        if ($(activeCard).hasClass('active')) {
+            $(activeCard).removeClass('active');
+        } else if (!$(activeCard).hasClass('active')){
+            $('.card').removeClass('active'); 
+            $(activeCard).addClass('active'); 
+        }
 		
-	});
+    });
 
     $('.ticket-number-column').click(function(){
-		let currentActive = $(this).closest('.table-row-wrapper');
-		if($(currentActive).hasClass('active')) {
-			$('.table-row-wrapper').removeClass('active');
-		} else {
-			$('.table-row-wrapper').removeClass('active');
-			$(currentActive).addClass('active');
-		}
+        let currentActive = $(this).closest('.table-row-wrapper');
+        if ($(currentActive).hasClass('active')) {
+            $('.table-row-wrapper').removeClass('active');
+        } else {
+            $('.table-row-wrapper').removeClass('active');
+            $(currentActive).addClass('active');
+        }
 		
-	});
+    });
 
 
 

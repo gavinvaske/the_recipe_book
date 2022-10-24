@@ -495,7 +495,6 @@ $( document ).ready(function() {
             $('.card').removeClass('active'); 
             $(activeCard).addClass('active'); 
         }
-		
     });
 
     $('.ticket-number-column').click(function(){
@@ -506,7 +505,6 @@ $( document ).ready(function() {
             $('.table-row-wrapper').removeClass('active');
             $(currentActive).addClass('active');
         }
-		
     });
 
     $('.collapse-group').click(function(){

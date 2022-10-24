@@ -501,7 +501,7 @@ html {
     color: #5e5873;
 }
 .registration-content-frame h1 span {
-  color: #7367f0;
+  color: #157efb;
 }
 .registration-content-frame h2 {
   font-size: 1.3rem;
@@ -533,8 +533,8 @@ html {
 .create-entry,
 .save-form-button {
     display: block;
-    border-color: #7367f0;
-    background-color: #7367f0;
+    border-color: #157efb;
+    background-color: #157efb;
     text-align: center;
     border: 1px solid transparent;
     padding: 0.786rem 1.5rem;
@@ -685,10 +685,10 @@ input:focus + .show-password-frame {
     width: 100%;
 }
 .label-link-wrapper a {
-    color: #7367f0;
+    color: #157efb;
 }
 .label-link-wrapper a:hover {
-    color: #5e50ee;
+    color: #157efb;
 }
 .remember-me-frame {
     display: flex;
@@ -733,8 +733,14 @@ input:focus + .show-password-frame {
   justify-content: center;
   align-items: center;
 }
-.navbar-main .column-left .navbar-links {
+.navbar-main .column-left .navbar-links a {
   padding: 12px 20px;
+}
+.navbar-main .column-left .navbar-links .material,
+.navbar-main .column-left .navbar-links .recipes {
+  padding: 12px 20px;
+}
+.navbar-main .column-left .navbar-links {
   border-radius: 5px;
   margin-right: 10px;
 }
@@ -813,6 +819,22 @@ input:focus + .show-password-frame {
 #recipe-dropdown-trigger,
 #material-dropdown-trigger {
   position: relative;
+}
+.navbar-main .column-left .navbar-links .material .fa-regular,
+.navbar-main .column-left .navbar-links .recipes .fa-light  {
+  font-size: 20px;
+  margin-right: 7px;
+}
+.navbar-main .navbar-links .fa-cubes-stacked,
+.navbar-main .navbar-links .fa-layer-group {
+  font-size: 22px;
+  margin-left: 25px;
+  margin-right: 10px;
+}
+.navbar-main .column-left .navbar-links .tickets .fa-sharp {
+  font-size: 20px;
+  margin-right: 7px;
+  transform: rotate(90deg);
 }
 .dropdown-menu {
   position: absolute;
@@ -934,8 +956,8 @@ input:focus + .show-password-frame {
 }
 .btn-primary {
   display: block;
-  border-color: #7367f0;
-  background-color: #7367f0;
+  border-color: #157efb;
+  background-color: #157efb;
   text-align: center;
   border: 1px solid transparent;
   padding: 0.786rem 1.5rem;
@@ -947,17 +969,39 @@ input:focus + .show-password-frame {
 }
 .btn-primary:hover {
   cursor: pointer;
-  -webkit-box-shadow: 0 8px 25px -8px #7367f0;
-  box-shadow: 0 8px 25px -8px #7367f0;
+  -webkit-box-shadow: 0 8px 25px -8px #157efb;
+  box-shadow: 0 8px 25px -8px #157efb;
+}
+.admin-panel td {
+  padding: 0.72rem 2rem;
+}
+.admin-panel .table-wrapper td:last-of-type {
+  text-align: center;
 }
 
-
-
+.all-recipes .table-header {
+  height: auto;
+  margin-bottom: 25px;
+}
+.all-recipes .table-wrapper,
+.table-wrapper.vendors,
+.table-wrapper.machines,
+.table-wrapper.finishes,
+.table-wrapper.materials {
+  padding: 1.5rem;
+}
+.table-wrapper .workflow-filter {
+  margin-top: 25px;
+}
+.table-wrapper .table-header {
+  margin-bottom: 25px;
+  height: auto;
+}
 .table-header {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  align-items: flex-start;
+  flex-direction: column;
   padding: 1.5rem;
 }
 .table-header .left-column,
@@ -1038,7 +1082,10 @@ input:focus + .show-password-frame {
   border-radius: 50%;
   margin-right: 1rem;
 }
-
+.card-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
 .title-icon-box {
   display: flex;
   justify-content: flex-start;
@@ -1172,12 +1219,12 @@ input:focus + .show-password-frame {
   margin-left: 15px;
 }
 .photo-details b {
-  color: #7367f0;
+  color: #157efb;
   font-weight: 700;
 }
 
 .user-profile-picture-box .picture-box {
-  background-color: #7367f0;
+  background-color: #157efb;
   height: 140px;
   width: 140px;
   border: 5px solid #6e6b7b;
@@ -1404,10 +1451,10 @@ a.storm {
 .admin-options li.active,
 .account-options li.active {
   color: white;
-  border-color: #7367f0;
-  -webkit-box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
-  box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
-  background-color: #7367f0;
+  border-color: #157efb;
+  -webkit-box-shadow: 0 4px 18px -4px rgb(21 126 251 / 65%);
+  box-shadow: 0 4px 18px -4px rgb(21 126 251 / 65%);
+  background-color: #157efb;
   border-radius: 0.358rem;
 }
 .admin-options li.active span,
@@ -1603,7 +1650,7 @@ a.storm {
   border-bottom-right-radius: 50%;
 }
 .pagination-number.active {
-  background: #7367f0!important;
+  background: #157efb!important;
   color: white;
   border-radius: 50%;
 }
@@ -1621,7 +1668,7 @@ a.storm {
   margin-right: 3px;
 }
 .arrow-box:hover {
-  background: #7367f0;
+  background: #157efb;
 }
 .arrow-box:hover svg {
   fill: white;
@@ -1638,7 +1685,7 @@ a.storm {
 }
 
 .greeting-banner h4 b {
-  color: #7367f0;
+  color: #157efb;
   font-weight: bold;
 }
 
@@ -2331,6 +2378,16 @@ a.storm {
   padding: 0;
   height: 100%;
 }
+.create-ticket-wrapper form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.create-ticket-wrapper .fad::before, .fa-duotone::before {
+  color: #157efb;
+}
 
 .create-ticket-wrapper .container,
 .create-ticket-wrapper .column {
@@ -2784,9 +2841,6 @@ a.storm {
 .table-row-wrapper.active {
 	height: auto;
 }
-.full-width {
-	width: 100%;
-}
 /*.ticket-products-wrapper {
 	width: 90%;
 }*/
@@ -2879,4 +2933,66 @@ a.storm {
 .department-wrapper {
   margin-bottom: 50px;
 }
+.department-wrapper h2 {
+  display: inline-block;
+  border-bottom: 2px solid #E5E5E4;
+}
+#department-select {
+  color:#323338;
+}
 
+.list-item-user-details { 
+  position: relative;
+}
+.department-end-frame {
+  margin-bottom: 25px;
+}
+.department-end-frame h4 {
+  text-align: center;
+  width: 330px;
+  margin: 0;
+}
+.department-divide-line {
+  width: calc(50% - 165px);
+  height: 2px;
+  background:#e5e5e4;
+}
+.list-item-user-details .hover-background {
+  display: none;
+  position: absolute;
+  top: -7px;
+  bottom: -7px;
+  left: -12px;
+  right: -12px;
+  border-radius: 5px;
+  z-index: -1;
+  background: #f8f8f8;
+}
+
+.list-item-user-details:hover .hover-background {
+  display: block;
+}
+
+.department-section.hide .ticket-container,
+.department-section.hide-all .ticket-container {
+  height: 0;
+  overflow: hidden;
+  transition: .3s;
+}
+.expanded-options-dropdown li.expand-group,
+.department-section .expand-all-groups {
+  display: none;
+}
+.department-section.hide .expanded-options-dropdown li.expand-group {
+  display: block;
+}
+.department-section.hide .expanded-options-dropdown li.collapse-group {
+  display: none;
+}
+
+.department-section.hide-all .collapse-all-groups {
+  display: none;
+}
+.department-section.hide-all .expanded-options-dropdown li.expand-all-groups {
+  display: block;
+}

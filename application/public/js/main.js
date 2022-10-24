@@ -1,8 +1,8 @@
 $( document ).ready(function() {
     $('.worlkflow-navigation ul li').on('click', function() {
-        $(`.department-end-frame`).remove();
+        $('.department-end-frame').remove();
         let currentDepartmentName = $(this).text();
-        $('#department-select').text(" - " + currentDepartmentName);
+        $('#department-select').text(' - ' + currentDepartmentName);
         const selectedDepartment = $(this).data('department');
         const cssTransitionDelayInMs = 200;
         $('.department-wrapper').hide(cssTransitionDelayInMs);

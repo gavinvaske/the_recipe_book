@@ -176,72 +176,74 @@
             <div class='table-body flex-center-center-column'>
               <div class='table-row-wrapper full-width'>
                 <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-                <div class='table-row flex-center-center-column'>
-                  <div class='flex-center-center-row ticket-wrapper full-width'>
-                    <div class='column-td column-td-a bg-green'>
-                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                      <div class='ticket-dropdown-options dropdown'>
-                        <ul>
-                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                          <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                          <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white'></div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>
-                      <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">TODO</span>
-                      </div><span class='machine-name'>Press 1 (TODO)</span>
-                    </div>
-                    <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
-                  </div>
-                </div>
-                <% }) %>
-                <div class='ticket-products-wrapper flex-center-right-column full-width'>
-                  <div class='table-header secondary-table-header flex-center-center-row'>
-                    <div class='column-header column-header-a'></div>
-                    <div class='column-header column-header-b'>#</div>
-                    <div class='column-header column-header-c'>Products</div>
-                    <div class='column-header column-header-d'></div>
-                    <div class='column-header column-header-e'></div>
-                    <div class='column-header column-header-f'></div>
-                    <div class='column-header column-header-g'>Frames</div>
-                    <div class='column-header column-header-h'>Quantity</div>
-                    <div class='column-header column-header-i'>Artwork</div>
-                  </div>
-
-                  <!--Gavin this where you would loop through and display products that belong to a ticket -->
-                  <div class='product-wrapper flex-top-center-column'>
-                    <div class='table-row flex-center-center-row'>
+                  <div class='table-row flex-center-center-column'>
+                    <div class='flex-center-center-row ticket-wrapper full-width'>
                       <div class='column-td column-td-a bg-green'>
                         <i class='fa-light fa-ellipsis-vertical text-white'></i>
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
-                            <li><i class="fa-regular fa-eye"></i>View Product</li>
+                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
                           </ul>
                         </div>
                       </div>
-                      <div class='column-td column-td-b bg-white'>1</div>
-                      <div class='column-td column-td-c product-number-column bg-white'>767D-001</div>
+                      <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                      <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                       <div class='column-td column-td-d bg-white'></div>
                       <div class='column-td column-td-e bg-white'></div>
                       <div class='column-td column-td-f bg-white'></div>
-                      <div class='column-td column-td-g bg-white'>100</div>
-                      <div class='column-td column-td-h bg-white'>4000</div>
-                      <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+                      <div class='column-td column-td-g bg-white'></div>
+                      <div class='column-td column-td-h bg-white'>
+                        <div class='user-cell bg-blue tooltip'>SV
+                          <span class="tooltiptext">TODO</span>
+                        </div><span class='machine-name'>Press 1 (TODO)</span>
+                      </div>
+                      <div class='column-td column-td-i bg-white'>July 4 (TODO)</div>
                     </div>
-                  </div><!-- End Gavin Looping Comment -->
-                </div>
+                  </div>
+
+                  <div class='ticket-products-wrapper flex-center-right-column full-width'>
+                    <div class='table-header secondary-table-header flex-center-center-row'>
+                      <div class='column-header column-header-a'></div>
+                      <div class='column-header column-header-b'>#</div>
+                      <div class='column-header column-header-c'>Products</div>
+                      <div class='column-header column-header-d'></div>
+                      <div class='column-header column-header-e'></div>
+                      <div class='column-header column-header-f'></div>
+                      <div class='column-header column-header-g'>Frames</div>
+                      <div class='column-header column-header-h'>Quantity</div>
+                      <div class='column-header column-header-i'>Artwork</div>
+                    </div>
+                    <% ticket.products.forEach((product) => { %>
+                      <!--Gavin this where you would loop through and display products that belong to a ticket -->
+                      <div class='product-wrapper flex-top-center-column'>
+                        <div class='table-row flex-center-center-row'>
+                          <div class='column-td column-td-a bg-green'>
+                            <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                            <div class='ticket-dropdown-options dropdown'>
+                              <ul> 
+                                <a href="/products/<%= product._id %>"><li><i class="fa-regular fa-eye"></i>View Product</li></a>
+                                <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                                <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                                <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class='column-td column-td-b bg-white'>1</div>
+                          <div class='column-td column-td-c product-number-column bg-white'>767D-001</div>
+                          <div class='column-td column-td-d bg-white'></div>
+                          <div class='column-td column-td-e bg-white'></div>
+                          <div class='column-td column-td-f bg-white'></div>
+                          <div class='column-td column-td-g bg-white'>100</div>
+                          <div class='column-td column-td-h bg-white'>4000</div>
+                          <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+                        </div>
+                      </div><!-- End Gavin Looping Comment -->
+                    <% }) %>
+                  </div>
+                <% }) %>
               </div>
             </div>
           </div>
@@ -340,6 +342,7 @@
                     </div>
                   </div><!-- End Gavin Looping Comment -->
                 </div>
+
               </div>
             </div>
           </div>

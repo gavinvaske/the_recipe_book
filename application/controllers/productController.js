@@ -4,7 +4,9 @@ const {upload} = require('../middleware/upload');
 const path = require('path');
 const fs = require('fs');
 const TicketModel = require('../models/ticket');
+
 const s3Service = require('../services/s3Service');
+const productService = require('../services/productService');
 
 router.use(verifyJwtToken);
 
@@ -21,7 +23,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         const fileName = request.file.originalname;
         
         const ticket = await TicketModel.findOne({
-            'product.productNumber': productNumber
+            'products.productNumber': productNumber
         }).exec();
 
         const {Location: urlWhereTheFileIsStored} = await s3Service.storeFileInS3(fileName, base64EncodedPdf);
@@ -43,6 +45,33 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         });
     } finally {
         deleteFileFromFileSystem(pdfFilePath);
+    }
+});
+
+router.get('/:id', async (request, response) => {
+    const productObjectId = request.params.id;
+
+    try {
+        const ticket = await TicketModel
+            .findOne({
+                'products._id': productObjectId
+            }).exec();
+
+        const product = productService.selectProductFromTicket(ticket, productObjectId);
+
+        if (!product) {
+            request.flash('errors', [`No product was found with an ID of "${productObjectId}"`]);
+            return response.redirect('/tickets');
+        }
+
+        return response.render('viewOneProduct', {
+            ticket,
+            product
+        });
+    } catch (error) {
+        console.log(`Error loading product: ${JSON.stringify(error)}`);
+        request.flash('errors', [`An error occurred while trying to load the product with an id of "${productObjectId}"`]);
+        return response.redirect('/tickets');
     }
 });
 

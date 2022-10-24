@@ -198,7 +198,7 @@
 }
 .table-header {
     padding: 0;
-	height: 40px;
+	/* height: 40px; */
 }
 .column-td {
 	/*background-color: white;*/
@@ -519,7 +519,6 @@
 .btn {
 	height: 54px;
 	width: 160px;
-	background-color: red;
 	display: flex;
 	justify-content: center;
 	align-items: center;

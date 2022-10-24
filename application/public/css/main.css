@@ -501,7 +501,7 @@ html {
     color: #5e5873;
 }
 .registration-content-frame h1 span {
-  color: #7367f0;
+  color: #157efb;
 }
 .registration-content-frame h2 {
   font-size: 1.3rem;
@@ -533,8 +533,8 @@ html {
 .create-entry,
 .save-form-button {
     display: block;
-    border-color: #7367f0;
-    background-color: #7367f0;
+    border-color: #157efb;
+    background-color: #157efb;
     text-align: center;
     border: 1px solid transparent;
     padding: 0.786rem 1.5rem;
@@ -685,10 +685,10 @@ input:focus + .show-password-frame {
     width: 100%;
 }
 .label-link-wrapper a {
-    color: #7367f0;
+    color: #157efb;
 }
 .label-link-wrapper a:hover {
-    color: #5e50ee;
+    color: #157efb;
 }
 .remember-me-frame {
     display: flex;
@@ -956,8 +956,8 @@ input:focus + .show-password-frame {
 }
 .btn-primary {
   display: block;
-  border-color: #7367f0;
-  background-color: #7367f0;
+  border-color: #157efb;
+  background-color: #157efb;
   text-align: center;
   border: 1px solid transparent;
   padding: 0.786rem 1.5rem;
@@ -969,20 +969,33 @@ input:focus + .show-password-frame {
 }
 .btn-primary:hover {
   cursor: pointer;
-  -webkit-box-shadow: 0 8px 25px -8px #7367f0;
-  box-shadow: 0 8px 25px -8px #7367f0;
+  -webkit-box-shadow: 0 8px 25px -8px #157efb;
+  box-shadow: 0 8px 25px -8px #157efb;
 }
-
+.admin-panel td {
+  padding: 0.72rem 2rem;
+}
+.admin-panel .table-wrapper td:last-of-type {
+  text-align: center;
+}
 
 .all-recipes .table-header {
   height: auto;
   margin-bottom: 25px;
 }
-.all-recipes .table-wrapper {
+.all-recipes .table-wrapper,
+.table-wrapper.vendors,
+.table-wrapper.machines,
+.table-wrapper.finishes,
+.table-wrapper.materials {
   padding: 1.5rem;
 }
-.all-recipes .workflow-filter {
+.table-wrapper .workflow-filter {
   margin-top: 25px;
+}
+.table-wrapper .table-header {
+  margin-bottom: 25px;
+  height: auto;
 }
 .table-header {
   display: flex;
@@ -1069,7 +1082,10 @@ input:focus + .show-password-frame {
   border-radius: 50%;
   margin-right: 1rem;
 }
-
+.card-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
 .title-icon-box {
   display: flex;
   justify-content: flex-start;
@@ -1203,12 +1219,12 @@ input:focus + .show-password-frame {
   margin-left: 15px;
 }
 .photo-details b {
-  color: #7367f0;
+  color: #157efb;
   font-weight: 700;
 }
 
 .user-profile-picture-box .picture-box {
-  background-color: #7367f0;
+  background-color: #157efb;
   height: 140px;
   width: 140px;
   border: 5px solid #6e6b7b;
@@ -1435,10 +1451,10 @@ a.storm {
 .admin-options li.active,
 .account-options li.active {
   color: white;
-  border-color: #7367f0;
-  -webkit-box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
-  box-shadow: 0 4px 18px -4px rgb(115 103 240 / 65%);
-  background-color: #7367f0;
+  border-color: #157efb;
+  -webkit-box-shadow: 0 4px 18px -4px rgb(21 126 251 / 65%);
+  box-shadow: 0 4px 18px -4px rgb(21 126 251 / 65%);
+  background-color: #157efb;
   border-radius: 0.358rem;
 }
 .admin-options li.active span,
@@ -1634,7 +1650,7 @@ a.storm {
   border-bottom-right-radius: 50%;
 }
 .pagination-number.active {
-  background: #7367f0!important;
+  background: #157efb!important;
   color: white;
   border-radius: 50%;
 }
@@ -1652,7 +1668,7 @@ a.storm {
   margin-right: 3px;
 }
 .arrow-box:hover {
-  background: #7367f0;
+  background: #157efb;
 }
 .arrow-box:hover svg {
   fill: white;
@@ -1669,7 +1685,7 @@ a.storm {
 }
 
 .greeting-banner h4 b {
-  color: #7367f0;
+  color: #157efb;
   font-weight: bold;
 }
 

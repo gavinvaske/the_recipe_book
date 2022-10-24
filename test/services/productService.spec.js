@@ -10,7 +10,7 @@ describe('productService test suite', () => {
         products = [];
         ticket = {
             products
-        }
+        };
     });
 
     describe('selectProductFromTicket()', () => {

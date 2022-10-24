@@ -94,10 +94,10 @@
 
         <p>Finished QTY: <% product.labelQty || 'N/A' %> (AA)</p>
         <p>QTY/Roll: <% product.labelsPerRoll || 'N/A' %> (AP)</p>
-        <!-- <p>Press Count: TODO (AQ)</p> -->
+        <p>Press Count: TODO: Waiting on Storm (AQ)</p>
         <p>Unwind Direction: <% product.unwindDirection || 'N/A' %> (F)</p>
         <p>Core Height: <% product.coreHeight || 'N/A' %> (AR)</p>
-        <!-- <p># of Cores: TODO (AS)</p> -->
+        <p># of Cores: <%= product.numberOfRolls || 'N/A' %> (AS)</p>
         <p>Overrun: <% product.overRun || 'N/A' %> (AT)</p>
         <p>Core Diameter: <% product.coreDiameter || 'N/A' %> (AU)</p>
         <p>Winding Notes: <% product.windingNotes || 'N/A' %> (AV)</p>
@@ -118,7 +118,7 @@
         <p>Zip: <%= ticket.shipZipCode || 'N/A' %> (AAD)</p>
         <p>Shipping Location: <%= ticket.shippingLocationName || 'N/A' %> (AAE)</p>
         <p>Shipping Attention: <%= ticket.shippingAttention || 'N/A' %> (AAF)</p>
-        <!-- <p>Shipping Notes: TODO (???)</p> -->
+        <p>Shipping Notes: TODO: Waiting on Storm (???)</p>
     </div>
 
 </div>

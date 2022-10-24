@@ -733,8 +733,14 @@ input:focus + .show-password-frame {
   justify-content: center;
   align-items: center;
 }
-.navbar-main .column-left .navbar-links {
+.navbar-main .column-left .navbar-links a {
   padding: 12px 20px;
+}
+.navbar-main .column-left .navbar-links .material,
+.navbar-main .column-left .navbar-links .recipes {
+  padding: 12px 20px;
+}
+.navbar-main .column-left .navbar-links {
   border-radius: 5px;
   margin-right: 10px;
 }
@@ -813,6 +819,22 @@ input:focus + .show-password-frame {
 #recipe-dropdown-trigger,
 #material-dropdown-trigger {
   position: relative;
+}
+.navbar-main .column-left .navbar-links .material .fa-regular,
+.navbar-main .column-left .navbar-links .recipes .fa-light  {
+  font-size: 20px;
+  margin-right: 7px;
+}
+.navbar-main .navbar-links .fa-cubes-stacked,
+.navbar-main .navbar-links .fa-layer-group {
+  font-size: 22px;
+  margin-left: 25px;
+  margin-right: 10px;
+}
+.navbar-main .column-left .navbar-links .tickets .fa-sharp {
+  font-size: 20px;
+  margin-right: 7px;
+  transform: rotate(90deg);
 }
 .dropdown-menu {
   position: absolute;
@@ -952,12 +974,21 @@ input:focus + .show-password-frame {
 }
 
 
-
+.all-recipes .table-header {
+  height: auto;
+  margin-bottom: 25px;
+}
+.all-recipes .table-wrapper {
+  padding: 1.5rem;
+}
+.all-recipes .workflow-filter {
+  margin-top: 25px;
+}
 .table-header {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  align-items: flex-start;
+  flex-direction: column;
   padding: 1.5rem;
 }
 .table-header .left-column,
@@ -2880,3 +2911,22 @@ a.storm {
   margin-bottom: 50px;
 }
 
+.list-item-user-details { 
+  position: relative;
+}
+
+.list-item-user-details .hover-background {
+  display: none;
+  position: absolute;
+  top: -7px;
+  bottom: -7px;
+  left: -12px;
+  right: -12px;
+  border-radius: 5px;
+  z-index: -1;
+  background: #f8f8f8;
+}
+
+.list-item-user-details:hover .hover-background {
+  display: block;
+}

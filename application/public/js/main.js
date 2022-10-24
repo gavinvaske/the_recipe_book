@@ -1,8 +1,10 @@
 $( document ).ready(function() {
     $('.worlkflow-navigation ul li').on('click', function() {
+        $(`.department-end-frame`).remove();
+        let currentDepartmentName = $(this).text();
+        $('#department-select').text(" - " + currentDepartmentName);
         const selectedDepartment = $(this).data('department');
         const cssTransitionDelayInMs = 200;
-
         $('.department-wrapper').hide(cssTransitionDelayInMs);
         
         $(`.department-wrapper*[data-department="${selectedDepartment}"]`).show(cssTransitionDelayInMs);
@@ -452,6 +454,10 @@ $( document ).ready(function() {
                 $(this).addClass('active');
             }
         });
+
+        $('.expanded-options-dropdown li').click(function(){
+            $('.expanded-options-wrapper').removeClass('active');
+        });
     
         $('.column-td-a').click(function(){
             if ($(this).hasClass('active')){
@@ -504,7 +510,22 @@ $( document ).ready(function() {
 		
     });
 
+    $('.collapse-group').click(function(){
+        $(this).closest('.department-section').addClass('hide');
+    });
 
+    $('.expand-group').click(function(){
+        $(this).closest('.department-section').removeClass('hide');
+    });
+
+    $('.collapse-all-groups').click(function(){
+        $('.department-section').addClass('hide-all');
+    });
+
+    $('.expand-all-groups').click(function(){
+        $('.department-section').removeClass('hide-all');
+        $('.department-section').removeClass('hide');
+    });
 
 });
 

@@ -9,7 +9,7 @@
     <div class='workflow-order-header'>
       
       <div class='header-description'>
-        <h1 class='text-blue'>Order Workflow</h1>
+        <h1 class='text-blue'>Order Workflow <span id="department-select"> - All Tickets</span></h1>
         <p>All jobs tickets can be found in the departments below.</p>
 
       </div>
@@ -141,7 +141,7 @@
       <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
-        <h1>Order Prep Department</h1>
+        <h2>Order Prep Department</h2>
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -152,9 +152,10 @@
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                  <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                  <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
+                  <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                  <li class='expand-group'><i class="fa-regular fa-maximize"></i>Expand This Group</li>
+                  <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                  <li class='expand-all-groups'><i class="fa-regular fa-maximize"></i>Expand All Groups</li>
                 </ul>
               </div>
             </div>
@@ -185,7 +186,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -228,7 +228,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -261,7 +260,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -291,7 +289,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -329,7 +326,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -362,7 +358,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -392,7 +387,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -430,7 +424,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -463,7 +456,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -493,7 +485,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -531,7 +522,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -564,7 +554,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -594,7 +583,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -632,7 +620,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -654,12 +641,16 @@
         <% } %>
       </div>
       <% } %>
+
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
       
       <!--- Art Prep Department Start-->
       <% if (artPrepTicketsGroupedBySubDepartment && Object.keys(artPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Art Department -->
       <div class='department-wrapper' data-department="ART-PREP">
-        <h1>Art Department</h1>
+        <h2>Art Department</h2>
 
         <% if (artPrepNeedsAttentionTickets && artPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -673,7 +664,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -703,7 +693,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -745,7 +734,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -778,7 +766,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -807,7 +794,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -845,7 +831,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -878,7 +863,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -935,7 +919,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -968,7 +951,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -998,7 +980,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1036,7 +1017,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1069,7 +1049,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1099,7 +1078,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1137,7 +1115,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1159,11 +1136,15 @@
         <% } %>
       </div>
       <% } %>
+
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
   
       <% if (prePressTicketsGroupedBySubDepartment && Object.keys(prePressTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Pre Press Department-->
       <div class='department-wrapper' data-department="PRE-PRESS">
-        <h1>Pre Pess Department</h1>
+        <h2>Pre Pess Department</h2>
 
         <% if (prePressNeedsAttentionTickets && prePressNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -1177,7 +1158,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1207,7 +1187,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1245,7 +1224,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1278,7 +1256,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1307,7 +1284,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -1345,7 +1321,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1378,7 +1353,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1435,7 +1409,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1458,10 +1431,14 @@
       </div>
       <% } %>
 
-    <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
+
+      <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Printing Department-->
       <div class='department-wrapper' data-department="PRINTING">
-        <h1>Printing Department</h1>
+        <h2>Printing Department</h2>
 
         <% if (printingInProgressTickets && printingInProgressTickets.length) { %>  <!-- TODO: This .each looks unique - investigate -->
         <div class='department-section department-section-a'>
@@ -1475,7 +1452,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1505,7 +1481,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -1547,7 +1522,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1580,7 +1554,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1610,7 +1583,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1648,7 +1620,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1681,7 +1652,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1711,7 +1681,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1749,7 +1718,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1782,7 +1750,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1812,7 +1779,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1850,7 +1816,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1883,7 +1848,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -1913,7 +1877,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -1951,7 +1914,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -1973,11 +1935,15 @@
         <% } %>
       </div>
       <% } %>
+
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
     
       <% if (cuttingTicketsGroupedBySubDepartment && Object.keys(cuttingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Cutting Department -->
       <div class='department-wrapper' data-department="CUTTING">
-        <h1>Cutting Department</h1>
+        <h2>Cutting Department</h2>
 
         <% if (cuttingInProgressTickets && cuttingInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
@@ -1991,7 +1957,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2021,7 +1986,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -2063,7 +2027,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2096,7 +2059,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2126,7 +2088,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2164,7 +2125,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2197,7 +2157,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2227,7 +2186,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2265,7 +2223,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2298,7 +2255,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2328,7 +2284,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2366,7 +2321,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2399,7 +2353,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2429,7 +2382,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2467,7 +2419,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2500,7 +2451,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2530,7 +2480,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2568,7 +2517,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2591,10 +2539,14 @@
       </div>
       <% } %>
 
-    <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
+
+      <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Winding Department -->
       <div class='department-wrapper' data-department="WINDING">
-        <h1>Winding Department</h1>
+        <h2>Winding Department</h2>
 
         <% if (windingInProgressTickets && windingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each Looks different -->
@@ -2608,7 +2560,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2638,7 +2589,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -2680,7 +2630,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2713,7 +2662,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2743,7 +2691,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -2781,7 +2728,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2814,7 +2760,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2844,7 +2789,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -2882,7 +2826,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -2905,10 +2848,14 @@
       </div>
       <% } %>
 
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
+
       <% if (shippingTicketsGroupedBySubDepartment && Object.keys(shippingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Shipping Department -->
       <div class='department-wrapper' data-department="SHIPPING">
-        <h1>Shipping Department</h1>
+        <h2>Shipping Department</h2>
 
         <% if (shippingInProgressTickets && shippingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each is unique? why -->
@@ -2922,7 +2869,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -2952,7 +2898,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -2990,7 +2935,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -3023,7 +2967,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -3053,7 +2996,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -3091,7 +3033,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -3124,7 +3065,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -3154,7 +3094,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -3192,7 +3131,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -3225,7 +3163,6 @@
                   <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                   <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                  <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                 </ul>
               </div>
             </div>
@@ -3254,7 +3191,6 @@
                           <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                           <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                         </ul>
                       </div>
                     </div>
@@ -3292,7 +3228,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -3315,10 +3250,14 @@
       </div>
       <% } %>
 
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+      </div>
+
       <% if (billingTicketsGroupedBySubDepartment && Object.keys(billingTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Billing Department -->
       <div class='department-wrapper' data-department="BILLING">
-        <h1>Billing Department (TODO Storm: this second's subdepartments appear incorrect)</h1>
+        <h2>Billing Department (TODO Storm: this second's subdepartments appear incorrect)</h2>
 
         <% if (true) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
           <div class='department-section department-section-a'>
@@ -3332,7 +3271,6 @@
                     <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                     <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                     <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                    <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                   </ul>
                 </div>
               </div>
@@ -3360,7 +3298,6 @@
                         <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                         <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                        <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                       </ul>
                     </div>
                   </div>
@@ -3382,7 +3319,6 @@
                             <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
                             <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                            <li><i class="fa-regular fa-file-excel"></i>Export to Excel</li>
                           </ul>
                         </div>
                       </div>
@@ -3401,7 +3337,6 @@
         <% } %>
       </div>
     <% } %>
-
   </div>
 </div>
 

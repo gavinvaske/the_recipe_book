@@ -21,6 +21,12 @@ function cannotBeFalsy(value) {
     return true;
 }
 
+function mustNotContainWhitespace(str) {
+    const doesContainWhitespace = /\s/.test(str);
+
+    return !doesContainWhitespace;
+}
+
 async function validateMaterialExists(materialId) {
     const searchCriteria = {
         materialId: {$regex: materialId, $options: 'i'}
@@ -109,11 +115,13 @@ const schema = new Schema({
         type: String,
         required: true,
         uppercase: true,
-        alias: 'ProductNumber'
+        trim: true,
+        alias: 'ProductNumber',
+        validate: [mustNotContainWhitespace, '"ProductNumber" cannot contain whitespace(s)']
     },
     productDie: {
         type: String,
-        validate: [validateProductDie, 'Product Die is in the wrong format'],
+        validate: [validateProductDie, '"ToolNo1" is in the wrong format'],
         required: true,
         uppercase: true,
         alias: 'ToolNo1'

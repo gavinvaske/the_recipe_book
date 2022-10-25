@@ -210,7 +210,8 @@ const schema = new Schema({
         alias: 'StockNotes'
     },
     prePrintingNotes: {
-        type: [String],
+        type: String,
+        required: false,
         alias: 'Notes'
     },
     printingNotes: {

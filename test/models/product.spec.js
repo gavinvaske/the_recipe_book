@@ -35,7 +35,7 @@ describe('validation', () => {
             MachineCount: String(chance.floating({min: 0})),
             FinishNotes: chance.string(),
             StockNotes: chance.string(),
-            Notes: [chance.string(), chance.string()],
+            Notes: chance.string(),
             Hidden_Notes: chance.string(),
             NoColors: chance.pickone(Object.keys(idToColorEnum)),
             LabelsPer_: String(chance.integer({min: 0})),
@@ -592,11 +592,10 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should be an array of Strings', () => {
+        it('should have a string datatype', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.prePrintingNotes[0]).toEqual(expect.any(String));
-            expect(product.prePrintingNotes[1]).toEqual(expect.any(String));
+            expect(product.prePrintingNotes).toEqual(expect.any(String));
         });
     });
     describe('attribute: printingNotes (aka Hidden_Notes)', () => {

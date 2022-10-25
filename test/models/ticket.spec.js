@@ -2,6 +2,7 @@ const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
 const {subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
+const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -13,7 +14,7 @@ describe('validation', () => {
             OrderDate: chance.date({string: true}),
             EstFootage: String(chance.integer({min: 1})),
             CustPONum: chance.string(),
-            Priority: chance.string(),
+            Priority: chance.pickone(getAllPriorities()),
             BillZip: chance.string(),
             BillCity: chance.string(),
             BillAddr1: chance.string(),
@@ -209,6 +210,22 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should default to "Standard" priority if attribute is missing', () => {
+            delete ticketAttributes.Priority;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.priority).toBe(standardPriority);
+        });
+
+        it('should fail validation if attribute is not one of the accepted values', () => {
+            ticketAttributes.Priority = chance.string();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
 
         it('should be of type String', () => {

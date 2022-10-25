@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
 const {subDepartmentsGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
+const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -156,8 +157,10 @@ const ticketSchema = new Schema({
     },
     priority: {
         type: String,
-        required: false,
-        alias: 'Priority'
+        required: true,
+        alias: 'Priority',
+        default: standardPriority,
+        enum: getAllPriorities()
     },
     billingZipCode: {
         type: String,

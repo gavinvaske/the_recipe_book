@@ -2,7 +2,7 @@ const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
 const {subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
-const {standardPriority, getAllPriories} = require('../../application/enums/priorityEnum');
+const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 
 describe('validation', () => {
     let ticketAttributes;
@@ -14,7 +14,7 @@ describe('validation', () => {
             OrderDate: chance.date({string: true}),
             EstFootage: String(chance.integer({min: 1})),
             CustPONum: chance.string(),
-            Priority: chance.pickone(getAllPriories()),
+            Priority: chance.pickone(getAllPriorities()),
             BillZip: chance.string(),
             BillCity: chance.string(),
             BillAddr1: chance.string(),

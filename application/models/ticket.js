@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
 const {subDepartmentsGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
-const {standardPriority, getAllPriories} = require('../enums/priorityEnum');
+const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -160,7 +160,7 @@ const ticketSchema = new Schema({
         required: true,
         alias: 'Priority',
         default: standardPriority,
-        enum: getAllPriories()
+        enum: getAllPriorities()
     },
     billingZipCode: {
         type: String,

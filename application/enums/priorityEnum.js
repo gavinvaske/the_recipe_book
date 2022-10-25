@@ -5,7 +5,7 @@ const STANDARD = 'Standard';
 
 module.exports.standardPriority = STANDARD;
 
-module.exports.getAllPriories = () => {
+module.exports.getAllPriorities = () => {
     return [
         RUSH_FEE,
         RE_RUN,

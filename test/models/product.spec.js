@@ -18,7 +18,7 @@ describe('validation', () => {
         const validProductDies = ['DD-123', 'DO-98839'];
 
         productAttributes = {
-            ProductNumber: chance.pickone(['1245D-100', '767D-2672', '767D-001']),
+            ProductNumber: chance.word(),
             ToolNo1: chance.pickone(validProductDies),
             StockNum2: chance.pickone(Object.keys(hotFolders)),
             InkType: chance.string(),
@@ -67,28 +67,19 @@ describe('validation', () => {
     });
 
     describe('attribute: productNumber (aka ProductNumber)', () => {
-        it('should fail validation if string does not start with 3 or 4 digits followed by a "D-" follows by 1 or more digits', () => {
-            const slightlyInvalidProductNumbers = chance.pickone([`12D-${getRandomNumberOfDigits()}`, `123D-${getRandomNumberOfDigits()}xxxxx`]);
-            productAttributes.ProductNumber = slightlyInvalidProductNumbers;
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-        it('should validate if correct Regex format is provided', () => {
-            const validProductNumber = chance.pickone([`1245d-${getRandomNumberOfDigits()}`, `767d-${getRandomNumberOfDigits()}`, `767d-${getRandomNumberOfDigits()}`]);
-            productAttributes.ProductNumber = validProductNumber;
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-            expect(error).toBe(undefined);
-        });
-
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.productNumber).toBeDefined();
+        });
+
+        it('should NOT fail validation', () => {
+            productAttributes.ProductNumber = chance.word();
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {
@@ -100,10 +91,37 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
+        it('should fail validation if attribute contains whitespace characters', () => {
+            productAttributes.ProductNumber = chance.word() + ' ' + chance.word();
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
         it('should be of type String', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.productNumber).toEqual(expect.any(String));
+        });
+
+        it('should automatically uppercase productNumber', () => {
+            const productNumber = chance.word();
+            productAttributes.ProductNumber = productNumber;
+    
+            const product = new ProductModel(productAttributes);
+
+            expect(product.productNumber).toEqual(productNumber.toUpperCase());
+        });
+
+        it('should automatically trim whitespace', () => {
+            const productNumberWithoutWhitespace = chance.word().toUpperCase();
+            productAttributes.ProductNumber = '  ' + productNumberWithoutWhitespace + ' ';
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.productNumber).toEqual(productNumberWithoutWhitespace);
         });
     });
     

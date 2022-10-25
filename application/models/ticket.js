@@ -159,9 +159,7 @@ const ticketSchema = new Schema({
         type: String,
         required: true,
         alias: 'Priority',
-        default: function() {
-            return standardPriority;
-        },
+        default: standardPriority,
         enum: getAllPriories()
     },
     billingZipCode: {

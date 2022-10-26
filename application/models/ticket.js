@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
@@ -50,7 +51,7 @@ async function validateMaterialExists(materialId) {
     
     try {
         const material = await MaterialModel.findOne(searchCriteria).exec();
-
+        
         return !material ? false : true;
     } catch (error) {
         return false;

@@ -51,7 +51,7 @@ async function validateMaterialExists(materialId) {
     
     try {
         const material = await MaterialModel.findOne(searchCriteria).exec();
-        
+
         return !material ? false : true;
     } catch (error) {
         return false;

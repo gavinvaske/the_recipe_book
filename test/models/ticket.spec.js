@@ -51,8 +51,16 @@ describe('validation', () => {
             expect(ticket.ticketNumber).toBeDefined();
         });
 
+        it('should trim whitespace', () => {
+            const ticketNumberWithoutWhitespace = chance.word();
+            ticketAttributes.TicketNumber = ' ' + ticketNumberWithoutWhitespace + '   ';
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.ticketNumber).toBe(ticketNumberWithoutWhitespace);
+        });
+
         it('should fail if ticketNumber does not contain ONLY digits', () => {
-            const validTicketNumber = chance.integer({min: 0});
+            const validTicketNumber = String(chance.integer({min: 0}));
             const invalidTicketNumber = validTicketNumber + chance.word();
             ticketAttributes.TicketNumber = invalidTicketNumber;
             const ticket = new TicketModel(ticketAttributes);

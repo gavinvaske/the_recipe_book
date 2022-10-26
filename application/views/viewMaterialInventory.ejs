@@ -2,15 +2,15 @@
 <div class='page-wrapper materials-wrapper flex-center-center-column full-width'>
 
     <div class='material-header flex-center-center-row full-width'>
-      <div class='col col-one third-width'>
+      <div class='card col col-one third-width'>
         <span>Feet On Hand</span>
         <h1 class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></h1>
       </div>
-      <div class='col col-two'>
+      <div class='card col col-two'>
         <span>Feet On Order</span>
         <h1 class='total-length-of-material-ordered'><%= lengthOfAllMaterialsOrdered || 'N/A' %></h1>
       </div>
-      <div class='col col-three'>
+      <div class='card col col-three'>
         <span>Total POs</span>
         <h1 class='total-purchase-ordered'><%= totalPurchaseOrders || 'N/A' %></h1>
       </div>

@@ -828,7 +828,8 @@ input:focus + .show-password-frame {
 .navbar-main .navbar-links .fa-cubes-stacked,
 .navbar-main .navbar-links .fa-layer-group {
   font-size: 22px;
-  margin-left: 25px;
+  /* margin-left: 25px; */
+  margin-left: 15px;
   margin-right: 10px;
 }
 .navbar-main .column-left .navbar-links .tickets .fa-sharp {
@@ -899,7 +900,8 @@ input:focus + .show-password-frame {
 .dropdown-menu li a svg,
 .options-dropdown li a svg {
   margin-right: 10px;
-  margin-left: 25px
+  /* margin-left: 25px */
+  margin-left: 15px;
 }
 .dropdown-menu li a:hover,
 .options-dropdown li a:hover {
@@ -961,7 +963,8 @@ input:focus + .show-password-frame {
   text-align: center;
   border: 1px solid transparent;
   padding: 0.786rem 1.5rem;
-  border-radius: 0.358rem;
+  /* border-radius: 0.358rem; */
+  border-radius: 3px;
   width: 100%;
   color: white;
   font-weight: 500;
@@ -1485,8 +1488,17 @@ a.storm {
 .half-width {
   width: 50%;
 }
-.two-third-width {
+.quarter-width {
+  width: 25%;
+}
+.third-width {
+  width: 33.333%;
+}
+.three-fourths-width {
   width: 75%;
+}
+.two-thirds-width {
+  width: 66.666%;
 }
 .recipe-filter {
   text-align: center;
@@ -2385,9 +2397,9 @@ a.storm {
   flex-direction: column;
 }
 
-.create-ticket-wrapper .fad::before, .fa-duotone::before {
+/* .create-ticket-wrapper .fad::before, .fa-duotone::before {
   color: #157efb;
-}
+} */
 
 .create-ticket-wrapper .container,
 .create-ticket-wrapper .column {
@@ -2403,7 +2415,8 @@ a.storm {
 }
 
 .create-ticket-wrapper .fa-file-import{
-  font-size: 150px;
+  font-size: 110px;
+  margin-bottom: 30px;
 }
 .create-ticket-wrapper .alert-box {
   margin-bottom: 20px;
@@ -2567,19 +2580,21 @@ a.storm {
 
 
 .material-header {
-  background-color: white; 
   border-radius: 10px; 
   padding: 15px; 
   box-sizing: border-box;
   margin-bottom: 20px;
 }
 .material-header .col {
-	width: 33.333%;
+	width: calc(33.333% - 50px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 
+}
+.material-header .col.col-two {
+  margin: 0 50px;
 }
 
 .material-header .col span {
@@ -2995,4 +3010,99 @@ a.storm {
 }
 .department-section.hide-all .expanded-options-dropdown li.expand-all-groups {
   display: block;
+}
+
+.view-full-ticket-wrapper .masonary-frame .card {
+  margin: 0 10px 20px 10px;
+}
+
+.view-full-ticket-wrapper .masonary-frame .card.half-width {
+  width: calc(50% - 20px);
+}
+.view-full-ticket-wrapper .masonary-frame .card.third-width {
+  width: calc(33.333% - 20px);
+}
+
+.view-full-ticket-wrapper .masonary-frame .card.two-thirds-width {
+  width: calc(66.666% - 20px);
+}
+.view-full-ticket-wrapper .masonary-frame .card.quarter-width {
+  width: calc(25% - 20px);
+}
+.view-full-ticket-wrapper .masonary-frame .card.three-fourths-width {
+  width: calc(75% - 20px);
+}
+
+.masonary-frame .card span {
+  font-size: 2.5rem;
+}
+.masonary-frame .card label {
+  color: #6f6b7c;
+}
+.masonary-frame .card.multiple span {
+  font-size: 1rem;
+}
+
+.pre-printing-department-wrapper .card span {
+  color: #28c76f;
+}
+.printing-department-wrapper .card span {
+  color: #7367f0;
+}
+.cutting-department-wrapper .card span {
+  color: #ff8510;
+}
+.winding-department-wrapper .card span {
+  color: #00cfe8;
+}
+.shipping-department-wrapper .card span {
+  color: #7367f0;
+}
+.billing-department-wrapper .card span {
+  color: #ea5455;
+}
+
+.upload-ticket-frame {
+  margin: 35px 0;
+  padding: 50px 0;
+  width: 60%;
+  border-radius: 3%;
+  background: rgba(21, 126, 251, .1);
+}
+.upload-ticket-frame input[type=file] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #555;
+  height: 55px;
+}
+.upload-ticket-frame input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #157efb;
+  padding: 10px 20px;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+.upload-ticket-frame input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
+.upload-ticket-frame .text-frame {
+  margin-bottom: 25px;
+}
+
+.drop-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.btn-frame.ticket-upload .btn {
+   margin:0 5px;
+   border-radius: 3px;
 }

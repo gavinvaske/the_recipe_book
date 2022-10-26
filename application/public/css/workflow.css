@@ -139,9 +139,9 @@
 
 .dropdown {
 	position: absolute;
-  box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
-  padding: 16px;
-  border-radius: 8px;
+	box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
+	padding: 16px;
+	border-radius: 8px;
 }
 
 .dropdown {
@@ -159,16 +159,16 @@
 .person-filter-dropdown	{
 	left: -120px;
 	max-width: 432px;
-  min-width: 400px;
-  max-height: 500px;
-  overflow: auto;
+	min-width: 400px;
+	max-height: 500px;
+	overflow: auto;
 }
 .sort-dropdown {
 	left: 10px;
 	max-width: 432px;
-  min-width: 400px;
-  max-height: 500px;
-  overflow: auto;
+	min-width: 400px;
+	max-height: 500px;
+	overflow: auto;
 }
 
 .quick-filter-dropdown.active,

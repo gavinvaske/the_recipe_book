@@ -175,6 +175,13 @@ button:hover {
 	color: white;
 }
 
+/* DARK BUTTONS */
+.bg-outline-dark {
+	border: 2px solid #6e6b7b!important;
+	background: none;
+	color: #6e6b7b;
+}
+
 /* SPLIT BUTTON */
 .split-btn-frame:hover .btn-split,
 .split-btn-frame:hover .btn-split-arrow-dropdown {

@@ -168,7 +168,7 @@ describe('validation', () => {
 
         it('should trim whitespace', () => {
             const birthDate = chance.date({string: true});
-            userAttributes.birthDate = ' ' + birthDate + ' ';
+            userAttributes.birthDate = '  ' + birthDate + ' ';
             const user = new UserModel(userAttributes);
 
             user.validateSync();

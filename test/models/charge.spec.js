@@ -19,6 +19,14 @@ describe('validation', () => {
             expect(charge.productNumber).toBeDefined();
         });
 
+        it('should trim whitespace', () => {
+            const productNumberWithoutWhitespace = chance.word();
+            chargeAttributes.ProductNumber = ' ' + productNumberWithoutWhitespace + '  ';
+            const charge = new ChargeModel(chargeAttributes);
+
+            expect(charge.productNumber).toBe(productNumberWithoutWhitespace);
+        });
+
         it('should fail validation if attribute does not exist', () => {
             delete chargeAttributes.ProductNumber;
             const charge = new ChargeModel(chargeAttributes);

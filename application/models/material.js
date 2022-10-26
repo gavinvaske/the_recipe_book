@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
     name: {
         type: String,
-        trim: true,
         required: true
     },
     materialId: {
         type: String,
-        required: true,
-        trim: true
+        required: true
 
     }
 }, { timestamps: true });

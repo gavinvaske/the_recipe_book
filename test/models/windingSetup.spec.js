@@ -86,6 +86,15 @@ describe('validation', () => {
     
             expect(error).not.toBe(undefined);
         });
+
+        it('should trim extra whitespace', () => {
+            const videoUrlWithoutWhitespace = chance.url();
+            windingSetupAttributes.video = '  ' + videoUrlWithoutWhitespace + ' ';
+
+            const windingSetup = new WindingSetupModel(windingSetupAttributes);
+    
+            expect(windingSetup.video).toBe(videoUrlWithoutWhitespace);
+        });
     });
 
     describe('"watchOutFor" attribute', () => {

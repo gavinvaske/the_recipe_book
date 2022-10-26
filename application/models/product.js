@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const MaterialModel = require('../models/material');
 const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
@@ -115,9 +116,8 @@ const schema = new Schema({
         type: String,
         required: true,
         uppercase: true,
-        trim: true,
         alias: 'ProductNumber',
-        validate: [mustNotContainWhitespace, '"ProductNumber" cannot contain whitespace(s)']
+        validate: [mustNotContainWhitespace, '"productNumber" cannot contain whitespace(s)']
     },
     productDie: {
         type: String,
@@ -282,12 +282,9 @@ const schema = new Schema({
             {
                 validator : Number.isInteger,
                 message   : 'Tool Number Around must be an integer'
-            },
-            {
-                validator: numberMustBeGreaterThanZero,
-                message: 'Tool Number Around cannot be negative'
             }
         ],
+        min: 0,
         required: true,
         alias: 'Tool_NumberAround'
     },
@@ -506,7 +503,6 @@ function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound)
 
     return Math.round(unRoundedValue * precision) / precision;
 }
-
 
 const Product = mongoose.model('Product', schema);
 

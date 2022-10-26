@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 const USER = 'USER';
@@ -29,7 +30,6 @@ const checkForSpaces = function(text) {
 const userSchema = new Schema({
     email: {
         type: String,
-        trim: true,
         uppercase: true,
         unique: true,
         required: 'Email address is required',
@@ -58,7 +58,6 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
-        trim: true,
         validate: [{
             validator: checkForSpaces, 
             msg: 'Your username must not contain spaces'
@@ -66,21 +65,17 @@ const userSchema = new Schema({
         sparse: true
     },
     fullName: {
-        type: String,
-        trim: true
+        type: String
     },
     jobRole: {
-        type: String,
-        trim: true
+        type: String
     },
     phoneNumber: {
         type: String,
-        trim: true,
         validate: [validatePhone, 'Your phone number must be 10 digits and/or formatted correctly']
     },
     birthDate: {
-        type: Date,
-        trim: true
+        type: Date
     }
 }, { timestamps: true });
 

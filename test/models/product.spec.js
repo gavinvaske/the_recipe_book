@@ -73,6 +73,14 @@ describe('validation', () => {
             expect(product.productNumber).toBeDefined();
         });
 
+        it('should trim whitespace', () => {
+            const productNumberWithoutWhitespace = chance.word().toUpperCase();
+            productAttributes.ProductNumber = ' ' + productNumberWithoutWhitespace + '  ';
+            const product = new ProductModel(productAttributes);
+
+            expect(product.productNumber).toBe(productNumberWithoutWhitespace);
+        });
+
         it('should NOT fail validation', () => {
             productAttributes.ProductNumber = chance.word();
             const product = new ProductModel(productAttributes);
@@ -539,6 +547,14 @@ describe('validation', () => {
             expect(product.windingNotes).toBeDefined();
         });
 
+        it('should contain attribute', () => {
+            const finishNotes = chance.word();
+            productAttributes.FinishNotes = ' ' + finishNotes + '  ';
+            const product = new ProductModel(productAttributes);
+
+            expect(product.windingNotes).toBe(finishNotes);
+        });
+
         it('should pass validation if attribute is missing', () => {
             delete productAttributes.FinishNotes;
             const product = new ProductModel(productAttributes);
@@ -875,6 +891,15 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if 0 is used', () => {
+            productAttributes.Tool_NumberAround = 0;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBe(undefined);
         });
 
         it('should be of type Number', () => {
@@ -1243,6 +1268,14 @@ describe('validation', () => {
             const error = product.validateSync();
 
             expect(error).not.toBeDefined();
+        });
+
+        it('should trim', () => {
+            const varnish = chance.word();
+            productAttributes.ColorDescr = varnish + '  ';
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toEqual(varnish);
         });
     });
 

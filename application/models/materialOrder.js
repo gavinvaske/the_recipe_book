@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 const TOTAL_ROLLS_MIN = 1;
@@ -75,8 +76,7 @@ const schema = new Schema({
     },
     notes: {
         type: String,
-        required: false,
-        trim: true
+        required: false
     }
 }, { timestamps: true });
 

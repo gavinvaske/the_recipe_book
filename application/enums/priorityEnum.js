@@ -1,4 +1,4 @@
-const RUSH_FEE = 'Rush Fee';
+const RUSH_FEE = 'Rush';
 const RE_RUN = 'ReRun';
 const HOT = 'Hot';
 const STANDARD = 'Standard';

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
@@ -20,8 +21,7 @@ const schema = new Schema({
         required: true
     },
     notes: {
-        type: String,
-        trim: true
+        type: String
     },
     finish: {
         type: Schema.Types.ObjectId,
@@ -39,8 +39,7 @@ const schema = new Schema({
     video: {
         type: String,
         validate: [validateUrl, 'Please fill a valid video url'],
-        match: [URL_VALIDATION_REGEX, 'Please fill a valid video url'],
-        trim: true
+        match: [URL_VALIDATION_REGEX, 'Please fill a valid video url']
     },
     difficulty: {
         type: String,
@@ -59,8 +58,7 @@ const schema = new Schema({
         required: true
     },
     alertTextBox: {
-        type: String,
-        trim: true
+        type: String
     },
     defaultMachine: {
         type: Schema.Types.ObjectId,

@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
+mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
     designNumber: {
         type: String,
-        trim: true,
         uppercase: true,
         required: true
     },
     dieNumber: {
         type: String,
-        trim: true,
         uppercase: true,
         required: true
     },

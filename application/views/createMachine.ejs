@@ -1,16 +1,16 @@
 <%- include('partials/navbarMain.ejs') %>
 
 <div class="page-wrapper create-table-entry">
-
-    <h2 class="content-header-title">Creating New Machine</h2>
-
     <div class="card">
-        <h4>Create A New Machine</h4>
-
+        <div class="header">
+            <div class="title-icon-box">
+                <h1 class="text-blue card-title">Create New Machine</h1>
+            </div>
+            <p>Fill out the form below to create a new machine. Remember, you're <b>awesome :)</b></p>
+        </div>
         <div class="alert-box">
             <%- include ("flashMessages") %>
         </div>
-
         <form id="create-machine-form" action="/machines/create", method="POST">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -18,7 +18,5 @@
              </div>
             <button class="create-entry submit-button" type="submit" value="Create Machine">Create</button>
         </form>
-
     </div>
-
 </div>

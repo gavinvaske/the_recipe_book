@@ -229,6 +229,9 @@ button:hover {
 	width: 100px;
 	border-radius: 3px;
 }
+.btn-sort {
+	width: 130px;
+}
 .btn-person-filter,
 .btn-sort {
 	margin: 0 10px;

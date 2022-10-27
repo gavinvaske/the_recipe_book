@@ -1,7 +1,7 @@
 <%- include('partials/navbarMain.ejs') %>
 <div class='page-wrapper materials-wrapper flex-center-center-column full-width'>
-
-    <div class='material-header flex-center-center-row full-width'>
+    <h2 class="page-title">Inventory Page</h2>
+    <div class='material-header flex-top-space-between-row full-width'>
       <div class='card col col-one third-width'>
         <span>Feet On Hand</span>
         <h1 class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></h1>
@@ -63,8 +63,10 @@
 
         <div class="all-wrapper tooltip">
           <span class="tooltiptext">See All</span>
-          <button class="sort btn-sort"><i class="fa-solid fa-layer-group"></i> See All</button>
+          <button class="sort btn-sort"><i class="fa-solid fa-layer-group"></i> See All(<span id="material-count">Count</span>)</button>
         </div>
+
+        
 
       </div>
 

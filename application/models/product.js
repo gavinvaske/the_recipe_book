@@ -325,6 +325,10 @@ const schema = new Schema({
     varnish: {
         type: String,
         required: false,
+        set: function(varnish) {
+            const stringToRemove = "C:";
+            return varnish && varnish.replace(stringToRemove, '');
+        },
         alias: 'ColorDescr'
     },
     coreDiameter: {

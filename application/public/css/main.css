@@ -538,8 +538,9 @@ html {
     text-align: center;
     border: 1px solid transparent;
     padding: 0.786rem 1.5rem;
-    border-radius: 0.358rem;
+    /* border-radius: 0.358rem; */
     width: 100%;
+    border-radius: 3px;
     color: white;
     font-weight: 500;
     font-size: 1rem;
@@ -1060,7 +1061,8 @@ input:focus + .show-password-frame {
   text-align: center;
 }
 
-.table.recipes tbody tr td {
+.table.recipes tbody tr td,
+.admin-panel td {
   padding: 0.72rem 2rem;
   border-top: 1px solid #ebe9f1;
   vertical-align: middle;
@@ -1095,27 +1097,29 @@ input:focus + .show-password-frame {
   align-items: center;
   flex-direction: row;
 }
-.title-icon-box h1 {
+/* .title-icon-box h1 {
   font-weight: 600;
   color: #5E5873;
   font-size: 1.87rem;
   margin-left: 15px;
-}
+} */
 .header p {
   font-size: 1.5rem;
   font-weight: 200;
   margin-left: 3px;
   color: #6e6b7b;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 .header p b {
-  color: #7367F6;
+  color: #157efb;
   font-weight: 500;
 }
 .table th div {
   font-weight: bold;
 }
-
+.new-recipe .fa-regular.fa-hat-chef {
+  font-size: 50px;
+}
 .page-wrapper.new-recipe form,
 #create-machine-form,
 .edit-recipe-form {
@@ -1209,7 +1213,8 @@ input:focus + .show-password-frame {
   transition: .3s;
 }
 
-.table.recipes tbody tr:hover {
+.table.recipes tbody tr:hover,
+.admin-panel tr:hover {
   background: rgba(115,103,240,.12);
 }
 .user-profile-picture-box {
@@ -1383,14 +1388,14 @@ a.storm {
   margin-bottom: 2rem;
 }
 
-.content-header-title {
+/* .content-header-title {
   font-weight: 500;
   color: #636363;
   border-right: 1px solid #d6dce1;
   font-size: 1.714rem;
   line-height: 1.2;
   margin-bottom: 1.5rem;
-}
+} */
 
 .page-wrapper.admin-panel,
 .page-wrapper.account-settings {
@@ -1885,10 +1890,10 @@ a.storm {
   fill: #7567F6;
 }
 
-.create-recipe-wrapper h1 {
+/* .create-recipe-wrapper h1 {
  font-weight: 600;
  color: #5f5973;
-}
+} */
 .create-recipe-wrapper h4 {
   margin: 20px 0 0 0;
 }
@@ -2353,9 +2358,9 @@ a.storm {
   padding-left: 20px;
 }
 
-.card .header {
+/* .card .header {
   margin-bottom: 50px;
-}
+} */
 
 
 
@@ -2577,11 +2582,16 @@ a.storm {
 }
 
 
-
+.materials-wrapper .page-title {
+  width: 100%;
+  color: #157efb;
+  font-weight: 800;
+  font-size: 2.5rem;
+}
 
 .material-header {
   border-radius: 10px; 
-  padding: 15px; 
+  padding: 15px 0; 
   box-sizing: border-box;
   margin-bottom: 20px;
 }
@@ -2604,7 +2614,7 @@ a.storm {
 }
 
 .material-header .col h1 {
-	color: #00cfe8;
+	color: #157efb;
 	font-weight: 800;
 }
 
@@ -2767,7 +2777,7 @@ a.storm {
 .po-list-container {
 	width: 100%;
   max-height: 83px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 .po-row {
 	display: flex;
@@ -2972,7 +2982,7 @@ a.storm {
   height: 2px;
   background:#e5e5e4;
 }
-.list-item-user-details .hover-background {
+/* .list-item-user-details .hover-background {
   display: none;
   position: absolute;
   top: -7px;
@@ -2986,7 +2996,7 @@ a.storm {
 
 .list-item-user-details:hover .hover-background {
   display: block;
-}
+} */
 
 .department-section.hide .ticket-container,
 .department-section.hide-all .ticket-container {

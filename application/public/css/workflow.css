@@ -287,7 +287,7 @@
 .column-td-a:hover .fa-ellipsis-vertical {
 	opacity: 1;
 }
-.header  {
+.view-tickets .header  {
 	margin: 30px 0 0 0!important;
 }
 
@@ -505,6 +505,9 @@
     border-radius: 4px;
     padding: 4px 8px;
     color: #676879;
+}
+.ticket-dropdown-options li a {
+	color: #676879;
 }
 .expanded-options-dropdown li:hover,
 .ticket-dropdown-options li:hover {

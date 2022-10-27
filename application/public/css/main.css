@@ -3116,3 +3116,14 @@ a.storm {
    margin:0 5px;
    border-radius: 3px;
 }
+
+
+.table-row-wrapper.active .show-products {
+  display: none;
+}
+.table-row-wrapper.active .hide-products {
+  display: block;
+}
+.table-row-wrapper .hide-products {
+  display: none;
+}

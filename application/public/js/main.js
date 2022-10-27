@@ -539,6 +539,16 @@ $( document ).ready(function() {
         $('.department-section').addClass('hide-all');
     });
 
+    $('.show-products').click(function(){
+        let currentActive = $(this).closest('.table-row-wrapper');
+        $(currentActive).addClass('active');
+    });
+
+    $('.hide-products').click(function(){
+        let currentActive = $(this).closest('.table-row-wrapper');
+        $(currentActive).removeClass('active');
+    });
+
     $('.expand-all-groups').click(function(){
         $('.department-section').removeClass('hide-all');
         $('.department-section').removeClass('hide');

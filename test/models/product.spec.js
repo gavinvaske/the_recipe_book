@@ -1271,7 +1271,7 @@ describe('validation', () => {
         });
 
         it('should remove "C:" prefix from attribute', () => {
-            const prefixToRemove = "C:";
+            const prefixToRemove = 'C:';
             const varnish = chance.string();
             productAttributes.ColorDescr = prefixToRemove + varnish;
 

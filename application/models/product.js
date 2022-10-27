@@ -326,7 +326,7 @@ const schema = new Schema({
         type: String,
         required: false,
         set: function(varnish) {
-            const stringToRemove = "C:";
+            const stringToRemove = 'C:';
             return varnish && varnish.replace(stringToRemove, '');
         },
         alias: 'ColorDescr'

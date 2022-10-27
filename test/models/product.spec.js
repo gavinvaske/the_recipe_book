@@ -1270,6 +1270,16 @@ describe('validation', () => {
             expect(error).not.toBeDefined();
         });
 
+        it('should remove "C:" prefix from attribute', () => {
+            const prefixToRemove = 'C:';
+            const varnish = chance.string();
+            productAttributes.ColorDescr = prefixToRemove + varnish;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.varnish).toBe(varnish);
+        });
+
         it('should trim', () => {
             const varnish = chance.word();
             productAttributes.ColorDescr = varnish + '  ';

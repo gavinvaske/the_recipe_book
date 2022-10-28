@@ -20,6 +20,12 @@
 	align-items: center;
 	flex-direction: row;
 }
+.flex-bottom-space-between-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	flex-direction: row;
+}
 .flex-top-space-between-row {
 	display: flex;
 	justify-content: space-between;

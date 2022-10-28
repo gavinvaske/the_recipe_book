@@ -557,6 +557,20 @@ $( document ).ready(function() {
         let materialCount = $('.material-card-section .card').length;
         $('#material-count').text(materialCount);
     });
+
+    $('.move-to-department-trigger').click(function(){
+        $('.departments-dropdown').addClass('active');
+        $(this).closest('.move-ticket').addClass('active');
+    });
+
+    $('.drpdwn-back-btn').click(function(){
+        $('.departments-dropdown').removeClass('active');
+    });
+
+    // $('.department-dropdown-options').mouseleave(function(){
+    //     $('.department-dropdown-options').removeClass('active');
+    // });
+
 });
 
 

@@ -3127,3 +3127,49 @@ a.storm {
 .table-row-wrapper .hide-products {
   display: none;
 }
+
+.move-ticket {
+  position: relative;
+}
+.department-dropdown-options {
+  top: 0!important;
+  visibility: hidden;
+  opacity: 1;
+  left: 100%;
+  min-width: 240px;
+  padding: 0!important;
+}
+
+.move-ticket:hover .department-dropdown-options {
+  visibility: visible;
+  opacity: 1;
+}
+
+.departments-dropdown {
+  z-index: 4;
+  position: absolute;
+  background-color: white;
+  height: auto;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
+}
+.departments-dropdown.active {
+  visibility: visible;
+}
+
+.department-dropdown-header {
+  height: 40px;
+  padding: 15px 15px 0 15px;
+}
+.department-dropdown-header span.drpdwn-title {
+  font-weight: 700;
+}
+
+.move-ticket.active .department-dropdown-options {
+  visibility: visible;
+  opacity: 1;
+}

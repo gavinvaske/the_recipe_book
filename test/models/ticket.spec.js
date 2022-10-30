@@ -650,6 +650,22 @@ describe('validation', () => {
 
             expect(error).toBe(undefined);
         });
+
+        it('should fail validation if subDepartment is not a valid subdepartment for the provided department', () => {
+            const orderPrepDepartment = 'ORDER-PREP';
+            const billingSubDepartment = 'READY FOR BILLING';
+    
+            ticketAttributes.destination = {
+                department: orderPrepDepartment,
+                subDepartment: billingSubDepartment
+            };
+    
+            const ticket = new TicketModel(ticketAttributes);
+    
+            const error = ticket.validateSync();
+    
+            expect(error).not.toBe(undefined);
+        });
     });
 
     describe('attribute: departmentNotes', () => {

@@ -33,6 +33,10 @@ function destinationsAreValid(destination) {
         return false;
     }
 
+    if (department) {
+        return subDepartmentsGroupedByDepartment[department].includes(subDepartment);
+    }
+    
     return true;
 }
 

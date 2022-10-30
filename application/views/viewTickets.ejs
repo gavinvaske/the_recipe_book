@@ -137,11 +137,12 @@
     <% const billingInProgressTickets = billingTicketsGroupedBySubDepartment['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
     <% const billingReadyForBillingTickets = billingTicketsGroupedBySubDepartment['READY FOR BILLING'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
 
-
-      <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
+    
+    <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
+      <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedBySubDepartment).flat().length %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
-        <h2>Order Prep Department - <span id='departmentTotalTickets'>10</span></h2>
+        <h2>Order Prep Department - <span id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h2>
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -896,9 +897,10 @@
       
       <!--- Art Prep Department Start-->
       <% if (artPrepTicketsGroupedBySubDepartment && Object.keys(artPrepTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedBySubDepartment).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper' data-department="ART-PREP">
-        <h2>Art Department</h2>
+        <h2>Art Department - <span id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h2>
 
         <% if (artPrepNeedsAttentionTickets && artPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -1647,9 +1649,10 @@
       </div>
   
       <% if (prePressTicketsGroupedBySubDepartment && Object.keys(prePressTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedBySubDepartment).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper' data-department="PRE-PRESS">
-        <h2>Pre-Printing</h2>
+        <h2>Pre-Printing - <span id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h2>
 
         <% if (prePressNeedsAttentionTickets && prePressNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -2096,9 +2099,10 @@
       </div>
 
       <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedBySubDepartment).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper' data-department="PRINTING">
-        <h2>Printing Department</h2>
+        <h2>Printing Department - <span id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h2>
 
         <% if (printingInProgressTickets && printingInProgressTickets.length) { %>  <!-- TODO: This .each looks unique - investigate -->
         <div class='department-section department-section-a'>
@@ -2841,9 +2845,10 @@
       </div>
     
       <% if (cuttingTicketsGroupedBySubDepartment && Object.keys(cuttingTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedBySubDepartment).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper' data-department="CUTTING">
-        <h2>Cutting Department</h2>
+        <h2>Cutting Department - <span id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h2>
 
         <% if (cuttingInProgressTickets && cuttingInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
@@ -3732,9 +3737,10 @@
       </div>
 
       <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfWindingTickets = Object.values(windingTicketsGroupedBySubDepartment).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper' data-department="WINDING">
-        <h2>Winding Department</h2>
+        <h2>Winding Department - <span id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h2>
 
         <% if (windingInProgressTickets && windingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each Looks different -->
@@ -4186,9 +4192,10 @@
       </div>
 
       <% if (shippingTicketsGroupedBySubDepartment && Object.keys(shippingTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedBySubDepartment).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper' data-department="SHIPPING">
-        <h2>Shipping Department</h2>
+        <h2>Shipping Department - <span id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h2>
 
         <% if (shippingInProgressTickets && shippingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each is unique? why -->
@@ -4781,9 +4788,10 @@
       </div>
 
       <% if (billingTicketsGroupedBySubDepartment && Object.keys(billingTicketsGroupedBySubDepartment).length > 0) { %>
+        <% const numberOfBillingTickets = Object.values(billingTicketsGroupedBySubDepartment).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper' data-department="BILLING">
-        <h2>Billing Department (TODO Storm: this second's subdepartments appear incorrect)</h2>
+        <h2>Billing Department (TODO Storm: this second's subdepartments appear incorrect) - <span id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h2>
 
         <% if (true) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
           <div class='department-section department-section-a'>

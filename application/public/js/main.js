@@ -600,6 +600,10 @@ $( document ).ready(function() {
     $('.sub-drpdwn-back-btn').click(function() {
         $('.sub-department-dropdown').removeClass('active');
     });
+
+    $('.notification-option').click(function() {
+        $(this).toggleClass('active');
+    });
     
 
 });

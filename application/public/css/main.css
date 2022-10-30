@@ -3149,7 +3149,8 @@ a.storm {
   display: none;
 }
 
-.move-ticket {
+.move-ticket ,
+.duration-dropdown-trigger {
   position: relative;
 }
 .department-dropdown-options {
@@ -3162,14 +3163,16 @@ a.storm {
   padding: 0!important;
 }
 
-.move-ticket:hover .department-dropdown-options {
+.move-ticket:hover .department-dropdown-options,
+.duration-dropdown-trigger:hover .duration-dropdown-options {
   display: block;
   opacity: 1;
 }
 
 .departments-dropdown,
 .list-dropdown,
-.sub-department-dropdown {
+.sub-department-dropdown,
+.duration-dropdown-options {
   z-index: -10;
   position: absolute;
   background-color: white;

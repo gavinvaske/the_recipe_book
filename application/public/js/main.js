@@ -561,7 +561,7 @@ $( document ).ready(function() {
 
     $('.move-to-department-trigger').click(function(){
         let currentlyActive = $(this).find('.departments-dropdown');
-        if($(currentlyActive).hasClass('active')) {
+        if ($(currentlyActive).hasClass('active')) {
             $(currentlyActive).removeClass('active');
         } else {
             $(currentlyActive).addClass('active');
@@ -571,7 +571,7 @@ $( document ).ready(function() {
 
     $('.move-to-list-trigger').click(function(){
         let currentlyActive = $(this).find('.list-dropdown');
-        if($(currentlyActive).hasClass('active')) {
+        if ($(currentlyActive).hasClass('active')) {
             $(currentlyActive).removeClass('active');
         } else {
             $(currentlyActive).addClass('active');

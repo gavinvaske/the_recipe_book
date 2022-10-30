@@ -147,10 +147,11 @@
 .dropdown {
 	background-color: white;
 	visibility: hidden;
+	z-index: 0;
 	opacity: 0;
 	top: calc(100% + 10px);
 	max-width: 800px;
-	min-width: 600px;
+	/* min-width: 600px; */
 }
 .quick-filter-dropdown,
 .advanced-filter-dropdown {
@@ -487,7 +488,8 @@
 .column-td-a.active .ticket-dropdown-options {
 	opacity: 1;
 	visibility: visible;
-	top: calc(100% + 10px);
+	/* top: calc(100% + 10px); */
+	top: 100%;
 	transition: .3s;
 }
 

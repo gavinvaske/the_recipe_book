@@ -476,7 +476,7 @@ $( document ).ready(function() {
         });
     });
 
-    $('.material-card-section .card .card-header .col-right').click(function(){
+    $('.material-card-section .card .card-header .col-right .fa-calendar').click(function(){
 
         let activeCard = $(this).parents('.card');
         if ($(activeCard).hasClass('active')) {
@@ -532,6 +532,7 @@ $( document ).ready(function() {
     });
 
     $('.expand-group').click(function(){
+        $(this).closest('.department-section').removeClass('hide-all');
         $(this).closest('.department-section').removeClass('hide');
     });
 
@@ -557,6 +558,50 @@ $( document ).ready(function() {
         let materialCount = $('.material-card-section .card').length;
         $('#material-count').text(materialCount);
     });
+
+    $('.move-to-department-trigger').click(function(){
+        let currentlyActive = $(this).find('.departments-dropdown');
+        if ($(currentlyActive).hasClass('active')) {
+            $(currentlyActive).removeClass('active');
+        } else {
+            $(currentlyActive).addClass('active');
+            $(this).closest('.move-ticket').addClass('active');
+        }
+    });
+
+    $('.move-to-list-trigger').click(function(){
+        let currentlyActive = $(this).find('.list-dropdown');
+        if ($(currentlyActive).hasClass('active')) {
+            $(currentlyActive).removeClass('active');
+        } else {
+            $(currentlyActive).addClass('active');
+            $(this).closest('.move-ticket').addClass('active');
+        }
+    });
+
+    $('.view-ticket').hover(function(){
+        $('.move-ticket').removeClass('active');
+        $('.departments-dropdown').removeClass('active');
+    });
+    $('.show-products').hover(function(){
+        $('.move-ticket').removeClass('active');
+        $('.departments-dropdown').removeClass('active');
+    });
+    $('.hide-products').hover(function(){
+        $('.move-ticket').removeClass('active');
+        $('.departments-dropdown').removeClass('active');
+    });
+
+    $('.move-to-department-trigger ul li').click(function(){
+        event.preventDefault();
+        $('.sub-department-dropdown').addClass('active');
+    });
+
+    $('.sub-drpdwn-back-btn').click(function() {
+        $('.sub-department-dropdown').removeClass('active');
+    });
+    
+
 });
 
 

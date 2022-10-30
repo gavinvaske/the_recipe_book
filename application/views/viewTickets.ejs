@@ -9,7 +9,7 @@
     <div class='workflow-order-header'>
       
       <div class='header-description'>
-        <h1 class='text-blue'>Order Workflow <span id="department-select"> - All Tickets</span></h1>
+        <h1 class=''>Order Workflow <span class='text-blue' id="department-select"> - All Departments</span></h1>
         <p>All jobs tickets can be found in the departments below.</p>
 
       </div>
@@ -141,7 +141,7 @@
       <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
-        <h2>Order Prep Department</h2>
+        <h2>Order Prep Department - <span id='departmentTotalTickets'>10</span></h2>
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -151,7 +151,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -182,10 +181,69 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
-                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                          <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                          <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                          <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                          <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                          <li class="duration-dropdown-trigger">
+                            <i class="fa-regular fa-clock-two"></i>Duration
+                            <div class='duration-dropdown-options'>
+                              <ul>
+                                <li class='date-creation'>Date Created - <span class='text-blue date-created-target'>10/01/22</span></li>
+                                <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'>1d 1hr 3m</span></li>
+                                <li class='production-duration'>Production - <span class='text-blue production-duration-target'>24m</span></li>
+                                <li class='department-duration'>Department - <span class='text-blue department-duration-target'>24m</span></li>
+                                <li class='list-duration'>Current List - <span class='text-blue list-duration-target'>24m</span></li>
+                              </ul>
+                            </div>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -224,8 +282,7 @@
                           <div class='ticket-dropdown-options dropdown'>
                             <ul> 
                               <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                              <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                              <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                             </ul>
                           </div>
                         </div>
@@ -257,7 +314,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -287,10 +343,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -324,8 +428,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -357,7 +460,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -387,10 +489,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -424,8 +574,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -457,7 +606,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -487,10 +635,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -524,8 +720,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -556,7 +751,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -586,10 +780,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -623,8 +865,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -650,7 +891,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
       </div>
       
       <!--- Art Prep Department Start-->
@@ -668,7 +909,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -698,10 +938,58 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
-                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                          <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                          <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                          <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                          <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                          <li class="duration">Duration</li>
                         </ul>
                       </div>
                     </div>
@@ -739,8 +1027,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -772,7 +1059,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -802,10 +1088,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -839,8 +1173,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -872,7 +1205,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -902,10 +1234,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -939,8 +1319,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -972,7 +1351,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1004,11 +1382,59 @@
                         <i class='fa-light fa-ellipsis-vertical text-white'></i>
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
-                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                            <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
-                          </ul>
+                            <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                            <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                          <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+ 
+ <li class="duration">Duration</li>                       </ul>
                         </div>
                       </div>
                     </div>
@@ -1042,8 +1468,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1075,7 +1500,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1107,10 +1531,58 @@
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <div class='ticket-dropdown-options dropdown'>
                         <ul>
-                          <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                          <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                          <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                          <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                          <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                          <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                          <li class="duration">Duration</li>
                         </ul>
                       </div>
                     </div>
@@ -1145,8 +1617,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1172,7 +1643,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
       </div>
   
       <% if (prePressTicketsGroupedBySubDepartment && Object.keys(prePressTicketsGroupedBySubDepartment).length > 0) { %>
@@ -1189,7 +1660,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1219,10 +1689,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1256,8 +1774,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1289,7 +1806,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1319,10 +1835,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1356,8 +1920,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1389,7 +1952,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1419,10 +1981,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1456,8 +2066,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1483,7 +2092,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>
       </div>
 
       <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
@@ -1500,7 +2109,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1530,10 +2138,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1571,8 +2227,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1604,7 +2259,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1634,10 +2288,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1671,8 +2373,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1704,7 +2405,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1734,10 +2434,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1771,8 +2519,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1804,7 +2551,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1834,10 +2580,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1871,8 +2665,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1904,7 +2697,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -1934,10 +2726,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -1971,8 +2811,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -1998,7 +2837,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>
     
       <% if (cuttingTicketsGroupedBySubDepartment && Object.keys(cuttingTicketsGroupedBySubDepartment).length > 0) { %>
@@ -2015,7 +2854,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2045,10 +2883,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2086,8 +2972,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2119,7 +3004,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2149,10 +3033,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2186,8 +3118,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2219,7 +3150,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2249,10 +3179,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2286,8 +3264,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2319,7 +3296,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2349,10 +3325,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2386,8 +3410,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2419,7 +3442,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2449,10 +3471,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2486,8 +3556,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2519,7 +3588,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2549,10 +3617,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2586,8 +3702,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2613,7 +3728,7 @@
       <% } %>
   
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
       </div>
 
       <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
@@ -2630,7 +3745,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2660,10 +3774,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2701,8 +3863,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2734,7 +3895,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2764,10 +3924,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2801,8 +4009,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2835,7 +4042,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2865,10 +4071,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -2902,8 +4156,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -2929,7 +4182,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End of Winding</h4><div class="department-divide-line"></div>
       </div>
 
       <% if (shippingTicketsGroupedBySubDepartment && Object.keys(shippingTicketsGroupedBySubDepartment).length > 0) { %>
@@ -2946,7 +4199,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -2976,10 +4228,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -3013,8 +4313,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -3046,7 +4345,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -3076,10 +4374,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -3113,8 +4459,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -3146,7 +4491,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -3176,10 +4520,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -3213,8 +4605,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -3246,7 +4637,6 @@
               </div>
               <div class='expanded-options-dropdown dropdown'>
                 <ul>
-                  <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                   <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                   <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                   <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -3276,10 +4666,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>
@@ -3313,8 +4751,7 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li class='collapse-ticket'><i class="fa-regular fa-minimize"></i>Collapse Ticket</li>
+                            <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           </ul>
                         </div>
                       </div>
@@ -3340,7 +4777,7 @@
       <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Department</h4><div class="department-divide-line"></div>
+        <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
 
       <% if (billingTicketsGroupedBySubDepartment && Object.keys(billingTicketsGroupedBySubDepartment).length > 0) { %>
@@ -3357,7 +4794,6 @@
                 </div>
                 <div class='expanded-options-dropdown dropdown'>
                   <ul>
-                    <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
                     <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
                     <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
                     <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
@@ -3385,10 +4821,58 @@
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <div class='ticket-dropdown-options dropdown'>
                       <ul>
-                        <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                        <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                        <li class="show-products"><i class="fa-regular fa-maximize"></i>Show Products</li>
-                        <li class="hide-products"><i class="fa-regular fa-minimize"></i>Hide Products</li>
+                        <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
+                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li class='click-me'>Order Prep</li>
+                                      <li>Art Prep</li>
+                                      <li>Pre-Printing</li>
+                                      <li>Printing</li>
+                                      <li>Cutting</li>
+                                      <li>Winding</li>
+                                      <li>Shipping</li>
+                                      <li>Billing</li>
+                                    </ul>
+                                  </div>
+                                  <div class='sub-department-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn">Back</span>
+                                    </div>
+                                    <ul>
+                                      <li>Sub Department A</li>
+                                      <li>Sub Department B</li>
+                                      <li>Sub Department C</li>
+                                    </ul>
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                          </li>
+                        <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                        <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                        <li class="duration">Duration</li>
                       </ul>
                     </div>
                   </div>

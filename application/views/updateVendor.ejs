@@ -1,7 +1,17 @@
-<h1>Update Vendor</h1>
+<%- include('partials/navbarMain.ejs') %>
 
-<form action="/vendors/update/<%= vendor.id %>", method="POST">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" value="<%= vendor.name %>">
-    <input type="submit" value="Update Vendor">
-</form>
+<div class="page-wrapper update-vendor">
+    <div class="card">
+        <div class="header">
+            <div class="card-title text-blue">
+                <h1>Update Vendor</h1>
+            </div>
+                <p>Make changes to the machine below and hit 'update' for them to take affect. Remember, you're <b>awesome :)</b></p>
+        </div>
+        <form action="/vendors/update/<%= vendor.id %>", method="POST">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" value="<%= vendor.name %>">
+            <button type="submit" class="submit-button">Update Vendor</button>
+        </form>
+    </div>
+</div>

@@ -604,7 +604,10 @@ $( document ).ready(function() {
     $('.notification-option').click(function() {
         $(this).toggleClass('active');
     });
-    
+
+    $('.start-ticket').click(function() {
+        $(this).closest('.table-row-wrapper').find('.start-job-bg-overlay').addClass('active');
+    });
 
 });
 

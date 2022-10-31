@@ -2432,9 +2432,6 @@ a.storm {
   margin-bottom: 50px;
 }
 
-.worlkflow-navigation {
-	margin: 25px 0;
-}
 .workflow-order-header ul {
 	width: 100%;
 }
@@ -2929,10 +2926,10 @@ a.storm {
 }*/
 
 .ticket-products-wrapper .table-header,
-.product-wrapper {
-	width: 95%;
+.product-wrapper,
+.product-wrapper-header {
+	width: 97%;
 }
-
 .ticket-products-wrapper {
 	display: none;
 	margin-bottom: 25px;
@@ -3017,13 +3014,34 @@ a.storm {
   margin-bottom: 50px;
 }
 .department-wrapper h2 {
-  display: inline-block;
-  border-bottom: 2px solid #E5E5E4;
+  color: #6e6b7b;
 }
+.start-job-bg-overlay {
+  display: none;
+  position: fixed;
+  background-color: rgba(10,10,10,.9);
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100%;
+}
+.start-job-bg-overlay.active {
+  display: flex;
+  z-index: 999;
+}
+
 /* #department-select {
   color:#323338;
 } */
-
+.ticket-dropdown-options li .fa-chevron-right {
+  right: 0;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+}
 .list-item-user-details { 
   position: relative;
 }
@@ -3037,7 +3055,7 @@ a.storm {
 }
 .department-divide-line {
   width: calc(50% - 165px);
-  height: 2px;
+  height: 1px;
   background:#e5e5e4;
 }
 /* .list-item-user-details .hover-background {
@@ -3336,19 +3354,10 @@ a.storm {
   display: block;
 }
 
-/* .sub-department-dropdown {
-  display: none;
+
+.product-wrapper-header h4 {
+  margin: 10px 0;
 }
-
-.sub-department-dropdown.active {
-  display: block;
-} */
-
-
-/* .sub-departments-list {
-  display: none;
+.department-section-e .product-wrapper-header h4 {
+  color: #ea5455;
 }
-
-.sub-departments-list.active {
-  display: block;
-} */

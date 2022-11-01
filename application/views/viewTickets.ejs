@@ -176,8 +176,25 @@
               <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
               <div class='table-row-wrapper full-width'>
                 <div class='start-job-bg-overlay flex-center-center-row'>
-                  <div class='card modal-window'>
-                    <h1>Storm</h1>
+                  <i class="fa-regular fa-xmark-large"></i>
+                  <div class='card modal-window start-job-modal'>
+                    <div class='modal-wrapper'>
+                      <div class='modal-header'>
+                        <h2>Start This Job</h2>
+                      </div>
+                      <div class='modal-body flex-center-center-column'>
+                        <h1><%= ticket.ticketNumber || 'N/A' %></h1>
+                        <select name="machine-list" id="machine">
+                          <option>Press 1</option>
+                          <option>Press 2</option>
+                          <option>Delta 1</option>
+                          <option>Delta 2</option>
+                        </select>
+                      </div>
+                      <div class='modal-footer flex-center-space-evenly-row'>
+                        <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class='table-row flex-center-center-column'>
@@ -295,6 +312,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -442,6 +460,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1058,6 +1077,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1208,6 +1228,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1826,6 +1847,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1976,6 +1998,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2292,6 +2315,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2892,6 +2916,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3058,6 +3083,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3808,6 +3834,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3974,6 +4001,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -4275,6 +4303,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -4437,6 +4466,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -4737,6 +4767,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -5029,6 +5060,7 @@
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
                 </div>
                 <div class='table-row flex-center-center-row'>
+                  <div class='group-lines'></div>
                   <div class='column-td column-td-a'>
                         <i class='fa-light fa-ellipsis-vertical text-white'></i>
                         <div class='ticket-dropdown-options dropdown'>

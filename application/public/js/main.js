@@ -609,6 +609,10 @@ $( document ).ready(function() {
         $(this).closest('.table-row-wrapper').find('.start-job-bg-overlay').addClass('active');
     });
 
+    $('.start-job-bg-overlay .fa-xmark-large').click(function(){
+        $('.start-job-bg-overlay').removeClass('active');
+    });
+
 });
 
 

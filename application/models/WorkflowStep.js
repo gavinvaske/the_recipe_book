@@ -22,7 +22,7 @@ function isDepartmentValid(department) {
     return true;
 }
 
-const ticketStatusRecordSchema = new Schema({
+const workflowStepSchema = new Schema({
     ticketId: {
         type: Schema.Types.ObjectId,
         ref: 'Ticket',
@@ -49,6 +49,6 @@ const ticketStatusRecordSchema = new Schema({
     }
 }, { timestamps: true });
 
-const TicketStatusHistory = mongoose.model('TicketStatusRecord', ticketStatusRecordSchema);
+const WorkflowStep = mongoose.model('WorkflowStep', workflowStepSchema);
 
-module.exports = TicketStatusHistory;
+module.exports = WorkflowStep;

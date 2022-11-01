@@ -1,16 +1,16 @@
 const chance = require('chance').Chance();
-const TicketStatusRecord = require('../../application/models/ticketStatusRecord');
+const WorkflowStep = require('../../application/models/WorkflowStep');
 const {getAllSubDepartments, subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 describe('validation', () => {
-    let ticketStatusRecordAttributes;
+    let workFlowStepAttributes;
 
     beforeEach(() => {
         let department = 'CUTTING';
         let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department]);
 
-        ticketStatusRecordAttributes = {
+        workFlowStepAttributes = {
             ticketId: new mongoose.Types.ObjectId(),
             department: department,
             departmentStatus: departmentStatus
@@ -18,7 +18,7 @@ describe('validation', () => {
     });
 
     it('should validate if all attributes are defined successfully', () => {
-        const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+        const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
     
         const error = ticketStatusRecord.validateSync();
 
@@ -27,8 +27,8 @@ describe('validation', () => {
 
     describe('attribute: ticketId', () => {
         it('should fail if attribute is not defined', () => {
-            delete ticketStatusRecordAttributes.ticketId;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            delete workFlowStepAttributes.ticketId;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -36,7 +36,7 @@ describe('validation', () => {
         });
 
         it('should be a mongoose object ID', () => {
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             console.log('testseteestestest');
             console.log(JSON.stringify(ticketStatusRecord.ticketId));
@@ -46,14 +46,14 @@ describe('validation', () => {
     });
     describe('attribute: department', () => {
         it('should be of type String', () => {
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             expect(ticketStatusRecord.department).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is not defined', () => {
-            delete ticketStatusRecordAttributes.department;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            delete workFlowStepAttributes.department;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -62,8 +62,8 @@ describe('validation', () => {
 
         it('should fail if attribute is NOT an accepted value', () => {
             const invalidDepartment = chance.string();
-            ticketStatusRecordAttributes.department = invalidDepartment;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.department = invalidDepartment;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -73,9 +73,9 @@ describe('validation', () => {
         it('should pass if attribute IS an accepted value', () => {
             const validDepartment = 'PRINTING';
             const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
-            ticketStatusRecordAttributes.department = validDepartment;
-            ticketStatusRecordAttributes.departmentStatus = validStatus;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.department = validDepartment;
+            workFlowStepAttributes.departmentStatus = validStatus;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -84,15 +84,15 @@ describe('validation', () => {
     });
     describe('attribute: departmentStatus', () => {
         it('should be of type String', () => {
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             expect(ticketStatusRecord.departmentStatus).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is NOT an accepted value', () => {
             const invalidDepartmentStatus = chance.string();
-            ticketStatusRecordAttributes.departmentStatus = invalidDepartmentStatus;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.departmentStatus = invalidDepartmentStatus;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -101,8 +101,8 @@ describe('validation', () => {
 
         it('should pass if attribute IS an accepted value', () => {
             const validDepartmentStatus = chance.pickone(getAllSubDepartments());
-            ticketStatusRecordAttributes.status = validDepartmentStatus;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.status = validDepartmentStatus;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -111,9 +111,9 @@ describe('validation', () => {
 
         it('should pass if departmentStatus is left blank because the department has no statuses', () => {
             const aDepartmentWithoutStatuses = 'COMPLETED';
-            ticketStatusRecordAttributes.department = aDepartmentWithoutStatuses;
-            delete ticketStatusRecordAttributes.departmentStatus;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.department = aDepartmentWithoutStatuses;
+            delete workFlowStepAttributes.departmentStatus;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
@@ -122,9 +122,9 @@ describe('validation', () => {
 
         it('should fail if departmentStatus is not an allowed status for the given department', () => {
             const aDepartmentWithStatuses = 'PRINTING';
-            ticketStatusRecordAttributes.department = aDepartmentWithStatuses;
-            delete ticketStatusRecordAttributes.departmentStatus;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+            workFlowStepAttributes.department = aDepartmentWithStatuses;
+            delete workFlowStepAttributes.departmentStatus;
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
 
             const error = ticketStatusRecord.validateSync();
 

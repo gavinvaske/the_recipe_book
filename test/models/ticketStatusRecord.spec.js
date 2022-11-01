@@ -8,7 +8,7 @@ describe('validation', () => {
 
     beforeEach(() => {
         let department = 'CUTTING';
-        let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department])
+        let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department]);
 
         ticketStatusRecordAttributes = {
             ticketId: new mongoose.Types.ObjectId(),
@@ -72,7 +72,7 @@ describe('validation', () => {
 
         it('should pass if attribute IS an accepted value', () => {
             const validDepartment = 'PRINTING';
-            const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment])
+            const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
             ticketStatusRecordAttributes.department = validDepartment;
             ticketStatusRecordAttributes.departmentStatus = validStatus;
             const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);

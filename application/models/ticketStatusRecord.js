@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 const {subDepartmentsGroupedByDepartment} = require('../enums/departmentsEnum');
 
 function isDepartmentAndDepartmentStatusCombinationValid() {
+    const lengthOfEmptyArray = 0;
     const allowedStatuses = subDepartmentsGroupedByDepartment[this.department];
-    const noDepartmentStatusesExistForThisDepartment = allowedStatuses.length === 0;
+    const noDepartmentStatusesExistForThisDepartment = allowedStatuses.length === lengthOfEmptyArray;
 
     if (noDepartmentStatusesExistForThisDepartment) {
         return true;

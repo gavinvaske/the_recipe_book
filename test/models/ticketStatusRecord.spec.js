@@ -1,16 +1,19 @@
 const chance = require('chance').Chance();
 const TicketStatusRecord = require('../../application/models/ticketStatusRecord');
-const {getAllSubDepartments, getAllDepartments} = require('../../application/enums/departmentsEnum');
+const {getAllSubDepartments, subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 describe('validation', () => {
     let ticketStatusRecordAttributes;
 
     beforeEach(() => {
+        let department = 'CUTTING';
+        let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department])
+
         ticketStatusRecordAttributes = {
             ticketId: new mongoose.Types.ObjectId(),
-            department: chance.pickone(getAllDepartments()),
-            status: chance.pickone(getAllSubDepartments())
+            department: department,
+            departmentStatus: departmentStatus
         };
     });
 
@@ -18,9 +21,6 @@ describe('validation', () => {
         const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
     
         const error = ticketStatusRecord.validateSync();
-
-        console.log('type of');
-        console.log(typeof ticketStatusRecord.ticketId);
 
         expect(error).toBe(undefined);
     });
@@ -71,8 +71,10 @@ describe('validation', () => {
         });
 
         it('should pass if attribute IS an accepted value', () => {
-            const validDepartment = chance.pickone(getAllDepartments());
+            const validDepartment = 'PRINTING';
+            const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment])
             ticketStatusRecordAttributes.department = validDepartment;
+            ticketStatusRecordAttributes.departmentStatus = validStatus;
             const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
 
             const error = ticketStatusRecord.validateSync();
@@ -80,25 +82,16 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
     });
-    describe('attribute: status', () => {
+    describe('attribute: departmentStatus', () => {
         it('should be of type String', () => {
             const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
 
-            expect(ticketStatusRecord.status).toEqual(expect.any(String));
-        });
-
-        it('should fail if attribute is not defined', () => {
-            delete ticketStatusRecordAttributes.status;
-            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
-
-            const error = ticketStatusRecord.validateSync();
-
-            expect(error).not.toBe(undefined);
+            expect(ticketStatusRecord.departmentStatus).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is NOT an accepted value', () => {
-            const invalidStatus = chance.string();
-            ticketStatusRecordAttributes.status = invalidStatus;
+            const invalidDepartmentStatus = chance.string();
+            ticketStatusRecordAttributes.departmentStatus = invalidDepartmentStatus;
             const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
 
             const error = ticketStatusRecord.validateSync();
@@ -107,13 +100,35 @@ describe('validation', () => {
         });
 
         it('should pass if attribute IS an accepted value', () => {
-            const validStatus = chance.pickone(getAllSubDepartments());
-            ticketStatusRecordAttributes.status = validStatus;
+            const validDepartmentStatus = chance.pickone(getAllSubDepartments());
+            ticketStatusRecordAttributes.status = validDepartmentStatus;
             const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
 
             const error = ticketStatusRecord.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should pass if departmentStatus is left blank because the department has no statuses', () => {
+            const aDepartmentWithoutStatuses = 'COMPLETED';
+            ticketStatusRecordAttributes.department = aDepartmentWithoutStatuses;
+            delete ticketStatusRecordAttributes.departmentStatus;
+            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+
+            const error = ticketStatusRecord.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail if departmentStatus is not an allowed status for the given department', () => {
+            const aDepartmentWithStatuses = 'PRINTING';
+            ticketStatusRecordAttributes.department = aDepartmentWithStatuses;
+            delete ticketStatusRecordAttributes.departmentStatus;
+            const ticketStatusRecord = new TicketStatusRecord(ticketStatusRecordAttributes);
+
+            const error = ticketStatusRecord.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
 });

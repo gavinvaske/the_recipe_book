@@ -1,6 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const {getAllSubDepartments, getAllDepartments} = require('../enums/departmentsEnum');
+const {subDepartmentsGroupedByDepartment} = require('../enums/departmentsEnum');
+
+function isDepartmentAndDepartmentStatusCombinationValid() {
+    const allowedStatuses = subDepartmentsGroupedByDepartment[this.department];
+    const noDepartmentStatusesExistForThisDepartment = allowedStatuses.length === 0;
+
+    if (noDepartmentStatusesExistForThisDepartment) {
+        return true;
+    }
+
+    return allowedStatuses.includes(this.departmentStatus);
+}
+
+function isDepartmentValid(department) {
+    if (!subDepartmentsGroupedByDepartment[department]) {
+        return false;
+    }
+
+    return true;
+}
 
 const ticketStatusRecordSchema = new Schema({
     ticketId: {
@@ -11,12 +30,21 @@ const ticketStatusRecordSchema = new Schema({
     department: {
         type: String,
         required: true,
-        enum: getAllDepartments()
+        validate: [
+            {
+                validator: isDepartmentValid,
+                message: 'The department {VALUE] is not a valid department'
+            },
+            {
+                validator: isDepartmentAndDepartmentStatusCombinationValid,
+                message: 'The department {VALUE} is not allowed to be paired with the provided departmentStatus'
+            }
+        ]
     },
-    status: {
+    departmentStatus: {
         type: String,
-        required: true,
-        enum: getAllSubDepartments()
+        required: false,
+        validate: [isDepartmentAndDepartmentStatusCombinationValid, 'The departmentStatus {VALUE} is not allowed to be paired with the provided department']
     }
 }, { timestamps: true });
 

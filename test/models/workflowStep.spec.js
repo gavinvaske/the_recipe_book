@@ -87,7 +87,7 @@ describe('validation', () => {
             expect(workflowStep.departmentStatus).toEqual(expect.any(String));
         });
 
-        it('should fail if attribute is NOT an accepted value', () => {
+        it('should fail if departmentStatus is not a valid departmentStatus a given department', () => {
             const invalidDepartmentStatus = chance.string();
             workFlowStepAttributes.departmentStatus = invalidDepartmentStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
@@ -150,7 +150,7 @@ describe('validation', () => {
     });
 
     describe('attribute: machines', () => {
-        it('should NOT fail if attribute is not defined', () => {
+        it('should have one element which is a valid mongoose objectId', () => {
             workFlowStepAttributes.machines = [
                 new mongoose.Types.ObjectId()
             ];

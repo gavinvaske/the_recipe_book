@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const {subDepartmentsGroupedByDepartment} = require('../enums/departmentsEnum');
+const {subDepartmentsGroupedByDepartment, getAllDepartments} = require('../enums/departmentsEnum');
 
 function isDepartmentAndDepartmentStatusCombinationValid() {
     const lengthOfEmptyArray = 0;
@@ -15,7 +15,7 @@ function isDepartmentAndDepartmentStatusCombinationValid() {
 }
 
 function isDepartmentValid(department) {
-    if (!subDepartmentsGroupedByDepartment[department]) {
+    if (!getAllDepartments().includes(department)) {
         return false;
     }
 
@@ -34,24 +34,22 @@ const workflowStepSchema = new Schema({
         validate: [
             {
                 validator: isDepartmentValid,
-                message: 'The department {VALUE] is not a valid department'
+                message: 'The department "{VALUE}" is not a valid department'
             },
             {
                 validator: isDepartmentAndDepartmentStatusCombinationValid,
-                message: 'The department {VALUE} is not allowed to be paired with the provided departmentStatus'
+                message: 'The department "{VALUE}" is not allowed to be paired with the provided departmentStatus'
             }
         ]
     },
     departmentStatus: {
         type: String,
         required: false,
-        validate: [isDepartmentAndDepartmentStatusCombinationValid, 'The departmentStatus {VALUE} is not allowed to be paired with the provided department']
+        validate: [isDepartmentAndDepartmentStatusCombinationValid, 'The departmentStatus "{VALUE}" is not allowed to be paired with the provided department']
     },
     assignees: {
-        type: [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }]
+        type: [Schema.Types.ObjectId],
+        ref: 'User'
     },
     machines: {
         type: [Schema.Types.ObjectId],

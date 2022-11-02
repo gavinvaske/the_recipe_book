@@ -121,7 +121,7 @@ const ticketSchema = new Schema({
     destination: {
         type: destinationSchema,
         required: false,
-        validate: [destinationsAreValid, 'Invalid Department/Sub-department combination']
+        validate: [destinationsAreValid, 'Invalid Department/departmentStatus combination']
     },
     products: {
         type: [productSchema],

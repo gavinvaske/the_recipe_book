@@ -3253,7 +3253,7 @@ a.storm {
 
 .departments-dropdown,
 .list-dropdown,
-.sub-department-dropdown,
+.department-status-dropdown,
 .duration-dropdown-options {
   z-index: -10;
   position: absolute;
@@ -3269,7 +3269,7 @@ a.storm {
 }
 .departments-dropdown.active,
 .list-dropdown.active,
-.sub-department-dropdown.active {
+.department-status-dropdown.active {
   display: block;
   left: 0;
   z-index: 444;

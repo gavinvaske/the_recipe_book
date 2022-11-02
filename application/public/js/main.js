@@ -594,11 +594,11 @@ $( document ).ready(function() {
 
     $('.move-to-department-trigger ul li').click(function(){
         event.preventDefault();
-        $('.sub-department-dropdown').addClass('active');
+        $('.department-status-dropdown').addClass('active');
     });
 
     $('.sub-drpdwn-back-btn').click(function() {
-        $('.sub-department-dropdown').removeClass('active');
+        $('.department-status-dropdown').removeClass('active');
     });
 
     $('.notification-option').click(function() {

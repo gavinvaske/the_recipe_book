@@ -19,9 +19,9 @@ describe('validation', () => {
     });
 
     it('should validate if all attributes are defined successfully', () => {
-        const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+        const workflowStep = new WorkflowStep(workFlowStepAttributes);
     
-        const error = ticketStatusRecord.validateSync();
+        const error = workflowStep.validateSync();
 
         expect(error).toBe(undefined);
     });
@@ -29,34 +29,31 @@ describe('validation', () => {
     describe('attribute: ticketId', () => {
         it('should fail if attribute is not defined', () => {
             delete workFlowStepAttributes.ticketId;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).not.toBe(undefined);
         });
 
         it('should be a mongoose object ID', () => {
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            console.log('testseteestestest');
-            console.log(JSON.stringify(ticketStatusRecord.ticketId));
-
-            expect(mongoose.Types.ObjectId.isValid(ticketStatusRecord.ticketId)).toBe(true);
+            expect(mongoose.Types.ObjectId.isValid(workflowStep.ticketId)).toBe(true);
         });
     });
     describe('attribute: department', () => {
         it('should be of type String', () => {
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(ticketStatusRecord.department).toEqual(expect.any(String));
+            expect(workflowStep.department).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is not defined', () => {
             delete workFlowStepAttributes.department;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).not.toBe(undefined);
         });
@@ -64,9 +61,9 @@ describe('validation', () => {
         it('should fail if attribute is NOT an accepted value', () => {
             const invalidDepartment = chance.string();
             workFlowStepAttributes.department = invalidDepartment;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).not.toBe(undefined);
         });
@@ -76,26 +73,26 @@ describe('validation', () => {
             const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
             workFlowStepAttributes.department = validDepartment;
             workFlowStepAttributes.departmentStatus = validStatus;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).toBe(undefined);
         });
     });
     describe('attribute: departmentStatus', () => {
         it('should be of type String', () => {
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(ticketStatusRecord.departmentStatus).toEqual(expect.any(String));
+            expect(workflowStep.departmentStatus).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is NOT an accepted value', () => {
             const invalidDepartmentStatus = chance.string();
             workFlowStepAttributes.departmentStatus = invalidDepartmentStatus;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).not.toBe(undefined);
         });
@@ -103,9 +100,9 @@ describe('validation', () => {
         it('should pass if attribute IS an accepted value', () => {
             const validDepartmentStatus = chance.pickone(getAllSubDepartments());
             workFlowStepAttributes.status = validDepartmentStatus;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).toBe(undefined);
         });
@@ -114,9 +111,9 @@ describe('validation', () => {
             const aDepartmentWithoutStatuses = 'COMPLETED';
             workFlowStepAttributes.department = aDepartmentWithoutStatuses;
             delete workFlowStepAttributes.departmentStatus;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).toBe(undefined);
         });
@@ -125,9 +122,9 @@ describe('validation', () => {
             const aDepartmentWithStatuses = 'PRINTING';
             workFlowStepAttributes.department = aDepartmentWithStatuses;
             delete workFlowStepAttributes.departmentStatus;
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            const error = ticketStatusRecord.validateSync();
+            const error = workflowStep.validateSync();
 
             expect(error).not.toBe(undefined);
         });
@@ -138,17 +135,17 @@ describe('validation', () => {
             workFlowStepAttributes.assignees = [
                 new mongoose.Types.ObjectId()
             ];
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(mongoose.Types.ObjectId.isValid(ticketStatusRecord.assignees[0])).toBe(true);
+            expect(mongoose.Types.ObjectId.isValid(workflowStep.assignees[0])).toBe(true);
         });
 
         it('should default to an empty array if attribute is not defined', () => {
             delete workFlowStepAttributes.assignees;
             const emptyArray = [];
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(ticketStatusRecord.assignees).toEqual(emptyArray);
+            expect(workflowStep.assignees).toEqual(emptyArray);
         });
     });
 
@@ -157,17 +154,17 @@ describe('validation', () => {
             workFlowStepAttributes.machines = [
                 new mongoose.Types.ObjectId()
             ];
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(mongoose.Types.ObjectId.isValid(ticketStatusRecord.machines[0])).toBe(true);
+            expect(mongoose.Types.ObjectId.isValid(workflowStep.machines[0])).toBe(true);
         });
 
         it('should default to an empty array if attribute is not defined', () => {
             delete workFlowStepAttributes.machines;
             const emptyArray = [];
-            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
-            expect(ticketStatusRecord.machines).toEqual(emptyArray);
+            expect(workflowStep.machines).toEqual(emptyArray);
         });
     });
 });

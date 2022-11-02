@@ -17,7 +17,8 @@ describe('validation', () => {
             ticketId: new mongoose.Types.ObjectId(),
             department: department,
             departmentStatus: departmentStatus,
-            assignees: []
+            assignees: [],
+            machines: []
         };
     });
 

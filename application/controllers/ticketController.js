@@ -8,7 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {subDepartmentsGroupedByDepartment} = require('../enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
 
 router.use(verifyJwtToken);
 
@@ -71,7 +71,7 @@ router.post('/update/:ticketId/notes', async (request, response) => {
 
 router.post('/find-subdepartments', (request, response) => {
     const departmentName = request.body.departmentName;
-    const subDepartments = subDepartmentsGroupedByDepartment[departmentName];
+    const subDepartments = departmentStatusesGroupedByDepartment[departmentName];
 
     try {
         if (!subDepartments) {
@@ -108,14 +108,14 @@ router.get('/update/:id', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(request.params.id).exec();
         const materials = await MaterialModel.find().exec();
-        const departmentNames = Object.keys(subDepartmentsGroupedByDepartment);
+        const departmentNames = Object.keys(departmentStatusesGroupedByDepartment);
 
         const ticketDestination = ticket.destination;
         const selectedDepartment = ticketDestination && ticketDestination.department;
         const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
         const selectedMaterial = ticket.primaryMaterial;
 
-        const subDepartments = subDepartmentsGroupedByDepartment ? subDepartmentsGroupedByDepartment[selectedDepartment] : undefined;
+        const subDepartments = departmentStatusesGroupedByDepartment ? departmentStatusesGroupedByDepartment[selectedDepartment] : undefined;
 
         const materialIds = materials.map(material => material.materialId);
 

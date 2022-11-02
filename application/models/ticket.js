@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {subDepartmentsGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 
@@ -34,14 +34,14 @@ function destinationsAreValid(destination) {
     }
 
     if (department) {
-        return subDepartmentsGroupedByDepartment[department].includes(subDepartment);
+        return departmentStatusesGroupedByDepartment[department].includes(subDepartment);
     }
     
     return true;
 }
 
 function departmentIsValid(department) {
-    return Object.keys(subDepartmentsGroupedByDepartment).includes(department);
+    return Object.keys(departmentStatusesGroupedByDepartment).includes(department);
 }
 
 function subDepartmentIsValid(subDepartment) {

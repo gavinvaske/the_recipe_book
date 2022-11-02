@@ -37,7 +37,7 @@ const SHIPPING_DEPARTMENT = 'SHIPPING';
 const BILLING_DEPARTMENT = 'BILLING';
 const COMPLETE_DEPARTMENT = 'COMPLETED';
 
-module.exports.subDepartmentsGroupedByDepartment = {
+module.exports.departmentStatusesGroupedByDepartment = {
     [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,
@@ -99,7 +99,7 @@ module.exports.subDepartmentsGroupedByDepartment = {
 module.exports.getAllSubDepartments = () => {
     let allSubDepartments = [];
 
-    Object.values(this.subDepartmentsGroupedByDepartment).forEach((subDepartmentsForOneDepartment) => {
+    Object.values(this.departmentStatusesGroupedByDepartment).forEach((subDepartmentsForOneDepartment) => {
         allSubDepartments.push(...subDepartmentsForOneDepartment);
     });
 
@@ -107,5 +107,5 @@ module.exports.getAllSubDepartments = () => {
 };
 
 module.exports.getAllDepartments = () => {
-    return Object.keys(this.subDepartmentsGroupedByDepartment);
+    return Object.keys(this.departmentStatusesGroupedByDepartment);
 };

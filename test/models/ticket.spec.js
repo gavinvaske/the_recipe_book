@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
-const {subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 
@@ -592,7 +592,7 @@ describe('validation', () => {
         it('should fail validation if department attribute IS NOT an accepted value', () => {
             const validDepartment = 'ART-PREP';
             const invalidDepartment = chance.string();
-            const validSubDepartment = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
+            const validSubDepartment = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
 
             ticketAttributes.destination = {
                 department: invalidDepartment,

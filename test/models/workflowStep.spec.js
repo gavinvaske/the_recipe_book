@@ -3,11 +3,14 @@ const WorkflowStep = require('../../application/models/WorkflowStep');
 const {getAllSubDepartments, subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
+const DEPARTMENT_WITH_STATUSES = 'PRINTING';
+const DEPARTMENT_WITHOUT_STATUSES = 'COMPLETED';
+
 describe('validation', () => {
     let workFlowStepAttributes;
 
     beforeEach(() => {
-        let department = 'CUTTING';
+        let department = DEPARTMENT_WITH_STATUSES;
         let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department]);
 
         workFlowStepAttributes = {
@@ -69,7 +72,7 @@ describe('validation', () => {
         });
 
         it('should pass if attribute IS an accepted value', () => {
-            const validDepartment = 'PRINTING';
+            const validDepartment = DEPARTMENT_WITH_STATUSES;
             const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
             workFlowStepAttributes.department = validDepartment;
             workFlowStepAttributes.departmentStatus = validStatus;
@@ -108,8 +111,7 @@ describe('validation', () => {
         });
 
         it('should pass if departmentStatus is left blank because the department has no statuses', () => {
-            const aDepartmentWithoutStatuses = 'COMPLETED';
-            workFlowStepAttributes.department = aDepartmentWithoutStatuses;
+            workFlowStepAttributes.department = DEPARTMENT_WITHOUT_STATUSES;
             delete workFlowStepAttributes.departmentStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
 
@@ -119,8 +121,7 @@ describe('validation', () => {
         });
 
         it('should fail if departmentStatus is not an allowed status for the given department', () => {
-            const aDepartmentWithStatuses = 'PRINTING';
-            workFlowStepAttributes.department = aDepartmentWithStatuses;
+            workFlowStepAttributes.department = DEPARTMENT_WITH_STATUSES;
             delete workFlowStepAttributes.departmentStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
 

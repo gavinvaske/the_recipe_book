@@ -13,7 +13,8 @@ describe('validation', () => {
         workFlowStepAttributes = {
             ticketId: new mongoose.Types.ObjectId(),
             department: department,
-            departmentStatus: departmentStatus
+            departmentStatus: departmentStatus,
+            assignees: []
         };
     });
 
@@ -129,6 +130,44 @@ describe('validation', () => {
             const error = ticketStatusRecord.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: assignees', () => {
+        it('should have one element which is a valid mongoose objectId', () => {
+            workFlowStepAttributes.assignees = [
+                new mongoose.Types.ObjectId()
+            ];
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+
+            expect(mongoose.Types.ObjectId.isValid(ticketStatusRecord.assignees[0])).toBe(true);
+        });
+
+        it('should default to an empty array if attribute is not defined', () => {
+            delete workFlowStepAttributes.assignees;
+            const emptyArray = [];
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+
+            expect(ticketStatusRecord.assignees).toEqual(emptyArray);
+        });
+    });
+
+    describe('attribute: machines', () => {
+        it('should NOT fail if attribute is not defined', () => {
+            workFlowStepAttributes.machines = [
+                new mongoose.Types.ObjectId()
+            ];
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+
+            expect(mongoose.Types.ObjectId.isValid(ticketStatusRecord.machines[0])).toBe(true);
+        });
+
+        it('should default to an empty array if attribute is not defined', () => {
+            delete workFlowStepAttributes.machines;
+            const emptyArray = [];
+            const ticketStatusRecord = new WorkflowStep(workFlowStepAttributes);
+
+            expect(ticketStatusRecord.machines).toEqual(emptyArray);
         });
     });
 });

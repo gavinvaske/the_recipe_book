@@ -46,7 +46,17 @@ const workflowStepSchema = new Schema({
         type: String,
         required: false,
         validate: [isDepartmentAndDepartmentStatusCombinationValid, 'The departmentStatus {VALUE} is not allowed to be paired with the provided department']
-    }
+    },
+    assignees: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }]
+    },
+    machines: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Machine',
+    },
 }, { timestamps: true });
 
 const WorkflowStep = mongoose.model('WorkflowStep', workflowStepSchema);

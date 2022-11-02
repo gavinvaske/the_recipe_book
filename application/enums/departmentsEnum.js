@@ -44,9 +44,7 @@ module.exports.subDepartmentsGroupedByDepartment = {
         WAITING_ON_APPROVAL,
         WAITING_ON_CUSTOMER,
         READY_TO_ORDER_PLATE_OR_DIE,
-        SETUP,
-        RUNTIME,
-        TEAR_DOWN
+        IN_PROGRESS
     ],
     [ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,

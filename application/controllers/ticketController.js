@@ -69,13 +69,13 @@ router.post('/update/:ticketId/notes', async (request, response) => {
     return response.json({});
 });
 
-router.post('/find-subdepartments', (request, response) => {
+router.post('/find-department-statuses', (request, response) => {
     const departmentName = request.body.departmentName;
-    const subDepartments = departmentStatusesGroupedByDepartment[departmentName];
+    const departmentStatuses = departmentStatusesGroupedByDepartment[departmentName];
 
     try {
-        if (!subDepartments) {
-            throw new Error(`No subdepartments found for the department named "${departmentName}"`);
+        if (!departmentStatuses) {
+            throw new Error(`No departmentStatuses found for the department named "${departmentName}"`);
         }
     } catch (error) {
         return response.json({
@@ -84,7 +84,7 @@ router.post('/find-subdepartments', (request, response) => {
     }
 
     return response.json({
-        subDepartments
+        departmentStatuses: departmentStatuses
     });
 });
 
@@ -112,10 +112,10 @@ router.get('/update/:id', async (request, response) => {
 
         const ticketDestination = ticket.destination;
         const selectedDepartment = ticketDestination && ticketDestination.department;
-        const selectedSubDepartment = ticketDestination && ticketDestination.subDepartment;
+        const selectedDepartmentStatus = ticketDestination && ticketDestination.departmentStatus;
         const selectedMaterial = ticket.primaryMaterial;
 
-        const subDepartments = departmentStatusesGroupedByDepartment ? departmentStatusesGroupedByDepartment[selectedDepartment] : undefined;
+        const departmentStatuses = departmentStatusesGroupedByDepartment ? departmentStatusesGroupedByDepartment[selectedDepartment] : undefined;
 
         const materialIds = materials.map(material => material.materialId);
 
@@ -124,8 +124,8 @@ router.get('/update/:id', async (request, response) => {
             materialIds,
             departmentNames,
             selectedDepartment,
-            selectedSubDepartment,
-            subDepartments,
+            selectedDepartmentStatus: selectedDepartmentStatus,
+            departmentStatuses: departmentStatuses,
             selectedMaterial
         });
     } catch (error) {

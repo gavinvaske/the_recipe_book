@@ -115,27 +115,29 @@ describe('ticketService test suite', () => {
         let ticketsWithoutDepartments;
         let allTickets;
         let departmentNames;
+        let departmentStatusNames;
+        let ticketsWithoutADepartmentOrDepartmentStatus;
 
         beforeEach(() => {
             departmentNames = [chance.word(), chance.word(), chance.word()];
-            subDepartmentNames = [chance.word(), chance.word(), chance.word()];
+            departmentStatusNames = [chance.word(), chance.word(), chance.word()];
             ticketsWithDepartments = [
                 {
                     destination: {
                         department: departmentNames[0],
-                        subDepartment: subDepartmentNames[0],
+                        departmentStatus: departmentStatusNames[0],
                     }
                 },
                 {
                     destination: {
                         department: departmentNames[1],
-                        subDepartment: subDepartmentNames[1],
+                        departmentStatus: departmentStatusNames[1],
                     }
                 },
                 {
                     destination: {
                         department: departmentNames[2],
-                        subDepartment: subDepartmentNames[2],
+                        departmentStatus: departmentStatusNames[2],
                     }
                 }
             ];
@@ -160,37 +162,37 @@ describe('ticketService test suite', () => {
             expect(Object.keys(groupedTicketsByDepartment).length).toBe(departmentNames.length);
         });
 
-        it('should ignore tickets whose department and/or subDepartment is unknown', () => {
-            const numberOfTicketsWithAValidDepartmentAndSubDepartment = allTickets.length;
+        it('should ignore tickets whose department and/or departmentStatus is unknown', () => {
+            const numberOfTicketsWithAValidDepartmentAndDepartmentStatus = allTickets.length;
 
-            ticketsWithoutADepartmentOrSubDepartment = [
+            ticketsWithoutADepartmentOrDepartmentStatus = [
                 {
                     destination: {
                         department: chance.word(),
-                        subDepartment: undefined,
+                        departmentStatus: undefined,
                     }
                 },
                 {
                     destination: {
                         department: undefined,
-                        subDepartment: chance.word(),
+                        departmentStatus: chance.word(),
                     }
                 },
                 {
                     destination: {
                         department: undefined,
-                        subDepartment: undefined,
+                        departmentStatus: undefined,
                     }
                 }
             ];
 
             allTickets = [
                 ...allTickets,
-                ...ticketsWithoutADepartmentOrSubDepartment
+                ...ticketsWithoutADepartmentOrDepartmentStatus
             ];
             const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
 
-            expect(groupedTicketsByDepartment.length).toBe(numberOfTicketsWithAValidDepartmentAndSubDepartment.length);
+            expect(groupedTicketsByDepartment.length).toBe(numberOfTicketsWithAValidDepartmentAndDepartmentStatus.length);
         });
     });
 });

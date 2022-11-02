@@ -1,4 +1,4 @@
-// subDepartments
+// departmentStatuses
 const NEEDS_ATTENTION = 'NEEDS ATTENTION';
 const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
 const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
@@ -96,14 +96,14 @@ module.exports.departmentStatusesGroupedByDepartment = {
     [COMPLETE_DEPARTMENT]: []
 };
 
-module.exports.getAllSubDepartments = () => {
-    let allSubDepartments = [];
+module.exports.getAllDepartmentStatuses = () => {
+    let allDepartmentStatuses = [];
 
-    Object.values(this.departmentStatusesGroupedByDepartment).forEach((subDepartmentsForOneDepartment) => {
-        allSubDepartments.push(...subDepartmentsForOneDepartment);
+    Object.values(this.departmentStatusesGroupedByDepartment).forEach((departmentStatusesForOneDepartment) => {
+        allDepartmentStatuses.push(...departmentStatusesForOneDepartment);
     });
 
-    return allSubDepartments;
+    return allDepartmentStatuses;
 };
 
 module.exports.getAllDepartments = () => {

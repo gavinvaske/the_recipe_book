@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const WorkflowStep = require('../../application/models/WorkflowStep');
-const {getAllSubDepartments, departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentStatuses, departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 const DEPARTMENT_WITH_STATUSES = 'PRINTING';
@@ -102,7 +102,7 @@ describe('validation', () => {
         });
 
         it('should pass if attribute IS an accepted value', () => {
-            const validDepartmentStatus = chance.pickone(getAllSubDepartments());
+            const validDepartmentStatus = chance.pickone(getAllDepartmentStatuses());
             workFlowStepAttributes.status = validDepartmentStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
 

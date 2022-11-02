@@ -87,60 +87,60 @@
 
     </div>
 
-    <% const orderPrepTicketsGroupedBySubDepartment = ticketsGroupedByDestination['ORDER-PREP'] %>
-    <% const artPrepTicketsGroupedBySubDepartment = ticketsGroupedByDestination['ART-PREP'] %>
-    <% const prePressTicketsGroupedBySubDepartment = ticketsGroupedByDestination['PRE-PRESS'] %>
-    <% const printingTicketsGroupedBySubDepartment = ticketsGroupedByDestination['PRINTING'] %>
-    <% const cuttingTicketsGroupedBySubDepartment = ticketsGroupedByDestination['CUTTING'] %>
-    <% const windingTicketsGroupedBySubDepartment = ticketsGroupedByDestination['WINDING'] %>
-    <% const shippingTicketsGroupedBySubDepartment = ticketsGroupedByDestination['SHIPPING'] %>
-    <% const billingTicketsGroupedBySubDepartment = ticketsGroupedByDestination['BILLING'] %>
+    <% const orderPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ORDER-PREP'] %>
+    <% const artPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ART-PREP'] %>
+    <% const prePressTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRE-PRESS'] %>
+    <% const printingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRINTING'] %>
+    <% const cuttingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['CUTTING'] %>
+    <% const windingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['WINDING'] %>
+    <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['SHIPPING'] %>
+    <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['BILLING'] %>
 
-    <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedBySubDepartment['NEEDS ATTENTION'] %>
-    <% const orderPrepSendToCustomerTickets = orderPrepTicketsGroupedBySubDepartment['SEND TO CUSTOMER'] %>
-    <% const orderPrepWaitingOnApprovalTickets = orderPrepTicketsGroupedBySubDepartment['WAITING ON APPROVAL'] %>
-    <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedBySubDepartment['WAITING ON CUSTOMER'] %>
-    <% const orderPrepReadyToOrderTickets = orderPrepTicketsGroupedBySubDepartment['READY TO ORDER PLATE OR DIE'] %>
-    <% const orderPrepInProgressTickets = orderPrepTicketsGroupedBySubDepartment['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
+    <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+    <% const orderPrepSendToCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['SEND TO CUSTOMER'] %>
+    <% const orderPrepWaitingOnApprovalTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
+    <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
+    <% const orderPrepReadyToOrderTickets = orderPrepTicketsGroupedByDepartmentStatus['READY TO ORDER PLATE OR DIE'] %>
+    <% const orderPrepInProgressTickets = orderPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
 
-    <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedBySubDepartment['NEEDS ATTENTION'] %>
-    <% const artPrepInProgressTickets = artPrepTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const artPrepNeedsProofTickets = artPrepTicketsGroupedBySubDepartment['NEEDS PROOF'] %>
-    <% const artPrepNeedsDieLineTickets = artPrepTicketsGroupedBySubDepartment['NEEDS DIE LINE'] %>
-    <% const artPrepNeedsPlateTickets = artPrepTicketsGroupedBySubDepartment['NEEDS PLATE'] %>
+    <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+    <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
+    <% const artPrepNeedsDieLineTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS DIE LINE'] %>
+    <% const artPrepNeedsPlateTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PLATE'] %>
 
-    <% const prePressNeedsAttentionTickets = prePressTicketsGroupedBySubDepartment['NEEDS ATTENTION'] %>
-    <% const prePressInProgressTickets = prePressTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const prePressSendToPressTickets = prePressTicketsGroupedBySubDepartment['SEND TO PRESS'] %>
+    <% const prePressNeedsAttentionTickets = prePressTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+    <% const prePressInProgressTickets = prePressTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const prePressSendToPressTickets = prePressTicketsGroupedByDepartmentStatus['SEND TO PRESS'] %>
 
-    <% const printingInProgressTickets = printingTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const printingReadyForSchedulingTickets = printingTicketsGroupedBySubDepartment['READY FOR SCHEDULING'] %>
-    <% const printingSchedulePressOneTickets = printingTicketsGroupedBySubDepartment['SCHEDULE PRESS ONE'] %>
-    <% const printingSchedulePressTwoTickets = printingTicketsGroupedBySubDepartment['SCHEDULE PRESS TWO'] %>
-    <% const printingSchedulePressThreeTickets = printingTicketsGroupedBySubDepartment['SCHEDULE PRESS THREE'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
-    <% const printingOnHoldTickets = printingTicketsGroupedBySubDepartment['ON HOLD'] %>
+    <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const printingReadyForSchedulingTickets = printingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
+    <% const printingSchedulePressOneTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS ONE'] %>
+    <% const printingSchedulePressTwoTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS TWO'] %>
+    <% const printingSchedulePressThreeTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS THREE'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
+    <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
 
-    <% const cuttingInProgressTickets = cuttingTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const cuttingReadyForSchedulingTickets = cuttingTicketsGroupedBySubDepartment['READY FOR SCHEDULING'] %>
-    <% const cuttingScheduleDeltaOneTickets = cuttingTicketsGroupedBySubDepartment['SCHEDULE DELTA ONE'] %>
-    <% const cuttingScheduleDeltaTwoTickets = cuttingTicketsGroupedBySubDepartment['SCHEDULE DELTA TWO'] %>
-    <% const cuttingScheduleRotoflexTickets = cuttingTicketsGroupedBySubDepartment['SCHEDULE ROTOFLEX'] %>
-    <% const cuttingOnHoldTickets = cuttingTicketsGroupedBySubDepartment['ON HOLD'] %>
+    <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const cuttingReadyForSchedulingTickets = cuttingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
+    <% const cuttingScheduleDeltaOneTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA ONE'] %>
+    <% const cuttingScheduleDeltaTwoTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA TWO'] %>
+    <% const cuttingScheduleRotoflexTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE ROTOFLEX'] %>
+    <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
 
-    <% const windingInProgressTickets = windingTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const windingReadyForSchedulingTickets = windingTicketsGroupedBySubDepartment['READY FOR SCHEDULING'] %>
-    <% const windingOnHoldTickets = windingTicketsGroupedBySubDepartment['ON HOLD'] %>
+    <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const windingReadyForSchedulingTickets = windingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
+    <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
 
-    <% const shippingInProgressTickets = shippingTicketsGroupedBySubDepartment['IN PROGRESS'] %>
-    <% const shippingReadyForShippingTickets = shippingTicketsGroupedBySubDepartment['READY FOR SHIPPING'] %>
-    <% const shippingOnHoldTickets = shippingTicketsGroupedBySubDepartment['ON HOLD'] %>
-    <% const shippingToolArrivalTickets = shippingTicketsGroupedBySubDepartment['TOOL ARRIVALS'] %>
+    <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const shippingReadyForShippingTickets = shippingTicketsGroupedByDepartmentStatus['READY FOR SHIPPING'] %>
+    <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const shippingToolArrivalTickets = shippingTicketsGroupedByDepartmentStatus['TOOL ARRIVALS'] %>
 
-    <% const billingInProgressTickets = billingTicketsGroupedBySubDepartment['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
-    <% const billingReadyForBillingTickets = billingTicketsGroupedBySubDepartment['READY FOR BILLING'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
+    <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
+    <% const billingReadyForBillingTickets = billingTicketsGroupedByDepartmentStatus['READY FOR BILLING'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
     
-    <% if (orderPrepTicketsGroupedBySubDepartment && Object.keys(orderPrepTicketsGroupedBySubDepartment).length > 0) { %>
-      <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedBySubDepartment).flat().length %>
+    <% if (orderPrepTicketsGroupedByDepartmentStatus && Object.keys(orderPrepTicketsGroupedByDepartmentStatus).length > 0) { %>
+      <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
       <div class='department-wrapper' data-department="ORDER-PREP">
         <h2>Order Prep Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h2>
@@ -948,8 +948,8 @@
       </div>
       
       <!--- Art Prep Department Start-->
-      <% if (artPrepTicketsGroupedBySubDepartment && Object.keys(artPrepTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedBySubDepartment).flat().length %>
+      <% if (artPrepTicketsGroupedByDepartmentStatus && Object.keys(artPrepTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper' data-department="ART-PREP">
         <h2>Art Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h2>
@@ -1722,8 +1722,8 @@
         <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
       </div>
   
-      <% if (prePressTicketsGroupedBySubDepartment && Object.keys(prePressTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedBySubDepartment).flat().length %>
+      <% if (prePressTicketsGroupedByDepartmentStatus && Object.keys(prePressTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper' data-department="PRE-PRESS">
         <h2>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h2>
@@ -2186,8 +2186,8 @@
         <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (printingTicketsGroupedBySubDepartment && Object.keys(printingTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedBySubDepartment).flat().length %>
+      <% if (printingTicketsGroupedByDepartmentStatus && Object.keys(printingTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper' data-department="PRINTING">
         <h2>Printing Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h2>
@@ -2954,8 +2954,8 @@
         <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>
     
-      <% if (cuttingTicketsGroupedBySubDepartment && Object.keys(cuttingTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedBySubDepartment).flat().length %>
+      <% if (cuttingTicketsGroupedByDepartmentStatus && Object.keys(cuttingTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper' data-department="CUTTING">
         <h2>Cutting Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h2>
@@ -3872,8 +3872,8 @@
         <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (windingTicketsGroupedBySubDepartment && Object.keys(windingTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfWindingTickets = Object.values(windingTicketsGroupedBySubDepartment).flat().length %>
+      <% if (windingTicketsGroupedByDepartmentStatus && Object.keys(windingTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper' data-department="WINDING">
         <h2>Winding Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h2>
@@ -4341,8 +4341,8 @@
         <div class="department-divide-line"></div><h4>End of Winding</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (shippingTicketsGroupedBySubDepartment && Object.keys(shippingTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedBySubDepartment).flat().length %>
+      <% if (shippingTicketsGroupedByDepartmentStatus && Object.keys(shippingTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper' data-department="SHIPPING">
         <h2>Shipping Department - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h2>
@@ -4955,8 +4955,8 @@
         <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (billingTicketsGroupedBySubDepartment && Object.keys(billingTicketsGroupedBySubDepartment).length > 0) { %>
-        <% const numberOfBillingTickets = Object.values(billingTicketsGroupedBySubDepartment).flat().length %>
+      <% if (billingTicketsGroupedByDepartmentStatus && Object.keys(billingTicketsGroupedByDepartmentStatus).length > 0) { %>
+        <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper' data-department="BILLING">
         <h2>Billing Department (TODO Storm: this second's subdepartments appear incorrect) - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h2>

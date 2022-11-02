@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departmentStatusesGroupedByDepartment, getAllSubDepartments} = require('../enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../enums/departmentsEnum');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 
@@ -21,8 +21,8 @@ const validateEmail = function(email) {
 
 function destinationsAreValid(destination) {
     const department = destination.department;
-    const subDepartment = destination.subDepartment;
-    const oneAttributeIsDefinedButNotTheOther = (department && !subDepartment) || (!department && subDepartment);
+    const departmentStatus = destination.departmentStatus;
+    const oneAttributeIsDefinedButNotTheOther = (department && !departmentStatus) || (!department && departmentStatus);
     const isInCompletedState = department === 'COMPLETED';
 
     if (isInCompletedState) {
@@ -34,7 +34,7 @@ function destinationsAreValid(destination) {
     }
 
     if (department) {
-        return departmentStatusesGroupedByDepartment[department].includes(subDepartment);
+        return departmentStatusesGroupedByDepartment[department].includes(departmentStatus);
     }
     
     return true;
@@ -44,8 +44,8 @@ function departmentIsValid(department) {
     return Object.keys(departmentStatusesGroupedByDepartment).includes(department);
 }
 
-function subDepartmentIsValid(subDepartment) {
-    return getAllSubDepartments().includes(subDepartment);
+function departmentStatusIsValid(departmentStatus) {
+    return getAllDepartmentStatuses().includes(departmentStatus);
 }
 
 async function validateMaterialExists(materialId) {
@@ -97,9 +97,9 @@ const destinationSchema = new Schema({
         type: String,
         validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
     },
-    subDepartment: {
+    departmentStatus: {
         type: String,
-        validate: [subDepartmentIsValid, 'The provided sub-department "{VALUE}" is not accepted']
+        validate: [departmentStatusIsValid, 'The provided departmentStatus "{VALUE}" is not accepted']
     }
 }, { timestamps: true });
 

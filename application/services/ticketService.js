@@ -88,22 +88,22 @@ module.exports.groupTicketsByDestination = (tickets) => {
 
     tickets.forEach((ticket) => {
         const department = ticket.destination ? ticket.destination.department : undefined;
-        const subDepartment = ticket.destination ? ticket.destination.subDepartment : undefined;
+        const departmentStatus = ticket.destination ? ticket.destination.departmentStatus : undefined;
 
-        if (department && subDepartment) {
+        if (department && departmentStatus) {
             const isFirstTicketFoundForThisDepartment = !ticketsGroupedByDestination[department];
 
             if (isFirstTicketFoundForThisDepartment) {
                 ticketsGroupedByDestination[department] = {};
             }
 
-            const isFirstTicketFoundForThisSubDepartment = !ticketsGroupedByDestination[department][subDepartment];
+            const isFirstTicketFoundForThisDepartmentStatus = !ticketsGroupedByDestination[department][departmentStatus];
 
-            if (isFirstTicketFoundForThisSubDepartment) {
-                ticketsGroupedByDestination[department][subDepartment] = [];
+            if (isFirstTicketFoundForThisDepartmentStatus) {
+                ticketsGroupedByDestination[department][departmentStatus] = [];
             }
 
-            ticketsGroupedByDestination[department][subDepartment].push(ticket);
+            ticketsGroupedByDestination[department][departmentStatus].push(ticket);
         }
     });
     

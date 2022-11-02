@@ -55,15 +55,15 @@ $( document ).ready(function() {
         updateTicket(ticketAttributes, ticketId);
     });
 
-    $('#subdepartment-selection').change(function() {
+    $('#department-status-selection').change(function() {
         const selectedDepartment = $('#department-selection').val();
-        const selectedSubDepartment = $('#subdepartment-selection').val();
+        const selectedDepartmentStatus = $('#department-status-selection').val();
         const ticketId = $('#department-notes').data('ticket-id');
 
         const ticketAttributes = {
             destination: {
                 department: selectedDepartment,
-                subDepartment: selectedSubDepartment
+                departmentStatus: selectedDepartmentStatus
             }
         };
 
@@ -96,9 +96,9 @@ $( document ).ready(function() {
         });
     });
 
-    function populateSubDepartmentsDropdown(departmentName) {
+    function populateDepartmentStatusesDropdown(departmentName) {
         $.ajax({
-            url: '/tickets/find-subdepartments',
+            url: '/tickets/find-department-statuses',
             type: 'POST',
             data: {
                 departmentName: departmentName
@@ -107,14 +107,14 @@ $( document ).ready(function() {
                 if (response.error) {
                     alert(`An error occurred: ${response.error}`);
                 } else {
-                    const subDepartments = response.subDepartments;
-                    const subDepartmentDropdown = $('#subdepartment-selection');
+                    const departmentStatuses = response.departmentStatuses;
+                    const departmentStatusDropdown = $('#department-status-selection');
 
-                    subDepartmentDropdown.empty();
-                    subDepartmentDropdown.append($('<option />').val('').text('-'));
+                    departmentStatusDropdown.empty();
+                    departmentStatusDropdown.append($('<option />').val('').text('-'));
 
-                    subDepartments.forEach((subDepartment) => {
-                        subDepartmentDropdown.append($('<option />').val(subDepartment).text(subDepartment));
+                    departmentStatuses.forEach((departmentStatus) => {
+                        departmentStatusDropdown.append($('<option />').val(departmentStatus).text(departmentStatus));
                     });
                 }
             },
@@ -131,7 +131,7 @@ $( document ).ready(function() {
         if (!selectedDepartmentName) {
             return;
         }
-        populateSubDepartmentsDropdown(selectedDepartmentName);
+        populateDepartmentStatusesDropdown(selectedDepartmentName);
     });
 
     $('.proof-upload').on('change', function() {

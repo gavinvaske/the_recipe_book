@@ -38,12 +38,12 @@
                 <% } %>
             </select>
 
-            <label for="subdepartment-selection">SubDepartment:</label>
-            <select name="destination[subDepartment]" id="subdepartment-selection" data-ticket-id="<%= ticket.id %>">
-                <% if (typeof subDepartments != 'undefined') { %>
-                    <% subDepartments.forEach(subDepartmentName => { %>
-                        <% const isSelected = subDepartmentName == selectedSubDepartment ? 'selected' : ''; %>
-                        <option value="<%= subDepartmentName %>" <%= isSelected %>><%= subDepartmentName || 'N/A' %></option>
+            <label for="department-status-selection">departmentStatus:</label>
+            <select name="destination[departmentStatus]" id="department-status-selection" data-ticket-id="<%= ticket.id %>">
+                <% if (typeof departmentStatuses != 'undefined') { %>
+                    <% departmentStatuses.forEach(departmentStatus => { %>
+                        <% const isSelected = departmentStatus == selectedDepartmentStatus ? 'selected' : ''; %>
+                        <option value="<%= departmentStatus %>" <%= isSelected %>><%= departmentStatus || 'N/A' %></option>
                     <% }) %>
                 <% } else { %>
                     <option value=""><%= 'Please Select a Department First' %></option>

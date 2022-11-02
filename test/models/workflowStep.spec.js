@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const WorkflowStep = require('../../application/models/WorkflowStep');
-const {getAllSubDepartments, subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentStatuses, departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 const DEPARTMENT_WITH_STATUSES = 'PRINTING';
@@ -11,7 +11,7 @@ describe('validation', () => {
 
     beforeEach(() => {
         let department = DEPARTMENT_WITH_STATUSES;
-        let departmentStatus = chance.pickone(subDepartmentsGroupedByDepartment[department]);
+        let departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
 
         workFlowStepAttributes = {
             ticketId: new mongoose.Types.ObjectId(),
@@ -74,7 +74,7 @@ describe('validation', () => {
 
         it('should pass if attribute IS an accepted value', () => {
             const validDepartment = DEPARTMENT_WITH_STATUSES;
-            const validStatus = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
+            const validStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
             workFlowStepAttributes.department = validDepartment;
             workFlowStepAttributes.departmentStatus = validStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
@@ -102,7 +102,7 @@ describe('validation', () => {
         });
 
         it('should pass if attribute IS an accepted value', () => {
-            const validDepartmentStatus = chance.pickone(getAllSubDepartments());
+            const validDepartmentStatus = chance.pickone(getAllDepartmentStatuses());
             workFlowStepAttributes.status = validDepartmentStatus;
             const workflowStep = new WorkflowStep(workFlowStepAttributes);
 

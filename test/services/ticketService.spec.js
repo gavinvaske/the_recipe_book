@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
+const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../../application/enums/departmentsEnum');
 
 const TICKET_ITEM_KEY = 'TicketItem';
 
@@ -111,87 +112,90 @@ describe('ticketService test suite', () => {
     });
 
     describe('groupTicketsByDepartment', () => {
-        let ticketsWithDepartments;
-        let ticketsWithoutDepartments;
-        let allTickets;
-        let departmentNames;
+        const allDepartmentsWithAtLeastOneDepartmentStatus = getAllDepartmentsWithDepartmentStatuses();
 
-        beforeEach(() => {
-            departmentNames = [chance.word(), chance.word(), chance.word()];
-            subDepartmentNames = [chance.word(), chance.word(), chance.word()];
-            ticketsWithDepartments = [
-                {
-                    destination: {
-                        department: departmentNames[0],
-                        subDepartment: subDepartmentNames[0],
-                    }
-                },
-                {
-                    destination: {
-                        department: departmentNames[1],
-                        subDepartment: subDepartmentNames[1],
-                    }
-                },
-                {
-                    destination: {
-                        department: departmentNames[2],
-                        subDepartment: subDepartmentNames[2],
-                    }
-                }
-            ];
-            ticketsWithoutDepartments = [{}, {}, {}, {}, {}];
+        it('should generate correct number of departments in the datastructure even if no tickets were passed in', () => {
+            const emptyTicketsArray = [];
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
 
-            allTickets = [...ticketsWithDepartments, ...ticketsWithoutDepartments];
+            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.length);
         });
 
-        it('should generate correct department names', () => {
-            console.log(`allTickets => ${JSON.stringify(allTickets)}`);
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
+        it('should generate correct number of departmentsStatuses in the datastructure even if no tickets were passed in', () => {
+            const emptyTicketsArray = [];
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
 
-            console.log(groupedTicketsByDepartment);
-
-            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(departmentNames.length);
-            expect(Object.keys(groupedTicketsByDepartment)).toEqual(expect.arrayContaining([departmentNames[0], departmentNames[1], departmentNames[2]]));
+            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.length);
+            expect(Object.keys(groupedTicketsByDepartment).sort()).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.sort());
         });
 
         it('should map list of tickets according to department', () => {
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
+            const emptyTicketsArray = [];
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
+            let departmentStatusesInDataStructure = [];
 
-            expect(Object.keys(groupedTicketsByDepartment).length).toBe(departmentNames.length);
+            Object.keys(groupedTicketsByDepartment).forEach((departmentName) => {
+                const group = groupedTicketsByDepartment[departmentName];
+
+                departmentStatusesInDataStructure = [
+                    ...departmentStatusesInDataStructure,
+                    ...Object.keys(group)
+                ]; 
+            });
+
+            console.log(departmentStatusesInDataStructure);
+
+            expect(departmentStatusesInDataStructure.length).toBe(getAllDepartmentStatuses().length);
         });
 
-        it('should ignore tickets whose department and/or subDepartment is unknown', () => {
-            const numberOfTicketsWithAValidDepartmentAndSubDepartment = allTickets.length;
+        it('should ignore tickets whose department and/or departmentStatus is unknown', () => {
+            const validTickets = chance.n(buildATicketWithAValidDesintation, chance.integer({min: 0, max: 100}));
+            const invalidTickets = chance.n(buildTicketWithoutAValidDestination, chance.integer({min: 0, max: 100}));
+            
+            const tickets = [...validTickets, ...invalidTickets];
 
-            ticketsWithoutADepartmentOrSubDepartment = [
-                {
-                    destination: {
-                        department: chance.word(),
-                        subDepartment: undefined,
-                    }
-                },
-                {
-                    destination: {
-                        department: undefined,
-                        subDepartment: chance.word(),
-                    }
-                },
-                {
-                    destination: {
-                        department: undefined,
-                        subDepartment: undefined,
-                    }
-                }
-            ];
+            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(tickets);
 
-            allTickets = [
-                ...allTickets,
-                ...ticketsWithoutADepartmentOrSubDepartment
-            ];
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(allTickets);
-
-            expect(groupedTicketsByDepartment.length).toBe(numberOfTicketsWithAValidDepartmentAndSubDepartment.length);
+            expect(countNumberOfTicketsGroupedByDestination(groupedTicketsByDepartment)).toBe(validTickets.length);
         });
     });
 });
+
+function countNumberOfTicketsGroupedByDestination(ticketsGroupedByDestination) {
+    let numberOfTickets = 0;
+
+    Object.keys(ticketsGroupedByDestination).forEach((department) => {
+        const departmentStatuses = Object.keys(ticketsGroupedByDestination[department]);
+        
+        departmentStatuses.forEach((departmentStatus) => {
+            numberOfTickets = numberOfTickets + ticketsGroupedByDestination[department][departmentStatus].length;
+        });
+    });
+
+    return numberOfTickets;
+}
+
+function buildATicketWithAValidDesintation() {
+    const departmentWithAtLeastOneDepartmentStatus = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[departmentWithAtLeastOneDepartmentStatus]);
+
+    return {
+        destination: {
+            department: departmentWithAtLeastOneDepartmentStatus,
+            departmentStatus
+        }
+    };
+}
+
+function buildTicketWithoutAValidDestination() {
+    const invalidDepartment = chance.string();
+    const invalidDepartmentStatus = chance.string();
+
+    return {
+        destination: {
+            department: invalidDepartment,
+            departmentStatus: invalidDepartmentStatus
+        }
+    };
+}
 

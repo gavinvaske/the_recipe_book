@@ -1,4 +1,4 @@
-// subDepartments
+// departmentStatuses
 const NEEDS_ATTENTION = 'NEEDS ATTENTION';
 const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
 const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
@@ -37,7 +37,7 @@ const SHIPPING_DEPARTMENT = 'SHIPPING';
 const BILLING_DEPARTMENT = 'BILLING';
 const COMPLETE_DEPARTMENT = 'COMPLETED';
 
-module.exports.subDepartmentsGroupedByDepartment = {
+module.exports.departmentStatusesGroupedByDepartment = {
     [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         SEND_TO_CUSTOMER,
@@ -96,16 +96,31 @@ module.exports.subDepartmentsGroupedByDepartment = {
     [COMPLETE_DEPARTMENT]: []
 };
 
-module.exports.getAllSubDepartments = () => {
-    let allSubDepartments = [];
+module.exports.getAllDepartmentStatuses = () => {
+    let allDepartmentStatuses = [];
 
-    Object.values(this.subDepartmentsGroupedByDepartment).forEach((subDepartmentsForOneDepartment) => {
-        allSubDepartments.push(...subDepartmentsForOneDepartment);
+    Object.values(this.departmentStatusesGroupedByDepartment).forEach((departmentStatusesForOneDepartment) => {
+        allDepartmentStatuses.push(...departmentStatusesForOneDepartment);
     });
 
-    return allSubDepartments;
+    return allDepartmentStatuses;
 };
 
 module.exports.getAllDepartments = () => {
-    return Object.keys(this.subDepartmentsGroupedByDepartment);
+    return Object.keys(this.departmentStatusesGroupedByDepartment);
+};
+
+module.exports.getAllDepartmentsWithDepartmentStatuses = () => {
+    let departmentsWithAtLeastOneDepartmentStatus = [];
+    let allDepartments = this.getAllDepartments();
+
+    allDepartments.forEach((department) => {
+        const containsAtLeastOneDepartmentStatus = this.departmentStatusesGroupedByDepartment[department].length > 0; // eslint-disable-line no-magic-numbers
+
+        if (containsAtLeastOneDepartmentStatus) {
+            departmentsWithAtLeastOneDepartmentStatus.push(department);
+        }
+    });
+
+    return departmentsWithAtLeastOneDepartmentStatus;
 };

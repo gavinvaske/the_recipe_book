@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
-const {subDepartmentsGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 
@@ -565,7 +565,7 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should pass validation if attribute exists but department/subdepartment are both not defined', () => {
+        it('should pass validation if attribute exists but department/departmentStatus are both not defined', () => {
             ticketAttributes.destination = {};
             const ticket = new TicketModel(ticketAttributes);
 
@@ -574,13 +574,13 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should fail validation if subDepartment attribute IS NOT an accepted value', () => {
+        it('should fail validation if departmentStatus attribute IS NOT an accepted value', () => {
             const validDepartment = 'PRE-PRESS';
-            const invalidSubDepartment = chance.string();
+            const invalidDepartmentStatus = chance.string();
 
             ticketAttributes.destination = {
                 department: validDepartment,
-                subDepartment: invalidSubDepartment
+                departmentStatus: invalidDepartmentStatus
             };
             const ticket = new TicketModel(ticketAttributes);
 
@@ -592,11 +592,11 @@ describe('validation', () => {
         it('should fail validation if department attribute IS NOT an accepted value', () => {
             const validDepartment = 'ART-PREP';
             const invalidDepartment = chance.string();
-            const validSubDepartment = chance.pickone(subDepartmentsGroupedByDepartment[validDepartment]);
+            const validDepartmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
 
             ticketAttributes.destination = {
                 department: invalidDepartment,
-                subDepartment: validSubDepartment
+                departmentStatus: validDepartmentStatus
             };
             const ticket = new TicketModel(ticketAttributes);
 
@@ -605,13 +605,13 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should fail validation if exactly one of either department or subdepartment is left blank', () => {
+        it('should fail validation if exactly one of either department or departmentStatus is left blank', () => {
             const validDepartment = 'ORDER PREP';
-            const invalidSubDepartment = undefined;
+            const invalidDepartmentStatus = undefined;
 
             ticketAttributes.destination = {
                 department: validDepartment,
-                subDepartment: invalidSubDepartment
+                departmentStatus: invalidDepartmentStatus
             };
 
             const ticket = new TicketModel(ticketAttributes);
@@ -621,13 +621,13 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should fail validation if department is COMPLETED and subDepartment is defined', () => {
+        it('should fail validation if department is COMPLETED and departmentStatus is defined', () => {
             const validDepartment = 'COMPLETED';
-            const invalidSubDepartment = chance.word();
+            const invalidDepartmentStatus = chance.word();
     
             ticketAttributes.destination = {
                 department: validDepartment,
-                subDepartment: invalidSubDepartment
+                departmentStatus: invalidDepartmentStatus
             };
     
             const ticket = new TicketModel(ticketAttributes);
@@ -637,7 +637,7 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should pass validation if department is COMPLETED and subDepartment not defined', () => {
+        it('should pass validation if department is COMPLETED and departmentStatus not defined', () => {
             const validDepartment = 'COMPLETED';
 
             ticketAttributes.destination = {
@@ -651,13 +651,13 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should fail validation if subDepartment is not a valid subdepartment for the provided department', () => {
+        it('should fail validation if departmentStatus is not a valid departmentStatus for the provided department', () => {
             const orderPrepDepartment = 'ORDER-PREP';
-            const billingSubDepartment = 'READY FOR BILLING';
+            const billingDepartmentStatus = 'READY FOR BILLING';
     
             ticketAttributes.destination = {
                 department: orderPrepDepartment,
-                subDepartment: billingSubDepartment
+                departmentStatus: billingDepartmentStatus
             };
     
             const ticket = new TicketModel(ticketAttributes);

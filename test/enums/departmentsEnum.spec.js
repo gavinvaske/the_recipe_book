@@ -1,17 +1,17 @@
-const {getAllSubDepartments, getAllDepartments} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentStatuses, getAllDepartments} = require('../../application/enums/departmentsEnum');
 
 describe('departmentsEnum', () => {
-    it('should return the list of subdepartments', () => {
-        const expectedNumberOfSubDepartments = 39;
-        const expectedNumberOfUniqueSubDepartments = 24;
+    it('should return the list of departmentStatus', () => {
+        const expectedNumberOfDepartmentStatuses = 39;
+        const expectedNumberOfUniqueDepartmentStatuses = 24;
 
-        const subDepartments = getAllSubDepartments();
-        const uniqueSubDepartments = new Set(subDepartments);
+        const departmentStatuses = getAllDepartmentStatuses();
+        const uniqueDepartmentStatuses = new Set(departmentStatuses);
 
-        console.log(uniqueSubDepartments.size);
+        console.log(uniqueDepartmentStatuses.size);
 
-        expect(subDepartments.length).toBe(expectedNumberOfSubDepartments);
-        expect(uniqueSubDepartments.size).toBe(expectedNumberOfUniqueSubDepartments);
+        expect(departmentStatuses.length).toBe(expectedNumberOfDepartmentStatuses);
+        expect(uniqueDepartmentStatuses.size).toBe(expectedNumberOfUniqueDepartmentStatuses);
     });
 
     it('should return the list of departments', () => {

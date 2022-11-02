@@ -1,7 +1,9 @@
-<%- include('partials/navbarMain.ejs') %>
+
 
 <div class="page-wrapper view-tickets">
-  <div class='card'>
+  <%- include('partials/navbarMain.ejs') %>
+  <%- include('partials/sidebarMain.ejs') %>
+  <div class='card tickets-card'>
     <div class="alert-box full-width">
         <%- include ("flashMessages") %>
     </div>
@@ -13,7 +15,7 @@
         <p>All jobs tickets can be found in the departments below.</p>
 
       </div>
-      <div class='worlkflow-navigation'>
+      <div class='workflow-navigation'>
         <ul class='navigation-list full-width'>
           <li data-department="ORDER-PREP">Order Prep</li>
           <li data-department="ART-PREP">Art Prep</li>

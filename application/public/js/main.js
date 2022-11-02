@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    $('.worlkflow-navigation ul li').on('click', function() {
+    $('.workflow-navigation ul li').on('click', function() {
         $('.department-end-frame').remove();
         let currentDepartmentName = $(this).text();
         $('#department-select').text(' - ' + currentDepartmentName);
@@ -611,6 +611,24 @@ $( document ).ready(function() {
 
     $('.start-job-bg-overlay .fa-xmark-large').click(function(){
         $('.start-job-bg-overlay').removeClass('active');
+    });
+
+    $('.start-job-bg-overlay .fa-xmark-large').click(function(){
+        $('.start-job-bg-overlay').removeClass('active');
+    });
+
+    $('.expand-sidebar').click(function() {
+        $(this).toggleClass('active');
+        $('.view-tickets').toggleClass('active');
+        $('.sidebar-main').toggleClass('active');
+    });
+    $('.sidebar-option').click(function() {
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+        } else {
+            $('.sidebar-option').removeClass('active');
+            $(this).addClass('active');
+        }
     });
 
 });

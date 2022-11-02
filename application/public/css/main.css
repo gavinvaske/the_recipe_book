@@ -445,7 +445,7 @@ html {
   color: #39c2dd;
 }
 .page-wrapper {
-  padding: 120px 2rem 0 2rem;
+  padding: 110px 2rem 0 2rem;
 }
 .body p {
     line-height: 1.5rem;
@@ -3014,9 +3014,9 @@ a.storm {
 	height: auto;
 }
 
-.department-wrapper {
+/* .department-wrapper {
   margin-bottom: 50px;
-}
+} */
 .department-wrapper h2 {
   color: #6e6b7b;
 }
@@ -3492,7 +3492,7 @@ canvas{
   border-left: 1px solid #5DDE97;
   border-bottom: 1px solid #5DDE97;
 }
-.department-section-e .product-wrapper:first-of-type .table-row .group-lines {
+.product-wrapper:first-of-type .table-row .group-lines {
   height: 90px;
   top: -59px;
 }
@@ -3507,4 +3507,170 @@ canvas{
 }
 .department-section-a .product-wrapper .table-row:hover .column-td-a {
   background: #28c76f;
+}
+
+.department-section-a .product-wrapper .table-row:hover .group-lines {
+  border-bottom-color: #28c76f;
+}
+.department-section-e .product-wrapper .table-row:hover .group-lines {
+  border-bottom-color: #ea5455;
+}
+
+.page-wrapper.view-tickets .navbar-main {
+  display: none;
+}
+.page-wrapper.view-tickets {
+  padding-top: 35px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.sidebar-main {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 80px;
+  background-color: white;
+  z-index: 500;
+  padding: 15px 25px;
+  box-shadow: 0 0 15px 0 rgb(34 41 47 / 5%);
+  transition: .3s;
+}
+.sidebar-main:hover,
+.sidebar-main.active {
+  width: 350px;
+  transition: .3s;
+  cursor: pointer;
+}
+.tickets-card {
+  width: calc(100% - 80px);
+  transition: .3s;
+}
+
+.view-tickets.active .tickets-card {
+  width: calc(100% - 350px);
+  transition: .3s;
+}
+
+.expand-sidebar {
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  border: 2px solid #157efb;
+  display: none;
+}
+
+.sidebar-main:hover .expand-sidebar,
+.sidebar-main.active .expand-sidebar,
+.sidebar-main:hover .department-container,
+.sidebar-main.active .department-container ,
+.sidebar-main:hover .navigation-container,
+.sidebar-main.active .navigation-container {
+  display: flex;
+  transition: .3s;
+}
+.sidebar-main:hover .expand-sidebar .title-frame {
+  padding: 0 25px;
+  transition: .3s;
+}
+
+.expand-sidebar.active .bull-eye {
+  width: 8px;
+  height: 8px;
+  border: 2px solid #157efb;
+  border-radius: 100%;
+}
+
+.sidebar-main .title-frame {
+  padding:0;
+}
+
+.department-container,
+.navigation-container {
+  display: none;
+  margin: 25px 0;
+  width: 100%;
+}
+
+.department-container span,
+.navigation-container span {
+  color: #a6a4b0;
+  font-size: 25px;
+  line-height: 1.5;
+  letter-spacing: .01rem;
+}
+.department-container ul li .option,
+.navigation-container ul li .option {
+  position: relative;
+  font-size: 20px;
+  padding: 10px 15px;
+  width: 100%;
+  border-radius: 5px;
+  transition: .3s;
+}
+.department-container ul li .option i,
+.navigation-container ul li .option i {
+  margin-right: 12px;
+  transition: .3s;
+}
+.department-container ul li .option:hover,
+.navigation-container ul li .option:hover {
+  background: #f8f8f8;
+  cursor: pointer;
+}
+.sidebar-option.active .option {
+  background: #f8f8f8;
+}
+.department-container ul li .option:hover i,
+.navigation-container ul li .option:hover i {
+  margin-left: 7px;
+  transition: .3s;
+}
+.navigation-container ul li .option .fa-chevron-right {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  font-size: 16px;
+}
+.sidebar-sub-options {
+  /* padding-left: 12px;
+  overflow: hidden;
+  height: 0;
+  visibility: hidden;
+  transition: .3s; */
+  max-height: 0;
+  overflow-y: hidden;
+  transition: .3s;
+}
+.sidebar-sub-options li {
+  font-size: 18px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.sidebar-option.active i.fa-chevron-right {
+  transform: rotate(90deg);
+  transition: .3s;
+}
+.sidebar-sub-options li i {
+  font-size: 12px;
+  margin-right: 12px;
+  transition: .3s;
+}
+.sidebar-sub-options li:hover i {
+ margin-left: 7px;
+ transition: .3s;
+}
+.sidebar-option.active .sidebar-sub-options {
+  /* height: 200px;
+  visibility: visible;
+  transition: .3s; */
+  
+	max-height: 200px; /* approximate max height */
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(1, 1, 1, 1);
 }

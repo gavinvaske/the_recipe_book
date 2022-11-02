@@ -2,8 +2,8 @@ const {getAllSubDepartments, getAllDepartments} = require('../../application/enu
 
 describe('departmentsEnum', () => {
     it('should return the list of subdepartments', () => {
-        const expectedNumberOfSubDepartments = 35;
-        const expectedNumberOfUniqueSubDepartments = 21;
+        const expectedNumberOfSubDepartments = 39;
+        const expectedNumberOfUniqueSubDepartments = 24;
 
         const subDepartments = getAllSubDepartments();
         const uniqueSubDepartments = new Set(subDepartments);

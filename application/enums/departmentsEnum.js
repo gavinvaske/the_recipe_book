@@ -5,6 +5,11 @@ const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
 const WAITING_ON_CUSTOMER = 'WAITING ON CUSTOMER';
 const READY_TO_ORDER_PLATE_OR_DIE = 'READY TO ORDER PLATE OR DIE';
 const IN_PROGRESS = 'IN PROGRESS';
+
+const SETUP = 'SET-UP';
+const RUNTIME = 'RUNTIME';
+const TEAR_DOWN = 'TEAR-DOWN';
+
 const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
 const NEEDS_PLATE = 'NEEDS PLATE';
 const SEND_TO_PRESS = 'SEND TO PRESS';
@@ -54,7 +59,9 @@ module.exports.subDepartmentsGroupedByDepartment = {
         SEND_TO_PRESS
     ],
     [PRINTING_DEPARTMENT]: [
-        IN_PROGRESS,
+        SETUP,
+        RUNTIME,
+        TEAR_DOWN,
         READY_FOR_SCHEDULING,
         SCHEDULE_PRESS_ONE,
         SCHEDULE_PRESS_TWO,
@@ -62,7 +69,9 @@ module.exports.subDepartmentsGroupedByDepartment = {
         ON_HOLD
     ],
     [CUTTING_DEPARTMENT]: [
-        IN_PROGRESS,
+        SETUP,
+        RUNTIME,
+        TEAR_DOWN,
         READY_FOR_SCHEDULING,
         SCHEDULE_DELTA_ONE,
         SCHEDULE_DELTA_TWO,

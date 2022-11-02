@@ -109,3 +109,18 @@ module.exports.getAllDepartmentStatuses = () => {
 module.exports.getAllDepartments = () => {
     return Object.keys(this.departmentStatusesGroupedByDepartment);
 };
+
+module.exports.getAllDepartmentsWithDepartmentStatuses = () => {
+    let departmentsWithAtLeastOneDepartmentStatus = [];
+    let allDepartments = this.getAllDepartments();
+
+    allDepartments.forEach((department) => {
+        const containsAtLeastOneDepartmentStatus = this.departmentStatusesGroupedByDepartment[department].length > 0; // eslint-disable-line no-magic-numbers
+
+        if (containsAtLeastOneDepartmentStatus) {
+            departmentsWithAtLeastOneDepartmentStatus.push(department);
+        }
+    });
+
+    return departmentsWithAtLeastOneDepartmentStatus;
+};

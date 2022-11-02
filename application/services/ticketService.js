@@ -1,4 +1,5 @@
 const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
+const {departmentStatusesGroupedByDepartment, getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum');
 
 function isEmptyObject(value) {
     if (!value) {
@@ -83,29 +84,36 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
     };
 };
 
+function buildTicketsGroupedByDestinationDataStructure(departmentsWithStatuses) {
+    let ticketsGroupedByDestination = {};
+
+    departmentsWithStatuses.forEach((department) => {
+        ticketsGroupedByDestination[department] = {};
+
+        const departmentStatuses = departmentStatusesGroupedByDepartment[department];
+
+        departmentStatuses.forEach((departmentStatus) => {
+            ticketsGroupedByDestination[department][departmentStatus] = [];
+        });
+    });
+
+    return ticketsGroupedByDestination;
+}
+
 module.exports.groupTicketsByDestination = (tickets) => {
-    const ticketsGroupedByDestination = {};
+    const ticketsGroupedByDestination = buildTicketsGroupedByDestinationDataStructure(getAllDepartmentsWithDepartmentStatuses());
 
     tickets.forEach((ticket) => {
         const department = ticket.destination ? ticket.destination.department : undefined;
         const departmentStatus = ticket.destination ? ticket.destination.departmentStatus : undefined;
 
         if (department && departmentStatus) {
-            const isFirstTicketFoundForThisDepartment = !ticketsGroupedByDestination[department];
-
-            if (isFirstTicketFoundForThisDepartment) {
-                ticketsGroupedByDestination[department] = {};
+            const departmentAndDepartmentStatusCombinationIsValid = ticketsGroupedByDestination[department] && ticketsGroupedByDestination[department][departmentStatus];
+            if (departmentAndDepartmentStatusCombinationIsValid) {
+                ticketsGroupedByDestination[department][departmentStatus].push(ticket);
             }
-
-            const isFirstTicketFoundForThisDepartmentStatus = !ticketsGroupedByDestination[department][departmentStatus];
-
-            if (isFirstTicketFoundForThisDepartmentStatus) {
-                ticketsGroupedByDestination[department][departmentStatus] = [];
-            }
-
-            ticketsGroupedByDestination[department][departmentStatus].push(ticket);
         }
     });
-    
+
     return ticketsGroupedByDestination;
 };

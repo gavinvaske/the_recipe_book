@@ -329,8 +329,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -447,6 +447,9 @@
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
                 <div class='ticket-products-wrapper flex-center-right-column full-width'>
+                  <div class='product-wrapper-header flex-center-left-row'>
+                    <h4>Products - <span>3</span></h4>
+                  </div>
                   <div class='table-header secondary-table-header flex-center-center-row'>
                     <div class='column-header column-header-a'></div>
                     <div class='column-header column-header-b'>#</div>
@@ -477,8 +480,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -613,6 +616,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -627,8 +631,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -763,6 +767,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -777,8 +782,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -912,6 +917,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -926,8 +932,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1094,8 +1100,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1245,8 +1251,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1381,6 +1387,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1395,8 +1402,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1534,6 +1541,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1548,8 +1556,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1687,6 +1695,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -1701,8 +1710,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -1864,8 +1873,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2015,8 +2024,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2151,6 +2160,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2165,8 +2175,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2332,8 +2342,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2468,6 +2478,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2482,8 +2493,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2618,6 +2629,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2632,8 +2644,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2768,6 +2780,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -2782,8 +2795,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -2933,8 +2946,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3100,8 +3113,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3250,8 +3263,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3386,6 +3399,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3400,8 +3414,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3536,6 +3550,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3550,8 +3565,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3686,6 +3701,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -3700,8 +3716,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -3851,8 +3867,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4018,8 +4034,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4168,8 +4184,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4320,8 +4336,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4483,8 +4499,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4619,6 +4635,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -4633,8 +4650,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4784,8 +4801,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>
@@ -4920,6 +4937,7 @@
                     <% ticket.products.forEach((product, index) => { %>
                     <div class='product-wrapper flex-top-center-column'>
                       <div class='table-row flex-center-center-row'>
+                        <div class='group-lines'></div>
                         <div class='column-td column-td-a bg-green'>
                           <i class='fa-light fa-ellipsis-vertical text-white'></i>
                           <div class='ticket-dropdown-options dropdown'>
@@ -4934,8 +4952,8 @@
                         <div class='column-td column-td-d bg-white'></div>
                         <div class='column-td column-td-e bg-white'></div>
                         <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'>100</div>
-                        <div class='column-td column-td-h bg-white'>4000</div>
+                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
                         <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
                       </div>
                     </div>

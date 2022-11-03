@@ -6,6 +6,7 @@ const chargeSchema = require('./charge').schema;
 const {departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../enums/departmentsEnum');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
+const WorkflowStepModel = require('../models/WorkflowStep');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -285,6 +286,57 @@ ticketSchema.pre('save', function(next) {
     next();
 });
 
+async function addRowToWorkflowStepDbTable(workflowStepAttributes) {
+    const workflowStep = new WorkflowStepModel(workflowStepAttributes);
+
+    await WorkflowStepModel.create(workflowStep);
+}
+
+ticketSchema.pre('updateOne', async function(next) {
+    const destination = this.getUpdate().$set.destination;
+    const department = destination.department ? destination.department : undefined;
+    const departmentStatus = destination.departmentStatus ? destination.departmentStatus : undefined;
+    const ticketId = this.getQuery()._id;
+    const workflowStepAttributes = {
+        ticketId,
+        department,
+        departmentStatus
+    }
+
+    if (!destination) {
+        return next();
+    }
+
+    try {
+        await addRowToWorkflowStepDbTable(workflowStepAttributes);
+    } catch(error) {
+        console.log(`Error during mongoose ticketSchema.pre('updateOne') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
+        return next(error);
+    }
+})
+
+ticketSchema.pre('findOneAndUpdate', async function(next) {
+    const destination = this.getUpdate().$set.destination;
+    const department = destination.department ? destination.department : undefined;
+    const departmentStatus = destination.departmentStatus ? destination.departmentStatus : undefined;
+    const ticketId = this.getQuery()._id;
+    const workflowStepAttributes = {
+        ticketId,
+        department,
+        departmentStatus
+    }
+
+    if (!destination) {
+        return next();
+    }
+
+    try {
+        await addRowToWorkflowStepDbTable(workflowStepAttributes);
+    } catch(error) {
+        console.log(`Error during mongoose ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
+        return next(error);
+    }
+});
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
 module.exports = Ticket;

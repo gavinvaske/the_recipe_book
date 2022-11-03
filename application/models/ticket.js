@@ -301,7 +301,7 @@ ticketSchema.pre('updateOne', async function(next) {
         ticketId,
         department,
         departmentStatus
-    }
+    };
 
     if (!destination) {
         return next();
@@ -309,11 +309,11 @@ ticketSchema.pre('updateOne', async function(next) {
 
     try {
         await addRowToWorkflowStepDbTable(workflowStepAttributes);
-    } catch(error) {
+    } catch (error) {
         console.log(`Error during mongoose ticketSchema.pre('updateOne') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
         return next(error);
     }
-})
+});
 
 ticketSchema.pre('findOneAndUpdate', async function(next) {
     const destination = this.getUpdate().$set.destination;
@@ -324,7 +324,7 @@ ticketSchema.pre('findOneAndUpdate', async function(next) {
         ticketId,
         department,
         departmentStatus
-    }
+    };
 
     if (!destination) {
         return next();
@@ -332,7 +332,7 @@ ticketSchema.pre('findOneAndUpdate', async function(next) {
 
     try {
         await addRowToWorkflowStepDbTable(workflowStepAttributes);
-    } catch(error) {
+    } catch (error) {
         console.log(`Error during mongoose ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
         return next(error);
     }

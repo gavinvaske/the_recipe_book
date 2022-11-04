@@ -3218,24 +3218,6 @@ a.storm {
 .table-row-wrapper .hide-products {
   display: none;
 }
-.department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
-  background-color: #f29899;
-}
-.department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
-  color:#f29899;
-}
-.department-section-a .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
-  background-color: #5DDE97;
-}
-.department-section-a .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
-  color:#5DDE97;
-}
-.department-section-b .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
-  background-color: #aba3f6;
-}
-.department-section-b .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
-  color:#aba3f6;
-}
 
 .move-ticket ,
 .duration-dropdown-trigger {
@@ -3483,57 +3465,7 @@ canvas{
   border-radius: 5px;
 }
 
-.group-lines {
-  position: absolute;
-  left:-16px;
-  top: -33px;
-  width: 13px;
-  height: 65px;
-}
-.department-section-b .group-lines {
-  border-left: 1px solid #8f85f3;
-  border-bottom: 1px solid #8f85f3;
-}
-.department-section-e .group-lines {
-  border-left: 1px solid #f29899;
-  border-bottom: 1px solid #f29899;
-}
-.department-section-a .group-lines {
-  border-left: 1px solid #5DDE97;
-  border-bottom: 1px solid #5DDE97;
-}
-.product-wrapper:first-of-type .table-row .group-lines {
-  height: 90px;
-  top: -59px;
-}
-.department-section-e .product-wrapper .table-row:hover .column-td-c {
-  color: #ea5455;
-}
-.department-section-e .product-wrapper .table-row:hover .column-td-a {
-  background: #ea5455;
-}
-.department-section-a .product-wrapper .table-row:hover .column-td-c {
-  color: #28c76f;
-}
-.department-section-a .product-wrapper .table-row:hover .column-td-a {
-  background: #28c76f;
-}
-.department-section-b .product-wrapper .table-row:hover .column-td-c {
-  color: #7367f0;
-}
-.department-section-b .product-wrapper .table-row:hover .column-td-a {
-  background: #7367f0;
-}
 
-/* .department-section-a .product-wrapper .table-row:hover .group-lines {
-  border-bottom-color: #28c76f;
-}
-.department-section-e .product-wrapper .table-row:hover .group-lines {
-  border-bottom-color: #ea5455;
-}
-.department-section-a .product-wrapper .table-row:hover .group-lines {
-  border-bottom-color: #7367f0;
-} */
 
 .page-wrapper.view-tickets .navbar-main {
   display: none;
@@ -3548,12 +3480,14 @@ canvas{
   position: fixed;
   top: 0;
   bottom: 0;
+  overflow: hidden;
   left: 0;
   height: 100%;
-  width: 80px;
+  /* width: 80px; */
+  width: 90px;
   background-color: white;
   z-index: 500;
-  padding: 15px 25px;
+  padding: 15px 15px;
   box-shadow: 0 0 15px 0 rgb(34 41 47 / 5%);
   transition: .3s;
 }
@@ -3564,7 +3498,7 @@ canvas{
   cursor: pointer;
 }
 .tickets-card {
-  width: calc(100% - 80px);
+  width: calc(100% - 90px);
   transition: .3s;
 }
 
@@ -3572,21 +3506,25 @@ canvas{
   width: calc(100% - 350px);
   transition: .3s;
 }
-
+/* .sidebar-main .shadow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  width: 5px;
+  z-index: 2;
+} */
 .expand-sidebar {
-  width: 25px;
-  height: 25px;
+  width: 27px;
+  height: 27px;
   border-radius: 100%;
-  border: 2px solid #157efb;
+  border: 3px solid #157efb;
   display: none;
 }
 
 .sidebar-main:hover .expand-sidebar,
-.sidebar-main.active .expand-sidebar,
-.sidebar-main:hover .department-container,
-.sidebar-main.active .department-container ,
-.sidebar-main:hover .navigation-container,
-.sidebar-main.active .navigation-container {
+.sidebar-main.active .expand-sidebar {
   display: flex;
   transition: .3s;
 }
@@ -3603,54 +3541,65 @@ canvas{
 }
 
 .sidebar-main .title-frame {
-  padding:0;
+  padding:0 15px;
+  min-width: 250px;
 }
 
-.department-container,
 .navigation-container {
-  display: none;
-  margin: 25px 0;
+  margin: 50px 0 0 0;
+  display: flex;
   width: 100%;
+  min-width: 320px;
+  position: relative;
 }
-
-.department-container span,
 .navigation-container span {
   color: #a6a4b0;
   font-size: 25px;
   line-height: 1.5;
   letter-spacing: .01rem;
 }
-.department-container ul li .option,
 .navigation-container ul li .option {
   position: relative;
-  font-size: 20px;
-  padding: 10px 15px;
+  font-size: 24px;
+  padding: 10px 15px 10px 15px;
   width: 100%;
   border-radius: 5px;
   transition: .3s;
 }
-.department-container ul li .option i,
-.navigation-container ul li .option i {
-  margin-right: 12px;
-  transition: .3s;
+.navigation-container ul li .option p {
+  visibility: hidden;
 }
-.department-container ul li .option:hover,
+.sidebar-main:hover .navigation-container ul li .option p,
+.sidebar-main.active .navigation-container ul li .option p {
+  visibility: visible;
+}
+.sidebar-option,
+.sidebar-option a {
+  color: #000;
+}
 .navigation-container ul li .option:hover {
   background: #f8f8f8;
   cursor: pointer;
 }
+.sidebar-main .icon-box {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
+  transition: .3s;
+}
 .sidebar-option.active .option {
   background: #f8f8f8;
 }
-.department-container ul li .option:hover i,
-.navigation-container ul li .option:hover i {
+.navigation-container ul li .option:hover .icon-box {
   margin-left: 7px;
   transition: .3s;
 }
 .navigation-container ul li .option .fa-chevron-right {
   position: absolute;
-  right: 10px;
-  top: 15px;
+  right: 20px;
+  top: 20px;
   font-size: 16px;
 }
 .sidebar-sub-options {
@@ -3665,7 +3614,7 @@ canvas{
 }
 .sidebar-sub-options li {
   font-size: 18px;
-  padding: 10px 15px;
+  padding: 10px 23px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -3690,6 +3639,32 @@ canvas{
   
 	max-height: 200px; /* approximate max height */
 	transition-property: all;
-	transition-duration: .5s;
+	transition-duration: .3s;
 	transition-timing-function: cubic-bezier(1, 1, 1, 1);
+}
+
+.sidebar-main:hover .feather-more-horizontal {
+  display: none;
+}
+.sidebar-main:hover .sidebar-title {
+  display: block;
+}
+.sidebar-title {
+  display: none;
+}
+.feather-more-horizontal {
+  margin-left: 20px; 
+}
+.sidebar-title {
+  margin-left: 15px;
+}
+.sidebar-main.active  .sidebar-title {
+  display: block;
+}
+.sidebar-main.active  .feather-more-horizontal {
+  display: none;
+}
+.feather-more-horizontal,
+.sidebar-title {
+  height: 40px;
 }

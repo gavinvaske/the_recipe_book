@@ -583,11 +583,8 @@ $( document ).ready(function() {
         $('.move-ticket').removeClass('active');
         $('.departments-dropdown').removeClass('active');
     });
-    $('.show-products').hover(function(){
-        $('.move-ticket').removeClass('active');
-        $('.departments-dropdown').removeClass('active');
-    });
-    $('.hide-products').hover(function(){
+
+    $('.back-out-hover').hover(function(){
         $('.move-ticket').removeClass('active');
         $('.departments-dropdown').removeClass('active');
     });
@@ -599,6 +596,7 @@ $( document ).ready(function() {
 
     $('.sub-drpdwn-back-btn').click(function() {
         $('.department-status-dropdown').removeClass('active');
+        $('.departments-dropdown').addClass('storm');
     });
 
     $('.notification-option').click(function() {
@@ -621,6 +619,9 @@ $( document ).ready(function() {
         $(this).toggleClass('active');
         $('.view-tickets').toggleClass('active');
         $('.sidebar-main').toggleClass('active');
+        if ($('.sidebar-option').hasClass('active')) {
+            $('.sidebar-option').removeClass('active');
+        }
     });
     $('.sidebar-option').click(function() {
         if ($(this).hasClass('active')) {

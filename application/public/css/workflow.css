@@ -206,7 +206,7 @@
 }
 .table-row {
 	background-color: #f8f8f8;
-	height: 60px;
+	height: 61px;
 	margin-bottom: 3px;
 	position: relative;
 }
@@ -399,6 +399,88 @@
 .department-section-e .column-td-a:hover {
 	background-color: #e42728;
 }
+
+
+.group-lines {
+	position: absolute;
+	left:-16px;
+	top: -33px;
+	width: 13px;
+	height: 65px;
+  }
+  .department-section-b .group-lines {
+	border-left: 1px solid #8f85f3;
+	border-bottom: 1px solid #8f85f3;
+  }
+  .department-section-e .group-lines {
+	border-left: 1px solid #f29899;
+	border-bottom: 1px solid #f29899;
+  }
+  .department-section-a .group-lines {
+	border-left: 1px solid #5DDE97;
+	border-bottom: 1px solid #5DDE97;
+  }
+  .department-section-d .group-lines {
+	border-left: 1px solid #ffb56f;
+	border-bottom: 1px solid #ffb56f;
+  }
+  .product-wrapper:first-of-type .table-row .group-lines {
+	height: 90px;
+	top: -59px;
+  }
+  
+  .department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
+	background-color: #f29899;
+  }
+  .department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
+	color:#f29899;
+  }
+  .department-section-a .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
+	background-color: #5DDE97;
+  }
+  .department-section-a .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
+	color:#5DDE97;
+  }
+  .department-section-b .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
+	background-color: #aba3f6;
+  }
+  .department-section-b .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
+	color:#aba3f6;
+  }
+  .department-section-d .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
+	background-color: #ffb56f;
+  }
+  .department-section-d .table-row-wrapper.active .ticket-products-wrapper .column-td-c {
+	color:#ffb56f;
+  }
+  
+  
+  .department-section-e .product-wrapper .table-row:hover .column-td-c {
+	color: #ea5455;
+  }
+  .department-section-e .product-wrapper .table-row:hover .column-td-a {
+	background-color: #ea5455;
+  }
+  .department-section-a .product-wrapper .table-row:hover .column-td-c {
+	color: #28c76f;
+  }
+  .department-section-a .product-wrapper .table-row:hover .column-td-a {
+	background-color: #28c76f;
+  }
+  .department-section-b .product-wrapper .table-row:hover .column-td-c {
+	color: #7367f0;
+  }
+  .department-section-b .product-wrapper .table-row:hover .column-td-a {
+	background-color: #7367f0;
+  }
+  .department-section-d .product-wrapper .table-row:hover .column-td-c {
+	color: #ff8510;
+  }
+  .department-section-d .product-wrapper .table-row:hover .column-td-a {
+	background-color: #ff8510;
+  }
+  
+  
 
 
 .header-description h1 {

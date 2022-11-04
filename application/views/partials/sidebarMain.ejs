@@ -1,110 +1,65 @@
 <div class='sidebar-main'>
     <div class='flex-center-space-between-row full-width title-frame'>
-        <svg xmlns="http://www.w3.org/2000/svg" width="42px" height="42px" viewBox="0 0 225.97 290.05"><defs><style>.scls-1{fill:#00cfe8;}.scls-2{fill:#7367f0;}.scls-3{fill:#ea5455;}.scls-4{fill:#fcd61a;}.scls-5{fill:#28c76f;}.scls-6{fill:#2ab8fa;}.scls-7{fill:#ff9f43;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="scls-1" x="0.23" y="142.35" width="54" height="120.69"/><rect class="scls-2" width="224.81" height="54" rx="27"/><rect class="scls-3" x="88.76" y="119.77" width="137.21" height="54" rx="27"/><rect class="scls-4" y="236.05" width="137.21" height="54" rx="27"/><circle class="scls-5" cx="198.57" cy="27" r="27"/><circle class="scls-6" cx="27.23" cy="142.35" r="27"/><circle class="scls-7" cx="194.57" cy="263.05" r="27"/></g></g></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 225.97 290.05"><defs><style>.scls-1{fill:#00cfe8;}.scls-2{fill:#7367f0;}.scls-3{fill:#ea5455;}.scls-4{fill:#fcd61a;}.scls-5{fill:#28c76f;}.scls-6{fill:#2ab8fa;}.scls-7{fill:#ff9f43;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="scls-1" x="0.23" y="142.35" width="54" height="120.69"/><rect class="scls-2" width="224.81" height="54" rx="27"/><rect class="scls-3" x="88.76" y="119.77" width="137.21" height="54" rx="27"/><rect class="scls-4" y="236.05" width="137.21" height="54" rx="27"/><circle class="scls-5" cx="198.57" cy="27" r="27"/><circle class="scls-6" cx="27.23" cy="142.35" r="27"/><circle class="scls-7" cx="194.57" cy="263.05" r="27"/></g></g></svg>
         <button class='expand-sidebar flex-center-center-row'>
             <div class='bull-eye'></div>
         </button>
     </div>
     <div class='navigation-container flex-top-left-column'>
-        <span>Navigation</span>
+        <span class='sidebar-title'>Navigation</span><svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
         <ul class='full-width'>
             <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    <i class="fa-sharp fa-solid fa-ticket"></i>Tickets
-                </div>
+                <a href='/tickets' class='flex-center-left-row full-width option'>
+                    <div class='icon-box'><i class="fa-sharp fa-solid fa-ticket"></i></div><p>Tickets</p>
+                </a>
             </li>
             <li class='materials-sidebar-option sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-regular fa-toilet-paper"></i>Materials
+                    <div class='icon-box'><i class="fa-regular fa-toilet-paper"></i></div><p>Materials</p>
                     <i class="fa-regular fa-chevron-right"></i>
                 </div>
                 <ul class='sidebar-sub-options'>
-                    <li><i class="fa-regular fa-circle"></i>Inventory</li>
-                    <li><i class="fa-regular fa-circle"></i>Create Purchase Order</li>
-                    <li><i class="fa-regular fa-circle"></i>View Purchase Orders</li>
+                    <li><a href='/material-inventory'><i class="fa-regular fa-circle"></i>Inventory</a></li>
+                    <li><a href='/material-orders/create'><i class="fa-regular fa-circle"></i>Create Purchase Order</a></li>
+                    <li><a href='/material-orders'><i class="fa-regular fa-circle"></i>View Purchase Orders</a></li>
                 </ul>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-light fa-hat-chef"></i>Recipes
+                    <div class='icon-box'><i class="fa-light fa-hat-chef"></i></div><p>Recipes</p>
                     <i class="fa-regular fa-chevron-right"></i>
                 </div>
                 <ul class='sidebar-sub-options'>
-                    <li><i class="fa-regular fa-circle"></i>Inventory</li>
-                    <li><i class="fa-regular fa-circle"></i>Create Purchase Order</li>
-                    <li><i class="fa-regular fa-circle"></i>View Purchase Orders</li>
+                    <li><a href='/recipes/create'><i class="fa-regular fa-circle"></i>Create Recipe</a></li>
+                    <li><a href='/recipes?pageNumber=1'><i class="fa-regular fa-circle"></i>View All Recipes</a></li>
                 </ul>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-sharp fa-solid fa-list-timeline"></i>Master Log
+                    <div class='icon-box'><i class="fa-sharp fa-solid fa-list-timeline"></i></div><p>Master Log</p>
                 </div>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-regular fa-message"></i>Chat
+                    <div class='icon-box'><i class="fa-regular fa-message"></i></div><p>Chat</p>
                 </div>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-regular fa-bell"></i>Notification
+                    <div class='icon-box'><i class="fa-regular fa-bell"></i></div><p>Notification</p>
                 </div>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <i class="fa-regular fa-user"></i>Me
+                    <div class='icon-box'><i class="fa-regular fa-user"></i></div><p>Me</p>
                     <i class="fa-regular fa-chevron-right"></i>
                 </div>
                 <ul class='sidebar-sub-options'>
-                    <li><i class="fa-regular fa-circle"></i>Inventory</li>
-                    <li><i class="fa-regular fa-circle"></i>Create Purchase Order</li>
-                    <li><i class="fa-regular fa-circle"></i>View Purchase Orders</li>
+                    <li><a href="/users/profile/"><i class="fa-regular fa-circle"></i>Account</a></li>
+                    <li><a href="/team"><i class="fa-regular fa-circle"></i>Team</a></li>
+                    <li><a href="/admin"><i class="fa-regular fa-circle"></i>Admin</a></li>
+                    <li><a href="/users/logout"><i class="fa-regular fa-circle"></i>Log Out</a></li>
                 </ul>
-            </li>
-        </ul>
-    </div>
-    <div class='department-container flex-top-left-column'>
-        <span>Dapartments</span>
-        <ul class='full-width'>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Order Prep
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Art Prep
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Pre-Printing
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Printing
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Cutting
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Winding
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Shipping
-                </div>
-            </li>
-            <li class='sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    Billing
-                </div>
             </li>
         </ul>
     </div>

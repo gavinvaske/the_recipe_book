@@ -253,6 +253,24 @@ button:hover {
 
 }
 
+#backToTop {
+	position: fixed;
+	right: 30px;
+	bottom: 5%;
+	background-color: red;
+	width: 50px;
+	height: 50px;
+	z-index: 9;
+	border-color: #7367f0!important;
+    background-color: #7367f0!important;
+	border-radius: .358rem;
+	color: white;
+	font-size: 20px;
+	display: none;
+}
+#backToTop:hover {
+	box-shadow: 0 8px 25px -8px #7367f0;
+}
 .btn-person-filter:hover,
 .btn-sort:hover {
 	background-color: #dcdfec;

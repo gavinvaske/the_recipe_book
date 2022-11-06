@@ -619,9 +619,9 @@ $( document ).ready(function() {
         $(this).toggleClass('active');
         $('.view-tickets').toggleClass('active');
         $('.sidebar-main').toggleClass('active');
-        if ($('.sidebar-option').hasClass('active')) {
-            $('.sidebar-option').removeClass('active');
-        }
+        // if ($('.sidebar-option').hasClass('active')) {
+        //     $('.sidebar-option').removeClass('active');
+        // }
     });
     $('.sidebar-option').click(function() {
         if ($(this).hasClass('active')) {
@@ -632,6 +632,13 @@ $( document ).ready(function() {
         }
     });
 
+    $('.sidebar-main').mouseleave(function(){
+        if ($(this).hasClass('active')) {
+
+        } else {
+            $('.sidebar-option ').removeClass('active');
+        }
+    });
 });
 
 

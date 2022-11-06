@@ -1,27 +1,32 @@
 <nav class="navbar-main">
     <div class="column column-left">
         <ul class="full-width flex-center-left-row main-navbar-links">
-            <li class="navbar-links"><a href='/tickets' class="flex-center-center-row tickets"><i class="fa-sharp fa-solid fa-ticket"></i>Tickets</a></li>
+            <li class="navbar-links"><a href='/tickets' class="flex-center-center-row tickets"><i class="fa-regular fa-table-tree"></i> Job Board</a></li>
             <li class="navbar-links nav-dropdown-trigger" id="material-dropdown-trigger">
-                <div class="material flex-center-center-row">
-                    <i class="fa-regular fa-toilet-paper"></i> Materials
+                <a href="/material-inventory" class="material flex-center-center-row"><i class="fa-regular fa-toilet-paper"></i> Inventory</a>
+                <!-- <div class="material flex-center-center-row">
+                    <i class="fa-regular fa-toilet-paper"></i> Inventory
                     <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
                 <ul class="dropdown-menu material-dropdown">
                     <li><a href="/material-inventory"><i class="fa-sharp fa-solid fa-cubes-stacked"></i>Inventory</a></li>
                     <li><a href="/material-orders/create"><svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>Create Purchase Order</a></li>
                     <li><a href="/material-orders"><i class="fa-regular fa-layer-group"></i>View Purchase Orders</a></li>
-                </ul>
+                </ul> -->
             </li>
-            <li class="navbar-links nav-dropdown-trigger" id="recipe-dropdown-trigger">
-                <div class="recipes flex-center-center-row">
-                    <i class="fa-light fa-hat-chef"></i>Recipes
+            <li class="navbar-links nav-dropdown-trigger" id="insights-dropdown-trigger">
+                <div class="insights flex-center-center-row">
+                    <i class="fa-regular fa-chart-network"></i>Insights
                     <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
-                <ul class="dropdown-menu recipe-dropdown">
-                    <li><a href="/recipes/create"><svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>Create New Recipe</a></li>
+                <ul class="dropdown-menu insights-dropdown">
+                    <li><a href="/recipes/create">Dashboard</a></li>
                     <li><a href="/recipes?pageNumber=1"><i class="fa-regular fa-layer-group"></i>View All Recipes</a></li>
                 </ul>
+                <!-- <ul class="dropdown-menu recipe-dropdown">
+                    <li><a href="/recipes/create"><svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>Create New Recipe</a></li>
+                    <li><a href="/recipes?pageNumber=1"><i class="fa-regular fa-layer-group"></i>View All Recipes</a></li>
+                </ul> -->
             </li>
         </ul>
     </div>
@@ -31,8 +36,8 @@
     <div class="column column-right">
         <ul class="primary">
             <li class="activity-option tooltip-bottom">
-                <span class="tooltiptext">Master Activity Feed</span>
-                <i class="fa-sharp fa-solid fa-list-timeline"></i>
+                <span class="tooltiptext">Activity Feed</span>
+                <i class="fa-regular fa-wave-pulse"></i>
             </li>
             <li class="team-chat-option tooltip-bottom">
                 <span class="tooltiptext">Team Chat</span>
@@ -75,10 +80,10 @@
                     </div>
                 </div>
                 <ul class="dropdown-menu user-options">
-                    <li><a href="/users/profile/"><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-50 feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Account</a></li>
-                    <li><a href="/team"><i class="fa-sharp fa-solid fa-users-rays"></i>Team</a></li>
-                    <li><a href="/admin"><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>Admin</a></li>
-                    <li><a href="/users/logout"><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-50 feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Log Out</a></li>
+                    <li><a href="/users/profile/"><i class="fa-regular fa-user"></i>Account</a></li>
+                    <li><a href="/admin"><i class="fa-regular fa-users-medical"></i>Users</a></li>
+                    <li><a href="/admin"><i class="fa-regular fa-screwdriver-wrench"></i>C.R.U.D.</a></li>
+                    <li><a href="/users/logout"><i class="fa-regular fa-right-from-bracket"></i>Log Out</a></li>
                 </ul>
             </li>
        </ul>

@@ -3,9 +3,10 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../enums/departmentsEnum');
+const destinationSchema = require('../models/destination').schema;
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
+const WorkflowStepModel = require('../models/WorkflowStep');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -18,35 +19,6 @@ function stringOnlyContainsDigits(ticketNumber) {
 const validateEmail = function(email) {
     return EMAIL_VALIDATION_REGEX.test(email);
 };
-
-function destinationsAreValid(destination) {
-    const department = destination.department;
-    const departmentStatus = destination.departmentStatus;
-    const oneAttributeIsDefinedButNotTheOther = (department && !departmentStatus) || (!department && departmentStatus);
-    const isInCompletedState = department === 'COMPLETED';
-
-    if (isInCompletedState) {
-        return true;
-    }
-
-    if (oneAttributeIsDefinedButNotTheOther) {
-        return false;
-    }
-
-    if (department) {
-        return departmentStatusesGroupedByDepartment[department].includes(departmentStatus);
-    }
-    
-    return true;
-}
-
-function departmentIsValid(department) {
-    return Object.keys(departmentStatusesGroupedByDepartment).includes(department);
-}
-
-function departmentStatusIsValid(departmentStatus) {
-    return getAllDepartmentStatuses().includes(departmentStatus);
-}
 
 async function validateMaterialExists(materialId) {
     const searchCriteria = {
@@ -92,17 +64,6 @@ const departmentNotesSchema = new Schema({
     strict: 'throw'
 });
 
-const destinationSchema = new Schema({
-    department: {
-        type: String,
-        validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
-    },
-    departmentStatus: {
-        type: String,
-        validate: [departmentStatusIsValid, 'The provided departmentStatus "{VALUE}" is not accepted']
-    }
-}, { timestamps: true });
-
 const ticketSchema = new Schema({
     primaryMaterial: {
         type: String,
@@ -120,8 +81,7 @@ const ticketSchema = new Schema({
     },
     destination: {
         type: destinationSchema,
-        required: false,
-        validate: [destinationsAreValid, 'Invalid Department/departmentStatus combination']
+        required: false
     },
     products: {
         type: [productSchema],
@@ -284,6 +244,31 @@ ticketSchema.pre('save', function(next) {
 
     next();
 });
+
+async function addRowToWorkflowStepDbTable(next) {
+    const destination = this.getUpdate().$set.destination;
+
+    if (!destination) {
+        return next();
+    }
+
+    const workflowStepAttributes = {
+        ticketId: this.getQuery()._id,
+        destination
+    };
+
+    try {
+        const workflowStep = new WorkflowStepModel(workflowStepAttributes);
+
+        await WorkflowStepModel.create(workflowStep);
+    } catch (error) {
+        console.log(`Error during mongoose ticketSchema.pre('updateOne') or ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
+        return next(error);
+    }
+}
+
+ticketSchema.pre('updateOne', addRowToWorkflowStepDbTable);
+ticketSchema.pre('findOneAndUpdate', addRowToWorkflowStepDbTable);
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

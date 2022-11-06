@@ -245,51 +245,31 @@ ticketSchema.pre('save', function(next) {
     next();
 });
 
-async function addRowToWorkflowStepDbTable(workflowStepAttributes) {
-    const workflowStep = new WorkflowStepModel(workflowStepAttributes);
+async function addRowToWorkflowStepDbTable(next) {
+    const destination = this.getUpdate().$set.destination;
 
-    await WorkflowStepModel.create(workflowStep);
+    if (!destination) {
+        return next();
+    }
+
+    const workflowStepAttributes = {
+        ticketId: this.getQuery()._id,
+        destination
+    };
+
+    try {
+        const workflowStep = new WorkflowStepModel(workflowStepAttributes);
+
+        await WorkflowStepModel.create(workflowStep);
+    } catch (error) {
+        console.log(`Error during mongoose ticketSchema.pre('updateOne') or ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
+        return next(error);
+    }
 }
 
-ticketSchema.pre('updateOne', async function(next) {
-    const destination = this.getUpdate().$set.destination;
+ticketSchema.pre('updateOne', addRowToWorkflowStepDbTable);
+ticketSchema.pre('findOneAndUpdate', addRowToWorkflowStepDbTable);
 
-    if (!destination) {
-        return next();
-    }
-
-    const workflowStepAttributes = {
-        ticketId: this.getQuery()._id,
-        destination
-    };
-
-    try {
-        await addRowToWorkflowStepDbTable(workflowStepAttributes);
-    } catch (error) {
-        console.log(`Error during mongoose ticketSchema.pre('updateOne') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
-        return next(error);
-    }
-});
-
-ticketSchema.pre('findOneAndUpdate', async function(next) {
-    const destination = this.getUpdate().$set.destination;
-
-    if (!destination) {
-        return next();
-    }
-
-    const workflowStepAttributes = {
-        ticketId: this.getQuery()._id,
-        destination
-    };
-
-    try {
-        await addRowToWorkflowStepDbTable(workflowStepAttributes);
-    } catch (error) {
-        console.log(`Error during mongoose ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
-        return next(error);
-    }
-});
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
 module.exports = Ticket;

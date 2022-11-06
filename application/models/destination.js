@@ -3,16 +3,21 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const {getAllDepartments, departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
 
-function isDepartmentAndDepartmentStatusCombinationValid() {
+function isDepartmentAndDepartmentStatusCombinationValid(department, departmentStatus) {
     const lengthOfEmptyArray = 0;
-    const allowedStatuses = departmentStatusesGroupedByDepartment[this.department];
+    
+    if (!isDepartmentValid(department)) {
+        return false;
+    }
+
+    const allowedStatuses = departmentStatusesGroupedByDepartment[department];
     const noDepartmentStatusesExistForThisDepartment = allowedStatuses.length === lengthOfEmptyArray;
 
-    if (noDepartmentStatusesExistForThisDepartment && !this.departmentStatus) {
+    if (noDepartmentStatusesExistForThisDepartment && !departmentStatus) {
         return true;
     }
 
-    return allowedStatuses.includes(this.departmentStatus);
+    return allowedStatuses.includes(departmentStatus);
 }
 
 function isDepartmentValid(department) {
@@ -25,21 +30,10 @@ function isDepartmentValid(department) {
 
 const destinationSchema = new Schema({
     department: {
-        type: String,
-        validate: [
-            {
-                validator: isDepartmentValid,
-                message: 'The department "{VALUE}" is not a valid department'
-            },
-            {
-                validator: isDepartmentAndDepartmentStatusCombinationValid,
-                message: 'The department "{VALUE}" is not allowed to be paired with the provided departmentStatus'
-            }
-        ]
+        type: String
     },
     departmentStatus: {
-        type: String,
-        validate: [isDepartmentAndDepartmentStatusCombinationValid, 'The departmentStatus "{VALUE}" is not allowed to be paired with the provided department']
+        type: String
     },
     assignees: {
         type: [Schema.Types.ObjectId],
@@ -50,6 +44,14 @@ const destinationSchema = new Schema({
         ref: 'Machine'
     }
 }, { timestamps: true });
+
+destinationSchema.pre('validate', function(next) {
+    if (!isDepartmentAndDepartmentStatusCombinationValid(this.department, this.departmentStatus)) {
+        return next(new Error(`The departmentStatus "${this.departmentStatus}" is not allowed to be paired with the provided department "${this.department}"`));
+    }
+
+    return next();
+});
 
 const Destination = mongoose.model('Destination', destinationSchema);
 

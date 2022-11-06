@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
-const {departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 
@@ -550,13 +549,7 @@ describe('validation', () => {
     });
 
     describe('attribute: destination', () => {
-        it('should contain attribute', () => {
-            const ticket = new TicketModel(ticketAttributes);
-
-            expect(ticket.destination).toBeDefined();
-        });
-
-        it('should pass validation if attribute is missing', () => {
+        it('should pass validation if attribute is not defined', () => {
             delete ticketAttributes.destination;
             const ticket = new TicketModel(ticketAttributes);
 
@@ -565,23 +558,8 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should pass validation if attribute exists but department/departmentStatus are both not defined', () => {
-            ticketAttributes.destination = {};
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should fail validation if departmentStatus attribute IS NOT an accepted value', () => {
-            const validDepartment = 'PRE-PRESS';
-            const invalidDepartmentStatus = chance.string();
-
-            ticketAttributes.destination = {
-                department: validDepartment,
-                departmentStatus: invalidDepartmentStatus
-            };
+        it('should fail validation if attribute is not the correct type', () => {
+            ticketAttributes.destination = chance.word();
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -589,82 +567,10 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
-        it('should fail validation if department attribute IS NOT an accepted value', () => {
-            const validDepartment = 'ART-PREP';
-            const invalidDepartment = chance.string();
-            const validDepartmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
-
-            ticketAttributes.destination = {
-                department: invalidDepartment,
-                departmentStatus: validDepartmentStatus
-            };
+        it('should be a mongoose object with an _id attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            const error = ticket.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should fail validation if exactly one of either department or departmentStatus is left blank', () => {
-            const validDepartment = 'ORDER PREP';
-            const invalidDepartmentStatus = undefined;
-
-            ticketAttributes.destination = {
-                department: validDepartment,
-                departmentStatus: invalidDepartmentStatus
-            };
-
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should fail validation if department is COMPLETED and departmentStatus is defined', () => {
-            const validDepartment = 'COMPLETED';
-            const invalidDepartmentStatus = chance.word();
-    
-            ticketAttributes.destination = {
-                department: validDepartment,
-                departmentStatus: invalidDepartmentStatus
-            };
-    
-            const ticket = new TicketModel(ticketAttributes);
-    
-            const error = ticket.validateSync();
-    
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should pass validation if department is COMPLETED and departmentStatus not defined', () => {
-            const validDepartment = 'COMPLETED';
-
-            ticketAttributes.destination = {
-                department: validDepartment
-            };
-
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should fail validation if departmentStatus is not a valid departmentStatus for the provided department', () => {
-            const orderPrepDepartment = 'ORDER-PREP';
-            const billingDepartmentStatus = 'READY FOR BILLING';
-    
-            ticketAttributes.destination = {
-                department: orderPrepDepartment,
-                departmentStatus: billingDepartmentStatus
-            };
-    
-            const ticket = new TicketModel(ticketAttributes);
-    
-            const error = ticket.validateSync();
-    
-            expect(error).not.toBe(undefined);
+            expect(ticket.destination._id).not.toBe(undefined);
         });
     });
 

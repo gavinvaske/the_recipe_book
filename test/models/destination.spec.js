@@ -9,7 +9,7 @@ const DEPARTMENT_WITHOUT_STATUSES = 'COMPLETED';
 describe('validation', () => {
     let destinationAttributes;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         let department = DEPARTMENT_WITH_STATUSES;
         let departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
 
@@ -21,12 +21,17 @@ describe('validation', () => {
         };
     });
 
-    it('should validate if all attributes are defined successfully', () => {
+    it('should validate if all attributes are defined successfully', async () => {
+        let validationError;
         const destination = new Destination(destinationAttributes);
-    
-        const error = destination.validateSync();
 
-        expect(error).toBe(undefined);
+        try {
+            await destination.validate();
+        } catch (error) {
+            validationError = error;
+        }
+
+        expect(validationError).toBe(undefined);
     });
 
     describe('attribute: department', () => {
@@ -36,48 +41,68 @@ describe('validation', () => {
             expect(destination.department).toEqual(expect.any(String));
         });
 
-        it('should fail if attribute is not defined', () => {
+        it('should fail if attribute is not defined', async () => {
             delete destinationAttributes.department;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).not.toBe(undefined);
+            expect(validationError).not.toBe(undefined);
         });
 
-        it('should fail if attribute is NOT an accepted value', () => {
+        it('should fail if attribute is NOT an accepted value', async () => {
             const invalidDepartment = chance.string();
             destinationAttributes.department = invalidDepartment;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).not.toBe(undefined);
+            expect(validationError).not.toBe(undefined);
         });
 
-        it('should pass if attribute IS an accepted value', () => {
+        it('should pass if attribute IS an accepted value', async () => {
             const validDepartment = DEPARTMENT_WITH_STATUSES;
             const validStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
             destinationAttributes.department = validDepartment;
             destinationAttributes.departmentStatus = validStatus;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).toBe(undefined);
+            expect(validationError).toBe(undefined);
         });
 
-        it('should pass if attribute IS an accepted value surrounded by whitespace', () => {
+        it('should pass if attribute IS an accepted value surrounded by whitespace', async () => {
             const whitespaceToTrim = '  ';
             const validDepartment = DEPARTMENT_WITH_STATUSES;
             const validStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
             destinationAttributes.department = whitespaceToTrim + validDepartment + whitespaceToTrim;
             destinationAttributes.departmentStatus = whitespaceToTrim + validStatus + whitespaceToTrim;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).toBe(undefined);
+            expect(validationError).toBe(undefined);
         });
     });
 
@@ -88,34 +113,49 @@ describe('validation', () => {
             expect(destination.departmentStatus).toEqual(expect.any(String));
         });
 
-        it('should fail if departmentStatus is not a valid departmentStatus a given department', () => {
+        it('should fail if departmentStatus is not a valid departmentStatus a given department', async () => {
             const invalidDepartmentStatus = chance.string();
             destinationAttributes.departmentStatus = invalidDepartmentStatus;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).not.toBe(undefined);
+            expect(validationError).not.toBe(undefined);
         });
 
-        it('should pass if departmentStatus is left blank because the department has no statuses', () => {
+        it('should pass if departmentStatus is left blank because the department has no statuses', async () => {
             destinationAttributes.department = DEPARTMENT_WITHOUT_STATUSES;
             delete destinationAttributes.departmentStatus;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).toBe(undefined);
+            expect(validationError).toBe(undefined);
         });
 
-        it('should fail if departmentStatus is not an allowed status for the given department', () => {
+        it('should fail if departmentStatus is not an allowed status for the given department', async () => {
             destinationAttributes.department = DEPARTMENT_WITH_STATUSES;
             delete destinationAttributes.departmentStatus;
             const destination = new Destination(destinationAttributes);
+            let validationError;
 
-            const error = destination.validateSync();
+            try {
+                await destination.validate();
+            } catch (error) {
+                validationError = error;
+            }
 
-            expect(error).not.toBe(undefined);
+            expect(validationError).not.toBe(undefined);
         });
     });
 

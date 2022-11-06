@@ -206,7 +206,7 @@
 }
 .table-row {
 	background-color: #f8f8f8;
-	height: 61px;
+	height: 43px;
 	margin-bottom: 3px;
 	position: relative;
 }
@@ -222,7 +222,7 @@
 	align-items: center;
 }
 .column-td {
-	height: 53px;
+	height: 35px;
 	font-weight: 500;
 }
 .column-td-c,
@@ -233,19 +233,19 @@
 .column-header-a {
 	width: 25px;
 	margin: 0 5px;
-  width: calc(30px - 10px);
+  	width: calc(30px - 10px);
 }
 .column-td-a .fa-ellipsis-vertical {
-	font-size: 25px;
+	font-size: 20px;
 }
 .column-td-b,
 .column-header-b {
 	margin-right: 5px;
-	width: calc(65px - 5px);
+	width: calc(50px - 5px);
 }
 .column-td-c,
 .column-header-c {
-	width: calc(100% - 1051px);
+	width: calc(100% - 1034px);
 	padding-left: 15px;
 }
 .column-td-c {
@@ -403,10 +403,10 @@
 
 .group-lines {
 	position: absolute;
-	left:-16px;
-	top: -33px;
-	width: 13px;
-	height: 65px;
+    left: -16px;
+    top: -30px;
+    width: 12px;
+    height: 52px;
   }
   .department-section-b .group-lines {
 	border-left: 1px solid #8f85f3;
@@ -425,8 +425,8 @@
 	border-bottom: 1px solid #ffb56f;
   }
   .product-wrapper:first-of-type .table-row .group-lines {
-	height: 90px;
-	top: -59px;
+	height: 80px;
+	top: -57px;
   }
   
   .department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
@@ -485,6 +485,7 @@
 
 .header-description h1 {
 	font-weight: 700;
+	line-height: 2.5rem;
 }
 
 .workflow-order-header ul li:hover {
@@ -581,7 +582,12 @@
 .column-td-a.active .fa-ellipsis-vertical {
 	opacity: 1;
 }
-
+.ticket-dropdown-options .line {
+	height: 1px;
+	background-color: #e6e9ef;
+	width: 100%;
+	margin: 7px 0;
+}
 .expanded-options-dropdown ul,
 .ticket-dropdown-options ul {
 	padding: 8px;

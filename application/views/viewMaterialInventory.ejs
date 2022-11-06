@@ -1,6 +1,11 @@
+<script>
+  var bodyclass=document.createAttribute("class");
+  bodyclass.value="view-material-inventory-body";
+  document.getElementsByTagName("body")[0].setAttributeNode(bodyclass);
+</script>
 <%- include('partials/navbarMain.ejs') %>
 <div class='page-wrapper materials-wrapper flex-center-center-column full-width'>
-    <h2 class="page-title">Inventory Page</h2>
+    <h2 class="page-title card">Inventory Page</h2>
     <div class='material-header flex-top-space-between-row full-width'>
       <div class='card col col-one third-width'>
         <span>Feet On Hand</span>
@@ -16,7 +21,7 @@
       </div>
     </div>
 
-    <div class="workflow-filter flex-center-left-row full-width">
+    <div class="workflow-filter flex-center-left-row full-width card">
         <a class="create bg-blue text-white border-blue btn-create new-po-btn" href="/material-orders/create">PO <i class="fa-regular fa-plus"></i></a>
         <a class="create bg-blue text-white border-blue btn-create new-po-btn" href="/materials/create" role="button">Material <i class="fa-regular fa-plus"></i></a>
         <div class="search-wrapper flex-center-left-row">

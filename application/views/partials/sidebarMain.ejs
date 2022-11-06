@@ -8,35 +8,34 @@
     <div class='navigation-container flex-top-left-column'>
         <span class='sidebar-title'>Navigation</span><svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
         <ul class='full-width'>
-            <li class='sidebar-option'>
+            <li class='sidebar-option tickets'>
                 <a href='/tickets' class='flex-center-left-row full-width option'>
-                    <div class='icon-box'><i class="fa-sharp fa-solid fa-ticket"></i></div><p>Tickets</p>
+                    <div class='icon-box'><i class="fa-regular fa-table-tree"></i></div><p>Job Board</p>
                 </a>
             </li>
             <li class='materials-sidebar-option sidebar-option'>
-                <div class='flex-center-left-row full-width option'>
-                    <div class='icon-box'><i class="fa-regular fa-toilet-paper"></i></div><p>Materials</p>
-                    <i class="fa-regular fa-chevron-right"></i>
-                </div>
-                <ul class='sidebar-sub-options'>
+                <a href='/material-inventory' class='flex-center-left-row full-width option'>
+                    <div class='icon-box'><i class="fa-regular fa-toilet-paper"></i></div><p>Inventory</p>
+                </a>
+                <!-- <ul class='sidebar-sub-options'>
                     <li><a href='/material-inventory'><i class="fa-regular fa-circle"></i>Inventory</a></li>
                     <li><a href='/material-orders/create'><i class="fa-regular fa-circle"></i>Create Purchase Order</a></li>
                     <li><a href='/material-orders'><i class="fa-regular fa-circle"></i>View Purchase Orders</a></li>
-                </ul>
+                </ul> -->
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <div class='icon-box'><i class="fa-light fa-hat-chef"></i></div><p>Recipes</p>
+                    <div class='icon-box'><i class="fa-regular fa-chart-network"></i></div><p>Insights</p>
                     <i class="fa-regular fa-chevron-right"></i>
                 </div>
                 <ul class='sidebar-sub-options'>
-                    <li><a href='/recipes/create'><i class="fa-regular fa-circle"></i>Create Recipe</a></li>
-                    <li><a href='/recipes?pageNumber=1'><i class="fa-regular fa-circle"></i>View All Recipes</a></li>
+                    <li><a href='#'><i class="fa-regular fa-circle"></i>Dashboard</a></li>
+                    <li><a href='#'><i class="fa-regular fa-circle"></i>View All Recipes</a></li>
                 </ul>
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <div class='icon-box'><i class="fa-sharp fa-solid fa-list-timeline"></i></div><p>Master Log</p>
+                    <div class='icon-box'><i class="fa-regular fa-wave-pulse"></i></div><p>Master Log</p>
                 </div>
             </li>
             <li class='sidebar-option'>
@@ -51,7 +50,7 @@
             </li>
             <li class='sidebar-option'>
                 <div class='flex-center-left-row full-width option'>
-                    <div class='icon-box'><i class="fa-regular fa-user"></i></div><p>Me</p>
+                    <div class='icon-box'><div class='user-profile-picture profile-picture'></div></div><p class='user-name'>Me</p>
                     <i class="fa-regular fa-chevron-right"></i>
                 </div>
                 <ul class='sidebar-sub-options'>

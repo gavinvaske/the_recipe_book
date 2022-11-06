@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('./product').schema;
 const chargeSchema = require('./charge').schema;
-const {departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../enums/departmentsEnum');
+const destinationSchema = require('../models/destination').schema;
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 const WorkflowStepModel = require('../models/WorkflowStep');
@@ -19,35 +19,6 @@ function stringOnlyContainsDigits(ticketNumber) {
 const validateEmail = function(email) {
     return EMAIL_VALIDATION_REGEX.test(email);
 };
-
-function destinationsAreValid(destination) {
-    const department = destination.department;
-    const departmentStatus = destination.departmentStatus;
-    const oneAttributeIsDefinedButNotTheOther = (department && !departmentStatus) || (!department && departmentStatus);
-    const isInCompletedState = department === 'COMPLETED';
-
-    if (isInCompletedState) {
-        return true;
-    }
-
-    if (oneAttributeIsDefinedButNotTheOther) {
-        return false;
-    }
-
-    if (department) {
-        return departmentStatusesGroupedByDepartment[department].includes(departmentStatus);
-    }
-    
-    return true;
-}
-
-function departmentIsValid(department) {
-    return Object.keys(departmentStatusesGroupedByDepartment).includes(department);
-}
-
-function departmentStatusIsValid(departmentStatus) {
-    return getAllDepartmentStatuses().includes(departmentStatus);
-}
 
 async function validateMaterialExists(materialId) {
     const searchCriteria = {
@@ -93,17 +64,6 @@ const departmentNotesSchema = new Schema({
     strict: 'throw'
 });
 
-const destinationSchema = new Schema({
-    department: {
-        type: String,
-        validate: [departmentIsValid, 'The provided department "{VALUE}" is not accepted']
-    },
-    departmentStatus: {
-        type: String,
-        validate: [departmentStatusIsValid, 'The provided departmentStatus "{VALUE}" is not accepted']
-    }
-}, { timestamps: true });
-
 const ticketSchema = new Schema({
     primaryMaterial: {
         type: String,
@@ -121,8 +81,7 @@ const ticketSchema = new Schema({
     },
     destination: {
         type: destinationSchema,
-        required: false,
-        validate: [destinationsAreValid, 'Invalid Department/departmentStatus combination']
+        required: false
     },
     products: {
         type: [productSchema],
@@ -294,18 +253,15 @@ async function addRowToWorkflowStepDbTable(workflowStepAttributes) {
 
 ticketSchema.pre('updateOne', async function(next) {
     const destination = this.getUpdate().$set.destination;
-    const department = destination.department ? destination.department : undefined;
-    const departmentStatus = destination.departmentStatus ? destination.departmentStatus : undefined;
-    const ticketId = this.getQuery()._id;
-    const workflowStepAttributes = {
-        ticketId,
-        department,
-        departmentStatus
-    };
 
     if (!destination) {
         return next();
     }
+
+    const workflowStepAttributes = {
+        ticketId: this.getQuery()._id,
+        destination
+    };
 
     try {
         await addRowToWorkflowStepDbTable(workflowStepAttributes);
@@ -317,18 +273,15 @@ ticketSchema.pre('updateOne', async function(next) {
 
 ticketSchema.pre('findOneAndUpdate', async function(next) {
     const destination = this.getUpdate().$set.destination;
-    const department = destination.department ? destination.department : undefined;
-    const departmentStatus = destination.departmentStatus ? destination.departmentStatus : undefined;
-    const ticketId = this.getQuery()._id;
-    const workflowStepAttributes = {
-        ticketId,
-        department,
-        departmentStatus
-    };
 
     if (!destination) {
         return next();
     }
+
+    const workflowStepAttributes = {
+        ticketId: this.getQuery()._id,
+        destination
+    };
 
     try {
         await addRowToWorkflowStepDbTable(workflowStepAttributes);

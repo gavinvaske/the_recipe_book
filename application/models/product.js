@@ -524,6 +524,12 @@ const schema = new Schema({
         default: function(){
             return this.labelRepeat;
         }
+    },
+    numberOfCores: {
+        type: Number,
+        default: function() {
+            return Math.ceil(this.labelQty / this.labelsPerRoll);
+        }
     }
 }, { timestamps: true });
 

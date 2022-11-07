@@ -1971,4 +1971,54 @@ describe('validation', () => {
             expect(product.deltaRepeat).toEqual(expectedValue);
         });
     });
+
+    describe('attribute: numberOfCores', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expect.any(Number));
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 1]', () => {
+            const labelQuantity = 100;
+            const labelsPerRoll = 9;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 12;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 2]', () => {
+            const labelQuantity = 5;
+            const labelsPerRoll = 5;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 1;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 3]', () => {
+            const labelQuantity = 1;
+            const labelsPerRoll = 5;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 1;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
+        });
+    });
 });

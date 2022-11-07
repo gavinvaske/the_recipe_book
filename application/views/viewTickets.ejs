@@ -88,6 +88,8 @@
 
     </div>
 
+    <div class='scroll-curtain'></div>
+
     <% const orderPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ORDER-PREP'] %>
     <% const artPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ART-PREP'] %>
     <% const prePressTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRE-PRESS'] %>
@@ -143,7 +145,7 @@
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
       <div class='department-wrapper card' data-department="ORDER-PREP">
-        <h2>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h2>
+        <h3>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h3>
         <% if (orderPrepNeedsAttentionTickets && orderPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -1070,7 +1072,7 @@
         <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper card' data-department="ART-PREP">
-        <h2>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h2>
+        <h3>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h3>
 
         <% if (artPrepNeedsAttentionTickets && artPrepNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -1889,7 +1891,7 @@
         <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper card' data-department="PRE-PRESS">
-        <h2>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h2>
+        <h3>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h3>
 
         <% if (prePressNeedsAttentionTickets && prePressNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
@@ -2417,7 +2419,7 @@
         <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper card' data-department="PRINTING">
-        <h2>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h2>
+        <h3>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h3>
 
         <% if (printingInProgressTickets && printingInProgressTickets.length) { %>  <!-- TODO: This .each looks unique - investigate -->
         <div class='department-section department-section-a'>
@@ -3293,7 +3295,7 @@
         <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper card' data-department="CUTTING">
-        <h2>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h2>
+        <h3>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h3>
 
         <% if (cuttingInProgressTickets && cuttingInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
@@ -4340,7 +4342,7 @@
         <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper card' data-department="WINDING">
-        <h2>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h2>
+        <h3>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h3>
 
         <% if (windingInProgressTickets && windingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each Looks different -->
@@ -4872,7 +4874,7 @@
         <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper card' data-department="SHIPPING">
-        <h2>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h2>
+        <h3>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h3>
 
         <% if (shippingInProgressTickets && shippingInProgressTickets.length) { %>
         <div class='department-section department-section-a'> <!-- TODO: This .each is unique? why -->
@@ -5572,7 +5574,7 @@
         <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper card' data-department="BILLING">
-        <h2>Billing (TODO Storm: this second's departmentStatuses appear incorrect) - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h2>
+        <h3>Billing (TODO Storm: this second's departmentStatuses appear incorrect) - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h3>
 
         <% if (true) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
           <div class='department-section department-section-a'>

@@ -615,10 +615,12 @@ $( document ).ready(function() {
         $('.start-job-bg-overlay').removeClass('active');
     });
 
-    $('.expand-sidebar').click(function() {
-        $(this).toggleClass('active');
+    $('.sidebar-main .title-frame').click(function() {
+        $('.expand-sidebar').toggleClass('active');
         $('.view-tickets').toggleClass('active');
         $('.sidebar-main').toggleClass('active');
+        $('.workflow-order-header.card').toggleClass('active');
+        $('.scroll-curtain').toggleClass('active');
         // if ($('.sidebar-option').hasClass('active')) {
         //     $('.sidebar-option').removeClass('active');
         // }

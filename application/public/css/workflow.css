@@ -9,7 +9,8 @@
 }
 .workflow-order-header ul li {
 	width: 12.5%;
-	height: 54px;
+	/* height: 54px; */
+	height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;

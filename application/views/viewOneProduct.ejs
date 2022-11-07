@@ -376,7 +376,7 @@
                     <label># of Cores: </label>
                 </div>
                 <div class="flex-center-center-row full-width">
-                    <span><%= product.numberOfRolls || 'N/A' %> (AS)</span>
+                    <span><%= product.numberOfCores || 'N/A' %> (AS)</span>
                 </div>
             </div>
             <div class="card quarter-width">
@@ -384,7 +384,7 @@
                     <label>Overrun: </label>
                 </div>
                 <div class="flex-center-center-row full-width">
-                    <span>  <%= product.overRun || 'N/A' %> (AT)</span>
+                    <span>  <%= product.overRun * 100 %>% (AT)</span>
                 </div>
             </div>
             <div class="card quarter-width">

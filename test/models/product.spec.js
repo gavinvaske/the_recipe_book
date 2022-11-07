@@ -938,26 +938,64 @@ describe('validation', () => {
     });
 
     describe('attribute: coreHeight', () => {
-        it('should be required if FinishType attribute equals "Roll"', () => {
-            productAttributes.FinishType = 'Roll';
-            delete productAttributes.coreHeight;
+        const ROLLS_FINISH_TYPE = 'RoLLs';
+
+        it('should be defined if FinishType attribute equals "Rolls"', () => {
+            productAttributes.FinishType = ROLLS_FINISH_TYPE;
 
             const product = new ProductModel(productAttributes);
 
-            const error = product.validateSync();
-
-            expect(error).not.toBe(undefined);
+            expect(product.coreHeight).not.toBe(undefined);
         });
 
-        it('should NOT BE required if FinishType DOES NOT equal "Roll"', () => {
-            productAttributes.FinishType = chance.string();
-            delete productAttributes.coreHeight;
+        it('should NOT be defined if "FinishType" DOES NOT equals "Rolls"', () => {
+            productAttributes.FinishType = chance.string;
 
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreHeight).toBe(undefined);
+        });
+
+        it('should validate correct when FinishType is "Rolls" and coreHeight was calculated', () => {
+            productAttributes.FinishType = ROLLS_FINISH_TYPE;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should be equal to the attribute labelAcross but rounded to the nearest quarter inch (test 1)', () => {
+            const labelAcross = 6.69;
+            const expectedCoreHeight = 6.75;
+            productAttributes.FinishType = ROLLS_FINISH_TYPE;
+            productAttributes.NoAcross = labelAcross;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreHeight).toBe(expectedCoreHeight);
+        });
+
+        it('should be equal to the attribute labelAcross but rounded to the nearest quarter inch (test 2)', () => {
+            const labelAcross = 0.05;
+            const expectedCoreHeight = 0;
+            productAttributes.FinishType = ROLLS_FINISH_TYPE;
+            productAttributes.NoAcross = labelAcross;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreHeight).toBe(expectedCoreHeight);
+        });
+
+        it('should be equal to the attribute labelAcross but rounded to the nearest quarter inch (test 3)', () => {
+            const labelAcross = 11.251;
+            const expectedCoreHeight = 11.25;
+            productAttributes.FinishType = ROLLS_FINISH_TYPE;
+            productAttributes.NoAcross = labelAcross;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.coreHeight).toBe(expectedCoreHeight);
         });
     });
 
@@ -1931,6 +1969,56 @@ describe('validation', () => {
             const product = new ProductModel(productAttributes);
 
             expect(product.deltaRepeat).toEqual(expectedValue);
+        });
+    });
+
+    describe('attribute: numberOfCores', () => {
+        it('should contain attribute', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toBeDefined();
+        });
+
+        it('should be of type Number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expect.any(Number));
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 1]', () => {
+            const labelQuantity = 100;
+            const labelsPerRoll = 9;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 12;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 2]', () => {
+            const labelQuantity = 5;
+            const labelsPerRoll = 5;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 1;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
+        });
+
+        it('should be calculated correctly according to formula: ceil(labelQuantity / labelsPerRoll) [test 3]', () => {
+            const labelQuantity = 1;
+            const labelsPerRoll = 5;
+            productAttributes.OrderQuantity = labelQuantity;
+            productAttributes.LabelsPer_ = labelsPerRoll;
+            const expectedNumberOfCores = 1;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfCores).toEqual(expectedNumberOfCores);
         });
     });
 });

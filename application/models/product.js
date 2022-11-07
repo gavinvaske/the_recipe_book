@@ -15,6 +15,25 @@ const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
 const FRAME_REPEAT_SCALAR = 25.4;
 const FEET_PER_ROLL = 5000;
 
+function roundToNearestQuarterInch(valueInInches) {
+    const numberOfQuarterInchesPerInch = 4;
+
+    if (!valueInInches || numberOfQuarterInchesPerInch < 0) { // eslint-disable-line no-magic-numbers
+        return;
+    }
+
+    const numberOfQuarterInches = valueInInches * numberOfQuarterInchesPerInch;
+
+    const totalNumberOfQuarterInchesRoundedToNearestQuarterInch = roundValueToNearestDecimalPlace(numberOfQuarterInches, 0); // eslint-disable-line no-magic-numbers
+    const totalNumberOfInches = totalNumberOfQuarterInchesRoundedToNearestQuarterInch / numberOfQuarterInchesPerInch;
+
+    return totalNumberOfInches;
+}
+
+function isRollsFinishType(finishType) {
+    return finishType && finishType.toUpperCase() === 'ROLLS';
+}
+
 function cannotBeFalsy(value) {
     if (!value) {
         return false;
@@ -300,8 +319,15 @@ const schema = new Schema({
     },
     coreHeight: {
         type: Number,
+        default: function() {
+            if (!isRollsFinishType(this.finishType)) {
+                return;
+            }
+
+            return roundToNearestQuarterInch(this.labelsAcross);
+        },
         required: function() {
-            return this.finishType && this.finishType.toUpperCase() === 'ROLL';
+            return isRollsFinishType(this.finishType);
         }
     },
     labelRepeat: {
@@ -497,6 +523,12 @@ const schema = new Schema({
         required: true,
         default: function(){
             return this.labelRepeat;
+        }
+    },
+    numberOfCores: {
+        type: Number,
+        default: function() {
+            return Math.ceil(this.labelQty / this.labelsPerRoll);
         }
     }
 }, { timestamps: true });

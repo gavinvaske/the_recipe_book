@@ -404,7 +404,7 @@
 
 .group-lines {
 	position: absolute;
-    left: -16px;
+    left: -18px;
     top: -30px;
     width: 12px;
     height: 52px;
@@ -426,8 +426,8 @@
 	border-bottom: 1px solid #ffb56f;
   }
   .product-wrapper:first-of-type .table-row .group-lines {
-	height: 80px;
-	top: -57px;
+	height: 68px;
+	top: -46px;
   }
   
   .department-section-e .table-row-wrapper.active .ticket-products-wrapper .column-td-a {

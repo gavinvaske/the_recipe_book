@@ -726,7 +726,7 @@ input:focus + .show-password-frame {
   align-items: center;
   -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-  z-index: 8;
+  z-index: 61;
 }
 .navbar-main .column-left .feather-chevron-down {
   margin-left: 7px;
@@ -841,7 +841,8 @@ input:focus + .show-password-frame {
   margin-right: 7px;
 }
 .navbar-main .navbar-links .fa-cubes-stacked,
-.navbar-main .navbar-links .fa-layer-group {
+.navbar-main .navbar-links .fa-layer-group,
+.navbar-main .navbar-links .fa-list-timeline {
   font-size: 22px;
   /* margin-left: 25px; */
   margin-left: 15px;
@@ -2614,7 +2615,7 @@ a.storm {
   min-width: 200px;
   margin-left: -87px;
 }
-.miscellaneous-option.tooltip-bottom .tooltiptext {
+.settings-option.tooltip-bottom .tooltiptext {
   min-width: 200px;
   margin-left: -88px;
 }
@@ -2747,6 +2748,7 @@ a.storm {
 
 .material-card-section .card .card-header .col-right a {
   margin-left: 7px;
+  line-height: 20px;
 }
 .material-card-section .card .card-header .col-right i {
   font-size: 20px;
@@ -3353,7 +3355,7 @@ a.storm {
 .notification-option,
 .team-chat-option,
 .activity-option,
-.miscellaneous-option {
+.settings-option {
   position: relative;
 }
 .notification-counter {
@@ -3375,13 +3377,14 @@ a.storm {
 .notification-option i,
 .team-chat-option i,
 .activity-option i,
-.miscellaneous-option i {
+.settings-option i {
   font-size: 25px;
   margin-right: 25px;
 }
 .notification-option:hover,
 .team-chat-option:hover,
-.activity-option:hover {
+.activity-option:hover,
+.settings-option:hover {
   cursor: pointer;
 }
 .notification-teaser-dropdown {
@@ -3834,4 +3837,118 @@ canvas{
 }
 .scroll-curtain.active {
   width: calc(100% - 350px);
+}
+
+.department-wrapper.card h4 {
+  margin: 0;
+}
+.full-page-curtain {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 80px;
+  height: 0;
+  background-color: white;
+  z-index: 60;
+  box-shadow: 0 50px 60px 0 rgb(36 50 66 / 15%);
+  transition: .5s;
+}
+
+.full-page-curtain.active {
+  height: 700px;
+  transition: .5s;
+}
+
+.full-page-curtain .footer {
+  height: 45px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #E6E6E6;
+}
+.full-page-curtain-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  margin-top: -45px;
+  visibility: hidden;
+}
+.full-page-curtain.active  .full-page-curtain-wrapper {
+  margin-top: 0;
+  opacity: 1;
+  visibility: visible;
+  transition: .5s;
+}
+
+.full-page-curtain-wrapper .right-col.parent {
+  background-color: #f8f8f8;
+  width: 42%;
+  height: 100%;
+}
+.full-page-curtain-wrapper .left-col.parent,
+.full-page-curtain-wrapper .right-col.parent {
+  padding-top: 35px;
+}
+.full-page-curtain-wrapper .left-col.parent {
+  width: 58%;
+  height: 100%;
+}
+.full-page-curtain-container {
+  height: 100%;
+}
+
+.full-page-curtain-wrapper .footer .right-col.child {
+  width: 42%;
+}
+.full-page-curtain-wrapper .footer .left-col.child {
+  width: 58%;
+}
+
+.full-page-curtain-wrapper .left-col.parent .left-options-frame {
+  height: 100%;
+  min-width: 850px;
+  display: flex;
+}
+
+.full-page-curtain-wrapper .footer .left-col.child .left-options-frame {
+  min-width: 850px;
+  height: 100%;
+  display: flex;
+}
+
+.full-page-curtain-wrapper .right-col.parent .right-options-frame {
+  height: 100%;
+  min-width: 500px;
+  display: flex;
+  padding-left: 50px;
+}
+
+.full-page-curtain-wrapper .footer .right-col.child .right-options-frame {
+  min-width: 500px;
+  height: 100%;
+  display: flex;
+}
+
+.full-page-curtain-wrapper .left-col.parent .left-options-frame .left-col.child {
+  width: 33.333%;
+  height: 100%;
+}
+.full-page-curtain-wrapper .left-col.parent .left-options-frame .right-col.child {
+  width: 66.666%;
+  height: 100%;
+}
+.full-page-curtain-wrapper .right-col.parent .right-options-frame .left-col.child {
+  height: 100%;
+  width: 100%;
+}
+
+.full-page-curtain-wrapper .footer span {
+  margin:0 20px;
+}
+
+.full-page-curtain-wrapper h5 {
+  border-bottom: 1px solid #e0dedc;
+  width: 70%;
+  padding-bottom: 20px;
 }

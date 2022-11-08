@@ -20,8 +20,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
                 <ul class="dropdown-menu insights-dropdown">
-                    <li><a href="/recipes/create">Dashboard</a></li>
-                    <li><a href="/recipes?pageNumber=1"><i class="fa-regular fa-layer-group"></i>View All Recipes</a></li>
+                    <li><a href="/recipes/create"><i class="fa-solid fa-list-timeline"></i>Master Log</a></li>
+                    <li><a href="/recipes?pageNumber=1"><i class="fa-regular fa-layer-group"></i>Dashboard</a></li>
                 </ul>
                 <!-- <ul class="dropdown-menu recipe-dropdown">
                     <li><a href="/recipes/create"><svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>Create New Recipe</a></li>
@@ -35,13 +35,17 @@
     </div>
     <div class="column column-right">
         <ul class="primary">
-            <li class='miscellaneous-option tooltip-bottom'>
-                <span class='tooltiptext'>Miscellaneous</span>
-                <i class="fa-solid fa-grid"></i>
+            <li class='settings-option settings tooltip-bottom'>
+                <span class='tooltiptext'>Settings</span>
+                <i class="fa-regular fa-gear"></i>
             </li>
-            <li class="activity-option tooltip-bottom">
+            <!-- <li class="activity-option tooltip-bottom">
                 <span class="tooltiptext">Activity Feed</span>
                 <i class="fa-regular fa-wave-pulse"></i>
+            </li> -->
+            <li class="activity-option tooltip-bottom">
+                <span class="tooltiptext">Calendar</span>
+                <i class="fa-regular fa-calendar"></i>
             </li>
             <li class="team-chat-option tooltip-bottom">
                 <span class="tooltiptext">Team Chat</span>
@@ -85,8 +89,8 @@
                 </div>
                 <ul class="dropdown-menu user-options">
                     <li><a href="/users/profile/"><i class="fa-regular fa-user"></i>Account</a></li>
-                    <li><a href="/admin"><i class="fa-regular fa-users-medical"></i>Users</a></li>
-                    <li><a href="#"><i class="fa-regular fa-screwdriver-wrench"></i>C.R.U.D.</a></li>
+                    <!-- <li><a href="/admin"><i class="fa-regular fa-users-medical"></i>Users</a></li>
+                    <li><a href="#"><i class="fa-regular fa-screwdriver-wrench"></i>C.R.U.D.</a></li> -->
                     <li><a href="#"><i class="fa-regular fa-books"></i>Resources</a></li>
                     <li><a href="/users/logout"><i class="fa-regular fa-right-from-bracket"></i>Log Out</a></li>
                 </ul>
@@ -94,3 +98,40 @@
        </ul>
     </div>
 </nav>
+
+<div class='full-page-curtain'>
+    <div class='full-page-curtain-wrapper'>
+        <div class='full-page-curtain-container flex-center-center-row full-width'>
+            <div class='left-col parent flex-top-right-row'>
+                <div class='left-options-frame flex-top-left-row'>
+                    <div class='left-col child'>
+                        <h5>COLUMN 1</h5>
+                    </div>
+                    <div class='right-col child'>
+                       <h5>COLUMN 2</h5>
+                    </div>
+                </div>
+            </div>
+            <div class='right-col parent flex-top-left-row'>
+                <div class='right-options-frame'>
+                    <div class='left-col child'>
+                        <h5>COLLUMN 3</h5>
+                    </div>
+                </div>
+            </div>
+            <div class='footer flex-center-center-row'>
+                <div class='left-col child flex-center-right-row'>
+                    <div class='left-options-frame flex-center-left-row'>
+                        <a href='#'>Option A</a>
+                        <span>|</span>
+                        <a href='#'>Option B</a>
+                    </div>
+                </div>
+                <div class='right-col child flex-center-left-row'>
+                    <div class='right-options-frame flex-center-left-row'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

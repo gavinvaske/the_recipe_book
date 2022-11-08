@@ -615,6 +615,10 @@ $( document ).ready(function() {
         $('.start-job-bg-overlay').removeClass('active');
     });
 
+    $('.settings-option.settings').click(function(){
+        $('.full-page-curtain').toggleClass('active');
+    });
+
     $('.sidebar-main .title-frame').click(function() {
         $('.expand-sidebar').toggleClass('active');
         $('.view-tickets').toggleClass('active');

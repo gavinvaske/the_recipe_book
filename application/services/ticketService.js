@@ -123,7 +123,7 @@ module.exports.whatDateWasThisTicketCreated = async (ticketId) => {
     const ticket = await TicketModel.findById(ticketId, 'createdAt').exec();
 
     return ticket.createdAt;
-}
+};
 
 module.exports.howManyMinutesHavePassedSinceTicketWasCreated = async (ticketId) => {
     const ticket = await TicketModel.findById(ticketId, 'createdAt').exec();
@@ -132,8 +132,8 @@ module.exports.howManyMinutesHavePassedSinceTicketWasCreated = async (ticketId) 
     const millisecondsPerMinute = 60000;
 
     return Math.floor(millisecondsSinceTicketCreation / millisecondsPerMinute);
-}
+};
 
-module.exports.howLongHasThisTicketBeenInProduction = (ticketId) => {}
-module.exports.howLongHasThisTicketBeenInADepartment = (ticketId, department) => {}
-module.exports.howLongHasThisTicketBeenInADepartmentAndDepartmentStatus = (ticketId, department, departmentStatus) => {}
+// module.exports.howLongHasThisTicketBeenInProduction = (ticketId) => {};
+// module.exports.howLongHasThisTicketBeenInADepartment = (ticketId, department) => {};
+// module.exports.howLongHasThisTicketBeenInADepartmentAndDepartmentStatus = (ticketId, department, departmentStatus) => {};

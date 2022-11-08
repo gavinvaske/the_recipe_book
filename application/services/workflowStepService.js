@@ -33,7 +33,7 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
     const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
 
     if (!workflowStepTimeLedger[ticketId]) {
-        workflowStepTimeLedger[ticketId] = {}
+        workflowStepTimeLedger[ticketId] = {};
     }
 
     if (!workflowStepTimeLedger[ticketId][department]) {
@@ -60,10 +60,10 @@ module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
     const ticketIds = await WorkflowStepModel.find().distinct('ticketId').exec();
     const workflowStepTimeLedger = {};
     
-    for(let i = 0; i < ticketIds.length; i++) {
+    for (let i = 0; i < ticketIds.length; i++) {
         const workflowStepsForOneTicket = await findWorkflowStepsByTicketId(ticketIds[i]);
         
-        for(let j = 0; j < workflowStepsForOneTicket.length; j++) {
+        for (let j = 0; j < workflowStepsForOneTicket.length; j++) {
             const currentWorkflowStep = workflowStepsForOneTicket[j];
             const isThereANextWorkflowStep = workflowStepsForOneTicket.length - 1 > j;
             let nextWorkflowStep;
@@ -73,9 +73,9 @@ module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
             }
     
             let millisecondsSpentInCurrentWorkflowStep = getTimeSpentInWorkflowStep(currentWorkflowStep, nextWorkflowStep);
-            let minutesSpentInCurrentWorkflowStep = dateTimeService.convertMillisecondsToMinutes(millisecondsSpentInCurrentWorkflowStep)
+            let minutesSpentInCurrentWorkflowStep = dateTimeService.convertMillisecondsToMinutes(millisecondsSpentInCurrentWorkflowStep);
     
             updateWorkflowStepTimeLedger(workflowStepTimeLedger, currentWorkflowStep, minutesSpentInCurrentWorkflowStep);
         }
     }
-}
+};

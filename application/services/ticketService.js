@@ -1,5 +1,6 @@
 const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
 const {departmentStatusesGroupedByDepartment, getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum');
+const TicketModel = require('../models/ticket');
 
 function isEmptyObject(value) {
     if (!value) {
@@ -117,3 +118,22 @@ module.exports.groupTicketsByDestination = (tickets) => {
 
     return ticketsGroupedByDestination;
 };
+
+module.exports.whatDateWasThisTicketCreated = async (ticketId) => {
+    const ticket = await TicketModel.findById(ticketId, 'createdAt').exec();
+
+    return ticket.createdAt;
+}
+
+module.exports.howManyMinutesHavePassedSinceTicketWasCreated = async (ticketId) => {
+    const ticket = await TicketModel.findById(ticketId, 'createdAt').exec();
+    const now = new Date();
+    const millisecondsSinceTicketCreation = now - ticket.createdAt;
+    const millisecondsPerMinute = 60000;
+
+    return Math.floor(millisecondsSinceTicketCreation / millisecondsPerMinute);
+}
+
+module.exports.howLongHasThisTicketBeenInProduction = (ticketId) => {}
+module.exports.howLongHasThisTicketBeenInADepartment = (ticketId, department) => {}
+module.exports.howLongHasThisTicketBeenInADepartmentAndDepartmentStatus = (ticketId, department, departmentStatus) => {}

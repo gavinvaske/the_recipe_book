@@ -78,6 +78,45 @@ describe('workflowStepService test suite', () => {
             expect(actualDuration).toBe(durationSpentWithProductionDepartmentStatus);
         });
     });
+
+    describe('getHowLongTicketHasBeenInDepartment()', () => {
+        it ('should determine how long a ticket has been in the department correctly', () => {
+            const department = chance.word();
+            const timeSpentInDepartment = chance.floating({min: 0});
+    
+            const workflowStepLedger = {
+                [department]: {
+                    [TIME_SPENT_IN_DEPARTMENT]: timeSpentInDepartment
+                }
+            };
+    
+            const actualDuration = workflowStepService.getHowLongTicketHasBeenInDepartment(workflowStepLedger, department);
+    
+            expect(actualDuration).toBe(timeSpentInDepartment);
+        });
+    });
+
+    describe('getHowLongTicketHasHadADepartmentStatus()', () => {
+        it ('should determine how long a ticket has been in the departmentStatus correctly', () => {
+            const department = chance.word();
+            const departmentStatus = chance.word();
+            const timeSpentInDepartmentStatus = chance.floating({min: 0});
+    
+            const workflowStepLedger = {
+                [department]: {
+                    [TIME_PER_DEPARTMENT_STATUS]: {
+                        [departmentStatus]: timeSpentInDepartmentStatus
+                    }
+                }
+            };
+    
+            const actualDuration = workflowStepService.getHowLongTicketHasHadADepartmentStatus(workflowStepLedger, department, departmentStatus);
+    
+            expect(actualDuration).toBe(timeSpentInDepartmentStatus);
+        });
+    });
+
+
 });
 
 function getNonProductionDepartments() {

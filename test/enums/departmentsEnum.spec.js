@@ -1,4 +1,4 @@
-const {getAllDepartmentStatuses, getAllDepartments} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentStatuses, getAllDepartments, productionDepartmentsAndDepartmentStatuses} = require('../../application/enums/departmentsEnum');
 
 describe('departmentsEnum', () => {
     it('should return the list of departmentStatus', () => {
@@ -20,5 +20,41 @@ describe('departmentsEnum', () => {
         const departments = getAllDepartments();
 
         expect(departments.length).toBe(expectedNumberOfDepartments);
+    });
+
+    it('should return the correct number of production departments', () => {
+        const expectedNumberOfDepartments = 5;
+
+        const productionDepartments = Object.keys(productionDepartmentsAndDepartmentStatuses);
+
+        expect(productionDepartments.length).toBe(expectedNumberOfDepartments);
+    });
+
+    it('should have at least one departmentStatus for all production departments', () => {
+        let doesDepartmentContainZeroDepartmentStatuses = false;
+        const emptyLength = 0;
+
+        Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
+            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department];
+            if (!departmentStatuses || departmentStatuses.length === emptyLength) {
+                doesDepartmentContainZeroDepartmentStatuses = true;
+            }
+        });
+
+        expect(doesDepartmentContainZeroDepartmentStatuses).toBe(false);
+    });
+
+    it('should have the correct number of product departmentStatuses', () => {
+        let expectedNumberOfProductionDepartmentStatuses = 24;
+        let allProductionDepartmentStatuses = [];
+
+        Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
+            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department];
+            if (departmentStatuses) {
+                allProductionDepartmentStatuses.push(...departmentStatuses);
+            }
+        });
+
+        expect(expectedNumberOfProductionDepartmentStatuses).toBe(allProductionDepartmentStatuses.length);
     });
 });

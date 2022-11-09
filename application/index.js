@@ -16,6 +16,8 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
+app.locals.helperMethods = require('../application/services/ejsService');
+
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 require('./services/socketService')(io); // Initalize sockets listeners/emitters

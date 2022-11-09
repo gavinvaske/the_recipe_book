@@ -226,6 +226,6 @@ describe('dateTimeService test suite', () => {
             const actualDate = dateTimeService.getSimpleDate(dateString);
 
             expect(actualDate).toBe(expectedDate);
-        })
+        });
     });
 });

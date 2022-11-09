@@ -68,4 +68,4 @@ module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-lin
 
 module.exports.getSimpleDate = (date) => {
     return new Date(date).toLocaleDateString('en-US');
-}
+};

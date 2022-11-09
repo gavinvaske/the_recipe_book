@@ -32,10 +32,11 @@ describe('departmentsEnum', () => {
 
     it('should have at least one departmentStatus for all production departments', () => {
         let doesDepartmentContainZeroDepartmentStatuses = false;
+        const emptyLength = 0;
 
         Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
-            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department]
-            if (!departmentStatuses || departmentStatuses.length === 0) {
+            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department];
+            if (!departmentStatuses || departmentStatuses.length === emptyLength) {
                 doesDepartmentContainZeroDepartmentStatuses = true;
             }
         });
@@ -48,9 +49,9 @@ describe('departmentsEnum', () => {
         let allProductionDepartmentStatuses = [];
 
         Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
-            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department]
+            const departmentStatuses = productionDepartmentsAndDepartmentStatuses[department];
             if (departmentStatuses) {
-                allProductionDepartmentStatuses.push(...departmentStatuses)
+                allProductionDepartmentStatuses.push(...departmentStatuses);
             }
         });
 

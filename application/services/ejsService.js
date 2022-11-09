@@ -1,17 +1,15 @@
-const {getOverallTicketDuration, getHowLongTicketHasBeenInProduction, getHowLongTicketHasBeenInDepartment, getHowLongTicketHasHadADepartmentStatus} = require('./workflowStepService');
-
-function sayHi(name) {
-    return 'hello ' + name;
-}
+const workflowStepService = require('./workflowStepService');
 
 function getSimpleDate(date) {
     return new Date(date).toLocaleDateString('en-US');
 }
 
 function prettifyDuration(durationInMinutes) {
-    if (!durationInMinutes) {
-        return;
+    if (typeof durationInMinutes !== 'number' || durationInMinutes < 0) {
+        return 'N/A';
     }
+
+    let minutes, hours, days, weeks, months;
     const roundedDurationInMinutes = Math.floor(durationInMinutes);
     const daysPerYear = 365;
     const monthsPerYear = 12;
@@ -29,7 +27,7 @@ function prettifyDuration(durationInMinutes) {
     const durationIsLessThanOneYear = roundedDurationInMinutes < minutesPerYear;
 
     if (durationIsLessThanOneMinutes) {
-        return 0; // eslint-disable-line no-magic-numbers
+        return `${0}m`; // eslint-disable-line no-magic-numbers
     }
 
     if (durationIslessThanOneHour) {
@@ -37,32 +35,42 @@ function prettifyDuration(durationInMinutes) {
     }
 
     if (durationIsLessThanOneDay) {
-        return 'TODO: Format this time';
+        hours = Math.floor(roundedDurationInMinutes / minutesPerHour)
+        minutes = roundedDurationInMinutes % minutesPerHour;
+        return `${hours}hr ${minutes}m`;
     }
 
     if (durationIsLessThanOneWeek) {
-        return 'TODO: Format this time';
+        days = Math.floor(roundedDurationInMinutes / minutesPerDay);
+        hours = Math.floor((roundedDurationInMinutes % minutesPerDay) / minutesPerHour);
+        return `${days}d ${hours}hr`;
     }
 
     if (durationIsLessThanOneMonth) {
-        return 'TODO: Format this time';
+        weeks = Math.floor(roundedDurationInMinutes / minutesPerWeek);
+        days = Math.floor((roundedDurationInMinutes % minutesPerWeek) / minutesPerDay);
+        return `${weeks}w ${days}d`;
     }
 
     if (durationIsLessThanOneYear) {
-        return 'TODO: Format this time';
+        months = Math.floor(roundedDurationInMinutes / minutesPerAverageMonth);
+        weeks = Math.floor((roundedDurationInMinutes % minutesPerAverageMonth) / minutesPerWeek)
+        return `${months}m ${weeks}w`;
     }
 
-    return 'TODO: Format this time';
+    years = Math.floor(roundedDurationInMinutes / minutesPerYear);
+    months = Math.floor((roundedDurationInMinutes % minutesPerYear) / minutesPerAverageMonth)
+
+    return `${years}yr ${months}m`;
 }
 
 const helperMethods = {
-    sayHi: sayHi,
     prettifyDuration: prettifyDuration,
     getSimpleDate: getSimpleDate,
-    getOverallTicketDuration: getOverallTicketDuration,
-    getHowLongTicketHasBeenInProduction: getHowLongTicketHasBeenInProduction,
-    getHowLongTicketHasBeenInDepartment: getHowLongTicketHasBeenInDepartment,
-    getHowLongTicketHasHadADepartmentStatus: getHowLongTicketHasHadADepartmentStatus
+    getOverallTicketDuration: workflowStepService.getOverallTicketDuration,
+    getHowLongTicketHasBeenInProduction: workflowStepService.getHowLongTicketHasBeenInProduction,
+    getHowLongTicketHasBeenInDepartment: workflowStepService.getHowLongTicketHasBeenInDepartment,
+    getHowLongTicketHasHadADepartmentStatus: workflowStepService.getHowLongTicketHasHadADepartmentStatus
 };
 
 module.exports = helperMethods;

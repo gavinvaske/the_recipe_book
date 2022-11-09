@@ -90,11 +90,50 @@ module.exports.departmentStatusesGroupedByDepartment = {
         TOOL_ARRIVALS
     ],
     [BILLING_DEPARTMENT]: [
-        IN_PROGRESS,
-        READY_FOR_BILLING
+        READY_FOR_BILLING,
+        IN_PROGRESS
     ],
     [COMPLETE_DEPARTMENT]: []
 };
+
+module.exports.productionDepartmentsAndDepartmentStatuses = {
+    [PRE_PRESS_DEPARTMENT]: [
+        SEND_TO_PRESS
+    ],
+    [PRINTING_DEPARTMENT]: [
+        SETUP,
+        RUNTIME,
+        TEAR_DOWN,
+        READY_FOR_SCHEDULING,
+        SCHEDULE_PRESS_ONE,
+        SCHEDULE_PRESS_TWO,
+        SCHEDULE_PRESS_THREE,
+        ON_HOLD
+    ],
+    [CUTTING_DEPARTMENT]: [
+        SETUP,
+        RUNTIME,
+        TEAR_DOWN,
+        READY_FOR_SCHEDULING,
+        SCHEDULE_DELTA_ONE,
+        SCHEDULE_DELTA_TWO,
+        SCHEDULE_ROTOFLEX,
+        ON_HOLD
+    ],
+    [WINDING_DEPARTMENT]: [
+        IN_PROGRESS,
+        READY_FOR_SCHEDULING,
+        ON_HOLD
+    ],
+    [SHIPPING_DEPARTMENT]: [
+        IN_PROGRESS,
+        READY_FOR_SHIPPING,
+        ON_HOLD,
+        TOOL_ARRIVALS
+    ]
+}
+
+module.exports.COMPLETE_DEPARTMENT = COMPLETE_DEPARTMENT;
 
 module.exports.getAllDepartmentStatuses = () => {
     let allDepartmentStatuses = [];

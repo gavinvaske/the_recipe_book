@@ -3851,7 +3851,7 @@ canvas{
   background-color: white;
   z-index: 60;
   box-shadow: 0 50px 60px 0 rgb(36 50 66 / 15%);
-  transition: .5s;
+  transition: .2s;
 }
 
 .full-page-curtain.active {
@@ -3871,20 +3871,38 @@ canvas{
   height: 100%;
   width: 100%;
   opacity: 0;
-  margin-top: -45px;
+  margin-top: -30px;
   visibility: hidden;
 }
 .full-page-curtain.active  .full-page-curtain-wrapper {
   margin-top: 0;
   opacity: 1;
   visibility: visible;
-  transition: .5s;
+  transition: .4s;
+  transition-delay: .2s;
+  /* animation-name: menuFadeIn;
+  animation-duration: 0.7s;
+  animation-delay: 2s; */
+}
+
+@keyframes menuFadeIn {
+  0% {
+    margin-top: -45px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .full-page-curtain-wrapper .right-col.parent {
   background-color: #f8f8f8;
   width: 42%;
   height: 100%;
+  z-index: 0;
 }
 .full-page-curtain-wrapper .left-col.parent,
 .full-page-curtain-wrapper .right-col.parent {
@@ -3931,7 +3949,7 @@ canvas{
 }
 
 .full-page-curtain-wrapper .left-col.parent .left-options-frame .left-col.child {
-  width: 33.333%;
+  width: 100%;
   height: 100%;
 }
 .full-page-curtain-wrapper .left-col.parent .left-options-frame .right-col.child {
@@ -3949,6 +3967,53 @@ canvas{
 
 .full-page-curtain-wrapper h5 {
   border-bottom: 1px solid #e0dedc;
-  width: 70%;
+  width: 90%;
   padding-bottom: 20px;
+  margin-bottom: 32px;
+}
+
+.full-page-curtain .dropdown-option {
+  width: 200px;
+  margin-bottom: 40px;
+  position: relative;
+}
+.full-page-curtain .dropdown-option:before {
+  content: "";
+  position: absolute;
+  border-radius: 3px;
+  width: calc(100% + 32px);
+  height: calc(100% + 32px);
+  top: -16px;
+  left: -16px;
+  background: #fafaf9;
+  z-index: -1;
+  opacity: 0;
+  transform: scale(1.1);
+}
+.full-page-curtain .full-page-curtain-wrapper .right-col.parent .dropdown-option:before {
+  background: white;
+}
+.full-page-curtain .dropdown-option:hover::before {
+  opacity: 1;
+  transform: scale(1);
+  transition: .3s;
+}
+
+.full-page-curtain .dropdown-option h6 {
+  font-size: 14px;
+  color: #5e5873;
+  font-weight: 700;
+}
+.full-page-curtain .dropdown-option p {
+  font-size: 12px;
+  color: #625f6e;
+}
+.full-page-curtain-wrapper .left-col.parent .left-options-frame .left-col.child ul {
+  max-height: 544px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
 }

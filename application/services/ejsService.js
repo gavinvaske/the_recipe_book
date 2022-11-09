@@ -1,8 +1,14 @@
+const {getOverallTicketDuration, getHowLongTicketHasBeenInProduction, getHowLongTicketHasBeenInDepartment, getHowLongTicketHasHadADepartmentStatus} = require('./workflowStepService');
+
 function sayHi(name) {
     return 'hello ' + name;
 }
 
-function prettifyDurationInMinutes(durationInMinutes) {
+function getSimpleDate(date) {
+    return new Date(date).toLocaleDateString('en-US');
+}
+
+function prettifyDuration(durationInMinutes) {
     if (!durationInMinutes) {
         return;
     }
@@ -50,8 +56,13 @@ function prettifyDurationInMinutes(durationInMinutes) {
 }
 
 const helperMethods = {
-    sayHi,
-    prettifyDurationInMinutes
+    sayHi: sayHi,
+    prettifyDuration: prettifyDuration,
+    getSimpleDate: getSimpleDate,
+    getOverallTicketDuration: getOverallTicketDuration,
+    getHowLongTicketHasBeenInProduction: getHowLongTicketHasBeenInProduction,
+    getHowLongTicketHasBeenInDepartment: getHowLongTicketHasBeenInDepartment,
+    getHowLongTicketHasHadADepartmentStatus: getHowLongTicketHasHadADepartmentStatus
 };
 
 module.exports = helperMethods;

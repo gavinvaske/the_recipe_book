@@ -9,6 +9,7 @@ const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
 const {departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
+const workflowStepService = require('../services/workflowStepService');
 
 router.use(verifyJwtToken);
 
@@ -22,9 +23,11 @@ router.get('/', async (request, response) => {
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
+    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep();   // TODO: Maybe pass in a list of ticket Ids to compute
 
     return response.render('viewTickets', {
-        ticketsGroupedByDestination
+        ticketsGroupedByDestination,
+        workflowStepTimeLedger
     });
 });
 

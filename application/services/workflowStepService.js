@@ -60,7 +60,7 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
 }
 
 module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
-    const ticketIds = await WorkflowStepModel.find().distinct('ticketId').exec();   // TODO: Maybe only find ticketIds whose current department is NOT 'COMPLETED' and NOT undefined
+    const ticketIds = await WorkflowStepModel.find().distinct('ticketId').exec(); // TODO: Maybe only find ticketIds whose current department is NOT 'COMPLETED' and NOT undefined
     const workflowStepTimeLedger = {};
     
     for (let i = 0; i < ticketIds.length; i++) {
@@ -91,10 +91,10 @@ module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
     Object.keys(workflowStepLedgerForTicket).forEach((department) => {
         const departmentLevelLedger = workflowStepLedgerForTicket[department];
         totalTimeInMinutes += departmentLevelLedger[TIME_SPENT_IN_DEPARTMENT];
-    })
+    });
 
     return totalTimeInMinutes;
-}
+};
 
 module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
     let totalTimeInMinutes = 0;
@@ -102,31 +102,31 @@ module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
     Object.keys(workflowStepLedgerForTicket).forEach((department) => {
         const departmentLevelLedger = workflowStepLedgerForTicket[department];
         totalTimeInMinutes += departmentLevelLedger[TIME_SPENT_IN_DEPARTMENT];
-    })
+    });
 
     return totalTimeInMinutes;
-}
+};
 
 module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicket) => {
     let totalTimeInMinutes = 0;
 
     Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
-        const departmentStatusesForThisDepartment = productionDepartmentsAndDepartmentStatuses[department]
+        const departmentStatusesForThisDepartment = productionDepartmentsAndDepartmentStatuses[department];
 
         departmentStatusesForThisDepartment.forEach((departmentStatus) => {
             if (workflowStepLedgerForTicket[department] && workflowStepLedgerForTicket[department][departmentStatus]) {
-                totalTimeInMinutes += workflowStepLedgerForTicket[department][departmentStatus]
+                totalTimeInMinutes += workflowStepLedgerForTicket[department][departmentStatus];
             }
         });
     });
 
     return totalTimeInMinutes;
-}
+};
 
 module.exports.getHowLongTicketHasBeenInDepartment = (workflowStepLedgerForTicket, department) => {
     return workflowStepLedgerForTicket[department][TIME_SPENT_IN_DEPARTMENT];
-}
+};
 
 module.exports.getHowLongTicketHasHadADepartmentStatus = (workflowStepLedgerForTicket, department, departmentStatus) => {
     return workflowStepLedgerForTicket[department][TIME_PER_DEPARTMENT_STATUS][departmentStatus];
-}
+};

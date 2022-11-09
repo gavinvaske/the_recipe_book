@@ -131,7 +131,7 @@ module.exports.productionDepartmentsAndDepartmentStatuses = {
         ON_HOLD,
         TOOL_ARRIVALS
     ]
-}
+};
 
 module.exports.COMPLETE_DEPARTMENT = COMPLETE_DEPARTMENT;
 

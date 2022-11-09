@@ -4,8 +4,10 @@ function getSimpleDate(date) {
     return new Date(date).toLocaleDateString('en-US');
 }
 
-function prettifyDuration(durationInMinutes) {
-    if (typeof durationInMinutes !== 'number' || durationInMinutes < 0) {
+function prettifyDuration(durationInMinutes) { // eslint-disable-line complexity
+    const zeroMinutes = 0;
+    
+    if (typeof durationInMinutes !== 'number' || durationInMinutes < zeroMinutes) {
         return 'N/A';
     }
 
@@ -20,22 +22,18 @@ function prettifyDuration(durationInMinutes) {
     const minutesPerYear = daysPerYear * minutesPerDay;
 
     const durationIslessThanOneHour = roundedDurationInMinutes < minutesPerHour;
-    const durationIsLessThanOneMinutes = roundedDurationInMinutes <= 0; // eslint-disable-line no-magic-numbers
+    const durationIsLessThanOneMinutes = roundedDurationInMinutes <= zeroMinutes;
     const durationIsLessThanOneDay = roundedDurationInMinutes < minutesPerDay;
     const durationIsLessThanOneWeek = roundedDurationInMinutes < minutesPerWeek;
     const durationIsLessThanOneMonth = roundedDurationInMinutes < minutesPerAverageMonth;
     const durationIsLessThanOneYear = roundedDurationInMinutes < minutesPerYear;
 
-    if (durationIsLessThanOneMinutes) {
-        return `${0}m`; // eslint-disable-line no-magic-numbers
-    }
-
-    if (durationIslessThanOneHour) {
-        return roundedDurationInMinutes;
+    if (durationIsLessThanOneMinutes || durationIslessThanOneHour) {
+        return `${roundedDurationInMinutes}m`; // eslint-disable-line no-magic-numbers
     }
 
     if (durationIsLessThanOneDay) {
-        hours = Math.floor(roundedDurationInMinutes / minutesPerHour)
+        hours = Math.floor(roundedDurationInMinutes / minutesPerHour);
         minutes = roundedDurationInMinutes % minutesPerHour;
         return `${hours}hr ${minutes}m`;
     }
@@ -54,12 +52,12 @@ function prettifyDuration(durationInMinutes) {
 
     if (durationIsLessThanOneYear) {
         months = Math.floor(roundedDurationInMinutes / minutesPerAverageMonth);
-        weeks = Math.floor((roundedDurationInMinutes % minutesPerAverageMonth) / minutesPerWeek)
+        weeks = Math.floor((roundedDurationInMinutes % minutesPerAverageMonth) / minutesPerWeek);
         return `${months}m ${weeks}w`;
     }
 
     years = Math.floor(roundedDurationInMinutes / minutesPerYear);
-    months = Math.floor((roundedDurationInMinutes % minutesPerYear) / minutesPerAverageMonth)
+    months = Math.floor((roundedDurationInMinutes % minutesPerYear) / minutesPerAverageMonth);
 
     return `${years}yr ${months}m`;
 }

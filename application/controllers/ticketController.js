@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
-    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep();   // TODO: Maybe pass in a list of ticket Ids to compute
+    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep(); // TODO: Maybe pass in a list of ticket Ids to compute
 
     return response.render('viewTickets', {
         ticketsGroupedByDestination,

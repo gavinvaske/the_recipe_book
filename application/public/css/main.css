@@ -81,6 +81,9 @@
     background-color: transparent;
     text-decoration: none;
   }
+  a:hover {
+    cursor: pointer;
+  }
   /**
    * 1. Remove the bottom border in Chrome 57-
    * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
@@ -3293,6 +3296,7 @@ a.storm {
 .duration-dropdown-trigger:hover .duration-dropdown-options {
   display: block;
   opacity: 1;
+  z-index: 10;
 }
 
 .departments-dropdown,
@@ -3933,6 +3937,9 @@ canvas{
   min-width: 850px;
   height: 100%;
   display: flex;
+}
+.full-page-curtain-wrapper .footer .left-col.child .left-options-frame a {
+  color: #5e5873;
 }
 
 .full-page-curtain-wrapper .right-col.parent .right-options-frame {

@@ -625,9 +625,6 @@ $( document ).ready(function() {
         $('.sidebar-main').toggleClass('active');
         $('.workflow-order-header.card').toggleClass('active');
         $('.scroll-curtain').toggleClass('active');
-        // if ($('.sidebar-option').hasClass('active')) {
-        //     $('.sidebar-option').removeClass('active');
-        // }
     });
     $('.sidebar-option').click(function() {
         if ($(this).hasClass('active')) {

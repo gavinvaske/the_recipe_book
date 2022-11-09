@@ -217,4 +217,15 @@ describe('dateTimeService test suite', () => {
             expect(formattedDuration).toBe(expectedFormattedDuration);
         });
     });
+
+    describe('getSimpleDate()', () => {
+        it('should convert date according to format mm/dd/yyyy', () => {
+            const dateString = '2022-11-06T20:45:04.176+00:00';
+            const expectedDate = '11/6/2022';
+
+            const actualDate = dateTimeService.getSimpleDate(dateString);
+
+            expect(actualDate).toBe(expectedDate);
+        })
+    });
 });

@@ -2639,7 +2639,8 @@ a.storm {
   border-radius: 8px;
 }
 
-.quick-filter-dropdown {
+.quick-filter-dropdown, 
+.advanced-filter-dropdown {
 	visibility: hidden;
 	opacity: 0;
 	left: 0;

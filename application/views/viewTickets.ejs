@@ -263,7 +263,7 @@
                             </div>
                             <i class="fa-regular fa-chevron-right"></i>
                           </li>
-                          <li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <div class='line'></div>
                           <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
@@ -416,7 +416,7 @@
                         <li class='start-ticket'>
                           <i class="fa-regular fa-circle-play"></i>Start Ticket
                         </li>
-                        <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                        <a href="/tickets/<%= ticket.id %>"><a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a></a>
                         <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                         <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                         <li class="move-ticket">
@@ -588,7 +588,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -760,7 +760,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -931,7 +931,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -1114,7 +1114,8 @@
                         <div class='ticket-dropdown-options dropdown'>
                         <ul>
                           <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+                          <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
                           <li class="move-ticket">
                             <i class="fa-regular fa-circle-arrow-right"></i>Move
                             <div class='department-dropdown-options dropdown'>
@@ -1271,7 +1272,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -1443,7 +1444,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -1615,7 +1616,8 @@
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
                             <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
-                            <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+                            <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
                             <li class="move-ticket">
                               <i class="fa-regular fa-circle-arrow-right"></i>Move
                               <div class='department-dropdown-options dropdown'>
@@ -1769,7 +1771,8 @@
                         <div class='ticket-dropdown-options dropdown'>
                         <ul>
                           <li class='start-ticket'><i class="fa-regular fa-circle-play"></i>Start Ticket</li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+                          <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
                           <li class="move-ticket">
                             <i class="fa-regular fa-circle-arrow-right"></i>Move
                             <div class='department-dropdown-options dropdown'>
@@ -1935,7 +1938,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2107,7 +2110,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2279,7 +2282,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2463,7 +2466,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2639,7 +2642,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2811,7 +2814,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -2983,7 +2986,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -3155,7 +3158,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -3339,7 +3342,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -3515,7 +3518,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -3686,7 +3689,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -3858,7 +3861,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4030,7 +4033,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4202,7 +4205,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4386,7 +4389,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4562,7 +4565,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4734,7 +4737,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -4918,7 +4921,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -5090,7 +5093,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -5262,7 +5265,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -5434,7 +5437,7 @@
                           <li class='start-ticket'>
                             <i class="fa-regular fa-circle-play"></i>Start Ticket
                           </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                           <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                           <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                           <li class="move-ticket">
@@ -5617,7 +5620,7 @@
                             <li class='start-ticket'>
                               <i class="fa-regular fa-circle-play"></i>Start Ticket
                             </li>
-                            <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <a href="/tickets/<%= ticket.id %>"><li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
                             <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
                             <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
                             <li class="move-ticket">

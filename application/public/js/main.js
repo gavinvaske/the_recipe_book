@@ -346,6 +346,7 @@ $( document ).ready(function() {
         if ($(this).find('.dropdown-menu').hasClass('active')){ 
             $('.dropdown-menu').removeClass('active');
         } else {
+            $('.full-page-curtain').removeClass('active');
             $('.dropdown-menu').removeClass('active');
             $(this).find('.dropdown-menu').addClass('active');
         }
@@ -600,6 +601,7 @@ $( document ).ready(function() {
     });
 
     $('.notification-option').click(function() {
+        $('');
         $(this).toggleClass('active');
     });
 
@@ -616,6 +618,7 @@ $( document ).ready(function() {
     });
 
     $('.settings-option.settings').click(function(){
+        $('.dropdown-menu').removeClass('active');
         $('.full-page-curtain').toggleClass('active');
     });
 
@@ -625,9 +628,6 @@ $( document ).ready(function() {
         $('.sidebar-main').toggleClass('active');
         $('.workflow-order-header.card').toggleClass('active');
         $('.scroll-curtain').toggleClass('active');
-        // if ($('.sidebar-option').hasClass('active')) {
-        //     $('.sidebar-option').removeClass('active');
-        // }
     });
     $('.sidebar-option').click(function() {
         if ($(this).hasClass('active')) {
@@ -644,6 +644,12 @@ $( document ).ready(function() {
         } else {
             $('.sidebar-option ').removeClass('active');
         }
+    });
+
+    /* Gavin code for console.logs department seleciton */
+    $('.departments-dropdown li').click(function() {
+        let departmentSelection = $(this).data('department-name');
+        console.log(departmentSelection);
     });
 });
 

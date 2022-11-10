@@ -1172,6 +1172,205 @@
           </div>
         </div>
         <% } %>
+        <% if (orderPrepInProgressTickets && orderPrepInProgressTickets.length) { %>
+          <div class='department-section department-section-d'>
+            <div class='header flex-center-left-row'>
+              <div class='expanded-options-wrapper'>
+                <div class='expanded-options-btn flex-center-center-row'>
+                  <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class='expanded-options-dropdown dropdown'>
+                  <ul>
+                    <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
+                    <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
+                    <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
+                    <li class='expand-all-groups'><i class="fa-regular fa-maximize"></i>Show All Departments</li>
+                  </ul>
+                </div>
+              </div>
+              <h3 class='category-header text-purple'>In Progress - <span class='category-ticket-count'><%= orderPrepInProgressTickets.length %></span></h3>
+            </div>
+            <div class='table ticket-container flex-top-center-column'>
+              <div class='table-header flex-center-center-row'>
+                <div class='column-header column-header-a'></div>
+                <div class='column-header column-header-b'>#</div>
+                <div class='column-header column-header-c'>Type</div>
+                <div class='column-header column-header-d'></div>
+                <div class='column-header column-header-e'></div>
+                <div class='column-header column-header-f'></div>
+                <div class='column-header column-header-g'></div>
+                <div class='column-header column-header-h'></div>
+                <div class='column-header column-header-i'></div>
+              </div>
+              <div class='table-body flex-center-center-column'>
+                <% orderPrepInProgressTickets.forEach((ticket, index) => { %>
+                <div class='table-row-wrapper full-width'>
+                  <div class='table-row flex-center-center-row'>
+                    <div class='column-td column-td-a bg-green'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                      <div class='ticket-dropdown-options dropdown'>
+                        <ul>
+                          <li class='start-ticket back-out-hover'>
+                            <i class="fa-regular fa-circle-play"></i>Start Ticket
+                          </li>
+                          <li class="move-ticket">
+                            <i class="fa-regular fa-circle-arrow-right"></i>Move
+                            <div class='department-dropdown-options dropdown'>
+                              <ul>
+                                <li class="move-to-department-trigger">Move To Department
+                                  <div class='departments-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <ul>
+                                        <li class='click-me' data-department-name='order-prep'>Order Prep</li>
+                                        <li data-department-name='art-prep'>Art Prep</li>
+                                        <li data-department-name='pre-printing'>Pre-Printing</li>
+                                        <li data-department-name='printing'>Printing</li>
+                                        <li data-department-name='cutting'>Cutting</li>
+                                        <li data-department-name='winding'>Winding</li>
+                                        <li data-department-name='shipping'>Shipping</li>
+                                        <li data-department-name='billing'>Billing</li>
+                                      </ul>
+                                  </div>
+                                  <div class='department-status-dropdown back-out-hover'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
+                                    <ul>
+                                      <li>Department Status A</li>
+                                      <li>Department Status B</li>
+                                      <li>Department Status C</li>
+                                    </ul>
+                                    <!-- End Gavin Target -->
+                                  </div>
+                                </li>
+                                <li class='move-to-list-trigger'>Move To List
+                                  <div class='list-dropdown'>
+                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                    </div>
+                                    <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
+                                    <ul>
+                                      <li>Department Status A</li>
+                                      <li>Department Status B</li>
+                                      <li>Department Status C</li>
+                                    </ul>
+                                    <!-- End Gavin Target -->
+                                  </div>
+                                </li>
+                                <li>Move To Top</li>
+                              </ul>
+                            </div>
+                            <i class="fa-regular fa-chevron-right"></i>
+                          </li>
+                          <a href="/tickets/<%= ticket.id %>"><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+                          <div class='line'></div>
+                          <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                          <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                          <li class="duration-dropdown-trigger back-out-hover">
+                            <i class="fa-regular fa-clock-two"></i>Duration
+                            <div class='duration-dropdown-options'>
+                              <ul>
+                                <li class='date-creation'>Date Created - <span class='text-blue date-created-target'><%= helperMethods.getSimpleDate(ticket.createdAt) %></span></li>
+                                <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getOverallTicketDuration(workflowStepTimeLedger[ticket.id])) %></span></li>
+                                <li class='production-duration'>Production - <span class='text-blue production-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInProduction(workflowStepTimeLedger[ticket.id])) %></span></li>
+                                <li class='department-duration'>Department - <span class='text-blue department-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInDepartment(workflowStepTimeLedger[ticket.id], ticket.destination.department)) %></span></li>
+                                <li class='list-duration'>Current List - <span class='text-blue list-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasHadADepartmentStatus(workflowStepTimeLedger[ticket.id], ticket.destination.department, ticket.destination.departmentStatus)) %></span></li>
+                              </ul>
+                            </div>
+                            <i class="fa-regular fa-chevron-right"></i>
+                          </li>
+                          <li class="duration-dropdown-trigger back-out-hover">
+                            <i class="fa-regular fa-user-astronaut"></i>Assignees
+                            <div class='duration-dropdown-options'>
+                              <ul>
+                                <li class='assignee-list-item order-prep'>
+                                  <p>Order Prep:</p>
+                                  <span class='assignee tooltip'><span class="tooltiptext">Storm Vaske</span>SV</span>
+                                </li>
+                                <li class='assignee-list-item art-prep'>
+                                  <p>Art Prep:</p>
+                                  <span class='assignee tooltip'><span class="tooltiptext">Brian Patterson</span>BP</span>
+                                </li>
+                                <li class='assignee-list-item pre-printing'>
+                                  <p>Pre Printing:</p>
+                                  <span class='assignee tooltip'><span class="tooltiptext">Josie Steffey</span>JS</span>
+                                  <span class='assignee tooltip'><span class="tooltiptext">Ethan Sherwood</span>ES</span>
+                                </li>
+                                <li class='assignee-list-item printing'><p>Printing:</p></li>
+                                <li class='assignee-list-item cutting'><p>Cutting:</p></li>
+                                <li class='assignee-list-item winding'><p>Winding:</p></li>
+                                <li class='assignee-list-item Shipping'><p>Shipping:</p></li>
+                                <li class='assignee-list-item billing'><p>Shipping:</p></li>
+                              </ul>
+                            </div>
+                            <i class="fa-regular fa-chevron-right"></i>
+                          </li>
+                          <div class='line'></div>
+                          <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+                          <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
+                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-e bg-white'></div>
+                    <div class='column-td column-td-f bg-white'></div>
+                    <div class='column-td column-td-g bg-white'></div>
+                    <div class='column-td column-td-h bg-white'></div>
+                    <div class='column-td column-td-i bg-white'></div>
+                  </div>
+                  <div class='ticket-products-wrapper flex-center-right-column full-width'>
+                    <div class='product-wrapper-header flex-center-left-row'>
+                      <h4>Products - <span>3</span></h4>
+                    </div>
+                    <div class='table-header secondary-table-header flex-center-center-row'>
+                      <div class='column-header column-header-a'></div>
+                      <div class='column-header column-header-b'>#</div>
+                      <div class='column-header column-header-c'>Products</div>
+                      <div class='column-header column-header-d'></div>
+                      <div class='column-header column-header-e'></div>
+                      <div class='column-header column-header-f'></div>
+                      <div class='column-header column-header-g'>Frames</div>
+                      <div class='column-header column-header-h'>Quantity</div>
+                      <div class='column-header column-header-i'>Artwork</div>
+                    </div>
+                    <div class='full-width flex-center-right-column'>
+                      <% ticket.products.forEach((product, index) => { %>
+                      <div class='product-wrapper flex-top-center-column'>
+                        <div class='table-row flex-center-center-row'>
+                          <div class='group-lines'></div>
+                          <div class='column-td column-td-a bg-green'>
+                            <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                            <div class='ticket-dropdown-options dropdown'>
+                              <ul>
+                                <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
+                                <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+                          <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
+                          <div class='column-td column-td-d bg-white'></div>
+                          <div class='column-td column-td-e bg-white'></div>
+                          <div class='column-td column-td-f bg-white'></div>
+                          <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+                          <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
+                          <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+                        </div>
+                      </div>
+                      <% }) %>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+          <% } %>
       </div>
       <% } %>
 

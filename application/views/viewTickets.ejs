@@ -141,6 +141,7 @@
 
     <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
     <% const billingReadyForBillingTickets = billingTicketsGroupedByDepartmentStatus['READY FOR BILLING'] %> <!-- TODO: This table is missing and therefore this variable is unused right now, ask storm about it -->
+    
     <% if (orderPrepTicketsGroupedByDepartmentStatus && Object.keys(orderPrepTicketsGroupedByDepartmentStatus).length > 0) { %>
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
@@ -5574,9 +5575,9 @@
         <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper card' data-department="BILLING">
-        <h4>Billing (TODO Storm: this second's departmentStatuses appear incorrect) - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
+        <h4>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
 
-        <% if (true) { %>  <!-- TODO: This section is an invalid billing section, storm needs to update it -->
+          <% if (billingReadyForBillingTickets && billingReadyForBillingTickets.length) { %>
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>
@@ -5592,7 +5593,7 @@
                   </ul>
                 </div>
               </div>
-              <h3 class='category-header text-green'>Ready For Processing - <span class='category-ticket-count'>2</span></h3>
+              <h3 class='category-header text-green'>Ready For Billing - <span class='category-ticket-count'><%= billingReadyForBillingTickets.length %> </span></h3>
             </div>
             <div class='table ticket-container flex-top-center-column'>
               <div class='table-header flex-center-center-row'>
@@ -5607,125 +5608,127 @@
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
               <div class='table-body flex-center-center-column'>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                      <div class='ticket-dropdown-options dropdown'>
-                        <ul>
-                          <li class='start-ticket'>
-                            <i class="fa-regular fa-circle-play"></i>Start Ticket
-                          </li>
-                          <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
-                          <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
-                          <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                          <li class="move-ticket">
-                            <i class="fa-regular fa-circle-arrow-right"></i>Move
-                            <div class='department-dropdown-options dropdown'>
-                              <ul>
-                                <li class="move-to-department-trigger">Move To Department
-                                  <div class='departments-dropdown'>
-                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
-                                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                                    </div>
-                                    <ul>
-                                      <li class='click-me'>Order Prep</li>
-                                      <li>Art Prep</li>
-                                      <li>Pre-Printing</li>
-                                      <li>Printing</li>
-                                      <li>Cutting</li>
-                                      <li>Winding</li>
-                                      <li>Shipping</li>
-                                      <li>Billing</li>
-                                    </ul>
-                                  </div>
-                                  <div class='department-status-dropdown'>
-                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
-                                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                                    </div>
-                                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                    <ul>
-                                      <li>Department Status A</li>
-                                      <li>Department Status B</li>
-                                      <li>Department Status C</li>
-                                    </ul>
-                                    <!-- End Gavin Target -->
-                                  </div>
-                                </li>
-                                <li class='move-to-list-trigger'>Move To List
-                                  <div class='list-dropdown'>
-                                    <div class='department-dropdown-header flex-bottom-space-between-row'>
-                                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                                    </div>
-                                    <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
-                                    <ul>
-                                      <li>Department Status A</li>
-                                      <li>Department Status B</li>
-                                      <li>Department Status C</li>
-                                    </ul>
-                                    <!-- End Gavin Target -->
-                                  </div>
-                                </li>
-                                <li>Move To Top</li>
-                              </ul>
-                            </div>
-                            <i class="fa-regular fa-chevron-right"></i>
-                          </li>
-                          <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
-                          <li class="duration-dropdown-trigger">
-                            <i class="fa-regular fa-clock-two"></i>Duration
-                            <div class='duration-dropdown-options'>
-                              <ul>
-                                <li class='date-creation'>Date Created - <span class='text-blue date-created-target'>10/01/22</span></li>
-                                <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'>1d 1hr 3m</span></li>
-                                <li class='production-duration'>Production - <span class='text-blue production-duration-target'>24m</span></li>
-                                <li class='department-duration'>Department - <span class='text-blue department-duration-target'>24m</span></li>
-                                <li class='list-duration'>Current List - <span class='text-blue list-duration-target'>24m</span></li>
-                              </ul>
-                            </div>
-                            <i class="fa-regular fa-chevron-right"></i>
-                          </li>
-                          <li class='archive-ticket'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
-                        </ul>
-                      </div>
-                  </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
-                </div>
-                <div class='table-row flex-center-center-row'>
-                  <div class='group-lines'></div>
-                  <div class='column-td column-td-a'>
-                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <% billingReadyForBillingTickets.forEach((ticket, index) => { %>
+                  <div class='table-row flex-center-center-row'>
+                    <div class='column-td column-td-a'>
+                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
                         <div class='ticket-dropdown-options dropdown'>
                           <ul>
-                            <li><i class="fa-regular fa-eye"></i>View Ticket</li>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            <li class='start-ticket'>
+                              <i class="fa-regular fa-circle-play"></i>Start Ticket
+                            </li>
+                            <li class='view-ticket'><i class="fa-regular fa-eye"></i>View Ticket</li>
+                            <li class="show-products"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+                            <li class="hide-products"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                            <li class="move-ticket">
+                              <i class="fa-regular fa-circle-arrow-right"></i>Move
+                              <div class='department-dropdown-options dropdown'>
+                                <ul>
+                                  <li class="move-to-department-trigger">Move To Department
+                                    <div class='departments-dropdown'>
+                                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                        <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                      </div>
+                                      <ul>
+                                        <li class='click-me'>Order Prep</li>
+                                        <li>Art Prep</li>
+                                        <li>Pre-Printing</li>
+                                        <li>Printing</li>
+                                        <li>Cutting</li>
+                                        <li>Winding</li>
+                                        <li>Shipping</li>
+                                        <li>Billing</li>
+                                      </ul>
+                                    </div>
+                                    <div class='department-status-dropdown'>
+                                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                        <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                      </div>
+                                      <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
+                                      <ul>
+                                        <li>Department Status A</li>
+                                        <li>Department Status B</li>
+                                        <li>Department Status C</li>
+                                      </ul>
+                                      <!-- End Gavin Target -->
+                                    </div>
+                                  </li>
+                                  <li class='move-to-list-trigger'>Move To List
+                                    <div class='list-dropdown'>
+                                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                                        <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                                      </div>
+                                      <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
+                                      <ul>
+                                        <li>Department Status A</li>
+                                        <li>Department Status B</li>
+                                        <li>Department Status C</li>
+                                      </ul>
+                                      <!-- End Gavin Target -->
+                                    </div>
+                                  </li>
+                                  <li>Move To Top</li>
+                                </ul>
+                              </div>
+                              <i class="fa-regular fa-chevron-right"></i>
+                            </li>
+                            <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+                            <li class="duration-dropdown-trigger">
+                              <i class="fa-regular fa-clock-two"></i>Duration
+                              <div class='duration-dropdown-options'>
+                                <ul>
+                                  <li class='date-creation'>Date Created - <span class='text-blue date-created-target'>10/01/22</span></li>
+                                  <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'>1d 1hr 3m</span></li>
+                                  <li class='production-duration'>Production - <span class='text-blue production-duration-target'>24m</span></li>
+                                  <li class='department-duration'>Department - <span class='text-blue department-duration-target'>24m</span></li>
+                                  <li class='list-duration'>Current List - <span class='text-blue list-duration-target'>24m</span></li>
+                                </ul>
+                              </div>
+                              <i class="fa-regular fa-chevron-right"></i>
+                            </li>
+                            <li class='archive-ticket'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
                           </ul>
                         </div>
-                      </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>  
+                    </div>
+                    <div class='column-td column-td-b bg-white'></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
+                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-e bg-white'></div>
+                    <div class='column-td column-td-f bg-white'></div>
+                    <div class='column-td column-td-g bg-white'></div>
+                    <div class='column-td column-td-h bg-white'></div>
+                    <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
+                  </div>
+                  <div class='table-row flex-center-center-row'>
+                    <div class='group-lines'></div>
+                    <div class='column-td column-td-a'>
+                          <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                          <div class='ticket-dropdown-options dropdown'>
+                            <ul>
+                              <li><i class="fa-regular fa-eye"></i>View Ticket</li>
+                              <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
+                              <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
+                              <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
+                            </ul>
+                          </div>
+                        </div>
+                    <div class='column-td column-td-b bg-white'></div>
+                    <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
+                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-e bg-white'></div>
+                    <div class='column-td column-td-f bg-white'></div>
+                    <div class='column-td column-td-g bg-white'></div>
+                    <div class='column-td column-td-h bg-white'></div>
+                    <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>  
+                  </div>
                 </div>
+              <% }) %>
               </div>
             </div>
           </div>
-        <% } %>
+          <% } %>
       </div>
-    <% } %>
-  </div>
+      <% } %>
 </div>
 
 

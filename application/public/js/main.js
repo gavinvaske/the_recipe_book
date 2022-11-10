@@ -601,7 +601,7 @@ $( document ).ready(function() {
     });
 
     $('.notification-option').click(function() {
-        $('')
+        $('');
         $(this).toggleClass('active');
     });
 

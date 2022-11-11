@@ -662,7 +662,7 @@ $( document ).ready(function() {
         let statusSelection = $(this).data('status-name');
         let ticketId = $(this).data('ticket-id');
         // $(departmentSelection).addClass('storm');  
-        console.log(departmentSelection + ' ' + statusSelection + ' ' + ticketId);
+        console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 
 

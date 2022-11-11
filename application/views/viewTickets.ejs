@@ -231,13 +231,13 @@
                                     </div>
                                     <ul>
                                       <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
+                                      <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                      <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                      <li class='department-option' data-department-name='printing'>Printing</li>
+                                      <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                      <li class='department-option' data-department-name='winding'>Winding</li>
+                                      <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                      <li class='department-option' data-department-name='billing'>Billing</li>
                                     </ul>
                                   </div>
                                   <div class='department-status-dropdown back-out-hover'>
@@ -245,10 +245,10 @@
                                       <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                     </div>
                                     <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                    <ul>
-                                      <li>Department Status A</li>
-                                      <li>Department Status B</li>
-                                      <li>Department Status C</li>
+                                    <ul class='status-dropdown-list'>
+                                      <li class='status-option'>Department Status A</li>
+                                      <li class='status-option'>Department Status B</li>
+                                      <li class='status-option'>Department Status C</li>
                                     </ul>
                                     <!-- End Gavin Target -->
                                   </div>
@@ -433,15 +433,15 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                    <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                    <li data-department-name='art-prep'>Art Prep</li>
-                                    <li data-department-name='pre-printing'>Pre-Printing</li>
-                                    <li data-department-name='printing'>Printing</li>
-                                    <li data-department-name='cutting'>Cutting</li>
-                                    <li data-department-name='winding'>Winding</li>
-                                    <li data-department-name='shipping'>Shipping</li>
-                                    <li data-department-name='billing'>Billing</li>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
                                   </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
@@ -449,10 +449,10 @@
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -633,26 +633,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='click-me department-option' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option active' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -833,26 +833,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -1032,26 +1032,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                  <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -1231,28 +1231,26 @@
                                     <div class='department-dropdown-header flex-bottom-space-between-row'>
                                       <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                     </div>
-                                    <ul>
-                                        <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                        <li data-department-name='art-prep'>Art Prep</li>
-                                        <li data-department-name='pre-printing'>Pre-Printing</li>
-                                        <li data-department-name='printing'>Printing</li>
-                                        <li data-department-name='cutting'>Cutting</li>
-                                        <li data-department-name='winding'>Winding</li>
-                                        <li data-department-name='shipping'>Shipping</li>
-                                        <li data-department-name='billing'>Billing</li>
-                                      </ul>
+                                    <ul class='department-dropdown-list'>
+                                      <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                      <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                      <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                      <li class='department-option' data-department-name='printing'>Printing</li>
+                                      <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                      <li class='department-option' data-department-name='winding'>Winding</li>
+                                      <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                      <li class='department-option' data-department-name='billing'>Billing</li>
+                                    </ul>
                                   </div>
                                   <div class='department-status-dropdown back-out-hover'>
                                     <div class='department-dropdown-header flex-bottom-space-between-row'>
                                       <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                     </div>
-                                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                    <ul>
-                                      <li>Department Status A</li>
-                                      <li>Department Status B</li>
-                                      <li>Department Status C</li>
+                                    <ul class='status-dropdown-list'>
+                                      <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                      <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                      <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                     </ul>
-                                    <!-- End Gavin Target -->
                                   </div>
                                 </li>
                                 <li class='move-to-list-trigger'>Move To List
@@ -1444,26 +1442,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -1648,26 +1646,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -1848,26 +1846,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -2048,26 +2046,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -2248,26 +2246,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -2460,26 +2458,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -2660,26 +2658,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -2860,26 +2858,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -3072,26 +3070,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -3276,26 +3274,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -3476,26 +3474,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -3676,26 +3674,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -3891,13 +3889,11 @@
                                     <div class='department-dropdown-header flex-bottom-space-between-row'>
                                       <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                     </div>
-                                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                    <ul>
-                                      <li>Department Status A</li>
-                                      <li>Department Status B</li>
-                                      <li>Department Status C</li>
-                                    </ul>
-                                    <!-- End Gavin Target -->
+                                    <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
+                                  </ul>
                                   </div>
                                 </li>
                                 <li class='move-to-list-trigger'>Move To List
@@ -4076,26 +4072,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -4288,26 +4284,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -4492,26 +4488,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -4691,26 +4687,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -4891,26 +4887,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -5091,26 +5087,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -5291,26 +5287,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -5503,26 +5499,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -5707,26 +5703,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -5907,26 +5903,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -6119,26 +6115,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -6319,26 +6315,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -6519,26 +6515,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -6719,26 +6715,26 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                                  <ul>
-                                    <li>Department Status A</li>
-                                    <li>Department Status B</li>
-                                    <li>Department Status C</li>
+                                 <ul class='status-dropdown-list'>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-a'>Department Status A</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-b'>Department Status B</li>
+                                    <li class='status-option' data-ticket-id='<%= ticket.id %>' data-status-name='department-status-c'>Department Status C</li>
                                   </ul>
                                   <!-- End Gavin Target -->
                                 </div>
@@ -6933,16 +6929,16 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
@@ -7083,16 +7079,16 @@
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
-                                  <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li data-department-name='art-prep'>Art Prep</li>
-                                      <li data-department-name='pre-printing'>Pre-Printing</li>
-                                      <li data-department-name='printing'>Printing</li>
-                                      <li data-department-name='cutting'>Cutting</li>
-                                      <li data-department-name='winding'>Winding</li>
-                                      <li data-department-name='shipping'>Shipping</li>
-                                      <li data-department-name='billing'>Billing</li>
-                                    </ul>
+                                  <ul class='department-dropdown-list'>
+                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                    <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                                    <li class='department-option' data-department-name='printing'>Printing</li>
+                                    <li class='department-option' data-department-name='cutting'>Cutting</li>
+                                    <li class='department-option' data-department-name='winding'>Winding</li>
+                                    <li class='department-option' data-department-name='shipping'>Shipping</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                  </ul>
                                 </div>
                                 <div class='department-status-dropdown'>
                                   <div class='department-dropdown-header flex-bottom-space-between-row'>

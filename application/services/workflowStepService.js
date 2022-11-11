@@ -5,20 +5,41 @@ const {COMPLETED_DEPARTMENT, productionDepartmentsAndDepartmentStatuses} = requi
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
 
-async function findWorkflowStepsByTicketId(ticketId) {
+async function findWorkflowStepsByTicketIds(ticketIds) {
     const ascendingSort = 1;
     const searchQuery = {
-        ticketId: ticketId,
+        ticketId: {$in: ticketIds},
         'destination.department': {$ne: COMPLETED_DEPARTMENT}
     };
     const sortQuery = {
         createdAt: ascendingSort
     };
+    const attributesToSelect= [
+        'createdAt',
+        'ticketId',
+        'destination.department',
+        'destination.departmentStatus'
+    ];
 
-    return await WorkflowStepModel
+    const workflowSteps = await WorkflowStepModel
         .find(searchQuery)
+        .select(attributesToSelect)
         .sort(sortQuery)
         .exec();
+
+    const ticketIdToWorkflowSteps = {};
+
+    ticketIds.forEach((ticketId) => {
+        ticketIdToWorkflowSteps[ticketId] = [];
+    });
+
+    workflowSteps.forEach((workflowStep) => {
+        const ticketId = workflowStep.ticketId;
+
+        ticketIdToWorkflowSteps[ticketId].push(workflowStep);
+    });
+
+    return ticketIdToWorkflowSteps;
 }
 
 function getTimeSpentInWorkflowStep(currentWorkflowStep, nextWorkflowStep) {
@@ -61,11 +82,12 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
 
 module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
     const ticketIds = await WorkflowStepModel.find().distinct('ticketId').exec(); // TODO: Maybe only find ticketIds whose current department is NOT 'COMPLETED' and NOT undefined
+    const ticketIdToWorkflowSteps = await findWorkflowStepsByTicketIds(ticketIds);
     const workflowStepTimeLedger = {};
-    
-    for (let i = 0; i < ticketIds.length; i++) {
-        const workflowStepsForOneTicket = await findWorkflowStepsByTicketId(ticketIds[i]);
-        
+
+    for (ticketId in ticketIdToWorkflowSteps) {
+        const workflowStepsForOneTicket = ticketIdToWorkflowSteps[ticketId];
+
         for (let j = 0; j < workflowStepsForOneTicket.length; j++) {
             const currentWorkflowStep = workflowStepsForOneTicket[j];
             const isThereANextWorkflowStep = workflowStepsForOneTicket.length - 1 > j;
@@ -86,6 +108,10 @@ module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
 };
 
 module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
+    if (!workflowStepLedgerForTicket) {
+        return;
+    }
+
     let totalTimeInMinutes = 0;
 
     Object.keys(workflowStepLedgerForTicket).forEach((department) => {
@@ -97,6 +123,10 @@ module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
 };
 
 module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicket) => {
+    if (!workflowStepLedgerForTicket) {
+        return;
+    }
+
     let totalTimeInMinutes = 0;
     const zeroMinutes = 0;
 
@@ -115,9 +145,17 @@ module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicke
 };
 
 module.exports.getHowLongTicketHasBeenInDepartment = (workflowStepLedgerForTicket, department) => {
+    if (!workflowStepLedgerForTicket) {
+        return;
+    }
+
     return workflowStepLedgerForTicket[department][TIME_SPENT_IN_DEPARTMENT];
 };
 
 module.exports.getHowLongTicketHasHadADepartmentStatus = (workflowStepLedgerForTicket, department, departmentStatus) => {
+    if (!workflowStepLedgerForTicket) {
+        return;
+    }
+
     return workflowStepLedgerForTicket[department][TIME_PER_DEPARTMENT_STATUS][departmentStatus];
 };

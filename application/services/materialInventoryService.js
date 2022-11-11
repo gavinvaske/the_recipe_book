@@ -13,9 +13,6 @@ module.exports.getAllMaterialInventoryData = async () => {
         return material._id;
     })
 
-    console.log(`materials.length => ${materials.length}`)
-    console.log(`materialIds.length => ${materialIds.length}`)
-
     const searchQuery = {
         material: {$in: materials}
     }
@@ -35,22 +32,31 @@ module.exports.getAllMaterialInventoryData = async () => {
         materialIdToPurchaseOrders[materialId].push(purchaseOrder);
     });
 
-    console.log(`materialIdToPurchaseOrders => ${JSON.stringify(materialIdToPurchaseOrders)}`);
-
     materials.forEach((material) => {
         const materialInventory = buildMaterialInventory(material, materialIdToPurchaseOrders);
-
-
+        materialInventories.push(materialInventory);
     });
 
-    // return materialInventories;
+    const purchaseOrdersThatHaveYetToArrive = selectPurchaseOrdersThatHaveNotArrived(purchaseOrders);
+    const lengthOfAllMaterialsInInventory = computeLengthOfMaterialInInventory(purchaseOrders);
+    const lengthOfAllMaterialsOrdered = computeLengthOfMaterial(purchaseOrdersThatHaveYetToArrive);
+    const totalPurchaseOrders = purchaseOrders.length;
+
+    return {
+        materialInventories,
+        lengthOfAllMaterialsInInventory,
+        lengthOfAllMaterialsOrdered,
+        totalPurchaseOrders
+    }
 };
 
 function buildMaterialInventory(material, materialIdToPurchaseOrders) {
     const materialId = material._id;
-    const lengthOfMaterialOrdered = 69;
-    const lengthOfMaterialInStock = 69;
-    const purchaseOrdersForMaterial = 69;
+    const purchaseOrdersForOneMaterial = materialIdToPurchaseOrders[materialId];
+
+    const lengthOfMaterialOrdered = computeLengthOfMaterial(purchaseOrdersForOneMaterial);
+    const lengthOfMaterialInStock = computeLengthOfMaterialInInventory(purchaseOrdersForOneMaterial);
+    const purchaseOrdersForMaterial = selectPurchaseOrdersThatHaveNotArrived(purchaseOrdersForOneMaterial);
 
     return {
         material,
@@ -60,30 +66,40 @@ function buildMaterialInventory(material, materialIdToPurchaseOrders) {
     }
 }
 
-// module.exports.getAllMaterialInventoryData = async () => {
-//     let materialInventories = [];
-//     const materials = await MaterialModel
-//         .find()
-//         .lean()
-//         .exec();
+function computeLengthOfMaterial(purchaseOrders) {
+    let lengthOfMaterial = 0;
+    
+    purchaseOrders.forEach((purchaseOrder) => {
+        lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder)
+    });
 
-//     console.log(`materials.length => ${materials.length}`);
+    return lengthOfMaterial;
+}
 
-//     for (let i = 0; i < materials.length; i++) {
-//         const material = materials[i];
-//         const materialId = material._id;
+function computeLengthOfMaterialInInventory(purchaseOrders) {
+    let lengthOfMaterial = 0;
 
-//         const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(materialId);
-//         const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(materialId);
-//         const purchaseOrdersForMaterial = await materialOrderService.findPurchaseOrdersByMaterialThatHaveNotArrived(materialId);
+    purchaseOrders.forEach((purchaseOrder) => {
+        if (purchaseOrder.hasArrived) {
+            lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder);
+        }
+    })
 
-//         materialInventories.push({
-//             material,
-//             lengthOfMaterialOrdered,
-//             lengthOfMaterialInStock,
-//             purchaseOrdersForMaterial
-//         });
-//     }
+    return lengthOfMaterial;
+}
 
-//     return materialInventories;
-// };
+function selectPurchaseOrdersThatHaveNotArrived(purchaseOrders) {
+    let purchaseOrdersThatHaveNotArrived = [];
+
+    purchaseOrders.forEach((purchaseOrder) => {
+        if (!purchaseOrder.hasArrived) {
+            purchaseOrdersThatHaveNotArrived.push(purchaseOrder)
+        }
+    })
+
+    return purchaseOrdersThatHaveNotArrived;
+}
+
+function getTotalLengthOfMaterial({totalRolls, feetPerRoll}) {
+    return totalRolls * feetPerRoll;
+}

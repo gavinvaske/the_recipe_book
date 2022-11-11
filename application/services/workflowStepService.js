@@ -82,10 +82,10 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
 }
 
 module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
-    const searchQueryThatExcludesTicketsWithoutADestinationOrCompletedTickets = { $or:[ {'destination': null}, {'destination.department': { $ne: COMPLETE_DEPARTMENT } } ] };
+    const searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets = { $or:[ {'destination': null}, {'destination.department': { $ne: COMPLETE_DEPARTMENT } } ] };
 
     const ticketIds = await TicketModel
-        .find(searchQueryThatExcludesTicketsWithoutADestinationOrCompletedTickets)
+        .find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
         .distinct('_id')
         .exec();
 

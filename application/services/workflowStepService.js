@@ -1,6 +1,7 @@
 const WorkflowStepModel = require('../models/WorkflowStep');
+const TicketModel = require('../models/ticket');
 const dateTimeService = require('../services/dateTimeService');
-const {COMPLETED_DEPARTMENT, productionDepartmentsAndDepartmentStatuses} = require('../enums/departmentsEnum');
+const {COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses} = require('../enums/departmentsEnum');
 
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
@@ -9,7 +10,7 @@ async function findWorkflowStepsByTicketIds(ticketIds) {
     const ascendingSort = 1;
     const searchQuery = {
         ticketId: {$in: ticketIds},
-        'destination.department': {$ne: COMPLETED_DEPARTMENT}
+        'destination.department': {$ne: COMPLETE_DEPARTMENT}
     };
     const sortQuery = {
         createdAt: ascendingSort
@@ -81,28 +82,33 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
 }
 
 module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
-    const ticketIds = await WorkflowStepModel.find().distinct('ticketId').exec(); // TODO: Maybe only find ticketIds whose current department is NOT 'COMPLETED' and NOT undefined
+    const searchQueryThatExcludesTicketsWithoutADestinationOrCompletedTickets = { $or:[ {'destination': null}, {'destination.department': { $ne: COMPLETE_DEPARTMENT } } ] };
+
+    const ticketIds = await TicketModel
+        .find(searchQueryThatExcludesTicketsWithoutADestinationOrCompletedTickets)
+        .distinct('_id')
+        .exec();
+
     const ticketIdToWorkflowSteps = await findWorkflowStepsByTicketIds(ticketIds);
     const workflowStepTimeLedger = {};
 
     for (ticketId in ticketIdToWorkflowSteps) {
         const workflowStepsForOneTicket = ticketIdToWorkflowSteps[ticketId];
 
-        for (let j = 0; j < workflowStepsForOneTicket.length; j++) {
-            const currentWorkflowStep = workflowStepsForOneTicket[j];
-            const isThereANextWorkflowStep = workflowStepsForOneTicket.length - 1 > j;
+        workflowStepsForOneTicket && workflowStepsForOneTicket.forEach((currentWorkflowStep, index) => {
+            const isThereANextWorkflowStep = workflowStepsForOneTicket.length - 1 > index;
             let nextWorkflowStep;
-    
+
             if (isThereANextWorkflowStep) {
-                nextWorkflowStep = workflowStepsForOneTicket[j+1];
+                nextWorkflowStep = workflowStepsForOneTicket[index+1];
             }
-    
+
             let millisecondsSpentInCurrentWorkflowStep = getTimeSpentInWorkflowStep(currentWorkflowStep, nextWorkflowStep);
             let minutesSpentInCurrentWorkflowStep = dateTimeService.convertMillisecondsToMinutes(millisecondsSpentInCurrentWorkflowStep);
     
             updateWorkflowStepTimeLedger(workflowStepTimeLedger, currentWorkflowStep, minutesSpentInCurrentWorkflowStep);
-        }
-    }
+        });
+    };
 
     return workflowStepTimeLedger;
 };

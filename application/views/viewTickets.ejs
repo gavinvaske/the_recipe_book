@@ -128,7 +128,12 @@
     <% const printingSchedulePressThreeTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS THREE'] %>
     <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
 
-    <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const cuttingInProgressTickets = [
+        ...cuttingTicketsGroupedByDepartmentStatus['SET-UP'],
+        ...cuttingTicketsGroupedByDepartmentStatus['RUNTIME'],
+        ...cuttingTicketsGroupedByDepartmentStatus['TEAR-DOWN']
+      ]
+    %>
     <% const cuttingReadyForSchedulingTickets = cuttingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
     <% const cuttingScheduleDeltaOneTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA ONE'] %>
     <% const cuttingScheduleDeltaTwoTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA TWO'] %>
@@ -315,7 +320,6 @@
                           <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
                         </ul>
                       </div>
-                    </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                     <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                     <div class='column-td column-td-d bg-white'></div>

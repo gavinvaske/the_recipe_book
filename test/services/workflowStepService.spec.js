@@ -7,6 +7,14 @@ const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
 
 describe('workflowStepService test suite', () => {
     describe('getOverallTicketDuration()', () => {
+        it('should return undefined if the workflowStepLedger is undefined', () => {
+            let workflowStepLedger;
+
+            const actualDuration = workflowStepService.getOverallTicketDuration(workflowStepLedger);
+
+            expect(actualDuration).toBe(undefined);
+        });
+
         it('should return 0 if the workflowStepLedger is empty', () => {
             const workflowStepLedger = {};
             const expectedDuration = 0;
@@ -38,6 +46,13 @@ describe('workflowStepService test suite', () => {
     });
 
     describe('getHowLongTicketHasBeenInProduction()', () => {
+        it('should return undefined if workflowStepLedger is undefined', () => {
+            let workflowStepLedger;
+
+            const actualDuration = workflowStepService.getHowLongTicketHasBeenInProduction(workflowStepLedger);
+
+            expect(actualDuration).toBe(undefined);
+        });
 
         it('should return 0 if ticket has not been in a production department', () => {
             const nonProductionDepartments = getNonProductionDepartments();
@@ -80,6 +95,14 @@ describe('workflowStepService test suite', () => {
     });
 
     describe('getHowLongTicketHasBeenInDepartment()', () => {
+        it('should return undefined if workflowStepLedger is undefined', () => {
+            let workflowStepLedger;
+
+            const actualDuration = workflowStepService.getHowLongTicketHasBeenInDepartment(workflowStepLedger);
+
+            expect(actualDuration).toBe(undefined);
+        });
+
         it ('should determine how long a ticket has been in the department correctly', () => {
             const department = chance.word();
             const timeSpentInDepartment = chance.floating({min: 0});
@@ -97,6 +120,14 @@ describe('workflowStepService test suite', () => {
     });
 
     describe('getHowLongTicketHasHadADepartmentStatus()', () => {
+        it('should return undefined if workflowStepLedger is undefined', () => {
+            let workflowStepLedger;
+
+            const actualDuration = workflowStepService.getHowLongTicketHasHadADepartmentStatus(workflowStepLedger);
+
+            expect(actualDuration).toBe(undefined);
+        });
+
         it ('should determine how long a ticket has been in the departmentStatus correctly', () => {
             const department = chance.word();
             const departmentStatus = chance.word();

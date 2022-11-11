@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
-const materialOrderService = require('../services/materialOrderService');
 
 const materialInventoryService = require('../services/materialInventoryService');
 

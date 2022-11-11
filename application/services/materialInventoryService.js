@@ -1,6 +1,5 @@
 const MaterialModel = require('../models/material');
 const PurchaseOrderModel = require('../models/materialOrder');
-const materialOrderService = require('../services/materialOrderService');
 
 module.exports.getAllMaterialInventoryData = async () => {
     let materialInventories = [];
@@ -11,11 +10,11 @@ module.exports.getAllMaterialInventoryData = async () => {
 
     const materialIds = materials.map((material) => {
         return material._id;
-    })
+    });
 
     const searchQuery = {
         material: {$in: materials}
-    }
+    };
     const purchaseOrders = await PurchaseOrderModel
         .find(searchQuery)
         .exec();
@@ -47,7 +46,7 @@ module.exports.getAllMaterialInventoryData = async () => {
         lengthOfAllMaterialsInInventory,
         lengthOfAllMaterialsOrdered,
         totalPurchaseOrders
-    }
+    };
 };
 
 function buildMaterialInventory(material, materialIdToPurchaseOrders) {
@@ -63,14 +62,14 @@ function buildMaterialInventory(material, materialIdToPurchaseOrders) {
         lengthOfMaterialOrdered,
         lengthOfMaterialInStock,
         purchaseOrdersForMaterial
-    }
+    };
 }
 
 function computeLengthOfMaterial(purchaseOrders) {
     let lengthOfMaterial = 0;
     
     purchaseOrders.forEach((purchaseOrder) => {
-        lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder)
+        lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder);
     });
 
     return lengthOfMaterial;
@@ -83,7 +82,7 @@ function computeLengthOfMaterialInInventory(purchaseOrders) {
         if (purchaseOrder.hasArrived) {
             lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder);
         }
-    })
+    });
 
     return lengthOfMaterial;
 }
@@ -93,9 +92,9 @@ function selectPurchaseOrdersThatHaveNotArrived(purchaseOrders) {
 
     purchaseOrders.forEach((purchaseOrder) => {
         if (!purchaseOrder.hasArrived) {
-            purchaseOrdersThatHaveNotArrived.push(purchaseOrder)
+            purchaseOrdersThatHaveNotArrived.push(purchaseOrder);
         }
-    })
+    });
 
     return purchaseOrdersThatHaveNotArrived;
 }

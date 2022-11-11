@@ -580,6 +580,11 @@ $( document ).ready(function() {
         }
     });
 
+    $('.department-option').click(function(){
+        $('.department-option').removeClass('active');
+        $(this).addClass('active');
+    });
+
     $('.view-ticket').hover(function(){
         $('.move-ticket').removeClass('active');
         $('.departments-dropdown').removeClass('active');
@@ -651,6 +656,16 @@ $( document ).ready(function() {
         let departmentSelection = $(this).data('department-name');
         console.log(departmentSelection);
     });
+
+    $('.status-option').click(function() {
+        let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
+        let statusSelection = $(this).data('status-name');
+        let ticketId = $(this).data('ticket-id');
+        // $(departmentSelection).addClass('storm');  
+        console.log(departmentSelection + ' ' + statusSelection + ' ' + ticketId);
+    });
+
+
 });
 
 

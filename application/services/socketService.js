@@ -1,5 +1,5 @@
 const PurchaseOrderModel = require('../models/materialOrder');
-const materialInventoryService = require('../services/materialInventoryService');
+const materialOrderService = require('../services/materialOrderService');
 
 module.exports = function(io){
     console.log('Initializing Sockets...');
@@ -23,19 +23,19 @@ module.exports = function(io){
             return;
         }
 
-        const materialInventoryData = await materialInventoryService.getAllMaterialInventoryData();
-
-        const inventoryDataForOneMaterial = materialInventoryData.materialInventories.find((materialInventory) => {
-            return String(materialInventory.material._id) === String(materialObjectId);
-        });
+        const lengthOfMaterialOrdered = await materialOrderService.getLengthOfOneMaterialOrdered(materialObjectId);
+        const lengthOfMaterialInStock = await materialOrderService.getLengthOfOneMaterialInInventory(materialObjectId);
+        const lengthOfAllMaterialsInInventory = await materialOrderService.getLengthOfAllMaterialsInInventory();
+        const lengthOfAllMaterialsOrdered = await materialOrderService.getLengthOfAllMaterialsOrdered();
+        const totalPurchaseOrders = await materialOrderService.getNumberOfPurchaseOrders();
 
         io.emit(materialObjectId, {
-            lengthOfMaterialOrdered: inventoryDataForOneMaterial.lengthOfMaterialOrdered,
-            lengthOfMaterialInStock: inventoryDataForOneMaterial.lengthOfMaterialInStock,
-            lengthOfAllMaterialsInInventory: materialInventoryData.lengthOfAllMaterialsInInventory,
-            lengthOfAllMaterialsOrdered: materialInventoryData.lengthOfAllMaterialsOrdered,
-            totalPurchaseOrders: materialInventoryData.totalPurchaseOrders,
-            purchaseOrder: purchaseOrder
+            lengthOfMaterialOrdered,
+            lengthOfMaterialInStock,
+            lengthOfAllMaterialsInInventory,
+            lengthOfAllMaterialsOrdered,
+            totalPurchaseOrders,
+            purchaseOrder
         });
     });
 };

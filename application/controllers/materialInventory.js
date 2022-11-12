@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
+const materialOrderService = require('../services/materialOrderService');
 
 const materialInventoryService = require('../services/materialInventoryService');
 
@@ -7,17 +8,16 @@ router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {
-        const start1 = new Date();
-        const materialInventoryData = await materialInventoryService.getAllMaterialInventoryData();
-        const stop = new Date();
-
-        console.log(`Time Taken to execute = ${(stop - start1)} ms`);
-
+        const materialInventories = await materialInventoryService.getAllMaterialInventoryData();
+        const lengthOfAllMaterialsInInventory = await materialOrderService.getLengthOfAllMaterialsInInventory();
+        const lengthOfAllMaterialsOrdered = await materialOrderService.getLengthOfAllMaterialsOrdered();
+        const totalPurchaseOrders = await materialOrderService.getNumberOfPurchaseOrders();
+        
         return response.render('viewMaterialInventory', {
-            materialInventories: materialInventoryData.materialInventories,
-            lengthOfAllMaterialsInInventory: materialInventoryData.lengthOfAllMaterialsInInventory,
-            lengthOfAllMaterialsOrdered: materialInventoryData.lengthOfAllMaterialsOrdered,
-            totalPurchaseOrders: materialInventoryData.totalPurchaseOrders
+            materialInventories,
+            lengthOfAllMaterialsInInventory,
+            lengthOfAllMaterialsOrdered,
+            totalPurchaseOrders
         });
 
     } catch (error) {

@@ -7,11 +7,7 @@ router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {
-        const start1 = new Date();
         const materialInventoryData = await materialInventoryService.getAllMaterialInventoryData();
-        const stop = new Date();
-
-        console.log(`Time Taken to execute = ${(stop - start1)} ms`);
 
         return response.render('viewMaterialInventory', {
             materialInventories: materialInventoryData.materialInventories,

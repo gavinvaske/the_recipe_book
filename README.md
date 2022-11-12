@@ -16,7 +16,7 @@ Steps
   3. to run the application `cd` into the downloaded folder using: 
      - `cd the_recipe_book`
   4. Install Dependencies using:
-     - `npm install`
+     - `npm install` (if this command throws errors, see [this wiki page](https://github.com/gavinvaske/the_recipe_book/wiki/Fixing-%60npm-install%60-Error(s))
   5. Create a `.env` file in the root directory and populate it with all the variables found in `.env.example` (you'll need to replace all the 'TODO' valued variables. You'll need to decide the values they need to be.)
   5. start the application using:
      - `npm run start`

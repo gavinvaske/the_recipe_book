@@ -5996,7 +5996,6 @@
       <div class='department-wrapper card' data-department="SHIPPING">
         <h4>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
 
-        <% if (shippingInProgressTickets && shippingInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -6194,9 +6193,7 @@
             </div>
           </div>
         </div>
-        <% } %>
 
-        <% if (shippingReadyForShippingTickets && shippingReadyForShippingTickets.length) { %>
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -6394,9 +6391,7 @@
             </div>
           </div>
         </div>
-        <% } %>   
 
-        <% if (shippingOnHoldTickets && shippingOnHoldTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -6594,9 +6589,7 @@
             </div>
           </div>
         </div>
-        <% } %>
 
-        <% if (shippingToolArrivalTickets && shippingToolArrivalTickets.length) { %>
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -6794,7 +6787,6 @@
             </div>
           </div>
         </div>
-        <% } %>
       </div>
 
       <div class="department-end-frame flex-center-center-row full-width">

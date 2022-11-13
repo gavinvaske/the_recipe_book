@@ -2384,7 +2384,6 @@
       <div class='department-wrapper card' data-department="PRE-PRESS">
         <h4>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
 
-        <% if (prePressNeedsAttentionTickets && prePressNeedsAttentionTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -2582,9 +2581,7 @@
             </div>
           </div>
         </div>
-        <% } %>
 
-        <% if (prePressInProgressTickets && prePressInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -2782,9 +2779,7 @@
             </div>
           </div>
         </div>
-        <% } %>
 
-        <% if (prePressSendToPressTickets && prePressSendToPressTickets.length) { %>
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -2982,9 +2977,7 @@
             </div>
           </div>
         </div>
-        <% } %>
       </div>
-
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>

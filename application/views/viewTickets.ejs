@@ -6798,7 +6798,6 @@
       <div class='department-wrapper card' data-department="BILLING">
         <h4>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
 
-        <% if (billingReadyForBillingTickets && billingReadyForBillingTickets.length) { %>
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>
@@ -6946,9 +6945,7 @@
               </div>
             </div>
           </div>
-        <% } %>
 
-        <% if (billingInProgressTickets && billingInProgressTickets.length) { %>
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>
@@ -7096,7 +7093,6 @@
               </div>
             </div>
           </div>
-        <% } %>
       </div>
   </div>
 </div>

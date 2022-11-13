@@ -5389,7 +5389,6 @@
       <div class='department-wrapper card' data-department="WINDING">
         <h4>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
 
-        <% if (windingInProgressTickets && windingInProgressTickets.length) { %>
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -5591,9 +5590,7 @@
             </div>
           </div>
         </div>
-        <% } %>
 
-        <% if (windingReadyForSchedulingTickets && windingReadyForSchedulingTickets.length) { %>
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -5790,10 +5787,7 @@
             </div>
           </div>
         </div>
-        <% } %>
     
-
-        <% if (windingOnHoldTickets && windingOnHoldTickets.length) { %>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -5991,7 +5985,6 @@
             </div>
           </div>
         </div>
-        <% } %>    
       </div>
 
       <div class="department-end-frame flex-center-center-row full-width">

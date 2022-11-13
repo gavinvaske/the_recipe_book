@@ -21,7 +21,7 @@ describe('purchaseOrderService test suite', () => {
                 return {
                     exec: execFunction
                 };
-            })
+            });
 
             mockPurchaseOrderModel.find.mockImplementation(findFunction);
         });
@@ -43,7 +43,7 @@ describe('purchaseOrderService test suite', () => {
             };
             await purchaseOrderService.getPurchaseOrdersForMaterials(purchaseOrderIds);
 
-            expect(findFunction).toHaveBeenCalledWith(expectedSearchQuery)
+            expect(findFunction).toHaveBeenCalledWith(expectedSearchQuery);
         });
 
         it ('should return the purchaseOrders from the database', async () => {
@@ -70,7 +70,7 @@ describe('purchaseOrderService test suite', () => {
             purchaseOrders = [
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
-            ]
+            ];
 
             const foundPurchaseOrders = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(purchaseOrders);
 
@@ -94,7 +94,7 @@ describe('purchaseOrderService test suite', () => {
             purchaseOrders = [
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
-            ]
+            ];
 
             const foundPurchaseOrders = purchaseOrderService.findPurchaseOrdersThatHaveArrived(purchaseOrders);
 
@@ -110,7 +110,7 @@ describe('purchaseOrderService test suite', () => {
             const actualLength = purchaseOrderService.computeLengthOfMaterial(purchaseOrders);
 
             expect(actualLength).toBe(expectedLength);
-        })
+        });
 
         it('should compute the length of material on purchase orders correctly', () => {
             const numberOfPurchaseOrders = chance.integer({min: 1, max: 100});
@@ -118,26 +118,26 @@ describe('purchaseOrderService test suite', () => {
             let expectedLength = 0;
 
             for (let i=0; i < numberOfPurchaseOrders; i++) {
-                expectedLength += purchaseOrders[i].totalRolls * purchaseOrders[i].feetPerRoll
+                expectedLength += purchaseOrders[i].totalRolls * purchaseOrders[i].feetPerRoll;
             }
 
             const actualLength = purchaseOrderService.computeLengthOfMaterial(purchaseOrders);
 
             expect(actualLength).toBe(expectedLength);
-        })
+        });
     });
 });
 
 function getPurchaseOrderThatHasNotArrived() {
     return {
         hasArrived: false
-    }
+    };
 }
 
 function getPurchaseOrderThatHasArrived() {
     return {
         hasArrived: true
-    }
+    };
 }
 
 function buildPurchaseOrder() {
@@ -145,7 +145,7 @@ function buildPurchaseOrder() {
         _id: chance.string(),
         totalRolls: chance.integer({min: 1, max: 10}),
         feetPerRoll: chance.integer({min: 1, max: 10})
-    }
+    };
 }
 
 function buildPurchaseOrders(purchaseOrderIds) {
@@ -153,6 +153,6 @@ function buildPurchaseOrders(purchaseOrderIds) {
         return {
             _id: purchaseOrderId,
 
-        }
+        };
     });
 }

@@ -10,14 +10,14 @@ describe('materialService test suite', () => {
         
         beforeEach(() => {
             materialIds = chance.n(chance.string, chance.integer({min: 0, max: 20}));
-            materials = buildMaterials(materialIds)
-        })
+            materials = buildMaterials(materialIds);
+        });
 
         it('should parse _id attribute from all materials', () => {
             const actualMaterialIds = materialService.getMaterialIds(materials);
 
             expect(actualMaterialIds.sort()).toEqual(materialIds.sort());
-        })
+        });
     });
 
     describe('getAllMaterials()', () => {
@@ -34,7 +34,7 @@ describe('materialService test suite', () => {
                 return {
                     exec: execFunction
                 };
-            })
+            });
 
             mockMaterialModel.find.mockImplementation(findFunction);
         });
@@ -76,6 +76,6 @@ function buildMaterials(materialIds) {
     return materialIds.map((materialId) => {
         return {
             _id: materialId
-        }
+        };
     });
 }

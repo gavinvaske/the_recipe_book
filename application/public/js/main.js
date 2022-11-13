@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    const emptyLength = 0;
     $('.workflow-navigation ul li').on('click', function() {
         $('.department-end-frame').remove();
         let currentDepartmentName = $(this).text();
@@ -669,11 +670,11 @@ $( document ).ready(function() {
     if (ticketCounts) {
         ticketCounts.each(function() {
             const ticketCount = $(this).text();
-            const shouldSectionBeHidden = parseInt(ticketCount) === 0
+            const shouldSectionBeHidden = parseInt(ticketCount) === emptyLength;
             if (shouldSectionBeHidden) {
                 $(this).closest('.department-section').hide();
             }
-        })
+        });
     }
 });
 

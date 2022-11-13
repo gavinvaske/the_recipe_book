@@ -1,5 +1,7 @@
 const PurchaseOrderModel = require('../models/materialOrder');
 const materialInventoryService = require('../services/materialInventoryService');
+const purchaseOrderService = require('../services/purchaseOrderService');
+const materialService = require('../services/materialService');
 
 module.exports = function(io){
     console.log('Initializing Sockets...');
@@ -23,18 +25,28 @@ module.exports = function(io){
             return;
         }
 
-        const materialInventoryData = await materialInventoryService.getAllMaterialInventoryData();
+        const allMaterials = await materialService.getAllMaterials();
+        const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
-        const inventoryDataForOneMaterial = materialInventoryData.materialInventories.find((materialInventory) => {
-            return String(materialInventory.material._id) === String(materialObjectId);
-        });
+        const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialIds);
+        
+        const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialIds, allPurchaseOrders);
+
+        const allPurchaseOrdersForOneMaterial = materialIdToPurchaseOrders[materialObjectId];
+        const allPurchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders); 
+        const allPurchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
+
+        const materialInventory = materialInventoryService.buildMaterialInventory(purchaseOrder.material, allPurchaseOrdersForOneMaterial);
+        const lengthOfAllMaterialsInInventory = purchaseOrderService.computeLengthOfMaterial(allPurchaseOrdersThatHaveArrived);
+        const lengthOfAllMaterialsOrdered = purchaseOrderService.computeLengthOfMaterial(allPurchaseOrdersThatHaveNotArrived);
+        const totalPurchaseOrders = allPurchaseOrders.length;
 
         io.emit(materialObjectId, {
-            lengthOfMaterialOrdered: inventoryDataForOneMaterial.lengthOfMaterialOrdered,
-            lengthOfMaterialInStock: inventoryDataForOneMaterial.lengthOfMaterialInStock,
-            lengthOfAllMaterialsInInventory: materialInventoryData.lengthOfAllMaterialsInInventory,
-            lengthOfAllMaterialsOrdered: materialInventoryData.lengthOfAllMaterialsOrdered,
-            totalPurchaseOrders: materialInventoryData.totalPurchaseOrders,
+            lengthOfMaterialOrdered: materialInventory.lengthOfMaterialOrdered,
+            lengthOfMaterialInStock: materialInventory.lengthOfMaterialInStock,
+            lengthOfAllMaterialsInInventory: lengthOfAllMaterialsInInventory,
+            lengthOfAllMaterialsOrdered: lengthOfAllMaterialsOrdered,
+            totalPurchaseOrders: totalPurchaseOrders,
             purchaseOrder: purchaseOrder
         });
     });

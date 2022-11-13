@@ -1,24 +1,29 @@
 const MaterialModel = require('../models/material');
 const PurchaseOrderModel = require('../models/materialOrder');
 
-module.exports.getAllMaterialInventoryData = async () => {
-    let materialInventories = [];
-    const materials = await MaterialModel
-        .find()
-        .lean()
-        .exec();
-
-    const materialIds = materials.map((material) => {
+module.exports.getMaterialIds = (materials) => {
+    return materials.map((material) => {
         return material._id;
-    });
+    })
+}
 
+module.exports.getAllMaterials = async () => {
+    return await MaterialModel
+        .find()
+        .exec();
+}
+
+module.exports.getPurchaseOrdersForMaterials = async (materialIds) => {
     const searchQuery = {
-        material: {$in: materials}
+        material: {$in: materialIds}
     };
-    const purchaseOrders = await PurchaseOrderModel
+
+    return await PurchaseOrderModel
         .find(searchQuery)
         .exec();
+}
 
+module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
     const materialIdToPurchaseOrders = {};
 
     materialIds.forEach((materialId) => {
@@ -31,74 +36,43 @@ module.exports.getAllMaterialInventoryData = async () => {
         materialIdToPurchaseOrders[materialId].push(purchaseOrder);
     });
 
-    materials.forEach((material) => {
-        const materialInventory = buildMaterialInventory(material, materialIdToPurchaseOrders);
-        materialInventories.push(materialInventory);
-    });
-
-    const purchaseOrdersThatHaveYetToArrive = selectPurchaseOrdersThatHaveNotArrived(purchaseOrders);
-    const lengthOfAllMaterialsInInventory = computeLengthOfMaterialInInventory(purchaseOrders);
-    const lengthOfAllMaterialsOrdered = computeLengthOfMaterial(purchaseOrdersThatHaveYetToArrive);
-    const totalPurchaseOrders = purchaseOrders.length;
-
-    return {
-        materialInventories,
-        lengthOfAllMaterialsInInventory,
-        lengthOfAllMaterialsOrdered,
-        totalPurchaseOrders
-    };
-};
-
-function buildMaterialInventory(material, materialIdToPurchaseOrders) {
-    const materialId = material._id;
-    const purchaseOrdersForOneMaterial = materialIdToPurchaseOrders[materialId];
-
-    const lengthOfMaterialOrdered = computeLengthOfMaterial(purchaseOrdersForOneMaterial);
-    const lengthOfMaterialInStock = computeLengthOfMaterialInInventory(purchaseOrdersForOneMaterial);
-    const purchaseOrdersForMaterial = selectPurchaseOrdersThatHaveNotArrived(purchaseOrdersForOneMaterial);
-
-    return {
-        material,
-        lengthOfMaterialOrdered,
-        lengthOfMaterialInStock,
-        purchaseOrdersForMaterial
-    };
+    return materialIdToPurchaseOrders;
 }
 
-function computeLengthOfMaterial(purchaseOrders) {
+module.exports.findPurchaseOrdersThatHaveNotArrived = (purchaseOrders) => {
+    return purchaseOrders.filter((purchaseOrder) => {
+        return !purchaseOrder.hasArrived;
+    });
+}
+
+module.exports.findPurchaseOrdersThatHaveArrived = (purchaseOrders) => {
+    return purchaseOrders.filter((purchaseOrder) => {
+        return purchaseOrder.hasArrived;
+    });
+}
+
+module.exports.computeLengthOfMaterial = (purchaseOrders) => {
     let lengthOfMaterial = 0;
     
     purchaseOrders.forEach((purchaseOrder) => {
-        lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder);
+        lengthOfMaterial += getMaterialLengthOnPurchaseOrder(purchaseOrder);
     });
 
     return lengthOfMaterial;
 }
 
-function computeLengthOfMaterialInInventory(purchaseOrders) {
-    let lengthOfMaterial = 0;
+module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial) => {
+    const purchaseOrdersThatHaveArrived = this.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial)
+    const purchaseOrdersThatHaveNotArrived = this.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial)
 
-    purchaseOrders.forEach((purchaseOrder) => {
-        if (purchaseOrder.hasArrived) {
-            lengthOfMaterial += getTotalLengthOfMaterial(purchaseOrder);
-        }
-    });
+    return {
+        material,
+        lengthOfMaterialOrdered: this.computeLengthOfMaterial(allPurchaseOrdersForMaterial),
+        lengthOfMaterialInStock: this.computeLengthOfMaterial(purchaseOrdersThatHaveArrived),
+        purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
+    }
+};
 
-    return lengthOfMaterial;
-}
-
-function selectPurchaseOrdersThatHaveNotArrived(purchaseOrders) {
-    let purchaseOrdersThatHaveNotArrived = [];
-
-    purchaseOrders.forEach((purchaseOrder) => {
-        if (!purchaseOrder.hasArrived) {
-            purchaseOrdersThatHaveNotArrived.push(purchaseOrder);
-        }
-    });
-
-    return purchaseOrdersThatHaveNotArrived;
-}
-
-function getTotalLengthOfMaterial({totalRolls, feetPerRoll}) {
-    return totalRolls * feetPerRoll;
+function getMaterialLengthOnPurchaseOrder(purchaseOrder) {
+    return purchaseOrder.totalRolls * purchaseOrder.feetPerRoll;
 }

@@ -7,13 +7,29 @@ router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {
-        const materialInventoryData = await materialInventoryService.getAllMaterialInventoryData();
+        const allMaterials = await materialInventoryService.getAllMaterials();
+        const distinctMaterialIds = materialInventoryService.getMaterialIds(allMaterials);
+
+        const allPurchaseOrders = await materialInventoryService.getPurchaseOrdersForMaterials(distinctMaterialIds);
+
+        const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialIds, allPurchaseOrders);
+
+        const purchaseOrdersThatHaveArrived = materialInventoryService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders);
+        const purchaseOrdersThatHaveNotArrived = materialInventoryService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
+
+        const lengthOfAllMaterialsInInventory = materialInventoryService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
+        const lengthOfAllMaterialsOrdered = materialInventoryService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived);
+
+        const materialInventories = allMaterials.map((material) => {
+            const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];
+            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial);
+        })
 
         return response.render('viewMaterialInventory', {
-            materialInventories: materialInventoryData.materialInventories,
-            lengthOfAllMaterialsInInventory: materialInventoryData.lengthOfAllMaterialsInInventory,
-            lengthOfAllMaterialsOrdered: materialInventoryData.lengthOfAllMaterialsOrdered,
-            totalPurchaseOrders: materialInventoryData.totalPurchaseOrders
+            materialInventories,
+            lengthOfAllMaterialsInInventory,
+            lengthOfAllMaterialsOrdered,
+            totalPurchaseOrders: allPurchaseOrders.length
         });
 
     } catch (error) {

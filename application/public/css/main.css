@@ -796,7 +796,9 @@ input:focus + .show-password-frame {
   align-items: flex-end;
   flex-direction: column;
 }
-
+.sidebar-main .user-profile-picture {
+  background: #f8f8f8;
+}
 .user-profile-picture {
   position: relative;
   height: 45px;
@@ -3846,6 +3848,9 @@ canvas{
 
 .department-wrapper.card h4 {
   margin: 0;
+  display: inline-block;
+  border: 1px solid grey;
+  padding: 5px 10px;
 }
 .full-page-curtain {
   position: fixed;

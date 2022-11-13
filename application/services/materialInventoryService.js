@@ -1,4 +1,4 @@
-const purchaseOrderService = require('../services/purchaseOrderService')
+const purchaseOrderService = require('../services/purchaseOrderService');
 
 module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
     const materialIdToPurchaseOrders = {};

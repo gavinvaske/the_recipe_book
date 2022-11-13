@@ -26,7 +26,7 @@ module.exports = function(io){
         const allMaterials = await materialInventoryService.getAllMaterials();
         const distinctMaterialIds = materialInventoryService.getMaterialIds(allMaterials);
 
-        const allPurchaseOrders = await materialInventoryService.getPurchaseOrdersForMaterials(distinctMaterialIds)
+        const allPurchaseOrders = await materialInventoryService.getPurchaseOrdersForMaterials(distinctMaterialIds);
         
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialIds, allPurchaseOrders);
 
@@ -34,7 +34,7 @@ module.exports = function(io){
         const allPurchaseOrdersThatHaveArrived = materialInventoryService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders); 
         const allPurchaseOrdersThatHaveNotArrived = materialInventoryService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
 
-        const materialInventory = materialInventoryService.buildMaterialInventory(purchaseOrder.material, allPurchaseOrdersForOneMaterial)
+        const materialInventory = materialInventoryService.buildMaterialInventory(purchaseOrder.material, allPurchaseOrdersForOneMaterial);
         const lengthOfAllMaterialsInInventory = materialInventoryService.computeLengthOfMaterial(allPurchaseOrdersThatHaveArrived);
         const lengthOfAllMaterialsOrdered = materialInventoryService.computeLengthOfMaterial(allPurchaseOrdersThatHaveNotArrived);
         const totalPurchaseOrders = allPurchaseOrders.length;

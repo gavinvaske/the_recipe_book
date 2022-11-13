@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
         const materialInventories = allMaterials.map((material) => {
             const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];
             return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial);
-        })
+        });
 
         return response.render('viewMaterialInventory', {
             materialInventories,

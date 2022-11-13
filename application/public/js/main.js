@@ -665,7 +665,16 @@ $( document ).ready(function() {
         console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 
-
+    const ticketCounts = $('.category-ticket-count');
+    if (ticketCounts) {
+        ticketCounts.each(function() {
+            const ticketCount = $(this).text();
+            const shouldSectionBeHidden = parseInt(ticketCount) === 0
+            if (shouldSectionBeHidden) {
+                $(this).closest('.department-section').hide();
+            }
+        })
+    }
 });
 
 

@@ -151,7 +151,7 @@
 
     <% const billingReadyForBillingTickets = billingTicketsGroupedByDepartmentStatus['READY FOR BILLING'] %>
     <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% if (orderPrepTicketsGroupedByDepartmentStatus && Object.keys(orderPrepTicketsGroupedByDepartmentStatus).length > 0) { %>
+    
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
       <div class='department-wrapper card' data-department="ORDER-PREP">
@@ -1379,15 +1379,13 @@
           </div>
           <% } %>
       </div>
-      <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
       </div>
       
       <!--- Art Prep Department Start-->
-      <% if (artPrepTicketsGroupedByDepartmentStatus && Object.keys(artPrepTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper card' data-department="ART-PREP">
         <h4>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
@@ -2396,14 +2394,13 @@
         </div>
         <% } %>
       </div>
-      <% } %>
+
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
       </div>
   
-      <% if (prePressTicketsGroupedByDepartmentStatus && Object.keys(prePressTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper card' data-department="PRE-PRESS">
         <h4>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
@@ -3008,14 +3005,13 @@
         </div>
         <% } %>
       </div>
-      <% } %>
+
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (printingTicketsGroupedByDepartmentStatus && Object.keys(printingTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper card' data-department="PRINTING">
         <h4>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
@@ -4222,14 +4218,12 @@
         </div>
         <% } %>
       </div>
-      <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>
     
-      <% if (cuttingTicketsGroupedByDepartmentStatus && Object.keys(cuttingTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper card' data-department="CUTTING">
         <h4>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
@@ -5437,14 +5431,12 @@
         </div>
         <% } %>
       </div>
-      <% } %>
   
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (windingTicketsGroupedByDepartmentStatus && Object.keys(windingTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper card' data-department="WINDING">
         <h4>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
@@ -6053,14 +6045,12 @@
         </div>
         <% } %>    
       </div>
-      <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End of Winding</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (shippingTicketsGroupedByDepartmentStatus && Object.keys(shippingTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper card' data-department="SHIPPING">
         <h4>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
@@ -6865,14 +6855,12 @@
         </div>
         <% } %>
       </div>
-      <% } %>
 
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
 
-      <% if (billingTicketsGroupedByDepartmentStatus && Object.keys(billingTicketsGroupedByDepartmentStatus).length > 0) { %>
-        <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
+      <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper card' data-department="BILLING">
         <h4>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
@@ -7177,7 +7165,6 @@
           </div>
         <% } %>
       </div>
-    <% } %>
   </div>
 </div>
 

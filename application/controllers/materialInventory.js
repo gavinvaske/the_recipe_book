@@ -2,23 +2,25 @@ const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 
 const materialInventoryService = require('../services/materialInventoryService');
+const materialService = require('../services/materialService');
+const purchaseOrderService = require('../services/purchaseOrderService');
 
 router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {
-        const allMaterials = await materialInventoryService.getAllMaterials();
-        const distinctMaterialIds = materialInventoryService.getMaterialIds(allMaterials);
+        const allMaterials = await materialService.getAllMaterials();
+        const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
-        const allPurchaseOrders = await materialInventoryService.getPurchaseOrdersForMaterials(distinctMaterialIds);
+        const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialIds);
 
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialIds, allPurchaseOrders);
 
-        const purchaseOrdersThatHaveArrived = materialInventoryService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders);
-        const purchaseOrdersThatHaveNotArrived = materialInventoryService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
+        const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders);
+        const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
 
-        const lengthOfAllMaterialsInInventory = materialInventoryService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
-        const lengthOfAllMaterialsOrdered = materialInventoryService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived);
+        const lengthOfAllMaterialsInInventory = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
+        const lengthOfAllMaterialsOrdered = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived);
 
         const materialInventories = allMaterials.map((material) => {
             const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];

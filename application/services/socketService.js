@@ -1,5 +1,7 @@
 const PurchaseOrderModel = require('../models/materialOrder');
 const materialInventoryService = require('../services/materialInventoryService');
+const purchaseOrderService = require('../services/purchaseOrderService');
+const materialService = require('../services/materialService');
 
 module.exports = function(io){
     console.log('Initializing Sockets...');
@@ -23,20 +25,20 @@ module.exports = function(io){
             return;
         }
 
-        const allMaterials = await materialInventoryService.getAllMaterials();
-        const distinctMaterialIds = materialInventoryService.getMaterialIds(allMaterials);
+        const allMaterials = await materialService.getAllMaterials();
+        const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
-        const allPurchaseOrders = await materialInventoryService.getPurchaseOrdersForMaterials(distinctMaterialIds);
+        const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialIds);
         
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialIds, allPurchaseOrders);
 
         const allPurchaseOrdersForOneMaterial = materialIdToPurchaseOrders[materialObjectId];
-        const allPurchaseOrdersThatHaveArrived = materialInventoryService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders); 
-        const allPurchaseOrdersThatHaveNotArrived = materialInventoryService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
+        const allPurchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders); 
+        const allPurchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
 
         const materialInventory = materialInventoryService.buildMaterialInventory(purchaseOrder.material, allPurchaseOrdersForOneMaterial);
-        const lengthOfAllMaterialsInInventory = materialInventoryService.computeLengthOfMaterial(allPurchaseOrdersThatHaveArrived);
-        const lengthOfAllMaterialsOrdered = materialInventoryService.computeLengthOfMaterial(allPurchaseOrdersThatHaveNotArrived);
+        const lengthOfAllMaterialsInInventory = purchaseOrderService.computeLengthOfMaterial(allPurchaseOrdersThatHaveArrived);
+        const lengthOfAllMaterialsOrdered = purchaseOrderService.computeLengthOfMaterial(allPurchaseOrdersThatHaveNotArrived);
         const totalPurchaseOrders = allPurchaseOrders.length;
 
         io.emit(materialObjectId, {

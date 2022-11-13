@@ -152,7 +152,6 @@ function buildPurchaseOrders(purchaseOrderIds) {
     return purchaseOrderIds.map((purchaseOrderId) => {
         return {
             _id: purchaseOrderId,
-
         };
     });
 }

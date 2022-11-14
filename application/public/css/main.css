@@ -3560,12 +3560,21 @@ canvas{
   height: 100%;
   /* width: 80px; */
   width: 66px;
-  background-color: white;
+  /* background-color: white; */
   z-index: 500;
   padding: 35px 15px 15px 15px;
   box-shadow: 0 0 15px 0 rgb(34 41 47 / 5%);
+  background-color: white;
+  /* background: url('https://flevix.com/wp-content/uploads/2019/12/Live-Wave-Background.svg');
+  background-size: 400% 400%;
+  animation: backgroundGradient 30s ease infinite; */
   transition: .3s;
 }
+/* @keyframes backgroundGradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+} */
 .sidebar-main:hover,
 .sidebar-main.active {
   width: 300px;
@@ -3849,7 +3858,7 @@ canvas{
   width: calc(100% - 350px);
 }
 
-.department-wrapper.card h4 {
+.department-wrapper.card h4.department-name {
   margin: 0;
   display: inline-block;
   border: 1px solid grey;

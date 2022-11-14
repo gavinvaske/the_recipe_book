@@ -655,13 +655,36 @@ $( document ).ready(function() {
     $('.departments-dropdown li').click(function() {
         let departmentSelection = $(this).data('department-name');
         console.log(departmentSelection);
+
+        // TODO Gavin (11-13-2022): Upon department selection, populate the departmentStatus list
+        console.log($(this).parent('.department-dropdown-list'))
+
+        const departmentStatusHtmlList = $(this).parent('.department-dropdown-list').parent('.departments-dropdown').siblings('.department-status-dropdown').find('.status-dropdown-list');
+        departmentStatusHtmlList.empty();
+        // Step 1: clone hidden row from this dropdown
+        // Step 2: populate the data attributes with the correct stuff
+        // Step 3: append row to list
+        // Step 4: Display item
+        departmentStatusHtmlList.append("<li class='status-option' data-ticket-id='todo1' data-status-name='todo2'>todo3</li>")
     });
 
     $('.status-option').click(function() {
         let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
         let statusSelection = $(this).data('status-name');
         let ticketId = $(this).data('ticket-id');
-        // $(departmentSelection).addClass('storm');  
+
+        console.log($(this).data())
+
+        const ticketAttributes = {
+            destination: {
+                department: 'SHIPPING',
+                departmentStatus: 'READY FOR SHIPPING'
+            }
+        }
+
+        updateTicket(ticketId, ticketAttributes);
+
+        // $(departmentSelection).addClass('storm');
         console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 

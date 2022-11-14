@@ -155,7 +155,7 @@
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
       <div class='department-wrapper card' data-department="ORDER-PREP">
-        <h4>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
+        <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <div class='expanded-options-wrapper'>
@@ -1378,7 +1378,7 @@
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper card' data-department="ART-PREP">
-        <h4>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
+        <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
 
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -2382,7 +2382,7 @@
       <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper card' data-department="PRE-PRESS">
-        <h4>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
+        <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
 
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
@@ -2986,7 +2986,7 @@
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper card' data-department="PRINTING">
-        <h4>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
+        <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
 
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
@@ -4186,7 +4186,7 @@
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper card' data-department="CUTTING">
-        <h4>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
+        <h4 class='department-name'>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
 
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
@@ -5387,7 +5387,7 @@
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper card' data-department="WINDING">
-        <h4>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
+        <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
 
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
@@ -5994,7 +5994,7 @@
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper card' data-department="SHIPPING">
-        <h4>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
+        <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
 
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
@@ -6796,7 +6796,7 @@
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper card' data-department="BILLING">
-        <h4>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
+        <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
 
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
@@ -7095,6 +7095,7 @@
           </div>
       </div>
   </div>
+
 </div>
 
 

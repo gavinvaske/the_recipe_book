@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    const emptyLength = 0;
     $('.workflow-navigation ul li').on('click', function() {
         $('.department-end-frame').remove();
         let currentDepartmentName = $(this).text();
@@ -665,7 +666,16 @@ $( document ).ready(function() {
         console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 
-
+    const ticketCounts = $('.category-ticket-count');
+    if (ticketCounts) {
+        ticketCounts.each(function() {
+            const ticketCount = $(this).text();
+            const shouldSectionBeHidden = parseInt(ticketCount) === emptyLength;
+            if (shouldSectionBeHidden) {
+                $(this).closest('.department-section').hide();
+            }
+        });
+    }
 });
 
 

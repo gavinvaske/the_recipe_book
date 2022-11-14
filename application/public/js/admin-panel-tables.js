@@ -141,8 +141,19 @@ $( document ).ready(function() {
         });
     }
 
-    populateMaterialsTable();
-    populateFinishesTable();
-    populateMachinesTable();
-    populateVendorsTable();
+    if ($('#materials-table')) {
+        populateMaterialsTable();
+    }
+
+    if ($('#finishes-table')) {
+        populateFinishesTable();
+    }
+
+    if ($('#machines-table').length) {
+        populateMachinesTable();
+    }
+
+    if ($('#vendors-table').length) {
+        populateVendorsTable();
+    }
 });

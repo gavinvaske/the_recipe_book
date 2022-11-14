@@ -229,14 +229,16 @@
                                       <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                     </div>
                                     <ul>
-                                      <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                                      <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                                      <% helperMethods.getDepartmentsWithAtLeastOneStatus().forEach((department) => { %>
+                                        <li class='department-option click-me' data-department-name='<%= department %>'><%= department %></li>
+                                      <% }) %>
+                                      <!-- <li class='department-option' data-department-name='art-prep'>Art Prep</li>
                                       <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
                                       <li class='department-option' data-department-name='printing'>Printing</li>
                                       <li class='department-option' data-department-name='cutting'>Cutting</li>
                                       <li class='department-option' data-department-name='winding'>Winding</li>
-                                      <li class='department-option' data-department-name='shipping'>Shipping</li>
-                                      <li class='department-option' data-department-name='billing'>Billing</li>
+                                      <li class='department-option' data-department-name='shipping'>Shipping</li>-->
+                                      <li class='department-option' data-department-name='billingV23'>Billingv23</li> 
                                     </ul>
                                   </div>
                                   <div class='department-status-dropdown back-out-hover'>
@@ -1430,14 +1432,17 @@
                                     <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
                                   </div>
                                   <ul class='department-dropdown-list'>
-                                    <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                                    <% helperMethods.getDepartmentsWithAtLeastOneStatus().forEach((department) => { %>
+                                      <li class='department-option click-me' data-department-name='<%= department %>'><%= department %></li>
+                                    <% }) %>
+                                    <!-- <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
                                     <li class='department-option' data-department-name='art-prep'>Art Prep</li>
                                     <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
                                     <li class='department-option' data-department-name='printing'>Printing</li>
                                     <li class='department-option' data-department-name='cutting'>Cutting</li>
                                     <li class='department-option' data-department-name='winding'>Winding</li>
                                     <li class='department-option' data-department-name='shipping'>Shipping</li>
-                                    <li class='department-option' data-department-name='billing'>Billing</li>
+                                    <li class='department-option' data-department-name='billing'>Billing</li> -->
                                   </ul>
                                 </div>
                                 <div class='department-status-dropdown back-out-hover'>

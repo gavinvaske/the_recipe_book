@@ -665,7 +665,7 @@ $( document ).ready(function() {
         // Step 2: populate the data attributes with the correct stuff
         // Step 3: append row to list
         // Step 4: Display item
-        departmentStatusHtmlList.append("<li class='status-option' data-ticket-id='todo1' data-status-name='todo2'>todo3</li>")
+        departmentStatusHtmlList.append("<li id='this-is-the-element-id' class='status-option test-test' data-ticket-id='todo1' data-status-name='todo2'>todo3</li>")
     });
 
     $('.status-option').click(function() {
@@ -688,7 +688,26 @@ $( document ).ready(function() {
         console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 
+    $('.status-dropdown-list').on('click', '.status-option', function() {
+        alert('You clicked a status option that may have not existed on the DOM previously!');
+        let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
+        let statusSelection = $(this).data('status-name');
+        let ticketId = $(this).data('ticket-id');
 
+        console.log($(this).data())
+
+        const ticketAttributes = {
+            destination: {
+                department: departmentSelection,
+                departmentStatus: statusSelection
+            }
+        }
+
+        updateTicket(ticketAttributes, ticketId);
+
+        // $(departmentSelection).addClass('storm');
+        console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
+    });
 });
 
 

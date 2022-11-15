@@ -670,7 +670,7 @@ $( document ).ready(function() {
                         const clone = listItemTemplate.clone();
                         clone.data('status-name', departmentStatus);
                         clone.text(departmentStatus);
-                        departmentStatusList.append(clone)
+                        departmentStatusList.append(clone);
                     });
                 }
             },
@@ -700,7 +700,7 @@ $( document ).ready(function() {
                 department: departmentSelection,
                 departmentStatus: statusSelection
             }
-        }
+        };
 
         updateTicket(ticketAttributes, ticketId);
     });

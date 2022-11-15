@@ -694,8 +694,15 @@ $( document ).ready(function() {
         let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
         let statusSelection = $(this).data('status-name');
         let ticketId = $(this).data('ticket-id');
-        // $(departmentSelection).addClass('storm');
-        console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
+        
+        const ticketAttributes = {
+            destination: {
+                department: departmentSelection,
+                departmentStatus: statusSelection
+            }
+        }
+
+        updateTicket(ticketAttributes, ticketId);
     });
 
     const ticketCounts = $('.category-ticket-count');

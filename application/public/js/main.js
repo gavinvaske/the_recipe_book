@@ -11,19 +11,19 @@ $( document ).ready(function() {
         $(`.department-wrapper*[data-department="${selectedDepartment}"]`).show(cssTransitionDelayInMs);
     });
 
-    function updateTicket(ticketAttributes, ticketId) {
+    function updateTicket(ticketAttributes, ticketId, callback) {
         $.ajax({
             url: `/tickets/update/${ticketId}`,
             type: 'POST',
             data: ticketAttributes,
-            success: function(response) {
-                if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+            success: function(updatedTicket) {
+                if (callback) {
+                    callback(updatedTicket);
                 }
             },
             error: function(error) {
-                console.log(error);
-                alert('An error occurred while attempting to update the ticket');
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to update the ticket: "${errorMessage}"`);
             }
         });
     }
@@ -690,6 +690,11 @@ $( document ).ready(function() {
         populateDepartmentStatusList(departmentSelection, departmentStatusHtmlList, clone);
     });
 
+    function moveTicket(response) {
+        alert('alert from the callback!')
+        console.log(JSON.stringify(response));
+    }
+
     $('.status-dropdown-list').on('click', '.status-option', function() {
         let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
         let statusSelection = $(this).data('status-name');
@@ -702,7 +707,7 @@ $( document ).ready(function() {
             }
         };
 
-        updateTicket(ticketAttributes, ticketId);
+        updateTicket(ticketAttributes, ticketId, moveTicket);
     });
 
     const ticketCounts = $('.category-ticket-count');
@@ -716,9 +721,3 @@ $( document ).ready(function() {
         });
     }
 });
-
-
-
-
-
-

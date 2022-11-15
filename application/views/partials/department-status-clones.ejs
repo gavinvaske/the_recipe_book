@@ -1,208 +1,517 @@
-<% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
-<div class='table ticket-container flex-top-center-column'>
-    <div class='table-header flex-center-center-row'>
-      <div class='column-header column-header-a'></div>
-      <div class='column-header column-header-b'>#</div>
-      <div class='column-header column-header-c'>Ticket Number</div>
-      <div class='column-header column-header-d'>Status</div>
-      <div class='column-header column-header-e'></div>
-      <div class='column-header column-header-f'></div>
-      <div class='column-header column-header-g'></div>
-      <div class='column-header column-header-h'>From</div>
-      <div class='column-header column-header-i'>Due Date</div>
-    </div>
-    <div class='table-body flex-center-center-column'>
-      <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-      <div class='table-row-wrapper full-width'>
-        <div class='start-job-bg-overlay flex-center-center-row'>
-          <i class="fa-regular fa-xmark-large"></i>
-          <div class='card modal-window start-job-modal'>
-            <div class='modal-wrapper'>
-              <div class='modal-header'>
-                <h2>Start This Job</h2>
-              </div>
-              <div class='modal-body flex-center-center-column'>
-                <h1><%= ticket.ticketNumber || 'N/A' %></h1>
-                <select name="machine-list" id="machine">
-                  <option>Press 1</option>
-                  <option>Press 2</option>
-                  <option>Delta 1</option>
-                  <option>Delta 2</option>
-                </select>
-              </div>
-              <div class='modal-footer flex-center-space-evenly-row'>
-                <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
-              </div>
-            </div>
-          </div>
+<!-- Order Prep - Needs Attention -->
+<div class='table-row-wrapper full-width'>
+  <div class='start-job-bg-overlay flex-center-center-row'>
+    <i class="fa-regular fa-xmark-large"></i>
+    <div class='card modal-window start-job-modal'>
+      <div class='modal-wrapper'>
+        <div class='modal-header'>
+          <h2>Start This Job</h2>
         </div>
-        <div class='table-row flex-center-center-column'>
-          <div class='flex-center-center-row ticket-wrapper full-width'>
-            <div class='column-td column-td-a bg-green'>
-              <i class='fa-light fa-ellipsis-vertical text-white'></i>
-              <iv class='ticket-dropdown-options dropdown'>
-                <ul>
-                  <li class='start-ticket back-out-hover'>
-                    <i class="fa-regular fa-circle-play"></i>Start Ticket
-                  </li>
-                  <li class="move-ticket">
-                    <i class="fa-regular fa-circle-arrow-right"></i>Move
-                    <div class='department-dropdown-options dropdown'>
-                      <ul>
-                        <li class="move-to-department-trigger">Move To Department
-                          <div class='departments-dropdown'>
-                            <div class='department-dropdown-header flex-bottom-space-between-row'>
-                              <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                            </div>
-                            <ul>
-                              <li class='click-me' data-department-name='order-prep'>Order Prep</li>
-                              <li class='department-option' data-department-name='art-prep'>Art Prep</li>
-                              <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
-                              <li class='department-option' data-department-name='printing'>Printing</li>
-                              <li class='department-option' data-department-name='cutting'>Cutting</li>
-                              <li class='department-option' data-department-name='winding'>Winding</li>
-                              <li class='department-option' data-department-name='shipping'>Shipping</li>
-                              <li class='department-option' data-department-name='billing'>Billing</li>
-                            </ul>
-                          </div>
-                          <div class='department-status-dropdown back-out-hover'>
-                            <div class='department-dropdown-header flex-bottom-space-between-row'>
-                              <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                            </div>
-                            <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
-                            <ul class='status-dropdown-list'>
-                              <li class='status-option'>Department Status A</li>
-                              <li class='status-option'>Department Status B</li>
-                              <li class='status-option'>Department Status C</li>
-                            </ul>
-                            <!-- End Gavin Target -->
-                          </div>
-                        </li>
-                        <li class='move-to-list-trigger'>Move To List
-                          <div class='list-dropdown'>
-                            <div class='department-dropdown-header flex-bottom-space-between-row'>
-                              <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
-                            </div>
-                            <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
-                            <ul>
-                              <li>Department Status A</li>
-                              <li>Department Status B</li>
-                              <li>Department Status C</li>
-                            </ul>
-                            <!-- End Gavin Target -->
-                          </div>
-                        </li>
-                        <li>Move To Top</li>
-                      </ul>
-                    </div>
-                    <i class="fa-regular fa-chevron-right"></i>
-                  </li>
-                  <a href="/tickets/<%= ticket.id %>"><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
-                  <div class='line'></div>
-                  <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
-                  <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                  <li class="duration-dropdown-trigger back-out-hover">
-                    <i class="fa-regular fa-clock-two"></i>Duration
-                    <div class='duration-dropdown-options'>
-                      <ul>
-                        <li class='date-creation'>Date Created - <span class='text-blue date-created-target'><%= helperMethods.getSimpleDate(ticket.createdAt) %></span></li>
-                        <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getOverallTicketDuration(workflowStepTimeLedger[ticket.id])) %></span></li>
-                        <li class='production-duration'>Production - <span class='text-blue production-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInProduction(workflowStepTimeLedger[ticket.id])) %></span></li>
-                        <li class='department-duration'>Department - <span class='text-blue department-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInDepartment(workflowStepTimeLedger[ticket.id], ticket.destination.department)) %></span></li>
-                        <li class='list-duration'>Current List - <span class='text-blue list-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasHadADepartmentStatus(workflowStepTimeLedger[ticket.id], ticket.destination.department, ticket.destination.departmentStatus)) %></span></li>
-                      </ul>
-                    </div>
-                    <i class="fa-regular fa-chevron-right"></i>
-                  </li>
-                  <li class="duration-dropdown-trigger back-out-hover">
-                    <i class="fa-regular fa-user-astronaut"></i>Assignees
-                    <div class='duration-dropdown-options'>
-                      <ul>
-                        <li class='assignee-list-item order-prep'>
-                          <p>Order Prep:</p>
-                          <span class='assignee tooltip'><span class="tooltiptext">Storm Vaske</span>SV</span>
-                        </li>
-                        <li class='assignee-list-item art-prep'>
-                          <p>Art Prep:</p>
-                          <span class='assignee tooltip'><span class="tooltiptext">Brian Patterson</span>BP</span>
-                        </li>
-                        <li class='assignee-list-item pre-printing'>
-                          <p>Pre Printing:</p>
-                          <span class='assignee tooltip'><span class="tooltiptext">Josie Steffey</span>JS</span>
-                          <span class='assignee tooltip'><span class="tooltiptext">Ethan Sherwood</span>ES</span>
-                        </li>
-                        <li class='assignee-list-item printing'><p>Printing:</p></li>
-                        <li class='assignee-list-item cutting'><p>Cutting:</p></li>
-                        <li class='assignee-list-item winding'><p>Winding:</p></li>
-                        <li class='assignee-list-item Shipping'><p>Shipping:</p></li>
-                        <li class='assignee-list-item billing'><p>Shipping:</p></li>
-                      </ul>
-                    </div>
-                    <i class="fa-regular fa-chevron-right"></i>
-                  </li>
-                  <div class='line'></div>
-                  <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
-                  <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
-                </ul>
-              </div>
-            <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-            <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-            <div class='column-td column-td-d bg-white'></div>
-            <div class='column-td column-td-e bg-white'></div>
-            <div class='column-td column-td-f bg-white'></div>
-            <div class='column-td column-td-g bg-white'></div>
-            <div class='column-td column-td-h bg-white'>
-              <div class='user-cell bg-blue tooltip'>SV
-                <span class="tooltiptext">TODO</span>
-              </div><span class='machine-name'>Press 1</span>
-            </div>
-            <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
-          </div>
+        <div class='modal-body flex-center-center-column'>
+          <h1></h1>
+          <select name="machine-list" id="machine">
+            <option>Press 1</option>
+            <option>Press 2</option>
+            <option>Delta 1</option>
+            <option>Delta 2</option>
+          </select>
         </div>
-        <div class='ticket-products-wrapper flex-center-right-column full-width'>
-          <div class='product-wrapper-header flex-center-left-row'>
-            <h4>Products - <span>3</span></h4>
-          </div>
-          <div class='table-header secondary-table-header flex-center-center-row'>
-            <div class='column-header column-header-a'></div>
-            <div class='column-header column-header-b'>#</div>
-            <div class='column-header column-header-c'>Products</div>
-            <div class='column-header column-header-d'></div>
-            <div class='column-header column-header-e'></div>
-            <div class='column-header column-header-f'></div>
-            <div class='column-header column-header-g'>Frames</div>
-            <div class='column-header column-header-h'>Quantity</div>
-            <div class='column-header column-header-i'>Artwork</div>
-          </div>
-          <div class='full-width flex-center-right-column'>
-            <% ticket.products.forEach((product, index) => { %>
-            <div class='product-wrapper flex-top-center-column'>
-              <div class='table-row flex-center-center-row'>
-                <div class='group-lines'></div>
-                <div class='column-td column-td-a bg-green'>
-                  <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                  <div class='ticket-dropdown-options dropdown'>
-                    <ul> 
-                      <a href="/products/<%= product._id %>"><li><i class="fa-regular fa-eye"></i>View Product</li></a>
-                      <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
-                <div class='column-td column-td-d bg-white'></div>
-                <div class='column-td column-td-e bg-white'></div>
-                <div class='column-td column-td-f bg-white'></div>
-                <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
-                <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
-                <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
-              </div>
-            </div>
-            <% }) %>
-          </div>
+        <div class='modal-footer flex-center-space-evenly-row'>
+          <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
         </div>
       </div>
-      <% }) %>
     </div>
   </div>
-  <% }) %>
+  <div class='table-row flex-center-center-column'>
+    <div class='flex-center-center-row ticket-wrapper full-width'>
+      <div class='column-td column-td-a bg-green'>
+        <i class='fa-light fa-ellipsis-vertical text-white'></i>
+        <iv class='ticket-dropdown-options dropdown'>
+          <ul>
+            <li class='start-ticket back-out-hover'>
+              <i class="fa-regular fa-circle-play"></i>Start Ticket
+            </li>
+            <li class="move-ticket">
+              <i class="fa-regular fa-circle-arrow-right"></i>Move
+              <div class='department-dropdown-options dropdown'>
+                <ul>
+                  <li class="move-to-department-trigger">Move To Department
+                    <div class='departments-dropdown'>
+                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                        <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                      </div>
+                      <ul>
+                        <li class='click-me' data-department-name='order-prep'>Order Prep</li>
+                        <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                        <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                        <li class='department-option' data-department-name='printing'>Printing</li>
+                        <li class='department-option' data-department-name='cutting'>Cutting</li>
+                        <li class='department-option' data-department-name='winding'>Winding</li>
+                        <li class='department-option' data-department-name='shipping'>Shipping</li>
+                        <li class='department-option' data-department-name='billing'>Billing</li>
+                      </ul>
+                    </div>
+                    <div class='department-status-dropdown back-out-hover'>
+                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                        <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                      </div>
+                      <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
+                      <ul class='status-dropdown-list'>
+                        <li class='status-option'>Department Status A</li>
+                        <li class='status-option'>Department Status B</li>
+                        <li class='status-option'>Department Status C</li>
+                      </ul>
+                      <!-- End Gavin Target -->
+                    </div>
+                  </li>
+                  <li class='move-to-list-trigger'>Move To List
+                    <div class='list-dropdown'>
+                      <div class='department-dropdown-header flex-bottom-space-between-row'>
+                        <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                      </div>
+                      <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
+                      <ul>
+                        <li>Department Status A</li>
+                        <li>Department Status B</li>
+                        <li>Department Status C</li>
+                      </ul>
+                      <!-- End Gavin Target -->
+                    </div>
+                  </li>
+                  <li>Move To Top</li>
+                </ul>
+              </div>
+              <i class="fa-regular fa-chevron-right"></i>
+            </li>
+            <a href=""><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+            <div class='line'></div>
+            <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+            <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+            <li class="duration-dropdown-trigger back-out-hover">
+              <i class="fa-regular fa-clock-two"></i>Duration
+              <div class='duration-dropdown-options'>
+                <ul>
+                  <li class='date-creation'>Date Created - <span class='text-blue date-created-target'></span></li>
+                  <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'></span></li>
+                  <li class='production-duration'>Production - <span class='text-blue production-duration-target'></span></li>
+                  <li class='department-duration'>Department - <span class='text-blue department-duration-target'></span></li>
+                  <li class='list-duration'>Current List - <span class='text-blue list-duration-target'></span></li>
+                </ul>
+              </div>
+              <i class="fa-regular fa-chevron-right"></i>
+            </li>
+            <li class="duration-dropdown-trigger back-out-hover">
+              <i class="fa-regular fa-user-astronaut"></i>Assignees
+              <div class='duration-dropdown-options'>
+                <ul>
+                  <li class='assignee-list-item order-prep'>
+                    <p>Order Prep:</p>
+                    <span class='assignee tooltip'><span class="tooltiptext">Storm Vaske</span>SV</span>
+                  </li>
+                  <li class='assignee-list-item art-prep'>
+                    <p>Art Prep:</p>
+                    <span class='assignee tooltip'><span class="tooltiptext">Brian Patterson</span>BP</span>
+                  </li>
+                  <li class='assignee-list-item pre-printing'>
+                    <p>Pre Printing:</p>
+                    <span class='assignee tooltip'><span class="tooltiptext">Josie Steffey</span>JS</span>
+                    <span class='assignee tooltip'><span class="tooltiptext">Ethan Sherwood</span>ES</span>
+                  </li>
+                  <li class='assignee-list-item printing'><p>Printing:</p></li>
+                  <li class='assignee-list-item cutting'><p>Cutting:</p></li>
+                  <li class='assignee-list-item winding'><p>Winding:</p></li>
+                  <li class='assignee-list-item Shipping'><p>Shipping:</p></li>
+                  <li class='assignee-list-item billing'><p>Shipping:</p></li>
+                </ul>
+              </div>
+              <i class="fa-regular fa-chevron-right"></i>
+            </li>
+            <div class='line'></div>
+            <a href=""><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+            <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
+          </ul>
+        </div>
+      <div class='column-td column-td-b bg-white'></div>
+      <div class='column-td column-td-c bg-white ticket-number-column ticket-number'>Ticket Number (To-Do)</div>
+      <div class='column-td column-td-d bg-white status'>Status (To Do)</div>
+      <div class='column-td column-td-e bg-white'></div>
+      <div class='column-td column-td-f bg-white'></div>
+      <div class='column-td column-td-g bg-white'></div>
+      <div class='column-td column-td-h bg-white'>
+        <div class='user-cell bg-blue tooltip'>SV
+          <span class="tooltiptext">TODO</span>
+        </div><span class='machine-name'>Press 1</span>
+      </div>
+      <div class='column-td column-td-i bg-white due-date-preview due-date'>Due Date (To Do)</div>
+    </div>
+  </div>
+  <div class='ticket-products-wrapper flex-center-right-column full-width'>
+    <div class='product-wrapper-header flex-center-left-row'>
+      <h4>Products - <span>3</span></h4>
+    </div>
+    <div class='table-header secondary-table-header flex-center-center-row'>
+      <div class='column-header column-header-a'></div>
+      <div class='column-header column-header-b'>#</div>
+      <div class='column-header column-header-c'>Products</div>
+      <div class='column-header column-header-d'></div>
+      <div class='column-header column-header-e'></div>
+      <div class='column-header column-header-f'></div>
+      <div class='column-header column-header-g'>Frames</div>
+      <div class='column-header column-header-h'>Quantity</div>
+      <div class='column-header column-header-i'>Artwork</div>
+    </div>
+    <div class='full-width flex-center-right-column'>
+      <div class='product-wrapper flex-top-center-column'>
+        <div class='table-row flex-center-center-row'>
+          <div class='group-lines'></div>
+          <div class='column-td column-td-a bg-green'>
+            <i class='fa-light fa-ellipsis-vertical text-white'></i>
+            <div class='ticket-dropdown-options dropdown'>
+              <ul> 
+                <a href=""><li><i class="fa-regular fa-eye"></i>View Product</li></a>
+                <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+              </ul>
+            </div>
+          </div>
+          <div class='column-td column-td-b bg-white'></div>
+          <div class='column-td column-td-c product-number-column bg-white'></div>
+          <div class='column-td column-td-d bg-white'></div>
+          <div class='column-td column-td-e bg-white'></div>
+          <div class='column-td column-td-f bg-white'></div>
+          <div class='column-td column-td-g bg-white'>Frames (To Do)</div>
+          <div class='column-td column-td-h bg-white'>Label QTY (To Do)</div>
+          <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Order Prep - Send To Customer -->
+<div class='table-row-wrapper full-width'>
+  <div class='table-row flex-center-center-row'>
+    <div class='column-td column-td-a bg-green'>
+      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+      <div class='ticket-dropdown-options dropdown'>
+        <ul>
+          <li class='start-ticket back-out-hover'>
+            <i class="fa-regular fa-circle-play"></i>Start Ticket
+          </li>
+          <li class="move-ticket">
+            <i class="fa-regular fa-circle-arrow-right"></i>Move
+            <div class='department-dropdown-options dropdown'>
+              <ul>
+                <li class="move-to-department-trigger">Move To Department
+                  <div class='departments-dropdown'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <ul class='department-dropdown-list'>
+                      <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                      <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                      <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                      <li class='department-option' data-department-name='printing'>Printing</li>
+                      <li class='department-option' data-department-name='cutting'>Cutting</li>
+                      <li class='department-option' data-department-name='winding'>Winding</li>
+                      <li class='department-option' data-department-name='shipping'>Shipping</li>
+                      <li class='department-option' data-department-name='billing'>Billing</li>
+                    </ul>
+                  </div>
+                  <div class='department-status-dropdown back-out-hover'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
+                   <ul class='status-dropdown-list'>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-a'>Department Status A</li>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-b'>Department Status B</li>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-c'>Department Status C</li>
+                    </ul>
+                    <!-- End Gavin Target -->
+                  </div>
+                </li>
+                <li class='move-to-list-trigger'>Move To List
+                  <div class='list-dropdown'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
+                    <ul>
+                      <li>Department Status A</li>
+                      <li>Department Status B</li>
+                      <li>Department Status C</li>
+                    </ul>
+                    <!-- End Gavin Target -->
+                  </div>
+                </li>
+                <li>Move To Top</li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <a href=""><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+          <div class='line'></div>
+          <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+          <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+          <li class="duration-dropdown-trigger back-out-hover">
+            <i class="fa-regular fa-clock-two"></i>Duration
+            <div class='duration-dropdown-options'>
+              <ul>
+                <li class='date-creation'>Date Created - <span class='text-blue date-created-target'></span></li>
+                <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'></span></li>
+                <li class='production-duration'>Production - <span class='text-blue production-duration-target'></span></li>
+                <li class='department-duration'>Department - <span class='text-blue department-duration-target'></span></li>
+                <li class='list-duration'>Current List - <span class='text-blue list-duration-target'></span></li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <li class="duration-dropdown-trigger back-out-hover">
+            <i class="fa-regular fa-user-astronaut"></i>Assignees
+            <div class='duration-dropdown-options'>
+              <ul>
+                <li class='assignee-list-item order-prep'>
+                  <p>Order Prep:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Storm Vaske</span>SV</span>
+                </li>
+                <li class='assignee-list-item art-prep'>
+                  <p>Art Prep:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Brian Patterson</span>BP</span>
+                </li>
+                <li class='assignee-list-item pre-printing'>
+                  <p>Pre Printing:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Josie Steffey</span>JS</span>
+                  <span class='assignee tooltip'><span class="tooltiptext">Ethan Sherwood</span>ES</span>
+                </li>
+                <li class='assignee-list-item printing'><p>Printing:</p></li>
+                <li class='assignee-list-item cutting'><p>Cutting:</p></li>
+                <li class='assignee-list-item winding'><p>Winding:</p></li>
+                <li class='assignee-list-item Shipping'><p>Shipping:</p></li>
+                <li class='assignee-list-item billing'><p>Shipping:</p></li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <div class='line'></div>
+          <a href=""><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+          <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
+        </ul>
+      </div>
+    </div>
+    <div class='column-td column-td-b bg-white'></div>
+    <div class='column-td column-td-c bg-white ticket-number-column ticket-number'>Ticket Number (To-Do)</div>
+    <div class='column-td column-td-d bg-purple text-white'>Rush (To Do)</div>
+    <div class='column-td column-td-e bg-white'></div>
+    <div class='column-td column-td-f bg-white'></div>
+    <div class='column-td column-td-g bg-white'></div>
+    <div class='column-td column-td-h bg-white'></div>
+    <div class='column-td column-td-i bg-white due-date-preview due-date'>Due Date (To Do)</div>
+  </div>
+  <div class='ticket-products-wrapper flex-center-right-column full-width'>
+    <div class='product-wrapper-header flex-center-left-row'>
+      <h4>Products - <span>3</span></h4>
+    </div>
+    <div class='table-header secondary-table-header flex-center-center-row'>
+      <div class='column-header column-header-a'></div>
+      <div class='column-header column-header-b'>#</div>
+      <div class='column-header column-header-c'>Products</div>
+      <div class='column-header column-header-d'></div>
+      <div class='column-header column-header-e'></div>
+      <div class='column-header column-header-f'></div>
+      <div class='column-header column-header-g'>Frames</div>
+      <div class='column-header column-header-h'>Quantity</div>
+      <div class='column-header column-header-i'>Artwork</div>
+    </div>
+    <div class='full-width flex-center-right-column'>
+      <div class='product-wrapper flex-top-center-column'>
+        <div class='table-row flex-center-center-row'>
+          <div class='group-lines'></div>
+          <div class='column-td column-td-a bg-green'>
+            <i class='fa-light fa-ellipsis-vertical text-white'></i>
+            <div class='ticket-dropdown-options dropdown'>
+              <ul>
+                <li><a href=""><i class="fa-regular fa-eye"></i>View Product</a></li>
+                <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+              </ul>
+            </div>
+          </div>
+          <div class='column-td column-td-b bg-white'></div>
+          <div class='column-td column-td-c product-number-column bg-white'></div>
+          <div class='column-td column-td-d bg-white'></div>
+          <div class='column-td column-td-e bg-white'></div>
+          <div class='column-td column-td-f bg-white'></div>
+          <div class='column-td column-td-g bg-white'>Frames (To Do)</div>
+          <div class='column-td column-td-h bg-white'>Label QTY (To Do)</div>
+          <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Art Prep - Needs Attention -->
+<div class='table-row-wrapper full-width'>
+  <div class='table-row flex-center-center-row'>
+    <div class='column-td column-td-a bg-green'>
+      <i class='fa-light fa-ellipsis-vertical text-white'></i>
+      <div class='ticket-dropdown-options dropdown'>
+        <ul>
+          <li class='start-ticket back-out-hover'>
+            <i class="fa-regular fa-circle-play"></i>Start Ticket
+          </li>
+          <li class="move-ticket">
+            <i class="fa-regular fa-circle-arrow-right"></i>Move
+            <div class='department-dropdown-options dropdown'>
+              <ul>
+                <li class="move-to-department-trigger">Move To Department
+                  <div class='departments-dropdown'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose Dept.</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <ul class='department-dropdown-list'>
+                      <li class='department-option click-me' data-department-name='order-prep'>Order Prep</li>
+                      <li class='department-option' data-department-name='art-prep'>Art Prep</li>
+                      <li class='department-option' data-department-name='pre-printing'>Pre-Printing</li>
+                      <li class='department-option' data-department-name='printing'>Printing</li>
+                      <li class='department-option' data-department-name='cutting'>Cutting</li>
+                      <li class='department-option' data-department-name='winding'>Winding</li>
+                      <li class='department-option' data-department-name='shipping'>Shipping</li>
+                      <li class='department-option' data-department-name='billing'>Billing</li>
+                    </ul>
+                  </div>
+                  <div class='department-status-dropdown back-out-hover'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose Dept.</span><span class="sub-drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <!-- #409 Gavin This the list of department statuss. We would want to populate this with list of department-statuss that correspond with the main department-->
+                   <ul class='status-dropdown-list'>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-a'>Department Status A</li>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-b'>Department Status B</li>
+                      <li class='status-option' data-ticket-id='' data-status-name='department-status-c'>Department Status C</li>
+                    </ul>
+                    <!-- End Gavin Target -->
+                  </div>
+                </li>
+                <li class='move-to-list-trigger'>Move To List
+                  <div class='list-dropdown'>
+                    <div class='department-dropdown-header flex-bottom-space-between-row'>
+                      <span class='drpdwn-title'>Choose List</span><span class="drpdwn-back-btn"><div class='background-hover'></div>Back</span>
+                    </div>
+                    <!-- #410 Gavin This a list of the department statuss of the current department that the ticket is in. -->
+                    <ul>
+                      <li>Department Status A</li>
+                      <li>Department Status B</li>
+                      <li>Department Status C</li>
+                    </ul>
+                    <!-- End Gavin Target -->
+                  </div>
+                </li>
+                <li>Move To Top</li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <a href=""><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+          <div class='line'></div>
+          <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
+          <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+          <li class="duration-dropdown-trigger back-out-hover">
+            <i class="fa-regular fa-clock-two"></i>Duration
+            <div class='duration-dropdown-options'>
+              <ul>
+                <li class='date-creation'>Date Created - <span class='text-blue date-created-target'></span></li>
+                <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'></span></li>
+                <li class='production-duration'>Production - <span class='text-blue production-duration-target'></span></li>
+                <li class='department-duration'>Department - <span class='text-blue department-duration-target'></span></li>
+                <li class='list-duration'>Current List - <span class='text-blue list-duration-target'></span></li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <li class="duration-dropdown-trigger back-out-hover">
+            <i class="fa-regular fa-user-astronaut"></i>Assignees
+            <div class='duration-dropdown-options'>
+              <ul>
+                <li class='assignee-list-item order-prep'>
+                  <p>Order Prep:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Storm Vaske</span>SV</span>
+                </li>
+                <li class='assignee-list-item art-prep'>
+                  <p>Art Prep:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Brian Patterson</span>BP</span>
+                </li>
+                <li class='assignee-list-item pre-printing'>
+                  <p>Pre Printing:</p>
+                  <span class='assignee tooltip'><span class="tooltiptext">Josie Steffey</span>JS</span>
+                  <span class='assignee tooltip'><span class="tooltiptext">Ethan Sherwood</span>ES</span>
+                </li>
+                <li class='assignee-list-item printing'><p>Printing:</p></li>
+                <li class='assignee-list-item cutting'><p>Cutting:</p></li>
+                <li class='assignee-list-item winding'><p>Winding:</p></li>
+                <li class='assignee-list-item Shipping'><p>Shipping:</p></li>
+                <li class='assignee-list-item billing'><p>Shipping:</p></li>
+              </ul>
+            </div>
+            <i class="fa-regular fa-chevron-right"></i>
+          </li>
+          <div class='line'></div>
+          <a href=""><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+          <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
+        </ul>
+      </div>
+    </div>
+    <div class='column-td column-td-b bg-white'></div>
+    <div class='column-td column-td-c bg-white ticket-number-column ticket-number'>Ticket Number (To-Do)</div>
+    <div class='column-td column-td-d bg-white status'>Status (To Do)</div>
+    <div class='column-td column-td-e bg-white'></div>
+    <div class='column-td column-td-f bg-white'></div>
+    <div class='column-td column-td-g bg-white'></div>
+    <div class='column-td column-td-h bg-white'>
+      <div class='user-cell bg-blue tooltip'>SV
+        <span class="tooltiptext">Storm Vaske</span>
+      </div><span class='machine-name'>Press 1</span>
+    </div>
+    <div class='column-td column-td-i bg-white due-date-preview due-date'>Due Date (To Do)</div>
+  </div>
+  <div class='ticket-products-wrapper flex-center-right-column full-width'>
+    <div class='product-wrapper-header flex-center-left-row'>
+      <h4>Products - <span>3</span></h4>
+    </div>
+    <div class='table-header secondary-table-header flex-center-center-row'>
+      <div class='column-header column-header-a'></div>
+      <div class='column-header column-header-b'>#</div>
+      <div class='column-header column-header-c'>Products</div>
+      <div class='column-header column-header-d'></div>
+      <div class='column-header column-header-e'></div>
+      <div class='column-header column-header-f'></div>
+      <div class='column-header column-header-g'>Frames</div>
+      <div class='column-header column-header-h'>Quantity</div>
+      <div class='column-header column-header-i'>Artwork</div>
+    </div>
+    <div class='full-width flex-center-right-column'>
+      <div class='product-wrapper flex-top-center-column'>
+        <div class='table-row flex-center-center-row'>
+          <div class='group-lines'></div>
+          <div class='column-td column-td-a bg-green'>
+            <i class='fa-light fa-ellipsis-vertical text-white'></i>
+            <div class='ticket-dropdown-options dropdown'>
+              <ul>
+                <li><a href=""><i class="fa-regular fa-eye"></i>View Product</a></li>
+                <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+              </ul>
+            </div>
+          </div>
+          <div class='column-td column-td-b bg-white'></div>
+          <div class='column-td column-td-c product-number-column bg-white'></div>
+          <div class='column-td column-td-d bg-white'></div>
+          <div class='column-td column-td-e bg-white'></div>
+          <div class='column-td column-td-f bg-white'></div>
+          <div class='column-td column-td-g bg-white'>Frames (To Do)</div>
+          <div class='column-td column-td-h bg-white'>Label QTY (To Do)</div>
+          <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

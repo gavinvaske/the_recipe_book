@@ -652,17 +652,49 @@ $( document ).ready(function() {
         }
     });
 
+    function populateDepartmentStatusList(departmentName, departmentStatusList, listItemTemplate) {
+        $.ajax({
+            url: '/tickets/find-department-statuses',
+            type: 'POST',
+            data: {
+                departmentName: departmentName
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(`An error occurred: ${response.error}`);
+                } else {
+                    departmentStatusList.empty();
+                    const departmentStatuses = response.departmentStatuses;
+
+                    departmentStatuses.forEach((departmentStatus) => {
+                        const clone = listItemTemplate.clone();
+                        clone.data('status-name', departmentStatus);
+                        clone.text(departmentStatus);
+                        departmentStatusList.append(clone)
+                    });
+                }
+            },
+            error: function(error) {
+                alert('Uh oh, an unknown error occurred, see the console for more details');
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+
     /* Gavin code for console.logs department seleciton */
     $('.departments-dropdown li').click(function() {
         let departmentSelection = $(this).data('department-name');
-        console.log(departmentSelection);
+        const departmentStatusHtmlList = $(this).parent('.department-dropdown-list').parent('.departments-dropdown').siblings('.department-status-dropdown').find('.status-dropdown-list');
+        const clone = departmentStatusHtmlList.find('.status-option').first().clone();
+
+        populateDepartmentStatusList(departmentSelection, departmentStatusHtmlList, clone);
     });
 
-    $('.status-option').click(function() {
+    $('.status-dropdown-list').on('click', '.status-option', function() {
         let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
         let statusSelection = $(this).data('status-name');
         let ticketId = $(this).data('ticket-id');
-        // $(departmentSelection).addClass('storm');  
+        // $(departmentSelection).addClass('storm');
         console.log('Ticket ID:' + ticketId + ' ' + 'Department Selection:' + departmentSelection + ' ' + 'Status:' + statusSelection );
     });
 

@@ -681,7 +681,6 @@ $( document ).ready(function() {
         });
     }
 
-    /* Gavin code for console.logs department seleciton */
     $('.departments-dropdown li').click(function() {
         let departmentSelection = $(this).data('department-name');
         const departmentStatusHtmlList = $(this).parent('.department-dropdown-list').parent('.departments-dropdown').siblings('.department-status-dropdown').find('.status-dropdown-list');
@@ -691,6 +690,33 @@ $( document ).ready(function() {
     });
     
     function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
+        const NEEDS_ATTENTION = 'NEEDS ATTENTION';
+        const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
+        const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
+        const WAITING_ON_CUSTOMER = 'WAITING ON CUSTOMER';
+        const READY_TO_ORDER_PLATE_OR_DIE = 'READY TO ORDER PLATE OR DIE';
+        const IN_PROGRESS = 'IN PROGRESS';
+
+        const SETUP = 'SET-UP';
+        const RUNTIME = 'RUNTIME';
+        const TEAR_DOWN = 'TEAR-DOWN';
+
+        const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
+        const NEEDS_PLATE = 'NEEDS PLATE';
+        const SEND_TO_PRESS = 'SEND TO PRESS';
+        const READY_FOR_SCHEDULING = 'READY FOR SCHEDULING';
+        const SCHEDULE_PRESS_ONE = 'SCHEDULE PRESS ONE';
+        const SCHEDULE_PRESS_TWO = 'SCHEDULE PRESS TWO';
+        const SCHEDULE_PRESS_THREE = 'SCHEDULE PRESS THREE';
+        const NEEDS_PROOF = 'NEEDS PROOF';
+        const ON_HOLD = 'ON HOLD';
+        const SCHEDULE_DELTA_ONE = 'SCHEDULE DELTA ONE';
+        const SCHEDULE_DELTA_TWO = 'SCHEDULE DELTA TWO';
+        const SCHEDULE_ROTOFLEX = 'SCHEDULE ROTOFLEX';
+        const READY_FOR_SHIPPING = 'READY FOR SHIPPING';
+        const TOOL_ARRIVALS = 'TOOL ARRIVALS';
+        const READY_FOR_BILLING = 'READY FOR BILLING';
+
         const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
         const ART_PREP_DEPARTMENT = 'ART-PREP';
         const PRE_PRESS_DEPARTMENT = 'PRE-PRESS';
@@ -703,59 +729,59 @@ $( document ).ready(function() {
         const destinationToIdentifierMapping = 
         {
             [ORDER_PREP_DEPARTMENT]: {
-                NEEDS_ATTENTION: 'order-prep-needs-attention',
-                SEND_TO_CUSTOMER: 'order-prep-send-to-customer',
-                WAITING_ON_APPROVAL: 'order-prep-waiting-on-approval',
-                WAITING_ON_CUSTOMER: 'order-prep-waiting-on-customer',
-                READY_TO_ORDER_PLATE_OR_DIE: 'order-prep-ready-to-order',
-                IN_PROGRESS: 'order-prep-in-progress'
+                [NEEDS_ATTENTION]: 'order-prep-needs-attention',
+                [SEND_TO_CUSTOMER]: 'order-prep-send-to-customer',
+                [WAITING_ON_APPROVAL]: 'order-prep-waiting-on-approval',
+                [WAITING_ON_CUSTOMER]: 'order-prep-waiting-on-customer',
+                [READY_TO_ORDER_PLATE_OR_DIE]: 'order-prep-ready-to-order',
+                [IN_PROGRESS]: 'order-prep-in-progress'
             },
             [ART_PREP_DEPARTMENT]: {
-                NEEDS_ATTENTION: 'art-prep-needs-attention',
-                IN_PROGRESS: 'art-prep-in-progress',
-                NEEDS_PROOF: 'art-prep-needs-proof',
-                NEEDS_DIE_LINE: 'art-prep-needs-die',
-                NEEDS_PLATE: 'art-prep-needs-plate'
+                [NEEDS_ATTENTION]: 'art-prep-needs-attention',
+                [IN_PROGRESS]: 'art-prep-in-progress',
+                [NEEDS_PROOF]: 'art-prep-needs-proof',
+                [NEEDS_DIE_LINE]: 'art-prep-needs-die',
+                [NEEDS_PLATE]: 'art-prep-needs-plate'
             },
             [PRE_PRESS_DEPARTMENT]: {
-                NEEDS_ATTENTION: 'pre-press-needs-attention',
-                IN_PROGRESS: 'pre-press-in-progress',
-                SEND_TO_PRESS: 'pre-press-send-to-press'
+                [NEEDS_ATTENTION]: 'pre-press-needs-attention',
+                [IN_PROGRESS]: 'pre-press-in-progress',
+                [SEND_TO_PRESS]: 'pre-press-send-to-press'
             },
             [PRINTING_DEPARTMENT]: {
-                SETUP: 'printing-setup',
-                RUNTIME: 'printing-runtime',
-                TEAR_DOWN: 'printing-teardown',
-                READY_FOR_SCHEDULING: 'printing-ready-for-scheduling',
-                SCHEDULE_PRESS_ONE: 'printing-schedule-press-one',
-                SCHEDULE_PRESS_TWO: 'printing-schedule-press-two',
-                SCHEDULE_PRESS_THREE: 'printing-schedule-press-three',
-                ON_HOLD: 'printing-on-hold'
+                [SETUP]: 'printing-setup',
+                [RUNTIME]: 'printing-runtime',
+                [TEAR_DOWN]: 'printing-teardown',
+                [READY_FOR_SCHEDULING]: 'printing-ready-for-scheduling',
+                [SCHEDULE_PRESS_ONE]: 'printing-schedule-press-one',
+                [SCHEDULE_PRESS_TWO]: 'printing-schedule-press-two',
+                [SCHEDULE_PRESS_THREE]: 'printing-schedule-press-three',
+                [ON_HOLD]: 'printing-on-hold'
             },
             [CUTTING_DEPARTMENT]: {
-                SETUP: 'cutting-setup',
-                RUNTIME: 'cutting-runtime',
-                TEAR_DOWN: 'cutting-teardown',
-                READY_FOR_SCHEDULING: 'cutting-ready-for-scheduling',
-                SCHEDULE_DELTA_ONE: 'cutting-delta-one',
-                SCHEDULE_DELTA_TWO: 'cutting-delta-two',
-                SCHEDULE_ROTOFLEX: 'cutting-rotoflex',
-                ON_HOLD: 'cutting-on-hold'
+                [SETUP]: 'cutting-setup',
+                [RUNTIME]: 'cutting-runtime',
+                [TEAR_DOWN]: 'cutting-teardown',
+                [READY_FOR_SCHEDULING]: 'cutting-ready-for-scheduling',
+                [SCHEDULE_DELTA_ONE]: 'cutting-delta-one',
+                [SCHEDULE_DELTA_TWO]: 'cutting-delta-two',
+                [SCHEDULE_ROTOFLEX]: 'cutting-rotoflex',
+                [ON_HOLD]: 'cutting-on-hold'
             },
             [WINDING_DEPARTMENT]: {
-                IN_PROGRESS: 'winding-in-progress',
-                READY_FOR_SCHEDULING: 'winding-ready-for-scheduling',
-                ON_HOLD: 'winding-on-hold'
+                [IN_PROGRESS]: 'winding-in-progress',
+                [READY_FOR_SCHEDULING]: 'winding-ready-for-scheduling',
+                [ON_HOLD]: 'winding-on-hold'
             },
             [SHIPPING_DEPARTMENT]: {
-                IN_PROGRESS: 'winding-in-progress',
-                READY_FOR_SHIPPING: 'winding-ready-for-shipping',
-                ON_HOLD: 'winding-on-hold',
-                TOOL_ARRIVALS: 'winding-tool-arrivals'
+                [IN_PROGRESS]: 'winding-in-progress',
+                [READY_FOR_SHIPPING]: 'winding-ready-for-shipping',
+                [ON_HOLD]: 'winding-on-hold',
+                [TOOL_ARRIVALS]: 'winding-tool-arrivals'
             },
             [BILLING_DEPARTMENT]: {
-                READY_FOR_BILLING: 'billing-ready-for-billing',
-                IN_PROGRESS: 'billing-in-progress'
+                [READY_FOR_BILLING]: 'billing-ready-for-billing',
+                [IN_PROGRESS]: 'billing-in-progress'
             },
         };
 
@@ -793,10 +819,15 @@ $( document ).ready(function() {
         return rows.length;
     }
 
+    function getIdForTicketRow(ticketId) {
+        return `ticket-row-${ticketId}`;
+    }
+
     function populateTicketRowAttributes(ticketRowTemplate, ticket) {
         console.log(`ticket => ${JSON.stringify(ticket)}`);
         alert('TODO: Finish building populateTicketRowAttributes()');
         const ticketRow = ticketRowTemplate.clone();
+        ticketRow.attr('id', getIdForTicketRow(ticket._id))
 
         return ticketRow;
     }

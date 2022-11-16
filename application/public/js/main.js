@@ -827,7 +827,7 @@ $( document ).ready(function() {
         console.log(`ticket => ${JSON.stringify(ticket)}`);
         alert('TODO: Finish building populateTicketRowAttributes()');
         const ticketRow = ticketRowTemplate.clone();
-        ticketRow.attr('id', getIdForTicketRow(ticket._id))
+        ticketRow.attr('id', getIdForTicketRow(ticket._id));
 
         return ticketRow;
     }

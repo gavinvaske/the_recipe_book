@@ -13,6 +13,8 @@ const workflowStepService = require('../services/workflowStepService');
 
 router.use(verifyJwtToken);
 
+const SERVER_ERROR_CODE = 500;
+
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
@@ -100,7 +102,7 @@ router.post('/update/:id', async (request, response) => {
     } catch (error) {
         console.log(`Failed to update ticket with id ${ticketId}. Error message: ${error.message}`);
         request.flash('errors', [error.message]);
-        return response.status(500).send(error.message);
+        return response.status(SERVER_ERROR_CODE).send(error.message);
     }
 });
 

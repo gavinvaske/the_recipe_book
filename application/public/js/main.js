@@ -700,7 +700,7 @@ $( document ).ready(function() {
                 'READY TO ORDER PLATE OR DIE': 'order-prep-ready-to-order',
                 'IN PROGRESS': 'order-prep-in-progress',
             }
-        }
+        };
         const identifier = destinationToIdentifierMapping[department][departmentStatus];
 
         if (!identifier) {
@@ -716,7 +716,7 @@ $( document ).ready(function() {
 
     function findDepartmentStatusTableTicketBelongsIn(ticket) {
         const {department, departmentStatus} = ticket.destination;
-        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus)
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus);
         const tableId = `#${identifier}-table`;
         
         return $(tableId);
@@ -724,18 +724,19 @@ $( document ).ready(function() {
 
     function findATicketRowToClone(ticket) {
         const {department, departmentStatus} = ticket.destination;
-        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus)
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus);
         const tableRowCloneSelector = `.${identifier}-row`;
 
         return $(tableRowCloneSelector).clone();
     }
 
     function countHowManyRowsExistInTable(ticketTable) {
-        const rows = ticketTable.children('.table-row-wrapper')
+        const rows = ticketTable.children('.table-row-wrapper');
         return rows.length;
     }
 
     function populateTicketRowAttributes(ticketRowTemplate, ticket) {
+        console.log(`ticket => ${JSON.stringify(ticket)}`);
         alert('TODO: Finish building populateTicketRowAttributes()');
         const ticketRow = ticketRowTemplate.clone();
 
@@ -744,7 +745,7 @@ $( document ).ready(function() {
 
     function moveTicket(ticket) {
         const ticketId = ticket._id;
-        const ticketRowToRemove = findTicketRow(ticketId)
+        const ticketRowToRemove = findTicketRow(ticketId);
         
         ticketRowToRemove.remove();
 
@@ -753,7 +754,7 @@ $( document ).ready(function() {
 
         const ticketRow = populateTicketRowAttributes(ticketRowTemplate, ticket);
 
-        departmentStatusTable.append(ticketRow)
+        departmentStatusTable.append(ticketRow);
 
         updateDepartmentTicketCounts();
         updateDepartmentSectionTicketCounts();
@@ -765,27 +766,28 @@ $( document ).ready(function() {
     }
 
     function showOrHideDepartmentSections() {
+        const emptyLength = 0;
         $('.department-section').each(function() {
             const departmentStatusSection = $(this);
-            const departmentStatusTable = findTableWithinSection(departmentStatusSection)
-            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > 0;
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection);
+            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > emptyLength;
 
             if (tableIsNotEmpty) {
                 departmentStatusSection.show();
             } else {
                 departmentStatusSection.hide();
             }
-        })
+        });
     }
 
     function updateDepartmentSectionTicketCounts() {
         $('.department-section').each(function() {
             const departmentStatusSection = $(this);
-            const departmentStatusTable = findTableWithinSection(departmentStatusSection)
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection);
             const numberOfRowsInSection = countHowManyRowsExistInTable(departmentStatusTable);
 
-            departmentStatusSection.find('.category-ticket-count').text(numberOfRowsInSection)
-        })
+            departmentStatusSection.find('.category-ticket-count').text(numberOfRowsInSection);
+        });
     }
 
     function updateDepartmentTicketCounts() {
@@ -797,9 +799,9 @@ $( document ).ready(function() {
             const departmentStatusTables = department.find('.table-body');
             departmentStatusTables.each(function() {
                 const table = $(this);
-                const numberOfRowsInTable = countHowManyRowsExistInTable(table)
+                const numberOfRowsInTable = countHowManyRowsExistInTable(table);
                 numberOfTicketsInDepartment += numberOfRowsInTable;
-            })
+            });
 
             department.find('#departmentTotalTickets').text(numberOfTicketsInDepartment);
         });

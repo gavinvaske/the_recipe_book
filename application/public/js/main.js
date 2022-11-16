@@ -689,32 +689,120 @@ $( document ).ready(function() {
 
         populateDepartmentStatusList(departmentSelection, departmentStatusHtmlList, clone);
     });
-
-    function determineWhichTableToPutThisTicket(ticket) {
-        const {department, departmentStatus} = ticket.destination;
-
-        const destinationToTableSelector = {
+    
+    function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
+        const destinationToIdentifierMapping = {
             'ORDER-PREP': {
-                'NEEDS ATTENTION': '#order-prep-needs-attention-table',
-                'SEND TO CUSTOMER': '#order-prep-send-to-customer-table',
-                'WAITING ON APPROVAL': '#order-prep-waiting-on-approval-table',
-                'WAITING ON CUSTOMER': '#order-prep-waiting-on-customer-table',
-                'READY TO ORDER PLATE OR DIE': '#order-prep-ready-to-order-table',
-                'IN PROGRESS': '#order-prep-in-progress-table',
+                'NEEDS ATTENTION': 'order-prep-needs-attention',
+                'SEND TO CUSTOMER': 'order-prep-send-to-customer',
+                'WAITING ON APPROVAL': 'order-prep-waiting-on-approval',
+                'WAITING ON CUSTOMER': 'order-prep-waiting-on-customer',
+                'READY TO ORDER PLATE OR DIE': 'order-prep-ready-to-order',
+                'IN PROGRESS': 'order-prep-in-progress',
             }
         }
-        const tableSelector = destinationToTableSelector[department][departmentStatus];
+        const identifier = destinationToIdentifierMapping[department][departmentStatus];
 
-        if (!tableSelector) {
+        if (!identifier) {
             alert('Error: Failed to find a table to put the moved ticket into, contact a developer');
         }
 
-        alert(`found the table selector: ${tableSelector}`)
-        return tableSelector;
+        return identifier;
     }
 
-    function updateDepartmentSectionTicketCounts(departmentSectionToDecriment, departmentSectionToIncriment) {
-        alert('TODO: finish updateDepartmentSectionTicketCounts(...)')
+    function findTicketRow(ticketId) {
+        return $(`#ticket-row-${ticketId}`);
+    }
+
+    function findDepartmentStatusTableTicketBelongsIn(ticket) {
+        const {department, departmentStatus} = ticket.destination;
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus)
+        const tableId = `#${identifier}-table`;
+        
+        return $(tableId);
+    }
+
+    function findATicketRowToClone(ticket) {
+        const {department, departmentStatus} = ticket.destination;
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus)
+        const tableRowCloneSelector = `.${identifier}-row`;
+
+        return $(tableRowCloneSelector).clone();
+    }
+
+    function countHowManyRowsExistInTable(ticketTable) {
+        const rows = ticketTable.children('.table-row-wrapper')
+        return rows.length;
+    }
+
+    function populateTicketRowAttributes(ticketRowTemplate, ticket) {
+        alert('TODO: Finish building populateTicketRowAttributes()');
+        const ticketRow = ticketRowTemplate.clone();
+
+        return ticketRow;
+    }
+
+    function moveTicket(ticket) {
+        const ticketId = ticket._id;
+        const ticketRowToRemove = findTicketRow(ticketId)
+        
+        ticketRowToRemove.remove();
+
+        const departmentStatusTable = findDepartmentStatusTableTicketBelongsIn(ticket);
+        const ticketRowTemplate = findATicketRowToClone(ticket);
+
+        const ticketRow = populateTicketRowAttributes(ticketRowTemplate, ticket);
+
+        departmentStatusTable.append(ticketRow)
+
+        updateDepartmentTicketCounts();
+        updateDepartmentSectionTicketCounts();
+        showOrHideDepartmentSections();
+    }
+
+    function findTableWithinSection(departmentStatusSection) {
+        return departmentStatusSection.find('.table-body');
+    }
+
+    function showOrHideDepartmentSections() {
+        $('.department-section').each(function() {
+            const departmentStatusSection = $(this);
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection)
+            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > 0;
+
+            if (tableIsNotEmpty) {
+                departmentStatusSection.show();
+            } else {
+                departmentStatusSection.hide();
+            }
+        })
+    }
+
+    function updateDepartmentSectionTicketCounts() {
+        $('.department-section').each(function() {
+            const departmentStatusSection = $(this);
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection)
+            const numberOfRowsInSection = countHowManyRowsExistInTable(departmentStatusTable);
+
+            departmentStatusSection.find('.category-ticket-count').text(numberOfRowsInSection)
+        })
+    }
+
+    function updateDepartmentTicketCounts() {
+        const departments = $('.department-wrapper');
+        
+        departments.each(function() {
+            let numberOfTicketsInDepartment = 0;
+            const department = $(this);
+            const departmentStatusTables = department.find('.table-body');
+            departmentStatusTables.each(function() {
+                const table = $(this);
+                const numberOfRowsInTable = countHowManyRowsExistInTable(table)
+                numberOfTicketsInDepartment += numberOfRowsInTable;
+            })
+
+            department.find('#departmentTotalTickets').text(numberOfTicketsInDepartment);
+        });
     }
 
     $('.status-dropdown-list').on('click', '.status-option', function() {
@@ -730,28 +818,7 @@ $( document ).ready(function() {
         };
 
         updateTicket(ticketAttributes, ticketId, (updatedTicket) => {
-            alert('alert from the callback! -> ' + String(updatedTicket._id));
-
-            // Step 0a: Hide the moved ticket
-            $(`#ticket-row-${updatedTicket._id}`).hide()
-
-            // Step 0b: Select required attributes
-                // "Ticket Row": The row in the table that is going to be injected
-                // "Department Status Table": "The table whose rows represent a ticket with the associated department/department status"
-                // "Department Status Section": "The Section which contains the Department Status Table" and additional Meta Data / CSS Formatting
-            const ticketRow = $('.order-prep-needs-attention-row').first().clone();
-            const tableSelector = determineWhichTableToPutThisTicket(updatedTicket);
-            const departmentStatusTable = $(tableSelector);
-            const departmentStatusSection = departmentStatusTable.parent('.ticket-container').parent('.department-section').show();
-            const oldDepartmentStatusSection = 'TODO: Get this using jquery';
-
-            // Step 1: Update dynamic counts displayed in the new/old department sections AND department status sections
-            updateDepartmentSectionTicketCounts(departmentStatusSection, oldDepartmentStatusSection);
-            // Step 2a: Hide old "Department Status Section" (ONLY IF it is now empty)
-            // Step 2b: Show "Department Status Section" (just in case it was previously empty and hidden)
-            departmentStatusSection.show();
-            // Step 3: Add Row to the the "department Status Table"
-            departmentStatusTable.append(ticketRow)
+            moveTicket(updatedTicket);
         });
     });
 

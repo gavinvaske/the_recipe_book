@@ -749,9 +749,9 @@ $( document ).ready(function() {
                 [SEND_TO_PRESS]: 'pre-press-send-to-press'
             },
             [PRINTING_DEPARTMENT]: {
-                [SETUP]: 'printing-setup',
-                [RUNTIME]: 'printing-runtime',
-                [TEAR_DOWN]: 'printing-teardown',
+                [SETUP]: 'printing-in-progress',
+                [RUNTIME]: 'printing-in-progress',
+                [TEAR_DOWN]: 'printing-in-progress',
                 [READY_FOR_SCHEDULING]: 'printing-ready-for-scheduling',
                 [SCHEDULE_PRESS_ONE]: 'printing-schedule-press-one',
                 [SCHEDULE_PRESS_TWO]: 'printing-schedule-press-two',
@@ -759,13 +759,13 @@ $( document ).ready(function() {
                 [ON_HOLD]: 'printing-on-hold'
             },
             [CUTTING_DEPARTMENT]: {
-                [SETUP]: 'cutting-setup',
-                [RUNTIME]: 'cutting-runtime',
-                [TEAR_DOWN]: 'cutting-teardown',
+                [SETUP]: 'cutting-in-progress',
+                [RUNTIME]: 'cutting-in-progress',
+                [TEAR_DOWN]: 'cutting-in-progress',
                 [READY_FOR_SCHEDULING]: 'cutting-ready-for-scheduling',
-                [SCHEDULE_DELTA_ONE]: 'cutting-delta-one',
-                [SCHEDULE_DELTA_TWO]: 'cutting-delta-two',
-                [SCHEDULE_ROTOFLEX]: 'cutting-rotoflex',
+                [SCHEDULE_DELTA_ONE]: 'cutting-schedule-delta-one',
+                [SCHEDULE_DELTA_TWO]: 'cutting-schedule-delta-two',
+                [SCHEDULE_ROTOFLEX]: 'cutting-schedule-rotoflex',
                 [ON_HOLD]: 'cutting-on-hold'
             },
             [WINDING_DEPARTMENT]: {
@@ -774,10 +774,10 @@ $( document ).ready(function() {
                 [ON_HOLD]: 'winding-on-hold'
             },
             [SHIPPING_DEPARTMENT]: {
-                [IN_PROGRESS]: 'winding-in-progress',
-                [READY_FOR_SHIPPING]: 'winding-ready-for-shipping',
-                [ON_HOLD]: 'winding-on-hold',
-                [TOOL_ARRIVALS]: 'winding-tool-arrivals'
+                [IN_PROGRESS]: 'shipping-in-progress',
+                [READY_FOR_SHIPPING]: 'shipping-ready-for-shipping',
+                [ON_HOLD]: 'shipping-on-hold',
+                [TOOL_ARRIVALS]: 'shipping-tool-arrivals'
             },
             [BILLING_DEPARTMENT]: {
                 [READY_FOR_BILLING]: 'billing-ready-for-billing',

@@ -811,7 +811,7 @@ $( document ).ready(function() {
         const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus);
         const tableRowCloneSelector = `.${identifier}-row`;
 
-        return $(tableRowCloneSelector).clone();
+        return $(tableRowCloneSelector).first().clone();
     }
 
     function countHowManyRowsExistInTable(ticketTable) {

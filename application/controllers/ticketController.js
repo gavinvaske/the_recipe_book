@@ -13,6 +13,8 @@ const workflowStepService = require('../services/workflowStepService');
 
 router.use(verifyJwtToken);
 
+const SERVER_ERROR_CODE = 500;
+
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
@@ -95,15 +97,12 @@ router.post('/update/:id', async (request, response) => {
     const ticketId = request.params.id;
 
     try {
-        await TicketModel.findOneAndUpdate({_id: ticketId}, {$set: request.body}, {runValidators: true}).exec();
-
-        return response.json({});
+        const updatedTicket = await TicketModel.findOneAndUpdate({_id: ticketId}, {$set: request.body}, {runValidators: true, new: true}).exec();
+        response.send(updatedTicket);
     } catch (error) {
-        console.log(`Failed to update ticket with id ${ticketId}: ${error.message}`);
+        console.log(`Failed to update ticket with id ${ticketId}. Error message: ${error.message}`);
         request.flash('errors', [error.message]);
-        return response.json({
-            error: error.message
-        });
+        return response.status(SERVER_ERROR_CODE).send(error.message);
     }
 });
 

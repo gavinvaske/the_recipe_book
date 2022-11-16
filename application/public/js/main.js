@@ -11,19 +11,19 @@ $( document ).ready(function() {
         $(`.department-wrapper*[data-department="${selectedDepartment}"]`).show(cssTransitionDelayInMs);
     });
 
-    function updateTicket(ticketAttributes, ticketId) {
+    function updateTicket(ticketAttributes, ticketId, callback) {
         $.ajax({
             url: `/tickets/update/${ticketId}`,
             type: 'POST',
             data: ticketAttributes,
-            success: function(response) {
-                if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+            success: function(updatedTicket) {
+                if (callback) {
+                    callback(updatedTicket);
                 }
             },
             error: function(error) {
-                console.log(error);
-                alert('An error occurred while attempting to update the ticket');
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to update the ticket: "${errorMessage}"`);
             }
         });
     }
@@ -681,7 +681,6 @@ $( document ).ready(function() {
         });
     }
 
-    /* Gavin code for console.logs department seleciton */
     $('.departments-dropdown li').click(function() {
         let departmentSelection = $(this).data('department-name');
         const departmentStatusHtmlList = $(this).parent('.department-dropdown-list').parent('.departments-dropdown').siblings('.department-status-dropdown').find('.status-dropdown-list');
@@ -689,6 +688,213 @@ $( document ).ready(function() {
 
         populateDepartmentStatusList(departmentSelection, departmentStatusHtmlList, clone);
     });
+    
+    function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
+        const NEEDS_ATTENTION = 'NEEDS ATTENTION';
+        const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
+        const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
+        const WAITING_ON_CUSTOMER = 'WAITING ON CUSTOMER';
+        const READY_TO_ORDER_PLATE_OR_DIE = 'READY TO ORDER PLATE OR DIE';
+        const IN_PROGRESS = 'IN PROGRESS';
+
+        const SETUP = 'SET-UP';
+        const RUNTIME = 'RUNTIME';
+        const TEAR_DOWN = 'TEAR-DOWN';
+
+        const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
+        const NEEDS_PLATE = 'NEEDS PLATE';
+        const SEND_TO_PRESS = 'SEND TO PRESS';
+        const READY_FOR_SCHEDULING = 'READY FOR SCHEDULING';
+        const SCHEDULE_PRESS_ONE = 'SCHEDULE PRESS ONE';
+        const SCHEDULE_PRESS_TWO = 'SCHEDULE PRESS TWO';
+        const SCHEDULE_PRESS_THREE = 'SCHEDULE PRESS THREE';
+        const NEEDS_PROOF = 'NEEDS PROOF';
+        const ON_HOLD = 'ON HOLD';
+        const SCHEDULE_DELTA_ONE = 'SCHEDULE DELTA ONE';
+        const SCHEDULE_DELTA_TWO = 'SCHEDULE DELTA TWO';
+        const SCHEDULE_ROTOFLEX = 'SCHEDULE ROTOFLEX';
+        const READY_FOR_SHIPPING = 'READY FOR SHIPPING';
+        const TOOL_ARRIVALS = 'TOOL ARRIVALS';
+        const READY_FOR_BILLING = 'READY FOR BILLING';
+
+        const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
+        const ART_PREP_DEPARTMENT = 'ART-PREP';
+        const PRE_PRESS_DEPARTMENT = 'PRE-PRESS';
+        const PRINTING_DEPARTMENT = 'PRINTING';
+        const CUTTING_DEPARTMENT = 'CUTTING';
+        const WINDING_DEPARTMENT = 'WINDING';
+        const SHIPPING_DEPARTMENT = 'SHIPPING';
+        const BILLING_DEPARTMENT = 'BILLING';
+        
+        const destinationToIdentifierMapping = 
+        {
+            [ORDER_PREP_DEPARTMENT]: {
+                [NEEDS_ATTENTION]: 'order-prep-needs-attention',
+                [SEND_TO_CUSTOMER]: 'order-prep-send-to-customer',
+                [WAITING_ON_APPROVAL]: 'order-prep-waiting-on-approval',
+                [WAITING_ON_CUSTOMER]: 'order-prep-waiting-on-customer',
+                [READY_TO_ORDER_PLATE_OR_DIE]: 'order-prep-ready-to-order',
+                [IN_PROGRESS]: 'order-prep-in-progress'
+            },
+            [ART_PREP_DEPARTMENT]: {
+                [NEEDS_ATTENTION]: 'art-prep-needs-attention',
+                [IN_PROGRESS]: 'art-prep-in-progress',
+                [NEEDS_PROOF]: 'art-prep-needs-proof',
+                [NEEDS_DIE_LINE]: 'art-prep-needs-die',
+                [NEEDS_PLATE]: 'art-prep-needs-plate'
+            },
+            [PRE_PRESS_DEPARTMENT]: {
+                [NEEDS_ATTENTION]: 'pre-press-needs-attention',
+                [IN_PROGRESS]: 'pre-press-in-progress',
+                [SEND_TO_PRESS]: 'pre-press-send-to-press'
+            },
+            [PRINTING_DEPARTMENT]: {
+                [SETUP]: 'printing-in-progress',
+                [RUNTIME]: 'printing-in-progress',
+                [TEAR_DOWN]: 'printing-in-progress',
+                [READY_FOR_SCHEDULING]: 'printing-ready-for-scheduling',
+                [SCHEDULE_PRESS_ONE]: 'printing-schedule-press-one',
+                [SCHEDULE_PRESS_TWO]: 'printing-schedule-press-two',
+                [SCHEDULE_PRESS_THREE]: 'printing-schedule-press-three',
+                [ON_HOLD]: 'printing-on-hold'
+            },
+            [CUTTING_DEPARTMENT]: {
+                [SETUP]: 'cutting-in-progress',
+                [RUNTIME]: 'cutting-in-progress',
+                [TEAR_DOWN]: 'cutting-in-progress',
+                [READY_FOR_SCHEDULING]: 'cutting-ready-for-scheduling',
+                [SCHEDULE_DELTA_ONE]: 'cutting-schedule-delta-one',
+                [SCHEDULE_DELTA_TWO]: 'cutting-schedule-delta-two',
+                [SCHEDULE_ROTOFLEX]: 'cutting-schedule-rotoflex',
+                [ON_HOLD]: 'cutting-on-hold'
+            },
+            [WINDING_DEPARTMENT]: {
+                [IN_PROGRESS]: 'winding-in-progress',
+                [READY_FOR_SCHEDULING]: 'winding-ready-for-scheduling',
+                [ON_HOLD]: 'winding-on-hold'
+            },
+            [SHIPPING_DEPARTMENT]: {
+                [IN_PROGRESS]: 'shipping-in-progress',
+                [READY_FOR_SHIPPING]: 'shipping-ready-for-shipping',
+                [ON_HOLD]: 'shipping-on-hold',
+                [TOOL_ARRIVALS]: 'shipping-tool-arrivals'
+            },
+            [BILLING_DEPARTMENT]: {
+                [READY_FOR_BILLING]: 'billing-ready-for-billing',
+                [IN_PROGRESS]: 'billing-in-progress'
+            },
+        };
+
+        const identifier = destinationToIdentifierMapping[department][departmentStatus];
+
+        if (!identifier) {
+            alert('Error: Failed to find a table to put the moved ticket into, contact a developer');
+        }
+
+        return identifier;
+    }
+
+    function findTicketRow(ticketId) {
+        return $(`#ticket-row-${ticketId}`);
+    }
+
+    function findDepartmentStatusTableTicketBelongsIn(ticket) {
+        const {department, departmentStatus} = ticket.destination;
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus);
+        const tableId = `#${identifier}-table`;
+        
+        return $(tableId);
+    }
+
+    function findATicketRowToClone(ticket) {
+        const {department, departmentStatus} = ticket.destination;
+        const identifier = getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus);
+        const tableRowCloneSelector = `.${identifier}-row`;
+
+        return $(tableRowCloneSelector).first().clone();
+    }
+
+    function countHowManyRowsExistInTable(ticketTable) {
+        const rows = ticketTable.children('.table-row-wrapper');
+        return rows.length;
+    }
+
+    function getIdForTicketRow(ticketId) {
+        return `ticket-row-${ticketId}`;
+    }
+
+    function populateTicketRowAttributes(ticketRowTemplate, ticket) {
+        console.log(`ticket => ${JSON.stringify(ticket)}`);
+        alert('TODO: Finish building populateTicketRowAttributes()');
+        const ticketRow = ticketRowTemplate.clone();
+        ticketRow.attr('id', getIdForTicketRow(ticket._id));
+
+        return ticketRow;
+    }
+
+    function moveTicket(ticket) {
+        const ticketId = ticket._id;
+        const ticketRowToRemove = findTicketRow(ticketId);
+        
+        ticketRowToRemove.remove();
+
+        const departmentStatusTable = findDepartmentStatusTableTicketBelongsIn(ticket);
+        const ticketRowTemplate = findATicketRowToClone(ticket);
+
+        const ticketRow = populateTicketRowAttributes(ticketRowTemplate, ticket);
+
+        departmentStatusTable.append(ticketRow);
+
+        updateDepartmentTicketCounts();
+        updateDepartmentSectionTicketCounts();
+        showOrHideDepartmentSections();
+    }
+
+    function findTableWithinSection(departmentStatusSection) {
+        return departmentStatusSection.find('.table-body');
+    }
+
+    function showOrHideDepartmentSections() {
+        const emptyLength = 0;
+        $('.department-section').each(function() {
+            const departmentStatusSection = $(this);
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection);
+            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > emptyLength;
+
+            if (tableIsNotEmpty) {
+                departmentStatusSection.show();
+            } else {
+                departmentStatusSection.hide();
+            }
+        });
+    }
+
+    function updateDepartmentSectionTicketCounts() {
+        $('.department-section').each(function() {
+            const departmentStatusSection = $(this);
+            const departmentStatusTable = findTableWithinSection(departmentStatusSection);
+            const numberOfRowsInSection = countHowManyRowsExistInTable(departmentStatusTable);
+
+            departmentStatusSection.find('.category-ticket-count').text(numberOfRowsInSection);
+        });
+    }
+
+    function updateDepartmentTicketCounts() {
+        const departments = $('.department-wrapper');
+        
+        departments.each(function() {
+            let numberOfTicketsInDepartment = 0;
+            const department = $(this);
+            const departmentStatusTables = department.find('.table-body');
+            departmentStatusTables.each(function() {
+                const table = $(this);
+                const numberOfRowsInTable = countHowManyRowsExistInTable(table);
+                numberOfTicketsInDepartment += numberOfRowsInTable;
+            });
+
+            department.find('#departmentTotalTickets').text(numberOfTicketsInDepartment);
+        });
+    }
 
     $('.status-dropdown-list').on('click', '.status-option', function() {
         let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
@@ -702,7 +908,9 @@ $( document ).ready(function() {
             }
         };
 
-        updateTicket(ticketAttributes, ticketId);
+        updateTicket(ticketAttributes, ticketId, (updatedTicket) => {
+            moveTicket(updatedTicket);
+        });
     });
 
     const ticketCounts = $('.category-ticket-count');
@@ -716,9 +924,3 @@ $( document ).ready(function() {
         });
     }
 });
-
-
-
-
-
-

@@ -691,16 +691,74 @@ $( document ).ready(function() {
     });
     
     function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
-        const destinationToIdentifierMapping = {
-            'ORDER-PREP': {
-                'NEEDS ATTENTION': 'order-prep-needs-attention',
-                'SEND TO CUSTOMER': 'order-prep-send-to-customer',
-                'WAITING ON APPROVAL': 'order-prep-waiting-on-approval',
-                'WAITING ON CUSTOMER': 'order-prep-waiting-on-customer',
-                'READY TO ORDER PLATE OR DIE': 'order-prep-ready-to-order',
-                'IN PROGRESS': 'order-prep-in-progress',
-            }
+        const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
+        const ART_PREP_DEPARTMENT = 'ART-PREP';
+        const PRE_PRESS_DEPARTMENT = 'PRE-PRESS';
+        const PRINTING_DEPARTMENT = 'PRINTING';
+        const CUTTING_DEPARTMENT = 'CUTTING';
+        const WINDING_DEPARTMENT = 'WINDING';
+        const SHIPPING_DEPARTMENT = 'SHIPPING';
+        const BILLING_DEPARTMENT = 'BILLING';
+        
+        const destinationToIdentifierMapping = 
+        {
+            [ORDER_PREP_DEPARTMENT]: {
+                NEEDS_ATTENTION: 'order-prep-needs-attention',
+                SEND_TO_CUSTOMER: 'order-prep-send-to-customer',
+                WAITING_ON_APPROVAL: 'order-prep-waiting-on-approval',
+                WAITING_ON_CUSTOMER: 'order-prep-waiting-on-customer',
+                READY_TO_ORDER_PLATE_OR_DIE: 'order-prep-ready-to-order',
+                IN_PROGRESS: 'order-prep-in-progress'
+            },
+            [ART_PREP_DEPARTMENT]: {
+                NEEDS_ATTENTION: 'art-prep-needs-attention',
+                IN_PROGRESS: 'art-prep-in-progress',
+                NEEDS_PROOF: 'art-prep-needs-proof',
+                NEEDS_DIE_LINE: 'art-prep-needs-die',
+                NEEDS_PLATE: 'art-prep-needs-plate'
+            },
+            [PRE_PRESS_DEPARTMENT]: {
+                NEEDS_ATTENTION: 'pre-press-needs-attention',
+                IN_PROGRESS: 'pre-press-in-progress',
+                SEND_TO_PRESS: 'pre-press-send-to-press'
+            },
+            [PRINTING_DEPARTMENT]: {
+                SETUP: 'printing-setup',
+                RUNTIME: 'printing-runtime',
+                TEAR_DOWN: 'printing-teardown',
+                READY_FOR_SCHEDULING: 'printing-ready-for-scheduling',
+                SCHEDULE_PRESS_ONE: 'printing-schedule-press-one',
+                SCHEDULE_PRESS_TWO: 'printing-schedule-press-two',
+                SCHEDULE_PRESS_THREE: 'printing-schedule-press-three',
+                ON_HOLD: 'printing-on-hold'
+            },
+            [CUTTING_DEPARTMENT]: {
+                SETUP: 'cutting-setup',
+                RUNTIME: 'cutting-runtime',
+                TEAR_DOWN: 'cutting-teardown',
+                READY_FOR_SCHEDULING: 'cutting-ready-for-scheduling',
+                SCHEDULE_DELTA_ONE: 'cutting-delta-one',
+                SCHEDULE_DELTA_TWO: 'cutting-delta-two',
+                SCHEDULE_ROTOFLEX: 'cutting-rotoflex',
+                ON_HOLD: 'cutting-on-hold'
+            },
+            [WINDING_DEPARTMENT]: {
+                IN_PROGRESS: 'winding-in-progress',
+                READY_FOR_SCHEDULING: 'winding-ready-for-scheduling',
+                ON_HOLD: 'winding-on-hold'
+            },
+            [SHIPPING_DEPARTMENT]: {
+                IN_PROGRESS: 'winding-in-progress',
+                READY_FOR_SHIPPING: 'winding-ready-for-shipping',
+                ON_HOLD: 'winding-on-hold',
+                TOOL_ARRIVALS: 'winding-tool-arrivals'
+            },
+            [BILLING_DEPARTMENT]: {
+                READY_FOR_BILLING: 'billing-ready-for-billing',
+                IN_PROGRESS: 'billing-in-progress'
+            },
         };
+
         const identifier = destinationToIdentifierMapping[department][departmentStatus];
 
         if (!identifier) {

@@ -187,7 +187,7 @@
             </div>
             <div id='order-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div id="ticket-row-<%= ticket._id %>" class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-needs-attention-row'>
                 <div class='start-job-bg-overlay flex-center-center-row'>
                   <i class="fa-regular fa-xmark-large"></i>
                   <div class='card modal-window start-job-modal'>
@@ -410,7 +410,7 @@
             </div>
             <div id='order-prep-send-to-customer-table' class='table-body flex-center-center-column'>
               <% orderPrepSendToCustomerTickets.forEach((ticket, index) => { %>
-              <div id="ticket-row-<%= ticket._id %>" class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-send-to-customer-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -604,9 +604,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-waiting-on-approval-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnApprovalTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-approval-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -800,9 +800,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-waiting-on-customer-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-customer-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -996,9 +996,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-ready-to-order-table' class='table-body flex-center-center-column'>
               <% orderPrepReadyToOrderTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-ready-to-order-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1192,9 +1192,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-in-progress-table' class='table-body flex-center-center-column'>
               <% orderPrepInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1399,9 +1399,9 @@
               <div class='column-header column-header-h'>From</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-attention-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1599,9 +1599,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-in-progress-table' class='table-body flex-center-center-column'>
               <% artPrepInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1795,9 +1795,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-proof-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsProofTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-proof-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -1991,9 +1991,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-die-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsDieLineTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-die-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -2187,9 +2187,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-plate-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsPlateTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-plate-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -2393,9 +2393,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-needs-attention-table' class='table-body flex-center-center-column'>
               <% prePressNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-needs-attention-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -2589,9 +2589,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-in-progress-table' class='table-body flex-center-center-column'>
               <% prePressInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -2785,9 +2785,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-send-to-press-table' class='table-body flex-center-center-column'>
               <% prePressSendToPressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-send-to-press-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -2991,9 +2991,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-in-progress-table' class='table-body flex-center-center-column'>
               <% printingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -3191,9 +3191,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% printingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-ready-for-scheduling-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -3387,9 +3387,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-one-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressOneTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-one-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -3583,9 +3583,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-two-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressTwoTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-two-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -3779,9 +3779,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-three-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressThreeTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-three-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -3975,9 +3975,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-on-hold-table' class='table-body flex-center-center-column'>
               <% printingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-on-hold-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -4181,9 +4181,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-in-progress-table' class='table-body flex-center-center-column'>
               <% cuttingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -4381,9 +4381,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% cuttingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-ready-for-scheduling-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -4576,9 +4576,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-delta-one-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleDeltaOneTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-one-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -4772,9 +4772,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-delta-two-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleDeltaTwoTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-two-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -4968,9 +4968,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-rotoflex-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleRotoflexTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-rotoflex-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -5164,9 +5164,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-on-hold-table' class='table-body flex-center-center-column'>
               <% cuttingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-on-hold-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -5370,9 +5370,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-in-progress-table' class='table-body flex-center-center-column'>
               <% windingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -5570,9 +5570,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% windingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-ready-for-scheduling-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -5765,9 +5765,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-on-hold-table' class='table-body flex-center-center-column'>
               <% windingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-on-hold-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -5971,9 +5971,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-in-progress-table' class='table-body flex-center-center-column'>
               <% shippingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -6167,9 +6167,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-ready-for-shipping-table' class='table-body flex-center-center-column'>
               <% shippingReadyForShippingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-for-shipping-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -6363,9 +6363,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-on-hold-table' class='table-body flex-center-center-column'>
               <% shippingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-on-hold-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
@@ -6559,9 +6559,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Arrival Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-tool-arrivals-table' class='table-body flex-center-center-column'>
               <% shippingToolArrivalTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-tool-arrivals-row'>
                 <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a bg-green'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>

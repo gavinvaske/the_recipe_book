@@ -1,0 +1,22 @@
+<div class='start-job-bg-overlay flex-center-center-row'>
+    <i class="fa-regular fa-xmark-large"></i>
+    <div class='card modal-window start-job-modal'>
+        <div class='modal-wrapper'>
+            <div class='modal-header'>
+            <h2>Start This Job</h2>
+            </div>
+            <div class='modal-body flex-center-center-column'>
+                <h1><%= ticket.ticketNumber || 'N/A' %></h1>
+                <select name="machine-list" id="machine">
+                    <option>Press 1</option>
+                    <option>Press 2</option>
+                    <option>Delta 1</option>
+                    <option>Delta 2</option>
+                </select>
+            </div>
+            <div class='modal-footer flex-center-space-evenly-row'>
+                <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class='ticket-products-wrapper flex-center-right-column full-width'>
+    <div class='product-wrapper-header flex-center-left-row'>
+        <h4>Products - <span>3</span></h4>
+    </div>
+    <div class='table-header secondary-table-header flex-center-center-row'>
+        <div class='column-header column-header-a'></div>
+        <div class='column-header column-header-b'>#</div>
+        <div class='column-header column-header-c'>Products</div>
+        <div class='column-header column-header-d'></div>
+        <div class='column-header column-header-e'></div>
+        <div class='column-header column-header-f'></div>
+        <div class='column-header column-header-g'>Frames</div>
+        <div class='column-header column-header-h'>Quantity</div>
+        <div class='column-header column-header-i'>Artwork</div>
+    </div>
+    <div class='full-width flex-center-right-column'>
+        <% ticket.products.forEach((product, index) => { %>
+        <div class='product-wrapper flex-top-center-column'>
+            <div class='table-row flex-center-center-row'>
+            <div class='group-lines'></div>
+            <div class='column-td column-td-a bg-green'>
+                <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                <div class='ticket-dropdown-options dropdown'>
+                <ul> 
+                    <a href="/products/<%= product._id %>"><li><i class="fa-regular fa-eye"></i>View Product</li></a>
+                    <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
+                </ul>
+                </div>
+            </div>
+            <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
+            <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
+            <div class='column-td column-td-d bg-white'></div>
+            <div class='column-td column-td-e bg-white'></div>
+            <div class='column-td column-td-f bg-white'></div>
+            <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
+            <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
+            <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>

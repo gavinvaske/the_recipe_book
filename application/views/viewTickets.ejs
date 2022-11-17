@@ -173,9 +173,9 @@
               <div class='column-header column-header-h'>From</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-needs-attention-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -230,9 +230,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-send-to-customer-table' class='table-body flex-center-center-column'>
               <% orderPrepSendToCustomerTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-send-to-customer-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -281,9 +281,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-waiting-on-approval-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnApprovalTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-approval-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -332,9 +332,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-waiting-on-customer-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-customer-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -383,9 +383,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-ready-to-order-table' class='table-body flex-center-center-column'>
               <% orderPrepReadyToOrderTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-ready-to-order-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -434,9 +434,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='order-prep-in-progress-table' class='table-body flex-center-center-column'>
               <% orderPrepInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -496,9 +496,9 @@
               <div class='column-header column-header-h'>From</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-attention-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -551,9 +551,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-in-progress-table' class='table-body flex-center-center-column'>
               <% artPrepInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -602,9 +602,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-proof-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsProofTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-proof-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -653,9 +653,9 @@
               <div class='column-header column-header-h'>Sent Date</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-die-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsDieLineTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-die-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -704,9 +704,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'></div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='art-prep-needs-plate-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsPlateTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-plate-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -765,9 +765,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-needs-attention-table' class='table-body flex-center-center-column'>
               <% prePressNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-needs-attention-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -816,9 +816,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-in-progress-table' class='table-body flex-center-center-column'>
               <% prePressInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -867,9 +867,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='pre-press-send-to-press-table' class='table-body flex-center-center-column'>
               <% prePressSendToPressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-press-send-to-press-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -928,9 +928,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-in-progress-table' class='table-body flex-center-center-column'>
               <% printingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -983,9 +983,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% printingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-ready-for-scheduling-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1034,9 +1034,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-one' class='table-body flex-center-center-column'>
               <% printingSchedulePressOneTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-one-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1085,9 +1085,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-two-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressTwoTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-two-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1136,9 +1136,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-three-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressThreeTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-three-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1187,9 +1187,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='printing-on-hold-table' class='table-body flex-center-center-column'>
               <% printingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1248,9 +1248,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-in-progress-table' class='table-body flex-center-center-column'>
               <% cuttingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1303,9 +1303,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% cuttingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-ready-for-scheduling-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1391,9 +1391,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-delta-one-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleDeltaOneTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-one-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1442,9 +1442,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-delta-two-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleDeltaTwoTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-two-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1493,9 +1493,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-schedule-rotoflex-table' class='table-body flex-center-center-column'>
               <% cuttingScheduleRotoflexTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-rotoflex-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1544,9 +1544,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='cutting-on-hold-table' class='table-body flex-center-center-column'>
               <% cuttingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1605,9 +1605,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-in-progress-table' class='table-body flex-center-center-column'>
               <% windingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1660,9 +1660,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-ready-for-scheduling-table' class='table-body flex-center-center-column'>
               <% windingReadyForSchedulingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-ready-for-scheduling-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1748,9 +1748,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='winding-on-hold-table' class='table-body flex-center-center-column'>
               <% windingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1809,9 +1809,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-in-progress-table' class='table-body flex-center-center-column'>
               <% shippingInProgressTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1860,9 +1860,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-ready-for-shipping-table' class='table-body flex-center-center-column'>
               <% shippingReadyForShippingTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-for-shipping-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1949,9 +1949,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-on-hold-table' class='table-body flex-center-center-column'>
               <% shippingOnHoldTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -2038,9 +2038,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Arrival Date</div>
             </div>
-            <div class='table-body flex-center-center-column'>
+            <div id='shipping-tool-arrivals-table' class='table-body flex-center-center-column'>
               <% shippingToolArrivalTickets.forEach((ticket, index) => { %>
-              <div class='table-row-wrapper full-width'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-tool-arrivals-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -2111,9 +2111,9 @@
                 <div class='column-header column-header-h'></div>
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
-              <div class='table-body flex-center-center-column'>
+              <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
                 <% billingReadyForBillingTickets.forEach((ticket, index) => { %>
-                <div class='table-row flex-center-center-row'>
+                <div id='ticket-row-<%= ticket._id %>' class='table-row flex-center-center-row billing-ready-for-billing-row'>
                   <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
@@ -2186,9 +2186,9 @@
                 <div class='column-header column-header-h'></div>
                 <div class='column-header column-header-i'>Due Date</div>
               </div>
-              <div class='table-body flex-center-center-column'>
+              <div id='billing-in-progress-table' class='table-body flex-center-center-column'>
                 <% billingInProgressTickets.forEach((ticket, index) => { %>
-                <div class='table-row flex-center-center-row'>
+                <div id='ticket-row-<%= ticket._id %>' class='table-row flex-center-center-row billing-in-progress-row'>
                   <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {

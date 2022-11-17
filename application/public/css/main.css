@@ -3051,9 +3051,9 @@ a.storm {
 	height: auto;
 }
 
-/* .department-wrapper {
-  margin-bottom: 50px;
-} */
+.department-wrapper {
+ position: relative;
+}
 .department-wrapper h2 {
   color: #6e6b7b;
 }
@@ -3118,6 +3118,7 @@ a.storm {
 }
 .view-tickets-body .card {
   margin-bottom: 15px;
+  padding-top: 45px;
 }
 .list-item-user-details { 
   position: relative;
@@ -3549,7 +3550,8 @@ canvas{
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 240px 30px 0 30px;
+  /* padding: 240px 30px 0 30px; */
+  padding: 255px 30px 0 30px;
 }
 .sidebar-main {
   position: fixed;
@@ -3863,6 +3865,17 @@ canvas{
   display: inline-block;
   border: 1px solid grey;
   padding: 5px 10px;
+  color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 0.428rem;
+  padding-left: 25px;
+  width: 100%;
+  border-top-right-radius: 0.428rem;
+}
+.department-wrapper.card h4.department-name span {
+  color: white;
 }
 .full-page-curtain {
   position: fixed;
@@ -4041,4 +4054,37 @@ canvas{
   flex-wrap: wrap;
   flex-direction: column;
   width: 100%;
+}
+
+div[data-department^="ORDER-PREP"] h4 {
+  background: #845EC2;
+  border-color: #845EC2!important;
+}
+div[data-department^="ART-PREP"] h4 {
+  background: #2C73D2;
+  border-color: #2C73D2!important;
+}
+div[data-department^="PRE-PRESS"] h4 {
+  background: #00896F;
+  border-color: #00896F!important;
+}
+div[data-department^="PRINTING"] h4 {
+  background: #FF6F91;
+  border-color: #FF6F91!important;
+}
+div[data-department^="CUTTING"] h4 {
+  background: #00C9A7;
+  border-color: #00C9A7!important;
+}
+div[data-department^="WINDING"] h4 {
+  background: #FF9671;
+  border-color: #FF9671!important;
+}
+div[data-department^="SHIPPING"] h4 {
+  background: #FFC75F;
+  border-color: #FFC75F!important;
+}
+div[data-department^="BILLING"] h4 {
+  background: #009EFA;
+  border-color: #009EFA!important;
 }

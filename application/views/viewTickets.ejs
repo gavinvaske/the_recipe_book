@@ -16,75 +16,9 @@
       <div class="alert-box full-width">
           <%- include ("flashMessages") %>
       </div>
-      <div class='workflow-navigation'>
-        <ul class='navigation-list full-width'>
-          <li data-department="ORDER-PREP">Order Prep</li>
-          <li data-department="ART-PREP">Art Prep</li>
-          <li data-department="PRE-PRESS">Pre-Printing</li>
-          <li data-department="PRINTING">Printing</li>
-          <li data-department="CUTTING">Cutting</li>
-          <li data-department="WINDING">Winding</li>
-          <li data-department="SHIPPING">Shipping</li>
-          <li data-department="BILLING">Billing</li>
-        </ul>
-
-      </div>
-      <div class='workflow-filter flex-center-left-row'>
-
-        <a href='/tickets/upload' class='create bg-blue text-white border-blue btn-create'>Create <i class="fa-regular fa-plus"></i></a>
-
-        <div class='search-wrapper flex-center-left-row'>
-          <i class="fa-regular fa-magnifying-glass flex-center-center-row"></i><input placeholder='Search' value='' class='search-input'>
-        </div>
-
-        <div class='person-filter-wrapper tooltip'>
-          <button class='filter btn-person-filter'>
-            <span class="tooltiptext">Filter by person</span>
-            <i class='fa-regular fa-circle-user'></i> Person
-          </button>
-          <div class='person-filter-dropdown dropdown'>
-            <h5><b>Quick person filter</b></h5>
-            <p>Filter items and subitems by person.</p>
-          </div>
-        </div>
-
-        <div class='split-btn-frame btn-filter flex-center-center-row tooltip'>
-          <span class="tooltiptext">Filter by anything</span>
-          <div class='filter-btn-wrapper flex-center-center-row'>
-            <button class='btn-split quick-filter flex-center-center-row'>
-              <i class="fa-light fa-filter"></i>Filter
-            </button>
-            <button class='btn-split-arrow-dropdown btn-advanced-filter'><i class="fa-regular fa-chevron-down"></i></button>
-          </div>
-
-          <div class='quick-filter-dropdown dropdown'>
-            <h5><b>Quick Filter</b></h5>
-            <p>Testing how big the dropdown box can be</p>
-          </div>
-
-          <div class='advanced-filter-dropdown dropdown'>
-            <h5><b>Advanced Filter</b></h5>
-            <p>Testing how big the dropdown box can be</p>
-          </div>
-        </div>
-
-        <div class='sort-wrapper tooltip'>
-          <span class="tooltiptext">Sort by any column</span>
-          <button class='sort btn-sort'><i class="fa-regular fa-arrow-down-arrow-up"></i> Sort</button>
-          <div class='sort-dropdown dropdown'>
-            <h5><b>Sort by</b></h5>
-            <p>Testing how big the dropdown box can be</p>
-          </div>
-        </div>
-
-        <div class='all-wrapper tooltip'>
-          <a href="/tickets">
-            <span class="tooltiptext">See All</span>
-            <button class='sort btn-sort' href="/tickets"><i class="fa-solid fa-layer-group"></i> See All</button>
-          </a>
-        </div>
-
-      </div>
+      
+      <%- include('partials/workflow-navigation.ejs') %>
+      <%- include('partials/workflow-sorting-filtering.ejs') %>
 
     </div>
 
@@ -212,7 +146,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -263,7 +196,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -314,7 +246,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -365,7 +296,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -416,7 +346,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -468,17 +397,14 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
       </div>
-      
       <!--- Art Prep Department Start-->
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
       <div class='department-wrapper card' data-department="ART-PREP">
         <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
-
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -533,7 +459,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -584,7 +509,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -635,7 +559,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -686,7 +609,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -738,16 +660,13 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
       </div>
-  
       <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper card' data-department="PRE-PRESS">
         <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
-
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -798,7 +717,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -849,7 +767,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -901,16 +818,13 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>
       </div>
-
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper card' data-department="PRINTING">
         <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -965,7 +879,6 @@
             </div>
           </div>
         </div>
-        
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1016,7 +929,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1067,7 +979,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1118,7 +1029,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1169,7 +1079,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1221,11 +1130,9 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>
-    
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper card' data-department="CUTTING">
@@ -1285,7 +1192,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1373,7 +1279,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1424,7 +1329,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-d'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1475,7 +1379,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-f'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1526,7 +1429,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1578,16 +1480,13 @@
           </div>
         </div>
       </div>
-  
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
       </div>
-
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper card' data-department="WINDING">
         <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1642,7 +1541,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1730,7 +1628,6 @@
             </div>
           </div>
         </div>
-    
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1782,16 +1679,13 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End of Winding</h4><div class="department-divide-line"></div>
       </div>
-
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper card' data-department="SHIPPING">
         <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
-
         <div class='department-section department-section-a'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1842,7 +1736,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-b'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -1931,7 +1824,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-e'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -2020,7 +1912,6 @@
             </div>
           </div>
         </div>
-
         <div class='department-section department-section-c'>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
@@ -2072,16 +1963,13 @@
           </div>
         </div>
       </div>
-
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
-
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper card' data-department="BILLING">
         <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
-
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>
@@ -2156,7 +2044,6 @@
               </div>
             </div>
           </div>
-
           <div class='department-section department-section-a'>
             <div class='header flex-center-left-row'>
               <div class='expanded-options-wrapper'>

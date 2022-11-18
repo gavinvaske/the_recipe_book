@@ -819,15 +819,68 @@ $( document ).ready(function() {
         return rows.length;
     }
 
-    function getIdForTicketRow(ticketId) {
+    function getTicketRowId(ticketId) {
         return `ticket-row-${ticketId}`;
     }
 
+    const ticketNumberColumn = '.ticket-number-column';
+    const statusColumn = '.status-column';
+    const fromColumn = '.from-column';
+    const dueDateColumn = '.due-date-column';
+    const followUpDateColumn = '.follow-up-date-column';
+    const sentDateColumn = '.sent-date-column';
+    const typeColumn = '.type-column';
+    const productCountColumn = '.product-count-column';
+    const locationColumn = '.location-column';
+    const materialColumn = '.material-column';
+    const dieColumn = '.die-column';
+    const lengthColumn = '.length-column';
+    const holdStatusColumn = '.hold-status-column';
+    const rolls = '.rolls-column';
+    const groupedColumn = '.grouped-column';
+
+    function mapTicketRowColumnSelectorToValues(ticket) {
+        console.log(ticket);
+        return {
+            [ticketNumberColumn]: '!TODO!',
+            [statusColumn]: '!TODO!',
+            [fromColumn]: '!TODO!',
+            [dueDateColumn]: '!TODO!',
+            [followUpDateColumn]: '!TODO!',
+            [sentDateColumn]: '!TODO!',
+            [typeColumn]: '!TODO!',
+            [productCountColumn]: '!TODO!',
+            [locationColumn]: '!TODO!',
+            [materialColumn]: '!TODO!',
+            [dieColumn]: '!TODO!',
+            [lengthColumn]: '!TODO!',
+            [holdStatusColumn]: '!TODO!',
+            [rolls]: '!TODO!',
+            [groupedColumn]: '!TODO!',
+        };
+    }
+
     function populateTicketRowAttributes(ticketRowTemplate, ticket) {
-        console.log(`ticket => ${JSON.stringify(ticket)}`);
-        alert('TODO: Finish building populateTicketRowAttributes()');
         const ticketRow = ticketRowTemplate.clone();
-        ticketRow.attr('id', getIdForTicketRow(ticket._id));
+        ticketRow.attr('id', getTicketRowId(ticket._id));
+        const columnSelectorToColumnValueMap = mapTicketRowColumnSelectorToValues(ticket);
+
+        const columnClassPostfix = '-column';
+        const columns = ticketRowTemplate.find(`[class$=${columnClassPostfix}]`); // See https://stackoverflow.com/a/5376445/9273261
+
+        columns.each(function() {
+            const classesOnColumn = $(this).attr('class').split(/\s+/);
+
+            classesOnColumn.forEach((cssClass) => {
+                const classSelector = `.${cssClass}`;
+                const shouldPopulateThisColumnWithAValue = columnSelectorToColumnValueMap.hasOwnProperty(classSelector);
+
+                if (shouldPopulateThisColumnWithAValue) {
+                    const valueToPopulateColumnWith = columnSelectorToColumnValueMap[classSelector];
+                    ticketRow.find(classSelector).text(valueToPopulateColumnWith);
+                }
+            });
+        });
 
         return ticketRow;
     }

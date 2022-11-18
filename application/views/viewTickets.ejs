@@ -125,16 +125,16 @@
                     </div>
                     <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                     <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white'></div>
+                    <div class='column-td column-td-d bg-white status-column'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
                         <span class="tooltiptext">TODO</span>
-                      </div><span class='machine-name'>Press 1</span>
+                      </div><span class='machine-name from-column'>Press 1</span>
                     </div>
-                    <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
+                    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4</div>
                   </div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
@@ -180,12 +180,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                  <div class='column-td column-td-d bg-purple text-white status-column'>Rush</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -230,12 +230,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
-                  <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'>July 2 (TODO)</div>
+                  <div class='column-td column-td-h bg-white sent-date-column'>July 1 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -280,12 +280,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
-                  <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'>July 2 (TODO)</div>
+                  <div class='column-td column-td-h bg-white sent-date-column'>July 1 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -439,16 +439,16 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                    </div><span class='machine-name from-column'>Press 1 (TODO)</span>
                   </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -493,12 +493,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
+                  <div class='column-td column-td-d bg-purple text-white status-column'>Rush (TODO)</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -543,12 +543,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
-                  <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'>July 2 (TODO)</div>
+                  <div class='column-td column-td-h bg-white sent-date-column'>July 1 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -593,12 +593,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'>July 2 (TODO)</div>
-                  <div class='column-td column-td-h bg-white'>July 1 (TODO)</div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'>July 2 (TODO)</div>
+                  <div class='column-td column-td-h bg-white sent-date-column'>July 1 (TODO)</div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -701,12 +701,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -751,12 +751,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                  <div class='column-td column-td-d bg-purple text-white status-column'>Rush</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -801,12 +801,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -859,16 +859,16 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
-                  <div class='column-td column-td-d bg-purple text-white'>Rush</div>
+                  <div class='column-td column-td-d bg-purple text-white status-column'>Rush</div>
                   <div class='column-td column-td-e bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                    </div><span class='machine-name location-column'>Press 1 (TODO)</span>
                   </div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -913,12 +913,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
+                  <div class='column-td column-td-d bg-red text-white status-column'>Hot (TODO)</div>
                   <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -946,7 +946,7 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-schedule-press-one' class='table-body flex-center-center-column'>
+            <div id='printing-schedule-press-one-table' class='table-body flex-center-center-column'>
               <% printingSchedulePressOneTickets.forEach((ticket, index) => { %>
               <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-one-row'>
                 <%- include('partials/start-job-modal.ejs', {
@@ -963,12 +963,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-red text-white'>Hot (TODO)</div>
+                  <div class='column-td column-td-d bg-red text-white status-column'>Hot (TODO)</div>
                   <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1013,12 +1013,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1063,12 +1063,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1113,12 +1113,12 @@
                   </div>
                   <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
-                  <div class='column-td column-td-g bg-white'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                  <div class='column-td column-td-d bg-white status-column'></div>
+                  <div class='column-td column-td-e bg-white hold-status-column'></div>
+                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket

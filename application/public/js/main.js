@@ -504,7 +504,7 @@ $( document ).ready(function() {
         }
     });
 
-    $('.column-td-a').click(function(){
+    $('.table-body').on('click', '.table-row-wrapper .table-row .column-td-a', function() {
         if ($(this).hasClass('active')){
             $(this).removeClass('active');
         } else {

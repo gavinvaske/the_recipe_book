@@ -3118,7 +3118,7 @@ a.storm {
 }
 .view-tickets-body .card {
   margin-bottom: 15px;
-  padding-top: 45px;
+  /* padding-top: 45px; */
 }
 .list-item-user-details { 
   position: relative;
@@ -3550,8 +3550,8 @@ canvas{
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* padding: 240px 30px 0 30px; */
-  padding: 255px 30px 0 30px;
+  padding: 240px 30px 0 30px;
+  /* padding: 255px 30px 0 30px; */
 }
 .sidebar-main {
   position: fixed;
@@ -3866,13 +3866,7 @@ canvas{
   border: 1px solid grey;
   padding: 5px 10px;
   color: white;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-top-left-radius: 0.428rem;
-  padding-left: 25px;
-  width: 100%;
-  border-top-right-radius: 0.428rem;
+  border-radius: 3px;
 }
 .department-wrapper.card h4.department-name span {
   color: white;
@@ -4057,34 +4051,69 @@ canvas{
 }
 
 div[data-department^="ORDER-PREP"] h4 {
-  background: #845EC2;
-  border-color: #845EC2!important;
+  /* background: #845EC2;
+  border-color: #845EC2!important; */
+  background-color: rgba(0,207,232,.12);
+  border-color: rgba(0,207,232,.12)!important;
+  color:#00cfe8!important;
 }
+div[data-department^="ORDER-PREP"] h4 span {
+  color: #00cfe8!important;
+}
+
 div[data-department^="ART-PREP"] h4 {
-  background: #2C73D2;
-  border-color: #2C73D2!important;
+  background: rgba(255,159,67,.1);
+  border-color: rgba(255,159,67,.1)!important;
+  color: #ff9f43!important;
+}
+div[data-department^="ART-PREP"] h4 span {
+  color: #ff9f43!important;
 }
 div[data-department^="PRE-PRESS"] h4 {
-  background: #00896F;
-  border-color: #00896F!important;
+  background: rgba(115,103,240,.1);
+  border-color: rgba(115,103,240,.1)!important;
+  color: #7367f0!important;
+}
+div[data-department^="PRE-PRESS"] h4 span {
+  color: #7367f0!important;
 }
 div[data-department^="PRINTING"] h4 {
-  background: #FF6F91;
-  border-color: #FF6F91!important;
+  background: rgba(75,75,75,.12);
+  border-color: rgba(75,75,75,.12)!important;
+  color: #4b4b4b!important;
+}
+div[data-department^="PRINTING"] h4 span {
+  color: #4b4b4b!important;
 }
 div[data-department^="CUTTING"] h4 {
-  background: #00C9A7;
-  border-color: #00C9A7!important;
+  background: rgba(40,199,111,.12);
+  border-color: rgba(40,199,111,.12)!important;
+  color: #28c76f!important;
+}
+div[data-department^="CUTTING"] h4 span {
+  color: #28c76f!important;
 }
 div[data-department^="WINDING"] h4 {
-  background: #FF9671;
-  border-color: #FF9671!important;
+  background: rgba(234,84,85,.12);
+  border-color: rgba(234,84,85,.12)!important;
+  color: #ea5455!important;
+}
+div[data-department^="WINDING"] h4 span {
+  color: #ea5455!important;
 }
 div[data-department^="SHIPPING"] h4 {
-  background: #FFC75F;
-  border-color: #FFC75F!important;
+  background: rgba(102, 204, 255, .3);
+  border-color: rgba(102, 204, 255, .3)!important;
+  color: rgba(102, 204, 255, 1)!important;
+}
+div[data-department^="SHIPPING"] h4 span {
+  color: rgba(102, 204, 255, 1)!important;
 }
 div[data-department^="BILLING"] h4 {
-  background: #009EFA;
-  border-color: #009EFA!important;
+  background: rgba(156, 211, 38, .3);
+  border-color: rgba(156, 211, 38, .3)!important;
+  color: rgba(156, 211, 38, 1)!important;
+}
+div[data-department^="BILLING"] h4 span {
+  color: rgba(156, 211, 38, 1)!important;
 }

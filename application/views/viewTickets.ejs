@@ -88,12 +88,14 @@
     
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->
-      <div class='department-wrapper card' data-department="ORDER-PREP">
+      <div class='department-wrapper' data-department="ORDER-PREP">
         <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
-        <div class='department-section department-section-e'>
+        <div class='status-section needs-attention-status red-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -116,7 +118,7 @@
               ) %>
                 <div class='table-row flex-center-center-column'>
                   <div class='flex-center-center-row ticket-wrapper full-width'>
-                    <div class='column-td column-td-a bg-green'>
+                    <div class='column-td column-td-a'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <%- include('partials/ticket-dropdown-options.ejs', {
                         ticket: ticket
@@ -146,10 +148,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-a'>
+        <div class='status-section send-to-customer-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -171,7 +175,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -196,10 +200,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div id='waitingOnApprovalStatus' class='status-section orange-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Waiting On Approval- <span class='category-ticket-count'><%= orderPrepWaitingOnApprovalTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Waiting On Approval- <span class='category-ticket-count'><%= orderPrepWaitingOnApprovalTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -221,7 +227,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -246,10 +252,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-c'>
+        <div class='status-section light-blue-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Waiting On Customer- <span class='category-ticket-count'><%= orderPrepWaitingOnCustomerTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Waiting On Customer - <span class='category-ticket-count'><%= orderPrepWaitingOnCustomerTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -271,7 +279,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -296,10 +304,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section ready-to-order-plate-die-status purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Ready To Order Plate / Die - <span class='category-ticket-count'><%= orderPrepReadyToOrderTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Ready To Order Plate / Die - <span class='category-ticket-count'><%= orderPrepReadyToOrderTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -321,7 +331,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -346,10 +356,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Order Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>In Progress - <span class='category-ticket-count'><%= orderPrepInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= orderPrepInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -371,7 +383,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -397,18 +409,17 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
-      </div>
       <!--- Art Prep Department Start-->
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
-      <div class='department-wrapper card' data-department="ART-PREP">
+      <div class='department-wrapper' data-department="ART-PREP">
         <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
-        <div class='department-section department-section-e'>
+        <div class='status-section needs-attention-status card'>
+          <div class='side-bumper'></div>
+          <span>Art Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -430,7 +441,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -459,10 +470,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Art Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= artPrepInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= artPrepInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -484,7 +497,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -509,10 +522,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section needs-proof-status orange-master card'>
+          <div class='side-bumper'></div>
+          <span>Art Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Proof - <span class='category-ticket-count'><%= artPrepNeedsProofTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Proof - <span class='category-ticket-count'><%= artPrepNeedsProofTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -534,7 +549,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -559,10 +574,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-c'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Art Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Die Line - <span class='category-ticket-count'><%= artPrepNeedsDieLineTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Die Line - <span class='category-ticket-count'><%= artPrepNeedsDieLineTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -584,7 +601,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -609,10 +626,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Art Prep</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Plate - <span class='category-ticket-count'><%= artPrepNeedsPlateTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Plate - <span class='category-ticket-count'><%= artPrepNeedsPlateTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -634,7 +653,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -660,17 +679,16 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
-      <div class='department-wrapper card' data-department="PRE-PRESS">
+      <div class='department-wrapper' data-department="PRE-PRESS">
         <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
-        <div class='department-section department-section-e'>
+        <div class='status-section needs-attention-status card'>
+          <div class='side-bumper'></div>
+          <span>Pre Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Needs Attention - <span class='category-ticket-count'><%= prePressNeedsAttentionTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= prePressNeedsAttentionTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -692,7 +710,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -717,10 +735,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Pre Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= prePressInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= prePressInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -742,7 +762,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -767,10 +787,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Pre Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Send To Press - <span class='category-ticket-count'><%= prePressSendToPressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Send To Press - <span class='category-ticket-count'><%= prePressSendToPressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -792,7 +814,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -818,17 +840,16 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Pre Printing</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
-      <div class='department-wrapper card' data-department="PRINTING">
+      <div class='department-wrapper' data-department="PRINTING">
         <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= printingInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= printingInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -850,7 +871,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -879,10 +900,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'><%= printingReadyForSchedulingTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Ready For Scheduling- <span class='category-ticket-count'><%= printingReadyForSchedulingTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -904,7 +927,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -929,10 +952,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-c'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Press One - <span class='category-ticket-count'><%= printingSchedulePressOneTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Press One - <span class='category-ticket-count'><%= printingSchedulePressOneTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -954,7 +979,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -979,10 +1004,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Press Two - <span class='category-ticket-count'><%= printingSchedulePressTwoTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Press Two - <span class='category-ticket-count'><%= printingSchedulePressTwoTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1004,7 +1031,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1029,10 +1056,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Press Three - <span class='category-ticket-count'><%= printingSchedulePressThreeTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Press Three - <span class='category-ticket-count'><%= printingSchedulePressThreeTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1054,7 +1083,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1079,10 +1108,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-e'>
+        <div class='status-section on-hold-status red-master card'>
+          <div class='side-bumper'></div>
+          <span>Printing</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= printingOnHoldTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= printingOnHoldTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1104,7 +1135,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1130,18 +1161,17 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
-      <div class='department-wrapper card' data-department="CUTTING">
+      <div class='department-wrapper' data-department="CUTTING">
         <h4 class='department-name'>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
 
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= cuttingInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= cuttingInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1163,7 +1193,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1192,10 +1222,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Ready For Scheduling- <span class='category-ticket-count'><%= cuttingReadyForSchedulingTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Ready For Scheduling- <span class='category-ticket-count'><%= cuttingReadyForSchedulingTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1217,7 +1249,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1233,56 +1265,21 @@
                   <div class='column-td column-td-h bg-white'>4 (TODO)</div>
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='ticket-products-wrapper flex-center-right-column full-width'>
-                  <div class='product-wrapper-header flex-center-left-row'>
-                    <h4>Products - <span>3</span></h4>
-                  </div>
-                  <div class='table-header secondary-table-header flex-center-center-row'>
-                    <div class='column-header column-header-a'></div>
-                    <div class='column-header column-header-b'>#</div>
-                    <div class='column-header column-header-c'>Products</div>
-                    <div class='column-header column-header-d'></div>
-                    <div class='column-header column-header-e'></div>
-                    <div class='column-header column-header-f'></div>
-                    <div class='column-header column-header-g'>Frames</div>
-                    <div class='column-header column-header-h'>Quantity</div>
-                    <div class='column-header column-header-i'>Artwork</div>
-                  </div>
-                  <div class='full-width flex-center-right-column'>
-                    <% ticket.products.forEach((product, index) => { %>
-                    <div class='product-wrapper flex-top-center-column'>
-                      <div class='table-row flex-center-center-row'>
-                        <div class='column-td column-td-a bg-green'>
-                          <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                          <div class='ticket-dropdown-options dropdown'>
-                            <ul>
-                              <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                              <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                        <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
-                        <div class='column-td column-td-d bg-white'></div>
-                        <div class='column-td column-td-e bg-white'></div>
-                        <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
-                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
-                        <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
-                      </div>
-                    </div>
-                    <% }) %>
-                  </div>
-                </div>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
               <% }) %>
             </div>
           </div>
         </div>
-        <div class='department-section department-section-c'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Delta One - <span class='category-ticket-count'><%= cuttingScheduleDeltaOneTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Delta One - <span class='category-ticket-count'><%= cuttingScheduleDeltaOneTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1304,7 +1301,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1329,10 +1326,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-d'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Delta Two - <span class='category-ticket-count'><%= cuttingScheduleDeltaTwoTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Delta Two - <span class='category-ticket-count'><%= cuttingScheduleDeltaTwoTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1354,7 +1353,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1379,10 +1378,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-f'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Scheduled Rofoflex - <span class='category-ticket-count'><%= cuttingScheduleRotoflexTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Scheduled Rofoflex - <span class='category-ticket-count'><%= cuttingScheduleRotoflexTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1404,7 +1405,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1429,10 +1430,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-e'>
+        <div class='status-section on-hold-status card'>
+          <div class='side-bumper'></div>
+          <span>Cutting</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= cuttingOnHoldTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= cuttingOnHoldTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1454,7 +1457,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1480,17 +1483,16 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
-      <div class='department-wrapper card' data-department="WINDING">
+      <div class='department-wrapper' data-department="WINDING">
         <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Winding</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= windingInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= windingInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1512,7 +1514,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1541,10 +1543,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Winding</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Ready For Scheduling - <span class='category-ticket-count'><%= windingReadyForSchedulingTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Ready For Scheduling - <span class='category-ticket-count'><%= windingReadyForSchedulingTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1566,7 +1570,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1582,56 +1586,21 @@
                   <div class='column-td column-td-h bg-white'>3 <%= ticket.products.length %> </div>
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='ticket-products-wrapper flex-center-right-column full-width'>
-                  <div class='product-wrapper-header flex-center-left-row'>
-                    <h4>Products - <span>3</span></h4>
-                  </div>
-                  <div class='table-header secondary-table-header flex-center-center-row'>
-                    <div class='column-header column-header-a'></div>
-                    <div class='column-header column-header-b'>#</div>
-                    <div class='column-header column-header-c'>Products</div>
-                    <div class='column-header column-header-d'></div>
-                    <div class='column-header column-header-e'></div>
-                    <div class='column-header column-header-f'></div>
-                    <div class='column-header column-header-g'>Frames</div>
-                    <div class='column-header column-header-h'>Quantity</div>
-                    <div class='column-header column-header-i'>Artwork</div>
-                  </div>
-                  <div class='full-width flex-center-right-column'>
-                    <% ticket.products.forEach((product, index) => { %>
-                    <div class='product-wrapper flex-top-center-column'>
-                      <div class='table-row flex-center-center-row'>
-                        <div class='column-td column-td-a bg-green'>
-                          <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                          <div class='ticket-dropdown-options dropdown'>
-                            <ul>
-                              <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                              <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class='column-td column-td-b bg-white'><%= index + 1 %></div>
-                        <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
-                        <div class='column-td column-td-d bg-white'></div>
-                        <div class='column-td column-td-e bg-white'></div>
-                        <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
-                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
-                        <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
-                      </div>
-                    </div>
-                    <% }) %>
-                  </div>
-                </div>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
               <% }) %>
             </div>
           </div>
         </div>
-        <div class='department-section department-section-e'>
+        <div class='status-section on-hold-status card'>
+          <div class='side-bumper'></div>
+          <span>Winding</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= windingOnHoldTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= windingOnHoldTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1653,7 +1622,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1679,17 +1648,16 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End of Winding</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
-      <div class='department-wrapper card' data-department="SHIPPING">
+      <div class='department-wrapper' data-department="SHIPPING">
         <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
-        <div class='department-section department-section-a'>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Shipping</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= shippingInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= shippingInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1711,7 +1679,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1736,10 +1704,12 @@
             </div>
           </div>
         </div>
-        <div class='department-section department-section-b'>
+        <div class='status-section purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Shipping</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Ready For Shipping - <span class='category-ticket-count'><%= shippingReadyForShippingTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Ready For Shipping - <span class='category-ticket-count'><%= shippingReadyForShippingTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1761,7 +1731,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1777,57 +1747,21 @@
                   <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='ticket-products-wrapper flex-center-right-column full-width'>
-                  <div class='product-wrapper-header flex-center-left-row'>
-                    <h4>Products - <span>3</span></h4>
-                  </div>
-                  <div class='table-header secondary-table-header flex-center-center-row'>
-                    <div class='column-header column-header-a'></div>
-                    <div class='column-header column-header-b'>#</div>
-                    <div class='column-header column-header-c'>Products</div>
-                    <div class='column-header column-header-d'></div>
-                    <div class='column-header column-header-e'></div>
-                    <div class='column-header column-header-f'></div>
-                    <div class='column-header column-header-g'>Frames</div>
-                    <div class='column-header column-header-h'>Quantity</div>
-                    <div class='column-header column-header-i'>Artwork</div>
-                  </div>
-                  <div class='full-width flex-center-right-column'>
-                    <% ticket.products.forEach((product, index) => { %>
-                    <div class='product-wrapper flex-top-center-column'>
-                      <div class='table-row flex-center-center-row'>
-                        <div class='group-lines'></div>
-                        <div class='column-td column-td-a bg-green'>
-                          <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                          <div class='ticket-dropdown-options dropdown'>
-                            <ul>
-                              <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                              <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class='column-td column-td-b bg-white'></div>
-                        <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
-                        <div class='column-td column-td-d bg-white'></div>
-                        <div class='column-td column-td-e bg-white'></div>
-                        <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
-                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
-                        <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
-                      </div>
-                    </div>
-                    <% }) %>
-                  </div>
-                </div>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
               <% }) %>
             </div>
           </div>
         </div>
-        <div class='department-section department-section-e'>
+        <div class='status-section on-hold-status card'>
+          <div class='side-bumper'></div>
+          <span>Shipping</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>On Hold - <span class='category-ticket-count'><%= shippingOnHoldTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= shippingOnHoldTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1849,7 +1783,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1865,57 +1799,21 @@
                   <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
                   <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='ticket-products-wrapper flex-center-right-column full-width'>
-                  <div class='product-wrapper-header flex-center-left-row'>
-                    <h4>Products - <span>3</span></h4>
-                  </div>
-                  <div class='table-header secondary-table-header flex-center-center-row'>
-                    <div class='column-header column-header-a'></div>
-                    <div class='column-header column-header-b'>#</div>
-                    <div class='column-header column-header-c'>Products</div>
-                    <div class='column-header column-header-d'></div>
-                    <div class='column-header column-header-e'></div>
-                    <div class='column-header column-header-f'></div>
-                    <div class='column-header column-header-g'>Frames</div>
-                    <div class='column-header column-header-h'>Quantity</div>
-                    <div class='column-header column-header-i'>Artwork</div>
-                  </div>
-                  <div class='full-width flex-center-right-column'>
-                    <% ticket.products.forEach((product, index) => { %>
-                    <div class='product-wrapper flex-top-center-column'>
-                      <div class='table-row flex-center-center-row'>
-                        <div class='group-lines'></div>
-                        <div class='column-td column-td-a bg-green'>
-                          <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                          <div class='ticket-dropdown-options dropdown'>
-                            <ul>
-                              <li><a href="/products/<%= product._id %>"><i class="fa-regular fa-eye"></i>View Product</a></li>
-                              <li class='collapse-ticket'><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class='column-td column-td-b bg-white'></div>
-                        <div class='column-td column-td-c product-number-column bg-white'><%= product.productNumber || 'N/A' %></div>
-                        <div class='column-td column-td-d bg-white'></div>
-                        <div class='column-td column-td-e bg-white'></div>
-                        <div class='column-td column-td-f bg-white'></div>
-                        <div class='column-td column-td-g bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
-                        <div class='column-td column-td-h bg-white'><%= product.labelQty || 'N/A'%></div>
-                        <div class='column-td column-td-i bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
-                      </div>
-                    </div>
-                    <% }) %>
-                  </div>
-                </div>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
               <% }) %>
             </div>
           </div>
         </div>
-        <div class='department-section department-section-c'>
+        <div class='status-section card'>
+          <div class='side-bumper'></div>
+          <span>Shipping</span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header text-purple'>Arrival Plate / Die - <span class='category-ticket-count'><%= shippingToolArrivalTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Arrival Plate / Die - <span class='category-ticket-count'><%= shippingToolArrivalTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -1937,7 +1835,7 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a bg-green'>
+                  <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
@@ -1963,45 +1861,37 @@
           </div>
         </div>
       </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
-      </div>
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
-      <div class='department-wrapper card' data-department="BILLING">
+      <div class='department-wrapper' data-department="BILLING">
         <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
-          <div class='department-section department-section-a'>
-            <div class='header flex-center-left-row'>
-              <div class='expanded-options-wrapper'>
-                <div class='expanded-options-btn flex-center-center-row'>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class='expanded-options-dropdown dropdown'>
-                  <ul>
-                    <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
-                    <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
-                    <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
-                    <li class='expand-all-groups'><i class="fa-regular fa-maximize"></i>Show All Departments</li>
-                  </ul>
-                </div>
-              </div>
-              <h3 class='category-header text-green'>Ready For Billing - <span class='category-ticket-count'><%= billingReadyForBillingTickets.length %></span></h3>
+        <div class='status-section ready-for-billing-status purple-master card'>
+          <div class='side-bumper'></div>
+          <span>Billing</span>
+          <div class='header flex-center-left-row'>
+            <%- include('partials/department-expand-options.ejs') %>
+            <h3 class='category-header collapse-group-cheater'>Ready For Billing - <span class='category-ticket-count'><%= billingReadyForBillingTickets.length %></span></h3>
+          </div>
+          <div class='table ticket-container flex-top-center-column'>
+            <div class='table-header flex-center-center-row'>
+              <div class='column-header column-header-a'></div>
+              <div class='column-header column-header-b'>#</div>
+              <div class='column-header column-header-c'>Ticket Number</div>
+              <div class='column-header column-header-d'>Status</div>
+              <div class='column-header column-header-e'></div>
+              <div class='column-header column-header-f'></div>
+              <div class='column-header column-header-g'>Grouped</div>
+              <div class='column-header column-header-h'>Products</div>
+              <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table ticket-container flex-top-center-column'>
-              <div class='table-header flex-center-center-row'>
-                <div class='column-header column-header-a'></div>
-                <div class='column-header column-header-b'>#</div>
-                <div class='column-header column-header-c'>Ticket Number</div>
-                <div class='column-header column-header-d'></div>
-                <div class='column-header column-header-e'></div>
-                <div class='column-header column-header-f'></div>
-                <div class='column-header column-header-g'></div>
-                <div class='column-header column-header-h'></div>
-                <div class='column-header column-header-i'>Due Date</div>
-              </div>
-              <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
-                <% billingReadyForBillingTickets.forEach((ticket, index) => { %>
-                <div id='ticket-row-<%= ticket._id %>' class='table-row flex-center-center-row billing-ready-for-billing-row'>
+            <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
+              <% billingReadyForBillingTickets.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row'>
+                <%- include('partials/start-job-modal.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
+                <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
@@ -2009,73 +1899,51 @@
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
-                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td column-td-d bg-purple text-white'>Rush (TODO)</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
+                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %> </div>
+                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='table-row flex-center-center-row'>
-                  <div class='group-lines'></div>
-                  <div class='column-td column-td-a'>
-                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                        <div class='ticket-dropdown-options dropdown'>
-                          <ul>
-                            <a href="/tickets/<%= ticket.id %>"><li><i class="fa-regular fa-eye"></i>View Ticket</li></a>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          </ul>
-                        </div>
-                      </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>  
-                </div>
-                <% }) %>
+                <%- include('partials/products-wrapper.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
+              <% }) %>
             </div>
           </div>
-          <div class='department-section department-section-a'>
-            <div class='header flex-center-left-row'>
-              <div class='expanded-options-wrapper'>
-                <div class='expanded-options-btn flex-center-center-row'>
-                  <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class='expanded-options-dropdown dropdown'>
-                  <ul>
-                    <li class='collapse-group'><i class="fa-regular fa-minimize"></i>Hide This Department</li>
-                    <li class='expand-group'><i class="fa-regular fa-maximize"></i>Show This Department</li>
-                    <li class='collapse-all-groups'><i class="fa-regular fa-minimize"></i>Hide All Departmens</li>
-                    <li class='expand-all-groups'><i class="fa-regular fa-maximize"></i>Show All Departments</li>
-                  </ul>
-                </div>
-              </div>
-              <h3 class='category-header text-green'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
+        </div>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Billing</span>
+          <div class='header flex-center-left-row'>
+            <%- include('partials/department-expand-options.ejs') %>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
+          </div>
+          <div class='table ticket-container flex-top-center-column'>
+            <div class='table-header flex-center-center-row'>
+              <div class='column-header column-header-a'></div>
+              <div class='column-header column-header-b'>#</div>
+              <div class='column-header column-header-c'>Ticket Number</div>
+              <div class='column-header column-header-d'>Status</div>
+              <div class='column-header column-header-e'></div>
+              <div class='column-header column-header-f'></div>
+              <div class='column-header column-header-g'>Grouped</div>
+              <div class='column-header column-header-h'>Products</div>
+              <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div class='table ticket-container flex-top-center-column'>
-              <div class='table-header flex-center-center-row'>
-                <div class='column-header column-header-a'></div>
-                <div class='column-header column-header-b'>#</div>
-                <div class='column-header column-header-c'>Ticket Number</div>
-                <div class='column-header column-header-d'></div>
-                <div class='column-header column-header-e'></div>
-                <div class='column-header column-header-f'></div>
-                <div class='column-header column-header-g'></div>
-                <div class='column-header column-header-h'></div>
-                <div class='column-header column-header-i'>Due Date</div>
-              </div>
-              <div id='billing-in-progress-table' class='table-body flex-center-center-column'>
-                <% billingInProgressTickets.forEach((ticket, index) => { %>
-                <div id='ticket-row-<%= ticket._id %>' class='table-row flex-center-center-row billing-in-progress-row'>
+            <div id='billing-in-progress-table' class='table-body flex-center-center-column'>
+              <% billingInProgressTickets.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-for-shipping-row'>
+                <%- include('partials/start-job-modal.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
+                <div class='table-row flex-center-center-row'>
                   <div class='column-td column-td-a'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
@@ -2083,43 +1951,26 @@
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
+                  <div class='column-td column-td-b bg-white'><%= index + 1 %> </div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>
+                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
                 </div>
-                <div class='table-row flex-center-center-row'>
-                  <div class='group-lines'></div>
-                  <div class='column-td column-td-a'>
-                        <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                        <div class='ticket-dropdown-options dropdown'>
-                          <ul>
-                            <a href="/tickets/<%= ticket.id %>"><li><i class="fa-regular fa-eye"></i>View Ticket</li></a>
-                            <li><i class="fa-regular fa-circle-arrow-right"></i>Move</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide This Group</li>
-                            <li><i class="fa-regular fa-minimize"></i>Hide All Groups</li>
-                          </ul>
-                        </div>
-                      </div>
-                  <div class='column-td column-td-b bg-white'></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#47001</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-preview'>July 4</div>  
-                </div>
-                <% }) %>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
               </div>
+              <% }) %>
             </div>
           </div>
+        </div>
       </div>
-       <%- include('partials/department-status-clones.ejs') %>
+      <%- include('partials/department-status-clones.ejs') %>
   </div>
 </div>
 

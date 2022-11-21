@@ -530,16 +530,20 @@ $( document ).ready(function() {
     });
 
     $('.collapse-group').click(function(){
-        $(this).closest('.department-section').addClass('hide');
+        $(this).closest('.status-section').addClass('hide');
+    });
+
+    $('.collapse-group-cheater').click(function(){
+        $(this).closest('.status-section').toggleClass('hide');
     });
 
     $('.expand-group').click(function(){
-        $(this).closest('.department-section').removeClass('hide-all');
-        $(this).closest('.department-section').removeClass('hide');
+        $(this).closest('.status-section').removeClass('hide-all');
+        $(this).closest('.status-section').removeClass('hide');
     });
 
     $('.collapse-all-groups').click(function(){
-        $('.department-section').addClass('hide-all');
+        $('.status-section').addClass('hide-all');
     });
 
     $('.show-products').click(function(){
@@ -553,8 +557,8 @@ $( document ).ready(function() {
     });
 
     $('.expand-all-groups').click(function(){
-        $('.department-section').removeClass('hide-all');
-        $('.department-section').removeClass('hide');
+        $('.status-section').removeClass('hide-all');
+        $('.status-section').removeClass('hide');
     });
     $( document ).ready(function() {
         let materialCount = $('.material-card-section .card').length;
@@ -909,7 +913,7 @@ $( document ).ready(function() {
 
     function showOrHideDepartmentSections() {
         const emptyLength = 0;
-        $('.department-section').each(function() {
+        $('.status-section').each(function() {
             const departmentStatusSection = $(this);
             const departmentStatusTable = findTableWithinSection(departmentStatusSection);
             const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > emptyLength;
@@ -923,7 +927,7 @@ $( document ).ready(function() {
     }
 
     function updateDepartmentSectionTicketCounts() {
-        $('.department-section').each(function() {
+        $('.status-section').each(function() {
             const departmentStatusSection = $(this);
             const departmentStatusTable = findTableWithinSection(departmentStatusSection);
             const numberOfRowsInSection = countHowManyRowsExistInTable(departmentStatusTable);
@@ -972,7 +976,8 @@ $( document ).ready(function() {
             const ticketCount = $(this).text();
             const shouldSectionBeHidden = parseInt(ticketCount) === emptyLength;
             if (shouldSectionBeHidden) {
-                $(this).closest('.department-section').hide();
+                $(this).closest('.status-section').hide();
+                // $('.department-wrapper').find('.status-section:visible:last').css('margin-bottom', '0');
             }
         });
     }

@@ -2457,7 +2457,7 @@ a.storm {
 .workflow-order-header.card {
   position: fixed;
   top: 2rem;
-  width: calc(100% - 126px);
+  width: calc(100% - 125px);
   right: 30px;
   z-index: 99;
   transition: .3s;
@@ -2969,7 +2969,8 @@ a.storm {
 .ticket-products-wrapper .table-header,
 .product-wrapper,
 .product-wrapper-header {
-	width: 97%;
+	/* width: 97%; */
+  width: calc(100% - 70px);
 }
 .ticket-products-wrapper {
 	display: none;
@@ -3053,6 +3054,7 @@ a.storm {
 
 .department-wrapper {
  position: relative;
+ margin-bottom: 30px;
 }
 .department-wrapper h2 {
   color: #6e6b7b;
@@ -3117,7 +3119,7 @@ a.storm {
   background-color: #0465d9;
 }
 .view-tickets-body .card {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   /* padding-top: 45px; */
 }
 .list-item-user-details { 
@@ -3154,28 +3156,28 @@ a.storm {
   display: block;
 } */
 
-.department-section.hide .ticket-container,
-.department-section.hide-all .ticket-container {
+.status-section.hide .ticket-container,
+.status-section.hide-all .ticket-container {
   height: 0;
   overflow: hidden;
   transition: .3s;
 }
 .expanded-options-dropdown li.expand-group,
-.department-section .expand-all-groups {
+.status-section .expand-all-groups {
   display: none;
 }
-.department-section.hide .expanded-options-dropdown li.collapse-group {
+.status-section.hide .expanded-options-dropdown li.collapse-group {
   display: none;
 }
 
-.department-section.hide-all .collapse-all-groups {
+.status-section.hide-all .collapse-all-groups {
   display: none;
 }
-.department-section.hide li.expand-group {
+.status-section.hide li.expand-group {
   display: block;
 }
-.department-section.hide-all .expanded-options-dropdown li.expand-all-groups,
-.department-section.hide-all .expanded-options-dropdown li.expand-group {
+.status-section.hide-all .expanded-options-dropdown li.expand-all-groups,
+.status-section.hide-all .expanded-options-dropdown li.expand-group {
   display: block;
 }
 
@@ -3442,11 +3444,13 @@ a.storm {
 
 .product-wrapper-header h4 {
   margin: 10px 0;
+  padding-left: 7px;
+  font-size: 18px;
 }
-.department-section-e .product-wrapper-header h4 {
+.status-section-e .product-wrapper-header h4 {
   color: #ea5455;
 }
-.department-section-e .table-row-wrapper .user-cell {
+.status-section-e .table-row-wrapper .user-cell {
   height: 30px;
   width: 30px;
 }
@@ -3550,8 +3554,8 @@ canvas{
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  /* padding: 210px 30px 0 30px; */
   padding: 240px 30px 0 30px;
-  /* padding: 255px 30px 0 30px; */
 }
 .sidebar-main {
   position: fixed;
@@ -3860,16 +3864,33 @@ canvas{
   width: calc(100% - 350px);
 }
 
-.department-wrapper.card h4.department-name {
+.department-wrapper h4.department-name {
   margin: 0;
   display: inline-block;
   border: 1px solid grey;
-  padding: 5px 10px;
+  padding: 5px 10px 5px 25px;
   color: white;
-  border-radius: 3px;
+  border-radius: 0.428rem;
+
+  width: 100%;
+  font-size: 18px;
+  margin: 7px 0;
+  border: none;
+  border-radius: 0;
+  /* border-bottom: 1px solid #e5e5e4!important;
+  border-top: 1px solid #e5e5e4!important; */
+  color: #6e6b7b;
+  display: none;
 }
-.department-wrapper.card h4.department-name span {
+.department-wrapper h4.department-name span {
   color: white;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 15px;
+  height: 20px;
+  width: 20px;
+
+  background-color: #6e6b7b;
 }
 .full-page-curtain {
   position: fixed;
@@ -4050,70 +4071,69 @@ canvas{
   width: 100%;
 }
 
-div[data-department^="ORDER-PREP"] h4 {
-  /* background: #845EC2;
-  border-color: #845EC2!important; */
+/* div[data-department^="ORDER-PREP"] h4.department-name {
   background-color: rgba(0,207,232,.12);
   border-color: rgba(0,207,232,.12)!important;
   color:#00cfe8!important;
 }
-div[data-department^="ORDER-PREP"] h4 span {
-  color: #00cfe8!important;
+div[data-department^="ORDER-PREP"] h4.department-name span {
+  background-color: #00cfe8;
 }
 
-div[data-department^="ART-PREP"] h4 {
+div[data-department^="ART-PREP"] h4.department-name {
   background: rgba(255,159,67,.1);
   border-color: rgba(255,159,67,.1)!important;
   color: #ff9f43!important;
 }
-div[data-department^="ART-PREP"] h4 span {
-  color: #ff9f43!important;
+div[data-department^="ART-PREP"] h4.department-name span {
+  background: #ff9f43;
 }
-div[data-department^="PRE-PRESS"] h4 {
+div[data-department^="PRE-PRESS"] h4.department-name {
   background: rgba(115,103,240,.1);
   border-color: rgba(115,103,240,.1)!important;
   color: #7367f0!important;
 }
-div[data-department^="PRE-PRESS"] h4 span {
-  color: #7367f0!important;
+div[data-department^="PRE-PRESS"] h4.department-name span {
+  background: #7367f0;
 }
-div[data-department^="PRINTING"] h4 {
+div[data-department^="PRINTING"] h4.department-name {
   background: rgba(75,75,75,.12);
   border-color: rgba(75,75,75,.12)!important;
   color: #4b4b4b!important;
 }
-div[data-department^="PRINTING"] h4 span {
-  color: #4b4b4b!important;
+div[data-department^="PRINTING"] h4.department-name span {
+  background: #4b4b4b;
 }
-div[data-department^="CUTTING"] h4 {
+div[data-department^="CUTTING"] h4.department-name {
   background: rgba(40,199,111,.12);
   border-color: rgba(40,199,111,.12)!important;
   color: #28c76f!important;
 }
-div[data-department^="CUTTING"] h4 span {
-  color: #28c76f!important;
+div[data-department^="CUTTING"] h4.department-name span {
+  background: #28c76f;
 }
-div[data-department^="WINDING"] h4 {
+div[data-department^="WINDING"] h4.department-name {
   background: rgba(234,84,85,.12);
   border-color: rgba(234,84,85,.12)!important;
   color: #ea5455!important;
 }
-div[data-department^="WINDING"] h4 span {
-  color: #ea5455!important;
+div[data-department^="WINDING"] h4.department-name span {
+  background: #ea5455;
 }
-div[data-department^="SHIPPING"] h4 {
+div[data-department^="SHIPPING"] h4.department-name {
   background: rgba(102, 204, 255, .3);
   border-color: rgba(102, 204, 255, .3)!important;
   color: rgba(102, 204, 255, 1)!important;
 }
-div[data-department^="SHIPPING"] h4 span {
-  color: rgba(102, 204, 255, 1)!important;
+div[data-department^="SHIPPING"] h4.department-name span {
+  background: rgba(102, 204, 255, 1);
 }
-div[data-department^="BILLING"] h4 {
+div[data-department^="BILLING"] h4.department-name {
   background: rgba(156, 211, 38, .3);
   border-color: rgba(156, 211, 38, .3)!important;
   color: rgba(156, 211, 38, 1)!important;
 }
-div[data-department^="BILLING"] h4 span {
-  color: rgba(156, 211, 38, 1)!important;
-}
+div[data-department^="BILLING"] h4.department-name span {
+  background: rgba(156, 211, 38, 1);
+} */
+

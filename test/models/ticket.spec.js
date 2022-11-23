@@ -1,7 +1,12 @@
 const chance = require('chance').Chance();
 const TicketModel = require('../../application/models/ticket');
+const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
+const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+
+const LENGTH_OF_ONE = 1;
+const EMPTY_LENGTH = 0;
 
 describe('validation', () => {
     let ticketAttributes;
@@ -729,6 +734,168 @@ describe('validation', () => {
             const error = ticket.validateSync();
     
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('mongoose pre hooks test suite', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        describe('mongoose ticketSchema.pre("findOneAndUpdate")', () => {
+        
+            it('should add item to workflow database when one ticket is updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const newTicketDestination = {
+                    department: randomDepartment,
+                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                };
+    
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+                await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(LENGTH_OF_ONE);
+            });
+    
+            it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const newTicketDestination = {
+                    department: randomDepartment,
+                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                };
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+                await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                const workflowStep = allWorkflowStepsInDatabase[0];
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(LENGTH_OF_ONE);
+                expect(String(workflowStep.ticketId)).toBe(String(savedTicket._id));
+                expect(workflowStep.destination.department).toBe(newTicketDestination.department);
+                expect(workflowStep.destination.departmentStatus).toBe(newTicketDestination.departmentStatus);
+                expect(workflowStep.destination.createdAt).toBeDefined();
+                expect(workflowStep.destination.updatedAt).toBeDefined();
+                expect(workflowStep.createdAt).toBeDefined();
+                expect(workflowStep.updatedAt).toBeDefined();
+            });
+    
+            it('should NOT add item to workflow database when one ticket is updated but the destination attribute was NOT updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+                const ticketAttributesOtherThanDestinationToUpdate = {};
+                await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: ticketAttributesOtherThanDestinationToUpdate}, {runValidators: true}).exec();
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(EMPTY_LENGTH);
+            });
+    
+            it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
+                const departments = getAllDepartmentsWithDepartmentStatuses();
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+    
+                for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
+                    const department = chance.pickone(departments);
+                    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+    
+                    newTicketDestination = {
+                        department,
+                        departmentStatus
+                    };
+    
+                    await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+                }
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(numberOfUpdatesToTicketDestination);
+            });
+        });
+
+        describe('mongoose ticketSchema.pre("updateOne")', () => {
+        
+            it('should add item to workflow database when one ticket is updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const newTicketDestination = {
+                    department: randomDepartment,
+                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                };
+                const savedTicket = await ticket.save({validateBeforeSave: false});
+
+                await TicketModel.updateOne({ _id: savedTicket._id }, { $set: { destination: newTicketDestination } });
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                expect(allWorkflowStepsInDatabase.length).toBe(LENGTH_OF_ONE);
+            });
+    
+            it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const newTicketDestination = {
+                    department: randomDepartment,
+                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                };
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+
+                await TicketModel.updateOne({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                const workflowStep = allWorkflowStepsInDatabase[0];
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(LENGTH_OF_ONE);
+                expect(String(workflowStep.ticketId)).toBe(String(savedTicket._id));
+                expect(workflowStep.destination.department).toBe(newTicketDestination.department);
+                expect(workflowStep.destination.departmentStatus).toBe(newTicketDestination.departmentStatus);
+                expect(workflowStep.destination.createdAt).toBeDefined();
+                expect(workflowStep.destination.updatedAt).toBeDefined();
+                expect(workflowStep.createdAt).toBeDefined();
+                expect(workflowStep.updatedAt).toBeDefined();
+            });
+    
+            it('should NOT add item to workflow database when one ticket is updated but the destination attribute was NOT updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+                const ticketAttributesOtherThanDestinationToUpdate = {};
+
+                await TicketModel.updateOne({_id: savedTicket._id}, {$set: ticketAttributesOtherThanDestinationToUpdate}, {runValidators: true}).exec();
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                expect(allWorkflowStepsInDatabase.length).toBe(EMPTY_LENGTH);
+            });
+    
+            it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
+                const ticket = new TicketModel(ticketAttributes);
+                const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
+                const departments = getAllDepartmentsWithDepartmentStatuses();
+                let savedTicket = await ticket.save({validateBeforeSave: false});
+    
+                for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
+                    const department = chance.pickone(departments);
+                    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+    
+                    newTicketDestination = {
+                        department,
+                        departmentStatus
+                    };
+    
+                    await TicketModel.updateOne({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+                }
+    
+                const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                
+                expect(allWorkflowStepsInDatabase.length).toBe(numberOfUpdatesToTicketDestination);
+            });
         });
     });
 });

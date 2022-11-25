@@ -1022,6 +1022,9 @@ input:focus + .show-password-frame {
 .table-wrapper .workflow-filter {
   margin-top: 25px;
 }
+.workflow-order-header .workflow-filter {
+  margin-top: 20px;
+}
 .table-wrapper .table-header {
   margin-bottom: 25px;
   height: auto;
@@ -2972,9 +2975,12 @@ a.storm {
 	/* width: 97%; */
   width: calc(100% - 70px);
 }
+.product-wrapper-header {
+  display: none;
+}
 .ticket-products-wrapper {
 	display: none;
-	margin-bottom: 25px;
+	margin:15px 0 25px 0;
 }
 
 .table-row-wrapper.active .ticket-products-wrapper {
@@ -3443,9 +3449,9 @@ a.storm {
 
 
 .product-wrapper-header h4 {
-  margin: 10px 0;
+  margin: 5px 0;
   padding-left: 7px;
-  font-size: 18px;
+  font-size: 14px;
 }
 .status-section-e .product-wrapper-header h4 {
   color: #ea5455;

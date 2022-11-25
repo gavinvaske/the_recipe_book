@@ -92,7 +92,7 @@
         <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
         <div class='status-section needs-attention-status red-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
@@ -150,7 +150,7 @@
         </div>
         <div class='status-section send-to-customer-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Send To Customer - <span class='category-ticket-count'><%= orderPrepSendToCustomerTickets.length %></span></h3>
@@ -202,7 +202,7 @@
         </div>
         <div id='waitingOnApprovalStatus' class='status-section orange-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Waiting On Approval- <span class='category-ticket-count'><%= orderPrepWaitingOnApprovalTickets.length %></span></h3>
@@ -254,7 +254,7 @@
         </div>
         <div class='status-section light-blue-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Waiting On Customer - <span class='category-ticket-count'><%= orderPrepWaitingOnCustomerTickets.length %></span></h3>
@@ -306,7 +306,7 @@
         </div>
         <div class='status-section ready-to-order-plate-die-status purple-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready To Order Plate / Die - <span class='category-ticket-count'><%= orderPrepReadyToOrderTickets.length %></span></h3>
@@ -358,7 +358,7 @@
         </div>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Order Prep</span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= orderPrepInProgressTickets.length %></span></h3>
@@ -409,6 +409,9 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
+      </div>
       <!--- Art Prep Department Start-->
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Art Department -->
@@ -416,7 +419,7 @@
         <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
         <div class='status-section needs-attention-status card'>
           <div class='side-bumper'></div>
-          <span>Art Prep</span>
+          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
@@ -472,7 +475,7 @@
         </div>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Art Prep</span>
+          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= artPrepInProgressTickets.length %></span></h3>
@@ -524,7 +527,7 @@
         </div>
         <div class='status-section needs-proof-status orange-master card'>
           <div class='side-bumper'></div>
-          <span>Art Prep</span>
+          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Proof - <span class='category-ticket-count'><%= artPrepNeedsProofTickets.length %></span></h3>
@@ -576,7 +579,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Art Prep</span>
+          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Die Line - <span class='category-ticket-count'><%= artPrepNeedsDieLineTickets.length %></span></h3>
@@ -628,7 +631,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Art Prep</span>
+          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Plate - <span class='category-ticket-count'><%= artPrepNeedsPlateTickets.length %></span></h3>
@@ -679,13 +682,16 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfPrePressTickets = Object.values(prePressTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Pre Press Department-->
       <div class='department-wrapper' data-department="PRE-PRESS">
         <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePressTickets %></span></h4>
         <div class='status-section needs-attention-status card'>
           <div class='side-bumper'></div>
-          <span>Pre Printing</span>
+          <span>Pre Printing - <%= numberOfPrePressTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= prePressNeedsAttentionTickets.length %></span></h3>
@@ -737,7 +743,7 @@
         </div>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Pre Printing</span>
+          <span>Pre Printing - <%= numberOfPrePressTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= prePressInProgressTickets.length %></span></h3>
@@ -789,7 +795,7 @@
         </div>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Pre Printing</span>
+          <span>Pre Printing - <%= numberOfPrePressTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Send To Press - <span class='category-ticket-count'><%= prePressSendToPressTickets.length %></span></h3>
@@ -840,13 +846,16 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Pre-Printing</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Printing Department-->
       <div class='department-wrapper' data-department="PRINTING">
         <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= printingInProgressTickets.length %></span></h3>
@@ -902,7 +911,7 @@
         </div>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready For Scheduling- <span class='category-ticket-count'><%= printingReadyForSchedulingTickets.length %></span></h3>
@@ -954,7 +963,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Press One - <span class='category-ticket-count'><%= printingSchedulePressOneTickets.length %></span></h3>
@@ -1006,7 +1015,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Press Two - <span class='category-ticket-count'><%= printingSchedulePressTwoTickets.length %></span></h3>
@@ -1058,7 +1067,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Press Three - <span class='category-ticket-count'><%= printingSchedulePressThreeTickets.length %></span></h3>
@@ -1110,7 +1119,7 @@
         </div>
         <div class='status-section on-hold-status red-master card'>
           <div class='side-bumper'></div>
-          <span>Printing</span>
+          <span>Printing - <%= numberOfPrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= printingOnHoldTickets.length %></span></h3>
@@ -1161,6 +1170,9 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Cutting Department -->
       <div class='department-wrapper' data-department="CUTTING">
@@ -1168,7 +1180,7 @@
 
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= cuttingInProgressTickets.length %></span></h3>
@@ -1224,7 +1236,7 @@
         </div>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready For Scheduling- <span class='category-ticket-count'><%= cuttingReadyForSchedulingTickets.length %></span></h3>
@@ -1276,7 +1288,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Delta One - <span class='category-ticket-count'><%= cuttingScheduleDeltaOneTickets.length %></span></h3>
@@ -1328,7 +1340,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Delta Two - <span class='category-ticket-count'><%= cuttingScheduleDeltaTwoTickets.length %></span></h3>
@@ -1380,7 +1392,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Scheduled Rofoflex - <span class='category-ticket-count'><%= cuttingScheduleRotoflexTickets.length %></span></h3>
@@ -1432,7 +1444,7 @@
         </div>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
-          <span>Cutting</span>
+          <span>Cutting - <%= numberOfCuttingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= cuttingOnHoldTickets.length %></span></h3>
@@ -1483,13 +1495,16 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Winding Department -->
       <div class='department-wrapper' data-department="WINDING">
         <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Winding</span>
+          <span>Winding - <%= numberOfWindingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= windingInProgressTickets.length %></span></h3>
@@ -1545,7 +1560,7 @@
         </div>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Winding</span>
+          <span>Winding - <%= numberOfWindingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready For Scheduling - <span class='category-ticket-count'><%= windingReadyForSchedulingTickets.length %></span></h3>
@@ -1597,7 +1612,7 @@
         </div>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
-          <span>Winding</span>
+          <span>Winding - <%= numberOfWindingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= windingOnHoldTickets.length %></span></h3>
@@ -1648,13 +1663,16 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Winding</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Shipping Department -->
       <div class='department-wrapper' data-department="SHIPPING">
         <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Shipping</span>
+          <span>Shipping - <%= numberOfShippingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= shippingInProgressTickets.length %></span></h3>
@@ -1706,7 +1724,7 @@
         </div>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Shipping</span>
+          <span>Shipping - <%= numberOfShippingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready For Shipping - <span class='category-ticket-count'><%= shippingReadyForShippingTickets.length %></span></h3>
@@ -1758,7 +1776,7 @@
         </div>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
-          <span>Shipping</span>
+          <span>Shipping - <%= numberOfShippingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= shippingOnHoldTickets.length %></span></h3>
@@ -1810,7 +1828,7 @@
         </div>
         <div class='status-section card'>
           <div class='side-bumper'></div>
-          <span>Shipping</span>
+          <span>Shipping - <%= numberOfShippingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Arrival Plate / Die - <span class='category-ticket-count'><%= shippingToolArrivalTickets.length %></span></h3>
@@ -1861,13 +1879,16 @@
           </div>
         </div>
       </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
+      </div>
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Billing Department -->
       <div class='department-wrapper' data-department="BILLING">
         <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
         <div class='status-section ready-for-billing-status purple-master card'>
           <div class='side-bumper'></div>
-          <span>Billing</span>
+          <span>Billing - <%= numberOfBillingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Ready For Billing - <span class='category-ticket-count'><%= billingReadyForBillingTickets.length %></span></h3>
@@ -1919,7 +1940,7 @@
         </div>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Billing</span>
+          <span>Billing - <%= numberOfBillingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
@@ -1969,6 +1990,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Billing</h4><div class="department-divide-line"></div>
       </div>
       <%- include('partials/department-status-clones.ejs') %>
   </div>

@@ -310,7 +310,7 @@
 	justify-content: center;
 	align-items: center;
 	color: white;
-	font-size: 14px;
+	font-size: 12px;
 	margin-right: 10px;
 }
 
@@ -453,8 +453,10 @@
 	border-bottom: 1px solid #00cfe8;
   }
   .product-wrapper:first-of-type .table-row .group-lines {
-	height: 73px;
-	top: -52px;
+	/* height: 73px;
+	top: -52px; */
+	height: 50px;
+    top: -29px;
   }
   
   .red-master .table-row-wrapper.active .ticket-products-wrapper .column-td-a {
@@ -878,6 +880,7 @@ button:hover {
 	height: 33px;
 	min-width: 100px;
 	border-radius: 3px;
+	line-height: 16px;
 }
 .btn-person-filter,
 .btn-sort,

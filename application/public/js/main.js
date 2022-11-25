@@ -888,6 +888,16 @@ $( document ).ready(function() {
 
         return ticketRow;
     }
+    
+    function updateTicketRowNumbers() {
+        const departmentTables = $('.table-body');
+        departmentTables.each(function() {
+            const ticketRows = $(this).find('[id^=ticket-row]'); // https://stackoverflow.com/a/5376445/9273261
+            ticketRows.each(function(index) {
+                $(this).find('.row-number').text(index + 1);
+            });
+        });
+    }
 
     function moveTicket(ticket) {
         const ticketId = ticket._id;
@@ -905,6 +915,7 @@ $( document ).ready(function() {
         updateDepartmentTicketCounts();
         updateDepartmentSectionTicketCounts();
         showOrHideDepartmentSections();
+        updateTicketRowNumbers();
     }
 
     function findTableWithinSection(departmentStatusSection) {

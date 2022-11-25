@@ -1,5 +1,7 @@
 $( document ).ready(function() {
     const emptyLength = 0;
+    const ZERO = 0;
+
     $('.workflow-navigation ul li').on('click', function() {
         $('.department-end-frame').remove();
         let currentDepartmentName = $(this).text();
@@ -502,7 +504,7 @@ $( document ).ready(function() {
         }
     });
 
-    $('.column-td-a').click(function(){
+    $('.table-body').on('click', '.table-row-wrapper .table-row .column-td-a', function() {
         if ($(this).hasClass('active')){
             $(this).removeClass('active');
         } else {
@@ -511,7 +513,7 @@ $( document ).ready(function() {
         }
     });
 
-    $('.ticket-number-column').click(function(){
+    $('.table-body').on('click', '.table-row .ticket-number-column', function(){
         let currentActive = $(this).closest('.table-row-wrapper');
         if ($(currentActive).hasClass('active')) {
             $('.table-row-wrapper').removeClass('active');
@@ -827,6 +829,13 @@ $( document ).ready(function() {
         return `ticket-row-${ticketId}`;
     }
 
+    function formatDate(dateAsString, formatConfig) {
+        if (!dateAsString) {
+            return;
+        }
+        return new Date(dateAsString).toLocaleDateString('en-us', formatConfig);
+    }
+
     const ticketNumberColumn = '.ticket-number-column';
     const statusColumn = '.status-column';
     const fromColumn = '.from-column';
@@ -845,19 +854,21 @@ $( document ).ready(function() {
 
     function mapTicketRowColumnSelectorToValues(ticket) {
         console.log(ticket);
+        const machineName = (ticket.destination.machines && ticket.destination.machines.length > emptyLength) ? ticket.destination.machines[0].name : '';
+        const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
         return {
-            [ticketNumberColumn]: '!TODO!',
-            [statusColumn]: '!TODO!',
+            [ticketNumberColumn]: ticket.shippingAttention,
+            [statusColumn]: ticket.shippingAttention,
             [fromColumn]: '!TODO!',
-            [dueDateColumn]: '!TODO!',
+            [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
             [followUpDateColumn]: '!TODO!',
             [sentDateColumn]: '!TODO!',
             [typeColumn]: '!TODO!',
-            [productCountColumn]: '!TODO!',
-            [locationColumn]: '!TODO!',
-            [materialColumn]: '!TODO!',
+            [productCountColumn]: numberOfProducts,
+            [locationColumn]: machineName,
+            [materialColumn]: ticket.primaryMaterial, // TODO: I think Storm marked this wrong on the mockup, check with him
             [dieColumn]: '!TODO!',
-            [lengthColumn]: '!TODO!',
+            [lengthColumn]: ticket.totalFeet,
             [holdStatusColumn]: '!TODO!',
             [rolls]: '!TODO!',
             [groupedColumn]: '!TODO!',
@@ -899,6 +910,48 @@ $( document ).ready(function() {
         });
     }
 
+    function getAProductRowClone() {
+        return $('#product-row-template').first().clone();
+    }
+
+    function buildProductRows(products) {
+        let productRows = [];
+        
+        products && products.forEach((product) => {
+            console.log(`product => ${JSON.stringify(product)}`);
+            const productRow = getAProductRowClone();
+
+            // TODO: Populate the template with dynamic data
+
+            productRows.push(productRow);
+
+        });
+
+        return productRows;
+    }
+
+    function addProductRowsToTicketRow(ticketRow, productRows) {
+        if (!productRows || productRows.length === emptyLength) {
+            return;
+        }
+
+        const productsTable = ticketRow.find('.products-table');
+        
+        productsTable.empty();
+
+        productsTable.append(...productRows);
+    }
+
+    function updateTicketRowNumbers() {
+        const departmentTables = $('.table-body');
+        departmentTables.each(function() {
+            const ticketRows = $(this).find('[id^=ticket-row]'); // https://stackoverflow.com/a/5376445/9273261
+            ticketRows.each(function(index) {
+                $(this).find('.row-number').text(index + 1);
+            });
+        });
+    }
+
     function moveTicket(ticket) {
         const ticketId = ticket._id;
         const ticketRowToRemove = findTicketRow(ticketId);
@@ -909,6 +962,9 @@ $( document ).ready(function() {
         const ticketRowTemplate = findATicketRowToClone(ticket);
 
         const ticketRow = populateTicketRowAttributes(ticketRowTemplate, ticket);
+        const productRows = buildProductRows(ticket.products);
+
+        addProductRowsToTicketRow(ticketRow, productRows);
 
         departmentStatusTable.append(ticketRow);
 

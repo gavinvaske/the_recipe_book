@@ -952,6 +952,20 @@ $( document ).ready(function() {
         });
     }
 
+    function populateTicketRowDropdownOptions(ticketRow) {
+        ticketRow.find('.date-created-target').text('TODO 1');
+        ticketRow.find('.overall-duration-target').text('TODO 2');
+        ticketRow.find('.production-duration-target').text('TODO 3');
+        ticketRow.find('.department-duration-target').text('TODO 4');
+        ticketRow.find('.list-duration-target').text('TODO 5');
+
+        ticketRow.find('.view-ticket-link').attr('href','TODO 6');
+        ticketRow.find('.edit-ticket-link').attr('href','TODO 7');
+        ticketRow.find('.archive-ticket-link').attr('href','TODO 8');
+
+        ticketRow.find('.start-modal-ticket-number').attr('href','TODO 9');
+    }
+
     function moveTicket(ticket) {
         const ticketId = ticket._id;
         const ticketRowToRemove = findTicketRow(ticketId);
@@ -965,6 +979,7 @@ $( document ).ready(function() {
         const productRows = buildProductRows(ticket.products);
 
         addProductRowsToTicketRow(ticketRow, productRows);
+        populateTicketRowDropdownOptions(ticketRow)
 
         departmentStatusTable.append(ticketRow);
 

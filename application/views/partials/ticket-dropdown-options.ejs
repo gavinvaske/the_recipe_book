@@ -53,7 +53,7 @@
             </div>
             <i class="fa-regular fa-chevron-right"></i>
         </li>
-        <a href="/tickets/<%= ticket.id %>"><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
+        <a href="/tickets/<%= ticket.id %>" class="view-ticket-link"><li class='view-ticket back-out-hover'><i class="fa-regular fa-eye"></i>View Ticket</li></a>
         <div class='line'></div>
         <li class="show-products back-out-hover"><i class="fa-regular fa-list-tree"></i>Show Products</li>
         <li class="hide-products back-out-hover"><i class="fa-regular fa-arrows-to-line"></i>Hide Products</li>
@@ -97,7 +97,7 @@
             <i class="fa-regular fa-chevron-right"></i>
         </li>
         <div class='line'></div>
-        <a href="/tickets/update/<%= ticket.id %>"><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
-        <li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li>
+        <a href="/tickets/update/<%= ticket.id %>" class='edit-ticket-link'><li class='edit-ticket back-out-hover'><i class="fa-regular fa-pen-to-square"></i>Edit Ticket</li></a>
+        <a href='' class='archive-ticket-link'><li class='archive-ticket back-out-hover'><i class="fa-regular fa-box-archive"></i>Archive Ticket</li></a>
     </ul>
   </div>

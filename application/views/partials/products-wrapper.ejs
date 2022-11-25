@@ -1,6 +1,7 @@
 <div class='ticket-products-wrapper flex-center-right-column full-width'>
+    <% const numberOfProducts = ticket.products ? ticket.products.length : 0 %> 
     <div class='product-wrapper-header flex-center-left-row'>
-        <h4>Products - <span>3</span></h4>
+        <h4>Products - <span><%= numberOfProducts %></span></h4>
     </div>
     <div class='table-header secondary-table-header flex-center-center-row'>
         <div class='column-header column-header-a'></div>
@@ -14,7 +15,7 @@
         <div class='column-header column-header-i'>Artwork</div>
     </div>
     <div class='full-width flex-center-right-column products-table'>
-        <% ticket.products.forEach((product, index) => { %>
+        <% ticket.products && ticket.products.forEach((product, index) => { %>
         <div class='product-wrapper flex-top-center-column'>
             <div class='table-row flex-center-center-row'>
             <div class='group-lines'></div>

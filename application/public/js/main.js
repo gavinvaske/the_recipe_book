@@ -979,7 +979,7 @@ $( document ).ready(function() {
         const productRows = buildProductRows(ticket.products);
 
         addProductRowsToTicketRow(ticketRow, productRows);
-        populateTicketRowDropdownOptions(ticketRow)
+        populateTicketRowDropdownOptions(ticketRow);
 
         departmentStatusTable.append(ticketRow);
 

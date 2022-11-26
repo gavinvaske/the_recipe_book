@@ -918,8 +918,8 @@ $( document ).ready(function() {
         let productRows = [];
         
         products && products.forEach((product) => {
-            console.log(`product => ${JSON.stringify(product)}`);
             const productRow = getAProductRowClone();
+            productRow.find('.view-product-link').attr('href', `/products/${product._id}`);
 
             // TODO: Populate the template with dynamic data
 

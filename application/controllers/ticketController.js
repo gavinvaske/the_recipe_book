@@ -10,6 +10,7 @@ const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
 const {departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
+const dateTimeService = require('../services/dateTimeService');
 
 router.use(verifyJwtToken);
 
@@ -25,7 +26,8 @@ router.get('/', async (request, response) => {
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
-    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep(); // TODO: Maybe pass in a list of ticket Ids to compute
+    const ticketIds = await workflowStepService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
+    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep(ticketIds);
 
     return response.render('viewTickets', {
         ticketsGroupedByDestination,
@@ -35,7 +37,7 @@ router.get('/', async (request, response) => {
 
 router.get('/delete/:id', async (request, response) => {
     try {
-        response.send('TODO: Archive deleted tickets')
+        response.send('TODO: Archive deleted tickets');
     } catch (error) {
         request.flash('errors', error.message);
         return response.redirect('back');
@@ -96,6 +98,37 @@ router.post('/update/:id', async (request, response) => {
     try {
         const updatedTicket = await TicketModel.findOneAndUpdate({_id: ticketId}, {$set: request.body}, {runValidators: true, new: true}).exec();
         response.send(updatedTicket);
+    } catch (error) {
+        console.log(`Failed to update ticket with id ${ticketId}. Error message: ${error.message}`);
+        request.flash('errors', [error.message]);
+        return response.status(SERVER_ERROR_CODE).send(error.message);
+    }
+});
+
+router.get('/duration/:id', async (request, response) => {
+    const ticketId = request.params.id;
+
+    try {
+        const ticket = await TicketModel.findById(ticketId).exec();
+        const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep([ticket._id]);
+
+        const workflowStepTimeLedgerForTicket = workflowStepTimeLedger[ticketId];
+
+        const department = ticket.destination.department;
+        const departmentStatus = ticket.destination.departmentStatus;
+
+        const overallDuration = workflowStepService.getOverallTicketDuration(workflowStepTimeLedgerForTicket);
+        const productionDuration = workflowStepService.getHowLongTicketHasBeenInProduction(workflowStepTimeLedgerForTicket);
+        const departmentDuration = workflowStepService.getHowLongTicketHasBeenInDepartment(workflowStepTimeLedgerForTicket, department);
+        const listDuration = workflowStepService.getHowLongTicketHasHadADepartmentStatus(workflowStepTimeLedgerForTicket, department, departmentStatus);
+        
+        return response.json({
+            'date-created': dateTimeService.getSimpleDate(ticket.createdAt),
+            'overall-duration': dateTimeService.prettifyDuration(overallDuration),
+            'production-duration': dateTimeService.prettifyDuration(productionDuration),
+            'department-duration': dateTimeService.prettifyDuration(departmentDuration),
+            'list-duration': dateTimeService.prettifyDuration(listDuration)
+        });
     } catch (error) {
         console.log(`Failed to update ticket with id ${ticketId}. Error message: ${error.message}`);
         request.flash('errors', [error.message]);

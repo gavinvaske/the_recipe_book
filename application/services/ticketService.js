@@ -1,5 +1,6 @@
 const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
-const {departmentStatusesGroupedByDepartment, getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment, getAllDepartmentsWithDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../enums/departmentsEnum');
+const TicketModel = require('../models/ticket');
 
 function isEmptyObject(value) {
     if (!value) {
@@ -43,6 +44,24 @@ function parseTicketAttributesOffOfProducts(product) {
         Company: product.Company
     };
 }
+
+module.exports.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination = async () => {
+    const searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets = { 
+        $or: [ 
+            {'destination': null}, 
+            {
+                'destination.department': {$ne: COMPLETE_DEPARTMENT}
+            } 
+        ]
+    };
+
+    const ticketIds = await TicketModel
+        .find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
+        .distinct('_id')
+        .exec();
+
+    return ticketIds;
+};
 
 module.exports.removeEmptyObjectAttributes = (ticketObject) => {
     const ticketItemKey = 'TicketItem';

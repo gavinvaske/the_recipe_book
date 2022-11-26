@@ -1,6 +1,9 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
-const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment, getAllDepartmentStatuses} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment, getAllDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../../application/enums/departmentsEnum');
+
+const mockTicketModel = require('../../application/models/ticket');
+jest.mock('../../application/models/ticket');
 
 const TICKET_ITEM_KEY = 'TicketItem';
 
@@ -41,6 +44,66 @@ function getExtraCharge() {
 
 describe('ticketService test suite', () => {
     let ticket;
+
+    describe('findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()', () => {
+        let ticketsInDatabase;
+
+        afterEach(() => {
+            jest.resetAllMocks();
+        });
+
+        beforeEach(() => {
+            ticketsInDatabase = [];
+            execFunction = jest.fn().mockResolvedValue(ticketsInDatabase);
+            distinctFunction = jest.fn().mockImplementation(() => {
+                return {
+                    exec: execFunction
+                };
+            });
+            findFunction = jest.fn().mockImplementation(() => {
+                return {
+                    distinct: distinctFunction
+                };
+            });
+
+            mockTicketModel.find.mockImplementation(findFunction);
+        });
+
+        it ('should not throw error', async () => {
+            await expect(ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()).resolves.not.toThrowError();
+        });
+
+        it ('should use the correct query when searching for tickets from database', async () => {
+            const expectedFindQuery = { 
+                $or: [ 
+                    {'destination': null}, 
+                    {
+                        'destination.department': {$ne: COMPLETE_DEPARTMENT}
+                    } 
+                ]
+            };
+            await ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
+
+            expect(findFunction).toHaveBeenCalledTimes(1);
+            expect(findFunction).toHaveBeenCalledWith(expectedFindQuery);
+        });
+
+        it ('should only return distinct _ids from the query results', async () => {
+            const expectedDistinctAttributes = '_id';
+            await ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
+
+            expect(distinctFunction).toHaveBeenCalledTimes(1);
+            expect(distinctFunction).toHaveBeenCalledWith(expectedDistinctAttributes);
+        });
+
+        it ('should search for tickets from database using the correct mongoose query methods', async () => {
+            await ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
+
+            expect(findFunction).toHaveBeenCalledTimes(1);
+            expect(distinctFunction).toHaveBeenCalledTimes(1);
+            expect(execFunction).toHaveBeenCalledTimes(1);
+        });
+    });
 
     describe('pre-parsing ticket object', () => {
 

@@ -60,15 +60,12 @@
         <li class="duration-dropdown-trigger back-out-hover">
             <i class="fa-regular fa-clock-two"></i>Duration
             <div class='duration-dropdown-options'>
-                <% const department = ticket.destination ? ticket.destination.department : undefined %>
-                <% const departmentStatus = ticket.destination ? ticket.destination.departmentStatus : undefined %>
-                <% const workflowTimeLedgerForTicket = (workflowStepTimeLedger && Object.keys(workflowStepTimeLedger).length > 0) ? workflowStepTimeLedger[ticket.id] : undefined %>
                 <ul>
-                    <li class='date-creation'>Date Created - <span class='text-blue date-created-target'><%= ticket.createdAt ? helperMethods.getSimpleDate(ticket.createdAt) : 'N/A' %></span></li>
-                    <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getOverallTicketDuration(workflowTimeLedgerForTicket)) %></span></li>
-                    <li class='production-duration'>Production - <span class='text-blue production-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInProduction(workflowTimeLedgerForTicket)) %></span></li>
-                    <li class='department-duration'>Department - <span class='text-blue department-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasBeenInDepartment(workflowTimeLedgerForTicket, department)) %></span></li>
-                    <li class='list-duration'>Current List - <span class='text-blue list-duration-target'><%= helperMethods.prettifyDuration(helperMethods.getHowLongTicketHasHadADepartmentStatus(workflowTimeLedgerForTicket, department, departmentStatus)) %></span></li>
+                    <li class='date-creation'>Date Created - <span class='text-blue date-created-target'>N/A</span></li>
+                    <li class='overall-duration'>Overall - <span class='text-blue overall-duration-target'>N/A</span></li>
+                    <li class='production-duration'>Production - <span class='text-blue production-duration-target'>N/A</span></li>
+                    <li class='department-duration'>Department - <span class='text-blue department-duration-target'>N/A</span></li>
+                    <li class='list-duration'>Current List - <span class='text-blue list-duration-target'>N/A</span></li>
                 </ul>
             </div>
             <i class="fa-regular fa-chevron-right"></i>

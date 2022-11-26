@@ -26,12 +26,9 @@ router.get('/', async (request, response) => {
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
-    const ticketIds = await ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
-    const workflowStepTimeLedger = await workflowStepService.computeTimeTicketsHaveSpentInEachWorkflowStep(ticketIds);
 
     return response.render('viewTickets', {
-        ticketsGroupedByDestination,
-        workflowStepTimeLedger
+        ticketsGroupedByDestination
     });
 });
 

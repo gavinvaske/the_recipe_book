@@ -920,14 +920,23 @@ $( document ).ready(function() {
     function buildProductRows(products) {
         let productRows = [];
         
-        products && products.forEach((product) => {
+        products && products.forEach((product, index) => {
             const productRow = getAProductRowClone();
             productRow.find('.view-product-link').attr('href', `/products/${product._id}`);
+            productRow.find('.product-row-number-column').text(index + 1);
+            productRow.find('.product-number-column').text(product.productNumber);
+            productRow.find('.frames-column').text(product.frameCount);
+            productRow.find('.label-quanity-column').text(product.labelQty);
 
-            // TODO: Populate the template with dynamic data
+            const proofUrl = product.proof ? product.proof.url : undefined;
+
+            if (proofUrl) {
+                productRow.find('.product-proof-column a').attr('href', proofUrl);
+            } else {
+                productRow.find('.product-proof-column').text('N/A');
+            }
 
             productRows.push(productRow);
-
         });
 
         return productRows;

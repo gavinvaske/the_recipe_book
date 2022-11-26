@@ -606,7 +606,7 @@ $( document ).ready(function() {
         const ticketRow = findTicketRow(ticketId);
 
         if (!ticketId || !ticketRow) {
-            alert('Uh oh, failed to refresh the duration information for this ticket')
+            alert('Uh oh, failed to refresh the duration information for this ticket');
             return;
         }
         
@@ -617,7 +617,7 @@ $( document ).ready(function() {
             ticketRow.find('.department-duration-target').text(durationInformation['department-duration']);
             ticketRow.find('.list-duration-target').text(durationInformation['list-duration']);
         });
-    })
+    });
 
     $('.back-out-hover').hover(function(){
         $('.move-ticket').removeClass('active');

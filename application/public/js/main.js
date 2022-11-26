@@ -919,7 +919,7 @@ $( document ).ready(function() {
         
         products && products.forEach((product) => {
             const productRow = getAProductRowClone();
-            productRow.find('.view-product-link').attr('href', `/products/${product._id}`)
+            productRow.find('.view-product-link').attr('href', `/products/${product._id}`);
 
             // TODO: Populate the template with dynamic data
 

@@ -964,18 +964,36 @@ $( document ).ready(function() {
         });
     }
 
-    function populateTicketRowDropdownOptions(ticketRow) {
-        ticketRow.find('.date-created-target').text('TODO 1');
-        ticketRow.find('.overall-duration-target').text('TODO 2');
-        ticketRow.find('.production-duration-target').text('TODO 3');
-        ticketRow.find('.department-duration-target').text('TODO 4');
-        ticketRow.find('.list-duration-target').text('TODO 5');
+    function findDurationInformationForOneTicket(ticketObjectId, callback) {
+        $.ajax({
+            url: `/tickets/duration/${ticketObjectId}`,
+            type: 'GET',
+            success: function(durationInformation) {
+                if (callback) {
+                    callback(durationInformation);
+                }
+            },
+            error: function(error) {
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to populate the duration information for the ticket whose object ID is ${ticketObjectId}: "${errorMessage}"`);
+            }
+        });
+    }
 
-        ticketRow.find('.view-ticket-link').attr('href','TODO 6');
-        ticketRow.find('.edit-ticket-link').attr('href','TODO 7');
-        ticketRow.find('.archive-ticket-link').attr('href','TODO 8');
+    function populateTicketRowDropdownOptions(ticketRow, ticket) {
+        findDurationInformationForOneTicket(ticket._id, (durationInformation) => {
+            ticketRow.find('.date-created-target').text(durationInformation['date-created']);
+            ticketRow.find('.overall-duration-target').text(durationInformation['overall-duration']);
+            ticketRow.find('.production-duration-target').text(durationInformation['production-duration']);
+            ticketRow.find('.department-duration-target').text(durationInformation['department-duration']);
+            ticketRow.find('.list-duration-target').text(durationInformation['list-duration']);
+        });
 
-        ticketRow.find('.start-modal-ticket-number').attr('href','TODO 9');
+        ticketRow.find('.view-ticket-link').attr('href',`/tickets/${ticket._id}`);
+        ticketRow.find('.edit-ticket-link').attr('href',`/tickets/update/${ticket._id}`);
+        ticketRow.find('.archive-ticket-link').attr('href',`/tickets/delete/${ticket._id}`);
+
+        ticketRow.find('.start-modal-ticket-number').attr('href', ticket.ticketNumber);
     }
 
     function moveTicket(ticket) {
@@ -991,7 +1009,7 @@ $( document ).ready(function() {
         const productRows = buildProductRows(ticket.products);
 
         addProductRowsToTicketRow(ticketRow, productRows);
-        populateTicketRowDropdownOptions(ticketRow);
+        populateTicketRowDropdownOptions(ticketRow, ticket);
 
         departmentStatusTable.append(ticketRow);
 

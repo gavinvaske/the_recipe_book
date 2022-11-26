@@ -1,5 +1,4 @@
 const WorkflowStepModel = require('../models/WorkflowStep');
-const TicketModel = require('../models/ticket');
 const dateTimeService = require('../services/dateTimeService');
 const {COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses} = require('../enums/departmentsEnum');
 
@@ -81,14 +80,7 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
     workflowStepTimeLedger[ticketId][department][TIME_PER_DEPARTMENT_STATUS][departmentStatus] += timeSpentInThisWorkflowStep;
 }
 
-module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async () => {
-    const searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets = { $or:[ {'destination': null}, {'destination.department': { $ne: COMPLETE_DEPARTMENT } } ] };
-
-    const ticketIds = await TicketModel
-        .find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
-        .distinct('_id')
-        .exec();
-
+module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async (ticketIds) => {
     const ticketIdToWorkflowSteps = await findWorkflowStepsByTicketIds(ticketIds);
     const workflowStepTimeLedger = {};
 

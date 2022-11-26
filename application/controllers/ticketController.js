@@ -35,10 +35,7 @@ router.get('/', async (request, response) => {
 
 router.get('/delete/:id', async (request, response) => {
     try {
-        await TicketModel.findByIdAndDelete(request.params.id).exec();
-
-        request.flash('alerts', 'Deletion was successful');
-        response.redirect('/tickets');
+        response.send('TODO: Archive deleted tickets')
     } catch (error) {
         request.flash('errors', error.message);
         return response.redirect('back');

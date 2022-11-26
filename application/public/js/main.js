@@ -982,7 +982,6 @@ $( document ).ready(function() {
 
     function populateTicketRowDropdownOptions(ticketRow, ticket) {
         findDurationInformationForOneTicket(ticket._id, (durationInformation) => {
-            alert(`durationInformation => ${JSON.stringify(durationInformation)}`);
             ticketRow.find('.date-created-target').text(durationInformation['date-created']);
             ticketRow.find('.overall-duration-target').text(durationInformation['overall-duration']);
             ticketRow.find('.production-duration-target').text(durationInformation['production-duration']);

@@ -46,15 +46,15 @@ describe('ticketService test suite', () => {
     let ticket;
 
     describe('findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()', () => {
-        let ticketsInDatabase;
+        let distinctTicketIdsInDatabase;
 
         afterEach(() => {
             jest.resetAllMocks();
         });
 
         beforeEach(() => {
-            ticketsInDatabase = [];
-            execFunction = jest.fn().mockResolvedValue(ticketsInDatabase);
+            distinctTicketIdsInDatabase = [];
+            execFunction = jest.fn().mockResolvedValue(distinctTicketIdsInDatabase);
             distinctFunction = jest.fn().mockImplementation(() => {
                 return {
                     exec: execFunction
@@ -102,6 +102,15 @@ describe('ticketService test suite', () => {
             expect(findFunction).toHaveBeenCalledTimes(1);
             expect(distinctFunction).toHaveBeenCalledTimes(1);
             expect(execFunction).toHaveBeenCalledTimes(1);
+        });
+
+        it ('should return the results from the query', async () => {
+            distinctTicketIdsInDatabase = chance.n(chance.integer, chance.integer({min: 1, max: 100}));
+            execFunction = jest.fn().mockResolvedValue(distinctTicketIdsInDatabase);
+
+            const distinctTicketIds = await ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination();
+
+            expect(distinctTicketIds).toEqual(distinctTicketIdsInDatabase);
         });
     });
 

@@ -600,6 +600,25 @@ $( document ).ready(function() {
         $('.departments-dropdown').removeClass('active');
     });
 
+    $(document).on('mouseover', '.duration-dropdown-trigger', function() {
+        const ticketRowId = $(this).parents('.table-row-wrapper').attr('id');
+        const ticketId = ticketRowId.replace('ticket-row-', '');
+        const ticketRow = findTicketRow(ticketId);
+
+        if (!ticketId || !ticketRow) {
+            alert('Uh oh, failed to refresh the duration information for this ticket')
+            return;
+        }
+        
+        findDurationInformationForOneTicket(ticketId, (durationInformation) => {
+            ticketRow.find('.date-created-target').text(durationInformation['date-created']);
+            ticketRow.find('.overall-duration-target').text(durationInformation['overall-duration']);
+            ticketRow.find('.production-duration-target').text(durationInformation['production-duration']);
+            ticketRow.find('.department-duration-target').text(durationInformation['department-duration']);
+            ticketRow.find('.list-duration-target').text(durationInformation['list-duration']);
+        });
+    })
+
     $('.back-out-hover').hover(function(){
         $('.move-ticket').removeClass('active');
         $('.departments-dropdown').removeClass('active');
@@ -981,14 +1000,6 @@ $( document ).ready(function() {
     }
 
     function populateTicketRowDropdownOptions(ticketRow, ticket) {
-        findDurationInformationForOneTicket(ticket._id, (durationInformation) => {
-            ticketRow.find('.date-created-target').text(durationInformation['date-created']);
-            ticketRow.find('.overall-duration-target').text(durationInformation['overall-duration']);
-            ticketRow.find('.production-duration-target').text(durationInformation['production-duration']);
-            ticketRow.find('.department-duration-target').text(durationInformation['department-duration']);
-            ticketRow.find('.list-duration-target').text(durationInformation['list-duration']);
-        });
-
         ticketRow.find('.view-ticket-link').attr('href',`/tickets/${ticket._id}`);
         ticketRow.find('.edit-ticket-link').attr('href',`/tickets/update/${ticket._id}`);
         ticketRow.find('.archive-ticket-link').attr('href',`/tickets/delete/${ticket._id}`);

@@ -33,10 +33,19 @@
     <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['SHIPPING'] %>
     <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['BILLING'] %>
 
+    <!-- NEW VARIABLES BELOW -->
+
     <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-    <% const orderPrepSendToCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['SEND TO CUSTOMER'] %>
-    <% const orderPrepWaitingOnApprovalTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
+    <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
     <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
+    <% const orderPrepDieOrPlateReady = orderPrepTicketsGroupedByDepartmentStatus['DIE OR PLATE READY'] %>
+    <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
+
+
+    <!-- OLD VARIABLES BELOW -->
+
+    <% const orderPrepSendToCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['SEND TO CUSTOMER'] %>
     <% const orderPrepReadyToOrderTickets = orderPrepTicketsGroupedByDepartmentStatus['READY TO ORDER PLATE OR DIE'] %>
     <% const orderPrepInProgressTickets = orderPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
 

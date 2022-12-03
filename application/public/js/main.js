@@ -751,7 +751,7 @@ $( document ).ready(function() {
         const PRINTING_DEPARTMENT = 'PRINTING';
         const CUTTING_DEPARTMENT = 'CUTTING';
         const WINDING_DEPARTMENT = 'WINDING';
-        const PACKAGING_DEPARTMENT = 'PACKAGING'
+        const PACKAGING_DEPARTMENT = 'PACKAGING';
         const SHIPPING_DEPARTMENT = 'SHIPPING';
         const BILLING_DEPARTMENT = 'BILLING';
 
@@ -804,11 +804,11 @@ $( document ).ready(function() {
                 [READY_FOR_SCHEDULING]: 'winding-ready-for-scheduling',
                 [ON_HOLD]: 'winding-on-hold'
             },
-            [PACKAGING_DEPARTMENT]: [
-                ON_HOLD,
-                IN_PROGRESS,
-                PACKAGING_READY
-            ],
+            [PACKAGING_DEPARTMENT]: {
+                ON_HOLD: 'packaging-on-hold',
+                IN_PROGRESS: 'packaging-in-progress',
+                PACKAGING_READY: 'packaging-ready'
+            },
             [SHIPPING_DEPARTMENT]: {
                 [IN_PROGRESS]: 'shipping-in-progress',
                 [READY_FOR_SHIPPING]: 'shipping-ready-for-shipping',

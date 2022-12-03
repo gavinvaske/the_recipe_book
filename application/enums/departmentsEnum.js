@@ -29,7 +29,7 @@ const READY_FOR_BILLING = 'READY FOR BILLING';
 // departments
 const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
 const ART_PREP_DEPARTMENT = 'ART-PREP';
-const PRE_PRESS_DEPARTMENT = 'PRE-PRINTING';
+const PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
 const PRINTING_DEPARTMENT = 'PRINTING';
 const CUTTING_DEPARTMENT = 'CUTTING';
 const WINDING_DEPARTMENT = 'WINDING';
@@ -53,7 +53,7 @@ module.exports.departmentStatusesGroupedByDepartment = {
         NEEDS_DIE_LINE,
         NEEDS_PLATE
     ],
-    [PRE_PRESS_DEPARTMENT]: [
+    [PRE_PRINTING_DEPARTMENT]: [
         NEEDS_ATTENTION,
         IN_PROGRESS,
         SEND_TO_PRESS
@@ -97,7 +97,7 @@ module.exports.departmentStatusesGroupedByDepartment = {
 };
 
 module.exports.productionDepartmentsAndDepartmentStatuses = {
-    [PRE_PRESS_DEPARTMENT]: [
+    [PRE_PRINTING_DEPARTMENT]: [
         SEND_TO_PRESS
     ],
     [PRINTING_DEPARTMENT]: [

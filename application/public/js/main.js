@@ -747,7 +747,7 @@ $( document ).ready(function() {
 
         const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
         const ART_PREP_DEPARTMENT = 'ART-PREP';
-        const PRE_PRESS_DEPARTMENT = 'PRE-PRINTING';
+        const PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
         const PRINTING_DEPARTMENT = 'PRINTING';
         const CUTTING_DEPARTMENT = 'CUTTING';
         const WINDING_DEPARTMENT = 'WINDING';
@@ -771,7 +771,7 @@ $( document ).ready(function() {
                 [NEEDS_DIE_LINE]: 'art-prep-needs-die',
                 [NEEDS_PLATE]: 'art-prep-needs-plate'
             },
-            [PRE_PRESS_DEPARTMENT]: {
+            [PRE_PRINTING_DEPARTMENT]: {
                 [NEEDS_ATTENTION]: 'pre-printing-needs-attention',
                 [IN_PROGRESS]: 'pre-printing-in-progress',
                 [SEND_TO_PRESS]: 'pre-printing-send-to-press'

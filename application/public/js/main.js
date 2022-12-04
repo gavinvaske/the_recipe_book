@@ -643,6 +643,25 @@ $( document ).ready(function() {
         $(this).closest('.table-row-wrapper').find('.start-job-bg-overlay').addClass('active');
     });
 
+    $('.status-section').on('click', '.start-ticket-button', function() {
+        alert('you clkicked start');
+        
+        // Step 1) Update ticket: set the departmentStatus to "in-progress" within the specified department
+        const ticketObjectId = $(this).data('ticket-id');
+        const department = $(this).data('department');
+
+        const ticketAttributesToUpdate = {
+            destination: {
+                department,
+                departmentStatus: 'IN PROGRESS'
+            }
+        };
+
+        updateTicket(ticketAttributesToUpdate, ticketObjectId, () => {
+            window.location.href = `/tickets/in-progress/${ticketObjectId}`;
+        });
+    });
+
     $('.status-section').on('click', '.start-job-bg-overlay .fa-xmark-large', function() {
         $('.start-job-bg-overlay').removeClass('active');
     });

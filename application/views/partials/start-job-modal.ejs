@@ -7,6 +7,7 @@
             </div>
             <div class='modal-body flex-center-center-column'>
                 <h1 class='start-modal-ticket-number'><%= ticket.ticketNumber || 'N/A' %></h1>
+                <h1 class='start-modal-ticket-number'><%= ticket.destination || 'N/A' %></h1>
                 <select name="machine-list" id="machine">
                     <option>Press 1</option>
                     <option>Press 2</option>
@@ -15,7 +16,7 @@
                 </select>
             </div>
             <div class='modal-footer flex-center-space-evenly-row'>
-                <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
+                <button class='btn btn-primary'>Cancel</button><button data-department="<%= ticket.destination ? ticket.destination.department : 'N/A' %>" data-ticket-id="<%= ticket._id %>" class='btn btn-primary start-ticket-button'>Start Job</button>
             </div>
         </div>
     </div>

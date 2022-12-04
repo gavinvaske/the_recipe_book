@@ -39,7 +39,7 @@ router.get('/in-progress/:ticketId', async (request, response) => {
         const ticket = await TicketModel.findById(ticketObjectId).exec();
 
         if (!ticket) {
-            throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`)
+            throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`);
         }
 
         if (!isInProgressDepartmentStatus(ticket)) {
@@ -48,8 +48,8 @@ router.get('/in-progress/:ticketId', async (request, response) => {
 
         return response.render('viewOneInProgressTicket', {
             ticket
-        })
-    } catch(error) {
+        });
+    } catch (error) {
         return response.status(SERVER_ERROR_CODE).send(error.message);
     }
 });

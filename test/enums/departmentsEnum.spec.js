@@ -63,13 +63,13 @@ describe('departmentsEnum', () => {
         it('should return false if status IS NOT "IN PROGRESS"', () => {
             const departmentStatus = chance.word();
             
-            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(false)
+            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(false);
         });
 
         it('should return true if status IS "IN PROGRESS"', () => {
-            const departmentStatus = "IN PROGRESS";
+            const departmentStatus = 'IN PROGRESS';
             
-            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(true)
+            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(true);
         });
     });
 });

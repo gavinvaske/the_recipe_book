@@ -137,3 +137,7 @@ module.exports.getAllDepartmentsWithDepartmentStatuses = () => {
 
     return departmentsWithAtLeastOneDepartmentStatus;
 };
+
+module.exports.isInProgressDepartmentStatus = (departmentStatus) => {
+    return departmentStatus === IN_PROGRESS;
+}

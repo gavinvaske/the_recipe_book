@@ -1,4 +1,5 @@
-const {getAllDepartmentStatuses, getAllDepartments, productionDepartmentsAndDepartmentStatuses} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentStatuses, getAllDepartments, productionDepartmentsAndDepartmentStatuses, isInProgressDepartmentStatus} = require('../../application/enums/departmentsEnum');
+const chance = require('chance').Chance();
 
 describe('departmentsEnum', () => {
     it('should return the list of departmentStatus', () => {
@@ -56,5 +57,19 @@ describe('departmentsEnum', () => {
         });
 
         expect(expectedNumberOfProductionDepartmentStatuses).toBe(allProductionDepartmentStatuses.length);
+    });
+
+    describe('isInProgressDepartmentStatus()', () => {
+        it('should return false if status IS NOT "IN PROGRESS"', () => {
+            const departmentStatus = chance.word();
+            
+            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(false)
+        });
+
+        it('should return true if status IS "IN PROGRESS"', () => {
+            const departmentStatus = "IN PROGRESS";
+            
+            expect(isInProgressDepartmentStatus(departmentStatus)).toBe(true)
+        });
     });
 });

@@ -644,9 +644,6 @@ $( document ).ready(function() {
     });
 
     $('.status-section').on('click', '.start-ticket-button', function() {
-        alert('you clkicked start');
-        
-        // Step 1) Update ticket: set the departmentStatus to "in-progress" within the specified department
         const ticketObjectId = $(this).data('ticket-id');
         const department = $(this).data('department');
 

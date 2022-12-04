@@ -15,7 +15,7 @@
                 </select>
             </div>
             <div class='modal-footer flex-center-space-evenly-row'>
-                <button class='btn btn-primary'>Cancel</button><button class='btn btn-primary'>Start Job</button>
+                <button class='btn btn-primary'>Cancel</button><button data-department="<%= ticket.destination ? ticket.destination.department : 'N/A' %>" data-ticket-id="<%= ticket._id %>" class='btn btn-primary start-ticket-button'>Start Job</button>
             </div>
         </div>
     </div>

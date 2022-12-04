@@ -8,13 +8,14 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 
 router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
+const INVALID_REQUEST_ERROR_CODE = 400;
 
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
@@ -30,6 +31,27 @@ router.get('/', async (request, response) => {
     return response.render('viewTickets', {
         ticketsGroupedByDestination
     });
+});
+
+router.get('/in-progress/:ticketId', async (request, response) => {
+    const ticketObjectId = request.params.ticketId;
+    try {
+        const ticket = await TicketModel.findById(ticketObjectId).exec();
+
+        if (!ticket) {
+            throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`);
+        }
+
+        if (!isInProgressDepartmentStatus(ticket.destination.departmentStatus)) {
+            return response.status(INVALID_REQUEST_ERROR_CODE).send(`The requested ticket whose object ID is "${ticketObjectId}" does not have a department status of "in-progress"`);
+        }
+
+        return response.render('viewOneInProgressTicket', {
+            ticket
+        });
+    } catch (error) {
+        return response.status(SERVER_ERROR_CODE).send(error.message);
+    }
 });
 
 router.get('/delete/:id', async (request, response) => {
@@ -72,10 +94,13 @@ router.post('/update/:ticketId/notes', async (request, response) => {
 
 router.post('/find-department-statuses', (request, response) => {
     const departmentName = request.body.departmentName;
-    const departmentStatuses = departmentStatusesGroupedByDepartment[departmentName];
-
+    const allStatusesForOneDepartment = departmentToStatusesMappingForTicketObjects[departmentName];
+    let userSelectableDepartmentStatuses;
+    
     try {
-        if (!departmentStatuses) {
+        userSelectableDepartmentStatuses = removeDepartmentStatusesAUserIsNotAllowedToSelect(allStatusesForOneDepartment);
+
+        if (!userSelectableDepartmentStatuses) {
             throw new Error(`No departmentStatuses found for the department named "${departmentName}"`);
         }
     } catch (error) {
@@ -85,7 +110,7 @@ router.post('/find-department-statuses', (request, response) => {
     }
 
     return response.json({
-        departmentStatuses: departmentStatuses
+        departmentStatuses: userSelectableDepartmentStatuses
     });
 });
 
@@ -137,14 +162,14 @@ router.get('/update/:id', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(request.params.id).exec();
         const materials = await MaterialModel.find().exec();
-        const departmentNames = Object.keys(departmentStatusesGroupedByDepartment);
+        const departmentNames = Object.keys(departmentToStatusesMappingForTicketObjects);
 
         const ticketDestination = ticket.destination;
         const selectedDepartment = ticketDestination && ticketDestination.department;
         const selectedDepartmentStatus = ticketDestination && ticketDestination.departmentStatus;
         const selectedMaterial = ticket.primaryMaterial;
 
-        const departmentStatuses = departmentStatusesGroupedByDepartment ? departmentStatusesGroupedByDepartment[selectedDepartment] : undefined;
+        const departmentStatuses = departmentToStatusesMappingForTicketObjects ? departmentToStatusesMappingForTicketObjects[selectedDepartment] : undefined;
 
         const materialIds = materials.map(material => material.materialId);
 

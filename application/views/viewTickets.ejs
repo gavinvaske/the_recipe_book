@@ -40,15 +40,12 @@
     <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
     <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
     <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
-    <% const orderPrepDieOrPlateReady = orderPrepTicketsGroupedByDepartmentStatus['DIE OR PLATE READY'] %>
     <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
 
     <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
     <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
     <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
     <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
-    <% const artPrepNeedsDieLineTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS DIE LINE'] %>
-    <% const artPrepNeedsPlateTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PLATE'] %>
 
     <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
     <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
@@ -91,6 +88,9 @@
     <% const orderPrepReadyToOrderTickets = [] %>
     <% const orderPrepInProgressTickets = [] %>
     <% const orderPrepWaitingOnApprovalTickets = [] %>
+
+    <% const artPrepNeedsDieLineTickets = [] %>
+    <% const artPrepNeedsPlateTickets = [] %>
 
     <% const prePrintingSendToPressTickets = [] %>
   

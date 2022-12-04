@@ -3,7 +3,7 @@ const TicketModel = require('../../application/models/ticket');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
-const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
 
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
@@ -753,7 +753,7 @@ describe('validation', () => {
                 const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
     
                 let savedTicket = await ticket.save({validateBeforeSave: false});
@@ -769,7 +769,7 @@ describe('validation', () => {
                 const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 let savedTicket = await ticket.save({validateBeforeSave: false});
                 await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
@@ -806,7 +806,7 @@ describe('validation', () => {
     
                 for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
                     const department = chance.pickone(departments);
-                    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+                    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
     
                     newTicketDestination = {
                         department,
@@ -829,7 +829,7 @@ describe('validation', () => {
                 const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 const savedTicket = await ticket.save({validateBeforeSave: false});
 
@@ -844,7 +844,7 @@ describe('validation', () => {
                 const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentStatusesGroupedByDepartment[randomDepartment])
+                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 let savedTicket = await ticket.save({validateBeforeSave: false});
 
@@ -882,7 +882,7 @@ describe('validation', () => {
     
                 for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
                     const department = chance.pickone(departments);
-                    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+                    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
     
                     newTicketDestination = {
                         department,

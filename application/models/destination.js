@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const {getAllDepartments, departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
+const {getAllDepartments, departmentToStatusesMappingForTicketObjects} = require('../enums/departmentsEnum');
 
 function isDepartmentAndDepartmentStatusCombinationValid(department, departmentStatus) {
     const lengthOfEmptyArray = 0;
@@ -10,7 +10,7 @@ function isDepartmentAndDepartmentStatusCombinationValid(department, departmentS
         return false;
     }
 
-    const allowedStatuses = departmentStatusesGroupedByDepartment[department];
+    const allowedStatuses = departmentToStatusesMappingForTicketObjects[department];
     const noDepartmentStatusesExistForThisDepartment = allowedStatuses.length === lengthOfEmptyArray;
 
     if (noDepartmentStatusesExistForThisDepartment && !departmentStatus) {

@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const Destination = require('../../application/models/destination');
-const {departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 const DEPARTMENT_WITH_STATUSES = 'PRINTING';
@@ -11,7 +11,7 @@ describe('validation', () => {
 
     beforeEach(async () => {
         let department = DEPARTMENT_WITH_STATUSES;
-        let departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+        let departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
 
         destinationAttributes = {
             department: department,
@@ -72,7 +72,7 @@ describe('validation', () => {
 
         it('should pass if attribute IS an accepted value', async () => {
             const validDepartment = DEPARTMENT_WITH_STATUSES;
-            const validStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
+            const validStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[validDepartment]);
             destinationAttributes.department = validDepartment;
             destinationAttributes.departmentStatus = validStatus;
             const destination = new Destination(destinationAttributes);
@@ -90,7 +90,7 @@ describe('validation', () => {
         it('should pass if attribute IS an accepted value surrounded by whitespace', async () => {
             const whitespaceToTrim = '  ';
             const validDepartment = DEPARTMENT_WITH_STATUSES;
-            const validStatus = chance.pickone(departmentStatusesGroupedByDepartment[validDepartment]);
+            const validStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[validDepartment]);
             destinationAttributes.department = whitespaceToTrim + validDepartment + whitespaceToTrim;
             destinationAttributes.departmentStatus = whitespaceToTrim + validStatus + whitespaceToTrim;
             const destination = new Destination(destinationAttributes);

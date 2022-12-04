@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const WorkflowStep = require('../../application/models/WorkflowStep');
-const {departmentStatusesGroupedByDepartment} = require('../../application/enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 const DEPARTMENT_WITH_STATUSES = 'PRINTING';
@@ -10,7 +10,7 @@ describe('validation', () => {
 
     beforeEach(() => {
         let department = DEPARTMENT_WITH_STATUSES;
-        let departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[department]);
+        let departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
 
         workFlowStepAttributes = {
             ticketId: new mongoose.Types.ObjectId(),

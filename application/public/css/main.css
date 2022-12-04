@@ -4094,12 +4094,12 @@ div[data-department^="ART-PREP"] h4.department-name {
 div[data-department^="ART-PREP"] h4.department-name span {
   background: #ff9f43;
 }
-div[data-department^="PRE-PRESS"] h4.department-name {
+div[data-department^="PRE-PRINTING"] h4.department-name {
   background: rgba(115,103,240,.1);
   border-color: rgba(115,103,240,.1)!important;
   color: #7367f0!important;
 }
-div[data-department^="PRE-PRESS"] h4.department-name span {
+div[data-department^="PRE-PRINTING"] h4.department-name span {
   background: #7367f0;
 }
 div[data-department^="PRINTING"] h4.department-name {

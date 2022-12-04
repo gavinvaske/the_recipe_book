@@ -586,7 +586,7 @@ describe('validation', () => {
             departmentNotes = {
                 orderPrep: chance.string(),
                 artPrep: chance.string(),
-                prePress: chance.string(),
+                prePrinting: chance.string(),
                 printing: chance.string(),
                 cutting: chance.string(),
                 winding: chance.string(),
@@ -617,7 +617,7 @@ describe('validation', () => {
 
             expect(ticket.departmentNotes.orderPrep).toEqual(departmentNotes.orderPrep);
             expect(ticket.departmentNotes.artPrep).toEqual(departmentNotes.artPrep);
-            expect(ticket.departmentNotes.prePress).toEqual(departmentNotes.prePress);
+            expect(ticket.departmentNotes.prePrinting).toEqual(departmentNotes.prePrinting);
             expect(ticket.departmentNotes.printing).toEqual(departmentNotes.printing);
             expect(ticket.departmentNotes.cutting).toEqual(departmentNotes.cutting);
             expect(ticket.departmentNotes.winding).toEqual(departmentNotes.winding);

@@ -41,7 +41,7 @@ const departmentNotesSchema = new Schema({
     artPrep: {
         type: String
     },
-    prePress: {
+    prePrinting: {
         type: String
     },
     printing: {

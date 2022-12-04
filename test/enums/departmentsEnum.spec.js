@@ -2,8 +2,8 @@ const {getAllDepartmentStatuses, getAllDepartments, productionDepartmentsAndDepa
 
 describe('departmentsEnum', () => {
     it('should return the list of departmentStatus', () => {
-        const expectedNumberOfDepartmentStatuses = 39;
-        const expectedNumberOfUniqueDepartmentStatuses = 24;
+        const expectedNumberOfDepartmentStatuses = 40;
+        const expectedNumberOfUniqueDepartmentStatuses = 23;
 
         const departmentStatuses = getAllDepartmentStatuses();
         const uniqueDepartmentStatuses = new Set(departmentStatuses);
@@ -15,7 +15,7 @@ describe('departmentsEnum', () => {
     });
 
     it('should return the list of departments', () => {
-        const expectedNumberOfDepartments = 9;
+        const expectedNumberOfDepartments = 10;
 
         const departments = getAllDepartments();
 
@@ -44,8 +44,8 @@ describe('departmentsEnum', () => {
         expect(doesDepartmentContainZeroDepartmentStatuses).toBe(false);
     });
 
-    it('should have the correct number of product departmentStatuses', () => {
-        let expectedNumberOfProductionDepartmentStatuses = 24;
+    it('should have the correct number of production departmentStatuses', () => {
+        let expectedNumberOfProductionDepartmentStatuses = 21;
         let allProductionDepartmentStatuses = [];
 
         Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {

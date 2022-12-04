@@ -1003,7 +1003,7 @@ describe('validation', () => {
         let productAlerts;
         const validDepartmentsEnum = [
             'ART-PREP',
-            'PRE-PRESS',
+            'PRE-PRINTING',
             'PRINTING',
             'CUTTING',
             'WINDING',

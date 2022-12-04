@@ -1,5 +1,5 @@
 const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
-const {departmentStatusesGroupedByDepartment, getAllDepartmentsWithDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects, getAllDepartmentsWithDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../enums/departmentsEnum');
 const TicketModel = require('../models/ticket');
 
 function isEmptyObject(value) {
@@ -109,7 +109,7 @@ function buildTicketsGroupedByDestinationDataStructure(departmentsWithStatuses) 
     departmentsWithStatuses.forEach((department) => {
         ticketsGroupedByDestination[department] = {};
 
-        const departmentStatuses = departmentStatusesGroupedByDepartment[department];
+        const departmentStatuses = departmentToStatusesMappingForTicketObjects[department];
 
         departmentStatuses.forEach((departmentStatus) => {
             ticketsGroupedByDestination[department][departmentStatus] = [];

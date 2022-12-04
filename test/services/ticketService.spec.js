@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
-const {getAllDepartmentsWithDepartmentStatuses, departmentStatusesGroupedByDepartment, getAllDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, COMPLETE_DEPARTMENT} = require('../../application/enums/departmentsEnum');
 
 const mockTicketModel = require('../../application/models/ticket');
 jest.mock('../../application/models/ticket');
@@ -205,6 +205,11 @@ describe('ticketService test suite', () => {
             const emptyTicketsArray = [];
             const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
             let departmentStatusesInDataStructure = [];
+            let allDepartmentStatuses = [];
+
+            Object.values(departmentToStatusesMappingForTicketObjects).forEach((departmentStatusesForOneDepartment) => {
+                allDepartmentStatuses.push(...departmentStatusesForOneDepartment);
+            });
 
             Object.keys(groupedTicketsByDepartment).forEach((departmentName) => {
                 const group = groupedTicketsByDepartment[departmentName];
@@ -217,7 +222,7 @@ describe('ticketService test suite', () => {
 
             console.log(departmentStatusesInDataStructure);
 
-            expect(departmentStatusesInDataStructure.length).toBe(getAllDepartmentStatuses().length);
+            expect(departmentStatusesInDataStructure.length).toBe(allDepartmentStatuses.length);
         });
 
         it('should ignore tickets whose department and/or departmentStatus is unknown', () => {
@@ -249,7 +254,7 @@ function countNumberOfTicketsGroupedByDestination(ticketsGroupedByDestination) {
 
 function buildATicketWithAValidDesintation() {
     const departmentWithAtLeastOneDepartmentStatus = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
-    const departmentStatus = chance.pickone(departmentStatusesGroupedByDepartment[departmentWithAtLeastOneDepartmentStatus]);
+    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[departmentWithAtLeastOneDepartmentStatus]);
 
     return {
         destination: {

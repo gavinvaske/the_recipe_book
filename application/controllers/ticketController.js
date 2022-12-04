@@ -8,7 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departmentStatusesGroupedByDepartment, isInProgressDepartmentStatus} = require('../enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 
@@ -94,7 +94,7 @@ router.post('/update/:ticketId/notes', async (request, response) => {
 
 router.post('/find-department-statuses', (request, response) => {
     const departmentName = request.body.departmentName;
-    const departmentStatuses = departmentStatusesGroupedByDepartment[departmentName];
+    const departmentStatuses = departmentToStatusesMappingForTicketObjects[departmentName];
 
     try {
         if (!departmentStatuses) {
@@ -159,14 +159,14 @@ router.get('/update/:id', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(request.params.id).exec();
         const materials = await MaterialModel.find().exec();
-        const departmentNames = Object.keys(departmentStatusesGroupedByDepartment);
+        const departmentNames = Object.keys(departmentToStatusesMappingForTicketObjects);
 
         const ticketDestination = ticket.destination;
         const selectedDepartment = ticketDestination && ticketDestination.department;
         const selectedDepartmentStatus = ticketDestination && ticketDestination.departmentStatus;
         const selectedMaterial = ticket.primaryMaterial;
 
-        const departmentStatuses = departmentStatusesGroupedByDepartment ? departmentStatusesGroupedByDepartment[selectedDepartment] : undefined;
+        const departmentStatuses = departmentToStatusesMappingForTicketObjects ? departmentToStatusesMappingForTicketObjects[selectedDepartment] : undefined;
 
         const materialIds = materials.map(material => material.materialId);
 

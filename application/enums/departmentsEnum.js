@@ -96,6 +96,13 @@ module.exports.departmentToStatusesMappingForTicketObjects = {
     [COMPLETE_DEPARTMENT]: []
 };
 
+module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentStatuses) => {
+    return departmentStatuses.filter((departmentStatus) => {
+        const isAllowed = departmentStatus !== IN_PROGRESS;
+        return isAllowed;
+    });
+};
+
 module.exports.productionDepartmentsAndDepartmentStatuses = {
     PRE_PRINTING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[PRE_PRINTING_DEPARTMENT],
     PRINTING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[PRINTING_DEPARTMENT],

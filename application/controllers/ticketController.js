@@ -8,7 +8,7 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus} = require('../enums/departmentsEnum');
+const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 
@@ -94,10 +94,13 @@ router.post('/update/:ticketId/notes', async (request, response) => {
 
 router.post('/find-department-statuses', (request, response) => {
     const departmentName = request.body.departmentName;
-    const departmentStatuses = departmentToStatusesMappingForTicketObjects[departmentName];
-
+    const allStatusesForOneDepartment = departmentToStatusesMappingForTicketObjects[departmentName];
+    let userSelectableDepartmentStatuses;
+    
     try {
-        if (!departmentStatuses) {
+        userSelectableDepartmentStatuses = removeDepartmentStatusesAUserIsNotAllowedToSelect(allStatusesForOneDepartment);
+
+        if (!userSelectableDepartmentStatuses) {
             throw new Error(`No departmentStatuses found for the department named "${departmentName}"`);
         }
     } catch (error) {
@@ -107,7 +110,7 @@ router.post('/find-department-statuses', (request, response) => {
     }
 
     return response.json({
-        departmentStatuses: departmentStatuses
+        departmentStatuses: userSelectableDepartmentStatuses
     });
 });
 

@@ -1,4 +1,10 @@
-const {getAllDepartments, productionDepartmentsAndDepartmentStatuses, isInProgressDepartmentStatus, departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
+const {
+    getAllDepartments, 
+    productionDepartmentsAndDepartmentStatuses, 
+    isInProgressDepartmentStatus, 
+    departmentToStatusesMappingForTicketObjects, 
+    removeDepartmentStatusesAUserIsNotAllowedToSelect
+} = require('../../application/enums/departmentsEnum');
 const chance = require('chance').Chance();
 
 describe('departmentsEnum', () => {
@@ -47,6 +53,44 @@ describe('departmentsEnum', () => {
             });
     
             expect(expectedNumberOfProductionDepartmentStatuses).toBe(allProductionDepartmentStatuses.length);
+        });
+    });
+
+    describe('removeDepartmentStatusesAUserIsNotAllowedToSelect()', () => {
+        it('should throw error if non-array is passed in', () => {
+            const invalidParam = undefined;
+
+            expect(() => removeDepartmentStatusesAUserIsNotAllowedToSelect(invalidParam)).toThrow();
+        });
+
+        it('should handle an empty array', () => {
+            const departmentStatusesBeforeFiltering = [];
+
+            const departmentStatusesAfterFiltering = removeDepartmentStatusesAUserIsNotAllowedToSelect(departmentStatusesBeforeFiltering);
+
+            expect(departmentStatusesAfterFiltering.length).toBe(departmentStatusesBeforeFiltering.length);
+        });
+
+        it('should not filter anything', () => {
+            const departmentStatusesWhichShouldNotBeRemoved = chance.n(chance.string, chance.integer({min: 1, max: 20}));
+
+            const departmentStatusesAfterFiltering = removeDepartmentStatusesAUserIsNotAllowedToSelect(departmentStatusesWhichShouldNotBeRemoved);
+
+            expect(departmentStatusesAfterFiltering.length).toBe(departmentStatusesWhichShouldNotBeRemoved.length);
+        });
+
+        it('should filter out "IN PROGRESS" statuses', () => {
+            const departmentStatusesWhichShouldNotBeRemoved = chance.n(chance.string, chance.integer({min: 1, max: 20}));
+            const departmentStatusThatShouldBeRemoved = 'IN PROGRESS';
+
+            const departmentStatusesAfterFiltering = removeDepartmentStatusesAUserIsNotAllowedToSelect([
+                departmentStatusThatShouldBeRemoved,
+                ...departmentStatusesWhichShouldNotBeRemoved,
+                departmentStatusThatShouldBeRemoved,
+                departmentStatusThatShouldBeRemoved
+            ]);
+
+            expect(departmentStatusesAfterFiltering.length).toBe(departmentStatusesWhichShouldNotBeRemoved.length);
         });
     });
 

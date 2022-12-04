@@ -754,8 +754,6 @@ $( document ).ready(function() {
         const PACKAGING_DEPARTMENT = 'PACKAGING';
         const SHIPPING_DEPARTMENT = 'SHIPPING';
         const BILLING_DEPARTMENT = 'BILLING';
-
-        const PACKAGING_READY = 'PACKAGING READY';
         
         const destinationToIdentifierMapping = 
         {

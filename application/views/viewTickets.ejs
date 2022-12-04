@@ -31,6 +31,7 @@
     <% const cuttingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['CUTTING'] %>
     <% const windingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['WINDING'] %>
     <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['SHIPPING'] %>
+    <% const packagingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PACKAGING'] %>
     <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['BILLING'] %>
 
     <!-- NEW VARIABLES BELOW -->
@@ -42,58 +43,73 @@
     <% const orderPrepDieOrPlateReady = orderPrepTicketsGroupedByDepartmentStatus['DIE OR PLATE READY'] %>
     <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
 
-
-    <!-- OLD VARIABLES BELOW -->
-
-    <% const orderPrepSendToCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['SEND TO CUSTOMER'] %>
-    <% const orderPrepReadyToOrderTickets = orderPrepTicketsGroupedByDepartmentStatus['READY TO ORDER PLATE OR DIE'] %>
-    <% const orderPrepInProgressTickets = orderPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-
     <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+    <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
     <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
     <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
     <% const artPrepNeedsDieLineTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS DIE LINE'] %>
     <% const artPrepNeedsPlateTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PLATE'] %>
 
     <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+    <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
     <% const prePrintingInProgressTickets = prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const prePrintingSendToPressTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRESS'] %>
-  
-    <% const printingInProgressTickets = [
-        ...printingTicketsGroupedByDepartmentStatus['SET-UP'],
-        ...printingTicketsGroupedByDepartmentStatus['RUNTIME'],
-        ...printingTicketsGroupedByDepartmentStatus['TEAR-DOWN']
-      ]
-    %>
-    <% const printingReadyForSchedulingTickets = printingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
-    <% const printingSchedulePressOneTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS ONE'] %>
-    <% const printingSchedulePressTwoTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS TWO'] %>
-    <% const printingSchedulePressThreeTickets = printingTicketsGroupedByDepartmentStatus['SCHEDULE PRESS THREE'] %>
+    <% const prePrintingSendToPrintingTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING'] %>
+
     <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
+    <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
+    <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
 
-    <% const cuttingInProgressTickets = [
-        ...cuttingTicketsGroupedByDepartmentStatus['SET-UP'],
-        ...cuttingTicketsGroupedByDepartmentStatus['RUNTIME'],
-        ...cuttingTicketsGroupedByDepartmentStatus['TEAR-DOWN']
-      ]
-    %>
-    <% const cuttingReadyForSchedulingTickets = cuttingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
-    <% const cuttingScheduleDeltaOneTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA ONE'] %>
-    <% const cuttingScheduleDeltaTwoTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE DELTA TWO'] %>
-    <% const cuttingScheduleRotoflexTickets = cuttingTicketsGroupedByDepartmentStatus['SCHEDULE ROTOFLEX'] %>
     <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const cuttingReadyTickets = cuttingTicketsGroupedByDepartmentStatus['CUTTING_READY'] %>
+    <% const cuttingDeltaOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE'] %>
+    <% const cuttingDeltaTwoScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE'] %>
+    <% const cuttingRotoflexOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE'] %>
 
-    <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const windingReadyForSchedulingTickets = windingTicketsGroupedByDepartmentStatus['READY FOR SCHEDULING'] %>
     <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const windingReadyTickets = windingTicketsGroupedByDepartmentStatus['WINDING READY'] %>
 
-    <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const shippingReadyForShippingTickets = shippingTicketsGroupedByDepartmentStatus['READY FOR SHIPPING'] %>
+    <% const packagingOnHoldTickets = packagingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+    <% const packagingInProgressTickets = packagingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const packagingReadyTickets = packagingTicketsGroupedByDepartmentStatus['PACKAGING READY'] %>
+
     <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const shippingToolArrivalTickets = shippingTicketsGroupedByDepartmentStatus['TOOL ARRIVALS'] %>
+    <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
+    <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
 
-    <% const billingReadyForBillingTickets = billingTicketsGroupedByDepartmentStatus['READY FOR BILLING'] %>
+    <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
     <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+    <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
+
+    <!-- DEPRECATED VARIABLES BELOW: Need to remove after STORM removes the old html tables that references them -->
+
+    <% const orderPrepSendToCustomerTickets = [] %>
+    <% const orderPrepReadyToOrderTickets = [] %>
+    <% const orderPrepInProgressTickets = [] %>
+    <% const orderPrepWaitingOnApprovalTickets = [] %>
+
+    <% const prePrintingSendToPressTickets = [] %>
+  
+    <% const printingReadyForSchedulingTickets = [] %>
+    <% const printingSchedulePressOneTickets = [] %>
+    <% const printingSchedulePressTwoTickets = [] %>
+    <% const printingSchedulePressThreeTickets = [] %>
+
+    <% const cuttingReadyForSchedulingTickets = [] %>
+    <% const cuttingScheduleDeltaOneTickets = [] %>
+    <% const cuttingScheduleDeltaTwoTickets = [] %>
+    <% const cuttingScheduleRotoflexTickets = [] %>
+
+    <% const windingReadyForSchedulingTickets = [] %>
+
+    <% const shippingReadyForShippingTickets = [] %>
+    <% const shippingToolArrivalTickets = [] %>
+
+    <% const billingReadyForBillingTickets = [] %>
     
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <!-- Order Prep Department -->

@@ -650,7 +650,7 @@ $( document ).ready(function() {
         const ticketAttributesToUpdate = {
             destination: {
                 department,
-                departmentStatus: 'IN PROGRESSs'
+                departmentStatus: 'IN PROGRESS'
             }
         };
 

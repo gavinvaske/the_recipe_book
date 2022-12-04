@@ -8,13 +8,14 @@ const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
 const mongooseService = require('../services/mongooseService');
 const MaterialModel = require('../models/material');
-const {departmentStatusesGroupedByDepartment} = require('../enums/departmentsEnum');
+const {departmentStatusesGroupedByDepartment, isInProgressDepartmentStatus} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 
 router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
+const INVALID_REQUEST_ERROR_CODE = 400;
 
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
@@ -30,6 +31,27 @@ router.get('/', async (request, response) => {
     return response.render('viewTickets', {
         ticketsGroupedByDestination
     });
+});
+
+router.get('/in-progress/:ticketId', async (request, response) => {
+    const ticketObjectId = request.params.ticketId;
+    try {
+        const ticket = await TicketModel.findById(ticketObjectId).exec();
+
+        if (!ticket) {
+            throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`)
+        }
+
+        if (!isInProgressDepartmentStatus(ticket)) {
+            return response.status(INVALID_REQUEST_ERROR_CODE).send(`The requested ticket whose object ID is "${ticketObjectId}" does not have a department status of "in-progress"`);
+        }
+
+        return response.render('viewOneInProgressTicket', {
+            ticket
+        })
+    } catch(error) {
+        return response.status(SERVER_ERROR_CODE).send(error.message);
+    }
 });
 
 router.get('/delete/:id', async (request, response) => {

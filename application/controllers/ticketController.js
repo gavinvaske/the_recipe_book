@@ -42,7 +42,7 @@ router.get('/in-progress/:ticketId', async (request, response) => {
             throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`);
         }
 
-        if (!isInProgressDepartmentStatus(ticket)) {
+        if (!isInProgressDepartmentStatus(ticket.destination.departmentStatus)) {
             return response.status(INVALID_REQUEST_ERROR_CODE).send(`The requested ticket whose object ID is "${ticketObjectId}" does not have a department status of "in-progress"`);
         }
 

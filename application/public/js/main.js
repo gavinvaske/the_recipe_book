@@ -493,15 +493,15 @@ $( document ).ready(function() {
     });
 
 
-    $(document).mouseup(function(e) {
-        var container = $('.column-td-a.active');
-        var emptyLength = 0;
-        // if the target of the click isn't the container nor a descendant of the container
-        if (!container.is(e.target) && container.has(e.target).length === emptyLength) {
-            // container.hide();
-            $('.column-td-a.active').removeClass('active');
-        }
-    });
+    // $(document).mouseup(function(e) {
+    //     var container = $('.column-td-a.active');
+    //     var emptyLength = 0;
+    //     // if the target of the click isn't the container nor a descendant of the container
+    //     if (!container.is(e.target) && container.has(e.target).length === emptyLength) {
+    //         // container.hide();
+    //         $('.column-td-a.active').removeClass('active');
+    //     }
+    // });
 
     $('.table-body').on('click', '.table-row-wrapper .table-row .column-td-a', function() {
         if ($(this).hasClass('active')){
@@ -522,9 +522,9 @@ $( document ).ready(function() {
         }
     });
 
-    $('.ticket-dropdown-options').click(function() {
-        $('.column-td-a').removeClass('active');
-    });
+    // $('.ticket-dropdown-options').click(function() {
+    //     $('.column-td-a').removeClass('active');
+    // });
 
     // $('.collapse-ticket').click(function(){
     //     $('.table-row-wrapper').removeClass('active');
@@ -570,25 +570,25 @@ $( document ).ready(function() {
         $('#material-count').text(materialCount);
     });
 
-    $('.move-to-department-trigger').click(function(){
-        let currentlyActive = $(this).find('.departments-dropdown');
-        if ($(currentlyActive).hasClass('active')) {
-            $(currentlyActive).removeClass('active');
-        } else {
-            $(currentlyActive).addClass('active');
-            $(this).closest('.move-ticket').addClass('active');
-        }
-    });
+    // $('.move-to-department-trigger').click(function(){
+    //     let currentlyActive = $(this).find('.departments-dropdown');
+    //     if ($(currentlyActive).hasClass('active')) {
+    //         $(currentlyActive).removeClass('active');
+    //     } else {
+    //         $(currentlyActive).addClass('active');
+    //         $(this).closest('.move-ticket').addClass('active');
+    //     }
+    // });
 
-    $('.move-to-list-trigger').click(function(){
-        let currentlyActive = $(this).find('.list-dropdown');
-        if ($(currentlyActive).hasClass('active')) {
-            $(currentlyActive).removeClass('active');
-        } else {
-            $(currentlyActive).addClass('active');
-            $(this).closest('.move-ticket').addClass('active');
-        }
-    });
+    // $('.move-to-list-trigger').click(function(){
+    //     let currentlyActive = $(this).find('.list-dropdown');
+    //     if ($(currentlyActive).hasClass('active')) {
+    //         $(currentlyActive).removeClass('active');
+    //     } else {
+    //         $(currentlyActive).addClass('active');
+    //         $(this).closest('.move-ticket').addClass('active');
+    //     }
+    // });
 
     $('.department-option').click(function(){
         $('.department-option').removeClass('active');
@@ -597,7 +597,10 @@ $( document ).ready(function() {
 
     $('.view-ticket').hover(function(){
         $('.move-ticket').removeClass('active');
-        $('.departments-dropdown').removeClass('active');
+        $('.department-drpdwn').removeClass('active');
+        $('.department-drpdwn-options').removeClass('active');
+        $('.status-drpdwn').removeClass('active');
+        $('.department-status-drpdwn').removeClass('active');
     });
 
     $(document).on('mouseover', '.duration-dropdown-trigger', function() {
@@ -619,20 +622,52 @@ $( document ).ready(function() {
         });
     });
 
-    $('.back-out-hover').hover(function(){
-        $('.move-ticket').removeClass('active');
-        $('.departments-dropdown').removeClass('active');
-    });
+    // $('.back-out-hover').hover(function(){
+    //     $('.move-ticket').removeClass('active');
+    //     $('.departments-dropdown').removeClass('active');
+    // });
 
-    $('.move-to-department-trigger ul li').click(function(){
-        event.preventDefault();
-        $('.department-status-dropdown').addClass('active');
-    });
+    // $('.move-to-department-trigger ul li').click(function(){
+    //     event.preventDefault();
+    //     $('.department-status-dropdown').addClass('active');
+    // });
 
-    $('.sub-drpdwn-back-btn').click(function() {
-        $('.department-status-dropdown').removeClass('active');
-        $('.departments-dropdown').addClass('storm');
-    });
+    // $('.sub-drpdwn-back-btn').click(function() {
+    //     $('.department-status-dropdown').removeClass('active');
+    //     $('.departments-dropdown').addClass('storm');
+    // });
+    $('.move-to-department-trigger').click(function() {
+        event.stopPropagation();
+        $(this).find('.department-drpdwn').addClass('active');
+        $(this).closest('.ticket-drpdwn-options').find('.department-drpdwn-options').addClass('active');
+        $(this).closest('.primary-drpdwn-list-option.move-ticket').addClass('active');
+      });
+      $('.department-dropdown-header .drpdwn-back-btn').click(function() {
+        event.stopPropagation();
+        $('.department-drpdwn').removeClass('active');
+        $('.status-drpdwn').removeClass('active');
+        $('.department-drpdwn-options').removeClass('active');
+        $('.primary-drpdwn-list-option.move-ticket').removeClass('active');
+      });
+      $('.department-dropdown-header .status-drpdwn-back-btn').click(function() {
+        event.stopPropagation();
+        $('.department-status-drpdwn').removeClass('active');
+      });
+      $('.move-to-list-trigger').click(function() {
+        event.stopPropagation();
+        $(this).find('.status-drpdwn').addClass('active');
+        $(this).closest('.ticket-drpdwn-options').find('.department-drpdwn-options').addClass('active');
+        $(this).closest('.primary-drpdwn-list-option.move-ticket').addClass('active');
+      });
+      
+      $('.department-option').click(function() {
+        $('.department-status-drpdwn').addClass('active');
+      });
+      
+
+      
+
+
 
     $('.notification-option').click(function() {
         $('');

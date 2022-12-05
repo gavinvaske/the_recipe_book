@@ -4143,3 +4143,177 @@ div[data-department^="BILLING"] h4.department-name span {
   background: rgba(156, 211, 38, 1);
 } */
 
+
+
+
+
+
+
+.ticket-drpdwn-options {
+  position: absolute;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 17px 6px;
+  min-width: 264px;
+  width: 264px;
+  top: calc(100% - 10px);
+  z-index: 0;
+  left: 0px;
+  padding: 8px;
+  border-radius: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease 0s;
+}
+.ticket-drpdwn-options.active {
+   opacity: 1;
+    visibility: visible;
+    /* top: calc(100% + 10px); */
+    top: 100%;
+    transition: .3s;
+    z-index: 9;
+}
+.department-drpdwn, .duration-dropdown-options, .department-status-drpdwn {
+    z-index: -10;
+    position: absolute;
+    background-color: white;
+    height: auto;
+    display: none;
+    top: 0px;
+    left: 100%;
+    min-width: 240px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 17px 6px;
+    visibility: visible !important;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.primary-drpdwn-list-option,
+.move-department-drpdwn-list-option,
+.department-option,
+.current-department-status-option,
+.duration-option,
+.assignee-drpdwn-option {
+  line-height: 24px;
+  color: rgb(103, 104, 121);
+  border-radius: 4px;
+  padding: 4px 8px;
+  position: relative;
+}
+.assignee-drpdwn-option {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.primary-drpdwn-list-option:hover,
+.move-department-drpdwn-list-option:hover,
+.department-option:hover,
+.current-department-status-option:hover,
+.primary-drpdwn-list-option.move-ticket.active,
+.duration-option:hover {
+  background-color: rgb(220, 223, 236);
+  cursor: pointer
+}
+
+.ticket-drpdwn-options .line {
+  height: 1px;
+  background-color: rgb(230, 233, 239);
+  width: 100%;
+  margin: 7px 0px;
+}
+.primary-drpdwn-list-option i {
+  margin-right: 8px;
+}
+.department-drpdwn-options {
+  position: absolute;
+  z-index: 0;
+  opacity: 0;
+  left: 100%;
+  min-width: 240px;
+  top: 0px !important;
+  visibility: visible !important;
+/*   padding: 0px !important; */
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 17px 6px;
+}
+
+
+.move-ticket:hover .department-drpdwn-options,
+.department-drpdwn-options.active {
+  display: block;
+  opacity: 1;
+  z-index: 10;
+}
+
+.department-drpdwn, .status-drpdwn,
+.status-dropdown-list {
+  z-index: -10;
+  position: absolute;
+  background-color: white;
+  height: auto;
+  display: none;
+  top: 0px;
+  left: 100%;
+  min-width: 240px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 17px 6px;
+  visibility: visible !important;
+  border-radius: 8px;
+  padding: 8px;
+}
+.department-drpdwn.active {
+  display: block;
+  left: -7px;
+  z-index: 9;
+  top: -7px;
+}
+.status-drpdwn.active {
+  display: block;
+  left: -7px;
+  z-index: 9;
+  top: -40px;
+}
+.department-status-drpdwn.active {
+  display: block;
+  left: -7px;
+  z-index: 9;
+  top: -7px;
+  height: 312px;
+}
+.department-dropdown-header {
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row;
+}
+span.drpdwn-title {
+  font-weight: 700;
+}
+.drpdwn-back-btn,
+.status-drpdwn-back-btn, .duration-dropdown-trigger {
+  position: relative;
+}
+.background-hover {
+  display: none;
+  background-color: rgb(220, 223, 236);
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+.drpdwn-back-btn:hover .background-hover,
+.status-drpdwn-back-btn:hover .background-hover {
+  display: block;
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: -5px;
+  right: -5px;
+  z-index: -1;
+  border-r
+}
+.duration-dropdown-trigger:hover .duration-dropdown-options {
+  display: block;
+  right: -7px;
+  z-index: 9;
+}

@@ -143,9 +143,6 @@
 	box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 	padding: 16px;
 	border-radius: 8px;
-}
-
-.dropdown {
 	background-color: white;
 	visibility: hidden;
 	z-index: 0;
@@ -612,12 +609,13 @@
 	left: 0;
 }
 .expanded-options-wrapper.active .expanded-options-dropdown ,
-.column-td-a.active .ticket-dropdown-options {
+.column-td-a.active .ticket-drpdwn-options {
 	opacity: 1;
 	visibility: visible;
 	/* top: calc(100% + 10px); */
 	top: 100%;
 	transition: .3s;
+	z-index: 99;
 }
 
 .column-td-a.active .fa-ellipsis-vertical {

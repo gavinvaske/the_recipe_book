@@ -641,28 +641,28 @@ $( document ).ready(function() {
         $(this).find('.department-drpdwn').addClass('active');
         $(this).closest('.ticket-drpdwn-options').find('.department-drpdwn-options').addClass('active');
         $(this).closest('.primary-drpdwn-list-option.move-ticket').addClass('active');
-      });
-      $('.department-dropdown-header .drpdwn-back-btn').click(function() {
+    });
+    $('.department-dropdown-header .drpdwn-back-btn').click(function() {
         event.stopPropagation();
         $('.department-drpdwn').removeClass('active');
         $('.status-drpdwn').removeClass('active');
         $('.department-drpdwn-options').removeClass('active');
         $('.primary-drpdwn-list-option.move-ticket').removeClass('active');
-      });
-      $('.department-dropdown-header .status-drpdwn-back-btn').click(function() {
+    });
+    $('.department-dropdown-header .status-drpdwn-back-btn').click(function() {
         event.stopPropagation();
         $('.department-status-drpdwn').removeClass('active');
-      });
-      $('.move-to-list-trigger').click(function() {
+    });
+    $('.move-to-list-trigger').click(function() {
         event.stopPropagation();
         $(this).find('.status-drpdwn').addClass('active');
         $(this).closest('.ticket-drpdwn-options').find('.department-drpdwn-options').addClass('active');
         $(this).closest('.primary-drpdwn-list-option.move-ticket').addClass('active');
-      });
+    });
       
-      $('.department-option').click(function() {
+    $('.department-option').click(function() {
         $('.department-status-drpdwn').addClass('active');
-      });
+    });
       
 
       

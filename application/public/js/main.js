@@ -751,6 +751,8 @@ $( document ).ready(function() {
                         clone.text(departmentStatus);
                         departmentStatusList.append(clone);
                     });
+
+                    departmentStatusList.show();
                 }
             },
             error: function(error) {
@@ -760,12 +762,13 @@ $( document ).ready(function() {
         });
     }
 
-    $('.departments-dropdown li').click(function() {
+    $('.department-dropdown-list li').click(function() {
         let departmentSelection = $(this).data('department-name');
-        const departmentStatusHtmlList = $(this).parent('.department-dropdown-list').parent('.departments-dropdown').siblings('.department-status-dropdown').find('.status-dropdown-list');
-        const clone = departmentStatusHtmlList.find('.status-option').first().clone();
+        const departmentStatusList = $(this).parents('.move-department-drpdwn-list-option').find('.status-dropdown-list');
+        
+        const departmentStatusRowTemplate = departmentStatusList.find('.status-option').first().clone();
 
-        populateDepartmentStatusList(departmentSelection, departmentStatusHtmlList, clone);
+        populateDepartmentStatusList(departmentSelection, departmentStatusList, departmentStatusRowTemplate);
     });
     
     function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
@@ -1134,7 +1137,7 @@ $( document ).ready(function() {
     }
 
     $('.status-dropdown-list').on('click', '.status-option', function() {
-        let departmentSelection = $(this).parent('.status-dropdown-list').parent('.department-status-dropdown').siblings('.departments-dropdown').find('.department-option.active').data('department-name');
+        let departmentSelection = $(this).parents('.move-department-drpdwn-list-option').find('.department-option.active').data('department-name');
         let statusSelection = $(this).data('status-name');
         let ticketId = $(this).data('ticket-id');
         
@@ -1157,7 +1160,6 @@ $( document ).ready(function() {
             const shouldSectionBeHidden = parseInt(ticketCount) === emptyLength;
             if (shouldSectionBeHidden) {
                 $(this).closest('.status-section').hide();
-                // $('.department-wrapper').find('.status-section:visible:last').css('margin-bottom', '0');
             }
         });
     }

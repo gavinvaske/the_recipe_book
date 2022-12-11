@@ -23,7 +23,7 @@
   "author": "Gavin Vaske",
   "license": "ISC",
   "devDependencies": {
-    "chance": "1.1.8",
+    "chance": "1.1.9",
     "eslint": "8.29.0",
     "jest": "29.3.1",
     "nodemon": "2.0.20"

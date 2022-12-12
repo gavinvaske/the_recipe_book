@@ -25,7 +25,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
-      - heroku/deploy_to_heroku-via-git:
+      - heroku/deploy-via-git:
           force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:

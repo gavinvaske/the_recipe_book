@@ -14,9 +14,7 @@ jobs:
           command: npm run test
           name: Run tests
       - run:
-          command: |
-            wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-            sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+          command:
             npm run build
           name: Build app
       - persist_to_workspace:

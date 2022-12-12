@@ -4,6 +4,11 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
+  setup_environment:
+  command: |
+    wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+    sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+    
   build_and_test:
     executor: node/default
     steps:
@@ -32,7 +37,10 @@ jobs:
 workflows:
   test_my_app:
     jobs:
-      - build_and_test
+      - setup_environment:
+      - build_and_test:
+          requires:
+            - setup_environment # only deploy if the setup_environment job has completed
       - deploy:
           requires:
             - build_and_test # only deploy if the build_and_test job has completed

@@ -14,14 +14,12 @@ jobs:
           command: npm run test
           name: Run tests
       - run:
-          command:
-            npm run build
+          command: npm run build
           name: Build app
       - persist_to_workspace:
           root: ~/project
           paths:
             - .
-
   deploy:
     executor: heroku/default
     steps:
@@ -33,10 +31,7 @@ jobs:
 workflows:
   test_my_app:
     jobs:
-      - setup_environment:
       - build_and_test:
-          requires:
-            - setup_environment # only deploy if the setup_environment job has completed
       - deploy:
           requires:
             - build_and_test # only deploy if the build_and_test job has completed

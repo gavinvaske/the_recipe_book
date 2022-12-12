@@ -4,11 +4,6 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
-  setup_environment:
-  command: |
-    wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-    sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-    
   build_and_test:
     executor: node/default
     steps:
@@ -19,7 +14,10 @@ jobs:
           command: npm run test
           name: Run tests
       - run:
-          command: npm run build
+          command: |
+            wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+            sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+            npm run build
           name: Build app
       - persist_to_workspace:
           root: ~/project

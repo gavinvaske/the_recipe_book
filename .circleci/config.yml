@@ -4,13 +4,13 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
-  build_and_test:
+  run_test_suite:
     executor: node/default
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-      - run:
+      - run:  # https://stackoverflow.com/a/72633324/9273261
           command: |
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
@@ -20,21 +20,21 @@ jobs:
           root: ~/project
           paths:
             - .
-  deploy:
+  deploy_to_heroku:
     executor: heroku/default
     steps:
       - attach_workspace:
           at: ~/project
-      - heroku/deploy-via-git:
+      - heroku/deploy_to_heroku-via-git:
           force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
 
 workflows:
-  test_my_app:
+  run_tests_and_deploy:
     jobs:
-      - build_and_test
-      - deploy:
+      - run_test_suite
+      - deploy_to_heroku:
           requires:
-            - build_and_test # only deploy if the build_and_test job has completed
+            - run_test_suite # only deploy_to_heroku if the run_test_suite job has completed
           filters:
             branches:
-              only: main # only deploy when on main
+              only: main # only deploy_to_heroku when on main

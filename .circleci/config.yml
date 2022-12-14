@@ -26,7 +26,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - heroku/deploy-via-git:
-          force: true # force push when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
+          force: true
 
 workflows:
   run_tests_and_deploy:
@@ -34,7 +34,7 @@ workflows:
       - run_test_suite
       - deploy_to_heroku:
           requires:
-            - run_test_suite # only deploy_to_heroku if the run_test_suite job has completed
+            - run_test_suite
           filters:
             branches:
-              only: main # only deploy_to_heroku when on main
+              only: main

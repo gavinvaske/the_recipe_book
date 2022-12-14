@@ -20,21 +20,8 @@ jobs:
           root: ~/project
           paths:
             - .
-  deploy_to_heroku:
-    executor: heroku/default
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - heroku/deploy-via-git:
-          force: true
 
 workflows:
-  run_tests_and_deploy:
+  run_tests:
     jobs:
       - run_test_suite
-      - deploy_to_heroku:
-          requires:
-            - run_test_suite
-          filters:
-            branches:
-              only: main

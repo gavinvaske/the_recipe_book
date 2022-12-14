@@ -8,8 +8,8 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 
-databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
-const databaseConnection = mongoose.connection;
+databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL); 
+const databaseConnection = mongoose.connection;  
 
 const defaultPort = 8080;
 const PORT = process.env.PORT || defaultPort;

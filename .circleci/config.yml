@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+  heroku: circleci/heroku@1.2.6
+
+jobs:
+  run_test_suite:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:  # https://stackoverflow.com/a/72633324/9273261
+          command: |
+            wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+            sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+            npm run test
+          name: Run tests
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+workflows:
+  run_tests:
+    jobs:
+      - run_test_suite

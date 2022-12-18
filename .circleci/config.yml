@@ -7,8 +7,18 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+      # look for existing cache and restore if found
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run:
+          name: install dependencies
+          command: npm install
+      # save any changes to the cache
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+          paths: 
+            - node_modules  
       - run:  # https://stackoverflow.com/a/72633324/9273261
           command: |
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
@@ -18,10 +28,6 @@ jobs:
             npm run test
             npm run acceptance
           name: Run tests
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
 
 workflows:
   run_tests:

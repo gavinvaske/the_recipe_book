@@ -4,3 +4,5 @@ npm-debug.log
 .env
 .DS_Store
 env
+cypress/videos
+cypress/screenshots

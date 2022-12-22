@@ -3,26 +3,22 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  run_test_suite:
+  run_unit_tests:
     executor: node/default
     steps:
       - checkout
       # look for existing cache and restore if found
       - restore_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
-      # a separate cache for Cypress binary
-      - restore_cache:
-          keys:
-            - cypress-v2-{{ checksum "e2e/package-lock.json" }}
       # install dependencies    
       - run:
           name: install dependencies
-          command: npm install
+          command: npm ci
       # save any changes to the cache
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
           paths: 
-            - node_modules
+            - ~/.npm
       # save the installed Cypress binary
       - save_cache:
           key: cypress-v2-{{ checksum "e2e/package-lock.json" }}
@@ -32,13 +28,11 @@ jobs:
           command: |
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             sudo apt-get update -y
-            sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
             sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             npm run test
-            npm run acceptance
           name: Run tests
 
 workflows:
   run_tests:
     jobs:
-      - run_test_suite
+      - run_unit_tests

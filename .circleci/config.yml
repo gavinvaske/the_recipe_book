@@ -38,7 +38,3 @@ workflows:
   run_tests:
     jobs:
       - run_unit_tests
-      - start_application
-      - cypress/run # "run" job comes from "cypress" orb
-        requires:
-          - start_application

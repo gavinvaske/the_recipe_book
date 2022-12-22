@@ -15,7 +15,7 @@ jobs:
       - run:
           name: install dependencies
           command: npm ci
-      # save any changes to the cache
+      # save any changes to a cache
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
           paths: 

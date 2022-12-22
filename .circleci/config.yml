@@ -38,6 +38,10 @@ workflows:
   run_tests:
     jobs:
       - run_unit_tests
-      - start_application
+      - start_application:
         requires:
           - run_unit_tests
+      - cypress/install:
+        requires:
+          - start_application
+

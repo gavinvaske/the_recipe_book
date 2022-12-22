@@ -10,6 +10,10 @@ jobs:
       # look for existing cache and restore if found
       - restore_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
+      # a separate cache for Cypress binary
+      - restore_cache:
+          keys:
+            - cypress-v2-{{ checksum "e2e/package-lock.json" }}
       # install dependencies    
       - run:
           name: install dependencies
@@ -18,7 +22,12 @@ jobs:
       - save_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
           paths: 
-            - node_modules  
+            - node_modules
+      # save the installed Cypress binary
+      - save_cache:
+          key: cypress-v2-{{ checksum "e2e/package-lock.json" }}
+          paths:
+            - ~/.cache/Cypress
       - run:  # https://stackoverflow.com/a/72633324/9273261
           command: |
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb

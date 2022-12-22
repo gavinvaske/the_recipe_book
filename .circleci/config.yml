@@ -41,7 +41,7 @@ workflows:
       - start_application:
         requires:
           - run_unit_tests
-      - cypress/install:
+      - cypress/run:
         requires:
           - start_application
 

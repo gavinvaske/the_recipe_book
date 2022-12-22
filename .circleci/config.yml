@@ -26,19 +26,15 @@ jobs:
             sudo apt-get update -y
             sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             npm run test
+            npm run start
           name: Run tests
-  start_application:
-    executor: node/default
-    steps:
-      - run:
-          name: start application
-          command: npm run start
 
 workflows:
   run_tests:
     jobs:
       - run_unit_tests
-      - start_application:
+      - cypress/run:
           requires:
             - run_unit_tests
+
 

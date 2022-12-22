@@ -39,3 +39,5 @@ workflows:
     jobs:
       - run_unit_tests
       - start_application
+        requires:
+          - run_unit_tests

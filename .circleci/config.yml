@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
+  cypress: cypress-io/cypress@2
 
 jobs:
   run_unit_tests:
@@ -31,3 +32,4 @@ workflows:
   run_tests:
     jobs:
       - run_unit_tests
+      - cypress/run # "run" job comes from "cypress" orb

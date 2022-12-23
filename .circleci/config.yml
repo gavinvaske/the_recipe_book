@@ -8,7 +8,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - setup_environment:
+      - run:
           command: |  # https://stackoverflow.com/a/72633324/9273261
             wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             sudo apt-get update -y

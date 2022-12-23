@@ -26,19 +26,11 @@ jobs:
             sudo apt-get update -y
             sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
             npm run test
+            npm run acceptance
           name: Run tests
-  run_ui_tests:
-    executor: node/default
-    steps:
-      - run:
-           command: npm run acceptance
 
 workflows:
   run_tests:
     jobs:
       - run_unit_tests
-      - run_ui_tests:
-          requires:
-            - run_unit_tests
-
 

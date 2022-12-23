@@ -12,8 +12,8 @@
     "test": "jest",
     "cypress:run": "cypress run",
     "acceptance": "start-server-and-test start http://localhost:8080 cypress:run",
-    "lint": "./node_modules/.bin/eslint .",
-    "fix-lint": "./node_modules/.bin/eslint . --fix",
+    "lint": "eslint .",
+    "fix-lint": "eslint . --fix",
     "verify": "npm run test && npm run lint",
     "nodemon": "nodemon application/index.js"
   },

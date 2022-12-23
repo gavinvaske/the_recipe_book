@@ -4,20 +4,17 @@ orbs:
   cypress: cypress-io/cypress@2
 
 jobs:
-  setup_environment:
-    executor: node/default
-    steps:
-      - run:  # https://stackoverflow.com/a/72633324/9273261
-          command: |
-                wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-                sudo apt-get update -y
-                sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-                sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-          name: setup linux environment
   run_unit_and_ui_tests:
     executor: node/default
     steps:
       - checkout
+      - setup_environment
+          command: |  # https://stackoverflow.com/a/72633324/9273261
+            wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+            sudo apt-get update -y
+            sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+          name: setup linux environment
       # look for existing cache and restore if found
       - restore_cache:
           key: v1-deps-{{ checksum "package-lock.json" }}
@@ -39,8 +36,5 @@ jobs:
 workflows:
   run_tests:
     jobs:
-      - setup_environment
-      - run_unit_and_ui_tests:
-          requires:
-            - setup_environment
+      - run_unit_and_ui_tests
 

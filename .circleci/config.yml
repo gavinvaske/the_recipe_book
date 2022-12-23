@@ -40,6 +40,6 @@ workflows:
     jobs:
       - setup_environment
       - run_unit_and_ui_tests:
-        requires:
-          - setup_environment
+          requires:
+            - setup_environment
 

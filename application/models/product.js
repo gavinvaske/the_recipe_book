@@ -68,7 +68,9 @@ function convertStringCurrency(numberAsString) {
 }
 
 function validateProductDie(productDie) {
-    return PRODUCT_DIE_REGEX.test(productDie);
+    const isAPressProof = productDie.toUpperCase() === 'PRESS PROOF';
+
+    return PRODUCT_DIE_REGEX.test(productDie) || isAPressProof;
 }
 
 function numberMustBeGreaterThanZero(number) {

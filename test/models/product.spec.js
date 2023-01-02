@@ -154,7 +154,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if string is "Press Proof"', () => {
-            const validProductDie = 'Press Proof'
+            const validProductDie = 'Press Proof';
             productAttributes.ToolNo1 = validProductDie;
             const product = new ProductModel(productAttributes);
 

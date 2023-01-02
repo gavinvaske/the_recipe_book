@@ -167,8 +167,6 @@ describe('validation', () => {
             productAttributes.ToolNo1 = validProductDie;
             const product = new ProductModel(productAttributes);
 
-            console.log(`press proof => ${product.productDie}`)
-
             const error = product.validateSync();
             expect(error).toBe(undefined);
         });

@@ -112,7 +112,7 @@
     <% const billingReadyForBillingTickets = [] %>
     
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Order Prep Department Start-->
+      <!--- Order Prep Department Start-->
       <div class='department-wrapper' data-department="ORDER-PREP">
         <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
         <div class='status-section needs-attention-status red-master card'>
@@ -152,16 +152,16 @@
                     </div>
                     <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                     <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white status-column'></div>
+                    <div class='column-td column-td-d bg-white hold-status-column'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'>
                       <div class='user-cell bg-blue tooltip'>SV
                         <span class="tooltiptext">TODO</span>
-                      </div><span class='machine-name from-column'>Press 1</span>
+                      </div><span class='machine-name department-name-column'>N/A</span>
                     </div>
-                    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4</div>
+                    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>N/A</div>
                   </div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {

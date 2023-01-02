@@ -919,41 +919,44 @@ $( document ).ready(function() {
     }
 
     const ticketNumberColumn = '.ticket-number-column';
-    const statusColumn = '.status-column';
-    const fromColumn = '.from-column';
-    const dueDateColumn = '.due-date-column';
-    const followUpDateColumn = '.follow-up-date-column';
-    const sentDateColumn = '.sent-date-column';
-    const typeColumn = '.type-column';
-    const productCountColumn = '.product-count-column';
+    const departmentStatusColumn = '.department-status-column';
+    const departmentNameColumn = '.department-name-column';
+    const holdStatusColumn = '.hold-status-column';
     const locationColumn = '.location-column';
+    const lengthColumn = '.length-column';
     const materialColumn = '.material-column';
     const dieColumn = '.die-column';
-    const lengthColumn = '.length-column';
-    const holdStatusColumn = '.hold-status-column';
-    const rolls = '.rolls-column';
+    const totalRollsColumn = '.total-rolls-column';
     const groupedColumn = '.grouped-column';
+    const productCountColumn = '.product-count-column';
+    const dueDateColumn = '.due-date-column';
+    const fromColumn = '.from-column';
+    const dieFinishColumn = '.die-finish-column';
+    const sentDateColumn = '.sent-date-column';
+    const followUpDateColumn = '.follow-up-date-column';
+
 
     function mapTicketRowColumnSelectorToValues(ticket) {
-        console.log(ticket);
-        const machineName = (ticket.destination.machines && ticket.destination.machines.length > emptyLength) ? ticket.destination.machines[0].name : '';
         const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
+        const productDie = (ticket.products && ticket.products.length > 0) ? ticket.products[0].productDie : 'N/A';
+
         return {
-            [ticketNumberColumn]: ticket.shippingAttention,
-            [statusColumn]: ticket.shippingAttention,
-            [fromColumn]: '!TODO!',
-            [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
-            [followUpDateColumn]: '!TODO!',
-            [sentDateColumn]: '!TODO!',
-            [typeColumn]: '!TODO!',
+            [ticketNumberColumn]: `#${ticket.ticketNumber}`,
+            [departmentStatusColumn]: ticket.destination ? ticket.destination.departmentStatus : 'N/A',
+            [departmentNameColumn]: ticket.destination ? ticket.destination.department : 'N/A',
+            [holdStatusColumn]: '!TODO!1',
+            [locationColumn]: '!TODO!2',
+            [lengthColumn]: '!TODO!3',
+            [materialColumn]: ticket.primaryMaterial ? ticket.primaryMaterial : 'N/A',
+            [dieColumn]: productDie,
+            [totalRollsColumn]: '!TODO!4',
+            [groupedColumn]: '!TODO!5',
             [productCountColumn]: numberOfProducts,
-            [locationColumn]: machineName,
-            [materialColumn]: ticket.primaryMaterial, // TODO: I think Storm marked this wrong on the mockup, check with him
-            [dieColumn]: '!TODO!',
-            [lengthColumn]: ticket.totalFeet,
-            [holdStatusColumn]: '!TODO!',
-            [rolls]: '!TODO!',
-            [groupedColumn]: '!TODO!',
+            [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
+            [fromColumn]: '!TODO!8',
+            [dieFinishColumn]: '!TODO!9',
+            [sentDateColumn]: '!TODO!10',
+            [followUpDateColumn]: '!TODO!11',
         };
     }
 

@@ -153,6 +153,26 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
+        it('should pass validation if string is "Press Proof"', () => {
+            const validProductDie = 'Press Proof'
+            productAttributes.ToolNo1 = validProductDie;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+            expect(error).toBe(undefined);
+        });
+        
+        it('should pass validation if string is "Press Proof" no matter what the capitalization is', () => {
+            const validProductDie = 'PreSS prOoF';
+            productAttributes.ToolNo1 = validProductDie;
+            const product = new ProductModel(productAttributes);
+
+            console.log(`press proof => ${product.productDie}`)
+
+            const error = product.validateSync();
+            expect(error).toBe(undefined);
+        });
+
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);
 

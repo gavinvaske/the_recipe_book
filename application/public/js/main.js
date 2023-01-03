@@ -935,12 +935,10 @@ $( document ).ready(function() {
     const sentDateColumn = '.sent-date-column';
     const followUpDateColumn = '.follow-up-date-column';
 
-
     function mapTicketRowColumnSelectorToValues(ticket) {
         console.log(ticket);
-        const machineName = ticket.destination.machine ? ticket.destination.machine.name : '';
         const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
-        const productDie = (ticket.products && ticket.products.length > 0) ? ticket.products[0].productDie : 'N/A';
+        const productDie = (ticket.products && ticket.products.length > ZERO) ? ticket.products[0].productDie : 'N/A';
 
         return {
             [ticketNumberColumn]: `#${ticket.ticketNumber}`,

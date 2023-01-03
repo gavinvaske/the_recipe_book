@@ -936,7 +936,7 @@ $( document ).ready(function() {
 
     function mapTicketRowColumnSelectorToValues(ticket) {
         console.log(ticket);
-        const machineName = (ticket.destination.machines && ticket.destination.machines.length > emptyLength) ? ticket.destination.machines[0].name : '';
+        const machineName = ticket.destination.machine ? ticket.destination.machine.name : '';
         const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
         return {
             [ticketNumberColumn]: ticket.shippingAttention,

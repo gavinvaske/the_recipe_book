@@ -17,8 +17,8 @@ describe('validation', () => {
             destination: {
                 department: department,
                 departmentStatus: departmentStatus,
-                assignees: [],
-                machines: []
+                assignee: new mongoose.Types.ObjectId(),
+                machine: new mongoose.Types.ObjectId()
             }
         };
     });

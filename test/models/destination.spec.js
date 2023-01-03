@@ -16,8 +16,8 @@ describe('validation', () => {
         destinationAttributes = {
             department: department,
             departmentStatus: departmentStatus,
-            assignees: [],
-            machines: []
+            assignee: new mongoose.Types.ObjectId(),
+            machine: new mongoose.Types.ObjectId()
         };
     });
 
@@ -159,22 +159,35 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: assignees', () => {
+    describe('attribute: assignee', () => {
         it('should have one element which is a valid mongoose objectId', () => {
-            destinationAttributes.assignees = [
-                new mongoose.Types.ObjectId()
-            ];
+            destinationAttributes.assignee = new mongoose.Types.ObjectId();
             const destination = new Destination(destinationAttributes);
 
-            expect(mongoose.Types.ObjectId.isValid(destination.assignees[0])).toBe(true);
+            expect(mongoose.Types.ObjectId.isValid(destination.assignee)).toBe(true);
         });
 
         it('should default to an empty array if attribute is not defined', () => {
-            delete destinationAttributes.assignees;
-            const emptyArray = [];
+            delete destinationAttributes.assignee;
             const destination = new Destination(destinationAttributes);
 
-            expect(destination.assignees).toEqual(emptyArray);
+            expect(destination.assignee).not.toBeDefined();
+        });
+    });
+
+    describe('attribute: machine', () => {
+        it('should have one element which is a valid mongoose objectId', () => {
+            destinationAttributes.machine = new mongoose.Types.ObjectId();
+            const destination = new Destination(destinationAttributes);
+
+            expect(mongoose.Types.ObjectId.isValid(destination.machine)).toBe(true);
+        });
+
+        it('should default to an empty array if attribute is not defined', () => {
+            delete destinationAttributes.machine;
+            const destination = new Destination(destinationAttributes);
+
+            expect(destination.machine).not.toBeDefined();
         });
     });
 });

@@ -38,6 +38,10 @@ const destinationSchema = new Schema({
     assignees: {
         type: [Schema.Types.ObjectId],
         ref: 'User'
+    },
+    machines: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Machine'
     }
 }, { timestamps: true });
 

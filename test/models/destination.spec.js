@@ -177,4 +177,23 @@ describe('validation', () => {
             expect(destination.assignees).toEqual(emptyArray);
         });
     });
+
+    describe('attribute: machines', () => {
+        it('should have one element which is a valid mongoose objectId', () => {
+            destinationAttributes.machines = [
+                new mongoose.Types.ObjectId()
+            ];
+            const destination = new Destination(destinationAttributes);
+
+            expect(mongoose.Types.ObjectId.isValid(destination.machines[0])).toBe(true);
+        });
+
+        it('should default to an empty array if attribute is not defined', () => {
+            delete destinationAttributes.machines;
+            const emptyArray = [];
+            const destination = new Destination(destinationAttributes);
+
+            expect(destination.machines).toEqual(emptyArray);
+        });
+    });
 });

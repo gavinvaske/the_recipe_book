@@ -35,12 +35,12 @@ const destinationSchema = new Schema({
     departmentStatus: {
         type: String
     },
-    assignees: {
-        type: [Schema.Types.ObjectId],
+    assignee: {
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    machines: {
-        type: [Schema.Types.ObjectId],
+    machine: {
+        type: Schema.Types.ObjectId,
         ref: 'Machine'
     }
 }, { timestamps: true });

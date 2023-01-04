@@ -919,10 +919,8 @@ $( document ).ready(function() {
     }
 
     const ticketNumberColumn = '.ticket-number-column';
-    const departmentStatusColumn = '.department-status-column';
     const departmentNameColumn = '.department-name-column';
     const holdStatusColumn = '.hold-status-column';
-    const locationColumn = '.location-column';
     const lengthColumn = '.length-column';
     const materialColumn = '.material-column';
     const dieColumn = '.die-column';
@@ -934,29 +932,57 @@ $( document ).ready(function() {
     const dieFinishColumn = '.die-finish-column';
     const sentDateColumn = '.sent-date-column';
     const followUpDateColumn = '.follow-up-date-column';
+    const assigneeNameColumn = '.assignee-name-column';
+    const assigneeProfilePictureColumn = '.assignee-picture-url-column';
 
+    function sumTheLengthOfMaterialForEachProduct(products) {
+        let totalMaterialLength = 0;
+
+        products && products.forEach((product) => {
+            totalMaterialLength += product.totalFeet;
+        });
+
+        return totalMaterialLength;
+    }
+
+    function getDieCuttingFinishFromTheFirstProduct(products) {
+        if (!products || products.length === ZERO) {
+            return;
+        }
+
+        return products[0].dieCuttingFinish;
+    }
+
+    /* eslint-disable complexity */
     function mapTicketRowColumnSelectorToValues(ticket) {
         console.log(ticket);
         const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
         const productDie = (ticket.products && ticket.products.length > ZERO) ? ticket.products[0].productDie : 'N/A';
+        const assigneeName = ticket.destination.assignee ? ticket.destination.assignee.fullName : 'N/A';
+        const assigneeProfilePicture = ticket.destination.assignee ? ticket.destination.assignee.profilePicture : '';
+        const totalLengthOfMaterialInFeet = sumTheLengthOfMaterialForEachProduct(ticket.products);
+        const dieCuttingFinish = getDieCuttingFinishFromTheFirstProduct(ticket.products);
+
+        console.log(`assigneeName => ${assigneeName}`);
+        console.log(`assigneeProfilePicture => ${assigneeProfilePicture}`);
 
         return {
             [ticketNumberColumn]: `#${ticket.ticketNumber}`,
-            [departmentStatusColumn]: ticket.destination ? ticket.destination.departmentStatus : 'N/A',
             [departmentNameColumn]: ticket.destination ? ticket.destination.department : 'N/A',
-            [holdStatusColumn]: '!TODO!1',
-            [locationColumn]: '!TODO!2',
-            [lengthColumn]: '!TODO!3',
+            [assigneeNameColumn]: assigneeName,
+            [assigneeProfilePictureColumn]: assigneeProfilePicture,
+            [holdStatusColumn]: 'TODO #1',
+            [lengthColumn]: totalLengthOfMaterialInFeet,
             [materialColumn]: ticket.primaryMaterial ? ticket.primaryMaterial : 'N/A',
             [dieColumn]: productDie,
-            [totalRollsColumn]: '!TODO!4',
-            [groupedColumn]: '!TODO!5',
+            [totalRollsColumn]: ticket.totalWindingRolls,
+            [groupedColumn]: 'TODO #2',
             [productCountColumn]: numberOfProducts,
             [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
-            [fromColumn]: '!TODO!8',
-            [dieFinishColumn]: '!TODO!9',
-            [sentDateColumn]: '!TODO!10',
-            [followUpDateColumn]: '!TODO!11',
+            [fromColumn]: 'TODO #3',
+            [dieFinishColumn]: dieCuttingFinish ? dieCuttingFinish : 'N/A',
+            [sentDateColumn]: 'TODO #4',
+            [followUpDateColumn]: 'TODO #5'
         };
     }
 

@@ -1108,7 +1108,7 @@ $( document ).ready(function() {
 
         departmentStatusTable.append(ticketRow);
         ticketRow.show();
-        productRows.forEach((productRow) => productRow.show())
+        productRows.forEach((productRow) => productRow.show());
 
         updateDepartmentTicketCounts();
         updateDepartmentSectionTicketCounts();

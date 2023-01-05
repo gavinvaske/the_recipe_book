@@ -89,7 +89,7 @@ $( document ).ready(function() {
             },
             success: function(response) {
                 if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+                    alert(`failed to update that note: ${response.error}`);
                 }
             },
             error: function(error) {
@@ -108,7 +108,7 @@ $( document ).ready(function() {
             },
             success: function(response) {
                 if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+                    alert(`Failed to find department statuses: ${response.error}`);
                 } else {
                     const departmentStatuses = response.departmentStatuses;
                     const departmentStatusDropdown = $('#department-status-selection');
@@ -156,7 +156,7 @@ $( document ).ready(function() {
             contentType: false,
             success: function(response) {
                 if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+                    alert(`Failed to upload the proof: ${response.error}`);
                 } else {
                     alert('Upload was successful. TODO: implement a success flash message @Storm');
                 }
@@ -740,7 +740,7 @@ $( document ).ready(function() {
             },
             success: function(response) {
                 if (response.error) {
-                    alert(`An error occurred: ${response.error}`);
+                    alert(`An error occurred4: ${response.error}`);
                 } else {
                     departmentStatusList.empty();
                     const departmentStatuses = response.departmentStatuses;
@@ -772,33 +772,31 @@ $( document ).ready(function() {
     });
     
     function getIdentifierUsingTicketDepartmentAndDepartmentStatus(department, departmentStatus) {
+        // department statuses
         const NEEDS_ATTENTION = 'NEEDS ATTENTION';
-        const SEND_TO_CUSTOMER = 'SEND TO CUSTOMER';
         const WAITING_ON_APPROVAL = 'WAITING ON APPROVAL';
         const WAITING_ON_CUSTOMER = 'WAITING ON CUSTOMER';
-        const READY_TO_ORDER_PLATE_OR_DIE = 'READY TO ORDER PLATE OR DIE';
         const IN_PROGRESS = 'IN PROGRESS';
-
-        const SETUP = 'SET-UP';
-        const RUNTIME = 'RUNTIME';
-        const TEAR_DOWN = 'TEAR-DOWN';
-
-        const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
-        const NEEDS_PLATE = 'NEEDS PLATE';
-        const SEND_TO_PRESS = 'SEND TO PRESS';
-        const READY_FOR_SCHEDULING = 'READY FOR SCHEDULING';
-        const SCHEDULE_PRESS_ONE = 'SCHEDULE PRESS ONE';
-        const SCHEDULE_PRESS_TWO = 'SCHEDULE PRESS TWO';
-        const SCHEDULE_PRESS_THREE = 'SCHEDULE PRESS THREE';
+        const PROOFING_COMPLETE = 'PROOFING COMPLETE';
+        const PRINTING_READY = 'PRINTING READY';
+        const PRINTER_ONE_SCHEDULE = 'PRINTER ONE SCHEDULE';
+        const PRINTER_TWO_SCHEDULE = 'PRINTER TWO SCHEDULE';
+        
+        const SEND_TO_PRINTING = 'SEND TO PRINTING';
         const NEEDS_PROOF = 'NEEDS PROOF';
         const ON_HOLD = 'ON HOLD';
-        const SCHEDULE_DELTA_ONE = 'SCHEDULE DELTA ONE';
-        const SCHEDULE_DELTA_TWO = 'SCHEDULE DELTA TWO';
-        const SCHEDULE_ROTOFLEX = 'SCHEDULE ROTOFLEX';
-        const READY_FOR_SHIPPING = 'READY FOR SHIPPING';
-        const TOOL_ARRIVALS = 'TOOL ARRIVALS';
-        const READY_FOR_BILLING = 'READY FOR BILLING';
-
+        const PACKAGING_READY = 'PACKAGING READY';
+        
+        const CUTTING_READY = 'CUTTING_READY';
+        const DELTA_ONE_SCHEDULE = 'DELTA ONE SCHEDULE';
+        const DELTA_TWO_SCHEDULE = 'DELTA TWO SCHEDULE';
+        const ROTOFLEX_ONE_SCHEDULE = 'ROTOFLEX ONE SCHEDULE';
+        const WINDING_READY = 'WINDING READY';
+        const FARMED_OUT_TICKETS = 'FARMED OUT TICKETS';
+        const BILLING_READY = 'BILLING READY';
+        const SHIPPING_READY = 'SHIPPING READY';
+        
+        // departments
         const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
         const ART_PREP_DEPARTMENT = 'ART-PREP';
         const PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
@@ -808,69 +806,64 @@ $( document ).ready(function() {
         const PACKAGING_DEPARTMENT = 'PACKAGING';
         const SHIPPING_DEPARTMENT = 'SHIPPING';
         const BILLING_DEPARTMENT = 'BILLING';
-        
+
         const destinationToIdentifierMapping = 
         {
             [ORDER_PREP_DEPARTMENT]: {
                 [NEEDS_ATTENTION]: 'order-prep-needs-attention',
-                [SEND_TO_CUSTOMER]: 'order-prep-send-to-customer',
-                [WAITING_ON_APPROVAL]: 'order-prep-waiting-on-approval',
+                [ON_HOLD]: 'order-prep-on-hold',
+                [PROOFING_COMPLETE]: 'order-prep-proofing-complete',
                 [WAITING_ON_CUSTOMER]: 'order-prep-waiting-on-customer',
-                [READY_TO_ORDER_PLATE_OR_DIE]: 'order-prep-ready-to-order',
-                [IN_PROGRESS]: 'order-prep-in-progress'
+                [WAITING_ON_APPROVAL]: 'order-prep-waiting-on-approval'
             },
             [ART_PREP_DEPARTMENT]: {
                 [NEEDS_ATTENTION]: 'art-prep-needs-attention',
+                [ON_HOLD]: 'art-prep-on-hold',
                 [IN_PROGRESS]: 'art-prep-in-progress',
-                [NEEDS_PROOF]: 'art-prep-needs-proof',
-                [NEEDS_DIE_LINE]: 'art-prep-needs-die',
-                [NEEDS_PLATE]: 'art-prep-needs-plate'
+                [NEEDS_PROOF]: 'art-prep-needs-proof'
             },
             [PRE_PRINTING_DEPARTMENT]: {
                 [NEEDS_ATTENTION]: 'pre-printing-needs-attention',
+                [ON_HOLD]: 'pre-printing-on-hold',
                 [IN_PROGRESS]: 'pre-printing-in-progress',
-                [SEND_TO_PRESS]: 'pre-printing-send-to-press'
+                [SEND_TO_PRINTING]: 'pre-printing-send-to-printing'
             },
             [PRINTING_DEPARTMENT]: {
-                [SETUP]: 'printing-in-progress',
-                [RUNTIME]: 'printing-in-progress',
-                [TEAR_DOWN]: 'printing-in-progress',
-                [READY_FOR_SCHEDULING]: 'printing-ready-for-scheduling',
-                [SCHEDULE_PRESS_ONE]: 'printing-schedule-press-one',
-                [SCHEDULE_PRESS_TWO]: 'printing-schedule-press-two',
-                [SCHEDULE_PRESS_THREE]: 'printing-schedule-press-three',
-                [ON_HOLD]: 'printing-on-hold'
+                [ON_HOLD]: 'printing-on-hold',
+                [IN_PROGRESS]: 'printing-in-progress',
+                [PRINTING_READY]: 'printing-ready',
+                [PRINTER_ONE_SCHEDULE]: 'printing-printer-one-schedule',
+                [PRINTER_TWO_SCHEDULE]: 'printing-printer-two-schedule'
             },
             [CUTTING_DEPARTMENT]: {
-                [SETUP]: 'cutting-in-progress',
-                [RUNTIME]: 'cutting-in-progress',
-                [TEAR_DOWN]: 'cutting-in-progress',
-                [READY_FOR_SCHEDULING]: 'cutting-ready-for-scheduling',
-                [SCHEDULE_DELTA_ONE]: 'cutting-schedule-delta-one',
-                [SCHEDULE_DELTA_TWO]: 'cutting-schedule-delta-two',
-                [SCHEDULE_ROTOFLEX]: 'cutting-schedule-rotoflex',
-                [ON_HOLD]: 'cutting-on-hold'
+                [ON_HOLD]: 'cutting-on-hold',
+                [IN_PROGRESS]: 'cutting-in-progress',
+                [CUTTING_READY]: 'cutting-ready',
+                [DELTA_ONE_SCHEDULE]: 'cutting-delta-one-schedule',
+                [DELTA_TWO_SCHEDULE]: 'cutting-delta-two-schedule',
+                [ROTOFLEX_ONE_SCHEDULE]: 'cutting-rotoflex-one-schedule'
             },
             [WINDING_DEPARTMENT]: {
+                [ON_HOLD]: 'winding-on-hold',
                 [IN_PROGRESS]: 'winding-in-progress',
-                [READY_FOR_SCHEDULING]: 'winding-ready-for-scheduling',
-                [ON_HOLD]: 'winding-on-hold'
+                [WINDING_READY]: 'winding-ready'
             },
             [PACKAGING_DEPARTMENT]: {
-                ON_HOLD: 'packaging-on-hold',
-                IN_PROGRESS: 'packaging-in-progress',
-                PACKAGING_READY: 'packaging-ready'
+                [ON_HOLD]: 'packaging-on-hold',
+                [IN_PROGRESS]: 'packaging-in-progress',
+                [PACKAGING_READY]: 'packaging-ready'
             },
             [SHIPPING_DEPARTMENT]: {
-                [IN_PROGRESS]: 'shipping-in-progress',
-                [READY_FOR_SHIPPING]: 'shipping-ready-for-shipping',
                 [ON_HOLD]: 'shipping-on-hold',
-                [TOOL_ARRIVALS]: 'shipping-tool-arrivals'
+                [IN_PROGRESS]: 'shipping-in-progress',
+                [SHIPPING_READY]: 'shipping-ready',
+                [FARMED_OUT_TICKETS]: 'shipping-farmed-out-tickets',
             },
             [BILLING_DEPARTMENT]: {
-                [READY_FOR_BILLING]: 'billing-ready-for-billing',
-                [IN_PROGRESS]: 'billing-in-progress'
-            },
+                [ON_HOLD]: 'billing-on-hold',
+                [IN_PROGRESS]: 'billing-in-progress',
+                [BILLING_READY]: 'billing-ready'
+            }
         };
 
         const identifier = destinationToIdentifierMapping[department][departmentStatus];
@@ -919,41 +912,72 @@ $( document ).ready(function() {
     }
 
     const ticketNumberColumn = '.ticket-number-column';
-    const statusColumn = '.status-column';
-    const fromColumn = '.from-column';
-    const dueDateColumn = '.due-date-column';
-    const followUpDateColumn = '.follow-up-date-column';
-    const sentDateColumn = '.sent-date-column';
-    const typeColumn = '.type-column';
-    const productCountColumn = '.product-count-column';
-    const locationColumn = '.location-column';
+    const departmentNameColumn = '.department-column';
+    const departmentStatusNameColumn = '.department-status-column';
+    const holdStatusColumn = '.hold-status-column';
+    const lengthColumn = '.length-column';
     const materialColumn = '.material-column';
     const dieColumn = '.die-column';
-    const lengthColumn = '.length-column';
-    const holdStatusColumn = '.hold-status-column';
-    const rolls = '.rolls-column';
+    const totalRollsColumn = '.total-rolls-column';
     const groupedColumn = '.grouped-column';
+    const productCountColumn = '.product-count-column';
+    const dueDateColumn = '.due-date-column';
+    const fromColumn = '.from-column';
+    const dieFinishColumn = '.die-finish-column';
+    const sentDateColumn = '.sent-date-column';
+    const followUpDateColumn = '.follow-up-date-column';
+    const assigneeNameColumn = '.assignee-name-column';
+    const assigneeProfilePictureColumn = '.assignee-picture-url-column';
 
+    function sumTheLengthOfMaterialForEachProduct(products) {
+        let totalMaterialLength = 0;
+
+        products && products.forEach((product) => {
+            totalMaterialLength += product.totalFeet;
+        });
+
+        return totalMaterialLength;
+    }
+
+    function getDieCuttingFinishFromTheFirstProduct(products) {
+        if (!products || products.length === ZERO) {
+            return;
+        }
+
+        return products[0].dieCuttingFinish;
+    }
+
+    /* eslint-disable complexity */
     function mapTicketRowColumnSelectorToValues(ticket) {
         console.log(ticket);
-        const machineName = ticket.destination.machine ? ticket.destination.machine.name : '';
         const numberOfProducts = ticket.products ? ticket.products.length : ZERO;
+        const productDie = (ticket.products && ticket.products.length > ZERO) ? ticket.products[0].productDie : 'N/A';
+        const assigneeName = ticket.destination.assignee ? ticket.destination.assignee.fullName : 'N/A';
+        const assigneeProfilePicture = ticket.destination.assignee ? ticket.destination.assignee.profilePicture : '';
+        const totalLengthOfMaterialInFeet = sumTheLengthOfMaterialForEachProduct(ticket.products);
+        const dieCuttingFinish = getDieCuttingFinishFromTheFirstProduct(ticket.products);
+
+        console.log(`assigneeName => ${assigneeName}`);
+        console.log(`assigneeProfilePicture => ${assigneeProfilePicture}`);
+
         return {
-            [ticketNumberColumn]: ticket.shippingAttention,
-            [statusColumn]: ticket.shippingAttention,
-            [fromColumn]: '!TODO!',
-            [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
-            [followUpDateColumn]: '!TODO!',
-            [sentDateColumn]: '!TODO!',
-            [typeColumn]: '!TODO!',
+            [ticketNumberColumn]: `#${ticket.ticketNumber}`,
+            [departmentNameColumn]: ticket.destination ? ticket.destination.department : '-',
+            [departmentStatusNameColumn]: ticket.destination ? ticket.destination.departmentStatus : '-',
+            [assigneeNameColumn]: assigneeName,
+            [assigneeProfilePictureColumn]: assigneeProfilePicture,
+            [holdStatusColumn]: 'TODO: .hold-status-column',
+            [lengthColumn]: totalLengthOfMaterialInFeet,
+            [materialColumn]: ticket.primaryMaterial ? ticket.primaryMaterial : '-',
+            [dieColumn]: productDie,
+            [totalRollsColumn]: ticket.totalWindingRolls,
+            [groupedColumn]: 'TODO: .grouped-column',
             [productCountColumn]: numberOfProducts,
-            [locationColumn]: machineName,
-            [materialColumn]: ticket.primaryMaterial, // TODO: I think Storm marked this wrong on the mockup, check with him
-            [dieColumn]: '!TODO!',
-            [lengthColumn]: ticket.totalFeet,
-            [holdStatusColumn]: '!TODO!',
-            [rolls]: '!TODO!',
-            [groupedColumn]: '!TODO!',
+            [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
+            [fromColumn]: 'TODO: .from-column',
+            [dieFinishColumn]: dieCuttingFinish ? dieCuttingFinish : '-',
+            [sentDateColumn]: 'TODO: .sent-date-column',
+            [followUpDateColumn]: 'TODO: .follow-up-date-column'
         };
     }
 
@@ -1083,6 +1107,8 @@ $( document ).ready(function() {
         populateTicketRowDropdownOptions(ticketRow, ticket);
 
         departmentStatusTable.append(ticketRow);
+        ticketRow.show();
+        productRows.forEach((productRow) => productRow.show());
 
         updateDepartmentTicketCounts();
         updateDepartmentSectionTicketCounts();

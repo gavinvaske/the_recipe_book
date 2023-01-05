@@ -1,5 +1,5 @@
 <!-- Order Prep - Needs Attention -->
-<div id='' class='table-row-wrapper full-width order-prep-needs-attention-row'>
+<div id='' class='table-row-wrapper full-width order-prep-needs-attention-row' style="display: none;">
   <%- include('start-job-modal.ejs', {
     ticket: {}
     }
@@ -20,9 +20,9 @@
       <div class='column-td column-td-f bg-white'></div>
       <div class='column-td column-td-g bg-white'></div>
       <div class='column-td column-td-h bg-white'>
-        <div class='user-cell bg-blue tooltip'>SV
-          <span class="tooltiptext">TODO</span>
-        </div><span class='machine-name from-column'>Press 1</span>
+        <div class='user-cell bg-blue tooltip assignee-picture-url-column'>SV
+          <span class="tooltiptext assignee-name-column">TODO</span>
+        </div><span class='department-name department-column'>N/A</span>
       </div>
       <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4</div>
     </div>
@@ -33,36 +33,8 @@
   ) %>
 </div>
 
-<!-- Order Prep - Send To Customer -->
-<div id='' class='table-row-wrapper full-width order-prep-send-to-customer-row'>
-  <%- include('start-job-modal.ejs', {
-    ticket: {}
-    }
-  ) %>
-  <div class='table-row flex-center-center-row'>
-    <div class='column-td column-td-a'>
-      <i class='fa-light fa-ellipsis-vertical text-white'></i>
-      <%- include('ticket-dropdown-options.ejs', {
-        ticket: {}
-        }
-      ) %>
-    </div>
-    <div class='column-td column-td-b bg-white row-number'></div>
-    <div class='column-td column-td-c bg-white ticket-number-column'>#</div>
-    <div class='column-td column-td-d bg-purple text-white status-column'>Rush</div>
-    <div class='column-td column-td-e bg-white'></div>
-    <div class='column-td column-td-f bg-white'></div>
-    <div class='column-td column-td-g bg-white'></div>
-    <div class='column-td column-td-h bg-white'></div>
-    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
-  </div>
-  <%- include('products-wrapper.ejs', {
-    ticket: {}
-    }
-  )%>
-</div>
-
-<div id='' class='table-row-wrapper full-width order-prep-waiting-on-approval-row'>
+<!-- Order Prep - Waiting on Approval -->
+<div id='' class='table-row-wrapper full-width order-prep-waiting-on-approval-row' style="display: none;">
   <%- include('start-job-modal.ejs', {
     ticket: {}
     }
@@ -91,7 +63,7 @@
 </div>
 
 <!-- Order Prep - Waiting On Customer -->
-<div id='' class='table-row-wrapper full-width order-prep-waiting-on-customer-row'>
+<div id='' class='table-row-wrapper full-width order-prep-waiting-on-customer-row' style="display: none;">
   <%- include('start-job-modal.ejs', {
     ticket: {}
     }

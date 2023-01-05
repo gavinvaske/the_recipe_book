@@ -23,98 +23,15 @@
     </div>
 
     <div class='scroll-curtain'></div>
-
-    <% const orderPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ORDER-PREP'] %>
-    <% const artPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ART-PREP'] %>
-    <% const prePrintingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRE-PRINTING'] %>
-    <% const printingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRINTING'] %>
-    <% const cuttingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['CUTTING'] %>
-    <% const windingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['WINDING'] %>
-    <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['SHIPPING'] %>
-    <% const packagingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PACKAGING'] %>
-    <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['BILLING'] %>
-
-    <!-- NEW VARIABLES BELOW -->
-
-    <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-    <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
-    <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
-    <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
-
-    <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-    <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
-
-    <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-    <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const prePrintingInProgressTickets = prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const prePrintingSendToPrintingTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING'] %>
-
-    <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
-    <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
-    <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
-
-    <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const cuttingReadyTickets = cuttingTicketsGroupedByDepartmentStatus['CUTTING_READY'] %>
-    <% const cuttingDeltaOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE'] %>
-    <% const cuttingDeltaTwoScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE'] %>
-    <% const cuttingRotoflexOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE'] %>
-
-    <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const windingReadyTickets = windingTicketsGroupedByDepartmentStatus['WINDING READY'] %>
-
-    <% const packagingOnHoldTickets = packagingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const packagingInProgressTickets = packagingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const packagingReadyTickets = packagingTicketsGroupedByDepartmentStatus['PACKAGING READY'] %>
-
-    <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
-    <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
-
-    <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-    <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-    <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
-
-    <!-- DEPRECATED VARIABLES BELOW: Need to remove after STORM removes the old html tables that references them -->
-
-    <% const orderPrepSendToCustomerTickets = [] %>
-    <% const orderPrepReadyToOrderTickets = [] %>
-    <% const orderPrepInProgressTickets = [] %>
-    <% const orderPrepWaitingOnApprovalTickets = [] %>
-
-    <% const artPrepNeedsDieLineTickets = [] %>
-    <% const artPrepNeedsPlateTickets = [] %>
-
-    <% const prePrintingSendToPressTickets = [] %>
-  
-    <% const printingReadyForSchedulingTickets = [] %>
-    <% const printingSchedulePressOneTickets = [] %>
-    <% const printingSchedulePressTwoTickets = [] %>
-    <% const printingSchedulePressThreeTickets = [] %>
-
-    <% const cuttingReadyForSchedulingTickets = [] %>
-    <% const cuttingScheduleDeltaOneTickets = [] %>
-    <% const cuttingScheduleDeltaTwoTickets = [] %>
-    <% const cuttingScheduleRotoflexTickets = [] %>
-
-    <% const windingReadyForSchedulingTickets = [] %>
-
-    <% const shippingReadyForShippingTickets = [] %>
-    <% const shippingToolArrivalTickets = [] %>
-
-    <% const billingReadyForBillingTickets = [] %>
     
+    <!--- Order Prep Department Start -->
+      <% const orderPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ORDER-PREP'] %>
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Order Prep Department Start-->
       <div class='department-wrapper' data-department="ORDER-PREP">
         <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
+        
+        <!-- Order Prep | Needs Attention -->
+        <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <div class='status-section needs-attention-status red-master card'>
           <div class='side-bumper'></div>
           <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
@@ -152,16 +69,17 @@
                     </div>
                     <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                     <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white status-column'></div>
+                    <div class='column-td column-td-d bg-white department-status-column'></div>
                     <div class='column-td column-td-e bg-white'></div>
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'>
-                      <div class='user-cell bg-blue tooltip'>SV
-                        <span class="tooltiptext">TODO</span>
-                      </div><span class='machine-name from-column'>Press 1</span>
+                      <div class='user-cell bg-blue tooltip assignee-picture-url-column'>TODO
+                        <span class="tooltiptext assignee-name-column">TODO</span>
+                      </div>
+                      <span class='department-name department-column'>N/A</span>
                     </div>
-                    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4</div>
+                    <div class='column-td column-td-i bg-white due-date-preview due-date-column'>N/A</div>
                   </div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
@@ -173,9 +91,12 @@
             </div>
           </div>
         </div>
+
+        <!-- Order Prep | On Hold -->
+        <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status red-master card'>
           <div class='side-bumper'></div>
-          <span>Printing - <%= numberOfOrderPrepTickets %></span>
+          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= orderPrepOnHold.length %></span></h3>
@@ -192,9 +113,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-on-hold-table' class='table-body flex-center-center-column'>
+            <div id='order-prep-on-hold-table' class='table-body flex-center-center-column'>
               <% orderPrepOnHold.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-on-hold-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -225,6 +146,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Order Prep | Proofing Complete -->
+        <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
         <div class='status-section send-to-customer-status green-master card'>
           <div class='side-bumper'></div>
           <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
@@ -244,9 +168,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='order-prep-send-to-customer-table' class='table-body flex-center-center-column'>
+            <div id='order-prep-proofing-complete-table' class='table-body flex-center-center-column'>
               <% orderPrepProofingComplete.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-send-to-customer-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-proofing-complete-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -277,6 +201,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Order Prep | Waiting on Customer -->
+        <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
         <div class='status-section light-blue-master card'>
           <div class='side-bumper'></div>
           <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
@@ -329,7 +256,10 @@
             </div>
           </div>
         </div>
-        <div id='waitingOnApprovalStatus' class='status-section orange-master card'>
+
+        <!-- Order Prep | Waiting on Approval -->
+        <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
+        <div class='status-section orange-master card'>
           <div class='side-bumper'></div>
           <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
@@ -381,66 +311,19 @@
             </div>
           </div>
         </div>
-        <div class='status-section ready-to-order-plate-die-status purple-master card'>
-          <div class='side-bumper'></div>
-          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Ready To Order Plate / Die - <span class='category-ticket-count'><%= orderPrepReadyToOrderTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Type</div>
-              <div class='column-header column-header-d'></div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'></div>
-            </div>
-            <div id='order-prep-ready-to-order-table' class='table-body flex-center-center-column'>
-              <% orderPrepReadyToOrderTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-ready-to-order-row'>
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white'></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>
       </div>
-<!--- Art Prep Department Start-->
+
+      <!--- Art Prep Department Start -->
+      <% const artPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['ART-PREP'] %>
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="ART-PREP">
         <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
+        
+        <!-- Art Prep | Needs Attention -->
+        <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <div class='status-section needs-attention-status card'>
           <div class='side-bumper'></div>
           <span>Art Prep - <%= numberOfArtPrepTickets %></span>
@@ -484,7 +367,7 @@
                   <div class='column-td column-td-h bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name from-column'>Press 1 (TODO)</span>
+                    </div><span class='department-name from-column'>Press 1 (TODO)</span>
                   </div>
                   <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
@@ -497,12 +380,15 @@
             </div>
           </div>
         </div>
+
+        <!-- Art Prep | On Hold -->
+        <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status red-master card'>
           <div class='side-bumper'></div>
           <span>Art Prep - <%= numberOfOrderPrepTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= artPrepOnHold.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -516,9 +402,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-on-hold-table' class='table-body flex-center-center-column'>
-              <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-on-hold-row'>
+            <div id='art-prep-on-hold-table' class='table-body flex-center-center-column'>
+              <% artPrepOnHold.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -549,6 +435,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Art Prep | In Progress -->
+        <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Art Prep - <%= numberOfArtPrepTickets %></span>
@@ -601,6 +490,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Art Prep | Needs Proof -->
+        <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
         <div class='status-section needs-proof-status orange-master card'>
           <div class='side-bumper'></div>
           <span>Art Prep - <%= numberOfArtPrepTickets %></span>
@@ -653,12 +545,24 @@
             </div>
           </div>
         </div>
-        <div class='status-section card'>
+      </div>
+      <div class="department-end-frame flex-center-center-row full-width">
+        <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
+      </div>
+
+      <!--- Pre Printing Department Start -->
+      <% const prePrintingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRE-PRINTING'] %>
+      <% const numberOfPrePrintingTickets = Object.values(prePrintingTicketsGroupedByDepartmentStatus).flat().length %>
+      <div class='department-wrapper' data-department="PRE-PRINTING">
+        <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePrintingTickets %></span></h4>
+        <!-- Pre Printing | Needs Attention -->
+        <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+        <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
+          <span>Pre Printing - <%= numberOfPrePrintingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Needs Die Line - <span class='category-ticket-count'><%= artPrepNeedsDieLineTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= prePrintingNeedsAttentionTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -668,13 +572,13 @@
               <div class='column-header column-header-d'>Status</div>
               <div class='column-header column-header-e'></div>
               <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Follow Up Date</div>
-              <div class='column-header column-header-h'>Sent Date</div>
+              <div class='column-header column-header-g'> </div>
+              <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='art-prep-needs-die-table' class='table-body flex-center-center-column'>
-              <% artPrepNeedsDieLineTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-die-row'>
+            <div id='pre-printing-needs-attention-table' class='table-body flex-center-center-column'>
+              <% prePrintingNeedsAttentionTickets.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-printing-needs-attention-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -688,12 +592,12 @@
                   ) %>
                   </div>
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white status-column'></div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'>July 2 (TODO)</div>
-                  <div class='column-td column-td-h bg-white sent-date-column'>July 1 (TODO)</div>
+                  <div class='column-td column-td-g bg-white'></div>
+                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
                   <div class='column-td column-td-i bg-white due-date-preview due-date-column'>July 4 (TODO)</div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
@@ -705,66 +609,9 @@
             </div>
           </div>
         </div>
-        <div class='status-section card'>
-          <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Needs Plate - <span class='category-ticket-count'><%= artPrepNeedsPlateTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Type</div>
-              <div class='column-header column-header-d'></div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'></div>
-            </div>
-            <div id='art-prep-needs-plate-table' class='table-body flex-center-center-column'>
-              <% artPrepNeedsPlateTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-plate-row'>
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>Plate (TODO)</div>
-                  <div class='column-td column-td-d bg-white'></div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white'></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="department-end-frame flex-center-center-row full-width">
-        <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
-      </div>
-      <% const numberOfPrePrintingTickets = Object.values(prePrintingTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Pre Printing Department Start-->
-      <div class='department-wrapper' data-department="PRE-PRINTING">
-        <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePrintingTickets %></span></h4>
+
+        <!-- Pre Printing | On Hold -->
+        <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section needs-attention-status card'>
           <div class='side-bumper'></div>
           <span>Pre Printing - <%= numberOfPrePrintingTickets %></span>
@@ -784,9 +631,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='pre-printing-needs-attention-table' class='table-body flex-center-center-column'>
+            <div id='pre-printing-on-hold-table' class='table-body flex-center-center-column'>
               <% prePrintingOnHoldTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-printing-needs-attention-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-printing-on-hold-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -817,6 +664,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Pre Printing | In Progress -->
+        <% const prePrintingInProgressTickets = prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Pre Printing - <%= numberOfPrePrintingTickets %></span>
@@ -869,6 +719,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Pre Printing | Send to Printing -->
+        <% const prePrintingSendToPrintingTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Pre Printing - <%= numberOfPrePrintingTickets %></span>
@@ -888,9 +741,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='pre-printing-send-to-press-table' class='table-body flex-center-center-column'>
+            <div id='pre-printing-send-to-printing-table' class='table-body flex-center-center-column'>
               <% prePrintingSendToPrintingTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-printing-send-to-press-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width pre-printing-send-to-printing-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -925,10 +778,15 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Pre-Printing</h4><div class="department-divide-line"></div>
       </div>
+
+      <!--- Printing Department Start -->
+      <% const printingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PRINTING'] %>
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Printing Department Start-->
       <div class='department-wrapper' data-department="PRINTING">
         <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
+        
+        <!-- Printing | On Hold -->
+        <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status red-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -981,6 +839,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Printing | In Progress -->
+        <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -1021,7 +882,7 @@
                   <div class='column-td column-td-e bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name location-column'>Press 1 (TODO)</span>
+                    </div><span class='department-name location-column'>Press 1 (TODO)</span>
                   </div>
                   <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
@@ -1037,6 +898,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Printing | Printing Ready -->
+        <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -1056,9 +920,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-ready-for-scheduling-table' class='table-body flex-center-center-column'>
+            <div id='printing-ready-table' class='table-body flex-center-center-column'>
               <% printingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-ready-for-scheduling-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1089,6 +953,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Printing | Printer One Schedule -->
+        <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -1108,9 +975,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-schedule-press-one-table' class='table-body flex-center-center-column'>
+            <div id='printing-printer-one-schedule-table' class='table-body flex-center-center-column'>
               <% printingPrinterOneScheduleTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-one-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-printer-one-schedule-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1141,6 +1008,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Printing | Printer Two Schedule -->
+        <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -1160,9 +1030,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='printing-schedule-press-two-table' class='table-body flex-center-center-column'>
+            <div id='printing-printer-two-schedule-table' class='table-body flex-center-center-column'>
               <% printingPrinterTwoScheduleTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-schedule-press-two-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width printing-printer-two-schedule-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1197,10 +1067,15 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>
+
+      <!--- Cutting Department Start -->
+      <% const cuttingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['CUTTING'] %>
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Cutting Department Start-->
       <div class='department-wrapper' data-department="CUTTING">
         <h4 class='department-name'>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
+        
+        <!-- Cutting | On Hold -->
+        <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1253,6 +1128,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Cutting | In Progress -->
+        <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1293,7 +1171,7 @@
                   <div class='column-td column-td-e bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                    </div><span class='department-name'>Press 1 (TODO)</span>
                   </div>
                   <div class='column-td column-td-f bg-white'>1,920 ft (TODO)</div>
                   <div class='column-td column-td-g bg-white'>9111 (TODO)</div>
@@ -1309,6 +1187,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Cutting | Cutting Ready -->
+        <% const cuttingReadyTickets = cuttingTicketsGroupedByDepartmentStatus['CUTTING_READY'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1328,9 +1209,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='cutting-ready-for-scheduling-table' class='table-body flex-center-center-column'>
+            <div id='cutting-ready-table' class='table-body flex-center-center-column'>
               <% cuttingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-ready-for-scheduling-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1361,6 +1242,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Cutting | Delta One Schedule -->
+        <% const cuttingDeltaOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1380,9 +1264,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='cutting-schedule-delta-one-table' class='table-body flex-center-center-column'>
+            <div id='cutting-delta-one-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingDeltaOneScheduleTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-one-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-delta-one-schedule-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1413,6 +1297,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Cutting | Delta Two Schedule -->
+        <% const cuttingDeltaTwoScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1432,9 +1319,9 @@
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='cutting-schedule-delta-two-table' class='table-body flex-center-center-column'>
+            <div id='cutting-delta-two-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingDeltaTwoScheduleTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-delta-two-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-delta-two-schedule-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1465,6 +1352,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Cutting | RotoFlex One Schedule -->
+        <% const cuttingRotoflexOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Cutting - <%= numberOfCuttingTickets %></span>
@@ -1484,9 +1374,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='cutting-schedule-rotoflex-table' class='table-body flex-center-center-column'>
+            <div id='cutting-rotoflex-one-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingRotoflexOneScheduleTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-schedule-rotoflex-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width cutting-rotoflex-one-schedule-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1521,10 +1411,15 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Cutting</h4><div class="department-divide-line"></div>
       </div>
+
+      <!--- Winding Department Start -->
+      <% const windingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['WINDING'] %>
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
-<!--- Winding Department Start-->
       <div class='department-wrapper' data-department="WINDING">
         <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
+        
+        <!-- Winding | On Hold -->
+        <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
           <span>Winding - <%= numberOfWindingTickets %></span>
@@ -1577,6 +1472,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Winding | In Progress -->
+        <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Winding - <%= numberOfWindingTickets %></span>
@@ -1617,7 +1515,7 @@
                   <div class='column-td column-td-e bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                    </div><span class='department-name'>Press 1 (TODO)</span>
                   </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>18 (TODO)</div>
@@ -1633,6 +1531,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Winding | Winding Ready -->
+        <% const windingReadyTickets = windingTicketsGroupedByDepartmentStatus['WINDING READY'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Winding - <%= numberOfWindingTickets %></span>
@@ -1652,9 +1553,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='winding-ready-for-scheduling-table' class='table-body flex-center-center-column'>
+            <div id='winding-ready-table' class='table-body flex-center-center-column'>
               <% windingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-ready-for-scheduling-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width winding-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1689,12 +1590,18 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Winding</h4><div class="department-divide-line"></div>
       </div>
-<!--- Packagins Department Start-->
+
+      <!--- Packaging Department Start -->
+      <% const packagingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['PACKAGING'] %>
+      <% const numberOfPackagingTickets = Object.values(packagingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="PACKAGING">
-        <h4 class='department-name'>Packaging - <span class='text-blue' id='departmentTotalTickets'>8(TD)</span></h4>
+        <h4 class='department-name'>Packaging - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPackagingTickets %> </span></h4>
+        
+        <!-- Packaging | On Hold -->
+        <% const packagingOnHoldTickets = packagingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
-          <span>Packaging - 8(TD)</span>
+          <span>Packaging - <%= numberOfPackagingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= packagingOnHoldTickets.length %></span></h3>
@@ -1744,9 +1651,12 @@
             </div>
           </div>
         </div>
+
+        <!-- Packaging | In Progress -->
+        <% const packagingInProgressTickets = packagingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
-          <span>Packaging - 8(TD)</span>
+          <span>Packaging - <%= numberOfPackagingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= packagingInProgressTickets.length %></span></h3>
@@ -1784,7 +1694,7 @@
                   <div class='column-td column-td-e bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='machine-name'>Press 1 (TODO)</span>
+                    </div><span class='department-name'>Press 1 (TODO)</span>
                   </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>18 (TODO)</div>
@@ -1800,9 +1710,12 @@
             </div>
           </div>
         </div>
+
+        <!-- Packaging | Packaging Ready -->
+        <% const packagingReadyTickets = packagingTicketsGroupedByDepartmentStatus['PACKAGING READY'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
-          <span>Packaging - 8(TD)</span>
+          <span>Packaging - <%= numberOfPackagingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
             <h3 class='category-header collapse-group-cheater'>Packaging Ready - <span class='category-ticket-count'><%= packagingReadyTickets.length %></span></h3>
@@ -1819,9 +1732,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='packaging-ready-for-scheduling-table' class='table-body flex-center-center-column'>
+            <div id='packaging-ready-table' class='table-body flex-center-center-column'>
               <% packagingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width packaging-ready-for-scheduling-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width packaging-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -1856,10 +1769,15 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Packaging</h4><div class="department-divide-line"></div>
       </div>
-<!--- Shipping Department Start-->
+
+      <!--- Shipping Department Start-->
+      <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['SHIPPING'] %>
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="SHIPPING">
         <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
+        
+        <!-- Shipping | On Hold -->
+        <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <div class='status-section on-hold-status card'>
           <div class='side-bumper'></div>
           <span>Shipping - <%= numberOfShippingTickets %></span>
@@ -1912,6 +1830,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Shipping | In Progress -->
+        <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Shipping - <%= numberOfShippingTickets %></span>
@@ -1964,6 +1885,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Shipping | Shipping Ready -->
+        <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Shipping - <%= numberOfShippingTickets %></span>
@@ -1983,9 +1907,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='shipping-ready-for-shipping-table' class='table-body flex-center-center-column'>
+            <div id='shipping-ready-table' class='table-body flex-center-center-column'>
               <% shippingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-for-shipping-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -2016,6 +1940,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Shipping | Farmed Out Tickets -->
+        <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Shipping - <%= numberOfShippingTickets %></span>
@@ -2035,9 +1962,9 @@
               <div class='column-header column-header-h'></div>
               <div class='column-header column-header-i'>Arrival Date</div>
             </div>
-            <div id='shipping-tool-arrivals-table' class='table-body flex-center-center-column'>
+            <div id='shipping-farmed-out-tickets-table' class='table-body flex-center-center-column'>
               <% shippingFarmedOutTicketsTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-tool-arrivals-row'>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-farmed-out-tickets-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -2072,16 +1999,76 @@
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
+
+      <!-- Billing Department Start -->
+      <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination['BILLING'] %>
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
-<!-- Billing Department Start -->
       <div class='department-wrapper' data-department="BILLING">
         <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
+        
+        <!-- Billing | On Hold -->
+        <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <div class='status-section in-progress-status green-master card'>
+          <div class='side-bumper'></div>
+          <span>Billing - <%= numberOfBillingTickets %></span>
+          <div class='header flex-center-left-row'>
+            <%- include('partials/department-expand-options.ejs') %>
+            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= billingOnHoldTickets.length %></span></h3>
+          </div>
+          <div class='table ticket-container flex-top-center-column'>
+            <div class='table-header flex-center-center-row'>
+              <div class='column-header column-header-a'></div>
+              <div class='column-header column-header-b'>#</div>
+              <div class='column-header column-header-c'>Ticket Number</div>
+              <div class='column-header column-header-d'>Status</div>
+              <div class='column-header column-header-e'></div>
+              <div class='column-header column-header-f'></div>
+              <div class='column-header column-header-g'>Grouped</div>
+              <div class='column-header column-header-h'>Products</div>
+              <div class='column-header column-header-i'>Due Date</div>
+            </div>
+            <div id='billing-on-hold-table' class='table-body flex-center-center-column'>
+              <% billingOnHoldTickets.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width billing-on-hold-row'>
+                <%- include('partials/start-job-modal.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
+                <div class='table-row flex-center-center-row'>
+                  <div class='column-td column-td-a'>
+                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
+                    <%- include('partials/ticket-dropdown-options.ejs', {
+                      ticket: ticket
+                      }
+                  ) %>
+                  </div>
+                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td column-td-d bg-white'></div>
+                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-f bg-white'></div>
+                  <div class='column-td column-td-g bg-white'></div>
+                  <div class='column-td column-td-h bg-white'><%= ticket.products.length %></div>
+                  <div class='column-td column-td-i bg-white due-date-preview'>July 4 (TODO)</div>
+                </div>
+                <%- include('partials/ticket-dropdown-options.ejs', {
+                  ticket: ticket
+                  }
+              ) %>
+              </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Billing | In Progress -->
+        <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <div class='status-section ready-for-billing-status purple-master card'>
           <div class='side-bumper'></div>
           <span>Billing - <%= numberOfBillingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Ready For Billing - <span class='category-ticket-count'><%= billingReadyForBillingTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -2096,7 +2083,7 @@
               <div class='column-header column-header-i'>Due Date</div>
             </div>
             <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
-              <% billingReadyForBillingTickets.forEach((ticket, index) => { %>
+              <% billingInProgressTickets.forEach((ticket, index) => { %>
               <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
@@ -2128,12 +2115,15 @@
             </div>
           </div>
         </div>
+
+        <!-- Billing | Billing Ready -->
+        <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Billing - <%= numberOfBillingTickets %></span>
           <div class='header flex-center-left-row'>
             <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
+            <h3 class='category-header collapse-group-cheater'>Billing Ready - <span class='category-ticket-count'><%= billingReadyTickets.length %></span></h3>
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
@@ -2147,9 +2137,9 @@
               <div class='column-header column-header-h'>Products</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
-            <div id='billing-in-progress-table' class='table-body flex-center-center-column'>
-              <% billingInProgressTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-for-shipping-row'>
+            <div id='billing-ready-table' class='table-body flex-center-center-column'>
+              <% billingReadyTickets.forEach((ticket, index) => { %>
+              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width billing-ready-row'>
                 <%- include('partials/start-job-modal.ejs', {
                   ticket: ticket
                   }
@@ -2180,6 +2170,7 @@
             </div>
           </div>
         </div>
+
       </div>
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Billing</h4><div class="department-divide-line"></div>

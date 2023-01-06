@@ -787,7 +787,7 @@ $( document ).ready(function() {
         const ON_HOLD = 'ON HOLD';
         const PACKAGING_READY = 'PACKAGING READY';
         
-        const CUTTING_READY = 'CUTTING_READY';
+        const CUTTING_READY = 'CUTTING READY';
         const DELTA_ONE_SCHEDULE = 'DELTA ONE SCHEDULE';
         const DELTA_TWO_SCHEDULE = 'DELTA TWO SCHEDULE';
         const ROTOFLEX_ONE_SCHEDULE = 'ROTOFLEX ONE SCHEDULE';

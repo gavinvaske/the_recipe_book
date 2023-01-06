@@ -1260,8 +1260,8 @@
               <div class='column-header column-header-c'>Ticket Number</div>
               <div class='column-header column-header-d'>Status</div>
               <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Die</div>
-              <div class='column-header column-header-g'>Length</div>
+              <div class='column-header column-header-f'>Length</div>
+              <div class='column-header column-header-g'>Die</div>
               <div class='column-header column-header-h'>Finish</div>
               <div class='column-header column-header-i'>Due Date</div>
             </div>
@@ -1284,7 +1284,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>DELTA ONE SCHEDULE</div>
                   <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'>1,920 ft (TODO)</div>
+                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength %> </div>
                   <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
                   <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
                   <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>

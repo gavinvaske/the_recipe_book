@@ -929,16 +929,6 @@ $( document ).ready(function() {
     const assigneeNameColumn = '.assignee-name-column';
     const assigneeProfilePictureColumn = '.assignee-picture-url-column';
 
-    function sumTheLengthOfMaterialForEachProduct(products) {
-        let totalMaterialLength = 0;
-
-        products && products.forEach((product) => {
-            totalMaterialLength += product.totalFeet;
-        });
-
-        return totalMaterialLength;
-    }
-
     function getDieCuttingFinishFromTheFirstProduct(products) {
         if (!products || products.length === ZERO) {
             return;
@@ -954,28 +944,24 @@ $( document ).ready(function() {
         const productDie = (ticket.products && ticket.products.length > ZERO) ? ticket.products[0].productDie : 'N/A';
         const assigneeName = ticket.destination.assignee ? ticket.destination.assignee.fullName : 'N/A';
         const assigneeProfilePicture = ticket.destination.assignee ? ticket.destination.assignee.profilePicture : '';
-        const totalLengthOfMaterialInFeet = sumTheLengthOfMaterialForEachProduct(ticket.products);
         const dieCuttingFinish = getDieCuttingFinishFromTheFirstProduct(ticket.products);
-
-        console.log(`assigneeName => ${assigneeName}`);
-        console.log(`assigneeProfilePicture => ${assigneeProfilePicture}`);
 
         return {
             [ticketNumberColumn]: `#${ticket.ticketNumber}`,
-            [departmentNameColumn]: ticket.destination ? ticket.destination.department : '-',
-            [departmentStatusNameColumn]: ticket.destination ? ticket.destination.departmentStatus : '-',
+            [departmentNameColumn]: ticket.destination ? ticket.destination.department : undefined,
+            [departmentStatusNameColumn]: ticket.destination ? ticket.destination.departmentStatus : undefined,
             [assigneeNameColumn]: assigneeName,
             [assigneeProfilePictureColumn]: assigneeProfilePicture,
             [holdStatusColumn]: 'TODO: .hold-status-column',
-            [lengthColumn]: totalLengthOfMaterialInFeet,
-            [materialColumn]: ticket.primaryMaterial ? ticket.primaryMaterial : '-',
+            [lengthColumn]: ticket.totalMaterialLength,
+            [materialColumn]: ticket.primaryMaterial,
             [dieColumn]: productDie,
             [totalRollsColumn]: ticket.totalWindingRolls,
             [groupedColumn]: 'TODO: .grouped-column',
             [productCountColumn]: numberOfProducts,
             [dueDateColumn]: formatDate(ticket.shipDate, {month:'short', day:'numeric'}),
             [fromColumn]: 'TODO: .from-column',
-            [dieFinishColumn]: dieCuttingFinish ? dieCuttingFinish : '-',
+            [dieFinishColumn]: dieCuttingFinish,
             [sentDateColumn]: 'TODO: .sent-date-column',
             [followUpDateColumn]: 'TODO: .follow-up-date-column'
         };

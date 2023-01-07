@@ -553,6 +553,32 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: totalMaterialLength', () => {
+        beforeEach(() => {
+            const products = [
+                {
+                    totalFeet: chance.integer({min: 1})
+                },
+                {
+                    totalFeet: chance.integer({min: 1})
+                }
+            ];
+            ticketAttributes.products = products;
+        });
+
+        it('should be a number', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalMaterialLength).toEqual(expect.any(Number));
+        });
+
+        it('should compute the attribute correctly', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalMaterialLength).toEqual(ticketAttributes.products[0].totalFeet + ticketAttributes.products[1].totalFeet);
+        });
+    });
+
     describe('attribute: destination', () => {
         it('should pass validation if attribute is not defined', () => {
             delete ticketAttributes.destination;

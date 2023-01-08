@@ -230,6 +230,20 @@ const ticketSchema = new Schema({
             return sum;
         }
     },
+    totalMaterialLength: {
+        type: Number,
+        required: true,
+        default: function() {
+            let sum = 0; // eslint-disable-line no-magic-numbers
+
+            if (this.products.length) {
+                this.products.forEach((product) => {
+                    sum = sum + product.totalFeet;
+                });
+            }
+            return sum;
+        }
+    },
     customerName: {
         type: String,
         required: true,

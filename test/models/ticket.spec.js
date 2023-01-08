@@ -36,7 +36,9 @@ describe('validation', () => {
             BillState: chance.string(),
             destination: {},
             departmentNotes: {},
-            Company: chance.string()
+            Company: chance.string(),
+            sentDate: chance.date({string: true}),
+            followUpDate: chance.date({string: true})
         };
     });
 
@@ -734,6 +736,60 @@ describe('validation', () => {
             const error = ticket.validateSync();
     
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: sentDate', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.sentDate).toBeDefined();
+        });
+
+        it('should fail if date is invalid', () => {
+            const invalidDate = chance.word();
+            ticketAttributes.sentDate = invalidDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should NOT fail validation if attribute is missing', () => {
+            delete ticketAttributes.sentDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: followUpDate', () => {
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.followUpDate).toBeDefined();
+        });
+
+        it('should fail if date is invalid', () => {
+            const invalidDate = chance.word();
+            ticketAttributes.followUpDate = invalidDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should NOT fail validation if attribute is missing', () => {
+            delete ticketAttributes.followUpDate;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
         });
     });
 

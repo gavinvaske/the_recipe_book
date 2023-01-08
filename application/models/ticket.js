@@ -249,6 +249,14 @@ const ticketSchema = new Schema({
         required: true,
         alias: 'Company'
     },
+    sentDate: {
+        type: Date,
+        required: false
+    },
+    followUpDate: {
+        type: Date,
+        required: false
+    },
 }, { timestamps: true });
 
 ticketSchema.pre('save', function(next) {

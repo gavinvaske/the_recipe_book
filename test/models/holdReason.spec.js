@@ -112,7 +112,7 @@ describe('validation', () => {
         });
 
         it('should trim the attribute', () => {
-            const reason = chance.string();
+            const reason = chance.string().toUpperCase();
             holdReasonAttributes.reason = ' ' + reason + '   ';
             const holdReason = new HoldReason(holdReasonAttributes);
 

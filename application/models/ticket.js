@@ -7,6 +7,7 @@ const destinationSchema = require('../models/destination').schema;
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 const WorkflowStepModel = require('../models/WorkflowStep');
+const {getAllDepartments} = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -34,6 +35,15 @@ async function validateMaterialExists(materialId) {
     }
 }
 
+function validateKeysAreAllValidDepartments(holdReasonByDepartment) {
+    const potentiallyValidDepartmentNames = Object.keys(holdReasonByDepartment.toJSON());
+    const validDepartmentNames = getAllDepartments();
+
+    return potentiallyValidDepartmentNames.every((departmentName) => {
+        return validDepartmentNames.includes(departmentName);
+    });
+}
+
 const departmentNotesSchema = new Schema({
     orderPrep: {
         type: String
@@ -59,7 +69,7 @@ const departmentNotesSchema = new Schema({
     billing: {
         type: String
     }
-}, { 
+}, {
     timestamps: true,
     strict: 'throw'
 });
@@ -257,6 +267,13 @@ const ticketSchema = new Schema({
         type: Date,
         required: false
     },
+    holdReasonByDepartment: {
+        type: Map,
+        of: String,
+        required: false,
+        default: {},
+        validate: [validateKeysAreAllValidDepartments, 'The attribute "holdReasonByDepartment" must only contain keys which are valid departments']
+    }
 }, { timestamps: true });
 
 ticketSchema.pre('save', function(next) {

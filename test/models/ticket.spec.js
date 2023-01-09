@@ -3,7 +3,7 @@ const TicketModel = require('../../application/models/ticket');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
-const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
+const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, getAllDepartments} = require('../../application/enums/departmentsEnum');
 
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
@@ -38,7 +38,8 @@ describe('validation', () => {
             departmentNotes: {},
             Company: chance.string(),
             sentDate: chance.date({string: true}),
-            followUpDate: chance.date({string: true})
+            followUpDate: chance.date({string: true}),
+            holdReasonByDepartment: {}
         };
     });
 
@@ -816,6 +817,92 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).toBe(undefined);
+        });
+    });
+
+    describe('attribute: holdReasonByDepartment', () => {
+        let nonImportantString;
+        beforeEach(() => {
+            nonImportantString = chance.string();
+        });
+        it('should contain attribute', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.holdReasonByDepartment).toBeDefined();
+        });
+
+        it('should default to an empty object if attribute is not defined', () => {
+            delete ticketAttributes.holdReasonByDepartment;
+            const ticket = new TicketModel(ticketAttributes);
+            const emptyObject = {};
+
+            expect(ticket.holdReasonByDepartment.toJSON()).toStrictEqual(emptyObject);
+        });
+
+        it('should pass validation is attribute is not defined', () => {
+            delete ticketAttributes.holdReasonByDepartment;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation is attribute is an empty object', () => {
+            ticketAttributes.holdReasonByDepartment = {};
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should convert the value of each map record to a string', () => {
+            const aNumber = chance.integer();
+            ticketAttributes.holdReasonByDepartment[nonImportantString] = aNumber;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.holdReasonByDepartment.get(nonImportantString)).toBe(`${aNumber}`);
+        });
+
+        it('should fail validation if a non-valid department is used as a key', () => {
+            const invalidDepartment = chance.string();
+            ticketAttributes.holdReasonByDepartment[invalidDepartment] = nonImportantString;
+            const ticket = new TicketModel(ticketAttributes);
+            
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should pass validation if only valid departments are used as keys', () => {
+            const firstValidDepartment = getAllDepartments()[0];
+            const secondValidDepartment = getAllDepartments()[1];
+            ticketAttributes.holdReasonByDepartment = {
+                [firstValidDepartment]: chance.string(),
+                [secondValidDepartment]: chance.string()
+            };
+            const ticket = new TicketModel(ticketAttributes);
+            
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if a single invalid department is used as a key', () => {
+            const firstValidDepartment = getAllDepartments()[0];
+            const secondValidDepartment = getAllDepartments()[1];
+            const firstInvalidDepartment = chance.string();
+            ticketAttributes.holdReasonByDepartment = {
+                [firstValidDepartment]: nonImportantString,
+                [secondValidDepartment]: nonImportantString,
+                [firstInvalidDepartment]: nonImportantString
+            };
+            const ticket = new TicketModel(ticketAttributes);
+            
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
 

@@ -301,7 +301,6 @@ $( document ).ready(function() {
         }
     });
 
-
     $('.show-password-2').on('click', function(){
         var passInput=$('#repeatPassword');
         if (passInput.attr('type')==='password')
@@ -340,10 +339,6 @@ $( document ).ready(function() {
             }
         });
     });
-
-    // $('.user-frame').on('click', function(){
-    //     $('.dropdown-menu.user-options').toggleClass('active');
-    // });
 
     $('.nav-dropdown-trigger').on('click', function() {
         if ($(this).find('.dropdown-menu').hasClass('active')){ 
@@ -492,17 +487,6 @@ $( document ).ready(function() {
 		
     });
 
-
-    // $(document).mouseup(function(e) {
-    //     var container = $('.column-td-a.active');
-    //     var emptyLength = 0;
-    //     // if the target of the click isn't the container nor a descendant of the container
-    //     if (!container.is(e.target) && container.has(e.target).length === emptyLength) {
-    //         // container.hide();
-    //         $('.column-td-a.active').removeClass('active');
-    //     }
-    // });
-
     $('.table-body').on('click', '.table-row-wrapper .table-row .column-td-a', function() {
         if ($(this).hasClass('active')){
             $(this).removeClass('active');
@@ -521,14 +505,6 @@ $( document ).ready(function() {
             $(currentActive).addClass('active');
         }
     });
-
-    // $('.ticket-dropdown-options').click(function() {
-    //     $('.column-td-a').removeClass('active');
-    // });
-
-    // $('.collapse-ticket').click(function(){
-    //     $('.table-row-wrapper').removeClass('active');
-    // });
 
     $('.status-section').on('click', '.collapse-ticket', function() {
         $('.table-row-wrapper').removeClass('active');
@@ -570,26 +546,6 @@ $( document ).ready(function() {
         $('#material-count').text(materialCount);
     });
 
-    // $('.move-to-department-trigger').click(function(){
-    //     let currentlyActive = $(this).find('.departments-dropdown');
-    //     if ($(currentlyActive).hasClass('active')) {
-    //         $(currentlyActive).removeClass('active');
-    //     } else {
-    //         $(currentlyActive).addClass('active');
-    //         $(this).closest('.move-ticket').addClass('active');
-    //     }
-    // });
-
-    // $('.move-to-list-trigger').click(function(){
-    //     let currentlyActive = $(this).find('.list-dropdown');
-    //     if ($(currentlyActive).hasClass('active')) {
-    //         $(currentlyActive).removeClass('active');
-    //     } else {
-    //         $(currentlyActive).addClass('active');
-    //         $(this).closest('.move-ticket').addClass('active');
-    //     }
-    // });
-
     $('.department-option').click(function(){
         $('.department-option').removeClass('active');
         $(this).addClass('active');
@@ -622,20 +578,6 @@ $( document ).ready(function() {
         });
     });
 
-    // $('.back-out-hover').hover(function(){
-    //     $('.move-ticket').removeClass('active');
-    //     $('.departments-dropdown').removeClass('active');
-    // });
-
-    // $('.move-to-department-trigger ul li').click(function(){
-    //     event.preventDefault();
-    //     $('.department-status-dropdown').addClass('active');
-    // });
-
-    // $('.sub-drpdwn-back-btn').click(function() {
-    //     $('.department-status-dropdown').removeClass('active');
-    //     $('.departments-dropdown').addClass('storm');
-    // });
     $('.move-to-department-trigger').click(function() {
         event.stopPropagation();
         $(this).find('.department-drpdwn').addClass('active');
@@ -663,11 +605,20 @@ $( document ).ready(function() {
     $('.department-option').click(function() {
         $('.department-status-drpdwn').addClass('active');
     });
-      
 
-      
+    $('.on-hold-status-cell').click(function() {
+        let onHoldSelection = $(this).children('.on-hold-dropdown');
+        $(onHoldSelection).addClass('active');
+        
+    });
+    $('.close-on-hold-dropdown').click(function() {
+        event.stopPropagation();
+        $('.on-hold-dropdown').removeClass('active');
+    });
 
-
+    $(function() {
+        $('#datepicker').datepicker();
+    });
 
     $('.notification-option').click(function() {
         $('');

@@ -2637,12 +2637,12 @@ a.storm {
 	margin-left: -80px;
 }
 
-.dropdown {
+/* .dropdown {
 	position: absolute;
   box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
   padding: 16px;
   border-radius: 8px;
-}
+} */
 
 .quick-filter-dropdown, 
 .advanced-filter-dropdown {
@@ -4316,4 +4316,12 @@ span.drpdwn-title {
   display: block;
   right: -7px;
   z-index: 9;
+}
+
+
+
+
+
+.on-hold-status-cell {
+  position: relative;
 }

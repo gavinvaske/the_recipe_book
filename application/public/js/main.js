@@ -663,7 +663,20 @@ $( document ).ready(function() {
     $('.department-option').click(function() {
         $('.department-status-drpdwn').addClass('active');
     });
-      
+
+    $('.on-hold-status-cell').click(function() {
+        let onHoldSelection = $(this).children('.on-hold-dropdown');
+        $(onHoldSelection).addClass('active');
+        
+    });
+    $('.close-on-hold-dropdown').click(function() {
+        event.stopPropagation();
+        $('.on-hold-dropdown').removeClass('active');
+    });
+
+    $( function() {
+        $( "#datepicker" ).datepicker();
+      } );
 
       
 

@@ -131,7 +131,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -243,7 +243,7 @@
                   <div class='column-td column-td-d bg-white department-status-column'>WAITING ON CUSTOMER</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'>*TODO*</div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'>** TODO ** <%- include('partials/follow-up-date-picker') -%></div>
                   <div class='column-td column-td-h bg-white'>*TODO*</div>
                   <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
@@ -420,7 +420,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -825,7 +825,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1114,7 +1114,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
                   <div class='column-td column-td-h bg-white'>*TODO*</div>
@@ -1458,7 +1458,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1637,7 +1637,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1816,7 +1816,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -2046,7 +2046,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'>*TODO*</div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>

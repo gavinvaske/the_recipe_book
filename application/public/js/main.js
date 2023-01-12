@@ -865,7 +865,7 @@ $( document ).ready(function() {
     const ticketNumberColumn = '.ticket-number-column';
     const departmentNameColumn = '.department-column';
     const departmentStatusNameColumn = '.department-status-column';
-    const holdStatusColumn = '.hold-status-column';
+    const holdReasonColumn = '.hold-reason-column';
     const lengthColumn = '.length-column';
     const materialColumn = '.material-column';
     const dieColumn = '.die-column';
@@ -903,7 +903,7 @@ $( document ).ready(function() {
             [departmentStatusNameColumn]: ticket.destination ? ticket.destination.departmentStatus : undefined,
             [assigneeNameColumn]: assigneeName,
             [assigneeProfilePictureColumn]: assigneeProfilePicture,
-            [holdStatusColumn]: 'TODO: .hold-status-column',
+            [holdReasonColumn]: 'TODO: .hold-status-column',
             [lengthColumn]: ticket.totalMaterialLength,
             [materialColumn]: ticket.primaryMaterial,
             [dieColumn]: productDie,

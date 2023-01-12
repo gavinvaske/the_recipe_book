@@ -3,6 +3,7 @@
   bodyclass.value="view-tickets-body";
   document.getElementsByTagName("body")[0].setAttributeNode(bodyclass);
 </script>
+
 <div class="page-wrapper view-tickets">
   <%- include('partials/navbarMain.ejs') %>
   <%- include('partials/sidebarMain.ejs') %>
@@ -131,7 +132,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['ORDER-PREP'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['ORDER-PREP']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -420,7 +424,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['ART-PREP'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['ART-PREP']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -825,7 +832,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['PRINTING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['PRINTING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1114,7 +1124,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['CUTTING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['CUTTING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
                   <div class='column-td column-td-h bg-white'>*TODO*</div>
@@ -1458,7 +1471,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['WINDING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['WINDING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1637,7 +1653,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['PACKAGING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['PACKAGING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -1816,7 +1835,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['SHIPPING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['SHIPPING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -2046,7 +2068,10 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>*TODO*<%- include('partials/on-hold-dropdown') -%></div>
+                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                    <%= ticket.departmentToHoldReason['BILLING'] %>
+                    <%- include('partials/on-hold-dropdown', {allHoldReasonsForThisDepartment: departmentToHoldReasons['BILLING']}) -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>

@@ -16,4 +16,4 @@ module.exports.getDepartmentToHoldReasons = async () => {
     });
 
     return departmentToHoldReasons;
-}
+};

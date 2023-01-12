@@ -25,16 +25,16 @@ describe('validation', () => {
 
         it('should have a "createdAt" attribute once object is saved', async () => {
             const holdReason = new HoldReason(holdReasonAttributes);
-            let savedHoldStatus = await holdReason.save({validateBeforeSave: false});
+            let savedHoldReason = await holdReason.save({validateBeforeSave: false});
 
-            expect(savedHoldStatus.createdAt).toBeDefined();
+            expect(savedHoldReason.createdAt).toBeDefined();
         });
 
         it('should have a "updated" attribute once object is saved', async () => {
             const holdReason = new HoldReason(holdReasonAttributes);
-            let savedHoldStatus = await holdReason.save({validateBeforeSave: false});
+            let savedHoldReason = await holdReason.save({validateBeforeSave: false});
 
-            expect(savedHoldStatus.createdAt).toBeDefined();
+            expect(savedHoldReason.createdAt).toBeDefined();
         });
     });
 

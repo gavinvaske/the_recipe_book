@@ -1133,7 +1133,7 @@ $( document ).ready(function() {
 
         const ticketAttributeToUpdate = {
             followUpDate: selectedDate
-        }
+        };
 
         updateTicket(ticketAttributeToUpdate, ticketId);
     });

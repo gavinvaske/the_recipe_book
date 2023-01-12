@@ -11,6 +11,7 @@ const MaterialModel = require('../models/material');
 const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
+const holdReasonService = require('../services/holdReasonService');
 
 router.use(verifyJwtToken);
 
@@ -27,9 +28,11 @@ router.get('/', async (request, response) => {
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
+    const departmentToHoldReasons = await holdReasonService.getDepartmentToHoldReasons();
 
     return response.render('viewTickets', {
-        ticketsGroupedByDestination
+        ticketsGroupedByDestination,
+        departmentToHoldReasons
     });
 });
 

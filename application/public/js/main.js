@@ -1126,4 +1126,15 @@ $( document ).ready(function() {
             }
         });
     }
+
+    $('.status-section').on('change', '#datepicker', function() {
+        const selectedDate = $(this).val();
+        const ticketId = $(this).data('ticket-id');
+
+        const ticketAttributeToUpdate = {
+            followUpDate: selectedDate
+        }
+
+        updateTicket(ticketAttributeToUpdate, ticketId);
+    });
 });

@@ -243,7 +243,7 @@
                   <div class='column-td column-td-d bg-white department-status-column'>WAITING ON CUSTOMER</div>
                   <div class='column-td column-td-e bg-white'></div>
                   <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'>** TODO ** <%- include('partials/follow-up-date-picker') -%></div>
+                  <div class='column-td column-td-g bg-white follow-up-date-column'><%- include('partials/follow-up-date-picker', {ticket: ticket}) -%></div>
                   <div class='column-td column-td-h bg-white'>*TODO*</div>
                   <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>

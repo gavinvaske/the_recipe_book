@@ -267,7 +267,7 @@ const ticketSchema = new Schema({
         type: Date,
         required: false
     },
-    holdReasonByDepartment: {
+    departmentToHoldReason: {
         type: Map,
         of: String,
         required: false,

@@ -225,8 +225,15 @@ router.post('/upload', upload.single('job-xml'), async (request, response) => {
 router.get('/:id', async (request, response) => {
     try {
         const ticket = await TicketModel
-            .findById(request.params.id, 'ticketNumber destination')
+            .findById(request.params.id)
             .exec();
+
+        const {responseDataType} = request.query;
+        const shouldOnlyReturnTheJsonObject = responseDataType && responseDataType.toUpperCase() === 'JSON';
+
+        if (shouldOnlyReturnTheJsonObject) {
+            return response.json(ticket);
+        }
 
         return response.render('viewOneTicket', {
             ticket

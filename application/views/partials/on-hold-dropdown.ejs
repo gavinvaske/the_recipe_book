@@ -1,15 +1,24 @@
 <div class='on-hold-dropdown'>
     <div class='header flex-center-space-between-row'><i class="fa-light fa-circle-info"></i><span>Pick/Create Option</span><i class="close-on-hold-dropdown fa-regular fa-xmark"></i></div>
     <div class='body'>
-        <ul>
+        <ul class="hold-reason-options">
             <% allHoldReasonsForThisDepartment.forEach(holdReason => { %>
-                <li><%= holdReason %></li>
+                <!-- This first row is used as a clone: No touchy! -->
+                <%- include('on-hold-dropdown-option.ejs', {data: {hideThisRow: true}}) %>
+
+                <%- include('on-hold-dropdown-option.ejs', {
+                    data: {
+                        departmentName: departmentName,
+                        ticketId: ticketId,
+                        holdReason: holdReason
+                    }
+                }) %>
             <% }) %>
         </ul>
         <div class='custom-tag-frame'>
             <span>Create New</span>
             <div class='add-tag-frame flex-center-center-row'>
-                <input type='text'><button class='bg-blue text-white border-blue btn-create'>Add</button>
+                <input type='text'><button class='bg-blue text-white border-blue btn-create add-hold-reason-btn'>Add</button>
             </div>
         </div>
     </div>

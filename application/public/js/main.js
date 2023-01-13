@@ -25,7 +25,23 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 const errorMessage = error.responseText ? error.responseText : 'N/A';
-                alert(`An error occurred while attempting to update the ticket: "${errorMessage}"`);
+                alert(`An error occurred while attempting to update the ticket, the error is: "${errorMessage}"`);
+            }
+        });
+    };
+
+    function findTicket(ticketId, callback) {
+        $.ajax({
+            url: `/tickets/${ticketId}?responseDataType=JSON`,
+            type: 'GET',
+            success: function(ticket) {
+                if (callback) {
+                    callback(ticket);
+                }
+            },
+            error: function(error) {
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to find a ticket with id = ${ticketId}. The error message is: "${errorMessage}"`);
             }
         });
     }
@@ -1136,5 +1152,34 @@ $( document ).ready(function() {
         };
 
         updateTicket(ticketAttributeToUpdate, ticketId);
+    });
+
+    $('.status-section').on('click', '.hold-reason-option', function() {
+        const selectedHoldReason = $(this).text();
+        const departmentName = $(this).data('departmentName');
+        const ticketId = $(this).data('ticket-id');
+
+        findTicket(ticketId, (ticket) => {
+            let previousDepartmentToHoldReason = ticket.departmentToHoldReason;
+
+            if (!previousDepartmentToHoldReason) { 
+                previousDepartmentToHoldReason = {};
+            };
+
+            const ticketAttributesToUpdate = {
+                departmentToHoldReason: {
+                    ...previousDepartmentToHoldReason,
+                    [departmentName]: selectedHoldReason
+                }
+            };
+
+            updateTicket(ticketAttributesToUpdate, ticketId, () => {
+                $(this).closest('.on-hold-dropdown').siblings('.on-hold-reason-text').first().text(selectedHoldReason);
+            });
+        })
+    });
+
+    $('.status-section').on('click', '.add-hold-reason-btn', function() {
+        alert('you clicked it, I saw you!')
     });
 });

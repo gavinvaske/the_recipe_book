@@ -676,7 +676,7 @@ $( document ).ready(function() {
 
     $('.grouping-indicator').click(function() {
         let currentSelection = $(this);
-        if($(currentSelection).hasClass('active')) {
+        if ($(currentSelection).hasClass('active')) {
             $(this).removeClass('active');
         } else {
             $(this).addClass('active');

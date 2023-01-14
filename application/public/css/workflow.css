@@ -206,7 +206,8 @@
 .advanced-filter-dropdown.active,
 .person-filter-dropdown.active,
 .sort-dropdown.active,
-.on-hold-dropdown.active {
+.on-hold-dropdown.active,
+.grouping-indicator.active .dropdown {
 	visibility: visible;
 	opacity: 1;
 	z-index: 99;

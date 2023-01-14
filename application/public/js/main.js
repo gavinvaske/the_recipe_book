@@ -673,6 +673,16 @@ $( document ).ready(function() {
         $(onHoldSelection).addClass('active');
         
     });
+
+    $('.grouping-indicator').click(function() {
+        let currentSelection = $(this);
+        if($(currentSelection).hasClass('active')) {
+            $(this).removeClass('active');
+        } else {
+            $(this).addClass('active');
+        }
+        
+    });
     $('.close-on-hold-dropdown').click(function() {
         event.stopPropagation();
         $('.on-hold-dropdown').removeClass('active');

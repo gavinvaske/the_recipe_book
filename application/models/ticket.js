@@ -284,6 +284,19 @@ ticketSchema.pre('save', function(next) {
     next();
 });
 
+ticketSchema.virtual('numberOfProofsThatHaveNotBeenUploadedYet').get(function() {
+    let numberOfProofsThatHaveNotBeenUploadedYet = 0;
+
+    this.products && this.products.forEach((product) => {
+        const hasProofBeenUploaded = product.proof && product.proof.url;
+
+        if (!hasProofBeenUploaded) {
+            numberOfProofsThatHaveNotBeenUploadedYet += 1;
+        }
+    });
+    return numberOfProofsThatHaveNotBeenUploadedYet;
+});
+
 async function addRowToWorkflowStepDbTable(next) {
     const destination = this.getUpdate().$set.destination;
 

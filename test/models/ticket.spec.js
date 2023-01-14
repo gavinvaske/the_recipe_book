@@ -906,6 +906,61 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: numberOfProofsThatHaveNotBeenUploadedYet', () => {
+        it('should be calculated on its own without the need for a user to define it', () => {
+            delete ticketAttributes.numberOfProofsThatHaveNotBeenUploadedYet;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.numberOfProofsThatHaveNotBeenUploadedYet).toEqual(expect.any(Number));
+        });
+
+        it('should be equal to the number of ticket.products whose proof attribute is not defined', () => {
+            const productsWithoutProofs = [
+                {proof: undefined},
+                {proof: null}
+            ];
+            const productsWithProofs = [
+                {
+                    proof: {
+                        url: chance.string(),
+                        fileName: chance.string()
+                    },
+                }
+            ];
+            ticketAttributes.products = [...productsWithoutProofs, ...productsWithProofs];
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.numberOfProofsThatHaveNotBeenUploadedYet).toEqual(productsWithoutProofs.length);
+        });
+
+        it('should consider a proof missing if the ticket.products[n].proof.url is not defined', () => {
+            const productsWithoutProofs = [
+                {proof: undefined},
+                {proof: null}
+            ];
+            const productsWithAProofAttributeButAnUndefinedUrl = [
+                {
+                    proof: {
+                        url: undefined,
+                        fileName: chance.string()
+                    },
+                }
+            ];
+            ticketAttributes.products = [...productsWithoutProofs, ...productsWithAProofAttributeButAnUndefinedUrl];
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.numberOfProofsThatHaveNotBeenUploadedYet).toEqual(productsWithoutProofs.length + productsWithAProofAttributeButAnUndefinedUrl.length);
+        });
+
+        it('should default to 0 if no products exist', () => {
+            const numberOfProductsWhoseProofAttributeIsUndefined = 0;
+            delete ticketAttributes.products;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.numberOfProofsThatHaveNotBeenUploadedYet).toEqual(numberOfProductsWhoseProofAttributeIsUndefined);
+        });
+    });
+
     describe('mongoose pre hooks test suite', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();

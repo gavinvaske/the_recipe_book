@@ -965,7 +965,7 @@ $( document ).ready(function() {
             [departmentStatusNameColumn]: ticket.destination ? ticket.destination.departmentStatus : undefined,
             [assigneeNameColumn]: assigneeName,
             [assigneeProfilePictureColumn]: assigneeProfilePicture,
-            [holdReasonColumn]: 'TODO: .hold-status-column',
+            [holdReasonColumn]: 'TODO: .hold-reason-column',
             [lengthColumn]: ticket.totalMaterialLength,
             [materialColumn]: ticket.primaryMaterial,
             [dieColumn]: productDie,

@@ -39,7 +39,7 @@ describe('validation', () => {
             Company: chance.string(),
             sentDate: chance.date({string: true}),
             followUpDate: chance.date({string: true}),
-            holdReasonByDepartment: {}
+            departmentToHoldReason: {}
         };
     });
 
@@ -820,7 +820,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: holdReasonByDepartment', () => {
+    describe('attribute: departmentToHoldReason', () => {
         let nonImportantString;
         beforeEach(() => {
             nonImportantString = chance.string();
@@ -828,19 +828,19 @@ describe('validation', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.holdReasonByDepartment).toBeDefined();
+            expect(ticket.departmentToHoldReason).toBeDefined();
         });
 
         it('should default to an empty object if attribute is not defined', () => {
-            delete ticketAttributes.holdReasonByDepartment;
+            delete ticketAttributes.departmentToHoldReason;
             const ticket = new TicketModel(ticketAttributes);
             const emptyObject = {};
 
-            expect(ticket.holdReasonByDepartment.toJSON()).toStrictEqual(emptyObject);
+            expect(ticket.departmentToHoldReason.toJSON()).toStrictEqual(emptyObject);
         });
 
         it('should pass validation is attribute is not defined', () => {
-            delete ticketAttributes.holdReasonByDepartment;
+            delete ticketAttributes.departmentToHoldReason;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -849,7 +849,7 @@ describe('validation', () => {
         });
 
         it('should pass validation is attribute is an empty object', () => {
-            ticketAttributes.holdReasonByDepartment = {};
+            ticketAttributes.departmentToHoldReason = {};
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -859,15 +859,15 @@ describe('validation', () => {
 
         it('should convert the value of each map record to a string', () => {
             const aNumber = chance.integer();
-            ticketAttributes.holdReasonByDepartment[nonImportantString] = aNumber;
+            ticketAttributes.departmentToHoldReason[nonImportantString] = aNumber;
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.holdReasonByDepartment.get(nonImportantString)).toBe(`${aNumber}`);
+            expect(ticket.departmentToHoldReason.get(nonImportantString)).toBe(`${aNumber}`);
         });
 
         it('should fail validation if a non-valid department is used as a key', () => {
             const invalidDepartment = chance.string();
-            ticketAttributes.holdReasonByDepartment[invalidDepartment] = nonImportantString;
+            ticketAttributes.departmentToHoldReason[invalidDepartment] = nonImportantString;
             const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
@@ -878,7 +878,7 @@ describe('validation', () => {
         it('should pass validation if only valid departments are used as keys', () => {
             const firstValidDepartment = getAllDepartments()[0];
             const secondValidDepartment = getAllDepartments()[1];
-            ticketAttributes.holdReasonByDepartment = {
+            ticketAttributes.departmentToHoldReason = {
                 [firstValidDepartment]: chance.string(),
                 [secondValidDepartment]: chance.string()
             };
@@ -893,7 +893,7 @@ describe('validation', () => {
             const firstValidDepartment = getAllDepartments()[0];
             const secondValidDepartment = getAllDepartments()[1];
             const firstInvalidDepartment = chance.string();
-            ticketAttributes.holdReasonByDepartment = {
+            ticketAttributes.departmentToHoldReason = {
                 [firstValidDepartment]: nonImportantString,
                 [secondValidDepartment]: nonImportantString,
                 [firstInvalidDepartment]: nonImportantString

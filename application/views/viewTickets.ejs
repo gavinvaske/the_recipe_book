@@ -76,10 +76,7 @@
                     <div class='column-td column-td-f bg-white'></div>
                     <div class='column-td column-td-g bg-white'></div>
                     <div class='column-td column-td-h bg-white'>
-                      <div class='user-cell bg-blue tooltip assignee-picture-url-column'>TODO
-                        <span class="tooltiptext assignee-name-column">TODO</span>
-                      </div>
-                      <span class='department-name department-column'>N/A</span>
+                      <%- include('partials/assignee.ejs') -%>
                     </div>
                     <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                   </div>
@@ -378,8 +375,7 @@
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
-                      <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='department-name'>Press 1 (TODO)</span>
+                      <%- include('partials/assignee.ejs') -%>
                   </div>
                   <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
@@ -495,7 +491,9 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-e bg-white'>
+                    <%- include('partials/assignee.ejs') -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -726,7 +724,9 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-e bg-white'>
+                    <%- include('partials/assignee.ejs') -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white'></div>
@@ -911,9 +911,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
                   <div class='column-td column-td-e bg-white'>
-                    <div class='user-cell bg-blue tooltip'>SV
-                      <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='department-name'>Press 1 (TODO)</span>
+                      <%- include('partials/assignee.ejs') -%>
                   </div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
@@ -1209,9 +1207,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
                   <div class='column-td column-td-e bg-white'>
-                    <div class='user-cell bg-blue tooltip'>SV
-                      <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='department-name'>Press 1 (TODO)</span>
+                    <%- include('partials/assignee.ejs') -%>
                   </div>
                   <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
                   <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
@@ -1562,9 +1558,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
                   <div class='column-td column-td-e bg-white'>
-                    <div class='user-cell bg-blue tooltip'>SV
-                      <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='department-name'>Press 1 (TODO)</span>
+                    <%- include('partials/assignee.ejs') -%>
                   </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
@@ -1750,9 +1744,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
                   <div class='column-td column-td-e bg-white'>
-                    <div class='user-cell bg-blue tooltip'>SV
-                      <span class="tooltiptext">Storm Vaske (TODO)</span>
-                    </div><span class='department-name'>Press 1 (TODO)</span>
+                    <%- include('partials/assignee.ejs') -%>
                   </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
@@ -1937,7 +1929,9 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-e bg-white'>
+                    <%- include('partials/assignee.ejs') -%>
+                  </div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'>*TODO*</div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
@@ -2152,7 +2146,7 @@
               <div class='column-header column-header-b'>#</div>
               <div class='column-header column-header-c'>Ticket Number</div>
               <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
+              <div class='column-header column-header-e'>Location</div>
               <div class='column-header column-header-f'></div>
               <div class='column-header column-header-g'></div>
               <div class='column-header column-header-h'>Products</div>
@@ -2176,7 +2170,7 @@
                   <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'></div>
+                  <div class='column-td column-td-e bg-white'><%- include('partials/assignee.ejs') -%></div>
                   <div class='column-td column-td-f bg-white'></div>
                   <div class='column-td column-td-g bg-white'></div>
                   <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>

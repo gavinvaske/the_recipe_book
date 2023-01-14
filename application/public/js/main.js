@@ -679,7 +679,10 @@ $( document ).ready(function() {
     });
 
     $(function() {
-        $('#datepicker').datepicker();
+        $('#datepicker').datepicker({ 
+            changeMonth: true,
+            dateFormat: 'dd MM',
+        });
     });
 
     $('.notification-option').click(function() {

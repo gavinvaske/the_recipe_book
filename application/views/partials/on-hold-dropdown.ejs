@@ -2,10 +2,10 @@
     <div class='header flex-center-space-between-row'><i class="fa-light fa-circle-info"></i><span>Pick/Create Option</span><i class="close-on-hold-dropdown fa-regular fa-xmark"></i></div>
     <div class='body'>
         <ul class="hold-reason-options">
-            <% allHoldReasonsForThisDepartment.forEach(holdReason => { %>
-                <!-- This first row is used as a clone: No touchy! -->
-                <%- include('on-hold-dropdown-option.ejs', {data: {hideThisRow: true}}) %>
+            <!-- This first row is used as a clone: No touchy! -->
+            <%- include('on-hold-dropdown-option.ejs', {data: {hideThisRow: true}}) %>
 
+            <% allHoldReasonsForThisDepartment.forEach(holdReason => { %>
                 <%- include('on-hold-dropdown-option.ejs', {
                     data: {
                         departmentName: departmentName,

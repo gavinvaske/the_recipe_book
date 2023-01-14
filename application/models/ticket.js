@@ -35,8 +35,8 @@ async function validateMaterialExists(materialId) {
     }
 }
 
-function validateKeysAreAllValidDepartments(holdReasonByDepartment) {
-    const potentiallyValidDepartmentNames = Object.keys(holdReasonByDepartment.toJSON());
+function validateKeysAreAllValidDepartments(departmentToHoldReason) {
+    const potentiallyValidDepartmentNames = Object.keys(departmentToHoldReason.toJSON());
     const validDepartmentNames = getAllDepartments();
 
     return potentiallyValidDepartmentNames.every((departmentName) => {
@@ -267,12 +267,12 @@ const ticketSchema = new Schema({
         type: Date,
         required: false
     },
-    holdReasonByDepartment: {
+    departmentToHoldReason: {
         type: Map,
         of: String,
         required: false,
         default: {},
-        validate: [validateKeysAreAllValidDepartments, 'The attribute "holdReasonByDepartment" must only contain keys which are valid departments']
+        validate: [validateKeysAreAllValidDepartments, 'The attribute "departmentToHoldReason" must only contain keys which are valid departments']
     }
 }, { timestamps: true });
 

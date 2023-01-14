@@ -24,6 +24,6 @@ const HoldReasonSchema = new Schema({
     }
 }, { timestamps: true });
 
-const HoldStatus = mongoose.model('HoldStatus', HoldReasonSchema);
+const HoldReason = mongoose.model('HoldReason', HoldReasonSchema);
 
-module.exports = HoldStatus; 
+module.exports = HoldReason; 

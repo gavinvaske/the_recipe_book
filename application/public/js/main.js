@@ -46,6 +46,52 @@ $( document ).ready(function() {
         });
     }
 
+    function createHoldReason(holdReasonAttributes, callback) {
+        $.ajax({
+            url: `/hold-reasons`,
+            type: 'POST',
+            data: holdReasonAttributes,
+            success: function(holdReason) {
+                if (callback) {
+                    callback(holdReason);
+                }
+            },
+            error: function(error) {
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to CREATE the the specified "hold reason". The error that occurred is: ${errorMessage}`);
+            }
+        });
+    }
+
+    function findTheTicketIdOfTheRowThisHtmlElementIsIn(htmlElement) {
+        try {
+            const ticketId = htmlElement.closest('.table-row-wrapper').data('ticket-id');
+
+            if (!ticketId) {
+                throw Error('Could not find a "ticketId" which was required to complete this operation.')
+            }
+
+            return ticketId;
+        } catch(error) {
+            alert(error);
+            throw Error(error.message);
+        }
+    }
+
+    function findTheDepartmentNameThisHtmlElementIsIn(htmlElement) {
+        try {
+            const departmentName = htmlElement.closest('.department-wrapper').data('department');
+
+            if (!departmentName) {
+                throw Error('Could not find a "departmentName" which was required to complete this operation.')
+            }
+            return departmentName;
+        } catch(error) {
+            alert(error);
+            throw Error(error.message);
+        }
+    }
+
     $('#material-selection').change(function() {
         const selectedMaterialId = $('#material-selection').val();
         const ticketId = $('#department-notes').data('ticket-id');
@@ -1145,7 +1191,7 @@ $( document ).ready(function() {
 
     $('.status-section').on('change', '#datepicker', function() {
         const selectedDate = $(this).val();
-        const ticketId = $(this).data('ticket-id');
+        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this));
 
         const ticketAttributeToUpdate = {
             followUpDate: selectedDate
@@ -1156,8 +1202,8 @@ $( document ).ready(function() {
 
     $('.status-section').on('click', '.hold-reason-option', function() {
         const selectedHoldReason = $(this).text();
-        const departmentName = $(this).data('departmentName');
-        const ticketId = $(this).data('ticket-id');
+        const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
+        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this))
 
         findTicket(ticketId, (ticket) => {
             let previousDepartmentToHoldReason = ticket.departmentToHoldReason;
@@ -1180,6 +1226,26 @@ $( document ).ready(function() {
     });
 
     $('.status-section').on('click', '.add-hold-reason-btn', function() {
-        alert('you clicked it, I saw you!')
+        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this));
+        const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
+        const holdReasonTypedInByUser = $(this).siblings('.hold-reason-input-field').first().val();
+
+        alert(`ticketId => ${ticketId}`);
+        alert(`departmentName => ${departmentName}`);
+
+        const holdReasonAttributes = {
+            department: departmentName,
+            reason: holdReasonTypedInByUser
+        }
+
+        createHoldReason(holdReasonAttributes, (holdReason) => {
+            const holdReasonOptions = $(this).closest('.custom-tag-frame').siblings('.hold-reason-options').first();
+            const clonableRow = holdReasonOptions.children('.hold-reason-option').first();
+            const newRow = clonableRow.clone();
+            newRow.text(holdReason.reason)
+    
+            holdReasonOptions.append(newRow)
+            newRow.show()
+        });
     });
 });

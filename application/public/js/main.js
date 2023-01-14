@@ -48,7 +48,7 @@ $( document ).ready(function() {
 
     function createHoldReason(holdReasonAttributes, callback) {
         $.ajax({
-            url: `/hold-reasons`,
+            url: '/hold-reasons',
             type: 'POST',
             data: holdReasonAttributes,
             success: function(holdReason) {
@@ -68,11 +68,11 @@ $( document ).ready(function() {
             const ticketId = htmlElement.closest('.table-row-wrapper').data('ticket-id');
 
             if (!ticketId) {
-                throw Error('Could not find a "ticketId" which was required to complete this operation.')
+                throw Error('Could not find a "ticketId" which was required to complete this operation.');
             }
 
             return ticketId;
-        } catch(error) {
+        } catch (error) {
             alert(error);
             throw Error(error.message);
         }
@@ -83,10 +83,10 @@ $( document ).ready(function() {
             const departmentName = htmlElement.closest('.department-wrapper').data('department');
 
             if (!departmentName) {
-                throw Error('Could not find a "departmentName" which was required to complete this operation.')
+                throw Error('Could not find a "departmentName" which was required to complete this operation.');
             }
             return departmentName;
-        } catch(error) {
+        } catch (error) {
             alert(error);
             throw Error(error.message);
         }
@@ -1203,7 +1203,7 @@ $( document ).ready(function() {
     $('.status-section').on('click', '.hold-reason-option', function() {
         const selectedHoldReason = $(this).text();
         const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
-        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this))
+        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this));
 
         findTicket(ticketId, (ticket) => {
             let previousDepartmentToHoldReason = ticket.departmentToHoldReason;
@@ -1222,30 +1222,26 @@ $( document ).ready(function() {
             updateTicket(ticketAttributesToUpdate, ticketId, () => {
                 $(this).closest('.on-hold-dropdown').siblings('.on-hold-reason-text').first().text(selectedHoldReason);
             });
-        })
+        });
     });
 
     $('.status-section').on('click', '.add-hold-reason-btn', function() {
-        const ticketId = findTheTicketIdOfTheRowThisHtmlElementIsIn($(this));
         const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
         const holdReasonTypedInByUser = $(this).siblings('.hold-reason-input-field').first().val();
-
-        alert(`ticketId => ${ticketId}`);
-        alert(`departmentName => ${departmentName}`);
 
         const holdReasonAttributes = {
             department: departmentName,
             reason: holdReasonTypedInByUser
-        }
+        };
 
         createHoldReason(holdReasonAttributes, (holdReason) => {
             const holdReasonOptions = $(this).closest('.custom-tag-frame').siblings('.hold-reason-options').first();
             const clonableRow = holdReasonOptions.children('.hold-reason-option').first();
             const newRow = clonableRow.clone();
-            newRow.text(holdReason.reason)
+            newRow.text(holdReason.reason);
     
-            holdReasonOptions.append(newRow)
-            newRow.show()
+            holdReasonOptions.append(newRow);
+            newRow.show();
         });
     });
 });

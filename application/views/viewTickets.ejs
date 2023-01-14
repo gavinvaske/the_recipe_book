@@ -134,7 +134,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(orderPrepDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(orderPrepDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
                       departmentName: orderPrepDepartmentName,
@@ -433,7 +433,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(artPrepDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(artPrepDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName],
                       departmentName: artPrepDepartmentName,
@@ -848,7 +848,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class="hold-reason-text"><%= ticket.departmentToHoldReason.get(printingDepartmentName) %></span>
+                    <span class="hold-reason-text"><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(printingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName],
                       departmentName: printingDepartmentName,
@@ -1146,7 +1146,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(cuttingDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(cuttingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[cuttingDepartmentName],
                       departmentName: cuttingDepartmentName,
@@ -1499,7 +1499,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(windingDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(windingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[windingDepartmentName],
                       departmentName: windingDepartmentName,
@@ -1687,7 +1687,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(packagingDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(packagingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[packagingDepartmentName],
                       departmentName: packagingDepartmentName,
@@ -1875,7 +1875,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(shippingDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(shippingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName],
                       departmentName: shippingDepartmentName,
@@ -2114,7 +2114,7 @@
                   <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
                   <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
                   <div class='column-td column-td-e bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason.get(billingDepartmentName) %></span>
+                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(billingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName],
                       departmentName: billingDepartmentName,

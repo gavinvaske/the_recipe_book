@@ -273,6 +273,11 @@ const ticketSchema = new Schema({
         required: false,
         default: {},
         validate: [validateKeysAreAllValidDepartments, 'The attribute "departmentToHoldReason" must only contain keys which are valid departments']
+    },
+    ticketGroup: {
+        type: Schema.Types.ObjectId,
+        ref: 'TicketGroup',
+        required: false
     }
 }, { timestamps: true });
 

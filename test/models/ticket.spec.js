@@ -4,6 +4,7 @@ const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, getAllDepartments} = require('../../application/enums/departmentsEnum');
+const mongoose = require('mongoose');
 
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
@@ -39,7 +40,8 @@ describe('validation', () => {
             Company: chance.string(),
             sentDate: chance.date({string: true}),
             followUpDate: chance.date({string: true}),
-            departmentToHoldReason: {}
+            departmentToHoldReason: {},
+            ticketGroup: new mongoose.Types.ObjectId()
         };
     });
 
@@ -900,6 +902,38 @@ describe('validation', () => {
             };
             const ticket = new TicketModel(ticketAttributes);
             
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+    });
+
+    describe('attribute: ticketGroup', () => {
+        it('should pass validation if attribute is not defined', () => {
+            delete ticketAttributes.ticketGroup;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should pass validation when attribute is a valid mongoose objectId', () => {
+            ticketAttributes.ticketGroup = new mongoose.Types.ObjectId();
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+            const isAttributeAValidMongooseObjectId = mongoose.Types.ObjectId.isValid(ticket.ticketGroup);
+
+            expect(error).toBe(undefined);
+            expect(isAttributeAValidMongooseObjectId).toBe(true);
+        });   
+
+        it('should fail validation if attribute is not a valid mongoose objectId', () => {
+            const invalidTicketGroup = chance.string();
+            ticketAttributes.ticketGroup = invalidTicketGroup;
+            const ticket = new TicketModel(ticketAttributes);
+
             const error = ticket.validateSync();
 
             expect(error).not.toBe(undefined);

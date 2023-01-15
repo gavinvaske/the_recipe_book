@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const ZERO = 0;
+
 function isArrayLengthGreaterThanZero(items) {
-    return items && items.length > 0;
+    return items && items.length > ZERO;
 }
 
 const ticketGroupSchema = new Schema({

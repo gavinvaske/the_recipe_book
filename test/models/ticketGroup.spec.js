@@ -59,5 +59,5 @@ describe('validation', () => {
 
             expect(error).not.toBe(undefined);
         });
-    })
-})
+    });
+});

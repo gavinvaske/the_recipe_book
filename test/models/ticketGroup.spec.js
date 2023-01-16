@@ -51,7 +51,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if attribute an array containing non-mongoose object Id(s)', () => {
-            const invalidDataType = chance.string();
+            const invalidDataType = chance.integer();
             ticketGroupAttributes.ticketIdsInGroup = [invalidDataType];
             const ticketGroup = new TicketGroupModel(ticketGroupAttributes);
 

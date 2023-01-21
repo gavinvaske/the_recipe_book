@@ -1,3 +1,3 @@
 <% const additionalCssStyles = [] %> 
 
-<div class='column-header <%= additionalCssStyles && ...additionalCssStyles %>'></div>
+<div class='column-header column-header-b <%= additionalCssStyles ? additionalCssStyles : '' %>'><%= columnName ? columnName : '' %></div>

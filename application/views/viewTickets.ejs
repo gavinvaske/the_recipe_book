@@ -40,24 +40,19 @@
           tableName: 'order-prep-needs-attention',
           tickets: orderPrepNeedsAttentionTickets,
           totalNumberOfTicketsInThisDepartment: numberOfOrderPrepTickets,
-          columns: [  // TODO: Currently this is a list of every possible column, reduce it to only those that this table needs
-            'row-number',
-            'ticket-number',
-            'priority',
-            'hold-status',
-            'location',
-            'length',
-            'material',
-            'die',
-            'total-rolls',
-            'grouped',
-            'products',
-            'due-date',
-            'from',
-            'finish',
-            'sent-date',
-            'follow-up-date'
-          ]
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: '',
+            8: 'due-date'
+          },
+          data: {
+            tickets: orderPrepNeedsAttentionTickets
+          }
         }) %>
 
         <!-- Order Prep | On Hold -->

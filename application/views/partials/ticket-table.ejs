@@ -1,6 +1,46 @@
 <!-- TODO: make sure 'tableName' is in the defined list of accepted values -->
 <!-- TODO: make sure 'columns' are all in the defined list of accepted values -->
 
+<% const rowNumberColumnType = 'row-number' %>
+<% const ticketNumberColumnType = 'ticket-number' %>
+<% const priorityColumnType = 'priority' %>
+<% const holdStatusColumnType = 'hold-status' %>
+<% const locationColumnType = 'location' %>
+<% const lengthColumnType = 'length' %>
+<% const materialColumnType = 'material' %>
+<% const dieColumnType = 'die' %>
+<% const totalRollsColumnType = 'total-rolls' %>
+<% const groupedColumnType = 'grouped' %>
+<% const productsColumnType = 'products' %>
+<% const dueDateColumnType = 'due-date' %>
+<% const fromColumnType = 'from' %>
+<% const finishColumnType = 'finish' %>
+<% const sentDateColumnType = 'sent-date' %>
+<% const followUpDateColumnType = 'follow-up-date' %>
+
+<% const columnTypeToColumnName = {
+    [rowNumberColumnType]: '#',
+    [ticketNumberColumnType]: 'Ticket Number',
+    [priorityColumnType]: 'Priority',
+    [holdStatusColumnType]: 'Hold Status',
+    [locationColumnType]: 'Location',
+    [lengthColumnType]: 'Length',
+    [materialColumnType]: 'Material',
+    [dieColumnType]: 'Die',
+    [totalRollsColumnType]: 'Total Rolls',
+    [groupedColumnType]: 'Grouped',
+    [productsColumnType]: 'Products',
+    [dueDateColumnType]: 'Due Date',
+    [fromColumnType]: 'From',
+    [fromColumnType]: 'Finish',
+    [sentDateColumnType]: 'Sent Date',
+    [followUpDateColumnType]: 'Follow Up Date',
+    undefined: '',
+    null: '',
+    '': ''
+  }
+%>
+
 <div class='status-section red-master card'>
     <div class='side-bumper'></div>
     <span><%= department %> - <%= totalNumberOfTicketsInThisDepartment %></span>
@@ -11,6 +51,12 @@
     <div class='table ticket-container flex-top-center-column'>
       <div class='table-header flex-center-center-row'>
         <div class='column-header column-header-a'></div>
+        <% Object.keys(columns).forEach((rowNumber) => { %>
+          <% const columnType = columns[rowNumber] %>
+          <% const columnName = columnTypeToColumnName[columnType] %> 
+          <%- include('ticket-table-column-header.ejs', {columnName: columnName}) %>
+        <% }) %>
+        <!-- <div class='column-header column-header-a'></div>
         <div class='column-header column-header-b'>#</div>
         <div class='column-header column-header-c'>Ticket Number</div>
         <div class='column-header column-header-d'>Status</div>
@@ -18,7 +64,7 @@
         <div class='column-header column-header-f'></div>
         <div class='column-header column-header-g'></div>
         <div class='column-header column-header-h'>From</div>
-        <div class='column-header column-header-i'>Due Date</div>
+        <div class='column-header column-header-i'>Due Date</div> -->
       </div>
       <div id='<%= tableName %>-table' class='table-body flex-center-center-column'>
         <% tickets.forEach((ticket, index) => { %>
@@ -36,15 +82,60 @@
                   }
               ) %>
               </div>
+              <% Object.keys(columns).forEach((rowNumber) => { %>
+                <% const columnType = columns[rowNumber] %>
+
+                <% if (!columnType) { %>
+                 <% return %>
+                <% } %>
+
+                <% if (columnType === rowNumberColumnType) { %>
+                <% } else if (columnType === ticketNumberColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === priorityColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === holdStatusColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === locationColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === lengthColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === materialColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === dieColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === totalRollsColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === groupedColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === productsColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === dueDateColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === fromColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === finishColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === sentDateColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else if (columnType === followUpDateColumnType) { %>
+                  <%- include('ticket-table-column.ejs', {}) %>
+                <% } else { %>
+                  <% throw new Error(`Error: the columnType of "${columnType}" is not valid!`) %> 
+                <% }%>
+                
+                
+              <% }) %>
+              <!--
               <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
               <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
               <div class='column-td column-td-d bg-white department-status-column'><%= departmentStatus %></div>
               <div class='column-td column-td-e bg-white'></div>
               <div class='column-td column-td-f bg-white'></div>
               <div class='column-td column-td-g bg-white'></div>
-              <div class='column-td column-td-h bg-white'>
-                <%- include('assignee.ejs') -%>
-              </div>
+              <div class='column-td column-td-h bg-white'></div>
+              -->
+              
               <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
             </div>
           </div>

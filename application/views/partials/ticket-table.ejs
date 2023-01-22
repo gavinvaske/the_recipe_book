@@ -1,5 +1,9 @@
-<!-- TODO: make sure 'tableName' is in the defined list of accepted values -->
-<!-- TODO: make sure 'columns' are all in the defined list of accepted values -->
+
+<% const requiredAttributesAreNotDefined = !department || !tableIdentifier || !tickets || !columns || !dropdownOptions %>
+
+<% if (requiredAttributesAreNotDefined) { %>
+  <% throw new Error(`Error: attempting to render a ticket-table without defining all required attributes.`) %> 
+<% } %>
 
 <% const rowNumberColumnType = 'row-number' %>
 <% const ticketNumberColumnType = 'ticket-number' %>
@@ -43,6 +47,7 @@
 
 <div class='status-section red-master card'>
     <div class='side-bumper'></div>
+    <% const totalNumberOfTicketsInThisDepartment = Object.values(tickets).flat().length %> 
     <span><%= department %> - <%= totalNumberOfTicketsInThisDepartment %></span>
     <div class='header flex-center-left-row'>
       <%- include('department-expand-options.ejs') %>
@@ -56,19 +61,10 @@
           <% const columnName = columnTypeToColumnName[columnType] %> 
           <%- include('ticket-table-column-header.ejs', {columnName: columnName}) %>
         <% }) %>
-        <!-- <div class='column-header column-header-a'></div>
-        <div class='column-header column-header-b'>#</div>
-        <div class='column-header column-header-c'>Ticket Number</div>
-        <div class='column-header column-header-d'>Status</div>
-        <div class='column-header column-header-e'></div>
-        <div class='column-header column-header-f'></div>
-        <div class='column-header column-header-g'></div>
-        <div class='column-header column-header-h'>From</div>
-        <div class='column-header column-header-i'>Due Date</div> -->
       </div>
-      <div id='<%= tableName %>-table' class='table-body flex-center-center-column'>
+      <div id='<%= tableIdentifier %>-table' class='table-body flex-center-center-column'>
         <% tickets.forEach((ticket, index) => { %>
-        <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width <%= tableName %>-row' data-ticket-id="<%= ticket._id %>">
+        <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width <%= tableIdentifier %>-row' data-ticket-id="<%= ticket._id %>">
           <%- include('start-job-modal.ejs', {
             ticket: ticket
             }
@@ -123,18 +119,7 @@
                 <% } else { %>
                   <% throw new Error(`Error: the columnType of "${columnType}" is not valid!`) %> 
                 <% }%>
-                
-                
               <% }) %>
-              <!--
-              <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-              <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-              <div class='column-td column-td-d bg-white department-status-column'><%= departmentStatus %></div>
-              <div class='column-td column-td-e bg-white'></div>
-              <div class='column-td column-td-f bg-white'></div>
-              <div class='column-td column-td-g bg-white'></div>
-              <div class='column-td column-td-h bg-white'></div>
-              -->
               
               <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
             </div>

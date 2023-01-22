@@ -37,9 +37,8 @@
         <%- include('partials/ticket-table.ejs', {
           department: 'Order Prep',
           departmentStatus: 'Needs Attention',
-          tableName: 'order-prep-needs-attention',
+          tableIdentifier: 'order-prep-needs-attention',
           tickets: orderPrepNeedsAttentionTickets,
-          totalNumberOfTicketsInThisDepartment: numberOfOrderPrepTickets,
           columns: {
             1: 'row-number',
             2: 'ticket-number',
@@ -50,9 +49,7 @@
             7: '',
             8: 'due-date'
           },
-          data: {
-            tickets: orderPrepNeedsAttentionTickets
-          }
+          dropdownOptions: {}  // TODO Gavin (1-21-2022)
         }) %>
 
         <!-- Order Prep | On Hold -->

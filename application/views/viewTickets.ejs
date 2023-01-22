@@ -34,62 +34,23 @@
         
         <!-- Order Prep | Needs Attention -->
         <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-        <div class='status-section needs-attention-status red-master card'>
-          <div class='side-bumper'></div>
-          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= orderPrepNeedsAttentionTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
-            </div>
-            <div id='order-prep-needs-attention-table' class='table-body flex-center-center-column'>
-              <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-needs-attention-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-                ) %>
-                <div class='table-row flex-center-center-column'>
-                  <div class='flex-center-center-row ticket-wrapper full-width'>
-                    <div class='column-td column-td-a'>
-                      <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                      <%- include('partials/ticket-dropdown-options.ejs', {
-                        ticket: ticket
-                        }
-                    ) %>
-                    </div>
-                    <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white department-status-column'>NEEDS ATTENTION</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>
-                      <%- include('partials/assignee.ejs') -%>
-                    </div>
-                    <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                  </div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          department: 'Order Prep',
+          departmentStatus: 'Needs Attention',
+          tableIdentifier: 'order-prep-needs-attention',
+          tickets: orderPrepNeedsAttentionTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: '',
+            8: 'due-date'
+          },
+          dropdownOptions: {}  // TODO Gavin (1-21-2022)
+        }) %>
 
         <!-- Order Prep | On Hold -->
         <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>

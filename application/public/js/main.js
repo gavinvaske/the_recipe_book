@@ -549,11 +549,11 @@ $( document ).ready(function() {
 		
     });
 
-    $('.table-body').on('click', '.table-row-wrapper .table-row .column-td-a', function() {
+    $('.table-body').on('click', '.table-row-wrapper .table-row .column-td:nth-child(1)', function() {
         if ($(this).hasClass('active')){
             $(this).removeClass('active');
         } else {
-            $('.column-td-a').removeClass('active');
+            $('.column-td:nth-child(1)').removeClass('active');
             $(this).addClass('active');
         }
     });

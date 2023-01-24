@@ -43,15 +43,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>From</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='order-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% orderPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
@@ -62,23 +62,23 @@
                 ) %>
                 <div class='table-row flex-center-center-column'>
                   <div class='flex-center-center-row ticket-wrapper full-width'>
-                    <div class='column-td column-td-a'>
+                    <div class='column-td'>
                       <i class='fa-light fa-ellipsis-vertical text-white'></i>
                       <%- include('partials/ticket-dropdown-options.ejs', {
                         ticket: ticket
                         }
                     ) %>
                     </div>
-                    <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                    <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                    <div class='column-td column-td-d bg-white department-status-column'>NEEDS ATTENTION</div>
-                    <div class='column-td column-td-e bg-white'></div>
-                    <div class='column-td column-td-f bg-white'></div>
-                    <div class='column-td column-td-g bg-white'></div>
-                    <div class='column-td column-td-h bg-white'>
+                    <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                    <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                    <div class='column-td bg-white department-status-column'>NEEDS ATTENTION</div>
+                    <div class='column-td bg-white'></div>
+                    <div class='column-td bg-white'></div>
+                    <div class='column-td bg-white'></div>
+                    <div class='column-td bg-white'>
                       <%- include('partials/assignee.ejs') -%>
                     </div>
-                    <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                    <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                   </div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
@@ -102,15 +102,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
             </div>
             <div id='order-prep-on-hold-table' class='table-body flex-center-center-column'>
               <% orderPrepOnHold.forEach((ticket, index) => { %>
@@ -120,17 +120,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(orderPrepDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
@@ -139,10 +139,10 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -165,15 +165,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='order-prep-proofing-complete-table' class='table-body flex-center-center-column'>
               <% orderPrepProofingComplete.forEach((ticket, index) => { %>
@@ -183,21 +183,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>PROOFING COMPLETE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>PROOFING COMPLETE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -220,15 +220,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Follow Up Date</div>
-              <div class='column-header column-header-h'>Sent Date</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Follow Up Date</div>
+              <div class='column-header'>Sent Date</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='order-prep-waiting-on-customer-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
@@ -238,7 +238,7 @@
                   }
                 ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket,
@@ -246,14 +246,14 @@
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>WAITING ON CUSTOMER</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'><%- include('partials/follow-up-date-picker', {ticket: ticket}) -%></div>
-                  <div class='column-td column-td-h bg-white'>*TODO*</div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>WAITING ON CUSTOMER</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white follow-up-date-column'><%- include('partials/follow-up-date-picker', {ticket: ticket}) -%></div>
+                  <div class='column-td bg-white'>*TODO*</div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -276,15 +276,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Follow Up Date</div>
-              <div class='column-header column-header-h'>Sent Date</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Follow Up Date</div>
+              <div class='column-header'>Sent Date</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='order-prep-waiting-on-approval-table' class='table-body flex-center-center-column'>
               <% orderPrepWaitingOnApproval.forEach((ticket, index) => { %>
@@ -294,21 +294,21 @@
                   }
                 ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>WAITING ON APPROVAL</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'>*TODO*</div>
-                  <div class='column-td column-td-h bg-white'>*TODO*</div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>WAITING ON APPROVAL</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white follow-up-date-column'>*TODO*</div>
+                  <div class='column-td bg-white'>*TODO*</div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -342,15 +342,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>From</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='art-prep-needs-attention-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
@@ -360,24 +360,24 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>NEEDS ATTENTION</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>NEEDS ATTENTION</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'>
                     <div class='user-cell bg-blue tooltip'>SV
                       <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -400,15 +400,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>From</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='art-prep-on-hold-table' class='table-body flex-center-center-column'>
               <% artPrepOnHold.forEach((ticket, index) => { %>
@@ -418,17 +418,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(artPrepDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName],
@@ -437,10 +437,10 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -463,15 +463,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='art-prep-in-progress-table' class='table-body flex-center-center-column'>
               <% artPrepInProgressTickets.forEach((ticket, index) => { %>
@@ -481,23 +481,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -520,15 +520,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Proofs</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Proofs</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='art-prep-needs-proof-table' class='table-body flex-center-center-column'>
               <% artPrepNeedsProofTickets.forEach((ticket, index) => { %>
@@ -538,21 +538,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>NEEDS PROOF</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white follow-up-date-column'>*TODO*</div>
-                  <div class='column-td column-td-h bg-white'><%= ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A' %> </div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>NEEDS PROOF</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white follow-up-date-column'>*TODO*</div>
+                  <div class='column-td bg-white'><%= ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A' %> </div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -586,15 +586,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='pre-printing-needs-attention-table' class='table-body flex-center-center-column'>
               <% prePrintingNeedsAttentionTickets.forEach((ticket, index) => { %>
@@ -604,21 +604,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>NEEDS ATTENTION</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>NEEDS ATTENTION</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -641,15 +641,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>From</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='pre-printing-on-hold-table' class='table-body flex-center-center-column'>
               <% prePrintingOnHoldTickets.forEach((ticket, index) => { %>
@@ -659,21 +659,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -696,15 +696,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'></div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='pre-printing-in-progress-table' class='table-body flex-center-center-column'>
               <% prePrintingInProgressTickets.forEach((ticket, index) => { %>
@@ -714,23 +714,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white'></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -753,15 +753,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='pre-printing-send-to-printing-table' class='table-body flex-center-center-column'>
               <% prePrintingSendToPrintingTickets.forEach((ticket, index) => { %>
@@ -771,21 +771,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>SEND TO PRINTING</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>SEND TO PRINTING</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -819,15 +819,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='printing-on-hold-table' class='table-body flex-center-center-column'>
               <% printingOnHoldTickets.forEach((ticket, index) => { %>
@@ -837,17 +837,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class="hold-reason-text"><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(printingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName],
@@ -856,10 +856,10 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -882,15 +882,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='printing-in-progress-table' class='table-body flex-center-center-column'>
               <% printingInProgressTickets.forEach((ticket, index) => { %>
@@ -900,23 +900,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }) 
                     %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                       <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -939,15 +939,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='printing-ready-table' class='table-body flex-center-center-column'>
               <% printingReadyTickets.forEach((ticket, index) => { %>
@@ -957,21 +957,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-red text-white department-status-column'>PRINTING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
+                  <div class='column-td bg-red text-white department-status-column'>PRINTING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -994,15 +994,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='printing-printer-one-schedule-table' class='table-body flex-center-center-column'>
               <% printingPrinterOneScheduleTickets.forEach((ticket, index) => { %>
@@ -1012,21 +1012,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-red text-white department-status-column'>PRINTER ONE SCHEDULE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-red text-white department-status-column'>PRINTER ONE SCHEDULE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1049,15 +1049,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='printing-printer-two-schedule-table' class='table-body flex-center-center-column'>
               <% printingPrinterTwoScheduleTickets.forEach((ticket, index) => { %>
@@ -1067,21 +1067,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>PRINTER TWO SCHEDULE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>PRINTER TWO SCHEDULE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1115,15 +1115,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Material</div>
-              <div class='column-header column-header-h'>From</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Material</div>
+              <div class='column-header'>From</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-on-hold-table' class='table-body flex-center-center-column'>
               <% cuttingOnHoldTickets.forEach((ticket, index) => { %>
@@ -1133,17 +1133,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(cuttingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[cuttingDepartmentName],
@@ -1152,10 +1152,10 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
-                  <div class='column-td column-td-h bg-white'>*TODO*</div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white material-column'><%= ticket.primaryMaterial || 'N/A' %></div>
+                  <div class='column-td bg-white'>*TODO*</div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1178,15 +1178,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Die</div>
-              <div class='column-header column-header-h'>Finish</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Die</div>
+              <div class='column-header'>Finish</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-in-progress-table' class='table-body flex-center-center-column'>
               <% cuttingInProgressTickets.forEach((ticket, index) => { %>
@@ -1196,23 +1196,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
-                  <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
+                  <div class='column-td bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1235,15 +1235,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Die</div>
-              <div class='column-header column-header-h'>Finish</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Die</div>
+              <div class='column-header'>Finish</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-ready-table' class='table-body flex-center-center-column'>
               <% cuttingReadyTickets.forEach((ticket, index) => { %>
@@ -1253,21 +1253,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>CUTTING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
-                  <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
+                  <div class='column-td bg-white department-status-column'>CUTTING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
+                  <div class='column-td bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -1290,15 +1290,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Die</div>
-              <div class='column-header column-header-h'>Finish</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Die</div>
+              <div class='column-header'>Finish</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-delta-one-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingDeltaOneScheduleTickets.forEach((ticket, index) => { %>
@@ -1308,21 +1308,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>DELTA ONE SCHEDULE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength %> </div>
-                  <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
-                  <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
+                  <div class='column-td bg-white department-status-column'>DELTA ONE SCHEDULE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength %> </div>
+                  <div class='column-td bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
+                  <div class='column-td bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1345,15 +1345,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Die</div>
-              <div class='column-header column-header-h'>Finish</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Die</div>
+              <div class='column-header'>Finish</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-delta-two-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingDeltaTwoScheduleTickets.forEach((ticket, index) => { %>
@@ -1363,21 +1363,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
-                  <div class='column-td column-td-d bg-white department-status-column'>DELTA TWO SCHEDULE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
-                  <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %> </div>
+                  <div class='column-td bg-white department-status-column'>DELTA TWO SCHEDULE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
+                  <div class='column-td bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1400,15 +1400,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'>Length</div>
-              <div class='column-header column-header-g'>Die</div>
-              <div class='column-header column-header-h'>Finish</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Length</div>
+              <div class='column-header'>Die</div>
+              <div class='column-header'>Finish</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='cutting-rotoflex-one-schedule-table' class='table-body flex-center-center-column'>
               <% cuttingRotoflexOneScheduleTickets.forEach((ticket, index) => { %>
@@ -1418,21 +1418,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ROTOFLEX ONE SCHEDULE</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
-                  <div class='column-td column-td-g bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
-                  <div class='column-td column-td-h bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber %></div>
+                  <div class='column-td bg-white department-status-column'>ROTOFLEX ONE SCHEDULE</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white length-column'><%= ticket.totalMaterialLength || 'N/A' %></div>
+                  <div class='column-td bg-white die-column'><%= ticket.products && ticket.products[0].productDie %></div>
+                  <div class='column-td bg-white die-finish-column'><%= ticket.products && ticket.products[0].dieCuttingFinish %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1466,15 +1466,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Total Rolls</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Total Rolls</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='winding-on-hold-table' class='table-body flex-center-center-column'>
               <% windingOnHoldTickets.forEach((ticket, index) => { %>
@@ -1484,17 +1484,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(windingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[windingDepartmentName],
@@ -1503,10 +1503,10 @@
                       })
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1529,15 +1529,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Rolls</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Rolls</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='winding-in-progress-table' class='table-body flex-center-center-column'>
               <% windingInProgressTickets.forEach((ticket, index) => { %>
@@ -1547,23 +1547,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1586,15 +1586,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Rolls</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Rolls</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='winding-ready-table' class='table-body flex-center-center-column'>
               <% windingReadyTickets.forEach((ticket, index) => { %>
@@ -1604,21 +1604,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>WINDING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>WINDING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white total-rolls-column'><%= ticket.totalWindingRolls %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -1652,15 +1652,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='packaging-on-hold-table' class='table-body flex-center-center-column'>
               <% packagingOnHoldTickets.forEach((ticket, index) => { %>
@@ -1670,17 +1670,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(packagingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[packagingDepartmentName],
@@ -1689,12 +1689,12 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1717,15 +1717,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='packaging-in-progress-table' class='table-body flex-center-center-column'>
               <% packagingInProgressTickets.forEach((ticket, index) => { %>
@@ -1735,25 +1735,25 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1776,15 +1776,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='packaging-ready-table' class='table-body flex-center-center-column'>
               <% packagingReadyTickets.forEach((ticket, index) => { %>
@@ -1794,23 +1794,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>PACKAGING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>PACKAGING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -1844,15 +1844,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='shipping-on-hold-table' class='table-body flex-center-center-column'>
               <% shippingOnHoldTickets.forEach((ticket, index) => { %>
@@ -1862,17 +1862,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(shippingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName],
@@ -1881,12 +1881,12 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -1909,15 +1909,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='shipping-in-progress-table' class='table-body flex-center-center-column'>
               <% shippingInProgressTickets.forEach((ticket, index) => { %>
@@ -1927,25 +1927,25 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'>
                     <%- include('partials/assignee.ejs') -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -1968,15 +1968,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'>Grouped</div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Grouped</div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='shipping-ready-table' class='table-body flex-center-center-column'>
               <% shippingReadyTickets.forEach((ticket, index) => { %>
@@ -1986,23 +1986,23 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>SHIPPING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white grouping-indicator'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>SHIPPING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white grouping-indicator'>
                     <%- include('partials/job-grouping-indicator.ejs') -%>
                   </div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -2025,15 +2025,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='shipping-farmed-out-tickets-table' class='table-body flex-center-center-column'>
               <% shippingFarmedOutTicketsTickets.forEach((ticket, index) => { %>
@@ -2043,21 +2043,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>FARMED OUT TICKETS</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>FARMED OUT TICKETS</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -2091,15 +2091,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Hold Reason</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Hold Reason</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='billing-on-hold-table' class='table-body flex-center-center-column'>
               <% billingOnHoldTickets.forEach((ticket, index) => { %>
@@ -2109,17 +2109,17 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td column-td-e bg-white on-hold-status-cell'>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
+                  <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(billingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
                       allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName],
@@ -2128,10 +2128,10 @@
                       }) 
                     -%>
                   </div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket
@@ -2154,15 +2154,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'>Location</div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'>Location</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
               <% billingInProgressTickets.forEach((ticket, index) => { %>
@@ -2172,21 +2172,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td column-td-e bg-white'><%- include('partials/assignee.ejs') -%></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
+                  <div class='column-td bg-white'><%- include('partials/assignee.ejs') -%></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/products-wrapper.ejs', {
                   ticket: ticket
@@ -2209,15 +2209,15 @@
           </div>
           <div class='table ticket-container flex-top-center-column'>
             <div class='table-header flex-center-center-row'>
-              <div class='column-header column-header-a'></div>
-              <div class='column-header column-header-b'>#</div>
-              <div class='column-header column-header-c'>Ticket Number</div>
-              <div class='column-header column-header-d'>Status</div>
-              <div class='column-header column-header-e'></div>
-              <div class='column-header column-header-f'></div>
-              <div class='column-header column-header-g'></div>
-              <div class='column-header column-header-h'>Products</div>
-              <div class='column-header column-header-i'>Due Date</div>
+              <div class='column-header'></div>
+              <div class='column-header'>#</div>
+              <div class='column-header'>Ticket Number</div>
+              <div class='column-header'>Status</div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'></div>
+              <div class='column-header'>Products</div>
+              <div class='column-header'>Due Date</div>
             </div>
             <div id='billing-ready-table' class='table-body flex-center-center-column'>
               <% billingReadyTickets.forEach((ticket, index) => { %>
@@ -2227,21 +2227,21 @@
                   }
               ) %>
                 <div class='table-row flex-center-center-row'>
-                  <div class='column-td column-td-a'>
+                  <div class='column-td'>
                     <i class='fa-light fa-ellipsis-vertical text-white'></i>
                     <%- include('partials/ticket-dropdown-options.ejs', {
                       ticket: ticket
                       }
                   ) %>
                   </div>
-                  <div class='column-td column-td-b bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td column-td-c bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td column-td-d bg-white department-status-column'>BILLING READY</div>
-                  <div class='column-td column-td-e bg-white'></div>
-                  <div class='column-td column-td-f bg-white'></div>
-                  <div class='column-td column-td-g bg-white'></div>
-                  <div class='column-td column-td-h bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td column-td-i bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
+                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
+                  <div class='column-td bg-white department-status-column'>BILLING READY</div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white'></div>
+                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
+                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
                 </div>
                 <%- include('partials/ticket-dropdown-options.ejs', {
                   ticket: ticket

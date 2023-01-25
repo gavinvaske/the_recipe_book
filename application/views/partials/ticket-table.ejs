@@ -1,4 +1,4 @@
-<% const requiredAttributesAreNotDefined = !department || !tableIdentifier || !tickets || !columns || !dropdownOptions %>
+<% const requiredAttributesAreNotDefined = !department || !tableIdentifier || !tickets || !columns %>
 
 <% if (requiredAttributesAreNotDefined) { %>
   <% throw new Error(`Error: attempting to render a ticket-table without defining all required attributes.`) %> 
@@ -35,7 +35,7 @@
     [productsColumnType]: 'Products',
     [dueDateColumnType]: 'Due Date',
     [fromColumnType]: 'From',
-    [fromColumnType]: 'Finish',
+    [finishColumnType]: 'Finish',
     [sentDateColumnType]: 'Sent Date',
     [followUpDateColumnType]: 'Follow Up Date',
     undefined: '',
@@ -63,42 +63,36 @@
     </div>
     <div class='table ticket-container flex-top-center-column'>
       <div class='table-header flex-center-center-row'>
-        <div class='column-header'></div>
-        <div class='column-header'>#</div>
-        <div class='column-header'>Ticket Number</div>
-        <div class='column-header'>Status</div>
-        <div class='column-header'></div>
-        <div class='column-header'></div>
-        <div class='column-header'></div>
-        <div class='column-header'>From</div>
-        <div class='column-header'>Due Date</div>
+        <%- include('ticket-table-column-header.ejs', {columnName: ''}) %>
+
+        <% Object.keys(columns).forEach((rowNumber) => { %>
+          <% const columnType = columns[rowNumber] %>
+          <% const columnName = columnTypeToColumnName[columnType] %> 
+          <%- include('ticket-table-column-header.ejs', {columnName}) %>
+        <% }) %>
       </div>
+
       <div id='<%= tableIdentifier %>-table' class='table-body flex-center-center-column'>
         <% tickets.forEach((ticket, index) => { %>
         <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width <%= tableIdentifier %>-row' data-ticket-id="<%= ticket._id %>">
-          <%- include('start-job-modal.ejs', {
-                ticket: ticket
-            }) 
-          %>
+          <%- include('start-job-modal.ejs', {ticket}) %>
           <div class='table-row flex-center-center-column'>
             <div class='flex-center-center-row ticket-wrapper full-width'>
+              
               <div class='column-td'>
                 <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                <%- include('ticket-dropdown-options.ejs', {
-                    ticket: ticket
-                  }) 
-                %>
+                <%- include('ticket-dropdown-options.ejs', {ticket}) %>
               </div>
-              <div class='column-td bg-white row-number'><%= index + 1 %></div>
-              <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-              <div class='column-td bg-white department-status-column'>NEEDS ATTENTION</div>
-              <div class='column-td bg-white'></div>
-              <div class='column-td bg-white'></div>
-              <div class='column-td bg-white'></div>
-              <div class='column-td bg-white'>
-                <%- include('assignee.ejs') -%>
-              </div>
+
+              <%- include('ticket-table-column-td.ejs', {columnValue: index + 1 }) %>
+              <%- include('ticket-table-column-td.ejs', {columnValue: ticket.ticketNumber || 'N/A' }) %>
+              <%- include('ticket-table-column-td.ejs', {columnValue: 'NEEDS ATTENTION'}) %>
+              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
+              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
+              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
+              <div class='column-td bg-white'><%- include('assignee.ejs') -%></div>
               <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+
             </div>
           </div>
           <%- include('products-wrapper.ejs', {

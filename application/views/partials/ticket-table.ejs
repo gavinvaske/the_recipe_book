@@ -84,21 +84,53 @@
                 <%- include('ticket-dropdown-options.ejs', {ticket}) %>
               </div>
 
-              <%- include('ticket-table-column-td.ejs', {columnValue: index + 1 }) %>
-              <%- include('ticket-table-column-td.ejs', {columnValue: ticket.ticketNumber || 'N/A' }) %>
-              <%- include('ticket-table-column-td.ejs', {columnValue: 'NEEDS ATTENTION'}) %>
-              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
-              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
-              <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
-              <div class='column-td bg-white'><%- include('assignee.ejs') -%></div>
-              <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
+              <% Object.keys(columns).forEach((rowNumber) => { %>
+                <% const columnType = columns[rowNumber] %>
 
+                <% if (!columnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
+                  <% return %> 
+                <% } %>
+                
+                <% if (columnType === rowNumberColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: index + 1 }) %>
+                <% } else if (columnType === ticketNumberColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: ticket.ticketNumber || 'N/A'}) %>
+                <% } else if (columnType === priorityColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === holdStatusColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === locationColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === lengthColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === materialColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === dieColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === totalRollsColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === groupedColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === productsColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === dueDateColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: helperMethods.getSimpleDate(ticket.shipDate)}) %>
+                <% } else if (columnType === fromColumnType) { %>
+                  <div class='column-td bg-white'><%- include('assignee.ejs') -%></div>
+                <% } else if (columnType === finishColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === sentDateColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else if (columnType === followUpDateColumnType) { %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                <% } else { %>
+                  <% throw new Error(`Error: the columnType of "${columnType}" is not valid!`) %> 
+                <% }%>
+              <% }) %>
             </div>
           </div>
-          <%- include('products-wrapper.ejs', {
-            ticket: ticket
-            }
-        ) %>
+          <%- include('products-wrapper.ejs', {ticket}) %>
         </div>
         <% }) %>
       </div>

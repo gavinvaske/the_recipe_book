@@ -7,7 +7,7 @@
 <% const rowNumberColumnType = 'row-number' %>
 <% const ticketNumberColumnType = 'ticket-number' %>
 <% const priorityColumnType = 'priority' %>
-<% const holdStatusColumnType = 'hold-status' %>
+<% const holdReasonColumnType = 'hold-reason' %>
 <% const locationColumnType = 'location' %>
 <% const lengthColumnType = 'length' %>
 <% const materialColumnType = 'material' %>
@@ -25,7 +25,7 @@
     [rowNumberColumnType]: '#',
     [ticketNumberColumnType]: 'Ticket Number',
     [priorityColumnType]: 'Priority',
-    [holdStatusColumnType]: 'Hold Status',
+    [holdReasonColumnType]: 'Hold Reason',
     [locationColumnType]: 'Location',
     [lengthColumnType]: 'Length',
     [materialColumnType]: 'Material',
@@ -88,42 +88,106 @@
                 <% const columnType = columns[rowNumber] %>
 
                 <% if (!columnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
-                  <% return %> 
+                  <%- include('ticket-table-column-td.ejs', {columnValue: '', columnSelector: ''}) %>
+                  <% return %>
                 <% } %>
+
+                <% const columnSelector = columnType + '-row' %>
                 
                 <% if (columnType === rowNumberColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: index + 1 }) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: index + 1,
+                      columnSelector: 'row-number'  // TODO: Fix this so it uses "columnSelector": Note: this probably requires css changes in main.css
+                    })
+                  %>
                 <% } else if (columnType === ticketNumberColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: ticket.ticketNumber || 'N/A'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: ticket.ticketNumber || 'N/A',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === priorityColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
-                <% } else if (columnType === holdStatusColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                    columnValue: 'TODO',
+                    columnSelector: columnSelector
+                    })
+                  %>
+                <% } else if (columnType === holdReasonColumnType) { %>
+                  <%- include('ticketTableColumns/hold-reason-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === locationColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/user-column.ejs', {
+                      columnSelector: columnSelector
+                    }) 
+                  -%>
                 <% } else if (columnType === lengthColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === materialColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === dieColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === totalRollsColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    }) 
+                  %>
                 <% } else if (columnType === groupedColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/grouped-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    }) 
+                  %>
                 <% } else if (columnType === productsColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === dueDateColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: helperMethods.getSimpleDate(ticket.shipDate)}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: helperMethods.getSimpleDate(ticket.shipDate),
+                      columnSelector: columnSelector
+                    }) 
+                  %>
                 <% } else if (columnType === fromColumnType) { %>
-                  <div class='column-td bg-white'><%- include('assignee.ejs') -%></div>
+                  <%- include('ticketTableColumns/user-column.ejs', {
+                      columnSelector: columnSelector
+                    }) 
+                  -%>
                 <% } else if (columnType === finishColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === sentDateColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else if (columnType === followUpDateColumnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: 'TODO'}) %>
+                  <%- include('ticketTableColumns/date-picker-column.ejs', {
+                      columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
                 <% } else { %>
                   <% throw new Error(`Error: the columnType of "${columnType}" is not valid!`) %> 
                 <% }%>

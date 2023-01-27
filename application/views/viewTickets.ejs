@@ -35,7 +35,7 @@
         <!-- Order Prep | Needs Attention -->
         <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <%- include('partials/ticket-table.ejs', {
-          department: 'Order Prep',
+          departmentIdentifier: orderPrepDepartmentName,
           departmentStatus: 'Needs Attention',
           tableIdentifier: 'order-prep-needs-attention',
           tickets: orderPrepNeedsAttentionTickets,
@@ -52,67 +52,24 @@
         }) %>
 
         <!-- Order Prep | On Hold -->
-        <% const orderPrepOnHold = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-        <div class='status-section on-hold-status red-master card'>
-          <div class='side-bumper'></div>
-          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= orderPrepOnHold.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Hold Reason</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-            </div>
-            <div id='order-prep-on-hold-table' class='table-body flex-center-center-column'>
-              <% orderPrepOnHold.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-on-hold-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(orderPrepDepartmentName) %></span>
-                    <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
-                      departmentName: orderPrepDepartmentName,
-                      ticketId: ticket.id
-                      }) 
-                    -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <% const orderPrepOnHoldTickets = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: orderPrepDepartmentName,
+          departmentStatus: 'On Hold',
+          tableIdentifier: 'order-prep-on-hold',
+          tickets: orderPrepOnHoldTickets,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'hold-reason',
+            5: '',
+            6: '',
+            7: '',
+            8: ''
+          }
+        }) %>
 
         <!-- Order Prep | Proofing Complete -->
         <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
@@ -391,9 +348,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(artPrepDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName],
-                      departmentName: artPrepDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName]
                       }) 
                     -%>
                   </div>
@@ -810,9 +765,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class="hold-reason-text"><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(printingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName],
-                      departmentName: printingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName]
                       }) 
                     -%>
                   </div>
@@ -1106,9 +1059,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(cuttingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[cuttingDepartmentName],
-                      departmentName: cuttingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[cuttingDepartmentName]
                       }) 
                     -%>
                   </div>
@@ -1457,9 +1408,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(windingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[windingDepartmentName],
-                      departmentName: windingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[windingDepartmentName]
                       })
                     -%>
                   </div>
@@ -1643,9 +1592,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(packagingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[packagingDepartmentName],
-                      departmentName: packagingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[packagingDepartmentName]
                       }) 
                     -%>
                   </div>
@@ -1835,9 +1782,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(shippingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName],
-                      departmentName: shippingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName]
                       }) 
                     -%>
                   </div>
@@ -2082,9 +2027,7 @@
                   <div class='column-td bg-white on-hold-status-cell'>
                     <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(billingDepartmentName) %></span>
                     <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName],
-                      departmentName: billingDepartmentName,
-                      ticketId: ticket.id
+                      allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName]
                       }) 
                     -%>
                   </div>

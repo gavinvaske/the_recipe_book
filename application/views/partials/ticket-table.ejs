@@ -20,6 +20,7 @@
 <% const finishColumnType = 'finish' %>
 <% const sentDateColumnType = 'sent-date' %>
 <% const followUpDateColumnType = 'follow-up-date' %>
+<% const proofsColumn = 'proofs' %>
 
 <% const orderPrepDepartment = 'ORDER-PREP' %> 
 <% const artPrepDepartment = 'ART-PREP' %> 
@@ -48,6 +49,7 @@
     [finishColumnType]: 'Finish',
     [sentDateColumnType]: 'Sent Date',
     [followUpDateColumnType]: 'Follow Up Date',
+    [proofsColumn]: 'Proofs',
     undefined: '',
     null: '',
     '': ''
@@ -215,6 +217,12 @@
                 <% } else if (columnType === followUpDateColumnType) { %>
                   <%- include('ticketTableColumns/date-picker-column.ejs', {
                       columnValue: 'TODO',
+                      columnSelector: columnSelector
+                    })
+                  %>
+                <% } else if (columnType === proofsColumn) { %>
+                  <%- include('ticketTableColumns/text-column.ejs', {
+                      columnValue: ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A',
                       columnSelector: columnSelector
                     })
                   %>

@@ -118,7 +118,6 @@
           departmentStatus: 'Waiting on Approval',
           tableIdentifier: 'order-prep-waiting-on-approval',
           tickets: orderPrepWaitingOnApproval,
-          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
           columns: {
             1: 'row-number',
             2: 'ticket-number',
@@ -144,235 +143,82 @@
         
         <!-- Art Prep | Needs Attention -->
         <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
-        <div class='status-section needs-attention-status card'>
-          <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Needs Attention - <span class='category-ticket-count'><%= artPrepNeedsAttentionTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>From</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='art-prep-needs-attention-table' class='table-body flex-center-center-column'>
-              <% artPrepNeedsAttentionTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-attention-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>NEEDS ATTENTION</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'>
-                    <div class='user-cell bg-blue tooltip'>SV
-                      <%- include('partials/assignee.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: artPrepDepartmentName,
+          departmentStatus: 'Needs Attention',
+          tableIdentifier: 'art-prep-needs-attention',
+          tickets: artPrepNeedsAttentionTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: 'from',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Art Prep | On Hold -->
         <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-        <div class='status-section on-hold-status red-master card'>
-          <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= artPrepOnHold.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Hold Reason</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>From</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='art-prep-on-hold-table' class='table-body flex-center-center-column'>
-              <% artPrepOnHold.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-on-hold-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %> </div>
-                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(artPrepDepartmentName) %></span>
-                    <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName]
-                      }) 
-                    -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: artPrepDepartmentName,
+          departmentStatus: 'On Hold',
+          tableIdentifier: 'art-prep-on-hold',
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName],
+          tickets: artPrepOnHold,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'hold-reason',
+            5: '',
+            6: '',
+            7: 'from',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Art Prep | In Progress -->
         <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-        <div class='status-section in-progress-status green-master card'>
-          <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= artPrepInProgressTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Location</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='art-prep-in-progress-table' class='table-body flex-center-center-column'>
-              <% artPrepInProgressTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-in-progress-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td bg-white'>
-                    <%- include('partials/assignee.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: artPrepDepartmentName,
+          departmentStatus: 'In Progress',
+          tableIdentifier: 'art-prep-in-progress',
+          tickets: artPrepInProgressTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'location',
+            5: '',
+            6: '',
+            7: '',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Art Prep | Needs Proof -->
         <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
-        <div class='status-section needs-proof-status orange-master card'>
-          <div class='side-bumper'></div>
-          <span>Art Prep - <%= numberOfArtPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Needs Proof - <span class='category-ticket-count'><%= artPrepNeedsProofTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Proofs</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='art-prep-needs-proof-table' class='table-body flex-center-center-column'>
-              <% artPrepNeedsProofTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width art-prep-needs-proof-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>NEEDS PROOF</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white follow-up-date-column'>*TODO*</div>
-                  <div class='column-td bg-white'><%= ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A' %> </div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: artPrepDepartmentName,
+          departmentStatus: 'Needs Proof',
+          tableIdentifier: 'art-prep-needs-proof',
+          tickets: artPrepNeedsProofTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: 'proofs',
+            8: 'due-date'
+          }
+        }) %>
       </div>
+      
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Art Prep</h4><div class="department-divide-line"></div>
       </div>

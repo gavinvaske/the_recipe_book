@@ -157,13 +157,13 @@
                   -%>
                 <% } else if (columnType === lengthColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
+                      columnValue: ticket.totalMaterialLength || 'N/A',
                       columnSelector: columnSelector
                     })
                   %>
                 <% } else if (columnType === materialColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
+                      columnValue: ticket.primaryMaterial || 'N/A',
                       columnSelector: columnSelector
                     })
                   %>

@@ -98,7 +98,6 @@
           departmentStatus: 'Waiting on Customer',
           tableIdentifier: 'order-prep-waiting-on-customer',
           tickets: orderPrepWaitingOnCustomerTickets,
-          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
           columns: {
             1: 'row-number',
             2: 'ticket-number',
@@ -320,6 +319,24 @@
         
         <!-- Printing | On Hold -->
         <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: printingDepartmentName,
+          departmentStatus: 'On Hold',
+          tableIdentifier: 'printing-on-hold',
+          tickets: printingOnHoldTickets,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'hold-reason',
+            5: 'length',
+            6: 'material',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
+
         <div class='status-section on-hold-status red-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -381,6 +398,24 @@
 
         <!-- Printing | In Progress -->
         <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: printingDepartmentName,
+          departmentStatus: 'In Progress',
+          tableIdentifier: 'printing-in-progress',
+          tickets: printingInProgressTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'location',
+            5: 'length',
+            6: 'material',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
+
+
         <div class='status-section in-progress-status green-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -438,6 +473,24 @@
 
         <!-- Printing | Printing Ready --> 
         <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: printingDepartmentName,
+          departmentStatus: 'Printing Ready',
+          tableIdentifier: 'printing-in-progress',
+          tickets: printingReadyTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: 'length',
+            6: 'material',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
+
+
         <div class='status-section purple-master card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -493,6 +546,24 @@
 
         <!-- Printing | Printer One Schedule -->
         <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: printingDepartmentName,
+          departmentStatus: 'Printer 1 Scheduled',
+          tableIdentifier: 'printing-printer-one-schedule',
+          tickets: printingPrinterOneScheduleTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: 'length',
+            6: 'material',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
+
+        
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -548,6 +619,23 @@
 
         <!-- Printing | Printer Two Schedule -->
         <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: printingDepartmentName,
+          departmentStatus: 'Printer 2 Scheduled',
+          tableIdentifier: 'printing-printer-two-schedule',
+          tickets: printingPrinterTwoScheduleTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: 'length',
+            6: 'material',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
+
         <div class='status-section card'>
           <div class='side-bumper'></div>
           <span>Printing - <%= numberOfPrintingTickets %></span>
@@ -601,6 +689,7 @@
           </div>
         </div>
       </div>
+
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Printing</h4><div class="department-divide-line"></div>
       </div>

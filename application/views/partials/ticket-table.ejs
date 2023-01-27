@@ -169,7 +169,7 @@
                   %>
                 <% } else if (columnType === dieColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
+                      columnValue: ticket.products && ticket.products[0].productDie,
                       columnSelector: columnSelector
                     })
                   %>

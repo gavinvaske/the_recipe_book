@@ -78,7 +78,6 @@
           departmentStatus: 'Proofing Complete',
           tableIdentifier: 'order-prep-proofing-complete',
           tickets: orderPrepProofingComplete,
-          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
           columns: {
             1: 'row-number',
             2: 'ticket-number',
@@ -678,7 +677,7 @@
           }
         }) %>
       </div>
-      
+
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Packaging</h4><div class="department-divide-line"></div>
       </div>
@@ -692,244 +691,88 @@
         
         <!-- Shipping | On Hold -->
         <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-        <div class='status-section on-hold-status card'>
-          <div class='side-bumper'></div>
-          <span>Shipping - <%= numberOfShippingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= shippingOnHoldTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Hold Reason</div>
-              <div class='column-header'></div>
-              <div class='column-header'>Grouped</div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='shipping-on-hold-table' class='table-body flex-center-center-column'>
-              <% shippingOnHoldTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-on-hold-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(shippingDepartmentName) %></span>
-                    <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName]
-                      }) 
-                    -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white grouping-indicator'>
-                    <%- include('partials/job-grouping-indicator.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/ticket-dropdown-options.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: shippingDepartmentName,
+          departmentStatus: 'On Hold',
+          tableIdentifier: 'shipping-on-hold',
+          tickets: shippingOnHoldTickets,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'hold-reason',
+            5: '',
+            6: 'grouped',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Shipping | In Progress -->
         <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-        <div class='status-section in-progress-status green-master card'>
-          <div class='side-bumper'></div>
-          <span>Shipping - <%= numberOfShippingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= shippingInProgressTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Grouped</div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='shipping-in-progress-table' class='table-body flex-center-center-column'>
-              <% shippingInProgressTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td bg-white'>
-                    <%- include('partials/assignee.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white grouping-indicator'>
-                    <%- include('partials/job-grouping-indicator.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: shippingDepartmentName,
+          departmentStatus: 'In Progress',
+          tableIdentifier: 'shipping-in-progress',
+          tickets: shippingInProgressTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: 'grouped',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Shipping | Shipping Ready -->
         <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
-        <div class='status-section purple-master card'>
-          <div class='side-bumper'></div>
-          <span>Shipping - <%= numberOfShippingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Ready For Shipping - <span class='category-ticket-count'><%= shippingReadyTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Grouped</div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='shipping-ready-table' class='table-body flex-center-center-column'>
-              <% shippingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-ready-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>SHIPPING READY</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white grouping-indicator'>
-                    <%- include('partials/job-grouping-indicator.ejs') -%>
-                  </div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/ticket-dropdown-options.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: shippingDepartmentName,
+          departmentStatus: 'Ready for Shipping',
+          tableIdentifier: 'shipping-ready',
+          tickets: shippingReadyTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: 'grouped',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Shipping | Farmed Out Tickets -->
         <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
-        <div class='status-section card'>
-          <div class='side-bumper'></div>
-          <span>Shipping - <%= numberOfShippingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Farmed Out Jobs - <span class='category-ticket-count'><%= shippingFarmedOutTicketsTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='shipping-farmed-out-tickets-table' class='table-body flex-center-center-column'>
-              <% shippingFarmedOutTicketsTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-farmed-out-tickets-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>FARMED OUT TICKETS</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: shippingDepartmentName,
+          departmentStatus: 'Farmed out Jobs',
+          tableIdentifier: 'shipping-farmed-out-tickets',
+          tickets: shippingFarmedOutTicketsTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
       </div>
+
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Shipping</h4><div class="department-divide-line"></div>
       </div>
 
       <!-- Billing Department Start -->
-      <% billingDepartmentName = 'BILLING' %> 
+      <% const billingDepartmentName = 'BILLING' %> 
       <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[billingDepartmentName] %>
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= billingDepartmentName %>">
@@ -937,176 +780,63 @@
         
         <!-- Billing | On Hold -->
         <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
-        <div class='status-section in-progress-status green-master card'>
-          <div class='side-bumper'></div>
-          <span>Billing - <%= numberOfBillingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>On Hold - <span class='category-ticket-count'><%= billingOnHoldTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Hold Reason</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='billing-on-hold-table' class='table-body flex-center-center-column'>
-              <% billingOnHoldTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width billing-on-hold-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>ON HOLD</div>
-                  <div class='column-td bg-white on-hold-status-cell'>
-                    <span class='on-hold-reason-text'><%= ticket.departmentToHoldReason && ticket.departmentToHoldReason.get(billingDepartmentName) %></span>
-                    <%- include('partials/on-hold-dropdown', {
-                      allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName]
-                      }) 
-                    -%>
-                  </div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/ticket-dropdown-options.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: billingDepartmentName,
+          departmentStatus: 'On Hold',
+          tableIdentifier: 'billing-on-hold',
+          tickets: billingOnHoldTickets,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: 'hold-reason',
+            5: '',
+            6: '',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Billing | In Progress -->
         <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
-        <div class='status-section ready-for-billing-status purple-master card'>
-          <div class='side-bumper'></div>
-          <span>Billing - <%= numberOfBillingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>In Progress - <span class='category-ticket-count'><%= billingInProgressTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'>Location</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='billing-ready-for-billing-table' class='table-body flex-center-center-column'>
-              <% billingInProgressTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width shipping-in-progress-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-purple text-white department-status-column'>IN PROGRESS</div>
-                  <div class='column-td bg-white'><%- include('partials/assignee.ejs') -%></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: billingDepartmentName,
+          departmentStatus: 'In Progress',
+          tableIdentifier: 'billing-in-progress',
+          tickets: billingInProgressTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Billing | Billing Ready -->
         <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
-        <div class='status-section in-progress-status green-master card'>
-          <div class='side-bumper'></div>
-          <span>Billing - <%= numberOfBillingTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Billing Ready - <span class='category-ticket-count'><%= billingReadyTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Products</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='billing-ready-table' class='table-body flex-center-center-column'>
-              <% billingReadyTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width billing-ready-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %> </div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>BILLING READY</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white product-count-column'><%= ticket.products.length %></div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/ticket-dropdown-options.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
-
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: billingDepartmentName,
+          departmentStatus: 'Billing Ready',
+          tableIdentifier: 'billing-ready',
+          tickets: billingReadyTickets,
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: '',
+            7: 'products',
+            8: 'due-date'
+          }
+        }) %>
       </div>
+
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Billing</h4><div class="department-divide-line"></div>
       </div>

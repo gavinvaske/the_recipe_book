@@ -93,114 +93,43 @@
 
         <!-- Order Prep | Waiting on Customer -->
         <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
-        <div class='status-section light-blue-master card'>
-          <div class='side-bumper'></div>
-          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Waiting On Customer - <span class='category-ticket-count'><%= orderPrepWaitingOnCustomerTickets.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Follow Up Date</div>
-              <div class='column-header'>Sent Date</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='order-prep-waiting-on-customer-table' class='table-body flex-center-center-column'>
-              <% orderPrepWaitingOnCustomerTickets.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-customer-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-                ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket,
-                      departmentName: orderPrepDepartmentName
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>WAITING ON CUSTOMER</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white follow-up-date-column'><%- include('partials/follow-up-date-picker', {ticket: ticket}) -%></div>
-                  <div class='column-td bg-white'>*TODO*</div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: orderPrepDepartmentName,
+          departmentStatus: 'Waiting on Customer',
+          tableIdentifier: 'order-prep-waiting-on-customer',
+          tickets: orderPrepWaitingOnCustomerTickets,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: 'follow-up-date',
+            7: 'sent-date',
+            8: 'due-date'
+          }
+        }) %>
 
         <!-- Order Prep | Waiting on Approval -->
         <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
-        <div class='status-section orange-master card'>
-          <div class='side-bumper'></div>
-          <span>Order Prep - <%= numberOfOrderPrepTickets %></span>
-          <div class='header flex-center-left-row'>
-            <%- include('partials/department-expand-options.ejs') %>
-            <h3 class='category-header collapse-group-cheater'>Waiting On Approval- <span class='category-ticket-count'><%= orderPrepWaitingOnApproval.length %></span></h3>
-          </div>
-          <div class='table ticket-container flex-top-center-column'>
-            <div class='table-header flex-center-center-row'>
-              <div class='column-header'></div>
-              <div class='column-header'>#</div>
-              <div class='column-header'>Ticket Number</div>
-              <div class='column-header'>Status</div>
-              <div class='column-header'></div>
-              <div class='column-header'></div>
-              <div class='column-header'>Follow Up Date</div>
-              <div class='column-header'>Sent Date</div>
-              <div class='column-header'>Due Date</div>
-            </div>
-            <div id='order-prep-waiting-on-approval-table' class='table-body flex-center-center-column'>
-              <% orderPrepWaitingOnApproval.forEach((ticket, index) => { %>
-              <div id='ticket-row-<%= ticket._id %>' class='table-row-wrapper full-width order-prep-waiting-on-approval-row' data-ticket-id="<%= ticket._id %>">
-                <%- include('partials/start-job-modal.ejs', {
-                  ticket: ticket
-                  }
-                ) %>
-                <div class='table-row flex-center-center-row'>
-                  <div class='column-td'>
-                    <i class='fa-light fa-ellipsis-vertical text-white'></i>
-                    <%- include('partials/ticket-dropdown-options.ejs', {
-                      ticket: ticket
-                      }
-                  ) %>
-                  </div>
-                  <div class='column-td bg-white row-number'><%= index + 1 %></div>
-                  <div class='column-td bg-white ticket-number-column'>#<%= ticket.ticketNumber || 'N/A' %></div>
-                  <div class='column-td bg-white department-status-column'>WAITING ON APPROVAL</div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white'></div>
-                  <div class='column-td bg-white follow-up-date-column'>*TODO*</div>
-                  <div class='column-td bg-white'>*TODO*</div>
-                  <div class='column-td bg-white due-date-column'><%= helperMethods.getSimpleDate(ticket.shipDate) %></div>
-                </div>
-                <%- include('partials/products-wrapper.ejs', {
-                  ticket: ticket
-                  }
-              ) %>
-              </div>
-              <% }) %>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/ticket-table.ejs', {
+          departmentIdentifier: orderPrepDepartmentName,
+          departmentStatus: 'Waiting on Approval',
+          tableIdentifier: 'order-prep-waiting-on-approval',
+          tickets: orderPrepWaitingOnApproval,
+          allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
+          columns: {
+            1: 'row-number',
+            2: 'ticket-number',
+            3: 'priority',
+            4: '',
+            5: '',
+            6: 'follow-up-date',
+            7: 'sent-date',
+            8: 'due-date'
+          }
+        }) %>
       </div>
       <div class="department-end-frame flex-center-center-row full-width">
         <div class="department-divide-line"></div><h4>End Order Prep</h4><div class="department-divide-line"></div>

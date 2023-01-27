@@ -130,7 +130,7 @@
                   %>
                 <% } else if (columnType === ticketNumberColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.ticketNumber || 'N/A',
+                      columnValue: '#' + ticket.ticketNumber,
                       columnSelector: columnSelector
                     })
                   %>

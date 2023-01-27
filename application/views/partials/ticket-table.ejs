@@ -187,7 +187,7 @@
                   %>
                 <% } else if (columnType === productsColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
+                      columnValue: ticket.products.length,
                       columnSelector: columnSelector
                     })
                   %>

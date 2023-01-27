@@ -175,7 +175,7 @@
                   %>
                 <% } else if (columnType === totalRollsColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
+                      columnValue: ticket.totalWindingRolls,
                       columnSelector: columnSelector
                     }) 
                   %>

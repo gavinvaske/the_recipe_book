@@ -1,4 +1,4 @@
-<% const requiredAttributesAreNotDefined = !department || !tableIdentifier || !tickets || !columns %>
+<% const requiredAttributesAreNotDefined = !departmentIdentifier || !tableIdentifier || !tickets || !columns %>
 
 <% if (requiredAttributesAreNotDefined) { %>
   <% throw new Error(`Error: attempting to render a ticket-table without defining all required attributes.`) %> 
@@ -20,6 +20,16 @@
 <% const finishColumnType = 'finish' %>
 <% const sentDateColumnType = 'sent-date' %>
 <% const followUpDateColumnType = 'follow-up-date' %>
+
+<% const orderPrepDepartment = 'ORDER-PREP' %> 
+<% const artPrepDepartment = 'ART-PREP' %> 
+<% const prePrintingDepartment = 'PRE-PRINTING' %> 
+<% const printingDepartment = 'PRINTING' %> 
+<% const cuttingDepartment = 'CUTTING' %> 
+<% const windingDepartment = 'WINDING' %> 
+<% const packagingDepartment = 'PACKAGING' %> 
+<% const shippingDepartment = 'SHIPPING' %> 
+<% const billingDepartment = 'BILLING' %> 
 
 <% const columnTypeToColumnName = {
     [rowNumberColumnType]: '#',
@@ -44,7 +54,20 @@
   }
 %>
 
+<% const departmentIdentifierToDepartmentName = {
+  [orderPrepDepartment]: 'Order Prep',
+  [artPrepDepartment]: 'Art Prep',
+  [prePrintingDepartment]: 'Pre Printing',
+  [printingDepartment]: 'printing',
+  [cuttingDepartment]: 'cutting',
+  [windingDepartment]: 'Winding',
+  [packagingDepartment]: 'Packaging',
+  [shippingDepartment]: 'Shipping',
+  [billingDepartment]: 'Billing'
+} %> 
+
 <% const validColumnTypes = Object.keys(columnTypeToColumnName) %> 
+<% const department = departmentIdentifierToDepartmentName[departmentIdentifier] %> 
 
 <% Object.values(columns).forEach((columnType) => { %>
     <% const theColumnTypeIsUnknown = !validColumnTypes.includes(columnType) %> 
@@ -53,13 +76,18 @@
     <% } %>
 <% }) %>
 
+<% if (!department) { %>
+  <% throw new Error(`Error: the departmentIdentifier "${departmentIdentifier}" does not map to any known department`) %> 
+<% } %>
+
+
 <div class='status-section needs-attention-status red-master card'>
     <div class='side-bumper'></div>
-    <% const totalNumberOfTicketsInThisDepartment = Object.values(tickets).flat().length %>
+    <% const totalNumberOfTicketsInThisDepartment = 'TODO' %>
     <span><%= department %> - <%= totalNumberOfTicketsInThisDepartment %></span>
     <div class='header flex-center-left-row'>
       <%- include('department-expand-options.ejs') %>
-      <h3 class='category-header collapse-group-cheater'><% departmentStatus %> - <span class='category-ticket-count'><%= tickets.length %></span></h3>
+      <h3 class='category-header collapse-group-cheater'><%= departmentStatus %> - <span class='category-ticket-count'><%= tickets.length %></span></h3>
     </div>
     <div class='table ticket-container flex-top-center-column'>
       <div class='table-header flex-center-center-row'>
@@ -114,8 +142,10 @@
                   %>
                 <% } else if (columnType === holdReasonColumnType) { %>
                   <%- include('ticketTableColumns/hold-reason-column.ejs', {
-                      columnValue: 'TODO',
-                      columnSelector: columnSelector
+                      columnSelector: columnSelector,
+                      ticket: ticket,
+                      allHoldReasonsForThisDepartment: allHoldReasonsForThisDepartment,
+                      departmentIdentifier: departmentIdentifier
                     })
                   %>
                 <% } else if (columnType === locationColumnType) { %>

@@ -3,15 +3,11 @@
     <div class='body'>
         <ul class="hold-reason-options">
             <!-- This first row is used as a clone: No touchy! -->
-            <%- include('on-hold-dropdown-option.ejs', {data: {hideThisRow: true}}) %>
+            <%- include('on-hold-dropdown-option.ejs', {holdReason: ''}) %>
 
             <% allHoldReasonsForThisDepartment.forEach(holdReason => { %>
                 <%- include('on-hold-dropdown-option.ejs', {
-                    data: {
-                        departmentName: departmentName,
-                        ticketId: ticketId,
-                        holdReason: holdReason
-                    }
+                    holdReason: holdReason
                 }) %>
             <% }) %>
         </ul>

@@ -1,4 +1,4 @@
-const {createUser, isUserLoggedIn} = require('../../application/services/userService');
+const userService = require('../../application/services/userService');
 const databaseService = require('../../application/services/databaseService');
 const UserModel = require('../../application/models/user');
 const jwt = require('jsonwebtoken');
@@ -9,10 +9,14 @@ jest.mock('jsonwebtoken');
 describe('userService', () => {
     let jwtToken;
     let jwtSecret;
+    let userAttributes;
 
     beforeEach(() => {
         jest.resetAllMocks();
-
+        userAttributes = {
+            email: chance.email(),
+            password: chance.string({min: 8})
+        };
         jwtToken = chance.string();
         jwtSecret = chance.string();
     });
@@ -30,11 +34,11 @@ describe('userService', () => {
     });
 
     it('should save user to database', async () => {
-        let userAttributes = {
+        userAttributes = {
             email: 'test@gmail.com',
             password: '12345678'
         };
-        const {_id} = await createUser(userAttributes);
+        const {_id} = await userService.createUser(userAttributes);
     
         const userFromDatabase = await UserModel.findById(_id);
     
@@ -46,7 +50,7 @@ describe('userService', () => {
     it('should not login user if jwtToken is undefined', () => {
         jwtToken = undefined;
 
-        const isLoggedIn = isUserLoggedIn(jwtToken, jwtSecret);
+        const isLoggedIn = userService.isUserLoggedIn(jwtToken, jwtSecret);
 
         expect(isLoggedIn).toBeFalsy();
     });
@@ -56,7 +60,7 @@ describe('userService', () => {
             throw new Error();
         });
 
-        const isLoggedIn = isUserLoggedIn(jwtToken, jwtSecret);
+        const isLoggedIn = userService.isUserLoggedIn(jwtToken, jwtSecret);
 
         expect(isLoggedIn).toBeFalsy();
     });
@@ -65,8 +69,39 @@ describe('userService', () => {
         const user = {};
         jwt.verify.mockReturnValue(user);
 
-        const isLoggedIn = isUserLoggedIn(jwtToken, jwtSecret);
+        const isLoggedIn = userService.isUserLoggedIn(jwtToken, jwtSecret);
 
         expect(isLoggedIn).toBeTruthy();
+    });
+
+    describe('getUserInitials()', () => {
+        it('should return an empty string if user is not defined', () => {
+            const undefinedUser = undefined;
+            const expectedUserCredentials = '';
+
+            const actualUserCredentials = userService.getUserInitials(undefinedUser);
+
+            expect(actualUserCredentials).toBe(expectedUserCredentials);
+        });
+
+        it('should return an empty string if users fullname is not defined', () => {
+            userAttributes.fullName = undefined;
+            const user = UserModel(userAttributes);
+            const expectedUserCredentials = '';
+
+            const actualUserCredentials = userService.getUserInitials(user);
+
+            expect(actualUserCredentials).toBe(expectedUserCredentials);
+        });
+
+        it('should the first character of the users full name', () => {
+            userAttributes.fullName = chance.word();
+            const user = UserModel(userAttributes);
+            const expectedUserCredentials = userAttributes.fullName[0];
+
+            const actualUserCredentials = userService.getUserInitials(user);
+
+            expect(actualUserCredentials).toBe(expectedUserCredentials);
+        });
     });
 });

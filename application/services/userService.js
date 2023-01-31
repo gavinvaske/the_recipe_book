@@ -19,15 +19,15 @@ module.exports.getProfilePictureUrl = (user) => {
         return '';
     }
     
-    return `data:image/${contentType};base64,${imageData}`
+    return `data:image/${contentType};base64,${imageData}`;
 };
 
 module.exports.getUserInitials = (user) => {
     if (!user || !user.fullName) {
         return '';
     }
-    
-    if (user.fullName.length > 0) {
+
+    if (user.fullName.length > 0) { // eslint-disable-line no-magic-numbers
         return user.fullName[0];
     }
 };

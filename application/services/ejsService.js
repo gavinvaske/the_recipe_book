@@ -9,7 +9,8 @@ const helperMethods = {
     getHowLongTicketHasBeenInProduction: workflowStepService.getHowLongTicketHasBeenInProduction,
     getHowLongTicketHasBeenInDepartment: workflowStepService.getHowLongTicketHasBeenInDepartment,
     getHowLongTicketHasHadADepartmentStatus: workflowStepService.getHowLongTicketHasHadADepartmentStatus,
-    getProfilePictureUrl: userService.getProfilePictureUrl
+    getProfilePictureUrl: userService.getProfilePictureUrl,
+    getUserInitials: userService.getUserInitials
 };
 
 module.exports = helperMethods;

@@ -94,7 +94,7 @@ describe('userService', () => {
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
 
-        it('should the first character of the users full name', () => {
+        it('should return the first character of the users full name', () => {
             userAttributes.fullName = chance.word();
             const user = UserModel(userAttributes);
             const expectedUserCredentials = userAttributes.fullName[0];

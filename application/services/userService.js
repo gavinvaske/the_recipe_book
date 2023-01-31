@@ -19,7 +19,17 @@ module.exports.getProfilePictureUrl = (user) => {
         return '';
     }
     
-    return `url(data:image/${contentType};base64,${imageData})`
+    return `data:image/${contentType};base64,${imageData}`
+};
+
+module.exports.getUserInitials = (user) => {
+    if (!user || !user.fullName) {
+        return '';
+    }
+    
+    if (user.fullName.length > 0) {
+        return user.fullName[0];
+    }
 };
 
 module.exports.isUserLoggedIn = (jwtToken, jwtSecret) => {

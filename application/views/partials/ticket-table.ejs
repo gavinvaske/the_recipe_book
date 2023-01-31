@@ -410,7 +410,8 @@
                   %>
                 <% } else if (columnType === fromColumnType) { %>
                   <%- include('ticketTableColumns/user-column.ejs', {
-                      columnSelector: columnSelector
+                      columnSelector: columnSelector,
+                      ticket: ticket
                     }) 
                   -%>
                 <% } else if (columnType === finishColumnType) { %>

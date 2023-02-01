@@ -94,8 +94,9 @@ describe('userService', () => {
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
 
-        it('should return the first character of the users full name', () => {
-            userAttributes.fullName = chance.word();
+        it('should return a single character if their fullName is only a single word', () => {
+            const firstName = chance.word();
+            userAttributes.fullName = firstName;
             const user = UserModel(userAttributes);
             const expectedUserCredentials = userAttributes.fullName[0];
 
@@ -103,6 +104,32 @@ describe('userService', () => {
 
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
+
+        it('should return the first character of their first and last name', () => {
+            const firstName = chance.word();
+            const lastName = chance.word();
+            userAttributes.fullName = `${firstName} ${lastName}`;
+            const user = UserModel(userAttributes);
+            const expectedUserCredentials = firstName[0] + lastName[0];
+
+            const actualUserCredentials = userService.getUserInitials(user);
+
+            expect(actualUserCredentials).toBe(expectedUserCredentials);
+        });
+
+        it('should only return the first character of their first and last name and ignore their middle name(s)', () => {
+            const firstName = chance.word();
+            const middleName = chance.word();
+            const lastName = chance.word();
+            userAttributes.fullName = `${firstName} ${middleName} ${lastName}`;
+            const user = UserModel(userAttributes);
+            const expectedUserCredentials = firstName[0] + lastName[0];
+
+            const actualUserCredentials = userService.getUserInitials(user);
+
+            expect(actualUserCredentials).toBe(expectedUserCredentials);
+        });
+
     });
 
     describe('getProfilePictureUrl()', () => {

@@ -27,9 +27,11 @@ module.exports.getUserInitials = (user) => {
         return '';
     }
 
-    if (user.fullName.length > 0) { // eslint-disable-line no-magic-numbers
-        return user.fullName[0];
-    }
+    const names = user.fullName.split(' ');
+    const firstNameInitial = (names.length > 0) ? names[0][0] : '';
+    const lastNameInitial = (names.length > 1) ? names.slice(-1)[0][0] : '';
+
+    return firstNameInitial + lastNameInitial;
 };
 
 module.exports.isUserLoggedIn = (jwtToken, jwtSecret) => {

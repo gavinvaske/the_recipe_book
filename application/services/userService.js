@@ -23,13 +23,19 @@ module.exports.getProfilePictureUrl = (user) => {
 };
 
 module.exports.getUserInitials = (user) => {
+    const emptyString = '';
+    const indexOfFirstWordInArray = 0;
+    const indexOfLastWordInArray = -1;
+    const indexOfirstCharacterInWord = 0;
+
     if (!user || !user.fullName) {
         return '';
     }
 
     const names = user.fullName.split(' ');
-    const firstNameInitial = (names.length > 0) ? names[0][0] : '';
-    const lastNameInitial = (names.length > 1) ? names.slice(-1)[0][0] : '';
+
+    const firstNameInitial = (names.length > 0) ? names[indexOfFirstWordInArray][indexOfirstCharacterInWord] : emptyString; // eslint-disable-line no-magic-numbers
+    const lastNameInitial = (names.length > 1) ? names.slice(indexOfLastWordInArray)[indexOfFirstWordInArray][indexOfirstCharacterInWord] : emptyString;
 
     return firstNameInitial + lastNameInitial;
 };

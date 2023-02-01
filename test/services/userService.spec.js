@@ -104,4 +104,59 @@ describe('userService', () => {
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
     });
+
+    describe('getProfilePictureUrl()', () => {
+        it('should return an empty string if user does not exist', () => {
+            const undefinedUser = undefined;
+            const expectedProfilePictureUrl = '';
+
+            const actualProfilePictureUrl = userService.getProfilePictureUrl(undefinedUser);
+
+            expect(actualProfilePictureUrl).toBe(expectedProfilePictureUrl);
+        });
+
+        it('should return an empty string if profilePicture.data is not defined', () => {
+            const invalidImageData = undefined;
+            userAttributes.profilePicture = {
+                contentType: chance.word(),
+                data: invalidImageData
+            };
+            const user = UserModel(userAttributes);
+            const expectedProfilePictureUrl = '';
+
+            const actualProfilePictureUrl = userService.getProfilePictureUrl(user);
+
+            expect(actualProfilePictureUrl).toBe(expectedProfilePictureUrl);
+        });
+
+        it('should return an empty string if profilePicture.contentType is not defined', () => {
+            const invalidContentType = undefined;
+            userAttributes.profilePicture = {
+                contentType: invalidContentType,
+                data: chance.word()
+            };
+            const user = UserModel(userAttributes);
+            const expectedProfilePictureUrl = '';
+
+            const actualProfilePictureUrl = userService.getProfilePictureUrl(user);
+
+            expect(actualProfilePictureUrl).toBe(expectedProfilePictureUrl);
+        });
+
+        it('should return a correct url', () => {
+            const contentType = chance.word();
+            const data = chance.word();
+
+            userAttributes.profilePicture = {
+                contentType: contentType,
+                data: data
+            };
+            const user = UserModel(userAttributes);
+            const expectedProfilePictureUrl = `data:image/${user.profilePicture.contentType};base64,${user.profilePicture.data.toString('base64')}`;
+
+            const actualProfilePictureUrl = userService.getProfilePictureUrl(user);
+
+            expect(actualProfilePictureUrl).toBe(expectedProfilePictureUrl);
+        });
+    });
 });

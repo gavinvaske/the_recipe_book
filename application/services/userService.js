@@ -8,18 +8,18 @@ module.exports.createUser = async (userAttributes) => {
 };
 
 module.exports.getProfilePictureUrl = (user) => {
-    if (!user) { 
+    if (!user || !user.profilePicture) { 
         return '';
     }
-    
-    const contentType = user.profilePicture ? user.profilePicture.contentType : undefined;
-    const imageData = user.profilePicture ? user.profilePicture.data.toString('base64') : undefined;
 
-    if (!contentType || !imageData) {
+    const profilePicture = user.profilePicture;
+    const {contentType, data} = profilePicture;
+
+    if (!contentType || !data) {
         return '';
-    }
+    };
     
-    return `data:image/${contentType};base64,${imageData}`;
+    return `data:image/${contentType};base64,${data.toString('base64')}`;
 };
 
 module.exports.getUserInitials = (user) => {

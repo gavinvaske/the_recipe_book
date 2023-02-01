@@ -35,8 +35,6 @@
         <!-- Order Prep | Needs Attention -->
         <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: orderPrepDepartmentName,
-          departmentStatus: 'Needs Attention',
           tableIdentifier: 'order-prep-needs-attention',
           tickets: orderPrepNeedsAttentionTickets,
           columns: {
@@ -54,8 +52,6 @@
         <!-- Order Prep | On Hold -->
         <% const orderPrepOnHoldTickets = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: orderPrepDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'order-prep-on-hold',
           tickets: orderPrepOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[orderPrepDepartmentName],
@@ -74,8 +70,6 @@
         <!-- Order Prep | Proofing Complete -->
         <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: orderPrepDepartmentName,
-          departmentStatus: 'Proofing Complete',
           tableIdentifier: 'order-prep-proofing-complete',
           tickets: orderPrepProofingComplete,
           columns: {
@@ -93,8 +87,6 @@
         <!-- Order Prep | Waiting on Customer -->
         <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: orderPrepDepartmentName,
-          departmentStatus: 'Waiting on Customer',
           tableIdentifier: 'order-prep-waiting-on-customer',
           tickets: orderPrepWaitingOnCustomerTickets,
           columns: {
@@ -112,8 +104,6 @@
         <!-- Order Prep | Waiting on Approval -->
         <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: orderPrepDepartmentName,
-          departmentStatus: 'Waiting on Approval',
           tableIdentifier: 'order-prep-waiting-on-approval',
           tickets: orderPrepWaitingOnApproval,
           columns: {
@@ -142,8 +132,6 @@
         <!-- Art Prep | Needs Attention -->
         <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: artPrepDepartmentName,
-          departmentStatus: 'Needs Attention',
           tableIdentifier: 'art-prep-needs-attention',
           tickets: artPrepNeedsAttentionTickets,
           columns: {
@@ -161,8 +149,6 @@
         <!-- Art Prep | On Hold -->
         <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: artPrepDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'art-prep-on-hold',
           allHoldReasonsForThisDepartment: departmentToHoldReasons[artPrepDepartmentName],
           tickets: artPrepOnHold,
@@ -181,8 +167,6 @@
         <!-- Art Prep | In Progress -->
         <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: artPrepDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'art-prep-in-progress',
           tickets: artPrepInProgressTickets,
           columns: {
@@ -200,8 +184,6 @@
         <!-- Art Prep | Needs Proof -->
         <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: artPrepDepartmentName,
-          departmentStatus: 'Needs Proof',
           tableIdentifier: 'art-prep-needs-proof',
           tickets: artPrepNeedsProofTickets,
           columns: {
@@ -231,8 +213,6 @@
         <!-- Pre Printing | Needs Attention -->
         <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: prePrintingDepartmentName,
-          departmentStatus: 'Needs Attention',
           tableIdentifier: 'pre-printing-needs-attention',
           tickets: prePrintingNeedsAttentionTickets,
           columns: {
@@ -250,8 +230,6 @@
         <!-- Pre Printing | On Hold -->
         <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: prePrintingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'pre-printing-on-hold',
           tickets: prePrintingOnHoldTickets,
           columns: {
@@ -269,8 +247,6 @@
         <!-- Pre Printing | In Progress -->
         <% const prePrintingInProgressTickets = prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: prePrintingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'pre-printing-in-progress',
           tickets: prePrintingInProgressTickets,
           columns: {
@@ -288,8 +264,6 @@
         <!-- Pre Printing | Send to Printing -->
         <% const prePrintingSendToPrintingTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: prePrintingDepartmentName,
-          departmentStatus: 'Send to Printing',
           tableIdentifier: 'pre-printing-send-to-printing',
           tickets: prePrintingSendToPrintingTickets,
           columns: {
@@ -319,8 +293,6 @@
         <!-- Printing | On Hold -->
         <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: printingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'printing-on-hold',
           tickets: printingOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[printingDepartmentName],
@@ -339,8 +311,6 @@
         <!-- Printing | In Progress -->
         <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: printingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'printing-in-progress',
           tickets: printingInProgressTickets,
           columns: {
@@ -358,8 +328,6 @@
         <!-- Printing | Printing Ready --> 
         <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: printingDepartmentName,
-          departmentStatus: 'Printing Ready',
           tableIdentifier: 'printing-in-progress',
           tickets: printingReadyTickets,
           columns: {
@@ -377,8 +345,6 @@
         <!-- Printing | Printer One Schedule -->
         <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: printingDepartmentName,
-          departmentStatus: 'Printer 1 Scheduled',
           tableIdentifier: 'printing-printer-one-schedule',
           tickets: printingPrinterOneScheduleTickets,
           columns: {
@@ -396,8 +362,6 @@
         <!-- Printing | Printer Two Schedule -->
         <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: printingDepartmentName,
-          departmentStatus: 'Printer 2 Scheduled',
           tableIdentifier: 'printing-printer-two-schedule',
           tickets: printingPrinterTwoScheduleTickets,
           columns: {
@@ -426,8 +390,6 @@
         <!-- Cutting | On Hold -->
         <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'cutting-on-hold',
           allHoldReasonsForThisDepartment: departmentToHoldReasons[cuttingDepartmentName],
           tickets: cuttingOnHoldTickets,
@@ -446,8 +408,6 @@
         <!-- Cutting | In Progress -->
         <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'cutting-in-progress',
           tickets: cuttingInProgressTickets,
           columns: {
@@ -465,8 +425,6 @@
         <!-- Cutting | Cutting Ready -->
         <% const cuttingReadyTickets = cuttingTicketsGroupedByDepartmentStatus['CUTTING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'Cutting Ready',
           tableIdentifier: 'cutting-ready',
           tickets: cuttingReadyTickets,
           columns: {
@@ -484,8 +442,6 @@
         <!-- Cutting | Delta One Schedule -->
         <% const cuttingDeltaOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'Delta One Schedule',
           tableIdentifier: 'cutting-delta-one-schedule',
           tickets: cuttingDeltaOneScheduleTickets,
           columns: {
@@ -503,8 +459,6 @@
         <!-- Cutting | Delta Two Schedule -->
         <% const cuttingDeltaTwoScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'Delta Two Schedule',
           tableIdentifier: 'cutting-delta-two-schedule',
           tickets: cuttingDeltaTwoScheduleTickets,
           columns: {
@@ -522,8 +476,6 @@
         <!-- Cutting | RotoFlex One Schedule -->
         <% const cuttingRotoflexOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: cuttingDepartmentName,
-          departmentStatus: 'Rotoflex One Schedule',
           tableIdentifier: 'cutting-rotoflex-one-schedule',
           tickets: cuttingRotoflexOneScheduleTickets,
           columns: {
@@ -553,8 +505,6 @@
         <!-- Winding | On Hold -->
         <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: windingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'winding-on-hold',
           tickets: windingOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[windingDepartmentName],
@@ -573,8 +523,6 @@
         <!-- Winding | In Progress -->
         <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: windingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'winding-in-progress',
           tickets: windingInProgressTickets,
           columns: {
@@ -592,8 +540,6 @@
         <!-- Winding | Winding Ready -->
         <% const windingReadyTickets = windingTicketsGroupedByDepartmentStatus['WINDING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: windingDepartmentName,
-          departmentStatus: 'Winding Ready',
           tableIdentifier: 'winding-ready',
           tickets: windingReadyTickets,
           columns: {
@@ -622,8 +568,6 @@
         <!-- Packaging | On Hold -->
         <% const packagingOnHoldTickets = packagingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: packagingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'packaging-on-hold',
           tickets: packagingOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[packagingDepartmentName],
@@ -642,8 +586,6 @@
         <!-- Packaging | In Progress -->
         <% const packagingInProgressTickets = packagingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: packagingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'packaging-in-progress',
           tickets: packagingInProgressTickets,
           columns: {
@@ -661,8 +603,6 @@
         <!-- Packaging | Packaging Ready -->
         <% const packagingReadyTickets = packagingTicketsGroupedByDepartmentStatus['PACKAGING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: packagingDepartmentName,
-          departmentStatus: 'Packaging Ready',
           tableIdentifier: 'packaging-ready',
           tickets: packagingReadyTickets,
           columns: {
@@ -692,8 +632,6 @@
         <!-- Shipping | On Hold -->
         <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: shippingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'shipping-on-hold',
           tickets: shippingOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[shippingDepartmentName],
@@ -712,8 +650,6 @@
         <!-- Shipping | In Progress -->
         <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: shippingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'shipping-in-progress',
           tickets: shippingInProgressTickets,
           columns: {
@@ -731,8 +667,6 @@
         <!-- Shipping | Shipping Ready -->
         <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: shippingDepartmentName,
-          departmentStatus: 'Ready for Shipping',
           tableIdentifier: 'shipping-ready',
           tickets: shippingReadyTickets,
           columns: {
@@ -750,8 +684,6 @@
         <!-- Shipping | Farmed Out Tickets -->
         <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: shippingDepartmentName,
-          departmentStatus: 'Farmed out Jobs',
           tableIdentifier: 'shipping-farmed-out-tickets',
           tickets: shippingFarmedOutTicketsTickets,
           columns: {
@@ -781,8 +713,6 @@
         <!-- Billing | On Hold -->
         <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: billingDepartmentName,
-          departmentStatus: 'On Hold',
           tableIdentifier: 'billing-on-hold',
           tickets: billingOnHoldTickets,
           allHoldReasonsForThisDepartment: departmentToHoldReasons[billingDepartmentName],
@@ -801,8 +731,6 @@
         <!-- Billing | In Progress -->
         <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: billingDepartmentName,
-          departmentStatus: 'In Progress',
           tableIdentifier: 'billing-in-progress',
           tickets: billingInProgressTickets,
           columns: {
@@ -820,8 +748,6 @@
         <!-- Billing | Billing Ready -->
         <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
         <%- include('partials/ticket-table.ejs', {
-          departmentIdentifier: billingDepartmentName,
-          departmentStatus: 'Billing Ready',
           tableIdentifier: 'billing-ready',
           tickets: billingReadyTickets,
           columns: {

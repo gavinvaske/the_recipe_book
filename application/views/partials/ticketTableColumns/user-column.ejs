@@ -1,8 +1,12 @@
+<% const destination = ticket.destination %> 
+<% const user = destination && destination.assignee %> 
+
 <div class='column-td bg-white <%= columnSelector %>'>
-    <div class='user-cell bg-blue tooltip assignee-picture-url-column'>TODO
+    <div class='user-cell bg-blue tooltip assignee-picture-url-column'>
+        <%= helperMethods.getUserInitials(user) %>
         <!-- User Image Tag Below to propigate user image -->
-        <img src=''>
-        <span class="tooltiptext assignee-name-column">TODO</span>
+        <img src='<%= helperMethods.getProfilePictureUrl(user) %>'>
+        <span class="tooltiptext assignee-name-column"><% user ? user.fullName : 'N/A' %> </span>
     </div>
-    <span class='department-name department-column'>N/A</span>
+    <span class='department-name department-column'><% destination ? destination.department : 'N/A' %> </span>
 </div>

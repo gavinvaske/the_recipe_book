@@ -277,6 +277,10 @@
   }
 %>
 
+<% if (Object.keys(tableIdetifierToHumanReadableNames).indexOf(tableIdentifier) === -1) { %>
+  <% throw new Error(`Error: the tableIdentifier "${tableIdentifier}" is unknown and cannot be used to render a table.`) %> 
+<% } %>
+
 <% const validColumnTypes = Object.keys(columnTypeToColumnName) %> 
 <% const department = tableIdetifierToHumanReadableNames[tableIdentifier][departmentNameKey] %> 
 <% const departmentStatus = tableIdetifierToHumanReadableNames[tableIdentifier][departmentStatusKey] %>
@@ -289,8 +293,8 @@
     <% } %>
 <% }) %>
 
-<% if (!department) { %>
-  <% throw new Error(`Error: the departmentIdentifier "${departmentIdentifier}" does not map to any known department`) %> 
+<% if (!department || !departmentStatus || !departmentIdentifier) { %>
+  <% throw new Error(`Error: the departmentIdentifier "${departmentIdentifier}" does not map to any known department and/or subdepartment and/or departmentIdentifier`) %> 
 <% } %>
 
 

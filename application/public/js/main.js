@@ -1133,11 +1133,11 @@ $( document ).ready(function() {
     }
 
     function showOrHideDepartmentSections() {
-        const emptyLength = 0;
+        const numberOfHiddenClonableRowsPerTable = 1;
         $('.status-section').each(function() {
             const departmentStatusSection = $(this);
             const departmentStatusTable = findTableWithinSection(departmentStatusSection);
-            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > emptyLength;
+            const tableIsNotEmpty = countHowManyRowsExistInTable(departmentStatusTable) > numberOfHiddenClonableRowsPerTable;
 
             if (tableIsNotEmpty) {
                 departmentStatusSection.show();

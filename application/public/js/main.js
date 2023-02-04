@@ -1,6 +1,5 @@
 $( document ).ready(function() {
     const emptyLength = 0;
-    const ZERO = 0;
 
     $('.workflow-navigation ul li').on('click', function() {
         $('.department-end-frame').remove();
@@ -817,7 +816,7 @@ $( document ).ready(function() {
         });
     }
 
-    function moveTicket(ticket) {
+    function moveTicket(ticket) { // eslint-disable-line no-unused-vars 
         location.reload();
     }
 

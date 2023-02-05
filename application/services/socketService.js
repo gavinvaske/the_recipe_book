@@ -6,7 +6,7 @@ const materialService = require('../services/materialService');
 
 const MONGOOSE_INSERT_OPERATION_TYPE = 'insert';
 
-const EVENT_NEW_TICKET_CREATED = 'TICKET_CREATED';
+const EVENT_TICKET_CREATED = 'TICKET_CREATED';
 
 module.exports = function(io){
     console.log('Initializing Sockets...');
@@ -24,7 +24,7 @@ module.exports = function(io){
             .lean()
             .exec();
 
-        io.emit(EVENT_NEW_TICKET_CREATED, ticket);
+        io.emit(EVENT_TICKET_CREATED, ticket);
     });
 
     PurchaseOrderModel.watch().on('change', async (change) => {

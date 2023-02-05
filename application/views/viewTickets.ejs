@@ -769,16 +769,4 @@
   </div>
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
-
-<script>    
-    const socket = io();
-    
-    socket.on('TICKET_CREATED', function(ticket) {
-      console.log(`TICKET_CREATED event was received => ${JSON.stringify(ticket)}`);
-      location.reload();
-    });
-
-</script>
-
 

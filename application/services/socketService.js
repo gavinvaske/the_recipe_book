@@ -1,10 +1,31 @@
 const PurchaseOrderModel = require('../models/materialOrder');
+const TicketModel = require('../models/ticket');
 const materialInventoryService = require('../services/materialInventoryService');
 const purchaseOrderService = require('../services/purchaseOrderService');
 const materialService = require('../services/materialService');
 
+const MONGOOSE_INSERT_OPERATION_TYPE = 'insert';
+
+const EVENT_NEW_TICKET_CREATED = 'TICKET_CREATED';
+
 module.exports = function(io){
     console.log('Initializing Sockets...');
+
+    TicketModel.watch().on('change', async (change) => {
+        const aNewTicketWasAddedToDatabase = change.operationType === MONGOOSE_INSERT_OPERATION_TYPE;
+
+        if (!aNewTicketWasAddedToDatabase) {
+            return;
+        }
+
+        const ticket = await TicketModel
+            .findById(change.documentKey._id)
+            .populate({path: 'ticketGroup'})
+            .lean()
+            .exec();
+
+        io.emit(EVENT_NEW_TICKET_CREATED, ticket);
+    });
 
     PurchaseOrderModel.watch().on('change', async (change) => {
         console.log(`Change to a PurchaseOrder in database: ${JSON.stringify(change)}`);

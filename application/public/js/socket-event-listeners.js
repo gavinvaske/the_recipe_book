@@ -5,7 +5,7 @@ $( document ).ready(function() {
     let socket;
 
     try {
-        socket = io();
+        socket = io(); /* This io method comes from the socket.io library which is imported in layout.ejs just before this js file is imported */
     } catch {
         alert('Error, the socket.io library was not imported correctly and made available for a javascript file to use, contact a developer to resolve this.');
         throw new Error('socket.io was not imported correctly for use in a front-end js file and thus none of the socket listeners could be enabled, contact a developer to resolve this.');

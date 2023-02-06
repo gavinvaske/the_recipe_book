@@ -81,8 +81,8 @@ module.exports.getDayNumberAndMonth = (utcDate) => {
     
     const date = new Date(utcDate).toLocaleString('en-US', {day: '2-digit', month: 'long', timeZone: 'UTC'});
     const dateParts = date.split(' ');
-    const monthName = dateParts[0]
-    const twoDigitDayOfMonth = dateParts[1]
+    const monthName = dateParts[0];
+    const twoDigitDayOfMonth = dateParts[1];
 
-    return `${twoDigitDayOfMonth} ${monthName}`
-}
+    return `${twoDigitDayOfMonth} ${monthName}`;
+};

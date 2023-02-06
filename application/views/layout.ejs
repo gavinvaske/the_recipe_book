@@ -32,6 +32,9 @@
     <script src="/js/admin-panel-tables.js"></script>
     <script src="/js/particles.min.js"></script>
 
+    <script src="/socket.io/socket.io.js"></script> <!-- This line must be above /js/socket-event-listener. importing this library in that file causes lint parse erros so I'm using this hacky solution -->
+    <script type="module" src="/js/socket-event-listeners.js"></script>
+
     <script>
 
       let pageTitle = document.body.classList.contains('login-body');

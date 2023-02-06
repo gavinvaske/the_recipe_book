@@ -1,4 +1,4 @@
-<% const requiredAttributesAreNotDefined = !departmentIdentifier || !tableIdentifier || !tickets || !columns %>
+<% const requiredAttributesAreNotDefined = !tableIdentifier || !tickets || !columns %>
 
 <% if (requiredAttributesAreNotDefined) { %>
   <% throw new Error(`Error: attempting to render a ticket-table without defining all required attributes.`) %> 
@@ -22,15 +22,15 @@
 <% const followUpDateColumnType = 'follow-up-date' %>
 <% const proofsColumn = 'proofs' %>
 
-<% const orderPrepDepartment = 'ORDER-PREP' %> 
-<% const artPrepDepartment = 'ART-PREP' %> 
-<% const prePrintingDepartment = 'PRE-PRINTING' %> 
-<% const printingDepartment = 'PRINTING' %> 
-<% const cuttingDepartment = 'CUTTING' %> 
-<% const windingDepartment = 'WINDING' %> 
-<% const packagingDepartment = 'PACKAGING' %> 
-<% const shippingDepartment = 'SHIPPING' %> 
-<% const billingDepartment = 'BILLING' %> 
+<% const orderPrepDepartmentIdentifier = 'ORDER-PREP' %> 
+<% const artPrepDepartmentIdentifier = 'ART-PREP' %> 
+<% const prePrintingDepartmentIdentifier = 'PRE-PRINTING' %> 
+<% const printingDepartmentIdentifier = 'PRINTING' %> 
+<% const cuttingDepartmentIdentifier = 'CUTTING' %> 
+<% const windingDepartmentIdentifier = 'WINDING' %> 
+<% const packagingDepartmentIdentifier = 'PACKAGING' %> 
+<% const shippingDepartmentIdentifier = 'SHIPPING' %> 
+<% const billingDepartmentIdentifier = 'BILLING' %> 
 
 <% const columnTypeToColumnName = {
     [rowNumberColumnType]: '#',
@@ -56,20 +56,235 @@
   }
 %>
 
-<% const departmentIdentifierToDepartmentName = {
-  [orderPrepDepartment]: 'Order Prep',
-  [artPrepDepartment]: 'Art Prep',
-  [prePrintingDepartment]: 'Pre Printing',
-  [printingDepartment]: 'printing',
-  [cuttingDepartment]: 'cutting',
-  [windingDepartment]: 'Winding',
-  [packagingDepartment]: 'Packaging',
-  [shippingDepartment]: 'Shipping',
-  [billingDepartment]: 'Billing'
-} %> 
+<% const departmentNameKey = 'departmentName'; %>
+<% const departmentStatusKey = 'departmentStatus'; %>
+<% const departmentIdentifierKey = 'departmentIdentifier'; %>
+
+<% const orderPrepDepartment = 'Order Prep'; %>
+<% const artPrepDepartment = 'Art Prep'; %>
+<% const prePrintingDepartment = 'Pre Printing'; %>
+<% const printingDepartment = 'Printing'; %>
+<% const cuttingDepartment = 'Cutting'; %>
+<% const windingDepartment = 'Winding'; %>
+<% const packagingDepartment = 'Packaging'; %>
+<% const shippingDepartment = 'Shipping'; %>
+<% const billingDepartment = 'Billing'; %>
+
+<% const needsAttentionDepartmentStatus = 'Needs Attention'; %>
+<% const onHoldDepartmentStatus = 'On Hold'; %>
+<% const proofingCompleteDepartmentStatus = 'Proofing Complete'; %>
+<% const waitingOnCustomerDepartmentStatus = 'Waiting on Customer'; %>
+<% const waitingOnApprovalDepartmentStatus = 'Waiting on Approval'; %>
+<% const inProgressDepartmentStatus = 'In Progress'; %>
+<% const needsProofDepartmentStatus = 'Needs Proof'; %>
+<% const sendToPrintingDepartmentStatus = 'Send to Printing'; %>
+<% const printingReadyDepartmentStatus = 'Printing Ready'; %>
+<% const printerOneScheduleDepartmentStatus = 'Printer 1 Scheduled'; %>
+<% const printerTwoScheduledDepartmentStatus = 'Printer 2 Scheduled'; %>
+<% const cuttingReadyDepartmentStatus = 'Cutting Ready'; %>
+<% const deltaOneScheduledDepartmentStatus = 'Delta One Schedule'; %>
+<% const deltaTwoScheduledDepartmentStatus = 'Delta Two Schedule'; %>
+<% const rotoflexOneScheduledDepartmentStatus = 'Rotoflex One Schedule'; %>
+<% const windingReadyDepartmentStatus = 'Winding Ready'; %>
+<% const packagingReadyDepartmentStatus = 'Packaging Ready'; %>
+<% const readyForShippingDepartmentStatus = 'Ready for Shipping'; %>
+<% const farmedOutJobsDepartmentStatus = 'Farmed out Jobs'; %>
+<% const billingReadyDepartmentStatus = 'Billing Ready'; %>
+
+
+<% const tableIdetifierToHumanReadableNames = 
+  {
+    'order-prep-needs-attention': {
+      [departmentNameKey]: orderPrepDepartment,
+      [departmentStatusKey]: needsAttentionDepartmentStatus,
+      [departmentIdentifierKey]: orderPrepDepartmentIdentifier
+    },
+    'order-prep-on-hold': {
+      [departmentNameKey]: orderPrepDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: orderPrepDepartmentIdentifier
+    },
+    'order-prep-proofing-complete': {
+      [departmentNameKey]: orderPrepDepartment,
+      [departmentStatusKey]: proofingCompleteDepartmentStatus,
+      [departmentIdentifierKey]: orderPrepDepartmentIdentifier
+    },
+    'order-prep-waiting-on-customer': {
+      [departmentNameKey]: orderPrepDepartment,
+      [departmentStatusKey]: waitingOnCustomerDepartmentStatus,
+      [departmentIdentifierKey]: orderPrepDepartmentIdentifier
+    },
+    'order-prep-waiting-on-approval': {
+      [departmentNameKey]: orderPrepDepartment,
+      [departmentStatusKey]: waitingOnApprovalDepartmentStatus,
+      [departmentIdentifierKey]: orderPrepDepartmentIdentifier
+    },
+    'art-prep-needs-attention': {
+      [departmentNameKey]: artPrepDepartment,
+      [departmentStatusKey]: needsAttentionDepartmentStatus,
+      [departmentIdentifierKey]: artPrepDepartmentIdentifier
+    },
+    'art-prep-on-hold': {
+      [departmentNameKey]: artPrepDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: artPrepDepartmentIdentifier
+    },
+    'art-prep-in-progress': {
+      [departmentNameKey]: artPrepDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: artPrepDepartmentIdentifier
+    },
+    'art-prep-needs-proof': {
+      [departmentNameKey]: artPrepDepartment,
+      [departmentStatusKey]: needsProofDepartmentStatus,
+      [departmentIdentifierKey]: artPrepDepartmentIdentifier
+    },
+    'pre-printing-needs-attention': {
+      [departmentNameKey]: prePrintingDepartment,
+      [departmentStatusKey]: needsAttentionDepartmentStatus,
+      [departmentIdentifierKey]: prePrintingDepartmentIdentifier
+    },
+    'pre-printing-on-hold': {
+      [departmentNameKey]: prePrintingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: prePrintingDepartmentIdentifier
+    },
+    'pre-printing-in-progress': {
+      [departmentNameKey]: prePrintingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: prePrintingDepartmentIdentifier
+    },
+    'pre-printing-send-to-printing': {
+      [departmentNameKey]: prePrintingDepartment,
+      [departmentStatusKey]: sendToPrintingDepartmentStatus,
+      [departmentIdentifierKey]: prePrintingDepartmentIdentifier
+    },
+    'printing-on-hold': {
+      [departmentNameKey]: printingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: printingDepartmentIdentifier
+    },
+    'printing-in-progress': {
+      [departmentNameKey]: printingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: printingDepartmentIdentifier
+    },
+    'printing-printer-one-schedule': {
+      [departmentNameKey]: printingDepartment,
+      [departmentStatusKey]: printerOneScheduleDepartmentStatus,
+      [departmentIdentifierKey]: printingDepartmentIdentifier
+    },
+    'printing-printer-two-schedule': {
+      [departmentNameKey]: printingDepartment,
+      [departmentStatusKey]: printerTwoScheduledDepartmentStatus,
+      [departmentIdentifierKey]: printingDepartmentIdentifier
+    },
+    'cutting-on-hold': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'cutting-in-progress': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'cutting-ready': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: cuttingReadyDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'cutting-delta-one-schedule': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: deltaOneScheduledDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'cutting-delta-two-schedule': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: deltaTwoScheduledDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'cutting-rotoflex-one-schedule': {
+      [departmentNameKey]: cuttingDepartment,
+      [departmentStatusKey]: rotoflexOneScheduledDepartmentStatus,
+      [departmentIdentifierKey]: cuttingDepartmentIdentifier
+    },
+    'winding-on-hold': {
+      [departmentNameKey]: windingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: windingDepartmentIdentifier
+    },
+    'winding-in-progress': {
+      [departmentNameKey]: windingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: windingDepartmentIdentifier
+    },
+    'winding-ready': {
+      [departmentNameKey]: windingDepartment,
+      [departmentStatusKey]: windingReadyDepartmentStatus,
+      [departmentIdentifierKey]: windingDepartmentIdentifier
+    },
+    'packaging-on-hold': {
+      [departmentNameKey]: packagingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: packagingDepartmentIdentifier
+    },
+    'packaging-in-progress': {
+      [departmentNameKey]: packagingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: packagingDepartmentIdentifier
+    },
+    'packaging-ready': {
+      [departmentNameKey]: packagingDepartment,
+      [departmentStatusKey]: packagingReadyDepartmentStatus,
+      [departmentIdentifierKey]: packagingDepartmentIdentifier
+    },
+    'shipping-on-hold': {
+      [departmentNameKey]: shippingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: shippingDepartmentIdentifier
+    },
+    'shipping-in-progress': {
+      [departmentNameKey]: shippingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: shippingDepartmentIdentifier
+    },
+    'shipping-ready': {
+      [departmentNameKey]: shippingDepartment,
+      [departmentStatusKey]: readyForShippingDepartmentStatus,
+      [departmentIdentifierKey]: shippingDepartmentIdentifier
+    },
+    'shipping-farmed-out-tickets': {
+      [departmentNameKey]: shippingDepartment,
+      [departmentStatusKey]: farmedOutJobsDepartmentStatus,
+      [departmentIdentifierKey]: shippingDepartmentIdentifier
+    },
+    'billing-on-hold': {
+      [departmentNameKey]: billingDepartment,
+      [departmentStatusKey]: onHoldDepartmentStatus,
+      [departmentIdentifierKey]: billingDepartmentIdentifier
+    },
+    'billing-in-progress': {
+      [departmentNameKey]: billingDepartment,
+      [departmentStatusKey]: inProgressDepartmentStatus,
+      [departmentIdentifierKey]: billingDepartmentIdentifier
+    },
+    'billing-ready': {
+      [departmentNameKey]: billingDepartment,
+      [departmentStatusKey]: billingReadyDepartmentStatus,
+      [departmentIdentifierKey]: billingDepartmentIdentifier
+    }
+  }
+%>
+
+<% if (Object.keys(tableIdetifierToHumanReadableNames).indexOf(tableIdentifier) === -1) { %>
+  <% throw new Error(`Error: the tableIdentifier "${tableIdentifier}" is unknown and cannot be used to render a table.`) %> 
+<% } %>
 
 <% const validColumnTypes = Object.keys(columnTypeToColumnName) %> 
-<% const department = departmentIdentifierToDepartmentName[departmentIdentifier] %> 
+<% const department = tableIdetifierToHumanReadableNames[tableIdentifier][departmentNameKey] %> 
+<% const departmentStatus = tableIdetifierToHumanReadableNames[tableIdentifier][departmentStatusKey] %>
+<% const departmentIdentifier = tableIdetifierToHumanReadableNames[tableIdentifier][departmentIdentifierKey] %>
 
 <% Object.values(columns).forEach((columnType) => { %>
     <% const theColumnTypeIsUnknown = !validColumnTypes.includes(columnType) %> 
@@ -78,8 +293,8 @@
     <% } %>
 <% }) %>
 
-<% if (!department) { %>
-  <% throw new Error(`Error: the departmentIdentifier "${departmentIdentifier}" does not map to any known department`) %> 
+<% if (!department || !departmentStatus || !departmentIdentifier) { %>
+  <% throw new Error(`Error: the departmentIdentifier "${departmentIdentifier}" does not map to any known department and/or subdepartment and/or departmentIdentifier`) %> 
 <% } %>
 
 
@@ -118,33 +333,27 @@
                 <% const columnType = columns[rowNumber] %>
 
                 <% if (!columnType) { %>
-                  <%- include('ticket-table-column-td.ejs', {columnValue: '', columnSelector: ''}) %>
+                  <%- include('ticket-table-column-td.ejs', {columnValue: ''}) %>
                   <% return %>
                 <% } %>
-
-                <% const columnSelector = columnType + '-row' %>
                 
                 <% if (columnType === rowNumberColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: index + 1,
-                      columnSelector: 'row-number'  // TODO: Fix this so it uses "columnSelector": Note: this probably requires css changes in main.css
+                      columnValue: index + 1
                     })
                   %>
                 <% } else if (columnType === ticketNumberColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: '#' + ticket.ticketNumber,
-                      columnSelector: columnSelector
+                      columnValue: '#' + ticket.ticketNumber
                     })
                   %>
                 <% } else if (columnType === priorityColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                    columnValue: 'TODO',
-                    columnSelector: columnSelector
+                    columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === holdReasonColumnType) { %>
                   <%- include('ticketTableColumns/hold-reason-column.ejs', {
-                      columnSelector: columnSelector,
                       ticket: ticket,
                       allHoldReasonsForThisDepartment: allHoldReasonsForThisDepartment,
                       departmentIdentifier: departmentIdentifier
@@ -152,78 +361,67 @@
                   %>
                 <% } else if (columnType === locationColumnType) { %>
                   <%- include('ticketTableColumns/user-column.ejs', {
-                      columnSelector: columnSelector
-                    }) 
-                  -%>
+                    ticket: ticket
+                  }) 
+                %>
                 <% } else if (columnType === lengthColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.totalMaterialLength || 'N/A',
-                      columnSelector: columnSelector
+                      columnValue: ticket.totalMaterialLength || 'N/A'
                     })
                   %>
                 <% } else if (columnType === materialColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.primaryMaterial || 'N/A',
-                      columnSelector: columnSelector
+                      columnValue: ticket.primaryMaterial || 'N/A'
                     })
                   %>
                 <% } else if (columnType === dieColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.products && ticket.products[0].productDie,
-                      columnSelector: columnSelector
+                      columnValue: ticket.products && ticket.products[0].productDie
                     })
                   %>
                 <% } else if (columnType === totalRollsColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.totalWindingRolls,
-                      columnSelector: columnSelector
+                      columnValue: ticket.totalWindingRolls
                     }) 
                   %>
                 <% } else if (columnType === groupedColumnType) { %>
                   <%- include('ticketTableColumns/grouped-column.ejs', {
-                      columnValue: 'TODO',
-                      columnSelector: columnSelector
+                      columnValue: 'TODO'
                     }) 
                   %>
                 <% } else if (columnType === productsColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.products.length,
-                      columnSelector: columnSelector
+                      columnValue: ticket.products.length
                     })
                   %>
                 <% } else if (columnType === dueDateColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: helperMethods.getSimpleDate(ticket.shipDate),
-                      columnSelector: columnSelector
+                      columnValue: helperMethods.getSimpleDate(ticket.shipDate)
                     }) 
                   %>
                 <% } else if (columnType === fromColumnType) { %>
                   <%- include('ticketTableColumns/user-column.ejs', {
-                      columnSelector: columnSelector
+                      ticket: ticket
                     }) 
                   -%>
                 <% } else if (columnType === finishColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
-                      columnSelector: columnSelector
+                      columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === sentDateColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO',
-                      columnSelector: columnSelector
+                      columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === followUpDateColumnType) { %>
                   <%- include('ticketTableColumns/date-picker-column.ejs', {
-                      columnValue: 'TODO',
-                      columnSelector: columnSelector
+                      columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === proofsColumn) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A',
-                      columnSelector: columnSelector
+                      columnValue: ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A'
                     })
                   %>
                 <% } else { %>

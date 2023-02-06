@@ -5,8 +5,12 @@ describe('ejsService test suite', () => {
         expect(ejsService.prettifyDuration).toBeDefined();
     });
     
-    it('should have a method named getSimpleDate()', () => {
-        expect(ejsService.getSimpleDate).toBeDefined();
+    it('should have a method named getDate()', () => {
+        expect(ejsService.getDate).toBeDefined();
+    });
+
+    it('should have a method named getDate()', () => {
+        expect(ejsService.getDayNumberAndMonth).toBeDefined();
     });
 
     it('should have a method named getOverallTicketDuration()', () => {

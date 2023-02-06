@@ -396,7 +396,7 @@
                   %>
                 <% } else if (columnType === dueDateColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: helperMethods.getSimpleDate(ticket.shipDate)
+                      columnValue: helperMethods.getDayNumberAndMonth(ticket.shipDate)
                     }) 
                   %>
                 <% } else if (columnType === fromColumnType) { %>
@@ -411,12 +411,12 @@
                   %>
                 <% } else if (columnType === sentDateColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
-                      columnValue: 'TODO'
+                      columnValue: helperMethods.getDayNumberAndMonth(ticket.sentDate)
                     })
                   %>
                 <% } else if (columnType === followUpDateColumnType) { %>
                   <%- include('ticketTableColumns/date-picker-column.ejs', {
-                      columnValue: 'TODO'
+                      columnValue: helperMethods.getDayNumberAndMonth(ticket.followUpDate)
                     })
                   %>
                 <% } else if (columnType === proofsColumn) { %>

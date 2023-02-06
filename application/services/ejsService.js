@@ -4,7 +4,8 @@ const dateTimeService = require('./dateTimeService');
 
 const helperMethods = {
     prettifyDuration: dateTimeService.prettifyDuration,
-    getSimpleDate: dateTimeService.getSimpleDate,
+    getDate: dateTimeService.getDate,
+    getDayNumberAndMonth: dateTimeService.getDayNumberAndMonth,
     getOverallTicketDuration: workflowStepService.getOverallTicketDuration,
     getHowLongTicketHasBeenInProduction: workflowStepService.getHowLongTicketHasBeenInProduction,
     getHowLongTicketHasBeenInDepartment: workflowStepService.getHowLongTicketHasBeenInDepartment,

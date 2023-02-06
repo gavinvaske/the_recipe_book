@@ -66,6 +66,23 @@ module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-lin
     return `${years}yr ${months}m`;
 };
 
-module.exports.getSimpleDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US');
+module.exports.getDate = (utcDate) => {
+    if (!utcDate) {
+        return '';
+    }
+
+    return new Date(utcDate).toLocaleDateString('en-US');
 };
+
+module.exports.getDayNumberAndMonth = (utcDate) => {
+    if (!utcDate) {
+        return '';
+    }
+    
+    const date = new Date(utcDate).toLocaleString('en-US', {day: '2-digit', month: 'long', timeZone: 'UTC'});
+    const dateParts = date.split(' ');
+    const monthName = dateParts[0]
+    const twoDigitDayOfMonth = dateParts[1]
+
+    return `${twoDigitDayOfMonth} ${monthName}`
+}

@@ -1334,3 +1334,23 @@ h6 {
 	border-top-left-radius: 0.428rem;
 	border-bottom-left-radius: 0.428rem;
   }
+  .hold-reason-option {
+	  position: relative;
+	  max-height: 32px;
+	  overflow: hidden;
+  }
+  .hold-reason-option p {
+	width: 92%;
+  }
+  .hold-reason-option i {
+	position: absolute;
+	right: 10px;
+	opacity: 0;
+	top: 7px;
+	transition: .3s;
+}
+  .hold-reason-option:hover i {
+	  right: 15px;
+	  opacity: 1;
+	  transition: .3s;
+  }

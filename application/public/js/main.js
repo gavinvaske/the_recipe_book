@@ -748,6 +748,23 @@ $( document ).ready(function() {
         }
     });
 
+    $('.hold-reason-option i').click(function() {
+        event.stopPropagation();
+        $(this).parents('.hold-reason-options').siblings('.confirmation-window').addClass('active');
+        var holdReasonValue = $(this).siblings('p').text();
+        $('.delete-me-value').text(holdReasonValue);
+
+        $('input.delete').keyup(function() {
+            let deleteHoldReasonValue = holdReasonValue;
+            if ($('input.delete').keyup().val() === deleteHoldReasonValue) {
+                console.log('correct');
+            } else {
+                console.log('incorrect');
+            }
+        });
+    });
+    
+
     $('.sidebar-main').mouseleave(function(){
         if ($(this).hasClass('active')) {
 

@@ -360,8 +360,10 @@
                     })
                   %>
                 <% } else if (columnType === locationColumnType) { %>
-                  <%- include('ticketTableColumns/user-column.ejs', {}) 
-                  -%>
+                  <%- include('ticketTableColumns/user-column.ejs', {
+                    ticket: ticket
+                  }) 
+                %>
                 <% } else if (columnType === lengthColumnType) { %>
                   <%- include('ticketTableColumns/text-column.ejs', {
                       columnValue: ticket.totalMaterialLength || 'N/A'

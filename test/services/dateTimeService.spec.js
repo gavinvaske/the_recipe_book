@@ -218,12 +218,41 @@ describe('dateTimeService test suite', () => {
         });
     });
 
-    describe('getSimpleDate()', () => {
+    describe('getDate()', () => {
         it('should convert date according to format mm/dd/yyyy', () => {
             const dateString = '2022-11-06T20:45:04.176+00:00';
             const expectedDate = '11/6/2022';
 
-            const actualDate = dateTimeService.getSimpleDate(dateString);
+            const actualDate = dateTimeService.getDate(dateString);
+
+            expect(actualDate).toBe(expectedDate);
+        });
+
+        it('should return an empty string if undefined value is passed into method', () => {
+            const undefinedDate = undefined;
+            const expectedDate = '';
+
+            const actualDate = dateTimeService.getDate(undefinedDate);
+
+            expect(actualDate).toBe(expectedDate);
+        });
+    });
+
+    describe('getDayNumberAndMonth()', () => {
+        it('should convert date according to format "dd month" (ex: "01 February")', () => {
+            const dateString = '2022-11-08T20:45:04.176+00:00';
+            const expectedDate = '08 November';
+
+            const actualDate = dateTimeService.getDayNumberAndMonth(dateString);
+
+            expect(actualDate).toBe(expectedDate);
+        });
+
+        it('should return an empty string if undefined value is passed into method', () => {
+            const undefinedDate = undefined;
+            const expectedDate = '';
+
+            const actualDate = dateTimeService.getDayNumberAndMonth(undefinedDate);
 
             expect(actualDate).toBe(expectedDate);
         });

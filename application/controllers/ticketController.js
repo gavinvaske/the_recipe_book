@@ -148,7 +148,7 @@ router.get('/duration/:id', async (request, response) => {
         const listDuration = workflowStepService.getHowLongTicketHasHadADepartmentStatus(workflowStepTimeLedgerForTicket, department, departmentStatus);
         
         return response.json({
-            'date-created': dateTimeService.getSimpleDate(ticket.createdAt),
+            'date-created': dateTimeService.getDate(ticket.createdAt),
             'overall-duration': dateTimeService.prettifyDuration(overallDuration),
             'production-duration': dateTimeService.prettifyDuration(productionDuration),
             'department-duration': dateTimeService.prettifyDuration(departmentDuration),

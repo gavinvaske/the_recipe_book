@@ -6,7 +6,7 @@
         <%= helperMethods.getUserInitials(user) %>
         <!-- User Image Tag Below to propigate user image -->
         <img src='<%= helperMethods.getProfilePictureUrl(user) %>'>
-        <span class="tooltiptext assignee-name-column"><% user ? user.fullName : 'N/A' %> </span>
+        <span class="tooltiptext assignee-name-column"><%= user ? user.fullName : 'N/A' %> </span>
     </div>
-    <span class='department-name department-column'><% destination ? destination.department : 'N/A' %></span>
+    <span class='department-name department-column'><%= destination ? destination.department : 'N/A' %></span>
 </div>

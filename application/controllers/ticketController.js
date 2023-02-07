@@ -25,6 +25,7 @@ function deleteFileFromFileSystem(path) {
 router.get('/', async (request, response) => {
     const tickets = await TicketModel
         .find()
+        .populate({path: 'destination.assignee'})
         .exec();
 
     const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
@@ -32,7 +33,8 @@ router.get('/', async (request, response) => {
 
     return response.render('viewTickets', {
         ticketsGroupedByDestination,
-        departmentToHoldReasons
+        departmentToHoldReasons,
+        loggedInUser: request.user
     });
 });
 

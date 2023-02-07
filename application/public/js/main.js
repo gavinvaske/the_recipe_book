@@ -706,11 +706,13 @@ $( document ).ready(function() {
     $('.status-section').on('click', '.start-ticket-button', function() {
         const ticketObjectId = $(this).data('ticket-id');
         const department = $(this).data('department');
+        const loggedInUserId = $(this).data('user-id');
 
         const ticketAttributesToUpdate = {
             destination: {
                 department,
-                departmentStatus: 'IN PROGRESS'
+                departmentStatus: 'IN PROGRESS',
+                assignee: loggedInUserId
             }
         };
 

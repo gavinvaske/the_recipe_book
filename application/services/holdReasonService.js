@@ -11,8 +11,7 @@ module.exports.getDepartmentToHoldReasons = async () => {
     });
 
     allHoldReasons.forEach((holdReason) => {
-        const {department, reason} = holdReason;
-        departmentToHoldReasons[department].push(reason);
+        departmentToHoldReasons[holdReason.department].push(holdReason);
     });
 
     return departmentToHoldReasons;

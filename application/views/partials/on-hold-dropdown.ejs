@@ -4,7 +4,10 @@
         <div class='confirmation-window'>
             <p>Values in this custom field will be deleted from all cards on this board.<br><br> This can't be undone. To delete the field and its data, enter the field name: <span class='delete-me-value'></span></p>
             <div class='delete-content-frame'>
-                <input type="text" class='delete' name="fname"><button>Delete Hold Reason</button>
+                <input type="text" class='delete' name="fname">
+                <button id='delete-hold-reason-btn' data-hold-reason-id-to-delete="N/A">
+                    Delete Hold Reason
+                </button>
             </div>
         </div>
         <ul class="hold-reason-options">

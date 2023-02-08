@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const {getAllDepartments} = require('../enums/departmentsEnum');
+const mongoose_delete = require('mongoose-delete');
 
 function isDepartmentValid(department) {
     if (!getAllDepartments().includes(department)) {
@@ -23,6 +24,8 @@ const HoldReasonSchema = new Schema({
         required: true
     }
 }, { timestamps: true });
+
+HoldReasonSchema.plugin(mongoose_delete, {overrideMethods: true});
 
 const HoldReason = mongoose.model('HoldReason', HoldReasonSchema);
 

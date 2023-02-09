@@ -62,6 +62,22 @@ $( document ).ready(function() {
         });
     }
 
+    function deleteHoldReason(holdReasonObjectId, callback) {
+        $.ajax({
+            url: `/hold-reasons/${holdReasonObjectId}`,
+            type: 'DELETE',
+            success: function(response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function(error) {
+                const errorMessage = error.responseText ? error.responseText : 'N/A';
+                alert(`An error occurred while attempting to DELETE the the specified "hold reason". The error that occurred is: ${errorMessage}`);
+            }
+        }); 
+    }
+
     function findTheTicketIdOfTheRowThisHtmlElementIsIn(htmlElement) {
         try {
             const ticketId = htmlElement.closest('.table-row-wrapper').data('ticket-id');
@@ -90,6 +106,20 @@ $( document ).ready(function() {
             throw Error(error.message);
         }
     }
+
+    $('.hold-reason-option .fa-trash-can').on('click', function() {
+        const holdReasonId = $(this).data('hold-reason-id');
+
+        $('#delete-hold-reason-btn').data('hold-reason-id-to-delete', holdReasonId);
+    });
+
+    $('#delete-hold-reason-btn').on('click', function(){
+        const holdReasonId = $('#delete-hold-reason-btn').data('hold-reason-id-to-delete');
+        
+        deleteHoldReason(holdReasonId, () => {
+            alert('successful deletion, TODO: storm, close the window using jquery here');
+        });
+    });
 
     $('#material-selection').change(function() {
         const selectedMaterialId = $('#material-selection').val();

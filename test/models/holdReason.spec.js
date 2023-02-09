@@ -23,18 +23,35 @@ describe('validation', () => {
             await databaseService.closeDatabase();
         });
 
-        it('should have a "createdAt" attribute once object is saved', async () => {
-            const holdReason = new HoldReason(holdReasonAttributes);
-            let savedHoldReason = await holdReason.save({validateBeforeSave: false});
-
-            expect(savedHoldReason.createdAt).toBeDefined();
+        describe('verify timestamps on created object', () => {
+            it('should have a "createdAt" attribute once object is saved', async () => {
+                const holdReason = new HoldReason(holdReasonAttributes);
+                let savedHoldReason = await holdReason.save({validateBeforeSave: false});
+    
+                expect(savedHoldReason.createdAt).toBeDefined();
+            });
+    
+            it('should have a "updated" attribute once object is saved', async () => {
+                const holdReason = new HoldReason(holdReasonAttributes);
+                let savedHoldReason = await holdReason.save({validateBeforeSave: false});
+    
+                expect(savedHoldReason.createdAt).toBeDefined();
+            });
         });
 
-        it('should have a "updated" attribute once object is saved', async () => {
-            const holdReason = new HoldReason(holdReasonAttributes);
-            let savedHoldReason = await holdReason.save({validateBeforeSave: false});
+        describe('verify soft deletes work', () => {
+            it('should be "soft-deletable"', async () => {
+                const holdReason = new HoldReason(holdReasonAttributes);
+                const holdReasonId = holdReason._id;
 
-            expect(savedHoldReason.createdAt).toBeDefined();
+                await holdReason.save({validateBeforeSave: false});
+                await HoldReason.deleteById(holdReasonId);
+
+                const softDeletedHoldReason = await HoldReason.findOneDeleted({_id: holdReasonId}).exec();
+
+                expect(softDeletedHoldReason).toBeDefined();
+                expect(softDeletedHoldReason.deleted).toBe(true);
+            });
         });
     });
 

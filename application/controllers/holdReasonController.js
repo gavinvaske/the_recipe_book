@@ -26,7 +26,7 @@ router.delete('/:id', async (request, response) => {
     try {
         await HoldReasonModel.deleteById(id);
         return response.send(id);
-    } catch(error) {
+    } catch (error) {
         return response.status(SERVER_ERROR_CODE).send(error.message);
     }
 });

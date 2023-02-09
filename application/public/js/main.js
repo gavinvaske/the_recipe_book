@@ -110,16 +110,16 @@ $( document ).ready(function() {
     $('.hold-reason-option .fa-trash-can').on('click', function() {
         const holdReasonId = $(this).data('hold-reason-id');
 
-        $('#delete-hold-reason-btn').data('hold-reason-id-to-delete', holdReasonId)
+        $('#delete-hold-reason-btn').data('hold-reason-id-to-delete', holdReasonId);
     });
 
     $('#delete-hold-reason-btn').on('click', function(){
         const holdReasonId = $('#delete-hold-reason-btn').data('hold-reason-id-to-delete');
         
-        deleteHoldReason(holdReasonId, (response) => {
-            alert('successful deletion, TODO: storm, close the window using jquery here')
+        deleteHoldReason(holdReasonId, () => {
+            alert('successful deletion, TODO: storm, close the window using jquery here');
         });
-    })
+    });
 
     $('#material-selection').change(function() {
         const selectedMaterialId = $('#material-selection').val();

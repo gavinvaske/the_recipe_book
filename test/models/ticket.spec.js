@@ -930,7 +930,7 @@ describe('validation', () => {
         });   
 
         it('should fail validation if attribute is not a valid mongoose objectId', () => {
-            const invalidTicketGroup = chance.string();
+            const invalidTicketGroup = 123;
             ticketAttributes.ticketGroup = invalidTicketGroup;
             const ticket = new TicketModel(ticketAttributes);
 

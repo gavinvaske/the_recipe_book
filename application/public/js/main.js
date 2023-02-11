@@ -732,8 +732,6 @@ $( document ).ready(function() {
     $('.status-section').on('click', '.start-ticket', function() {
         const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
 
-        $('#machine-list option').remove();
-
         get('/machines/all', (machines) => {
             console.log(machines)
 
@@ -743,8 +741,6 @@ $( document ).ready(function() {
             });
 
             machinesInThisDepartment.forEach((machine) => {
-                alert(machine.name)
-                alert(machine._id)
                 $('.machine-list:visible').append(new Option(machine.name, machine._id));
             })
         })
@@ -756,12 +752,14 @@ $( document ).ready(function() {
         const ticketObjectId = $(this).data('ticket-id');
         const department = $(this).data('department');
         const loggedInUserId = $(this).data('user-id');
+        const selectedMachineId = $('.machine-list:visible option:selected').val();
 
         const ticketAttributesToUpdate = {
             destination: {
                 department,
                 departmentStatus: 'IN PROGRESS',
-                assignee: loggedInUserId
+                assignee: loggedInUserId,
+                machine: selectedMachineId ? selectedMachineId : undefined
             }
         };
 

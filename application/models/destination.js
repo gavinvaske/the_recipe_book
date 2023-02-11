@@ -47,7 +47,8 @@ const destinationSchema = new Schema({
 
 destinationSchema.pre('validate', function(next) {
     if (!isDepartmentAndDepartmentStatusCombinationValid(this.department, this.departmentStatus)) {
-        return next(new Error(`The departmentStatus "${this.departmentStatus}" is not allowed to be paired with the provided department "${this.department}"`));
+        const errorMessage = `The department "${this.department}" and departmentStatus "${this.departmentStatus}" are not allowed to be paired together.`;
+        return next(new Error(errorMessage));
     }
 
     return next();

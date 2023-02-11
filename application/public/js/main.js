@@ -730,6 +730,25 @@ $( document ).ready(function() {
     });
 
     $('.status-section').on('click', '.start-ticket', function() {
+        const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
+
+        get('/machines/all', (machines) => {
+            const machinesInThisDepartment = machines.filter((machine) => {
+                const shouldKeepThisMachine = machine.department === departmentName;
+                return shouldKeepThisMachine;
+            });
+
+            const shouldHideMachineList = !machinesInThisDepartment || machinesInThisDepartment.length === 0;
+
+            if (shouldHideMachineList) {
+                $('.machine-list').css('display', 'none');
+            }
+
+            machinesInThisDepartment.forEach((machine) => {
+                $('.machine-list:visible').append(new Option(machine.name, machine._id));
+            });
+        });
+
         $(this).closest('.table-row-wrapper').find('.start-job-bg-overlay').addClass('active');
     });
 
@@ -737,12 +756,14 @@ $( document ).ready(function() {
         const ticketObjectId = $(this).data('ticket-id');
         const department = $(this).data('department');
         const loggedInUserId = $(this).data('user-id');
+        const selectedMachineId = $('.machine-list:visible option:selected').val();
 
         const ticketAttributesToUpdate = {
             destination: {
                 department,
                 departmentStatus: 'IN PROGRESS',
-                assignee: loggedInUserId
+                assignee: loggedInUserId,
+                machine: selectedMachineId ? selectedMachineId : undefined
             }
         };
 
@@ -756,6 +777,10 @@ $( document ).ready(function() {
     });
 
     $('.start-job-bg-overlay .fa-xmark-large').click(function(){
+        $('.start-job-bg-overlay').removeClass('active');
+    });
+    
+    $('.status-section').on('click', '.cancel-start-ticket-button', function() {
         $('.start-job-bg-overlay').removeClass('active');
     });
 
@@ -847,6 +872,26 @@ $( document ).ready(function() {
 
     function findTicketRow(ticketId) {
         return $(`#ticket-row-${ticketId}`);
+    }
+
+    function get(endpoint, callback, errorCallback) {
+        $.ajax({
+            url: endpoint,
+            type: 'GET',
+            success: function(response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function(error) {
+                let errorMessage = `Error while making GET request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`;
+                alert(errorMessage);
+
+                if (errorCallback) {
+                    errorCallback(error);
+                }
+            }
+        });
     }
 
     function findDurationInformationForOneTicket(ticketObjectId, callback) {

@@ -740,6 +740,12 @@ $( document ).ready(function() {
                 return shouldKeepThisMachine
             });
 
+            const shouldHideMachineList = !machinesInThisDepartment || machinesInThisDepartment.length === 0;
+
+            if (shouldHideMachineList) {
+                $('.machine-list').css('display', 'none');
+            }
+
             machinesInThisDepartment.forEach((machine) => {
                 $('.machine-list:visible').append(new Option(machine.name, machine._id));
             })

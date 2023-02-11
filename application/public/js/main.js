@@ -733,11 +733,9 @@ $( document ).ready(function() {
         const departmentName = findTheDepartmentNameThisHtmlElementIsIn($(this));
 
         get('/machines/all', (machines) => {
-            console.log(machines)
-
             const machinesInThisDepartment = machines.filter((machine) => {
                 const shouldKeepThisMachine = machine.department === departmentName;
-                return shouldKeepThisMachine
+                return shouldKeepThisMachine;
             });
 
             const shouldHideMachineList = !machinesInThisDepartment || machinesInThisDepartment.length === 0;
@@ -748,8 +746,8 @@ $( document ).ready(function() {
 
             machinesInThisDepartment.forEach((machine) => {
                 $('.machine-list:visible').append(new Option(machine.name, machine._id));
-            })
-        })
+            });
+        });
 
         $(this).closest('.table-row-wrapper').find('.start-job-bg-overlay').addClass('active');
     });
@@ -784,7 +782,7 @@ $( document ).ready(function() {
     
     $('.status-section').on('click', '.cancel-start-ticket-button', function() {
         $('.start-job-bg-overlay').removeClass('active');
-    })
+    });
 
     $('.settings-option.settings').click(function(){
         $('.dropdown-menu').removeClass('active');
@@ -876,7 +874,7 @@ $( document ).ready(function() {
         return $(`#ticket-row-${ticketId}`);
     }
 
-    function get(endpoint, callback, error) {
+    function get(endpoint, callback, errorCallback) {
         $.ajax({
             url: endpoint,
             type: 'GET',
@@ -886,9 +884,12 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                let errorMessage = `Error while making GET request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`
+                let errorMessage = `Error while making GET request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`;
                 alert(errorMessage);
-                error(error);
+
+                if (errorCallback) {
+                    errorCallback(error);
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
+const {getAllDepartments} = require('../enums/departmentsEnum');
 
 function isDepartmentValid(department) {
     if (!getAllDepartments().includes(department)) {

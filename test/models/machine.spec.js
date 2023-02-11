@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const MachineModel = require('../../application/models/machine');
+const departmentEnum = require('../../application/enums/departmentsEnum');
 
 describe('validation', () => {
     let machineAttributes;
@@ -7,7 +8,8 @@ describe('validation', () => {
     beforeEach(() => {
         jest.resetAllMocks();
         machineAttributes = {
-            name: chance.string()
+            name: chance.string(),
+            department: chance.pickone(departmentEnum.getAllDepartments())
         };
     });
 
@@ -27,6 +29,15 @@ describe('validation', () => {
             const machine = new MachineModel(machineAttributes);
 
             expect(machine.name).toBe(name);
+        });
+
+        it('should fail when department is not defined', () => {
+            delete machineAttributes.department;
+
+            const machine = new MachineModel(machineAttributes);
+            const error = machine.validateSync();
+
+            expect(error).not.toBe(undefined);
         });
     });
 });

@@ -402,6 +402,7 @@
 }
 
 .user-cell {
+	position: relative;
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;
@@ -411,6 +412,15 @@
 	color: white;
 	font-size: 12px;
 	margin-right: 10px;
+}
+
+.user-cell img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
 }
 
 

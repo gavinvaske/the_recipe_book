@@ -617,7 +617,16 @@ $( document ).ready(function() {
     $('.collapse-all-groups').click(function(){
         $('.status-section').addClass('hide-all');
     });
-
+    
+    $('.table-row .column-td:nth-child(3').click(function(){
+        let currentActive = $(this).closest('.table-row-wrapper');
+        if ($(currentActive).hasClass('active')) {
+            $('.table-row-wrapper').removeClass('active');
+        } else {
+            $('.table-row-wrapper').removeClass('active');
+            $(currentActive).addClass('active');
+        }
+    });
     $('.status-section').on('click', '.show-products', function() {
         let currentActive = $(this).closest('.table-row-wrapper');
         $(currentActive).addClass('active');
@@ -805,9 +814,15 @@ $( document ).ready(function() {
         }
     });
 
+    $('.click-tab').click(function(){
+        $('.click-tab').removeClass('active');
+        $(this).addClass('active');
+    });
+
     $('.hold-reason-option i').click(function() {
         event.stopPropagation();
-        $(this).parents('.hold-reason-options').siblings('.confirmation-window').addClass('active');
+        $(this).parentsUntil('.wrapper').siblings('.touch-me').addClass('active');
+        // $(this).parents('.hold-reason-options').siblings('.confirmation-window').addClass('active');
         var holdReasonValue = $(this).siblings('p').text();
         $('.delete-me-value').text(holdReasonValue);
 

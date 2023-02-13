@@ -4411,3 +4411,79 @@ span.drpdwn-title {
   margin-left: 0;
   margin: 7px 0 7px 0;
 }
+
+.on-hold-dropdown .wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.touch-me {
+  position: absolute;
+  width: 100%;
+  top: -100%;
+  left: 0;
+}
+.touch-me.active {
+  top: 0;
+}
+
+
+.in-progress-view {
+  height: 100%;
+  padding-bottom: 30px;
+}
+.in-progress-view .left-col {
+  width: 15%;
+  height: 100%;
+}
+.in-progress-view .left-col .click-tab {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  position: relative;
+  background-color: #E6E6E6;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 0.428rem;
+}
+
+.in-progress-view .left-col .click-tab.active {
+  -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  border-left: 3px solid red;
+  background-color: white;
+}
+.click-tab.active .bumper {
+  top: 0;
+  position: absolute;
+  right: -98px;
+  height: 100%;
+  background-color: white;
+  width: 100px;
+  z-index: 1;
+}
+.in-progress-view .right-col {
+  width: 85%;
+  height: 100%;
+}
+.in-progress-view .right-col .card {
+  height: 100%;
+}
+.in-progress-view .right-col .card:nth-child(1) {
+  margin-right: 15px;
+}
+
+.in-progress-view .right-col .click-tab:nth-child(1) {
+  width: 35%;
+  margin-right: 15px;
+}
+
+.in-progress-view .right-col .click-tab:nth-child(2) {
+  width: 65%;
+}
+
+.in-progress-view .right-col .click-tab {
+  height: 100%;
+}
+iframe {
+  width: 100%;
+  height: 100%;
+}

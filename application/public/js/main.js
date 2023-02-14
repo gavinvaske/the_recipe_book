@@ -815,12 +815,13 @@ $( document ).ready(function() {
     });
 
     $('.click-tab').click(function(){
+        const delay = 300;
         $('.click-tab').removeClass('active');
         $(this).addClass('active');
         $('#proof').fadeIn();
         $('.proof-placeholder').fadeOut();
         $('.ticket-info').fadeOut();
-        $('.product-info').delay(300).fadeIn();
+        $('.product-info').delay(delay).fadeIn();
     });
 
     $('.close-window').click(function(){
@@ -1030,14 +1031,15 @@ $( document ).ready(function() {
         'Quote 3',
         'Quote 4',
         'Quote 5'
-        ];
+    ];
 
-        var getRandomWord = function () {
-            return words[Math.floor(Math.random() * words.length)];
-          };
-      $(function() { // after page load
+    var getRandomWord = function () {
+        return words[Math.floor(Math.random() * words.length)];
+    };
+    $(function() { // after page load
+        let newDelay = 500;
 
-        $('text-box').html(getRandomWord()).fadeIn(500);
+        $('text-box').html(getRandomWord()).fadeIn(newDelay);
 
-      });
+    });
 });

@@ -4454,10 +4454,10 @@ span.drpdwn-title {
 .click-tab.active .bumper {
   top: 0;
   position: absolute;
-  right: -98px;
+  right: -22px;
   height: 100%;
   background-color: white;
-  width: 100px;
+  width: 30px;
   z-index: 1;
 }
 .in-progress-view .right-col {
@@ -4466,6 +4466,8 @@ span.drpdwn-title {
 }
 .in-progress-view .right-col .card {
   height: 100%;
+  position: relative;
+  padding: 1.5rem;
 }
 .in-progress-view .right-col .card:nth-child(1) {
   margin-right: 15px;
@@ -4479,11 +4481,36 @@ span.drpdwn-title {
 .in-progress-view .right-col .click-tab:nth-child(2) {
   width: 65%;
 }
-
+.ticket-tab h3 {
+  font-weight: bold;
+  margin: 0;
+}
 .in-progress-view .right-col .click-tab {
   height: 100%;
 }
 iframe {
   width: 100%;
   height: 100%;
+}
+
+.job-notes {
+  position: absolute;
+  top: 1.5rem;
+  padding: 1.5rem;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: #f8f8f8;
+  border-radius: 0.428rem;
+}
+.job-notes h3 {
+  font-weight: bold;
+}
+.job-notes.active {
+  display: none;
+}
+.front-note {
+  border-radius: 0.428rem;
+  padding: 1.5rem;
+  background-color: white;
 }

@@ -819,6 +819,10 @@ $( document ).ready(function() {
         $(this).addClass('active');
     });
 
+    $('.close-window').click(function(){
+        $('.job-notes').addClass('active');
+    });
+
     $('.hold-reason-option i').click(function() {
         event.stopPropagation();
         $(this).parentsUntil('.wrapper').siblings('.touch-me').addClass('active');

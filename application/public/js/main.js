@@ -817,10 +817,16 @@ $( document ).ready(function() {
     $('.click-tab').click(function(){
         $('.click-tab').removeClass('active');
         $(this).addClass('active');
+        $('#proof').fadeIn();
+        $('.proof-placeholder').fadeOut();
+        $('.ticket-info').fadeOut();
+        $('.product-info').delay(300).fadeIn();
     });
 
     $('.close-window').click(function(){
         $('.job-notes').addClass('active');
+        $('.in-progress-view .right-col .card:nth-child(1)').addClass('active');
+        $('.in-progress-view .right-col .card:nth-child(2)').addClass('active');
     });
 
     $('.hold-reason-option i').click(function() {
@@ -1016,4 +1022,22 @@ $( document ).ready(function() {
             newRow.show();
         });
     });
+
+    var words = [
+        '',
+        'Quote 1',
+        'Quote 2',
+        'Quote 3',
+        'Quote 4',
+        'Quote 5'
+        ];
+
+        var getRandomWord = function () {
+            return words[Math.floor(Math.random() * words.length)];
+          };
+      $(function() { // after page load
+
+        $('text-box').html(getRandomWord()).fadeIn(500);
+
+      });
 });

@@ -4461,13 +4461,20 @@ span.drpdwn-title {
   z-index: 1;
 }
 .in-progress-view .right-col {
-  width: 85%;
+  width: 100%;
   height: 100%;
+  overflow: hidden;
+  transition: .3s;
+}
+.in-progress-view .right-col .card:nth-child(1).active {
+  width: 85%;
+  transition: .3s;
 }
 .in-progress-view .right-col .card {
   height: 100%;
   position: relative;
   padding: 1.5rem;
+  width: 100%;
 }
 .in-progress-view .right-col .card:nth-child(1) {
   margin-right: 15px;
@@ -4491,6 +4498,8 @@ span.drpdwn-title {
 iframe {
   width: 100%;
   height: 100%;
+  border-radius: .428rem;
+  display: none;
 }
 
 .job-notes {
@@ -4503,6 +4512,17 @@ iframe {
   background-color: #f8f8f8;
   border-radius: 0.428rem;
 }
+.proof-placeholder {
+  position: absolute;
+  top: 1.5rem;
+  padding: 1.5rem;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: #f8f8f8;
+  border-radius: 0.428rem;
+  overflow: hidden;
+}
 .job-notes h3 {
   font-weight: bold;
 }
@@ -4513,4 +4533,22 @@ iframe {
   border-radius: 0.428rem;
   padding: 1.5rem;
   background-color: white;
+}
+
+.in-progress-view .right-col .card:nth-child(2) {
+  position: relative;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  transition: .3s;
+}
+
+.in-progress-view .right-col .card:nth-child(2).active {
+  padding: 1.5rem;
+  width: 100%;
+  transition: .3s;
+}
+
+.product-info {
+  display: none;
 }

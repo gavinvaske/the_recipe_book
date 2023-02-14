@@ -617,7 +617,16 @@ $( document ).ready(function() {
     $('.collapse-all-groups').click(function(){
         $('.status-section').addClass('hide-all');
     });
-
+    
+    $('.table-row .column-td:nth-child(3').click(function(){
+        let currentActive = $(this).closest('.table-row-wrapper');
+        if ($(currentActive).hasClass('active')) {
+            $('.table-row-wrapper').removeClass('active');
+        } else {
+            $('.table-row-wrapper').removeClass('active');
+            $(currentActive).addClass('active');
+        }
+    });
     $('.status-section').on('click', '.show-products', function() {
         let currentActive = $(this).closest('.table-row-wrapper');
         $(currentActive).addClass('active');
@@ -805,9 +814,26 @@ $( document ).ready(function() {
         }
     });
 
+    $('.click-tab').click(function(){
+        const delay = 300;
+        $('.click-tab').removeClass('active');
+        $(this).addClass('active');
+        $('#proof').fadeIn();
+        $('.proof-placeholder').fadeOut();
+        $('.ticket-info').fadeOut();
+        $('.product-info').delay(delay).fadeIn();
+    });
+
+    $('.close-window').click(function(){
+        $('.job-notes').addClass('active');
+        $('.in-progress-view .right-col .card:nth-child(1)').addClass('active');
+        $('.in-progress-view .right-col .card:nth-child(2)').addClass('active');
+    });
+
     $('.hold-reason-option i').click(function() {
         event.stopPropagation();
-        $(this).parents('.hold-reason-options').siblings('.confirmation-window').addClass('active');
+        $(this).parentsUntil('.wrapper').siblings('.touch-me').addClass('active');
+        // $(this).parents('.hold-reason-options').siblings('.confirmation-window').addClass('active');
         var holdReasonValue = $(this).siblings('p').text();
         $('.delete-me-value').text(holdReasonValue);
 
@@ -996,5 +1022,24 @@ $( document ).ready(function() {
             holdReasonOptions.append(newRow);
             newRow.show();
         });
+    });
+
+    var words = [
+        '',
+        'Quote 1',
+        'Quote 2',
+        'Quote 3',
+        'Quote 4',
+        'Quote 5'
+    ];
+
+    var getRandomWord = function () {
+        return words[Math.floor(Math.random() * words.length)];
+    };
+    $(function() { // after page load
+        let newDelay = 500;
+
+        $('text-box').html(getRandomWord()).fadeIn(newDelay);
+
     });
 });

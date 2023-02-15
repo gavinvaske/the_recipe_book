@@ -2,21 +2,15 @@
 <div class='page-wrapper in-progress-view flex-top-center-row'>
     <div class='left-col col'>
         <div class='click-tab ticket-tab active'>
-            <h3>48803</h3>
+            <h3><%= ticket.ticketNumber ?? 'N/A' %></h3>
             <div class='bumper'></div>
         </div>
-        <div class='click-tab product-tab'>
-            1. 1139D-029
-            <div class='bumper'></div>
-        </div>
-        <div class='click-tab product-tab'>
-            2. 1139D-215
-            <div class='bumper'></div>
-        </div>
-        <div class='click-tab product-tab'>
-            3. 1139D-300
-            <div class='bumper'></div>
-        </div>
+        <% ticket.products && ticket.products.forEach((product, index) => { %>
+            <div class='click-tab product-tab' data-product-number="<%= product.productNumber %>">
+                <%= index + 1 %>. <%= product.productNumber ?? 'N/A' %>
+                <div class='bumper'></div>
+            </div>
+        <% }) %>
     </div>
     <div class='right-col col flex-top-center-row'>
         <div class='card half-width'>
@@ -38,9 +32,63 @@
                     </div>
                 </div>
             </div>
-            <div class='product-info'>
-                <h1>Product Details Populate Here. Hello Mars!</h1>
+            <% ticket.products && ticket.products.forEach((product) => { %>
+            <div class='product-info' data-product-number="<%= product.productNumber %>">
+                <h1>Product Details Populate Here:</h1>
+                <p>Product Number: <%- product.productNumber ?? 'N/A' %></p>
+                <p>Product Die: <%- product.productDie ?? 'N/A' %></p>
+                <p>Primary Material: <%- product.primaryMaterial ?? 'N/A' %></p>
+                <p>UV Finish: <%- product.uvFinish ?? 'N/A' %></p>
+                <p>Size Across: <%- product.sizeAcross ?? 'N/A' %></p>
+                <p>Size Around: <%- product.sizeAround ?? 'N/A' %></p>
+                <p>Labels Across: <%- product.labelsAcross ?? 'N/A' %></p>
+                <p>Labels Around: <%- product.labelsAround ?? 'N/A' %></p>
+                <p>Corner Radius: <%- product.cornerRadius ?? 'N/A' %></p>
+                <p>Unwind Direction: <%- product.unwindDirection ?? 'N/A' %></p>
+                <p>Matrix Across: <%- product.matrixAcross ?? 'N/A' %></p>
+                <p>Matrix Around: <%- product.matrixAround ?? 'N/A' %></p>
+                <p>Description: <%- product.description ?? 'N/A' %></p>
+                <p>Label Qty: <%- product.labelQty ?? 'N/A' %></p>
+                <p>Winding Notes: <%- product.windingNotes ?? 'N/A' %></p>
+                <p>Die Cutting Notes: <%- product.dieCuttingNotes ?? 'N/A' %></p>
+                <p>Pre Printing Notes: <%- product.prePrintingNotes ?? 'N/A' %></p>
+                <p>Printing Notes: <%- product.printingNotes ?? 'N/A' %></p>
+                <p>Number of Colors: <%- product.numberOfColors ?? 'N/A' %></p>
+                <p>Labels per Roll: <%- product.labelsPerRoll ?? 'N/A' %></p>
+                <p>Finish Type: <%- product.finishType ?? 'N/A' %></p>
+                <p>Price: <%- product.price ?? 'N/A' %></p>
+                <p>Price Mode: <%- product.priceMode ?? 'N/A' %></p>
+                <p>Product Die Two: <%- product.productDieTwo ?? 'N/A' %></p>
+                <p>Tool Number Around: <%- product.toolNumberAround ?? 'N/A' %></p>
+                <p>Plate ID: <%- product.plateId ?? 'N/A' %></p>
+                <p>Total Unwind Rolls: <%- product.totalWindingRolls ?? 'N/A' %></p>
+                <p>Core Height: <%- product.coreHeight ?? 'N/A' %></p>
+                <p>Label Repeat: <%- product.labelRepeat ?? 'N/A' %></p>
+                <p>Over Run: <%- product.overRun ?? 'N/A' %></p>
+                <p>Varnish: <%- product.varnish ?? 'N/A' %></p>
+                <p>Core Diameter: <%- product.coreDiameter ?? 'N/A' %></p>
+                <p>Number Across: <%- product.numberAcross ?? 'N/A' %></p>
+                <p>Shipping Attention: <%- product.shippingAttention ?? 'N/A' %></p>
+                <p>Die Cutting Married Material: <%- product.dieCuttingMarriedMaterial ?? 'N/A' %></p>
+                <p>Die Cutting Finish: <%- product.dieCuttingFinish ?? 'N/A' %></p>
+                <p>Tooling Notes: <%- product.toolingNotes ?? 'N/A' %></p>
+                <p>Frame Count: <%- product.frameCount ?? 'N/A' %></p>
+                <p>Labels per Frame: <%- product.labelsPerFrame ?? 'N/A' %></p>
+                <p>Measure Across: <%- product.measureAcross ?? 'N/A' %></p>
+                <p>Measure Around: <%- product.measureAround ?? 'N/A' %></p>
+                <p>Frames Plus Over Run: <%- product.framesPlusOverRun ?? 'N/A' %></p>
+                <p>Top Bottom Bleed: <%- product.topBottomBleed ?? 'N/A' %></p>
+                <p>Left Right Bleed: <%- product.leftRightBleed ?? 'N/A' %></p>
+                <p>Frame Repeat: <%- product.frameRepeat ?? 'N/A' %></p>
+                <p>Extra Frames: <%- product.extraFrames ?? 'N/A' %></p>
+                <p>Total Frames: <%- product.totalFrames ?? 'N/A' %></p>
+                <p>Total Feet: <%- product.totalFeet ?? 'N/A' %></p>
+                <p>Number of Rolls: <%- product.numberOfRolls ?? 'N/A' %></p>
+                <p>Roto Repeat: <%- product.rotoRepeat ?? 'N/A' %></p>
+                <p>Delta Repeat: <%- product.deltaRepeat ?? 'N/A' %></p>
+                <p>Number of Cores: <%- product.numberOfCores ?? 'N/A' %></p>
             </div>
+            <% }) %>
         </div>
         <div class='card half-width'>
             <div class='proof-placeholder'><div class='flex-center-center-row' style='height: 100%;'><h1 class='text-box'>Random Quote</h1></div></div>

@@ -821,7 +821,12 @@ $( document ).ready(function() {
         $('#proof').fadeIn();
         $('.proof-placeholder').fadeOut();
         $('.ticket-info').fadeOut();
-        $('.product-info').delay(delay).fadeIn();
+
+        const productNumber = $(this).data('product-number');
+        const productInfoToShow = $(`.product-info*[data-product-number="${productNumber}"]`);
+
+        $('.product-info').hide();
+        $(productInfoToShow).delay(delay).fadeIn();
     });
 
     $('.close-window').click(function(){

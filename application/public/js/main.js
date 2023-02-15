@@ -825,7 +825,7 @@ $( document ).ready(function() {
         const productNumber = $(this).data('product-number');
         const productInfoToShow = $(`.product-info*[data-product-number="${productNumber}"]`);
 
-        $('.product-info').hide()
+        $('.product-info').hide();
         $(productInfoToShow).delay(delay).fadeIn();
     });
 

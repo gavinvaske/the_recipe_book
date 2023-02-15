@@ -33,6 +33,30 @@
                 </div>
             </div>
             <% ticket.products && ticket.products.forEach((product) => { %>
+            
+            
+            <% if (ticket.destination.department === 'ORDER-PREP') { %>
+                <p>Order Prep</p>
+            <% } else if (ticket.destination.department === 'ART-PREP') { %>
+                <p>Art Prep</p>
+            <% } else if (ticket.destination.department === 'PRE-PRINTING') { %>
+                <p>Art Prep</p>
+            <% } else if (ticket.destination.department === 'PRINTING') { %>
+                <p>PRINTING</p>
+            <% } else if (ticket.destination.department === 'CUTTING') { %>
+                <p>CUTTING</p>
+            <% } else if (ticket.destination.department === 'WINDING') { %>
+                <p>WINDING</p>
+            <% } else if (ticket.destination.department === 'PACKAGING') { %>
+                <p>Packaging</p>
+            <% } else if (ticket.destination.department === 'SHIPPING') { %>
+                <p>Shipping</p>
+            <% } else if (ticket.destination.department === 'BILLING') { %>
+                <p>BILLING</p>
+            <% } else { %>
+                <% throw new Error(`Error: an unknown department was encountered called "${ticket.destination.department}".`) %> 
+            <% } %>
+            
             <div class='product-info' data-product-number="<%= product.productNumber %>">
                 <h1>Product Details Populate Here:</h1>
                 <p>Product Number: <%- product.productNumber ?? 'N/A' %></p>

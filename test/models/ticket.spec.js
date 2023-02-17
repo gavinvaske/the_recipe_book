@@ -825,7 +825,7 @@ describe('validation', () => {
     describe('attribute: departmentToHoldReason', () => {
         let nonImportantString;
         beforeEach(() => {
-            nonImportantString = chance.string();
+            nonImportantString = chance.word();
         });
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);

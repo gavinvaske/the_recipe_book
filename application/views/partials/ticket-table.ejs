@@ -1,4 +1,4 @@
-<% const requiredAttributesAreNotDefined = !tableIdentifier || !tickets || !columns %>
+<% const requiredAttributesAreNotDefined = !tableIdentifier || !tickets || !columns || !cssClassToUseForTableColoring %>
 
 <% if (requiredAttributesAreNotDefined) { %>
   <% throw new Error(`Error: attempting to render a ticket-table without defining all required attributes.`) %> 
@@ -298,7 +298,7 @@
 <% } %>
 
 
-<div class='status-section needs-attention-status red-master card'>
+<div class='status-section needs-attention-status <%= cssClassToUseForTableColoring %> card'>
     <div class='side-bumper'></div>
     <% const totalNumberOfTicketsInThisDepartment = 'TODO' %>
     <span><%= department %> - <%= totalNumberOfTicketsInThisDepartment %></span>

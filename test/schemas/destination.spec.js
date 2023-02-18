@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const Destination = require('../../application/models/destination');
+const destinationSchema = require('../../application/schemas/destination');
 const {departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
@@ -7,7 +7,8 @@ const DEPARTMENT_WITH_STATUSES = 'PRINTING';
 const DEPARTMENT_WITHOUT_STATUSES = 'COMPLETED';
 
 describe('validation', () => {
-    let destinationAttributes;
+    let destinationAttributes,
+        Destination;
 
     beforeEach(async () => {
         let department = DEPARTMENT_WITH_STATUSES;
@@ -19,6 +20,7 @@ describe('validation', () => {
             assignee: new mongoose.Types.ObjectId(),
             machine: new mongoose.Types.ObjectId()
         };
+        Destination = mongoose.model('Destination', destinationSchema);
     });
 
     it('should validate if all attributes are defined successfully', async () => {

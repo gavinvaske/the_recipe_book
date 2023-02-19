@@ -3,8 +3,8 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
 const ticketSchema = require('./ticket').schema;
-const dieLineCardSchema = require('../schemas/dieLineCard');
-const spotPlateCardSchema = require('../schemas/spotPlateCard');
+const dieLineCardSchema = require('../schemas/dieLine');
+const spotPlateCardSchema = require('../schemas/spotPlate');
 
 function performXor(a, b, c) {
     return Boolean(a) ^ Boolean(b) ^ Boolean(c); // https://stackoverflow.com/a/55865183

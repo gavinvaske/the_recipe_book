@@ -34,59 +34,98 @@
             </div>
             <% ticket.products && ticket.products.forEach((product) => { %>
             <div class='product-info' data-product-number="<%= product.productNumber %>">
-                <h1>Product Details Populate Here:</h1>
-                <p>Product Number: <%- product.productNumber ?? 'N/A' %></p>
-                <p>Product Die: <%- product.productDie ?? 'N/A' %></p>
-                <p>Primary Material: <%- product.primaryMaterial ?? 'N/A' %></p>
-                <p>UV Finish: <%- product.uvFinish ?? 'N/A' %></p>
-                <p>Size Across: <%- product.sizeAcross ?? 'N/A' %></p>
-                <p>Size Around: <%- product.sizeAround ?? 'N/A' %></p>
-                <p>Labels Across: <%- product.labelsAcross ?? 'N/A' %></p>
-                <p>Labels Around: <%- product.labelsAround ?? 'N/A' %></p>
-                <p>Corner Radius: <%- product.cornerRadius ?? 'N/A' %></p>
-                <p>Unwind Direction: <%- product.unwindDirection ?? 'N/A' %></p>
-                <p>Matrix Across: <%- product.matrixAcross ?? 'N/A' %></p>
-                <p>Matrix Around: <%- product.matrixAround ?? 'N/A' %></p>
-                <p>Description: <%- product.description ?? 'N/A' %></p>
-                <p>Label Qty: <%- product.labelQty ?? 'N/A' %></p>
-                <p>Winding Notes: <%- product.windingNotes ?? 'N/A' %></p>
-                <p>Die Cutting Notes: <%- product.dieCuttingNotes ?? 'N/A' %></p>
-                <p>Pre Printing Notes: <%- product.prePrintingNotes ?? 'N/A' %></p>
-                <p>Printing Notes: <%- product.printingNotes ?? 'N/A' %></p>
-                <p>Number of Colors: <%- product.numberOfColors ?? 'N/A' %></p>
-                <p>Labels per Roll: <%- product.labelsPerRoll ?? 'N/A' %></p>
-                <p>Finish Type: <%- product.finishType ?? 'N/A' %></p>
-                <p>Price: <%- product.price ?? 'N/A' %></p>
-                <p>Price Mode: <%- product.priceMode ?? 'N/A' %></p>
-                <p>Product Die Two: <%- product.productDieTwo ?? 'N/A' %></p>
-                <p>Tool Number Around: <%- product.toolNumberAround ?? 'N/A' %></p>
-                <p>Plate ID: <%- product.plateId ?? 'N/A' %></p>
-                <p>Total Unwind Rolls: <%- product.totalWindingRolls ?? 'N/A' %></p>
-                <p>Core Height: <%- product.coreHeight ?? 'N/A' %></p>
-                <p>Label Repeat: <%- product.labelRepeat ?? 'N/A' %></p>
-                <p>Over Run: <%- product.overRun ?? 'N/A' %></p>
-                <p>Varnish: <%- product.varnish ?? 'N/A' %></p>
-                <p>Core Diameter: <%- product.coreDiameter ?? 'N/A' %></p>
-                <p>Number Across: <%- product.numberAcross ?? 'N/A' %></p>
-                <p>Shipping Attention: <%- product.shippingAttention ?? 'N/A' %></p>
-                <p>Die Cutting Married Material: <%- product.dieCuttingMarriedMaterial ?? 'N/A' %></p>
-                <p>Die Cutting Finish: <%- product.dieCuttingFinish ?? 'N/A' %></p>
-                <p>Tooling Notes: <%- product.toolingNotes ?? 'N/A' %></p>
-                <p>Frame Count: <%- product.frameCount ?? 'N/A' %></p>
-                <p>Labels per Frame: <%- product.labelsPerFrame ?? 'N/A' %></p>
-                <p>Measure Across: <%- product.measureAcross ?? 'N/A' %></p>
-                <p>Measure Around: <%- product.measureAround ?? 'N/A' %></p>
-                <p>Frames Plus Over Run: <%- product.framesPlusOverRun ?? 'N/A' %></p>
-                <p>Top Bottom Bleed: <%- product.topBottomBleed ?? 'N/A' %></p>
-                <p>Left Right Bleed: <%- product.leftRightBleed ?? 'N/A' %></p>
-                <p>Frame Repeat: <%- product.frameRepeat ?? 'N/A' %></p>
-                <p>Extra Frames: <%- product.extraFrames ?? 'N/A' %></p>
-                <p>Total Frames: <%- product.totalFrames ?? 'N/A' %></p>
-                <p>Total Feet: <%- product.totalFeet ?? 'N/A' %></p>
-                <p>Number of Rolls: <%- product.numberOfRolls ?? 'N/A' %></p>
-                <p>Roto Repeat: <%- product.rotoRepeat ?? 'N/A' %></p>
-                <p>Delta Repeat: <%- product.deltaRepeat ?? 'N/A' %></p>
-                <p>Number of Cores: <%- product.numberOfCores ?? 'N/A' %></p>
+                <% if (ticket.destination.department === 'ORDER-PREP') { %>
+                    <p>Order Prep</p>
+                <% } else if (ticket.destination.department === 'ART-PREP' || ticket.destination.department === 'PRE-PRINTING') { %>
+                    <p>Art Prep</p>
+                    <p>Pre Printing</p>
+                
+                    <span><%= product.hotFolder || 'N/A' %> (E)</span>
+                    <span><%= product.unwindDirection || 'N/A' %> (F)</span>
+                    <span><%= product.cornerRadius || 'N/A' %> (G)</span>
+                    <span><%= product.numberOfColors || 'N/A' %> (H)</span>
+                    <span><%= product.frameRepeat || 'N/A' %> (I)</span>
+                    <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                    <span><%= product.sizeAround || 'N/A' %> (K)</span>
+                    <span><%= product.labelsAcross || 'N/A' %> (L)</span>
+                    <span><%= product.matrixAcross || 'N/A' %> (M)</span>
+                    <span><%= product.matrixAround || 'N/A' %> (N)</span>
+                    <span><%= product.labelsAround || 'N/A' %> (O)</span>
+                    <span><%= product.topBottomBleed || 'N/A' %> (P)</span>
+                    <span><%= product.leftRightBleed || 'N/A' %> (Q)</span>
+                    <span><%= product.labelsPerFrame || 'N/A' %> (R)</span>
+                    <span><%= product.primaryMaterial || 'N/A' %> (S)</span>
+                    <span><%= product.labelsPerRoll || 'N/A' %> (AP)</span>
+                    <span><%= product.prePrintingNotes || 'N/A' %> (T)</span>
+                
+                <% } else if (ticket.destination.department === 'PRINTING') { %>
+                    <p>PRINTING</p>
+                    <span><%= product.primaryMaterial || 'N/A' %> (???)</span>
+                    <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                    <span><%= product.sizeAround || 'N/A' %> (K)</span>
+                    <span><%= product.labelsAcross || 'N/A' %> (L)</span>
+                    <span><%= product.matrixAcross || 'N/A' %> (M)</span>
+                    <span><%= product.matrixAround || 'N/A' %> (N)</span>
+                    <span><%= product.labelsAround || 'N/A' %> (O)</span>
+                    <span><%= product.measureAcross || 'N/A' %> (U)</span>
+                    <span><%= product.measureAround || 'N/A' %> (V)</span>
+                    <span><%= product.labelsPerFrame || 'N/A' %> (R)</span>
+                    <span><%= product.printingNotes || 'N/A'%> (AB)</span>
+                    <span><%= product.framesPlusOverRun || 'N/A'%> (W)</span>
+                    <span><%= product.extraFrames || 'N/A'%> (X)</span>
+                    <span><%= product.totalFrames || 'N/A'%> (Y)</span>
+                    <span><%= product.totalFeet || 'N/A'%> (Z)</span>
+                    <span><%= product.labelQty || 'N/A'%> (AA)</span>
+                    <span><%= product.frameRepeat || 'N/A'%> (I)</span>
+                    <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
+                    <span><%= product.numberOfColors || 'N/A'%> (H)</span>
+                    <span><%= product.unwindDirection || 'N/A'%> (F)</span>
+                    <span><%= product.numberOfRolls || 'N/A'%> (AC)</span>
+                
+                <% } else if (ticket.destination.department === 'CUTTING') { %>
+                    <p>CUTTING</p>
+                    <span><%= product.productDie || 'N/A' %> (AD)</span>
+                    <span><%= product.dieCuttingFinish || 'N/A' %> (AE)</span>
+                    <span><%= product.varnish || 'N/A' %> (AF)</span>
+                    <span><%= product.finishType || 'N/A' %> (AG)</span>
+                    <span><%= product.productDieTwo || 'N/A' %> (AH)</span>
+                    <span><%= product.dieCuttingMarriedMaterial || 'N/A' %> (AI)</span>
+                    <span><%= product.deltaRepeat || 'N/A' %> (AJ)</span>
+                    <span><%= product.rotoRepeat || 'N/A' %> (AK)</span>
+                    <span><%= product.toolNumberAround || 'N/A' %> (AL)</span>
+                    <span><%= product.plateId || 'N/A' %> (AM)</span>
+                    <span><%= product.dieCuttingNotes || 'N/A' %> (AN)</span>
+                <% } else if (ticket.destination.department === 'WINDING') { %>
+                    <p>WINDING</p>
+                    <span> <%= product.labelQty || 'N/A' %> (AA)</span>
+                    <span> <%= product.labelsPerRoll || 'N/A' %> (AP)</span>
+                    <span>TODO: Waiting on Storm (AQ)</span>
+                    <span>  <%= product.unwindDirection || 'N/A' %> (F)</span>
+                    <span>  <%= product.coreHeight || 'N/A' %> (AR)</span>
+                    <span><%= product.numberOfCores || 'N/A' %> (AS)</span>
+                    <span>  <%= product.overRun * 100 %>% (AT)</span>
+                    <span>  <%= product.coreDiameter || 'N/A' %> (AU)</span>
+                    <span>  <%= product.windingNotes || 'N/A' %> (AV)</span>
+                <% } else if (ticket.destination.department === 'PACKAGING') { %>
+                    <p>Packaging</p>
+                    
+                <% } else if (ticket.destination.department === 'SHIPPING') { %>
+                    <p>Shipping</p>
+                    <span><%= ticket.shippingEmailAddress || 'N/A' %> (AW)</span>
+                    <span><%= ticket.shippingMethod || 'N/A' %> (AX)</span>
+                    <span><%= ticket.shippingInstructions || 'N/A' %> (AY)</span>
+                    <span><%= ticket.shippingAddress || 'N/A' %> (AZ)</span>
+                    <span><%= ticket.shippingUnitNumber || 'N/A' %> (AAA)</span>
+                    <span><%= ticket.shipCity || 'N/A' %> (AAB)</span>
+                    <span><%= ticket.shipState || 'N/A' %> (AAC)</span>
+                    <span><%= ticket.shipZipCode || 'N/A' %> (AAD)</span>
+                    <span><%= ticket.shippingLocationName || 'N/A' %> (AAE)</span>
+                    <span><%= ticket.shippingAttention || 'N/A' %> (AAF)</span>
+                <% } else if (ticket.destination.department === 'BILLING') { %>
+                    <p>BILLING</p>
+                <% } else { %>
+                    <% throw new Error(`Error: an unknown department was encountered called "${ticket.destination.department}".`) %> 
+                <% } %>
             </div>
             <% }) %>
         </div>

@@ -495,7 +495,9 @@ html {
   padding: 50px 50px;
   min-width: 400px;
   z-index: 1;
-  background-color: rgba(260,260,260,.9);
+  background-color: white;
+  -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
 }
 .registration-content-frame form {
     width: 100%;

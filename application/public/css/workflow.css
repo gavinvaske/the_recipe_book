@@ -825,14 +825,14 @@
 	z-index: 99;
 } */
 .expanded-options-wrapper.active .expanded-options-dropdown,
-.column-td:nth-child(1).active .ticket-drpdwn-options {
+.column-td:nth-child(1).active .ticket-drpdwn-options,
+.column-td:nth-child(1).active .ticket-dropdown-options {
 	opacity: 1;
 	visibility: visible;
 	top: 100%;
 	transition: .3s;
 	z-index: 99;
 }
-
 /* .column-td-a.active .fa-ellipsis-vertical {
 	opacity: 1;
 } */

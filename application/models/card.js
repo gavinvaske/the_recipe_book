@@ -7,7 +7,7 @@ const dieLineCardSchema = require('../schemas/dieLineCard');
 const spotPlateCardSchema = require('../schemas/spotPlateCard');
 
 function performXor(a, b, c) {
-    return Boolean(a) ^ Boolean(b) ^ Boolean(c);  // https://stackoverflow.com/a/55865183
+    return Boolean(a) ^ Boolean(b) ^ Boolean(c); // https://stackoverflow.com/a/55865183
 }
 
 const cardSchema = new Schema({

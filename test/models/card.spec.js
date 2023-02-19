@@ -5,19 +5,19 @@ const databaseService = require('../../application/services/databaseService');
 function createSpotPlate() {
     return {
         title: chance.string()
-    }
+    };
 }
 function createDieLine() {
     return {
         title: chance.string()
-    }
+    };
 }
 
 describe('validation', () => {
     let cardAttributes;
 
     beforeEach(() => {
-        cardAttributes = {}
+        cardAttributes = {};
     });
 
     describe('verify timestamps on created object', () => {
@@ -34,7 +34,7 @@ describe('validation', () => {
                 const card = new CardModel(cardAttributes);
                 let savedCard = await card.save({validateBeforeSave: false});
 
-                console.log(`blah: ${JSON.stringify(savedCard)}`)
+                console.log(`blah: ${JSON.stringify(savedCard)}`);
     
                 expect(savedCard.createdAt).toBeDefined();
             });

@@ -13,11 +13,14 @@ describe('cardService test suite', () => {
         });
 
         it('should return a card with the correct attributes', () => {
+            const expectedDieLineAttributes = {
+                title: dieLineAttributes.title,
+                description: dieLineAttributes.description,
+            }
             const actualDieLineCard = cardService.buildDieLineCard(dieLineAttributes);
 
             expect(actualDieLineCard.dieLine._id).toBeDefined();
-            expect(actualDieLineCard.dieLine.title).toEqual(dieLineAttributes.title);
-            expect(actualDieLineCard.dieLine.description).toEqual(dieLineAttributes.description);
+            expect(actualDieLineCard.dieLine).toEqual(expect.objectContaining(expectedDieLineAttributes));
         });
     });
 
@@ -32,11 +35,14 @@ describe('cardService test suite', () => {
         });
 
         it('should return a card with the correct attributes', () => {
+            const expectedSpotPlateAttributes = {
+                title: spotPlateAttributes.title,
+                description: spotPlateAttributes.description
+            }
             const actualSpotPlateCard = cardService.buildSpotPlateCard(spotPlateAttributes);
 
             expect(actualSpotPlateCard.spotPlate._id).toBeDefined();
-            expect(actualSpotPlateCard.spotPlate.title).toEqual(spotPlateAttributes.title);
-            expect(actualSpotPlateCard.spotPlate.description).toEqual(spotPlateAttributes.description);
+            expect(actualSpotPlateCard.spotPlate).toEqual(expect.objectContaining(expectedSpotPlateAttributes));
         });
     });
 });

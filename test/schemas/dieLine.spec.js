@@ -117,16 +117,16 @@ describe('validation', () => {
             const file = {
                 url: chance.url(),
                 fileName: chance.string()
-            }
+            };
             const expectedFileUploads = [
                 file
-            ]
-            dieLineAttributes.fileUploads = expectedFileUploads
+            ];
+            dieLineAttributes.fileUploads = expectedFileUploads;
             const dieLine = new DieLineModel(dieLineAttributes);
 
             expect(dieLine.fileUploads.length).toEqual(expectedFileUploads.length);
             expect(dieLine.fileUploads[0]).toEqual(expect.objectContaining(file));
-            expect(dieLine.fileUploads[0]._id).toBeDefined()
+            expect(dieLine.fileUploads[0]._id).toBeDefined();
         });
     });
 });

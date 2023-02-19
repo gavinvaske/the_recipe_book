@@ -119,16 +119,16 @@ describe('validation', () => {
             const file = {
                 url: chance.url(),
                 fileName: chance.string()
-            }
+            };
             const expectedFileUploads = [
                 file
-            ]
-            spotPlateAttributes.fileUploads = expectedFileUploads
+            ];
+            spotPlateAttributes.fileUploads = expectedFileUploads;
             const spotPlate = new SpotPlateModel(spotPlateAttributes);
 
             expect(spotPlate.fileUploads.length).toEqual(expectedFileUploads.length);
             expect(spotPlate.fileUploads[0]).toEqual(expect.objectContaining(file));
-            expect(spotPlate.fileUploads[0]._id).toBeDefined()
+            expect(spotPlate.fileUploads[0]._id).toBeDefined();
         });
     });
 });

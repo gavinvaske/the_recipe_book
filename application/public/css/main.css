@@ -4440,6 +4440,7 @@ span.drpdwn-title {
 .in-progress-view .left-col .click-tab {
   margin-right: 15px;
   margin-bottom: 15px;
+  height: 72px;
   position: relative;
   background-color: #E6E6E6;
   padding: 1.5rem;
@@ -4452,6 +4453,7 @@ span.drpdwn-title {
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   border-left: 3px solid red;
   background-color: white;
+  font-weight: bold;
 }
 .click-tab.active .bumper {
   top: 0;
@@ -4468,9 +4470,15 @@ span.drpdwn-title {
   overflow: hidden;
   transition: .3s;
 }
-.in-progress-view .right-col .card:nth-child(1).active {
+.in-progress-view .right-col .middle-col.active {
   width: 85%;
   transition: .3s;
+}
+.in-progress-view .right-col .middle-col .card:nth-child(1) {
+  margin-bottom: 0;
+}
+.in-progress-view .right-col .middle-col .card:nth-child(1).active {
+  margin-bottom: 15px;
 }
 .in-progress-view .right-col .card {
   height: 100%;
@@ -4478,13 +4486,27 @@ span.drpdwn-title {
   padding: 1.5rem;
   width: 100%;
 }
-.in-progress-view .right-col .card:nth-child(1) {
+.in-progress-view .right-col .middle-col {
   margin-right: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .in-progress-view .right-col .click-tab:nth-child(1) {
   width: 35%;
   margin-right: 15px;
+}
+.in-progress-view .right-col .middle-col .card:nth-child(2) {
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+.in-progress-view .right-col .middle-col .card:nth-child(1).active,
+.in-progress-view .right-col .middle-col .card:nth-child(2).active {
+  height: 50%;
+  position: relative;
+  padding: 1.5rem;
 }
 
 .in-progress-view .right-col .click-tab:nth-child(2) {
@@ -4493,6 +4515,7 @@ span.drpdwn-title {
 .ticket-tab h3 {
   font-weight: bold;
   margin: 0;
+  line-height: 1.75rem;
 }
 .in-progress-view .right-col .click-tab {
   height: 100%;

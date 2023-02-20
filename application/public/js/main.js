@@ -827,12 +827,17 @@ $( document ).ready(function() {
 
         $('.product-info').hide();
         $(productInfoToShow).delay(delay).fadeIn();
+
+        $('.in-progress-view .right-col .middle-col .card').addClass('active');
+    });
+    $('.ticket-tab').click(function(){
+        $('.in-progress-view .right-col .middle-col .card').removeClass('active');
     });
 
     $('.close-window').click(function(){
         $('.job-notes').addClass('active');
-        $('.in-progress-view .right-col .card:nth-child(1)').addClass('active');
-        $('.in-progress-view .right-col .card:nth-child(2)').addClass('active');
+        $('.in-progress-view .right-col .middle-col').addClass('active');
+        $('.in-progress-view .right-col .card.proof').addClass('active');
     });
 
     $('.hold-reason-option i').click(function() {

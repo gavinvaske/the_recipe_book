@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const fileSchema = require('./file');
 
-const spotPlateCardSchema = new Schema({
+const spotPlateSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -18,4 +18,4 @@ const spotPlateCardSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = spotPlateCardSchema;
+module.exports = spotPlateSchema;

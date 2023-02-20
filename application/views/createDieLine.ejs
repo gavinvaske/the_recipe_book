@@ -1,1 +1,26 @@
-<h1>TODO: createDieLine.ejs</h1>
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper create-table-entry">
+    <div class="card">
+        <div class="header">
+            <div class="title-icon-box">
+                <h1 class="text-blue card-title">Create New Die Line</h1>
+            </div>
+            <p>Fill out the form below to create a new die line. Remember, you're <b>awesome :)</b></p>
+        </div>
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
+        <form action="/die-lines", method="POST">
+            <div class="form-group">
+                <label for="name">title</label>
+                <input type="text" name="title" id="title">
+
+                <label for="name">description</label>
+                <input type="text" name="description" id="description">
+
+             </div>
+            <button class="create-entry submit-button" type="submit" value="Create Die Line">Create</button>
+        </form>
+    </div>
+</div>

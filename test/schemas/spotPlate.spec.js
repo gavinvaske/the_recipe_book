@@ -68,6 +68,14 @@ describe('validation', () => {
             expect(error).not.toBe(undefined);
         });
 
+        it('should trim leading and trailing whitespace', () => {
+            const expectedTitle = chance.string();
+            spotPlateAttributes.title = '  ' + expectedTitle + '  ';
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            expect(spotPlate.title).toEqual(expectedTitle);
+        });
+
         it('should be of type String', () => {
             const spotPlate = new SpotPlateModel(spotPlateAttributes);
 
@@ -89,6 +97,14 @@ describe('validation', () => {
             const error = spotPlate.validateSync();
 
             expect(error).toBe(undefined);
+        });
+
+        it('should trim leading and trailing whitespace', () => {
+            const expectedDescription = chance.string();
+            spotPlateAttributes.description = '  ' + expectedDescription + '  ';
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            expect(spotPlate.description).toEqual(expectedDescription);
         });
 
         it('should be of type String', () => {

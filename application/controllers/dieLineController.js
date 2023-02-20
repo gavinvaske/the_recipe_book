@@ -7,9 +7,9 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-    const card = cardService.buildDieLineCard(request.body);
+    const dieLineCard = cardService.buildDieLineCard(request.body);
 
-    await CardModel.create(card);
+    await CardModel.create(dieLineCard);
 
     return response.redirect('/tickets');
 });

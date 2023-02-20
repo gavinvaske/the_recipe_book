@@ -7,9 +7,9 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-    const card = cardService.buildSpotPlateCard(request.body);
+    const spotPlateCard = cardService.buildSpotPlateCard(request.body);
 
-    await CardModel.create(card);
+    await CardModel.create(spotPlateCard);
 
     return response.redirect('/tickets');
 });

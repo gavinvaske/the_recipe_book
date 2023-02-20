@@ -71,6 +71,14 @@ describe('validation', () => {
 
             expect(dieLine.title).toEqual(expect.any(String));
         });
+
+        it('should trim leading and trailing whitespace', () => {
+            const expectedTitle = chance.string();
+            dieLineAttributes.title = '  ' + expectedTitle + '  ';
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            expect(dieLine.title).toEqual(expectedTitle);
+        });
     });
 
     describe('attribute: description', () => {
@@ -93,6 +101,14 @@ describe('validation', () => {
             const dieLine = new DieLineModel(dieLineAttributes);
 
             expect(dieLine.description).toEqual(expect.any(String));
+        });
+
+        it('should trim leading and trailing whitespace', () => {
+            const expectedDescription = chance.string();
+            dieLineAttributes.description = '  ' + expectedDescription + '  ';
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            expect(dieLine.description).toEqual(expectedDescription);
         });
     });
 

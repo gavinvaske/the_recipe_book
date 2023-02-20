@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const fileSchema = require('./file');
 
-const dieLineCardSchema = new Schema({
+const dieLineSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -18,4 +18,4 @@ const dieLineCardSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = dieLineCardSchema;
+module.exports = dieLineSchema;

@@ -37,8 +37,6 @@ describe('validation', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const spotPlate = new SpotPlateModel(spotPlateAttributes);
                 let savedSpotPlate = await spotPlate.save({validateBeforeSave: false});
-
-                console.log(`blah: ${JSON.stringify(savedSpotPlate)}`);
     
                 expect(savedSpotPlate.createdAt).toBeDefined();
             });

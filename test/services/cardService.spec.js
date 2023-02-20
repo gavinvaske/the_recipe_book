@@ -16,7 +16,7 @@ describe('cardService test suite', () => {
             const expectedDieLineAttributes = {
                 title: dieLineAttributes.title,
                 description: dieLineAttributes.description,
-            }
+            };
             const actualDieLineCard = cardService.buildDieLineCard(dieLineAttributes);
 
             expect(actualDieLineCard.dieLine._id).toBeDefined();
@@ -38,7 +38,7 @@ describe('cardService test suite', () => {
             const expectedSpotPlateAttributes = {
                 title: spotPlateAttributes.title,
                 description: spotPlateAttributes.description
-            }
+            };
             const actualSpotPlateCard = cardService.buildSpotPlateCard(spotPlateAttributes);
 
             expect(actualSpotPlateCard.spotPlate._id).toBeDefined();

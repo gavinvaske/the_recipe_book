@@ -33,8 +33,6 @@ describe('validation', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const card = new CardModel(cardAttributes);
                 let savedCard = await card.save({validateBeforeSave: false});
-
-                console.log(`blah: ${JSON.stringify(savedCard)}`);
     
                 expect(savedCard.createdAt).toBeDefined();
             });

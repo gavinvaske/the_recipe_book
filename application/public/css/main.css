@@ -4476,9 +4476,13 @@ span.drpdwn-title {
 }
 .in-progress-view .right-col .middle-col .card:nth-child(1) {
   margin-bottom: 0;
+  min-height: 100%;
+  transition: .3s;
 }
 .in-progress-view .right-col .middle-col .card:nth-child(1).active {
   margin-bottom: 15px;
+  min-height: 50%;
+  transition: .3s;
 }
 .in-progress-view .right-col .card {
   height: 100%;
@@ -4490,6 +4494,7 @@ span.drpdwn-title {
   margin-right: 15px;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .in-progress-view .right-col .click-tab:nth-child(1) {
@@ -4497,16 +4502,19 @@ span.drpdwn-title {
   margin-right: 15px;
 }
 .in-progress-view .right-col .middle-col .card:nth-child(2) {
-  height: 0;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
+  height: 50%;
+  position: relative;
+  padding: 1.5rem;
 }
 .in-progress-view .right-col .middle-col .card:nth-child(1).active,
 .in-progress-view .right-col .middle-col .card:nth-child(2).active {
   height: 50%;
   position: relative;
   padding: 1.5rem;
+  transition: .3s;
+}
+.in-progress-view .right-col .middle-col .card:nth-child(2).active {
+  margin-bottom: 0;
 }
 
 .in-progress-view .right-col .click-tab:nth-child(2) {
@@ -4526,7 +4534,6 @@ iframe {
   border-radius: .428rem;
   display: none;
 }
-
 .job-notes {
   position: absolute;
   top: 1.5rem;
@@ -4559,21 +4566,27 @@ iframe {
   padding: 1.5rem;
   background-color: white;
 }
-
-.in-progress-view .right-col .card:nth-child(2) {
+.in-progress-view .right-col .card.proof {
   position: relative;
   width: 0;
   padding: 0;
   margin: 0;
   transition: .3s;
 }
-
-.in-progress-view .right-col .card:nth-child(2).active {
+.in-progress-view .right-col .card.proof.active {
   padding: 1.5rem;
   width: 100%;
   transition: .3s;
 }
-
 .product-info {
   display: none;
+}
+
+.click-tab.active .right-bumper {
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  background-color: red;
+  left: 0;
+  top: 0;
 }

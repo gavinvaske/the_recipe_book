@@ -815,18 +815,18 @@ $( document ).ready(function() {
     });
 
     $('.click-tab').click(function(){
-        const delay = 300;
+        const delay = 0;
         $('.click-tab').removeClass('active');
         $(this).addClass('active');
-        $('#proof').fadeIn();
-        $('.proof-placeholder').fadeOut();
-        $('.ticket-info').fadeOut();
+        $('#proof').show();
+        $('.proof-placeholder').hide();
+        $('.ticket-info').hide();
 
         const productNumber = $(this).data('product-number');
         const productInfoToShow = $(`.product-info*[data-product-number="${productNumber}"]`);
 
         $('.product-info').hide();
-        $(productInfoToShow).delay(delay).fadeIn();
+        $(productInfoToShow).delay(delay).show();
 
         $('.in-progress-view .right-col .middle-col .card').addClass('active');
     });

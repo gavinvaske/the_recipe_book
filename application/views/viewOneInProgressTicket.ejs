@@ -1,7 +1,8 @@
 <%- include('partials/navbarMain.ejs') %>
 <div class='page-wrapper in-progress-view flex-top-center-row'>
     <div class='left-col col'>
-        <div class='click-tab ticket-tab active'>
+        <div class='click-tab ticket-tab active flex-center-left-row'>
+            <div class='right-bumper'></div>
             <h3><%= ticket.ticketNumber ?? 'N/A' %></h3>
             <div class='bumper'></div>
         </div>
@@ -13,7 +14,7 @@
         <% }) %>
     </div>
     <div class='right-col col flex-top-center-row'>
-        <div class='middle-col flex-center-center-column half-width'>
+        <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>
                 <h3 class='ticket-info'>Ticket information goes here.</h3>
                 <div class='job-notes'>

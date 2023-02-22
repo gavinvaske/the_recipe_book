@@ -1,11 +1,9 @@
-const dieLineSchema = require('../../application/schemas/dieLine');
+const DieLineModel = require('../../application/models/dieLine');
 const chance = require('chance').Chance();
-const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
-    let dieLineAttributes,
-        DieLineModel;
+    let dieLineAttributes;
 
     beforeEach(() => {
         dieLineAttributes = {
@@ -13,7 +11,6 @@ describe('validation', () => {
             description: '',
             fileUploads: []
         };
-        DieLineModel = mongoose.model('File', dieLineSchema);
     });
 
     it('should validate if all attributes are defined successfully', () => {

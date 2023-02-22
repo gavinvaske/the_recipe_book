@@ -1,11 +1,9 @@
-const spotPlateSchema = require('../../application/schemas/spotPlate');
+const SpotPlateModel = require('../../application/models/spotPlate');
 const chance = require('chance').Chance();
-const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
-    let spotPlateAttributes,
-        SpotPlateModel;
+    let spotPlateAttributes;
 
     beforeEach(() => {
         spotPlateAttributes = {
@@ -13,7 +11,6 @@ describe('validation', () => {
             description: '',
             fileUploads: []
         };
-        SpotPlateModel = mongoose.model('File', spotPlateSchema);
     });
 
     it('should validate if all attributes are defined successfully', () => {

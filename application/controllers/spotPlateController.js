@@ -1,17 +1,26 @@
 const router = require('express').Router();
-const CardModel = require('../models/card');
-const cardService = require('../services/cardService');
+const SpotPlateModel = require('../models/spotPlate');
+
+router.get('/', (request, response) => {
+    return response.render('viewRequests');
+});
 
 router.get('/form', (request, response) => {
     return response.render('createSpotPlate');
 });
 
 router.post('/', async (request, response) => {
-    const spotPlateCard = cardService.buildSpotPlateCard(request.body);
+    try {
+        await SpotPlateModel.create(request.body);
 
-    await CardModel.create(spotPlateCard);
+        return response.redirect('/spot-plates');
+    } catch (error) {
+        console.log(`Error creating spot-plate: ${error.message}`);
+        request.flash('errors', ['The following error(s) occurred while creating the spot-plate:', ...mongooseService.parseHumanReadableMessages(error)]);
+        
+        return response.redirect('back');
+    }
 
-    return response.redirect('/tickets');
 });
 
 module.exports = router;

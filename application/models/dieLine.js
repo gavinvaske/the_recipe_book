@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('./file');
+const fileSchema = require('../schemas/file');
 
 const dieLineSchema = new Schema({
     title: {
@@ -18,4 +18,6 @@ const dieLineSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = dieLineSchema;
+const DieLine = mongoose.model('DieLine', dieLineSchema);
+
+module.exports = DieLine;

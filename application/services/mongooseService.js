@@ -1,6 +1,10 @@
 module.exports.parseHumanReadableMessages = (error) => {
     let humanReadableMessages = [];
 
+    if (error.message) {
+        return [error.message];
+    }
+
     try {
         const {errors} = error;
 

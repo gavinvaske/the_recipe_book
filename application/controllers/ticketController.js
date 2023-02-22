@@ -198,7 +198,7 @@ router.get('/form', (request, response) => {
     response.render('uploadTicket');
 });
 
-router.post('/form', upload.single('job-xml'), async (request, response) => {
+router.post('/', upload.single('job-xml'), async (request, response) => {
     const jobFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
 
     try {
@@ -216,7 +216,7 @@ router.post('/form', upload.single('job-xml'), async (request, response) => {
         return response.redirect(`/tickets/update/${ticket._id}`);
     } catch (error) {
         console.log(`Error uploading job file: ${error}`);
-        request.flash('errors', ['The following error occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
+        request.flash('errors', ['The following error(s) occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
     
         return response.redirect('/tickets/form');
     } finally {

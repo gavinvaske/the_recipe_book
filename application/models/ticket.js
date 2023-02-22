@@ -83,7 +83,7 @@ const ticketSchema = new Schema({
                 return this.products[0].primaryMaterial;
             }
         },
-        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID thru the admin panel before uploading the XML'],
+        validate: [validateMaterialExists, 'Unknown material ID of "{VALUE}". Please add this material ID through the admin panel before uploading the XML'],
     },
     departmentNotes: {
         type: departmentNotesSchema,

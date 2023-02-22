@@ -15,7 +15,7 @@ module.exports.parseHumanReadableMessages = (error) => {
             let humanReadableMessage;
 
             if (errorType === 'ValidatorError') {
-                humanReadableMessage = `'${mongooseError['path']}' failed validation: ${mongooseError['message']}`;
+                humanReadableMessage = `${mongooseError['message']}`;
             } else {
                 humanReadableMessage = `'${errorType}': ${mongooseError['message']}`;
             }

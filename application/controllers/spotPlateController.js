@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const SpotPlateModel = require('../models/spotPlate');
+const mongooseService = require('../services/mongooseService');
 
 router.get('/', (request, response) => {
     return response.render('viewRequests');

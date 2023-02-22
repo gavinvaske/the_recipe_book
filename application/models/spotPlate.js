@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('./file');
+const fileSchema = require('../schemas/file');
 
 const spotPlateSchema = new Schema({
     title: {
@@ -18,4 +18,6 @@ const spotPlateSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = spotPlateSchema;
+const SpotPlate = mongoose.model('SpotPlate', spotPlateSchema);
+
+module.exports = SpotPlate;

@@ -47,7 +47,7 @@ describe('mongooseService test cases', () => {
         console.log(humanReadableErrorMessages);
 
         expect(humanReadableErrorMessages.length).toBe(1);
-        expect(humanReadableErrorMessages[0]).toBe(`'${errors[key]['path']}' failed validation: ${errors[key]['message']}`);
+        expect(humanReadableErrorMessages[0]).toBe(errors[key]['message']);
     });
 
     it('should return a human readable error message if NON validation error', () => {

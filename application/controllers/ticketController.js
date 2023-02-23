@@ -195,7 +195,7 @@ router.get('/update/:id', async (request, response) => {
 });
 
 router.get('/form', (request, response) => {
-    response.render('uploadTicket');
+    response.render('createTicket');
 });
 
 router.post('/', upload.single('job-xml'), async (request, response) => {

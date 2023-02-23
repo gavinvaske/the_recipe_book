@@ -12,15 +12,12 @@ const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
+const fileService = require('../services/fileService');
 
 router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_ERROR_CODE = 400;
-
-function deleteFileFromFileSystem(path) {
-    fs.unlinkSync(path);
-}
 
 router.get('/', async (request, response) => {
     const tickets = await TicketModel
@@ -199,7 +196,7 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', upload.single('job-xml'), async (request, response) => {
-    const jobFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
+    const jobFilePath = fileService.getUploadedFilePath(request.file.filename);
 
     try {
         const jobAsXml = fs.readFileSync(jobFilePath);
@@ -220,7 +217,7 @@ router.post('/', upload.single('job-xml'), async (request, response) => {
     
         return response.redirect('/tickets/form');
     } finally {
-        deleteFileFromFileSystem(jobFilePath);
+        fileService.deleteOneFileFromFileSystem(jobFilePath);
     }
 });
 

@@ -2,12 +2,13 @@
 <div class='page-wrapper in-progress-view flex-top-center-row'>
     <div class='left-col col'>
         <div class='click-tab ticket-tab active flex-center-left-row'>
-            <div class='right-bumper'></div>
+            <div class='left-bumper'></div>
             <h3><%= ticket.ticketNumber ?? 'N/A' %></h3>
             <div class='bumper'></div>
         </div>
         <% ticket.products && ticket.products.forEach((product, index) => { %>
             <div class='click-tab product-tab' data-product-number="<%= product.productNumber %>">
+                <div class='left-bumper'></div>
                 <%= index + 1 %>. <%= product.productNumber ?? 'N/A' %>
                 <div class='bumper'></div>
             </div>
@@ -17,6 +18,26 @@
         <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>
                 <h3 class='ticket-info'>Ticket information goes here.</h3>
+                <div class='product-table'>
+                    <div class='table-header flex-center-space-around-row'>
+                        <div class='col-header'>#</div>
+                        <div class='col-header'>Product</div>
+                        <div class='col-header'>QTY</div>
+                        <div class='col-header'>Frames</div>
+                        <div class='col-header'>Feet</div>
+                    </div>
+                    <div class='table-body flex-top-center-column'>
+                        <% ticket.products && ticket.products.forEach((product, index) => { %>
+                            <div class='table-row flex-center-center-row'>
+                                <div class='col-td'>1</div>
+                                <div class='col-td'><%= product.productNumber %></div>
+                                <div class='col-td'><%= product.labelQty || 'N/A'%></div>
+                                <div class='col-td'><%= product.totalFrames || 'N/A'%></div>
+                                <div class='col-td'>50</div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
                 <div class='job-notes'>
                     <div class='front-note'>
                         <h3>Job Notes</h3>

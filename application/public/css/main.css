@@ -495,6 +495,7 @@ html {
   padding: 50px 50px;
   min-width: 400px;
   z-index: 1;
+  border-radius: 0.428rem;
   background-color: white;
   -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
@@ -505,7 +506,8 @@ html {
 .registration-content-frame h1 {
   font-family: Montserrat-Medium;
   /* font-size: 1.714rem; */
-  font-size: 1.9rem;
+  /* font-size: 1.9rem; */
+  font-size: 2.5rem;
   color: #5e5873;
 }
 .registration-content-frame h1 span {
@@ -513,7 +515,8 @@ html {
 }
 .registration-content-frame h2 {
   /* font-size: 1.3rem; */
-  font-size: 1.45rem;
+  /* font-size: 1.45rem; */
+  font-size: 1.2rem;
   letter-spacing: 3px;
   margin-bottom: 2rem;
 }
@@ -4451,7 +4454,6 @@ span.drpdwn-title {
 .in-progress-view .left-col .click-tab.active {
   -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-  border-left: 3px solid red;
   background-color: white;
   font-weight: bold;
 }
@@ -4541,7 +4543,7 @@ iframe {
   left: 1.5rem;
   bottom: 1.5rem;
   right: 1.5rem;
-  background-color: #f8f8f8;
+  background-color: white;
   border-radius: 0.428rem;
 }
 .proof-placeholder {
@@ -4563,7 +4565,7 @@ iframe {
 }
 .front-note {
   border-radius: 0.428rem;
-  padding: 1.5rem;
+  padding: 0;
   background-color: white;
 }
 .in-progress-view .right-col .card.proof {
@@ -4582,11 +4584,43 @@ iframe {
   display: none;
 }
 
-.click-tab.active .right-bumper {
+.click-tab.active .left-bumper {
   position: absolute;
   height: 100%;
-  width: 5px;
-  background-color: red;
+  width: 6px;
   left: 0;
   top: 0;
+  border-top-left-radius: 0.428rem;
+  border-bottom-left-radius: 0.428rem;
+}
+.ticket-tab .left-bumper {
+  background-color: #6a68af;
+}
+.product-tab .left-bumper {
+  background-color: #00cfe8;
+}
+
+.product-table .col-header:first-of-type,
+.product-table .col-td:first-of-type {
+  width: 4%;
+}
+
+.product-table .col-header {
+  font-weight: 600;
+}
+
+.product-table .col-header,
+.product-table .col-td {
+  width: 24%;
+  text-align: center;
+}
+
+.product-table .table-header {
+  padding: 10px 0;
+  border-top: 1px solid rgba(128, 128, 128, .12);
+  border-bottom: 1px solid rgba(128, 128, 128, .12);
+}
+
+.product-table .table-row {
+  padding: 7px 0;
 }

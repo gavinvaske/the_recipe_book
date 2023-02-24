@@ -26,12 +26,12 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
             'products.productNumber': productNumber
         }).exec();
 
-        const {Location: urlWhereTheFileIsStored} = await Promise.resolve(s3Service.storeFileInS3(fileName, base64EncodedPdf));
+        const uploadedProof = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf])[0] // TODO (2-22-2023): Make this line less ugly
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = {
-            url: urlWhereTheFileIsStored,
+        ticket.products[index].proof = {    // TODO (2-22-2023): Make proof an "s3File" type
+            url: uploadedProof.url,
             fileName
         };
 

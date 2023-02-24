@@ -1,4 +1,4 @@
-const fileSchema = require('../../application/schemas/file');
+const fileSchema = require('../../application/schemas/s3File');
 const chance = require('chance').Chance();
 const mongoose = require('mongoose');
 

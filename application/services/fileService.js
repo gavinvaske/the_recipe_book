@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const fileSchema = require('../../application/schemas/file');
+const fileSchema = require('../schemas/s3File');
 const mongoose = require('mongoose');
 
 module.exports.getUploadedFilePath = (uploadedFileName) => {
@@ -50,3 +50,9 @@ module.exports.buildFiles = (fileNames, fileUrls) => {
     }
     return files;
 };
+
+module.exports.getUploadedFileContents = (filePaths) => {
+    return filePaths.map((filePath) => {
+        return fs.readFileSync(filePath);
+    });
+}

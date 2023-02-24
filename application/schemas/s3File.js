@@ -8,16 +8,28 @@ function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
 }
 
-const fileSchema = new Schema({
+const s3FileSchema = new Schema({
     url: {
         type: String,
         validate: [validateUrl, 'Invalid URL of "{VALUE}" resulted in a validation error'],
-        required: true
+        required: true,
+        alias: 'Location'
     },
     fileName: {
         type: String,
-        required: true
+        required: true,
+        alias: 'key'
+    },
+    bucket: {
+        type: String,
+        required: true,
+        alias: 'Bucket'
+    },
+    versionId: {
+        type: String,
+        required: true,
+        alias: 'VersionId'
     }
 }, { timestamps: true });
 
-module.exports = fileSchema;
+module.exports = s3FileSchema;

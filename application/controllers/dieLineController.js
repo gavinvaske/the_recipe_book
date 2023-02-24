@@ -3,6 +3,7 @@ const DieLineModel = require('../models/dieLine');
 const mongooseService = require('../services/mongooseService');
 const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
+const s3Service = require('../services/s3Service');
 
 const MAX_NUMBER_OF_FILES = 100;
 
@@ -18,7 +19,15 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
     const uploadedFileNames = fileService.getFileNames(request.files);
     const uploadedFilePaths = fileService.getUploadedFilePaths(uploadedFileNames);
     try {
-        await DieLineModel.create(request.body);
+        let s3FileUploadResponses = await Promise.all(s3Service.storeFilesInS3(uploadedFileNames, uploadedFilePaths))
+        let fileUrls = s3Service.getUrlsFromS3UploadResponses(s3FileUploadResponses);
+
+        const dieLineAttributes = {
+            ...request.body,
+            fileUploads: fileService.buildFiles(uploadedFileNames, fileUrls)
+        }
+
+        await DieLineModel.create(dieLineAttributes);
 
         return response.redirect('/die-lines');
     } catch (error) {

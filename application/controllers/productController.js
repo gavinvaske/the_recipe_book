@@ -37,7 +37,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         await ticket.save();
 
         return response.json({});
-    } catch (error) {
+    } catch (error) {       
         console.log(`Error while uploading proof: ${error.message}`);
         await s3Service.deleteS3Objects(uploadedProofs);
 

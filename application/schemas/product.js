@@ -117,7 +117,7 @@ const proofSchema = new Schema({
     }
 }, { timestamps: true });
 
-const schema = new Schema({
+const productSchema = new Schema({
     proof: {
         type: proofSchema,
         required: false
@@ -542,6 +542,4 @@ function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound)
     return Math.round(unRoundedValue * precision) / precision;
 }
 
-const Product = mongoose.model('Product', schema);
-
-module.exports = Product;
+module.exports = productSchema;

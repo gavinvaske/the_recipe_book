@@ -36,11 +36,7 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
         console.log(`Error creating die-line: ${error.message}`);
         request.flash('errors', ['The following error(s) occurred while creating the die-line:', ...mongooseService.parseHumanReadableMessages(error)]);
 
-        const objectKeysToDelete = fileUploads.map((fileUpload) => {
-            return fileUpload.fileName;
-        })
-
-        await s3Service.deleteObjects(objectKeysToDelete);
+        await s3Service.deleteS3Objects(fileUploads);
 
         return response.redirect('back');
     } finally {

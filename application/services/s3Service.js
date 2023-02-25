@@ -7,16 +7,29 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-function buildS3ObjectToDelete(s3ObjectKey) {
+function buildS3ObjectToDelete(s3File) {
+    const {fileName, versionId} = s3File;
+
+    if (!fileName || !versionId) {
+        throw new Error(`fileName ("${fileName}") and/or versionId "${versionId}" are undefined. Cannot delete s3File if one or more of those attributes is not defined.`)
+    }
+
     return {
-        Key: s3ObjectKey
+        Key: fileName,
+        VersionId: versionId ? versionId : undefined
     }
 }
 
-module.exports.deleteObjects = async (s3ObjectKeys) => {
-    const objectsToDelete = s3ObjectKeys.map((s3ObjectKey) => {
-        return buildS3ObjectToDelete(s3ObjectKey);
+module.exports.deleteS3Objects = async (files) => {
+    if (!files) {
+        return;
+    }
+
+    const objectsToDelete = files.map((file) => {
+        return buildS3ObjectToDelete(file);
     });
+
+    console.log(`Info: Deleting the following Objects from S3 => ${JSON.stringify(objectsToDelete)}`);
 
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,

@@ -17,6 +17,7 @@ function deleteFileFromFileSystem(path) {
 router.post('/:productNumber/upload-proof', upload.single('proof'), async (request, response) => {
     const pdfFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
     const productNumber = request.params.productNumber;
+    let uploadedProofs = [];
     
     try {
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
@@ -24,7 +25,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         
         const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
-        const uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
+        uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
         const uploadedProof = uploadedProofs[0];
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
@@ -36,6 +37,8 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         return response.json({});
     } catch (error) {
         console.log(`Error while uploading proof: ${error.message}`);
+        await s3Service.deleteS3Objects(uploadedProofs);
+
         return response.status(500).json({
             error: error.message
         });

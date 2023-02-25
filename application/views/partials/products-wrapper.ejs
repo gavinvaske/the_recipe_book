@@ -36,7 +36,13 @@
             <div class='column-td bg-white'></div>
             <div class='column-td bg-white'><%= product.framesPlusOverRun || 'N/A'%></div>
             <div class='column-td bg-white'><%= product.labelQty || 'N/A'%></div>
-            <div class='column-td bg-white'><i class="fa-regular fa-image-polaroid"></i></div>
+            <div class='column-td bg-white'>
+                <% if (product.proof && product.proof.url) { %>
+                    <a href="<%= product.proof.url %>"><i class="fa-regular fa-image-polaroid"></i></a>
+                <% } else { %>
+                    N/A
+                <% } %>
+            </div>
         </div>
             </div>
         </div>

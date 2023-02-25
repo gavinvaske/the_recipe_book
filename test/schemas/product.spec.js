@@ -1154,7 +1154,9 @@ describe('validation', () => {
         beforeEach(() => {
             proof = {
                 url: chance.url(),
-                fileName: chance.word()
+                fileName: chance.word(),
+                bucket: chance.word(),
+                versionId: chance.word()
             };
         });
 

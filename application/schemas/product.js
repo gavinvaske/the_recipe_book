@@ -5,6 +5,7 @@ const MaterialModel = require('../models/material');
 const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
 const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
+const s3FileSchema = require('../schemas/s3File');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
@@ -105,21 +106,9 @@ const alertSchema = new Schema({
     }
 }, { timestamps: true });
 
-const proofSchema = new Schema({
-    url: {
-        type: String,
-        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL'],
-        required: true
-    },
-    fileName: {
-        type: String,
-        required: true
-    }
-}, { timestamps: true });
-
 const productSchema = new Schema({
     proof: {
-        type: proofSchema,
+        type: s3FileSchema,
         required: false
     },
     hotFolder: {

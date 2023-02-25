@@ -22,25 +22,21 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
         const fileName = request.file.originalname;
         
-        const ticket = await TicketModel.findOne({
-            'products.productNumber': productNumber
-        }).exec();
+        const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
-        const uploadedProof = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf])[0] // TODO (2-22-2023): Make this line less ugly
+        const uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
+        const uploadedProof = uploadedProofs[0];
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = {    // TODO (2-22-2023): Make proof an "s3File" type
-            url: uploadedProof.url,
-            fileName
-        };
+        ticket.products[index].proof = uploadedProof;
 
         await ticket.save();
 
         return response.json({});
     } catch (error) {
-        console.log(`Error while uploading proof: ${error}`);
-        return response.json({
+        console.log(`Error while uploading proof: ${error.message}`);
+        return response.status(500).json({
             error: error.message
         });
     } finally {

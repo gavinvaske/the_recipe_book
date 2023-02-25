@@ -11,13 +11,13 @@ function buildS3ObjectToDelete(s3File) {
     const {fileName, versionId} = s3File;
 
     if (!fileName || !versionId) {
-        throw new Error(`fileName ("${fileName}") and/or versionId "${versionId}" are undefined. Cannot delete s3File if one or more of those attributes is not defined.`)
+        throw new Error(`fileName ("${fileName}") and/or versionId "${versionId}" are undefined. Cannot delete s3File if one or more of those attributes is not defined.`);
     }
 
     return {
         Key: fileName,
         VersionId: versionId ? versionId : undefined
-    }
+    };
 }
 
 module.exports.deleteS3Objects = async (files) => {
@@ -36,10 +36,10 @@ module.exports.deleteS3Objects = async (files) => {
         Delete: {
             Objects: objectsToDelete
         }
-    }
+    };
 
     return s3.deleteObjects(params).promise();
-}
+};
 
 function sendFileToS3(fileName, fileContents){
     const params = {
@@ -53,7 +53,7 @@ function sendFileToS3(fileName, fileContents){
 
 module.exports.storeFilesInS3 = async (fileNames, contentsOfEachFile) => {
     if (fileNames.length !== contentsOfEachFile.length) {
-        throw new Error('"fileNames" must be mapped one-to-one with "contentsOfEachFile"')
+        throw new Error('"fileNames" must be mapped one-to-one with "contentsOfEachFile"');
     }
 
     const s3FileUploadResponsePromises = [];
@@ -67,6 +67,6 @@ module.exports.storeFilesInS3 = async (fileNames, contentsOfEachFile) => {
 
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);
-    })
-}
+    });
+};
 

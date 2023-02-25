@@ -85,10 +85,6 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
-function validateUrl(url) {
-    return URL_VALIDATION_REGEX.test(url);
-}
-
 function validateColor(nameOfColor) {
     return Object.values(numberToColorEnum).includes(nameOfColor);
 }

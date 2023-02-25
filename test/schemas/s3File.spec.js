@@ -139,11 +139,10 @@ describe('validation', () => {
     
             expect(file.bucket).toBe(expectedBucket);
         });
-    })
+    });
 
     describe('attribute: versionId', () => {
         it('should fail validation if attribute is not defined', () => {
-            const versionId = chance.string();
             delete s3FileAttributes.versionId;
             const file = new S3FileModel(s3FileAttributes);
 
@@ -177,5 +176,5 @@ describe('validation', () => {
     
             expect(file.versionId).toBe(expectedVersionId);
         });
-    })
+    });
 });

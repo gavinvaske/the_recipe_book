@@ -8,6 +8,8 @@ const TicketModel = require('../models/ticket');
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');
 
+const SERVER_ERROR_CODE = 500;
+
 router.use(verifyJwtToken);
 
 function deleteFileFromFileSystem(path) {
@@ -39,7 +41,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         console.log(`Error while uploading proof: ${error.message}`);
         await s3Service.deleteS3Objects(uploadedProofs);
 
-        return response.status(500).json({
+        return response.status(SERVER_ERROR_CODE).json({
             error: error.message
         });
     } finally {

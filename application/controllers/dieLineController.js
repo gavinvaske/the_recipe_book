@@ -22,12 +22,12 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
     let fileUploads = [];
 
     try {
-        fileUploads = await s3Service.storeFilesInS3(uploadedFileNames, uploadedFileContents)
+        fileUploads = await s3Service.storeFilesInS3(uploadedFileNames, uploadedFileContents);
 
         const dieLineAttributes = {
             ...request.body,
             fileUploads: fileUploads
-        }
+        };
 
         await DieLineModel.create(dieLineAttributes);
 

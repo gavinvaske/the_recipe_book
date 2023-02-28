@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {upload} = require('../middleware/upload');
-const path = require('path');
 const fs = require('fs');
 const parser = require('xml2json');
 const ticketService = require('../services/ticketService');
@@ -12,15 +11,12 @@ const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
+const fileService = require('../services/fileService');
 
 router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_ERROR_CODE = 400;
-
-function deleteFileFromFileSystem(path) {
-    fs.unlinkSync(path);
-}
 
 router.get('/', async (request, response) => {
     const tickets = await TicketModel
@@ -195,11 +191,11 @@ router.get('/update/:id', async (request, response) => {
 });
 
 router.get('/form', (request, response) => {
-    response.render('uploadTicket');
+    response.render('createTicket');
 });
 
-router.post('/form', upload.single('job-xml'), async (request, response) => {
-    const jobFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
+router.post('/', upload.single('job-xml'), async (request, response) => {
+    const jobFilePath = fileService.getUploadedFilePath(request.file.filename);
 
     try {
         const jobAsXml = fs.readFileSync(jobFilePath);
@@ -216,11 +212,11 @@ router.post('/form', upload.single('job-xml'), async (request, response) => {
         return response.redirect(`/tickets/update/${ticket._id}`);
     } catch (error) {
         console.log(`Error uploading job file: ${error}`);
-        request.flash('errors', ['The following error occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
+        request.flash('errors', ['The following error(s) occurred while uploading the file:', ...mongooseService.parseHumanReadableMessages(error)]);
     
         return response.redirect('/tickets/form');
     } finally {
-        deleteFileFromFileSystem(jobFilePath);
+        fileService.deleteOneFileFromFileSystem(jobFilePath);
     }
 });
 

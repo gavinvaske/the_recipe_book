@@ -54,6 +54,4 @@ destinationSchema.pre('validate', function(next) {
     return next();
 });
 
-const Destination = mongoose.model('Destination', destinationSchema);
-
-module.exports = Destination;
+module.exports = destinationSchema;

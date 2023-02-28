@@ -1,1 +1,29 @@
-<h1>TODO: createSpotPlate.ejs</h1>
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper create-table-entry">
+    <div class="card">
+        <div class="header">
+            <div class="title-icon-box">
+                <h1 class="text-blue card-title">Create New Spot Plate</h1>
+            </div>
+            <p>Fill out the form below to create a spot plate. Remember, you're <b>awesome :)</b></p>
+        </div>
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
+        <form action="/spot-plates", method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">title</label>
+                <input type="text" name="title" id="title">
+
+                <label for="name">description</label>
+                <input type="text" name="description" id="description">
+
+                <label for="files">Select files:</label>
+                <input type="file" id="files" name="file-uploads" multiple>
+
+             </div>
+            <button class="create-entry submit-button" type="submit" value="Create Spot Plate">Create</button>
+        </form>
+    </div>
+</div>

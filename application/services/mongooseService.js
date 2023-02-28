@@ -1,7 +1,12 @@
 module.exports.parseHumanReadableMessages = (error) => {
-    let humanReadableMessages = [];
-
     try {
+        const aNonMongooseErrorOccurred = !error.errors && error.message;
+
+        if (aNonMongooseErrorOccurred) {
+            return [error.message];
+        }
+
+        let humanReadableMessages = [];
         const {errors} = error;
 
         Object.keys(errors).forEach((key) => {
@@ -10,7 +15,7 @@ module.exports.parseHumanReadableMessages = (error) => {
             let humanReadableMessage;
 
             if (errorType === 'ValidatorError') {
-                humanReadableMessage = `'${mongooseError['path']}' failed validation: ${mongooseError['message']}`;
+                humanReadableMessage = `${mongooseError['message']}`;
             } else {
                 humanReadableMessage = `'${errorType}': ${mongooseError['message']}`;
             }
@@ -19,7 +24,7 @@ module.exports.parseHumanReadableMessages = (error) => {
 
         return humanReadableMessages;
     } catch (error) {
-        console.log(`Error parse error: ${JSON.stringify(error)}`);
+        console.log(`Error: parse error in parseHumanReadableMessages: ${JSON.stringify(error)}`);
         return ['Uh oh, an unknown error occurred, please contact the IT department.'];
     }
 };

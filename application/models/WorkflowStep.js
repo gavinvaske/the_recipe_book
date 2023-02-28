@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const destinationSchema = require('../models/destination').schema;
+const destinationSchema = require('../schemas/destination');
 
 const workflowStepSchema = new Schema({
     ticketId: {

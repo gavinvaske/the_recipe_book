@@ -27,7 +27,7 @@ describe('fileService test suite', () => {
             const actualFilePath = fileService.getUploadedFilePath(fileName);
 
             expect(pathMock.resolve).toHaveBeenCalledTimes(1);
-            expect(actualFilePath).toEqual(getExpectedFilePath(fileName))
+            expect(actualFilePath).toEqual(getExpectedFilePath(fileName));
         });
     });
 
@@ -49,15 +49,15 @@ describe('fileService test suite', () => {
 
             expect(pathMock.resolve).toHaveBeenCalledTimes(2);
             expect(actualFilePaths.length).toEqual(fileNames.length);
-            expect(actualFilePaths[0]).toEqual(getExpectedFilePath(fileName1))
-            expect(actualFilePaths[1]).toEqual(getExpectedFilePath(fileName2))
+            expect(actualFilePaths[0]).toEqual(getExpectedFilePath(fileName1));
+            expect(actualFilePaths[1]).toEqual(getExpectedFilePath(fileName2));
         });
     });
 
     function createFile() {
         return {
             filename: chance.word()
-        }
+        };
     }
 
     describe('getFileNames', () => {
@@ -89,7 +89,7 @@ describe('fileService test suite', () => {
 
             expect(fsMock.unlinkSync).toHaveBeenCalledTimes(1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath);
-        })
+        });
     });
 
     describe('deleteMultipleFilesFromFileSystem', () => {
@@ -103,7 +103,7 @@ describe('fileService test suite', () => {
             expect(fsMock.unlinkSync).toHaveBeenCalledTimes(filePaths.length);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath2);
-        })
+        });
     });
 
     describe('getUploadedFileContents', () => {

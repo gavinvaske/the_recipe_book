@@ -20,12 +20,12 @@ function buildS3ObjectToDelete(s3File) {
     };
 }
 
-module.exports.deleteS3Objects = async (files) => {
-    if (!files) {
+module.exports.deleteS3Objects = async (s3Files) => {
+    if (!s3Files || s3Files.length === 0) {
         return;
     }
 
-    const objectsToDelete = files.map((file) => {
+    const objectsToDelete = s3Files.map((file) => {
         return buildS3ObjectToDelete(file);
     });
 

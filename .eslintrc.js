@@ -15,7 +15,7 @@ module.exports = {
         'complexity': ['error', {'max': 8 }],
         'eqeqeq': ['error', 'always', {'null': 'ignore'}],
         'no-magic-numbers': ['error', {
-            'ignore': [0, 1], 
+            'ignore': [0, 1, 2], 
             'ignoreArrayIndexes': true 
         }],
         'no-multi-spaces': 'error',

@@ -1003,7 +1003,9 @@ describe('validation', () => {
 
     describe('mongoose post hooks test suite', () => {
         beforeEach(async () => {
+            jest.resetAllMocks();
             await databaseService.connectToTestMongoDatabase();
+            await databaseService.clearDatabase();
         });
 
         afterEach(async () => {
@@ -1013,19 +1015,23 @@ describe('validation', () => {
         describe('mongoose ticketSchema.post("save")', () => {
             it('should not allow two objects with duplicate ticketNumbers to be saved to the database', async () => {
                 delete ticketAttributes.destination;
+                ticketAttributes.ticketNumber = '123';
                 const ticket = new TicketModel(ticketAttributes);
                 const duplicateTicket = new TicketModel(ticketAttributes);
                 let errorMessage = '';
-
-                await ticket.save();
+                const numberOfUniqueTickets = 1;
 
                 try {
+                    await ticket.save();
                     await duplicateTicket.save();
                 } catch (error) {
                     errorMessage = error.message;
                 }
 
-                expect(errorMessage).toEqual(`Cannot create this ticket whose ticket number is "${duplicateTicket.ticketNumber}" because it is a duplicate of an existing ticket already saved to the database!`);
+                const ticketsInDatabase = await TicketModel.find({});
+
+                expect(ticketsInDatabase.length).toEqual(numberOfUniqueTickets);
+                expect(errorMessage).toBe(`Cannot create this ticket whose ticket number is "${duplicateTicket.ticketNumber}" because it is a duplicate of an existing ticket already saved to the database!`);
             });
         });
     });

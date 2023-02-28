@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const productSchema = require('./product').schema;
+const productSchema = require('../schemas/product');
 const chargeSchema = require('./charge').schema;
 const destinationSchema = require('../schemas/destination');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
@@ -103,7 +103,8 @@ const ticketSchema = new Schema({
         type: String,
         validate: [stringOnlyContainsDigits, 'Ticket Number must only contain digits'],
         required: true,
-        alias: 'TicketNumber'
+        alias: 'TicketNumber',
+        unique: true
     },
     shipDate: {
         type: Date,
@@ -300,6 +301,17 @@ ticketSchema.virtual('numberOfProofsThatHaveNotBeenUploadedYet').get(function() 
         }
     });
     return numberOfProofsThatHaveNotBeenUploadedYet;
+});
+
+ticketSchema.post('save', function(error, doc, next) {
+    const mongooseDupliateErrorCode = 11000;
+    const duplicateErrorCodeDetected = error.code === mongooseDupliateErrorCode;
+
+    if (duplicateErrorCodeDetected) {
+        next(new Error(`Cannot create this ticket whose ticket number is "${doc.ticketNumber}" because it is a duplicate of an existing ticket already saved to the database!`));
+    } else {
+        next(error);
+    }
 });
 
 async function addRowToWorkflowStepDbTable(next) {

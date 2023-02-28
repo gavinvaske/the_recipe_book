@@ -8,6 +8,8 @@ const TicketModel = require('../models/ticket');
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');
 
+const SERVER_ERROR_CODE = 500;
+
 router.use(verifyJwtToken);
 
 function deleteFileFromFileSystem(path) {
@@ -17,30 +19,29 @@ function deleteFileFromFileSystem(path) {
 router.post('/:productNumber/upload-proof', upload.single('proof'), async (request, response) => {
     const pdfFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
     const productNumber = request.params.productNumber;
+    let uploadedProofs = [];
     
     try {
         const base64EncodedPdf = fs.readFileSync(pdfFilePath);
         const fileName = request.file.originalname;
         
-        const ticket = await TicketModel.findOne({
-            'products.productNumber': productNumber
-        }).exec();
+        const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
-        const {Location: urlWhereTheFileIsStored} = await s3Service.storeFileInS3(fileName, base64EncodedPdf);
+        uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
+        const uploadedProof = uploadedProofs[0];
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = {
-            url: urlWhereTheFileIsStored,
-            fileName
-        };
+        ticket.products[index].proof = uploadedProof;
 
         await ticket.save();
 
         return response.json({});
-    } catch (error) {
-        console.log(`Error while uploading proof: ${error}`);
-        return response.json({
+    } catch (error) {       
+        console.log(`Error while uploading proof: ${error.message}`);
+        await s3Service.deleteS3Objects(uploadedProofs);
+
+        return response.status(SERVER_ERROR_CODE).json({
             error: error.message
         });
     } finally {

@@ -35,7 +35,7 @@ describe('validation', () => {
             ShipVia: chance.string(),
             ShipAttn_EmailAddress: chance.email(),
             BillState: chance.string(),
-            destination: {},
+            destination: undefined,
             departmentNotes: {},
             Company: chance.string(),
             sentDate: chance.date({string: true}),
@@ -604,6 +604,12 @@ describe('validation', () => {
         });
 
         it('should be a mongoose object with an _id attribute', () => {
+            const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+            ticketAttributes.destination = {
+                department: randomDepartment,
+                departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+            };
+
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.destination._id).not.toBe(undefined);
@@ -992,6 +998,41 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.numberOfProofsThatHaveNotBeenUploadedYet).toEqual(numberOfProductsWhoseProofAttributeIsUndefined);
+        });
+    });
+
+    describe('mongoose post hooks test suite', () => {
+        beforeEach(async () => {
+            jest.resetAllMocks();
+            await databaseService.connectToTestMongoDatabase();
+            await databaseService.clearDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        describe('mongoose ticketSchema.post("save")', () => {
+            it('should not allow two objects with duplicate ticketNumbers to be saved to the database', async () => {
+                delete ticketAttributes.destination;
+                ticketAttributes.ticketNumber = '123';
+                const ticket = new TicketModel(ticketAttributes);
+                const duplicateTicket = new TicketModel(ticketAttributes);
+                let errorMessage = '';
+                const numberOfUniqueTickets = 1;
+
+                try {
+                    await ticket.save();
+                    await duplicateTicket.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
+
+                const ticketsInDatabase = await TicketModel.find({});
+
+                expect(ticketsInDatabase.length).toEqual(numberOfUniqueTickets);
+                expect(errorMessage).toBe(`Cannot create this ticket whose ticket number is "${duplicateTicket.ticketNumber}" because it is a duplicate of an existing ticket already saved to the database!`);
+            });
         });
     });
 

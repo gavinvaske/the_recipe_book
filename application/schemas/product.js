@@ -5,6 +5,7 @@ const MaterialModel = require('../models/material');
 const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
 const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
 const {getAllDepartments} = require('../enums/departmentsEnum');
+const s3FileSchema = require('../schemas/s3File');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
@@ -84,10 +85,6 @@ function validateCornerRadius(cornerRadius) {
     return greaterThanOrEqualToZero && lessThanOne;
 }
 
-function validateUrl(url) {
-    return URL_VALIDATION_REGEX.test(url);
-}
-
 function validateColor(nameOfColor) {
     return Object.values(numberToColorEnum).includes(nameOfColor);
 }
@@ -105,21 +102,9 @@ const alertSchema = new Schema({
     }
 }, { timestamps: true });
 
-const proofSchema = new Schema({
-    url: {
-        type: String,
-        validate: [validateUrl, 'Proof attribute "{VALUE}" is not a valid URL'],
-        required: true
-    },
-    fileName: {
-        type: String,
-        required: true
-    }
-}, { timestamps: true });
-
-const schema = new Schema({
+const productSchema = new Schema({
     proof: {
-        type: proofSchema,
+        type: s3FileSchema,
         required: false
     },
     hotFolder: {
@@ -542,6 +527,4 @@ function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound)
     return Math.round(unRoundedValue * precision) / precision;
 }
 
-const Product = mongoose.model('Product', schema);
-
-module.exports = Product;
+module.exports = productSchema;

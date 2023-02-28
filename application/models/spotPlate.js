@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('../schemas/file');
+const fileSchema = require('../schemas/s3File');
 
 const spotPlateSchema = new Schema({
     title: {

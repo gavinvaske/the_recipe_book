@@ -820,7 +820,7 @@ $( document ).ready(function() {
         $(this).addClass('active');
         
         
-        if($('.ticket-tab').hasClass('active')) {
+        if ($('.ticket-tab').hasClass('active')) {
             $('.ticket-details-wrapper').show();
             $('#proof').hide();
             $('.proof-placeholder').show();

@@ -17,31 +17,93 @@
     <div class='right-col col flex-top-center-row'>
         <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>
-                <h3 class='ticket-info'>Ticket information goes here.</h3>
-                <div class='product-table'>
-                    <div class='table-header flex-center-space-around-row'>
-                        <div class='col-header'>#</div>
-                        <div class='col-header'>Product</div>
-                        <div class='col-header'>QTY</div>
-                        <div class='col-header'>Frames</div>
-                        <div class='col-header'>Feet</div>
-                    </div>
-                    <div class='table-body flex-top-center-column'>
-                        <% ticket.products && ticket.products.forEach((product, index) => { %>
-                            <div class='table-row flex-center-center-row'>
-                                <div class='col-td'>1</div>
-                                <div class='col-td'><%= product.productNumber %></div>
-                                <div class='col-td'><%= product.labelQty || 'N/A'%></div>
-                                <div class='col-td'><%= product.totalFrames || 'N/A'%></div>
-                                <div class='col-td'>50</div>
+                <div class='ticket-details-wrapper'>
+                    <h3 class='ticket-info'>Customer Name Goes Here</h3>
+                    <div class='highlight-frame-small flex-center-center-row'>
+                        <div class='col col-1'>
+                            <div class='box'>
+                                <span>Created</span>
                             </div>
-                        <% }) %>
+                        </div>
+                        <div class='col col-2'>
+                            <div class='box'>
+                                <span>Due</span>
+                            </div>
+                        </div>
+                        <div class='col col-3'>
+                            <div class='box'>
+                                <span>Age</span>
+                            </div>
+                        </div>
+                        <div class='col col-4'>
+                            <div class='box'>
+                                <span>Rush</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='highlight-frame flex-center-center-row'>
+                        <div class='col col-1'>
+                            <div class='box'>
+                                <div class='symbol-frame'>
+                                    <i class="fas fa-toilet-paper-alt"></i>
+                                </div>
+                                <span>Material</span>
+                            </div>
+                        </div>
+                        <div class='col col-2'>
+                            <div class='box'>
+                                <div class='symbol-frame'>
+                                    <i class="fas fa-spray-can"></i>
+                                </div>
+                                <span>Finish</span>
+                            </div>
+                        </div>
+                        <div class='col col-3'>
+                            <div class='box'>
+                                <div class='symbol-frame'>
+                                    <i class="fas fa-th"></i>
+                                </div>
+                                <span>Die</span>
+                            </div>
+                        </div>
+                        <div class='col col-4'>
+                            <div class='box'>
+                                <div class='symbol-frame'>
+                                    <i class="fas fa-shoe-prints"></i>
+                                </div>
+                                <span>Total Feet</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='notes-frame'>
+                        <span>Ticket Notes</span>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    </div>
+                    <div class='product-table'>
+                        <div class='table-header flex-center-space-around-row'>
+                            <div class='col-header'>#</div>
+                            <div class='col-header'>Product</div>
+                            <div class='col-header'>QTY</div>
+                            <div class='col-header'>Frames</div>
+                            <div class='col-header'>Feet</div>
+                        </div>
+                        <div class='table-body flex-top-center-column'>
+                            <% ticket.products && ticket.products.forEach((product, index) => { %>
+                                <div class='table-row flex-center-center-row'>
+                                    <div class='col-td'><%= index + 1 %></div>
+                                    <div class='col-td'><%= product.productNumber %></div>
+                                    <div class='col-td'><%= product.labelQty || 'N/A'%></div>
+                                    <div class='col-td'><%= product.totalFrames || 'N/A'%></div>
+                                    <div class='col-td'>50</div>
+                                </div>
+                            <% }) %>
+                        </div>
                     </div>
                 </div>
                 <div class='job-notes'>
                     <div class='front-note'>
-                        <h3>Job Notes</h3>
-                        <p>Hello mars please go into my room.</p>
+                        <h3>Job Notes:</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                         <div class='text-left full-width'>
                             <button class='submit-button close-window'>I Have Read</button>
                         </div>
@@ -75,67 +137,225 @@
                     
                     <% } else if (ticket.destination.department === 'PRINTING') { %>
                         <p>PRINTING</p>
-                        <span><%= product.primaryMaterial || 'N/A' %> (???)</span>
-                        <span><%= product.sizeAcross || 'N/A' %> (J)</span>
-                        <span><%= product.sizeAround || 'N/A' %> (K)</span>
-                        <span><%= product.labelsAcross || 'N/A' %> (L)</span>
-                        <span><%= product.matrixAcross || 'N/A' %> (M)</span>
-                        <span><%= product.matrixAround || 'N/A' %> (N)</span>
-                        <span><%= product.labelsAround || 'N/A' %> (O)</span>
-                        <span><%= product.measureAcross || 'N/A' %> (U)</span>
-                        <span><%= product.measureAround || 'N/A' %> (V)</span>
-                        <span><%= product.labelsPerFrame || 'N/A' %> (R)</span>
-                        <span><%= product.printingNotes || 'N/A'%> (AB)</span>
-                        <span><%= product.framesPlusOverRun || 'N/A'%> (W)</span>
-                        <span><%= product.extraFrames || 'N/A'%> (X)</span>
-                        <span><%= product.totalFrames || 'N/A'%> (Y)</span>
-                        <span><%= product.totalFeet || 'N/A'%> (Z)</span>
-                        <span><%= product.labelQty || 'N/A'%> (AA)</span>
-                        <span><%= product.frameRepeat || 'N/A'%> (I)</span>
-                        <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
-                        <span><%= product.numberOfColors || 'N/A'%> (H)</span>
-                        <span><%= product.unwindDirection || 'N/A'%> (F)</span>
-                        <span><%= product.numberOfRolls || 'N/A'%> (AC)</span>
+                        <div class='flex-center-center-row flex-wrap'>
+                            <div class='product-attribute-frame'>
+                                <span>Material</span>
+                                <span><%= product.primaryMaterial || 'N/A' %> (???)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>S. Across</span>
+                                <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>S. Around</span>
+                                <span><%= product.sizeAround || 'N/A' %> (K)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Labels Across</span>
+                                <span><%= product.labelsAcross || 'N/A' %> (L)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Labels Around</span>
+                                <span><%= product.labelsAround || 'N/A' %> (O)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Matrix Across</span>
+                                <span><%= product.matrixAcross || 'N/A' %> (M)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Matrix Around</span>
+                                <span><%= product.matrixAround || 'N/A' %> (N)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Measure Across</span>
+                                <span><%= product.measureAcross || 'N/A' %> (U)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Measure Around</span>
+                                <span><%= product.measureAround || 'N/A' %> (V)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Labels Per Frame</span>
+                                <span><%= product.labelsPerFrame || 'N/A' %> (R)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Measure Around</span>
+                                <span><%= product.measureAround || 'N/A'%> (AB)</span>
+                            </div>
+                            <div class=''>
+                                <span>Printing Notes</span>
+                                <span><%= product.printingNotes || 'N/A'%> (AB)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Frames Plus Overrun</span>
+                                <span><%= product.framesPlusOverRun || 'N/A'%> (W)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Extra Frames</span>
+                                <span><%= product.extraFrames || 'N/A'%> (X)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Total Frames</span>
+                                <span><%= product.totalFrames || 'N/A'%> (Y)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Total Feet</span>
+                                <span><%= product.totalFeet || 'N/A'%> (Z)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Label QTY</span>
+                                <span><%= product.labelQty || 'N/A'%> (AA)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Frame Repeat</span>
+                                <span><%= product.frameRepeat || 'N/A'%> (I)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Tooling Notes</span>
+                                <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Number of Colors</span>
+                                <span><%= product.numberOfColors || 'N/A'%> (H)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Unwind Direction</span>
+                                <span><%= product.unwindDirection || 'N/A'%> (F)</span>
+                            </div>
+                            <div class='product-attribute-frame'>
+                                <span>Number of Rolls</span>
+                                <span><%= product.numberOfRolls || 'N/A'%> (AC)</span>
+                            </div>
+                        </div>
                     
                     <% } else if (ticket.destination.department === 'CUTTING') { %>
                         <p>CUTTING</p>
-                        <span><%= product.productDie || 'N/A' %> (AD)</span>
-                        <span><%= product.dieCuttingFinish || 'N/A' %> (AE)</span>
-                        <span><%= product.varnish || 'N/A' %> (AF)</span>
-                        <span><%= product.finishType || 'N/A' %> (AG)</span>
-                        <span><%= product.productDieTwo || 'N/A' %> (AH)</span>
-                        <span><%= product.dieCuttingMarriedMaterial || 'N/A' %> (AI)</span>
-                        <span><%= product.deltaRepeat || 'N/A' %> (AJ)</span>
-                        <span><%= product.rotoRepeat || 'N/A' %> (AK)</span>
-                        <span><%= product.toolNumberAround || 'N/A' %> (AL)</span>
-                        <span><%= product.plateId || 'N/A' %> (AM)</span>
-                        <span><%= product.dieCuttingNotes || 'N/A' %> (AN)</span>
+                        <div class='product-attribute-frame'>
+                            <span>Die</span>
+                            <span><%= product.productDie || 'N/A' %> (AD)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>
+                            <span><%= product.dieCuttingFinish || 'N/A' %> (AE)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>
+                            <span><%= product.varnish || 'N/A' %> (AF)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>
+                            <span><%= product.finishType || 'N/A' %> (AG)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>
+                            <span><%= product.productDieTwo || 'N/A' %> (AH)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.dieCuttingMarriedMaterial || 'N/A' %> (AI)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.deltaRepeat || 'N/A' %> (AJ)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.rotoRepeat || 'N/A' %> (AK)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.toolNumberAround || 'N/A' %> (AL)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.plateId || 'N/A' %> (AM)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.dieCuttingNotes || 'N/A' %> (AN)</span>
+                        </div>
                     <% } else if (ticket.destination.department === 'WINDING') { %>
                         <p>WINDING</p>
-                        <span> <%= product.labelQty || 'N/A' %> (AA)</span>
-                        <span> <%= product.labelsPerRoll || 'N/A' %> (AP)</span>
-                        <span>TODO: Waiting on Storm (AQ)</span>
-                        <span>  <%= product.unwindDirection || 'N/A' %> (F)</span>
-                        <span>  <%= product.coreHeight || 'N/A' %> (AR)</span>
-                        <span><%= product.numberOfCores || 'N/A' %> (AS)</span>
-                        <span>  <%= product.overRun * 100 %>% (AT)</span>
-                        <span>  <%= product.coreDiameter || 'N/A' %> (AU)</span>
-                        <span>  <%= product.windingNotes || 'N/A' %> (AV)</span>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.labelQty || 'N/A' %> (AA)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.labelsPerRoll || 'N/A' %> (AP)</span>
+                        </div>
+
+                            <span>TODO: Waiting on Storm (AQ)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.unwindDirection || 'N/A' %> (F)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.coreHeight || 'N/A' %> (AR)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.numberOfCores || 'N/A' %> (AS)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.overRun * 100 %>% (AT)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.coreDiameter || 'N/A' %> (AU)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= product.windingNotes || 'N/A' %> (AV)</span>
+                        </div>
                     <% } else if (ticket.destination.department === 'PACKAGING') { %>
                         <p>Packaging</p>
                         
                     <% } else if (ticket.destination.department === 'SHIPPING') { %>
                         <p>Shipping</p>
-                        <span><%= ticket.shippingEmailAddress || 'N/A' %> (AW)</span>
-                        <span><%= ticket.shippingMethod || 'N/A' %> (AX)</span>
-                        <span><%= ticket.shippingInstructions || 'N/A' %> (AY)</span>
-                        <span><%= ticket.shippingAddress || 'N/A' %> (AZ)</span>
-                        <span><%= ticket.shippingUnitNumber || 'N/A' %> (AAA)</span>
-                        <span><%= ticket.shipCity || 'N/A' %> (AAB)</span>
-                        <span><%= ticket.shipState || 'N/A' %> (AAC)</span>
-                        <span><%= ticket.shipZipCode || 'N/A' %> (AAD)</span>
-                        <span><%= ticket.shippingLocationName || 'N/A' %> (AAE)</span>
-                        <span><%= ticket.shippingAttention || 'N/A' %> (AAF)</span>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingEmailAddress || 'N/A' %> (AW)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingMethod || 'N/A' %> (AX)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingInstructions || 'N/A' %> (AY)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingAddress || 'N/A' %> (AZ)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingUnitNumber || 'N/A' %> (AAA)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shipCity || 'N/A' %> (AAB)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shipState || 'N/A' %> (AAC)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shipZipCode || 'N/A' %> (AAD)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingLocationName || 'N/A' %> (AAE)</span>
+                        </div>
+                        <div class='product-attribute-frame'>
+                            <span>Placeholder</span>    
+                            <span><%= ticket.shippingAttention || 'N/A' %> (AAF)</span>
+                        </div>
                     <% } else if (ticket.destination.department === 'BILLING') { %>
                         <p>BILLING</p>
                     <% } else { %>
@@ -144,7 +364,22 @@
                 </div>
                 <% }) %>
             </div>
-            <div class='card'>Hello Mars</div>
+            <div class='card'>
+                <div class='checkbox-frame'>
+                    <p>
+                        <input type="checkbox" id="test1" />
+                        <label for="test1">Red</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="test2" />
+                        <label for="test2">Green</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="test3" />
+                        <label for="test3">Blue</label>
+                    </p>
+                </div>
+            </div>
         </div>
         <div class='card proof half-width'>
             <div class='proof-placeholder'><div class='flex-center-center-row' style='height: 100%;'><h1 class='text-box'>Random Quote</h1></div></div>

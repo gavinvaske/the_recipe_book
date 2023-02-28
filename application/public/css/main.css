@@ -4437,7 +4437,8 @@ span.drpdwn-title {
   padding-bottom: 30px;
 }
 .in-progress-view .left-col {
-  width: 15%;
+  /* width: 15%; */
+  width: 12%;
   height: 100%;
 }
 .in-progress-view .left-col .click-tab {
@@ -4445,7 +4446,7 @@ span.drpdwn-title {
   margin-bottom: 15px;
   height: 72px;
   position: relative;
-  background-color: #E6E6E6;
+  background-color: white;
   padding: 1.5rem;
   border: none;
   border-radius: 0.428rem;
@@ -4473,7 +4474,7 @@ span.drpdwn-title {
   transition: .3s;
 }
 .in-progress-view .right-col .middle-col.active {
-  width: 85%;
+  width: 88%;
   transition: .3s;
 }
 .in-progress-view .right-col .middle-col .card:nth-child(1) {
@@ -4596,6 +4597,13 @@ iframe {
 .ticket-tab .left-bumper {
   background-color: #6a68af;
 }
+.product-tab {
+  pointer-events: none;
+  opacity: .6;
+}
+.ticket-tab {
+  pointer-events: none;
+}
 .product-tab .left-bumper {
   background-color: #00cfe8;
 }
@@ -4616,11 +4624,233 @@ iframe {
 }
 
 .product-table .table-header {
-  padding: 10px 0;
-  border-top: 1px solid rgba(128, 128, 128, .12);
-  border-bottom: 1px solid rgba(128, 128, 128, .12);
+  padding: 12px 0;
+  border: 1px solid rgba(128, 128, 128, .12);
+  border-top-left-radius: 0.428rem;
+  border-top-right-radius: 0.428rem;
+  margin-bottom: -1px;
 }
 
+.in-progress-view .right-col .middle-col .card:nth-child(1) .notes-frame {
+  padding: 15px;
+  border: 1px solid rgba(128, 128, 128, .12);
+  border-radius: 0.428rem;
+  margin-bottom: 15px;
+}
 .product-table .table-row {
   padding: 7px 0;
+  background: none;
+  margin-bottom: -1px;
+  border: 1px solid rgba(128, 128, 128, .12);
+}
+
+.highlight-frame-small,
+.highlight-frame {
+  margin: 25px 0;
+}
+
+.highlight-frame-small .col,
+.highlight-frame .col {
+  width: 33.33%;
+  display: flex;
+  justify-items: center;
+  align-content: center;
+}
+
+.highlight-frame-small .box,
+.highlight-frame .box,
+.product-info .product-attribute-frame {
+  border-radius: 0.428rem;
+  border: 1px solid rgba(128, 128, 128, .12);
+  height: 150px;
+  width: calc(100% - 15px);
+}
+.product-attribute-frame span {
+  display: block;
+}
+.product-attribute-frame span:first-of-type {
+  font-size: 12px;
+}
+.highlight-frame .box {
+  height: 150px;
+  padding: 24px;
+}
+.highlight-frame-small .box,
+.product-info .product-attribute-frame {
+  height: 70px;
+  padding: 10px 24px;
+}
+.product-info .product-attribute-frame {
+  width: 200px;
+  margin-right: 15px;
+}
+.highlight-frame .box .symbol-frame {
+  height: 30px;
+  width: 30px;
+  border-radius: 0.428rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.symbol-frame .fa-toilet-paper-alt {
+  color: #00b8cf;
+  font-size: 20px;
+}
+.symbol-frame .fa-th {
+  color: #6a68af;
+  font-size: 20px;
+}
+.symbol-frame .fa-spray-can {
+  color: #f89d47;
+  font-size: 20px;
+}
+.symbol-frame .fa-shoe-prints {
+  color: #157efb;
+  font-size: 20px;
+}
+
+.highlight-frame .box span,
+.in-progress-view .right-col .middle-col .card:nth-child(1) .notes-frame span {
+  font-weight: 600;
+}
+
+.highlight-frame-small .col:last-of-type .box {
+  background-color: #6a68af;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-table .col-td:first-of-type {
+  font-weight: bold;
+}
+
+
+
+/* Base for label styling */
+.checkbox-frame [type="checkbox"]:not(:checked),
+.checkbox-frame [type="checkbox"]:checked {
+  position: absolute;
+  left: 0;
+  opacity: 0.01;
+}
+.checkbox-frame [type="checkbox"]:not(:checked) + label,
+.checkbox-frame [type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2.3em;
+  font-size: 1.05em;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+.checkbox-frame [type="checkbox"]:not(:checked) + label:before,
+.checkbox-frame [type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #aaa;
+  background: #FFF;
+  border-radius: .2em;
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
+  -webkit-transition: all .275s;
+      transition: all .275s;
+}
+
+/* checked mark aspect */
+.checkbox-frame [type="checkbox"]:not(:checked) + label:after,
+.checkbox-frame [type="checkbox"]:checked + label:after {
+  content: '✕';
+  position: absolute;
+  top: .525em;
+  left: .14em;
+  font-size: 1.375em;
+  color: #28c76f;
+  line-height: 0;
+  -webkit-transition: all .2s;
+      transition: all .2s;
+}
+
+/* checked mark aspect changes */
+.checkbox-frame [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0) rotate(45deg);
+      transform: scale(0) rotate(45deg);
+}
+
+.checkbox-frame [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  -webkit-transform: scale(1) rotate(0);
+      transform: scale(1) rotate(0);
+}
+
+/* Disabled checkbox */
+.checkbox-frame [type="checkbox"]:disabled:not(:checked) + label:before,
+.checkbox-frame [type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #e9e9e9;
+}
+
+.checkbox-frame [type="checkbox"]:disabled:checked + label:after {
+  color: #777;
+}
+
+.checkbox-frame [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+/* Accessibility */
+.checkbox-frame [type="checkbox"]:checked:focus + label:before,
+.checkbox-frame [type="checkbox"]:not(:checked):focus + label:before {
+  box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 6px rgba(203, 34, 237, .2);
+}
+
+
+
+
+
+.checkbox-frame div p:first-child {
+font-weight: bold;
+font-size: 1.2em;
+}
+
+.checkbox-frame p { 
+color: #aaa;
+}
+
+.checkbox-frame p a {
+color: inherit;
+}
+
+/* .checkbox-frame p + p {
+margin-top: 3em;
+} */
+
+.checkbox-frame form p {
+margin: 15px 0;
+color: #34495E;
+}
+
+.checkbox-frame .btn.btn {
+display: inline-block;
+padding: 8px 24px;
+text-decoration: none;
+border-radius: 40px;
+background: #34495E;
+color: #F2F2F2;
+transition: all .4s;
+}
+
+.checkbox-frame .btn.btn:hover,
+.checkbox-frame .btn.btn:focus {
+background: #000;
 }

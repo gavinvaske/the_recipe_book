@@ -100,5 +100,21 @@ describe('s3Service test suite', () => {
                 expect(mockedS3.upload).toHaveBeenCalledWith(expectedParams);
             });
         });
+
+        it('should respond a mongoose object for each file that was uploaded to s3', async () => {
+            const numberOfFiles = chance.d12();
+
+            const fileNames = chance.n(chance.word, numberOfFiles);
+            const fileContents = chance.n(chance.word, numberOfFiles);
+
+            const s3FilesAsMongooseObject = await s3Service.storeFilesInS3(fileNames, fileContents);
+
+            expect(s3FilesAsMongooseObject.length).toEqual(numberOfFiles);
+
+            s3FilesAsMongooseObject.forEach((s3File) => {
+                const {_id} = s3File;
+                expect(_id).toBeDefined();
+            });
+        });
     });
 });

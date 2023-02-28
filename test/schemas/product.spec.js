@@ -1196,7 +1196,7 @@ describe('validation', () => {
             expect(error).not.toBeDefined();
         });
 
-        it('should fail validation if proof.url is defined but fileName is not', () => {
+        it('should fail validation if proof.fileName is not defined', () => {
             delete proof.fileName;
             productAttributes.proof = proof;
             const product = new ProductModel(productAttributes);
@@ -1206,9 +1206,28 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should fail validation if proof.fileName is defined but url is not', () => {
+        it('should fail validation if proof.url is not defined', () => {
             delete proof.url;
-            proof.fileName = chance.word();
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if proof.bucket is not defined', () => {
+            delete proof.bucket;
+            productAttributes.proof = proof;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if proof.versionId is not defined', () => {
+            delete proof.versionId;
             productAttributes.proof = proof;
             const product = new ProductModel(productAttributes);
 

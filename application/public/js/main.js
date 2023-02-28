@@ -815,24 +815,38 @@ $( document ).ready(function() {
     });
 
     $('.click-tab').click(function(){
-        const delay = 300;
+        const delay = 0;
         $('.click-tab').removeClass('active');
         $(this).addClass('active');
-        $('#proof').fadeIn();
-        $('.proof-placeholder').fadeOut();
-        $('.ticket-info').fadeOut();
+        
+        
+        if ($('.ticket-tab').hasClass('active')) {
+            $('.ticket-details-wrapper').show();
+            $('#proof').hide();
+            $('.proof-placeholder').show();
+        } else {
+            $('.ticket-details-wrapper').hide();
+            $('.in-progress-view .right-col .middle-col .card').addClass('active');
+            $('.proof-placeholder').hide();
+            $('#proof').show();
+        }
+        
 
         const productNumber = $(this).data('product-number');
         const productInfoToShow = $(`.product-info*[data-product-number="${productNumber}"]`);
 
         $('.product-info').hide();
-        $(productInfoToShow).delay(delay).fadeIn();
+        $(productInfoToShow).delay(delay).show();
+    });
+    $('.ticket-tab').click(function(){
+        $('.in-progress-view .right-col .middle-col .card').removeClass('active');
     });
 
     $('.close-window').click(function(){
         $('.job-notes').addClass('active');
-        $('.in-progress-view .right-col .card:nth-child(1)').addClass('active');
-        $('.in-progress-view .right-col .card:nth-child(2)').addClass('active');
+        $('.in-progress-view .right-col .middle-col').addClass('active');
+        $('.in-progress-view .right-col .card.proof').addClass('active');
+        $('.product-tab, .ticket-tab').css({'pointer-events' : 'auto', 'opacity' : '1'});
     });
 
     $('.hold-reason-option i').click(function() {

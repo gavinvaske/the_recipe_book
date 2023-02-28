@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports.getUploadedFilePath = (uploadedFileName) => {
-    return path.join(path.resolve(__dirname, '../../') + '/uploads/' + uploadedFileName);
+    return path.resolve(__dirname, '../../') + '/uploads/' + uploadedFileName;
 };
 
 module.exports.getUploadedFilePaths = (uploadedFileNames) => {

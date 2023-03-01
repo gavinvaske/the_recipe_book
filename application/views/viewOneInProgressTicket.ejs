@@ -18,26 +18,29 @@
         <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>
                 <div class='ticket-details-wrapper'>
-                    <h3 class='ticket-info'>Customer Name Goes Here</h3>
+                    <h3 class='ticket-info'><%= ticket.customerName ? ticket.customerName : 'N/A' %></h3>
                     <div class='highlight-frame-small flex-center-center-row'>
                         <div class='col col-1'>
                             <div class='box'>
                                 <span>Created</span>
+                                <p><%= helperMethods.getDayNumberAndMonth(ticket.createdAt) %></p>
                             </div>
                         </div>
                         <div class='col col-2'>
                             <div class='box'>
                                 <span>Due</span>
+                                <p><%= helperMethods.getDayNumberAndMonth(ticket.shipDate) %></p>
                             </div>
                         </div>
                         <div class='col col-3'>
                             <div class='box'>
                                 <span>Age</span>
+                                <p>TODO: Calculate Age</p>
                             </div>
                         </div>
                         <div class='col col-4'>
                             <div class='box'>
-                                <span>Rush</span>
+                                <span><%= ticket.priority %></span>
                             </div>
                         </div>
                     </div>
@@ -48,6 +51,7 @@
                                     <i class="fas fa-toilet-paper-alt"></i>
                                 </div>
                                 <span>Material</span>
+                                <p><%= material.name %> (<%= material.materialId %>)</p>
                             </div>
                         </div>
                         <div class='col col-2'>
@@ -56,6 +60,7 @@
                                     <i class="fas fa-spray-can"></i>
                                 </div>
                                 <span>Finish</span>
+                                <p><%= ticket.products[0].finishType %></p>
                             </div>
                         </div>
                         <div class='col col-3'>
@@ -64,6 +69,7 @@
                                     <i class="fas fa-th"></i>
                                 </div>
                                 <span>Die</span>
+                                <p><%= ticket.products[0].productDie %></p>
                             </div>
                         </div>
                         <div class='col col-4'>
@@ -72,6 +78,7 @@
                                     <i class="fas fa-shoe-prints"></i>
                                 </div>
                                 <span>Total Feet</span>
+                                <p><%= ticket.totalMaterialLength %></p>
                             </div>
                         </div>
                     </div>
@@ -94,7 +101,7 @@
                                     <div class='col-td'><%= product.productNumber %></div>
                                     <div class='col-td'><%= product.labelQty || 'N/A'%></div>
                                     <div class='col-td'><%= product.totalFrames || 'N/A'%></div>
-                                    <div class='col-td'>50</div>
+                                    <div class='col-td'><%= product.totalFeet || 'N/A' %></div>
                                 </div>
                             <% }) %>
                         </div>
@@ -140,7 +147,7 @@
                         <div class='flex-center-center-row flex-wrap'>
                             <div class='product-attribute-frame'>
                                 <span>Material</span>
-                                <span><%= product.primaryMaterial || 'N/A' %> (???)</span>
+                                <span><%= material.name %> (<%= material.materialId %>)</span>
                             </div>
                             <div class='product-attribute-frame'>
                                 <span>S. Across</span>

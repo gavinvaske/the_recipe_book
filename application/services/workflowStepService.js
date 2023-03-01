@@ -126,17 +126,13 @@ module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicke
     }
 
     let totalTimeInMinutes = 0;
-    const zeroMinutes = 0;
 
     Object.keys(productionDepartmentsAndDepartmentStatuses).forEach((department) => {
-        const departmentStatusesForThisDepartment = productionDepartmentsAndDepartmentStatuses[department];
-
-        departmentStatusesForThisDepartment.forEach((departmentStatus) => {
-            if (workflowStepLedgerForTicket[department]) {
-                const durationWithThisDepartmentStatus = workflowStepLedgerForTicket[department][TIME_PER_DEPARTMENT_STATUS][departmentStatus];
-                totalTimeInMinutes += durationWithThisDepartmentStatus ? durationWithThisDepartmentStatus : zeroMinutes;
-            }
-        });
+        const ticketHasSpentTimeInThisProductionDepartment = workflowStepLedgerForTicket[department];
+    
+        if (ticketHasSpentTimeInThisProductionDepartment) {
+            totalTimeInMinutes += workflowStepLedgerForTicket[department][TIME_SPENT_IN_DEPARTMENT];
+        }
     });
 
     return totalTimeInMinutes;

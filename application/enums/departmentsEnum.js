@@ -101,11 +101,11 @@ module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentSt
 };
 
 module.exports.productionDepartmentsAndDepartmentStatuses = {
-    PRE_PRINTING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[PRE_PRINTING_DEPARTMENT],
-    PRINTING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[PRINTING_DEPARTMENT],
-    CUTTING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[CUTTING_DEPARTMENT],
-    WINDING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[WINDING_DEPARTMENT],
-    PACKAGING_DEPARTMENT: this.departmentToStatusesMappingForTicketObjects[PACKAGING_DEPARTMENT]
+    [PRE_PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PRE_PRINTING_DEPARTMENT],
+    [PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PRINTING_DEPARTMENT],
+    [CUTTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[CUTTING_DEPARTMENT],
+    [WINDING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[WINDING_DEPARTMENT],
+    [PACKAGING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PACKAGING_DEPARTMENT]
 };
 
 module.exports.COMPLETE_DEPARTMENT = COMPLETE_DEPARTMENT;

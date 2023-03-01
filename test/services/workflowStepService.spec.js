@@ -1,6 +1,6 @@
 const workflowStepService = require('../../application/services/workflowStepService');
 const chance = require('chance').Chance();
-const {productionDepartmentsAndDepartmentStatuses, getAllDepartments, departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
+const {productionDepartmentsAndDepartmentStatuses, getAllDepartments} = require('../../application/enums/departmentsEnum');
 
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
@@ -70,21 +70,15 @@ describe('workflowStepService test suite', () => {
 
         it('should only count the time a ticket has been in a production department/departmentStatus', () => {
             const nonProductionDepartment = getNonProductionDepartments()[0];
-            const nonProductionDepartmentDepartmentStatuses = departmentToStatusesMappingForTicketObjects[nonProductionDepartment];
-            const productionDepartment = Object.keys(productionDepartmentsAndDepartmentStatuses)[0];
-            const productionDepartmentDepartmentStatuses = productionDepartmentsAndDepartmentStatuses[productionDepartment];
+            const productionDepartment = chance.pickone(Object.keys(productionDepartmentsAndDepartmentStatuses));
             const durationSpentWithNonProductionDepartmentStatus = chance.floating({min: 0});
             const durationSpentWithProductionDepartmentStatus = chance.floating({min: 0});
             const workflowStepLedger = {
                 [nonProductionDepartment]: {
-                    [TIME_PER_DEPARTMENT_STATUS]: {
-                        [nonProductionDepartmentDepartmentStatuses[0]]: durationSpentWithNonProductionDepartmentStatus
-                    }
+                    [TIME_SPENT_IN_DEPARTMENT]: durationSpentWithNonProductionDepartmentStatus
                 },
                 [productionDepartment]: {
-                    [TIME_PER_DEPARTMENT_STATUS]: {
-                        [productionDepartmentDepartmentStatuses[0]]: durationSpentWithProductionDepartmentStatus
-                    }
+                    [TIME_SPENT_IN_DEPARTMENT]: durationSpentWithProductionDepartmentStatus
                 }
             };
 

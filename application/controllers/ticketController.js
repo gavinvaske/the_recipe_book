@@ -39,6 +39,11 @@ router.get('/in-progress/:ticketId', async (request, response) => {
     try {
         const ticket = await TicketModel.findById(ticketObjectId).exec();
 
+        const now = new Date();
+        const ticketCreationDate = new Date(ticket.createdAt);
+        const ageOfTicketInMilliseconds = dateTimeService.howManyMillisecondsHavePassedBetweenDateTimes(now, ticketCreationDate);
+        const ageOfTicketInMinutes = dateTimeService.convertMillisecondsToMinutes(ageOfTicketInMilliseconds);
+
         if (!ticket) {
             throw new Error(`No ticket was found in the database whose object ID is "${ticketObjectId}"`);
         }
@@ -48,7 +53,8 @@ router.get('/in-progress/:ticketId', async (request, response) => {
         }
 
         return response.render('viewOneInProgressTicket', {
-            ticket
+            ticket,
+            ageOfTicket: dateTimeService.prettifyDuration(ageOfTicketInMinutes)
         });
     } catch (error) {
         return response.status(SERVER_ERROR_CODE).send(error.message);

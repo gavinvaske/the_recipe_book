@@ -35,7 +35,7 @@
                         <div class='col col-3'>
                             <div class='box'>
                                 <span>Age</span>
-                                <p>TODO: Calculate Age</p>
+                                <p><%= ageOfTicket %></p>
                             </div>
                         </div>
                         <div class='col col-4'>
@@ -51,7 +51,7 @@
                                     <i class="fas fa-toilet-paper-alt"></i>
                                 </div>
                                 <span>Material</span>
-                                <p><%= material.name %> (<%= material.materialId %>)</p>
+                                <p><%= ticket.primaryMaterial %></p>
                             </div>
                         </div>
                         <div class='col col-2'>
@@ -147,7 +147,7 @@
                         <div class='flex-center-center-row flex-wrap'>
                             <div class='product-attribute-frame'>
                                 <span>Material</span>
-                                <span><%= material.name %> (<%= material.materialId %>)</span>
+                                <span><%= product.primaryMaterial %></span>
                             </div>
                             <div class='product-attribute-frame'>
                                 <span>S. Across</span>

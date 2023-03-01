@@ -6,14 +6,17 @@ const MINUTES_PER_WEEK = 10080;
 const MINUTES_PER_AVERAGE_MONTH = (DAYS_PER_YEAR / MONTHS_PER_YEAR) * MINUTES_PER_DAY;
 const MINUTES_PER_YEAR = DAYS_PER_YEAR * MINUTES_PER_DAY;
 
+const MILLISECONDS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+
 module.exports.howManyMillisecondsHavePassedBetweenDateTimes = (dateTime1, dateTime2) => {
     return Math.abs(dateTime2 - dateTime1);
 };
 
 module.exports.convertMillisecondsToMinutes = (numberOfMilliseconds) => {
-    const millisecondsPerMinute = 60000;
+    const milliSecondsPerMinute = MILLISECONDS_PER_SECOND * SECONDS_PER_MINUTE;
 
-    return numberOfMilliseconds / millisecondsPerMinute;
+    return numberOfMilliseconds / milliSecondsPerMinute;
 };
 
 module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-line complexity

@@ -4511,13 +4511,14 @@ span.drpdwn-title {
 }
 .in-progress-view .right-col .middle-col .card:nth-child(1).active,
 .in-progress-view .right-col .middle-col .card:nth-child(2).active {
-  height: 50%;
+  height: 80%;
   position: relative;
   padding: 1.5rem;
   transition: .3s;
 }
 .in-progress-view .right-col .middle-col .card:nth-child(2).active {
   margin-bottom: 0;
+  height: 20%;
 }
 
 .in-progress-view .right-col .click-tab:nth-child(2) {
@@ -4665,11 +4666,21 @@ iframe {
   height: 150px;
   width: calc(100% - 15px);
 }
-.product-attribute-frame span {
+.department-notes {
+  width: 100%;
+  border-radius: 0.428rem;
+  border: 1px solid rgba(128, 128, 128, .12);
+  min-height: 70px;
+  padding: 10px 24px;
+}
+.product-attribute-frame span,
+.department-notes span {
   display: block;
 }
-.product-attribute-frame span:first-of-type {
+.product-attribute-frame span:first-of-type,
+.department-notes span:first-of-type {
   font-size: 12px;
+  font-weight: 600;
 }
 .highlight-frame .box {
   height: 150px;
@@ -4730,6 +4741,9 @@ iframe {
   font-weight: bold;
 }
 
+.highlight-frame-small .col:nth-child(-n + 3) .box span:nth-child(1) {
+  font-weight: 600;
+}
 
 
 /* Base for label styling */

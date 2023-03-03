@@ -144,7 +144,11 @@
                     
                     <% } else if (ticket.destination.department === 'PRINTING') { %>
                         <p>PRINTING</p>
-                        <div class='flex-center-center-row flex-wrap'>
+                        <div class='flex-center-left-row flex-wrap'>
+                            <div class='department-notes'>
+                                <span>Printing Notes</span>
+                                <span><%= product.printingNotes || 'N/A'%> (AB)</span>
+                            </div>
                             <div class='product-attribute-frame'>
                                 <span>Material</span>
                                 <span><%= product.primaryMaterial %></span>
@@ -188,10 +192,6 @@
                             <div class='product-attribute-frame'>
                                 <span>Measure Around</span>
                                 <span><%= product.measureAround || 'N/A'%> (AB)</span>
-                            </div>
-                            <div class=''>
-                                <span>Printing Notes</span>
-                                <span><%= product.printingNotes || 'N/A'%> (AB)</span>
                             </div>
                             <div class='product-attribute-frame'>
                                 <span>Frames Plus Overrun</span>

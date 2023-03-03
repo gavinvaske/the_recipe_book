@@ -1225,16 +1225,6 @@ describe('validation', () => {
 
             expect(error).toBeDefined();
         });
-
-        it('should fail validation if proof.versionId is not defined', () => {
-            delete proof.versionId;
-            productAttributes.proof = proof;
-            const product = new ProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeDefined();
-        });
     });
 
     describe('attribute: labelRepeat (aka LabelRepeat)', () => {

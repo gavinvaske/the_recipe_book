@@ -2,13 +2,14 @@ const AWS = require('aws-sdk');
 const mongoose = require('mongoose');
 const fileSchema = require('../schemas/s3File');
 
+FILE_EXTENSION_IS_PDF_REGEX = /(.pdf)$/;
+
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
 function buildS3ObjectToDelete(s3File) {
-    console.log(`file => ${JSON.stringify(s3File)}`)
     const {fileName, versionId} = s3File;
 
     if (!fileName || !versionId) {
@@ -42,7 +43,7 @@ module.exports.deleteS3Objects = async (s3Files) => {
     return s3.deleteObjects(params).promise();
 };
 
-function sendFileToS3(fileName, fileContents){
+function sendPdfToS3(fileName, fileContents){
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
@@ -53,21 +54,29 @@ function sendFileToS3(fileName, fileContents){
     return s3.upload(params).promise();
 };
 
-module.exports.storeFilesInS3 = async (fileNames, contentsOfEachFile) => {
+function isEveryFileAPdf(fileNames) {
+    return fileNames.every((fileName) => {
+        return FILE_EXTENSION_IS_PDF_REGEX.test(fileName);
+    });
+}
+
+module.exports.storePdfsInS3 = async (fileNames, contentsOfEachFile) => {
     if (fileNames.length !== contentsOfEachFile.length) {
         throw new Error('"fileNames" must be mapped one-to-one with "contentsOfEachFile"');
+    }
+
+    if (!isEveryFileAPdf(fileNames)) {
+        throw new Error(`These files must be PDFs. At least one of the following files is not a PDF: ${JSON.stringify(fileNames)}`);
     }
 
     const s3FileUploadResponsePromises = [];
 
     for (let i = 0; i < fileNames.length; i++) {
-        s3FileUploadResponsePromises.push(sendFileToS3(fileNames[i], contentsOfEachFile[i]));
+        s3FileUploadResponsePromises.push(sendPdfToS3(fileNames[i], contentsOfEachFile[i]));
     }
 
     const s3FileUploadResponses = await Promise.all(s3FileUploadResponsePromises);
     const FileModel = mongoose.model('s3File', fileSchema);
-
-    console.log(`s3FileUploadResponses => ${JSON.stringify(s3FileUploadResponses)}`);
 
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);

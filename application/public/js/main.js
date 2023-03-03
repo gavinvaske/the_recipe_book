@@ -253,7 +253,7 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                alert('Uh oh, an unknown error occurred');
+                alert('Uh oh, an unknown error occurred, see the console for more details');
                 console.log(JSON.stringify(error));
             }
         });

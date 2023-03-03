@@ -22,8 +22,18 @@ function buildFileCreateRequest(fileName, fileContents) {
     return {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: fileContents
+        Body: fileContents,
+        ContentType: 'application/pdf'
     };
+}
+
+function createPdfFileName() {
+    return `${chance.word()}.pdf`;
+}
+
+function createNonPdfFileName() {
+    const nonPdfFileExtension = chance.pickone(['.jpg', 'jpeg', '.txt']);
+    return `${chance.word()}.${nonPdfFileExtension}`;
 }
 
 describe('s3Service test suite', () => {
@@ -73,7 +83,7 @@ describe('s3Service test suite', () => {
         });
     });
 
-    describe('storeFilesInS3', () => {
+    describe('storePdfsInS3', () => {
         it('should throw an error if the length of "fileNames" does not equal the length of "fileContents"', async () => {
             const numberOfFileNames = chance.d12();
             const numberOfFileContents = numberOfFileNames + 1;
@@ -81,17 +91,26 @@ describe('s3Service test suite', () => {
             const fileNames = chance.n(chance.word, numberOfFileNames);
             const fileContents = chance.n(chance.word, numberOfFileContents);
 
-            await expect(s3Service.storeFilesInS3(fileNames, fileContents)).rejects.toThrow('\"fileNames\" must be mapped one-to-one with \"contentsOfEachFile\"');
+            await expect(s3Service.storePdfsInS3(fileNames, fileContents)).rejects.toThrow('\"fileNames\" must be mapped one-to-one with \"contentsOfEachFile\"');
+        });
+
+        it('should throw an error if non-pdf files are attempted to be uploaded', async () => {
+            const numberOfFileNames = chance.d6();
+
+            const fileNames = chance.n(createNonPdfFileName, numberOfFileNames);
+            const fileContents = chance.n(chance.word, numberOfFileNames);
+
+            await expect(s3Service.storePdfsInS3(fileNames, fileContents)).rejects.toThrow(`These files must be PDFs. At least one of the following files is not a PDF: ${JSON.stringify(fileNames)}`);
         });
 
         it('should upload each file to S3', async () => {
             const mockedS3 = new awsMock.S3();
             const numberOfFiles = chance.d12();
 
-            const fileNames = chance.n(chance.word, numberOfFiles);
+            const fileNames = chance.n(createPdfFileName, numberOfFiles);
             const fileContents = chance.n(chance.word, numberOfFiles);
 
-            await s3Service.storeFilesInS3(fileNames, fileContents);
+            await s3Service.storePdfsInS3(fileNames, fileContents);
 
             expect(mockedS3.upload).toHaveBeenCalledTimes(numberOfFiles);
 
@@ -101,13 +120,13 @@ describe('s3Service test suite', () => {
             });
         });
 
-        it('should respond a mongoose object for each file that was uploaded to s3', async () => {
+        it('should respond with a mongoose object for each file that was uploaded to s3', async () => {
             const numberOfFiles = chance.d12();
 
-            const fileNames = chance.n(chance.word, numberOfFiles);
+            const fileNames = chance.n(createPdfFileName, numberOfFiles);
             const fileContents = chance.n(chance.word, numberOfFiles);
 
-            const s3FilesAsMongooseObject = await s3Service.storeFilesInS3(fileNames, fileContents);
+            const s3FilesAsMongooseObject = await s3Service.storePdfsInS3(fileNames, fileContents);
 
             expect(s3FilesAsMongooseObject.length).toEqual(numberOfFiles);
 

@@ -27,7 +27,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
         
         const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
-        uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
+        uploadedProofs = await s3Service.storePdfsInS3([fileName], [base64EncodedPdf]);
         const uploadedProof = uploadedProofs[0];
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);

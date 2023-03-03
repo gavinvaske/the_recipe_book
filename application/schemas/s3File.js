@@ -24,11 +24,6 @@ const s3FileSchema = new Schema({
         type: String,
         required: true,
         alias: 'Bucket'
-    },
-    versionId: {
-        type: String,
-        required: true,
-        alias: 'VersionId'
     }
 }, { timestamps: true });
 

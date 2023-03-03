@@ -22,7 +22,7 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
     let fileUploads = [];
 
     try {
-        fileUploads = await s3Service.storeFilesInS3(uploadedFileNames, uploadedFileContents);
+        fileUploads = await s3Service.storePdfsInS3(uploadedFileNames, uploadedFileContents);
 
         const spotPlateAttributes = {
             ...request.body,

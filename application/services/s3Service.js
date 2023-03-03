@@ -8,6 +8,7 @@ const s3 = new AWS.S3({
 });
 
 function buildS3ObjectToDelete(s3File) {
+    console.log(`file => ${JSON.stringify(s3File)}`)
     const {fileName, versionId} = s3File;
 
     if (!fileName || !versionId) {
@@ -45,7 +46,8 @@ function sendFileToS3(fileName, fileContents){
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: fileContents
+        Body: fileContents,
+        ContentType: 'application/pdf'
     };
 
     return s3.upload(params).promise();
@@ -64,6 +66,8 @@ module.exports.storeFilesInS3 = async (fileNames, contentsOfEachFile) => {
 
     const s3FileUploadResponses = await Promise.all(s3FileUploadResponsePromises);
     const FileModel = mongoose.model('s3File', fileSchema);
+
+    console.log(`s3FileUploadResponses => ${JSON.stringify(s3FileUploadResponses)}`);
 
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);

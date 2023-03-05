@@ -1,13 +1,11 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {upload} = require('../middleware/upload');
-const path = require('path');
-const fs = require('fs');
 const TicketModel = require('../models/ticket');
 
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');
-const fileService = require('../services/fileService')
+const fileService = require('../services/fileService');
 
 const SERVER_ERROR_CODE = 500;
 

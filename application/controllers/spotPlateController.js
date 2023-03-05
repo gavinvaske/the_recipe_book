@@ -4,7 +4,6 @@ const mongooseService = require('../services/mongooseService');
 const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
 const s3Service = require('../services/s3Service');
-const mime = require('mime');
 
 const MAX_NUMBER_OF_FILES = 100;
 

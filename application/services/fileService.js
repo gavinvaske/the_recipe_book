@@ -7,20 +7,20 @@ module.exports.getUploadedFilePath = (uploadedFileName) => {
 
 module.exports.getUploadedFile = (fileName) => {
     const filePath = this.getUploadedFilePath(fileName);
-    const fileContents = fs.readFileSync(filePath)
+    const fileContents = fs.readFileSync(filePath);
 
     return {
         fileName,
         filePath,
         fileContents
-    }
-}
+    };
+};
 
 module.exports.getUploadedFiles = (fileNames) => {
     return fileNames.map((fileName) => {
         return this.getUploadedFile(fileName);
     });
-}
+};
 
 module.exports.getFileNames = (files) => {
     if (!files) {

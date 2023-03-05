@@ -52,7 +52,7 @@ module.exports.storeFilesInS3 = async (files) => {
 
     const s3FileUploadResponsePromises = files.map((file) => {
         return sendFileToS3(file);
-    })
+    });
 
     const s3FileUploadResponses = await Promise.all(s3FileUploadResponsePromises);
     const FileModel = mongoose.model('s3File', s3FileSchema);

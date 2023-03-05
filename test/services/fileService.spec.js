@@ -118,9 +118,12 @@ describe('fileService test suite', () => {
     });
     describe('deleteOneFileFromFileSystem', () => {
         it('should unlink the file', () => {
-            const filePath = chance.string();
+            const filePath = chance.word();
+            const file = {
+                filePath: filePath
+            };
 
-            fileService.deleteOneFileFromFileSystem(filePath);
+            fileService.deleteOneFileFromFileSystem(file);
 
             expect(fsMock.unlinkSync).toHaveBeenCalledTimes(1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath);
@@ -130,12 +133,15 @@ describe('fileService test suite', () => {
     describe('deleteMultipleFilesFromFileSystem', () => {
         it('should unlink the files', () => {
             const filePath1 = chance.word();
-            const filePath2 = chance.string();
-            const filePaths = [filePath1, filePath2];
+            const filePath2 = chance.word();
+            const files = [
+                {filePath: filePath1},
+                {filePath: filePath2}
+            ]
 
-            fileService.deleteMultipleFilesFromFileSystem(filePaths);
+            fileService.deleteMultipleFilesFromFileSystem(files);
 
-            expect(fsMock.unlinkSync).toHaveBeenCalledTimes(filePaths.length);
+            expect(fsMock.unlinkSync).toHaveBeenCalledTimes(files.length);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath2);
         });

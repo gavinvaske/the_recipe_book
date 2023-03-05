@@ -137,7 +137,7 @@ describe('fileService test suite', () => {
             const files = [
                 {filePath: filePath1},
                 {filePath: filePath2}
-            ]
+            ];
 
             fileService.deleteMultipleFilesFromFileSystem(files);
 

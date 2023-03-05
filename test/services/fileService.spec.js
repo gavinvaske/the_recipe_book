@@ -14,10 +14,16 @@ function getExpectedFilePath(fileName) {
 }
 
 describe('fileService test suite', () => {
+    let fileContents;
+
     beforeEach(() => {
         jest.resetAllMocks();
+
+        fileContents = chance.string();
+
         pathMock.resolve.mockReturnValue(baseDirectory);
         fsMock.unlinkSync.mockReturnValue();
+        fsMock.readFileSync.mockReturnValue(fileContents);
     });
 
     describe('getUploadedFilePath', () => {
@@ -28,6 +34,58 @@ describe('fileService test suite', () => {
 
             expect(pathMock.resolve).toHaveBeenCalledTimes(1);
             expect(actualFilePath).toEqual(getExpectedFilePath(fileName));
+        });
+    });
+
+    describe('getUploadedFile', () => {
+        it('should return an object with the correct attributes', () => {
+            const fileName = chance.word();
+            const expectedFile = {
+                fileName: fileName,
+                filePath: getExpectedFilePath(fileName),
+                fileContents: fileContents
+            };
+
+            const actualFile = fileService.getUploadedFile(fileName);
+
+            expect(actualFile).toEqual(expectedFile);
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe('getUploadedFiles', () => {
+        it('should return one uploaded file', () => {
+            const fileName = chance.word();
+            const expectedFile = {
+                fileName: fileName,
+                filePath: getExpectedFilePath(fileName),
+                fileContents: fileContents
+            };
+
+            const actualFiles = fileService.getUploadedFiles([fileName]);
+
+            expect(actualFiles.length).toEqual(1);
+            expect(actualFiles[0]).toEqual(expectedFile);
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(1);
+        });
+
+        it('should return n number of uploaded files', () => {
+            const fileNames = chance.n(chance.word, chance.d12());
+            const expectedFiles = fileNames.map((fileName) => {
+                return {
+                    fileName: fileName,
+                    filePath: getExpectedFilePath(fileName),
+                    fileContents: fileContents
+                };
+            });
+
+            const actualFiles = fileService.getUploadedFiles(fileNames);
+
+            expect(actualFiles.length).toEqual(fileNames.length);
+            expectedFiles.forEach((expectedFile, index) => {
+                expect(actualFiles[index]).toEqual(expectedFile);
+            });
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(fileNames.length);
         });
     });
 

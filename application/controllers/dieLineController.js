@@ -17,16 +17,15 @@ router.get('/form', (request, response) => {
 
 router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (request, response) => {
     const uploadedFileNames = fileService.getFileNames(request.files);
-    const uploadedFilePaths = fileService.getUploadedFilePaths(uploadedFileNames);
-    const uploadedFileContents = fileService.getUploadedFileContents(uploadedFilePaths);
-    let fileUploads = [];
+    let uploadedFiles = fileService.getUploadedFiles(uploadedFileNames);
+    let s3Files = [];
 
     try {
-        fileUploads = await s3Service.storePdfsInS3(uploadedFileNames, uploadedFileContents);
+        s3Files = await s3Service.storeFilesInS3(uploadedFiles);
 
         const dieLineAttributes = {
             ...request.body,
-            fileUploads: fileUploads
+            fileUploads: s3Files
         };
 
         await DieLineModel.create(dieLineAttributes);
@@ -36,11 +35,11 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
         console.log(`Error creating die-line: ${error.message}`);
         request.flash('errors', ['The following error(s) occurred while creating the die-line:', ...mongooseService.parseHumanReadableMessages(error)]);
 
-        await s3Service.deleteS3Objects(fileUploads);
+        await s3Service.deleteS3Objects(s3Files);
 
         return response.redirect('back');
     } finally {
-        fileService.deleteMultipleFilesFromFileSystem(uploadedFilePaths);
+        fileService.deleteMultipleFilesFromFileSystem(uploadedFiles);
     }
 });
 

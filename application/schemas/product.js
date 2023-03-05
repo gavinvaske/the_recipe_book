@@ -528,7 +528,7 @@ function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound)
 }
 
 productSchema.virtual('proofUrl').get(function() {
-    return (this.proof && this.proof.url) ? this.proof.url : ''; 
+    return (this.proof && this.proof) ? this.proof.url : ''; 
 });
 
 module.exports = productSchema;

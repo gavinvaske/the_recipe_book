@@ -1225,6 +1225,23 @@ describe('validation', () => {
 
             expect(error).toBeDefined();
         });
+
+        it('should have an attribute ("proofUrl") that accesses the proof.url', () => {
+            productAttributes.proof = proof;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proofUrl).toEqual(proof.url);
+        });
+
+        it('should have an attribute ("proofUrl") that returns an empty string if proof is not defined', () => {
+            productAttributes.proof = undefined;
+            const emptyString = '';
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proofUrl).toEqual(emptyString);
+        });
     });
 
     describe('attribute: labelRepeat (aka LabelRepeat)', () => {

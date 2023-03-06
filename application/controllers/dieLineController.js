@@ -16,11 +16,12 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (request, response) => {
-    const uploadedFileNames = fileService.getFileNames(request.files);
-    let uploadedFiles = fileService.getUploadedFiles(uploadedFileNames);
+    let uploadedFiles = [];
     let s3Files = [];
-
+    
     try {
+        const uploadedFileNames = fileService.getFileNames(request.files);
+        uploadedFiles = fileService.getUploadedFiles(uploadedFileNames);
         s3Files = await s3Service.storeFilesInS3(uploadedFiles);
 
         const dieLineAttributes = {

@@ -101,7 +101,9 @@ describe('s3Service test suite', () => {
             files.forEach((file) => {
                 const expectedParams = buildFileCreateRequest(file.fileName, file.fileContents);
                 expect(mockedS3.upload).toHaveBeenCalledWith(expectedParams);
+                expect(mimeMock.getType).toHaveBeenCalledWith(file.fileName);
             });
+
         });
 
         it('should respond with a mongoose object for each file that was uploaded to s3', async () => {

@@ -1,8 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
+module.exports.PDF_MIME_TYPE = 'application/pdf';
+
 module.exports.getUploadedFilePath = (uploadedFileName) => {
     return path.resolve(__dirname, '../../') + '/uploads/' + uploadedFileName;
+};
+
+module.exports.doesFileHaveThisMimeType = (fileName, mimeType) => {
+    return mime.getType(fileName) === mimeType;
 };
 
 module.exports.getUploadedFile = (fileName) => {

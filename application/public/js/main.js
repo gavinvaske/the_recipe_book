@@ -253,7 +253,7 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                alert('Uh oh, an unknown error occurred, see the console for more details');
+                alert(`Failed to upload the file. The error message is "${error.responseText ? error.responseText : 'N/A'}"`);
                 console.log(JSON.stringify(error));
             }
         });

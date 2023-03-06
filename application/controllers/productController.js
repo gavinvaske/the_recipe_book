@@ -8,15 +8,20 @@ const productService = require('../services/productService');
 const fileService = require('../services/fileService');
 
 const SERVER_ERROR_CODE = 500;
+const INVALID_REQUEST_CODE = 400;
 
 router.use(verifyJwtToken);
 
 router.post('/:productNumber/upload-proof', upload.single('proof'), async (request, response) => {
     const productNumber = request.params.productNumber;
-    const uploadedFile = fileService.getUploadedFile(request.file.filename);
-    let fileUploadedToS3;
+    let fileUploadedToS3, uploadedFile;
     
-    try {        
+    try {
+        if (request.file.mimetype !== fileService.PDF_MIME_TYPE) {
+            return response.status(INVALID_REQUEST_CODE).send('The uploaded file must be a PDF');
+        }
+
+        uploadedFile = fileService.getUploadedFile(request.file.filename);
         const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
         [fileUploadedToS3] = await s3Service.storeFilesInS3([uploadedFile]);
@@ -33,9 +38,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
 
         await s3Service.deleteS3Objects([fileUploadedToS3]);
 
-        return response.status(SERVER_ERROR_CODE).json({
-            error: error.message
-        });
+        return response.status(SERVER_ERROR_CODE).send(error.message);
     } finally {
         fileService.deleteOneFileFromFileSystem(uploadedFile);
     }

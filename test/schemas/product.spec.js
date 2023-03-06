@@ -1226,14 +1226,21 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should fail validation if proof.versionId is not defined', () => {
-            delete proof.versionId;
+        it('should have an attribute ("proofUrl") that accesses the proof.url', () => {
             productAttributes.proof = proof;
+
             const product = new ProductModel(productAttributes);
 
-            const error = product.validateSync();
+            expect(product.proofUrl).toEqual(proof.url);
+        });
 
-            expect(error).toBeDefined();
+        it('should have an attribute ("proofUrl") that returns an empty string if proof is not defined', () => {
+            productAttributes.proof = undefined;
+            const emptyString = '';
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.proofUrl).toEqual(emptyString);
         });
     });
 

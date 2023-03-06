@@ -1,6 +1,9 @@
 const s3Service = require('../../application/services/s3Service');
 const awsMock = require('aws-sdk');
 const chance = require('chance').Chance();
+const mimeMock = require('mime');
+
+jest.mock('mime');
 
 jest.mock('aws-sdk', () => {
     const mockedS3 = {
@@ -11,10 +14,11 @@ jest.mock('aws-sdk', () => {
     return { S3: jest.fn(() => mockedS3) };
 });
 
+const PDF_CONTENT_TYPE = 'application/pdf';
+
 function buildFileDeleteRequest(file) {
     return {
-        Key: file.fileName,
-        VersionId: file.versionId
+        Key: file.fileName
     };
 }
 
@@ -22,7 +26,15 @@ function buildFileCreateRequest(fileName, fileContents) {
     return {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: fileContents
+        Body: fileContents,
+        ContentType: PDF_CONTENT_TYPE
+    };
+}
+
+function createPdfFile() {
+    return {
+        fileName: chance.word(),
+        fileContents: chance.word()
     };
 }
 
@@ -33,6 +45,10 @@ describe('s3Service test suite', () => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    beforeEach(() => {
+        mimeMock.getType.mockReturnValue(PDF_CONTENT_TYPE);
     });
 
     describe('deleteS3Objects', () => {
@@ -48,12 +64,10 @@ describe('s3Service test suite', () => {
         it('should send request to delete files', async () => {
             const mockedS3 = new awsMock.S3();
             const fileToDelete1 = {
-                fileName: chance.word(),
-                versionId: chance.word()
+                fileName: chance.word()
             };
             const fileToDelete2 = {
-                fileName: chance.word(),
-                versionId: chance.word()
+                fileName: chance.word()
             };
 
             await s3Service.deleteS3Objects([fileToDelete1, fileToDelete2]);
@@ -74,40 +88,29 @@ describe('s3Service test suite', () => {
     });
 
     describe('storeFilesInS3', () => {
-        it('should throw an error if the length of "fileNames" does not equal the length of "fileContents"', async () => {
-            const numberOfFileNames = chance.d12();
-            const numberOfFileContents = numberOfFileNames + 1;
-
-            const fileNames = chance.n(chance.word, numberOfFileNames);
-            const fileContents = chance.n(chance.word, numberOfFileContents);
-
-            await expect(s3Service.storeFilesInS3(fileNames, fileContents)).rejects.toThrow('\"fileNames\" must be mapped one-to-one with \"contentsOfEachFile\"');
-        });
-
         it('should upload each file to S3', async () => {
             const mockedS3 = new awsMock.S3();
             const numberOfFiles = chance.d12();
 
-            const fileNames = chance.n(chance.word, numberOfFiles);
-            const fileContents = chance.n(chance.word, numberOfFiles);
+            const files = chance.n(createPdfFile, numberOfFiles);
 
-            await s3Service.storeFilesInS3(fileNames, fileContents);
+            await s3Service.storeFilesInS3(files);
 
             expect(mockedS3.upload).toHaveBeenCalledTimes(numberOfFiles);
 
-            fileNames.forEach((fileName, index) => {
-                const expectedParams = buildFileCreateRequest(fileName, fileContents[index]);
+            files.forEach((file) => {
+                const expectedParams = buildFileCreateRequest(file.fileName, file.fileContents);
                 expect(mockedS3.upload).toHaveBeenCalledWith(expectedParams);
+                expect(mimeMock.getType).toHaveBeenCalledWith(file.fileName);
             });
+
         });
 
-        it('should respond a mongoose object for each file that was uploaded to s3', async () => {
+        it('should respond with a mongoose object for each file that was uploaded to s3', async () => {
             const numberOfFiles = chance.d12();
+            const files = chance.n(createPdfFile, numberOfFiles);
 
-            const fileNames = chance.n(chance.word, numberOfFiles);
-            const fileContents = chance.n(chance.word, numberOfFiles);
-
-            const s3FilesAsMongooseObject = await s3Service.storeFilesInS3(fileNames, fileContents);
+            const s3FilesAsMongooseObject = await s3Service.storeFilesInS3(files);
 
             expect(s3FilesAsMongooseObject.length).toEqual(numberOfFiles);
 

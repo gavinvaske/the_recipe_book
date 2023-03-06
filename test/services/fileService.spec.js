@@ -14,10 +14,16 @@ function getExpectedFilePath(fileName) {
 }
 
 describe('fileService test suite', () => {
+    let fileContents;
+
     beforeEach(() => {
         jest.resetAllMocks();
+
+        fileContents = chance.string();
+
         pathMock.resolve.mockReturnValue(baseDirectory);
         fsMock.unlinkSync.mockReturnValue();
+        fsMock.readFileSync.mockReturnValue(fileContents);
     });
 
     describe('getUploadedFilePath', () => {
@@ -31,26 +37,55 @@ describe('fileService test suite', () => {
         });
     });
 
-    describe('getUploadedFilePaths', () => {
-        it('should return an empty array if no filesNames are provided', () => {
-            const fileNames = [];
+    describe('getUploadedFile', () => {
+        it('should return an object with the correct attributes', () => {
+            const fileName = chance.word();
+            const expectedFile = {
+                fileName: fileName,
+                filePath: getExpectedFilePath(fileName),
+                fileContents: fileContents
+            };
 
-            const actualFilePaths = fileService.getUploadedFilePaths(fileNames);
+            const actualFile = fileService.getUploadedFile(fileName);
 
-            expect(pathMock.resolve).toHaveBeenCalledTimes(0);
-            expect(actualFilePaths).toEqual([]);
+            expect(actualFile).toEqual(expectedFile);
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(1);
         });
-        it('should return the full path to each file', () => {
-            const fileName1 = chance.word();
-            const fileName2 = chance.word();
-            const fileNames = [fileName1, fileName2];
+    });
 
-            const actualFilePaths = fileService.getUploadedFilePaths(fileNames);
+    describe('getUploadedFiles', () => {
+        it('should return one uploaded file', () => {
+            const fileName = chance.word();
+            const expectedFile = {
+                fileName: fileName,
+                filePath: getExpectedFilePath(fileName),
+                fileContents: fileContents
+            };
 
-            expect(pathMock.resolve).toHaveBeenCalledTimes(2);
-            expect(actualFilePaths.length).toEqual(fileNames.length);
-            expect(actualFilePaths[0]).toEqual(getExpectedFilePath(fileName1));
-            expect(actualFilePaths[1]).toEqual(getExpectedFilePath(fileName2));
+            const actualFiles = fileService.getUploadedFiles([fileName]);
+
+            expect(actualFiles.length).toEqual(1);
+            expect(actualFiles[0]).toEqual(expectedFile);
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(1);
+        });
+
+        it('should return n number of uploaded files', () => {
+            const fileNames = chance.n(chance.word, chance.d12());
+            const expectedFiles = fileNames.map((fileName) => {
+                return {
+                    fileName: fileName,
+                    filePath: getExpectedFilePath(fileName),
+                    fileContents: fileContents
+                };
+            });
+
+            const actualFiles = fileService.getUploadedFiles(fileNames);
+
+            expect(actualFiles.length).toEqual(fileNames.length);
+            expectedFiles.forEach((expectedFile, index) => {
+                expect(actualFiles[index]).toEqual(expectedFile);
+            });
+            expect(fsMock.readFileSync).toHaveBeenCalledTimes(fileNames.length);
         });
     });
 
@@ -83,9 +118,12 @@ describe('fileService test suite', () => {
     });
     describe('deleteOneFileFromFileSystem', () => {
         it('should unlink the file', () => {
-            const filePath = chance.string();
+            const filePath = chance.word();
+            const file = {
+                filePath: filePath
+            };
 
-            fileService.deleteOneFileFromFileSystem(filePath);
+            fileService.deleteOneFileFromFileSystem(file);
 
             expect(fsMock.unlinkSync).toHaveBeenCalledTimes(1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath);
@@ -95,44 +133,17 @@ describe('fileService test suite', () => {
     describe('deleteMultipleFilesFromFileSystem', () => {
         it('should unlink the files', () => {
             const filePath1 = chance.word();
-            const filePath2 = chance.string();
-            const filePaths = [filePath1, filePath2];
+            const filePath2 = chance.word();
+            const files = [
+                {filePath: filePath1},
+                {filePath: filePath2}
+            ];
 
-            fileService.deleteMultipleFilesFromFileSystem(filePaths);
+            fileService.deleteMultipleFilesFromFileSystem(files);
 
-            expect(fsMock.unlinkSync).toHaveBeenCalledTimes(filePaths.length);
+            expect(fsMock.unlinkSync).toHaveBeenCalledTimes(files.length);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath1);
             expect(fsMock.unlinkSync).toHaveBeenCalledWith(filePath2);
-        });
-    });
-
-    describe('getUploadedFileContents', () => {
-        beforeEach(() => {
-            fsMock.readFileSync.mockReturnValue('');
-        });
-
-        it('should get the contents of each file', () => {
-            const filePaths = chance.n(chance.word, chance.d12());
-
-            fileService.getUploadedFileContents(filePaths);
-
-            expect(fsMock.readFileSync).toHaveBeenCalledTimes(filePaths.length);
-        });
-
-        it('should return the contents of each file', () => {
-            const filePath1 = chance.word();
-            const filePath2 = chance.word();
-            const fileContents1 = chance.string();
-            const fileContents2 = chance.string();
-            fsMock.readFileSync.mockReturnValueOnce(fileContents1);
-            fsMock.readFileSync.mockReturnValueOnce(fileContents2);
-            const filePaths = [filePath1, filePath2];
-
-            const actualFileContents = fileService.getUploadedFileContents(filePaths);
-
-            expect(fsMock.readFileSync).toHaveBeenCalledTimes(filePaths.length);
-            expect(actualFileContents[0]).toEqual(fileContents1);
-            expect(actualFileContents[1]).toEqual(fileContents2);
         });
     });
 });

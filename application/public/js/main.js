@@ -253,7 +253,7 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                alert('Uh oh, an unknown error occurred');
+                alert(`Failed to upload the file. The error message is "${error.responseText ? error.responseText : 'N/A'}"`);
                 console.log(JSON.stringify(error));
             }
         });
@@ -1041,6 +1041,12 @@ $( document ).ready(function() {
             holdReasonOptions.append(newRow);
             newRow.show();
         });
+    });
+
+    $('.product-tab').on('click', function() {
+        const proofUrl = $(this).data('proof-url');
+
+        $('#proof').prop('src', proofUrl);
     });
 
     var words = [

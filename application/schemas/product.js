@@ -405,7 +405,7 @@ const productSchema = new Schema({
         required: true,
         default: function() {
             const decimalPositionToRound = 4;
-            const measureAcrossBeforeRounding = this.labelsAcross + this.matrixAcross;
+            const measureAcrossBeforeRounding = this.sizeAcross + this.matrixAcross;
             return roundValueToNearestDecimalPlace(measureAcrossBeforeRounding, decimalPositionToRound);
         }
     },
@@ -414,7 +414,7 @@ const productSchema = new Schema({
         required: true,
         default: function() {
             const decimalPositionToRound = 4;
-            const measureAroundBeforeRounding = this.labelsAround + this.matrixAround;
+            const measureAroundBeforeRounding = this.sizeAround + this.matrixAround;
             return roundValueToNearestDecimalPlace(measureAroundBeforeRounding, decimalPositionToRound);
         }
     },
@@ -526,5 +526,9 @@ function roundValueToNearestDecimalPlace(unRoundedValue, decimalPositionToRound)
 
     return Math.round(unRoundedValue * precision) / precision;
 }
+
+productSchema.virtual('proofUrl').get(function() {
+    return (this.proof && this.proof) ? this.proof.url : ''; 
+});
 
 module.exports = productSchema;

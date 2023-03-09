@@ -1,51 +1,46 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {upload} = require('../middleware/upload');
-const path = require('path');
-const fs = require('fs');
 const TicketModel = require('../models/ticket');
 
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');
+const fileService = require('../services/fileService');
 
 const SERVER_ERROR_CODE = 500;
+const INVALID_REQUEST_CODE = 400;
 
 router.use(verifyJwtToken);
 
-function deleteFileFromFileSystem(path) {
-    fs.unlinkSync(path);
-}
-
 router.post('/:productNumber/upload-proof', upload.single('proof'), async (request, response) => {
-    const pdfFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
     const productNumber = request.params.productNumber;
-    let uploadedProofs = [];
+    let fileUploadedToS3, uploadedFile;
     
     try {
-        const base64EncodedPdf = fs.readFileSync(pdfFilePath);
-        const fileName = request.file.originalname;
-        
+        if (request.file.mimetype !== fileService.PDF_MIME_TYPE) {
+            return response.status(INVALID_REQUEST_CODE).send('The uploaded file must be a PDF');
+        }
+
+        uploadedFile = fileService.getUploadedFile(request.file.filename);
         const ticket = await TicketModel.findOne({'products.productNumber': productNumber});
 
-        uploadedProofs = await s3Service.storeFilesInS3([fileName], [base64EncodedPdf]);
-        const uploadedProof = uploadedProofs[0];
+        [fileUploadedToS3] = await s3Service.storeFilesInS3([uploadedFile]);
 
         const index = ticket.products.findIndex((product) => product.productNumber === productNumber);
 
-        ticket.products[index].proof = uploadedProof;
+        ticket.products[index].proof = fileUploadedToS3;
 
         await ticket.save();
 
         return response.json({});
     } catch (error) {       
         console.log(`Error while uploading proof: ${error.message}`);
-        await s3Service.deleteS3Objects(uploadedProofs);
 
-        return response.status(SERVER_ERROR_CODE).json({
-            error: error.message
-        });
+        await s3Service.deleteS3Objects([fileUploadedToS3]);
+
+        return response.status(SERVER_ERROR_CODE).send(error.message);
     } finally {
-        deleteFileFromFileSystem(pdfFilePath);
+        fileService.deleteOneFileFromFileSystem(uploadedFile);
     }
 });
 

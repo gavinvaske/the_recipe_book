@@ -1,13 +1,30 @@
 const path = require('path');
 const fs = require('fs');
 
+module.exports.PDF_MIME_TYPE = 'application/pdf';
+
 module.exports.getUploadedFilePath = (uploadedFileName) => {
     return path.resolve(__dirname, '../../') + '/uploads/' + uploadedFileName;
 };
 
-module.exports.getUploadedFilePaths = (uploadedFileNames) => {
-    return uploadedFileNames.map((fileName) => {
-        return this.getUploadedFilePath(fileName);
+module.exports.doesFileHaveThisMimeType = (fileName, mimeType) => {
+    return mime.getType(fileName) === mimeType;
+};
+
+module.exports.getUploadedFile = (fileName) => {
+    const filePath = this.getUploadedFilePath(fileName);
+    const fileContents = fs.readFileSync(filePath);
+
+    return {
+        fileName,
+        filePath,
+        fileContents
+    };
+};
+
+module.exports.getUploadedFiles = (fileNames) => {
+    return fileNames.map((fileName) => {
+        return this.getUploadedFile(fileName);
     });
 };
 
@@ -20,18 +37,14 @@ module.exports.getFileNames = (files) => {
     });
 };
 
-module.exports.deleteOneFileFromFileSystem = (filePath) => {
+module.exports.deleteOneFileFromFileSystem = (file) => {
+    const {filePath} = file;
+
     fs.unlinkSync(filePath);
 };
 
-module.exports.deleteMultipleFilesFromFileSystem = (filePaths) => {
-    filePaths.forEach((filePath) => {
-        this.deleteOneFileFromFileSystem(filePath);
-    });
-};
-
-module.exports.getUploadedFileContents = (filePaths) => {
-    return filePaths.map((filePath) => {
-        return fs.readFileSync(filePath);
+module.exports.deleteMultipleFilesFromFileSystem = (files) => {
+    files.forEach((file) => {
+        this.deleteOneFileFromFileSystem(file);
     });
 };

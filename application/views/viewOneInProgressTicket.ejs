@@ -7,7 +7,7 @@
             <div class='bumper'></div>
         </div>
         <% ticket.products && ticket.products.forEach((product, index) => { %>
-            <div class='click-tab product-tab' data-product-number="<%= product.productNumber %>">
+            <div class='click-tab product-tab' data-product-number="<%= product.productNumber %>" data-proof-url="<%= product.proofUrl %>">
                 <div class='left-bumper'></div>
                 <%= index + 1 %>. <%= product.productNumber ?? 'N/A' %>
                 <div class='bumper'></div>

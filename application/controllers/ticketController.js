@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {upload} = require('../middleware/upload');
-const fs = require('fs');
 const parser = require('xml2json');
 const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');
@@ -201,11 +200,10 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', upload.single('job-xml'), async (request, response) => {
-    const jobFilePath = fileService.getUploadedFilePath(request.file.filename);
+    const xmlFile = fileService.getUploadedFile(request.file.filename);
 
     try {
-        const jobAsXml = fs.readFileSync(jobFilePath);
-        const rawUploadedTicketAsJson = JSON.parse(parser.toJson(jobAsXml))['Root'];
+        const rawUploadedTicketAsJson = JSON.parse(parser.toJson(xmlFile.fileContents))['Root'];
 
         ticketService.removeEmptyObjectAttributes(rawUploadedTicketAsJson);
 
@@ -222,7 +220,7 @@ router.post('/', upload.single('job-xml'), async (request, response) => {
     
         return response.redirect('/tickets/form');
     } finally {
-        fileService.deleteOneFileFromFileSystem(jobFilePath);
+        fileService.deleteOneFileFromFileSystem(xmlFile);
     }
 });
 

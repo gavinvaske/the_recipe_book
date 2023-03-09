@@ -16,17 +16,17 @@ router.get('/form', (request, response) => {
 });
 
 router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (request, response) => {
-    const uploadedFileNames = fileService.getFileNames(request.files);
-    const uploadedFilePaths = fileService.getUploadedFilePaths(uploadedFileNames);
-    const uploadedFileContents = fileService.getUploadedFileContents(uploadedFilePaths);
-    let fileUploads = [];
-
+    let uploadedFiles = [];
+    let s3Files = [];
+    
     try {
-        fileUploads = await s3Service.storeFilesInS3(uploadedFileNames, uploadedFileContents);
+        const uploadedFileNames = fileService.getFileNames(request.files);
+        uploadedFiles = fileService.getUploadedFiles(uploadedFileNames);
+        s3Files = await s3Service.storeFilesInS3(uploadedFiles);
 
         const spotPlateAttributes = {
             ...request.body,
-            fileUploads: fileUploads
+            fileUploads: s3Files
         };
 
         await SpotPlateModel.create(spotPlateAttributes);
@@ -36,13 +36,12 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
         console.log(`Error creating spot-plate: ${error.message}`);
         request.flash('errors', ['The following error(s) occurred while creating the spot-plate:', ...mongooseService.parseHumanReadableMessages(error)]);
 
-        await s3Service.deleteS3Objects(fileUploads);
+        await s3Service.deleteS3Objects(s3Files);
         
         return response.redirect('back');
     } finally {
-        fileService.deleteMultipleFilesFromFileSystem(uploadedFilePaths);
+        fileService.deleteMultipleFilesFromFileSystem(uploadedFiles);
     }
-
 });
 
 module.exports = router;

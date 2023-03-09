@@ -1,24 +1,12 @@
 const AWS = require('aws-sdk');
 const mongoose = require('mongoose');
-const fileSchema = require('../schemas/s3File');
+const s3FileSchema = require('../schemas/s3File');
+const mime = require('mime');
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
-
-function buildS3ObjectToDelete(s3File) {
-    const {fileName, versionId} = s3File;
-
-    if (!fileName || !versionId) {
-        throw new Error(`fileName ("${fileName}") and/or versionId "${versionId}" are undefined. Cannot delete s3File if one or more of those attributes is not defined.`);
-    }
-
-    return {
-        Key: fileName,
-        VersionId: versionId ? versionId : undefined
-    };
-}
 
 module.exports.deleteS3Objects = async (s3Files) => {
     if (!s3Files || s3Files.length === 0) {
@@ -26,7 +14,9 @@ module.exports.deleteS3Objects = async (s3Files) => {
     }
 
     const objectsToDelete = s3Files.map((file) => {
-        return buildS3ObjectToDelete(file);
+        return {
+            Key: file.fileName
+        };
     });
 
     console.log(`Info: Deleting the following Objects from S3 => ${JSON.stringify(objectsToDelete)}`);
@@ -41,29 +31,31 @@ module.exports.deleteS3Objects = async (s3Files) => {
     return s3.deleteObjects(params).promise();
 };
 
-function sendFileToS3(fileName, fileContents){
+function sendFileToS3(file) {
+    const {fileName, fileContents} = file;
+    const contentType = mime.getType(fileName);
+
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: fileContents
+        Body: fileContents,
+        ContentType: contentType
     };
 
     return s3.upload(params).promise();
 };
 
-module.exports.storeFilesInS3 = async (fileNames, contentsOfEachFile) => {
-    if (fileNames.length !== contentsOfEachFile.length) {
-        throw new Error('"fileNames" must be mapped one-to-one with "contentsOfEachFile"');
+module.exports.storeFilesInS3 = async (files) => {
+    if (!files || files.length === 0) {
+        return [];
     }
 
-    const s3FileUploadResponsePromises = [];
-
-    for (let i = 0; i < fileNames.length; i++) {
-        s3FileUploadResponsePromises.push(sendFileToS3(fileNames[i], contentsOfEachFile[i]));
-    }
+    const s3FileUploadResponsePromises = files.map((file) => {
+        return sendFileToS3(file);
+    });
 
     const s3FileUploadResponses = await Promise.all(s3FileUploadResponsePromises);
-    const FileModel = mongoose.model('s3File', fileSchema);
+    const FileModel = mongoose.model('s3File', s3FileSchema);
 
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);

@@ -10,8 +10,7 @@ describe('validation', () => {
         s3FileAttributes = {
             url: chance.url(),
             fileName: chance.string(),
-            bucket: chance.string(),
-            versionId: chance.string()
+            bucket: chance.string()
         };
         S3FileModel = mongoose.model('s3File', s3FileSchema);
     });
@@ -69,11 +68,11 @@ describe('validation', () => {
             expect(file.fileName).toBeDefined();
         });
 
-        it('should be alias-able using "key"', () => {
+        it('should be alias-able using "Key"', () => {
             delete s3FileAttributes.fileName;
             
             const fileName = chance.string();
-            s3FileAttributes.key = fileName;
+            s3FileAttributes.Key = fileName;
 
             const file = new S3FileModel(s3FileAttributes);
 
@@ -138,43 +137,6 @@ describe('validation', () => {
             const file = new S3FileModel(s3FileAttributes);
     
             expect(file.bucket).toBe(expectedBucket);
-        });
-    });
-
-    describe('attribute: versionId', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete s3FileAttributes.versionId;
-            const file = new S3FileModel(s3FileAttributes);
-
-            const error = file.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should be alias-able using "VersionId"', () => {
-            delete s3FileAttributes.versionId;
-
-            const versionId = chance.string();
-            s3FileAttributes.VersionId = versionId;
-
-            const file = new S3FileModel(s3FileAttributes);
-
-            expect(file.versionId).toEqual(versionId);
-        });
-
-        it('should be of type String', () => {
-            s3FileAttributes.versionId = chance.integer();
-            const file = new S3FileModel(s3FileAttributes);
-
-            expect(file.versionId).toEqual(expect.any(String));
-        });
-
-        it('should trim leading and trailing whitespace', () => {
-            const expectedVersionId = s3FileAttributes.versionId;
-            s3FileAttributes.versionId = ' ' + expectedVersionId + '  ';
-            const file = new S3FileModel(s3FileAttributes);
-    
-            expect(file.versionId).toBe(expectedVersionId);
         });
     });
 });

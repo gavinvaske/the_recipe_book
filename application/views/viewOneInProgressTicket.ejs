@@ -144,19 +144,48 @@
                     
                     <% } else if (ticket.destination.department === 'PRINTING') { %>
                         <p>PRINTING</p>
-                        <div class='flex-center-center-row flex-wrap'>
-                            <div class='product-attribute-frame'>
-                                <span>Material</span>
-                                <span><%= product.primaryMaterial %></span>
+                        <div class='flex-center-left-row flex-wrap'>
+                            <div class='department-notes'>
+                                <span>Printing Notes</span>
+                                <span><%= product.printingNotes || 'N/A'%> (AB)</span>
                             </div>
+
                             <div class='product-attribute-frame'>
-                                <span>S. Across</span>
-                                <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                                <span>Tooling Notes</span>
+                                <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
                             </div>
-                            <div class='product-attribute-frame'>
-                                <span>S. Around</span>
-                                <span><%= product.sizeAround || 'N/A' %> (K)</span>
+
+                            <div class='print-measure-frame flex-center-center-row'>
+                                <div class='col-left flex-center-center-column'>
+                                    <div class='flex-center-left-row'>
+                                        <span>S. Across</span>
+                                        <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Matrix Across</span>
+                                        <span><%= product.matrixAcross || 'N/A' %> (M)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Measure Across</span>
+                                        <span><%= product.measureAcross || 'N/A' %> (U)</span>
+                                    </div>
+                                </div>
+                                <div class='col-right flex-center-center-column'>
+                                    <div class='flex-center-left-row'>
+                                        <span>S. Around</span>
+                                        <span><%= product.sizeAround || 'N/A' %> (K)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Matrix Around</span>
+                                        <span><%= product.matrixAround || 'N/A' %> (N)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Measure Around</span>
+                                        <span><%= product.measureAround || 'N/A' %> (V)</span>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class='product-attribute-frame'>
                                 <span>Labels Across</span>
                                 <span><%= product.labelsAcross || 'N/A' %> (L)</span>
@@ -165,33 +194,13 @@
                                 <span>Labels Around</span>
                                 <span><%= product.labelsAround || 'N/A' %> (O)</span>
                             </div>
-                            <div class='product-attribute-frame'>
-                                <span>Matrix Across</span>
-                                <span><%= product.matrixAcross || 'N/A' %> (M)</span>
-                            </div>
-                            <div class='product-attribute-frame'>
-                                <span>Matrix Around</span>
-                                <span><%= product.matrixAround || 'N/A' %> (N)</span>
-                            </div>
-                            <div class='product-attribute-frame'>
-                                <span>Measure Across</span>
-                                <span><%= product.measureAcross || 'N/A' %> (U)</span>
-                            </div>
-                            <div class='product-attribute-frame'>
-                                <span>Measure Around</span>
-                                <span><%= product.measureAround || 'N/A' %> (V)</span>
-                            </div>
+
+                        
+
+
                             <div class='product-attribute-frame'>
                                 <span>Labels Per Frame</span>
                                 <span><%= product.labelsPerFrame || 'N/A' %> (R)</span>
-                            </div>
-                            <div class='product-attribute-frame'>
-                                <span>Measure Around</span>
-                                <span><%= product.measureAround || 'N/A'%> (AB)</span>
-                            </div>
-                            <div class=''>
-                                <span>Printing Notes</span>
-                                <span><%= product.printingNotes || 'N/A'%> (AB)</span>
                             </div>
                             <div class='product-attribute-frame'>
                                 <span>Frames Plus Overrun</span>
@@ -218,10 +227,6 @@
                                 <span><%= product.frameRepeat || 'N/A'%> (I)</span>
                             </div>
                             <div class='product-attribute-frame'>
-                                <span>Tooling Notes</span>
-                                <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
-                            </div>
-                            <div class='product-attribute-frame'>
                                 <span>Number of Colors</span>
                                 <span><%= product.numberOfColors || 'N/A'%> (H)</span>
                             </div>
@@ -233,6 +238,11 @@
                                 <span>Number of Rolls</span>
                                 <span><%= product.numberOfRolls || 'N/A'%> (AC)</span>
                             </div>
+                            <div class='product-attribute-frame'>
+                                <span>Material</span>
+                                <span><%= product.primaryMaterial %></span>
+                            </div>
+
                         </div>
                     
                     <% } else if (ticket.destination.department === 'CUTTING') { %>

@@ -405,7 +405,7 @@ const productSchema = new Schema({
         required: true,
         default: function() {
             const decimalPositionToRound = 4;
-            const measureAcrossBeforeRounding = this.labelsAcross + this.matrixAcross;
+            const measureAcrossBeforeRounding = this.sizeAcross + this.matrixAcross;
             return roundValueToNearestDecimalPlace(measureAcrossBeforeRounding, decimalPositionToRound);
         }
     },
@@ -414,7 +414,7 @@ const productSchema = new Schema({
         required: true,
         default: function() {
             const decimalPositionToRound = 4;
-            const measureAroundBeforeRounding = this.labelsAround + this.matrixAround;
+            const measureAroundBeforeRounding = this.sizeAround + this.matrixAround;
             return roundValueToNearestDecimalPlace(measureAroundBeforeRounding, decimalPositionToRound);
         }
     },

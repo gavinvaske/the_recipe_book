@@ -1636,10 +1636,8 @@ describe('validation', () => {
         });
         
         it('should be calculated correctly', () => {
-            const labelsAcross = 0.111;
-            const matrixAcross = 99.00005;
-            productAttributes.NoAcross = labelsAcross;
-            productAttributes.ColSpace = matrixAcross;
+            productAttributes.SizeAcross = 0.111;
+            productAttributes.ColSpace = 99.00005;
             const expectedMeasureAcross = 99.1111;
 
             const product = new ProductModel(productAttributes);
@@ -1662,7 +1660,7 @@ describe('validation', () => {
         });
         
         it('should be calculated correctly', () => {
-            productAttributes.NoAround = 6.222;
+            productAttributes.SizeAround = 6.222;
             productAttributes.RowSpace = 5.00005;
             const expectedMeasureAround = 11.2221;
 

@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const {upload} = require('../middleware/upload');
-const fs = require('fs');
 const parser = require('xml2json');
 const ticketService = require('../services/ticketService');
 const TicketModel = require('../models/ticket');

@@ -155,22 +155,36 @@
                                 <span><%= product.toolingNotes || 'N/A'%> (ACC)</span>
                             </div>
 
-
-
-
-
-                            <div class='product-attribute-frame'>
-                                <span>S. Across + Matrix Across</span>
-                                <span><%= product.sizeAcross || 'N/A' %> (J)</span>
-                                <span><%= product.matrixAcross || 'N/A' %> (M)</span>
-                                <span><%= product.measureAcross || 'N/A' %> (U)</span>
-                                <span>S. Around + Matrix Around</span>
-                                <span><%= product.sizeAround || 'N/A' %> (K)</span>
-                                <span><%= product.matrixAround || 'N/A' %> (N)</span>
-                                <span><%= product.measureAround || 'N/A' %> (V)</span>
+                            <div class='print-measure-frame flex-center-center-row'>
+                                <div class='col-left flex-center-center-column'>
+                                    <div class='flex-center-left-row'>
+                                        <span>S. Across</span>
+                                        <span><%= product.sizeAcross || 'N/A' %> (J)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Matrix Across</span>
+                                        <span><%= product.matrixAcross || 'N/A' %> (M)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Measure Across</span>
+                                        <span><%= product.measureAcross || 'N/A' %> (U)</span>
+                                    </div>
+                                </div>
+                                <div class='col-right flex-center-center-column'>
+                                    <div class='flex-center-left-row'>
+                                        <span>S. Around</span>
+                                        <span><%= product.sizeAround || 'N/A' %> (K)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Matrix Around</span>
+                                        <span><%= product.matrixAround || 'N/A' %> (N)</span>
+                                    </div>
+                                    <div class='flex-center-left-row'>
+                                        <span>Measure Around</span>
+                                        <span><%= product.measureAround || 'N/A' %> (V)</span>
+                                    </div>
+                                </div>
                             </div>
-
-
 
                             <div class='product-attribute-frame'>
                                 <span>Labels Across</span>

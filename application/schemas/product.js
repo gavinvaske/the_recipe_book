@@ -531,4 +531,15 @@ productSchema.virtual('proofUrl').get(function() {
     return (this.proof && this.proof) ? this.proof.url : ''; 
 });
 
+productSchema.virtual('finishes').get(function() {
+    if (this.varnish) return [this.varnish];
+
+    const finishes = [];
+
+    if (this.dieCuttingFinish) finishes.push(this.dieCuttingFinish);
+    if (this.dieCuttingMarriedMaterial) finishes.push(this.dieCuttingMarriedMaterial);
+
+    return finishes;
+});
+
 module.exports = productSchema;

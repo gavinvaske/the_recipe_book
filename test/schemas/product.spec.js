@@ -1267,6 +1267,83 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: finishes', () => {
+        beforeEach(() => {
+            delete productAttributes.ColorDescr;
+            delete productAttributes.StockNum;
+            delete productAttributes.StockNum3;
+        });
+
+        it('should be an empty array by default', () => {
+            const emptyArray = [];
+            const product = new ProductModel(productAttributes);
+
+            expect(product.finishes).toEqual(emptyArray);
+        });
+
+        it('should return a single element if "ColorDesc" is defined, regardless of the value(s) of "StockNum" and "StockNum3"', () => {
+            const varnish = chance.word();
+            productAttributes.ColorDescr = varnish;
+            productAttributes.StockNum = chance.word();
+            productAttributes.StockNum3 = chance.word();
+            
+            const expectedFinishes = [varnish];
+            const product = new ProductModel(productAttributes);
+
+            expect(product.finishes).toEqual(expectedFinishes);
+            expect(product.finishes.length).toEqual(1);
+        });
+
+        it('should return StockNum and/or StockNum3 (only if they are defined) if ColorDesc is not defined', () => {
+            delete productAttributes.ColorDescr;
+            
+            const dieCuttingFinish = chance.word();
+
+            productAttributes.StockNum = dieCuttingFinish;
+            productAttributes.StockNum3 = undefined;
+            
+            const expectedFinishes = [dieCuttingFinish];
+            const product = new ProductModel(productAttributes);
+
+            console.log(product.finishes);
+            console.log(product.finishes);
+
+            expect(product.finishes).toEqual(expectedFinishes);
+            expect(product.finishes.length).toEqual(expectedFinishes.length);
+        });
+
+        it('should return StockNum and/or StockNum3 (only if they are defined) if ColorDesc is not defined V2', () => {
+            delete productAttributes.ColorDescr;
+            
+            const dieCuttingMarriedMaterial = chance.word();
+
+            productAttributes.StockNum = undefined;
+            productAttributes.StockNum3 = dieCuttingMarriedMaterial;
+            
+            const expectedFinishes = [dieCuttingMarriedMaterial];
+            const product = new ProductModel(productAttributes);
+
+            expect(product.finishes).toEqual(expectedFinishes);
+            expect(product.finishes.length).toEqual(expectedFinishes.length);
+        });
+
+        it('should return StockNum and/or StockNum3 (only if they are defined) if ColorDesc is not defined V3', () => {
+            delete productAttributes.ColorDescr;
+            
+            const dieCuttingFinish = chance.word();
+            const dieCuttingMarriedMaterial = chance.word();
+
+            productAttributes.StockNum = dieCuttingFinish;
+            productAttributes.StockNum3 = dieCuttingMarriedMaterial;
+            
+            const expectedFinishes = [dieCuttingFinish, dieCuttingMarriedMaterial];
+            const product = new ProductModel(productAttributes);
+
+            expect(product.finishes).toEqual(expectedFinishes);
+            expect(product.finishes.length).toEqual(expectedFinishes.length);
+        });
+    });
+
     describe('attribute: overRun (aka OverRun)', () => {
         it('should contain attribute', () => {
             const product = new ProductModel(productAttributes);

@@ -245,7 +245,7 @@ describe('ticketService test suite', () => {
             when(mockTicketModel.aggregate)
                 .calledWith(expect.any(Array))
                 .mockResolvedValue([]);
-        })
+        });
 
         it('should not throw an error', async () => {
             materialIds = [];

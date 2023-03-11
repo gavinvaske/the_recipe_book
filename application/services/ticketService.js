@@ -142,14 +142,14 @@ module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
         { $match: { primaryMaterial: { $in: materialIds } } },
         { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
     ]);
-    const materialObjectIdToLengthUsedByTickets = {};
+    const materialIdToLengthUsedByTickets = {};
 
     lengthOfEachMaterialAlreadyUsedByTickets.forEach((oneMaterialUsage) => {
         const materialId = oneMaterialUsage._id;
         const lengthUsed = oneMaterialUsage.lengthUsed;
         
-        materialObjectIdToLengthUsedByTickets[materialId] = lengthUsed;
+        materialIdToLengthUsedByTickets[materialId] = lengthUsed;
     });
 
-    return materialObjectIdToLengthUsedByTickets;
+    return materialIdToLengthUsedByTickets;
 };

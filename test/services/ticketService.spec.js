@@ -1,6 +1,7 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
 const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, COMPLETE_DEPARTMENT} = require('../../application/enums/departmentsEnum');
+const { when } = require('jest-when');
 
 const mockTicketModel = require('../../application/models/ticket');
 jest.mock('../../application/models/ticket');
@@ -45,12 +46,12 @@ function getExtraCharge() {
 describe('ticketService test suite', () => {
     let ticket;
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     describe('findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()', () => {
         let distinctTicketIdsInDatabase;
-
-        afterEach(() => {
-            jest.resetAllMocks();
-        });
 
         beforeEach(() => {
             distinctTicketIdsInDatabase = [];
@@ -234,6 +235,68 @@ describe('ticketService test suite', () => {
             const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(tickets);
 
             expect(countNumberOfTicketsGroupedByDestination(groupedTicketsByDepartment)).toBe(validTickets.length);
+        });
+    });
+
+    describe('getLengthOfEachMaterialUsedByTickets()', () => {
+        let materialIds;
+
+        it('should not throw an error', async () => {
+            materialIds = [];
+            await expect(ticketService.getLengthOfEachMaterialUsedByTickets(materialIds)).resolves.not.toThrowError();
+        });
+
+        it('should return an empty object if materialIds is empty', async () => {
+            materialIds = [];
+            const emptyObject = {};
+
+            const actualMaterialIdToLength = await ticketService.getLengthOfEachMaterialUsedByTickets(materialIds);
+
+            expect(actualMaterialIdToLength).toEqual(emptyObject);
+        });
+
+        it('should call mongoose aggregate with correct params', async () => {
+            const aggregateParams = [
+                { $match: { primaryMaterial: { $in: materialIds } } },
+                { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
+            ];
+            await ticketService.getLengthOfEachMaterialUsedByTickets(materialIds);
+
+            expect(mockTicketModel.aggregate).toHaveBeenCalledWith(aggregateParams);
+            expect(mockTicketModel.aggregate).toHaveBeenCalledTimes(1);
+        });
+
+        it('should return the a correctly computed object', async () => {
+            const materialId1 = chance.word();
+            const materialId2 = chance.word();
+            const materialId3 = chance.word();
+            const materialLengthUsed1 = chance.integer({min: 0});
+            const materialLengthUsed2 = chance.integer({min: 0});
+            const materialLengthUsed3 = chance.integer({min: 0});
+
+            materialIds = [materialId1, materialId2, materialId3];
+
+            const aggregatedMaterialUsage = [
+                {_id: materialId1, lengthUsed: materialLengthUsed1},
+                {_id: materialId2, lengthUsed: materialLengthUsed2},
+                {_id: materialId3, lengthUsed: materialLengthUsed3}
+            ];
+            const aggregateParams = [
+                { $match: { primaryMaterial: { $in: materialIds } } },
+                { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
+            ];
+            const expectedMaterialIdToLengthUsed = {
+                [materialId1]: materialLengthUsed1,
+                [materialId2]: materialLengthUsed2,
+                [materialId3]: materialLengthUsed3
+            };
+            when(mockTicketModel.aggregate)
+                .calledWith(aggregateParams)
+                .mockResolvedValue(aggregatedMaterialUsage);
+
+            const actualMaterialIdToLengthUsed = await ticketService.getLengthOfEachMaterialUsedByTickets(materialIds);
+
+            expect(actualMaterialIdToLengthUsed).toEqual(expectedMaterialIdToLengthUsed);
         });
     });
 });

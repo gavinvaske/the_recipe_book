@@ -136,3 +136,20 @@ module.exports.groupTicketsByDestination = (tickets) => {
 
     return ticketsGroupedByDestination;
 };
+
+module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
+    const lengthOfEachMaterialAlreadyUsedByTickets = await TicketModel.aggregate([
+        { $match: { primaryMaterial: { $in: materialIds } } },
+        { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
+    ]);
+    const materialIdToLengthUsedByTickets = {};
+
+    lengthOfEachMaterialAlreadyUsedByTickets.forEach((oneMaterialUsage) => {
+        const materialId = oneMaterialUsage._id;
+        const lengthUsed = oneMaterialUsage.lengthUsed;
+        
+        materialIdToLengthUsedByTickets[materialId] = lengthUsed;
+    });
+
+    return materialIdToLengthUsedByTickets;
+};

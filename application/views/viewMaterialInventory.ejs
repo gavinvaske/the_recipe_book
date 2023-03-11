@@ -11,6 +11,10 @@
         <span>Feet On Hand</span>
         <h1 class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></h1>
       </div>
+      <div class='card col col-one third-width'>
+        <span>Net Feet</span>
+        <h1 class='net-length-of-material-in-inventory'><%= netLengthOfMaterialInInventory || 'N/A' %></h1>
+      </div>
       <div class='card col col-two'>
         <span>Feet On Order</span>
         <h1 class='total-length-of-material-ordered'><%= lengthOfAllMaterialsOrdered || 'N/A' %></h1>
@@ -122,6 +126,10 @@
           <div class='col col-right'>
             <span>Ordered</span>
             <h2 class='material-length-ordered'><%= materialInventory.lengthOfMaterialOrdered %></h2>
+          </div>
+          <div class='col col-right'>
+            <span>Net</span>
+            <h2 class='material-length-ordered'><%= materialInventory.netLengthOfMaterialInStock %></h2>
           </div>
         </div>
 

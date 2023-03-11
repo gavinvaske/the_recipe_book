@@ -1,4 +1,5 @@
 const chance = require('chance').Chance();
+const { when } = require('jest-when');
 const materialInventoryService = require('../../application/services/materialInventoryService');
 const mockPurchaseOrderService = require('../../application/services/purchaseOrderService');
 
@@ -44,7 +45,11 @@ describe('materialInventoryService test suite', () => {
     });
 
     describe('buildMaterialInventory', () => {
-        let purchaseOrdersThatHaveArrived, purchaseOrdersThatHaveNotArrived, material, purchaseOrders;
+        let purchaseOrdersThatHaveArrived, 
+            purchaseOrdersThatHaveNotArrived, 
+            material,
+            purchaseOrders,
+            feetOfMaterialAlreadyUsedByTickets;
 
         afterEach(() => {
             jest.resetAllMocks();
@@ -63,18 +68,28 @@ describe('materialInventoryService test suite', () => {
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
             ];
-            mockPurchaseOrderService.findPurchaseOrdersThatHaveArrived.mockReturnValue(purchaseOrdersThatHaveArrived);
-            mockPurchaseOrderService.findPurchaseOrdersThatHaveNotArrived.mockReturnValue(purchaseOrdersThatHaveNotArrived);
-            mockPurchaseOrderService.computeLengthOfMaterial.mockReturnValue(chance.integer({min: 0}));
+            feetOfMaterialAlreadyUsedByTickets = 0;
+
+            when(mockPurchaseOrderService.findPurchaseOrdersThatHaveArrived)
+                .calledWith(purchaseOrders)
+                .mockReturnValue(purchaseOrdersThatHaveArrived);
+
+            when(mockPurchaseOrderService.findPurchaseOrdersThatHaveNotArrived)
+                .calledWith(purchaseOrders)
+                .mockReturnValue(purchaseOrdersThatHaveNotArrived);
+
+            when(mockPurchaseOrderService.computeLengthOfMaterial)
+                .calledWith(purchaseOrders)
+                .mockReturnValue(chance.integer({min: 0}));
         });
         it('should not throw an error', () => {
             expect(() => {
-                materialInventoryService.buildMaterialInventory({}, []);
+                materialInventoryService.buildMaterialInventory({}, [], feetOfMaterialAlreadyUsedByTickets);
             }).not.toThrowError();
         });
 
         it('should call correct methods', () => {
-            materialInventoryService.buildMaterialInventory(material, purchaseOrders);
+            materialInventoryService.buildMaterialInventory(material, purchaseOrders, feetOfMaterialAlreadyUsedByTickets);
 
             expect(mockPurchaseOrderService.findPurchaseOrdersThatHaveArrived).toHaveBeenCalledTimes(1);
             expect(mockPurchaseOrderService.findPurchaseOrdersThatHaveNotArrived).toHaveBeenCalledTimes(1);
@@ -82,18 +97,29 @@ describe('materialInventoryService test suite', () => {
             expect(mockPurchaseOrderService.computeLengthOfMaterial).toHaveBeenCalledWith(purchaseOrdersThatHaveNotArrived);
         });
 
-        it('should name this test better', () => {
-            const lengthOfPurchaseOrdersThatHaveNotArrived = chance.integer({min: 1});
-            const lengthOfPurchaseOrdersThatHaveArrived = chance.integer({min: 1});
-            mockPurchaseOrderService.computeLengthOfMaterial.mockReturnValueOnce(lengthOfPurchaseOrdersThatHaveNotArrived).mockReturnValueOnce(lengthOfPurchaseOrdersThatHaveArrived);
+        it('should return a materialInventory object with correctly calculated attributes', () => {
+            const lengthOfMaterialOrdered = chance.integer({min: 1});
+            const lengthOfMaterialInStock = chance.integer({min: 1});
+
+            when(mockPurchaseOrderService.computeLengthOfMaterial)
+                .calledWith(purchaseOrdersThatHaveArrived)
+                .mockReturnValue(lengthOfMaterialInStock);
+
+            when(mockPurchaseOrderService.computeLengthOfMaterial)
+                .calledWith(purchaseOrdersThatHaveNotArrived)
+                .mockReturnValue(lengthOfMaterialOrdered);
+
+            feetOfMaterialAlreadyUsedByTickets = chance.integer();
+            const netLengthOfMaterialInStock = lengthOfMaterialInStock - feetOfMaterialAlreadyUsedByTickets;
             const expectedMaterialInventory = {
                 material,
-                lengthOfMaterialOrdered: lengthOfPurchaseOrdersThatHaveNotArrived,
-                lengthOfMaterialInStock: lengthOfPurchaseOrdersThatHaveArrived,
+                netLengthOfMaterialInStock,
+                lengthOfMaterialOrdered,
+                lengthOfMaterialInStock,
                 purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
             };
 
-            const materialInventory = materialInventoryService.buildMaterialInventory(material, purchaseOrders);
+            const materialInventory = materialInventoryService.buildMaterialInventory(material, purchaseOrders, feetOfMaterialAlreadyUsedByTickets);
         
             expect(materialInventory).toEqual(expectedMaterialInventory);
         });
@@ -126,7 +152,7 @@ describe('materialInventoryService test suite', () => {
 
             expect(actualNetLengthOfMaterial).toBe(expectedNetLengthOfMaterial);
         });
-    })
+    });
 });
 
 function buildPurchaseOrder(materialId) {

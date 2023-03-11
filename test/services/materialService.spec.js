@@ -9,11 +9,11 @@ describe('materialService test suite', () => {
         let materials, materialIds;
         
         beforeEach(() => {
-            materialIds = chance.n(chance.string, chance.integer({min: 0, max: 20}));
+            materialIds = chance.n(chance.string, chance.d12());
             materials = buildMaterials(materialIds);
         });
 
-        it('should parse _id attribute from all materials', () => {
+        it('should parse materialId attribute from all materials', () => {
             const actualMaterialIds = materialService.getMaterialIds(materials);
 
             expect(actualMaterialIds.sort()).toEqual(materialIds.sort());
@@ -57,11 +57,11 @@ describe('materialService test suite', () => {
             const materials = await materialService.getAllMaterials();
 
             expect(materials).toBeDefined();
-            expect(materials.length).toBe(0); // eslint-disable-line no-magic-numbers
+            expect(materials.length).toBe(0);
         });
 
         it ('should return the materials from the database', async () => {
-            materialsInDatabase = buildMaterials(chance.n(chance.string, chance.integer({min: 0, max: 100})));
+            materialsInDatabase = buildMaterials(chance.n(chance.string, chance.d100()));
             execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
         
             const materials = await materialService.getAllMaterials();
@@ -75,7 +75,7 @@ describe('materialService test suite', () => {
 function buildMaterials(materialIds) {
     return materialIds.map((materialId) => {
         return {
-            _id: materialId
+            materialId
         };
     });
 }

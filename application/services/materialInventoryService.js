@@ -29,3 +29,11 @@ module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial,
         purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
     };
 };
+
+module.exports.computeNetLengthOfMaterialInInventory = (materialInventories) => {
+    const initialValue = 0;
+
+    return materialInventories.reduce((accumulator, currentMaterialInventory) => {
+        return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
+    }, initialValue)
+}

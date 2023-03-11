@@ -34,10 +34,13 @@ router.get('/', async (request, response) => {
             return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets);
         });
 
+        const netLengthOfMaterialInInventory = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);
+
         return response.render('viewMaterialInventory', {
             materialInventories,
             lengthOfAllMaterialsInInventory,
             lengthOfAllMaterialsOrdered,
+            netLengthOfMaterialInInventory,
             totalPurchaseOrders: allPurchaseOrders.length
         });
 

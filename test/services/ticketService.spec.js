@@ -241,6 +241,12 @@ describe('ticketService test suite', () => {
     describe('getLengthOfEachMaterialUsedByTickets()', () => {
         let materialIds;
 
+        beforeEach(() => {
+            when(mockTicketModel.aggregate)
+                .calledWith(expect.any(Array))
+                .mockResolvedValue([]);
+        })
+
         it('should not throw an error', async () => {
             materialIds = [];
             await expect(ticketService.getLengthOfEachMaterialUsedByTickets(materialIds)).resolves.not.toThrowError();

@@ -2,7 +2,7 @@ module.exports.getObjectIds = (objects) => {
     return objects.map(({_id}) => {
         return _id;
     });
-}
+};
 
 module.exports.parseHumanReadableMessages = (error) => {
     try {

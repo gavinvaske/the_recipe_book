@@ -116,12 +116,16 @@
           </div>
           <div class='col col-left'>
             <span>Actual</span>
-            <h2 class='material-length-in-stock'><%= materialInventory.lengthOfMaterialInStock %></h2>
+            <h2 class='material-length-in-stock'><%= materialInventory.lengthOfMaterialInStock %></h2> <!--  TODO: Do we really even want this? Or do we only care about NET -->
           </div>
           <div class='divide-line'></div>
           <div class='col col-right'>
             <span>Ordered</span>
             <h2 class='material-length-ordered'><%= materialInventory.lengthOfMaterialOrdered %></h2>
+          </div>
+          <div class='col col-right'>
+            <span>Net</span>
+            <h2 class='material-length-ordered'><%= materialInventory.netLengthOfMaterialInStock %></h2>
           </div>
         </div>
 

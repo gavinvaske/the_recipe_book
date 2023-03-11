@@ -1,4 +1,5 @@
 const purchaseOrderService = require('../services/purchaseOrderService');
+const ticketService = require('../services/ticketService');
 
 module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
     const materialIdToPurchaseOrders = {};
@@ -16,14 +17,16 @@ module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => 
     return materialIdToPurchaseOrders;
 };
 
-module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial) => {
+module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets) => {
     const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
     const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
+    const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
 
     return {
         material,
         lengthOfMaterialOrdered: purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived),
-        lengthOfMaterialInStock: purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived),
+        lengthOfMaterialInStock: lengthOfMaterialInStock,
+        netLengthOfMaterialInStock: (lengthOfMaterialInStock - feetOfMaterialAlreadyUsedByTickets),
         purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
     };
 };

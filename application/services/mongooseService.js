@@ -1,3 +1,9 @@
+module.exports.getObjectIds = (objects) => {
+    return objects.map(({_id}) => {
+        return _id;
+    });
+}
+
 module.exports.parseHumanReadableMessages = (error) => {
     try {
         const aNonMongooseErrorOccurred = !error.errors && error.message;

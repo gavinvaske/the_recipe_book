@@ -1,8 +1,8 @@
 const MaterialModel = require('../models/material');
 
 module.exports.getMaterialIds = (materials) => {
-    return materials.map((material) => {
-        return material._id;
+    return materials.map(({materialId}) => {
+        return materialId;
     });
 };
 

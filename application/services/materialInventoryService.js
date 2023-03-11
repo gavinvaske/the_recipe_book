@@ -35,5 +35,5 @@ module.exports.computeNetLengthOfMaterialInInventory = (materialInventories) => 
 
     return materialInventories.reduce((accumulator, currentMaterialInventory) => {
         return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
-    }, initialValue)
-}
+    }, initialValue);
+};

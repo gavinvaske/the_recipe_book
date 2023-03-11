@@ -98,6 +98,35 @@ describe('materialInventoryService test suite', () => {
             expect(materialInventory).toEqual(expectedMaterialInventory);
         });
     });
+
+    describe('computeNetLengthOfMaterialInInventory', () => {
+        let materialInventories;
+
+        it('should return 0 when input is an empty array', () => {
+            materialInventories = [];
+            const expectedNetLengthOfMaterial = 0;
+
+            const actualNetLengthOfMaterial = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);
+
+            expect(actualNetLengthOfMaterial).toBe(expectedNetLengthOfMaterial);
+        });
+
+        it('should return the summation of each materialInventories "netLengthOfMaterialInStock" attribute', () => {
+            const netLengthOfMaterial1 = chance.integer();
+            const netLengthOfMaterial2 = chance.integer();
+            const netLengthOfMaterial3 = chance.integer();
+            materialInventories = [
+                { netLengthOfMaterialInStock: netLengthOfMaterial1 },
+                { netLengthOfMaterialInStock: netLengthOfMaterial2 },
+                { netLengthOfMaterialInStock: netLengthOfMaterial3 }
+            ];
+            const expectedNetLengthOfMaterial = netLengthOfMaterial1 + netLengthOfMaterial2 + netLengthOfMaterial3;
+
+            const actualNetLengthOfMaterial = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);
+
+            expect(actualNetLengthOfMaterial).toBe(expectedNetLengthOfMaterial);
+        });
+    })
 });
 
 function buildPurchaseOrder(materialId) {

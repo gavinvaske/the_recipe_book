@@ -1,8 +1,4 @@
-const PurchaseOrderModel = require('../models/materialOrder');
 const TicketModel = require('../models/ticket');
-const materialInventoryService = require('../services/materialInventoryService');
-const purchaseOrderService = require('../services/purchaseOrderService');
-const materialService = require('../services/materialService');
 
 const MONGOOSE_INSERT_OPERATION_TYPE = 'insert';
 

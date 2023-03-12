@@ -629,6 +629,7 @@ describe('validation', () => {
                 printing: chance.string(),
                 cutting: chance.string(),
                 winding: chance.string(),
+                packaging: chance.string(),
                 shipping: chance.string(),
                 billing: chance.string(),
             };
@@ -660,6 +661,7 @@ describe('validation', () => {
             expect(ticket.departmentNotes.printing).toEqual(departmentNotes.printing);
             expect(ticket.departmentNotes.cutting).toEqual(departmentNotes.cutting);
             expect(ticket.departmentNotes.winding).toEqual(departmentNotes.winding);
+            expect(ticket.departmentNotes.packaging).toEqual(departmentNotes.packaging);
             expect(ticket.departmentNotes.shipping).toEqual(departmentNotes.shipping);
             expect(ticket.departmentNotes.billing).toEqual(departmentNotes.billing);
         });
@@ -987,7 +989,14 @@ describe('validation', () => {
             expect(error).toBe(undefined);
         });
 
-        it('should ')
+        it('should store the note on the correct department', () => {
+            const department = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
+            const jobComment = chance.string();
+            ticketAttributes.departmentToJobComment[department] = jobComment;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.departmentToJobComment[department]).toEqual(jobComment);
+        });
     });
 
     describe('attribute: numberOfProofsThatHaveNotBeenUploadedYet', () => {

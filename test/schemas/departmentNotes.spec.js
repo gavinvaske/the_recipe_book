@@ -47,7 +47,7 @@ describe('validation', () => {
         const departmentNotes = new DepartmentNotesModel(departmentNotesAttributes);
         
         expect(departmentNotes[department]).toEqual(note);
-    })
+    });
 
     describe('aliases', () => {
         beforeEach(() => {

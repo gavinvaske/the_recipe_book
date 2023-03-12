@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const DowntimeReason = require('../../application/models/downtimeReason');
-const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
@@ -8,7 +7,6 @@ describe('validation', () => {
 
     beforeEach(() => {
         downtimeReasonAttributes = {
-            ticketId: new mongoose.Types.ObjectId(),
             reason: chance.string()
         };
     });

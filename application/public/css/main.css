@@ -4441,7 +4441,8 @@ span.drpdwn-title {
   width: 12%;
   height: 100%;
 }
-.in-progress-view .left-col .click-tab {
+.in-progress-view .left-col .click-tab,
+.in-progress-view .left-col .finish-tab {
   margin-right: 15px;
   margin-bottom: 15px;
   height: 72px;
@@ -4452,7 +4453,8 @@ span.drpdwn-title {
   border-radius: 0.428rem;
 }
 
-.in-progress-view .left-col .click-tab.active {
+.in-progress-view .left-col .click-tab.active,
+.in-progress-view .left-col .finish-tab.active {
   -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   background-color: white;
@@ -4470,6 +4472,7 @@ span.drpdwn-title {
 .in-progress-view .right-col {
   width: 100%;
   height: 100%;
+  position: relative;
   overflow: hidden;
   transition: .3s;
 }
@@ -4598,7 +4601,8 @@ iframe {
 .ticket-tab .left-bumper {
   background-color: #6a68af;
 }
-.product-tab {
+.product-tab,
+.finish-tab {
   pointer-events: none;
   opacity: .6;
 }
@@ -4875,4 +4879,36 @@ background: #000;
   border-radius: 0.428rem;
   border: 1px solid rgba(128, 128, 128, .12);
   padding: 10px 24px;
+}
+
+.finish-window {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  padding: 1.5rem;
+  border: none;
+  -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  border-radius: 0.428rem;
+  display: none;
+  z-index: 1;
+}
+.finish-window.active {
+  display: block;
+}
+
+#jobComments {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  height: 150px;
+  min-height: 150px;
+  max-height: 150px;
+}
+
+#time-selection {
+  width: 200px;
 }

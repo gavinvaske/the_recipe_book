@@ -846,8 +846,18 @@ $( document ).ready(function() {
         $('.job-notes').addClass('active');
         $('.in-progress-view .right-col .middle-col').addClass('active');
         $('.in-progress-view .right-col .card.proof').addClass('active');
-        $('.product-tab, .ticket-tab').css({'pointer-events' : 'auto', 'opacity' : '1'});
+        $('.product-tab, .ticket-tab, .finish-tab').css({'pointer-events' : 'auto', 'opacity' : '1'});
     });
+
+    $('.finish-tab').click(function(){
+        $('.finish-window').addClass('active');
+    });
+
+    $('#dom-click-target').on('click', '.clone-button', function() {
+        alert('gavin function is located on line 856 of main.js');
+        $('.clone-master:first').clone().insertAfter('.clone-master:last');
+    });
+    
 
     $('.hold-reason-option i').click(function() {
         event.stopPropagation();

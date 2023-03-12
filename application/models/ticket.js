@@ -224,7 +224,13 @@ const ticketSchema = new Schema({
                 });
             }
             return sum;
-        }
+        },
+        set: function(totalMaterialLength) {
+            const feetPerAttempt = 50;
+
+            return totalMaterialLength + (this.attempts * feetPerAttempt);
+        },
+        min: 0
     },
     customerName: {
         type: String,

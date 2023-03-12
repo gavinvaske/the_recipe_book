@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const productSchema = require('../schemas/product');
-const chargeSchema = require('./charge').schema;
+const chargeSchema = require('../schemas/charge');
 const destinationSchema = require('../schemas/destination');
 const departmentNotesSchema = require('../schemas/departmentNotes');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');

@@ -1,15 +1,18 @@
 
 const chance = require('chance').Chance();
-const ChargeModel = require('../../application/models/charge');
+const chargeSchema = require('../../application/schemas/charge');
+const mongoose = require('mongoose');
 
 describe('validation', () => {
-    let chargeAttributes;
+    let chargeAttributes,
+        ChargeModel;
 
     beforeEach(() => {
         chargeAttributes = {
             ProductNumber: chance.word() + `-${chance.letter()}`,
             PriceM: String(chance.floating())
         };
+        ChargeModel = mongoose.model('DepartmentNotes', chargeSchema);
     });
 
     describe('attribute: productNumber (aka ProductNumber)', () => {

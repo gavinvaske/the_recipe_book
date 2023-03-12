@@ -1056,7 +1056,9 @@ $( document ).ready(function() {
     $('.product-tab').on('click', function() {
         const proofUrl = $(this).data('proof-url');
 
-        $('#proof').prop('src', proofUrl);
+        if (proofUrl) {
+            $('#proof').prop('src', proofUrl);
+        }
     });
 
     var words = [

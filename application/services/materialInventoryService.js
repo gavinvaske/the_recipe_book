@@ -16,14 +16,24 @@ module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => 
     return materialIdToPurchaseOrders;
 };
 
-module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial) => {
+module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets) => {
     const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
     const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
+    const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
 
     return {
         material,
         lengthOfMaterialOrdered: purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived),
-        lengthOfMaterialInStock: purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived),
+        lengthOfMaterialInStock: lengthOfMaterialInStock,
+        netLengthOfMaterialInStock: (lengthOfMaterialInStock - feetOfMaterialAlreadyUsedByTickets),
         purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
     };
+};
+
+module.exports.computeNetLengthOfMaterialInInventory = (materialInventories) => {
+    const initialValue = 0;
+
+    return materialInventories.reduce((accumulator, currentMaterialInventory) => {
+        return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
+    }, initialValue);
 };

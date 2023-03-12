@@ -117,7 +117,9 @@
                                     <i class="fas fa-spray-can"></i>
                                 </div>
                                 <span>Finish</span>
-                                <p><%= ticket.products[0].finishType %></p>
+                                <% ticket.products && ticket.products[0].finishes.forEach((finish) => { %>
+                                    <p><%= finish %></p>
+                                <% }) %>
                             </div>
                         </div>
                         <div class='col col-3'>
@@ -457,7 +459,7 @@
         </div>
         <div class='card proof half-width'>
             <div class='proof-placeholder'><div class='flex-center-center-row' style='height: 100%;'><h1 class='text-box'>Random Quote</h1></div></div>
-            <iframe id='proof' src= "http://localhost:8080/images/1139D-096 Proof.pdf#zoom=100" type="application/pdf"></iframe>
+            <iframe id='proof' src= "/images/1139D-096 Proof.pdf#zoom=100" type="application/pdf"></iframe>
         </div>
     </div>
 </div>

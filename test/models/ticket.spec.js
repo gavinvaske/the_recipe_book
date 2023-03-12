@@ -3,7 +3,7 @@ const TicketModel = require('../../application/models/ticket');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
-const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, getAllDepartments} = require('../../application/enums/departmentsEnum');
+const departmentsEnum = require('../../application/enums/departmentsEnum');
 const mongoose = require('mongoose');
 
 const LENGTH_OF_ONE = 1;
@@ -41,7 +41,9 @@ describe('validation', () => {
             sentDate: chance.date({string: true}),
             followUpDate: chance.date({string: true}),
             departmentToHoldReason: {},
-            ticketGroup: new mongoose.Types.ObjectId()
+            ticketGroup: new mongoose.Types.ObjectId(),
+            attempts: chance.integer({min: 0}),
+            departmentToJobComment: {}
         };
     });
 
@@ -604,10 +606,10 @@ describe('validation', () => {
         });
 
         it('should be a mongoose object with an _id attribute', () => {
-            const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+            const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
             ticketAttributes.destination = {
                 department: randomDepartment,
-                departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+                departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
             };
 
             const ticket = new TicketModel(ticketAttributes);
@@ -884,8 +886,8 @@ describe('validation', () => {
         });
 
         it('should pass validation if only valid departments are used as keys', () => {
-            const firstValidDepartment = getAllDepartments()[0];
-            const secondValidDepartment = getAllDepartments()[1];
+            const firstValidDepartment = departmentsEnum.getAllDepartments()[0];
+            const secondValidDepartment = departmentsEnum.getAllDepartments()[1];
             ticketAttributes.departmentToHoldReason = {
                 [firstValidDepartment]: chance.string(),
                 [secondValidDepartment]: chance.string()
@@ -898,8 +900,8 @@ describe('validation', () => {
         });
 
         it('should fail validation if a single invalid department is used as a key', () => {
-            const firstValidDepartment = getAllDepartments()[0];
-            const secondValidDepartment = getAllDepartments()[1];
+            const firstValidDepartment = departmentsEnum.getAllDepartments()[0];
+            const secondValidDepartment = departmentsEnum.getAllDepartments()[1];
             const firstInvalidDepartment = chance.string();
             ticketAttributes.departmentToHoldReason = {
                 [firstValidDepartment]: nonImportantString,
@@ -944,6 +946,48 @@ describe('validation', () => {
 
             expect(error).not.toBe(undefined);
         });
+    });
+
+    describe('attribute: attempts', () => {
+        beforeEach(() => {
+            ticketAttributes.attempts = chance.integer({min: 0});
+        });
+
+        it('should default to zero if not defined', () => {
+            delete ticketAttributes.attempts;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.attempts).toBe(0);
+        });
+
+        it('should throw an error if value is a negative number', () => {
+            ticketAttributes.attempts = chance.integer({max: -1});
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should be of type Number', () => {
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.attempts).toEqual(expect.any(Number));
+        });
+    });
+
+    describe('attribute: departmentToJobComment', () => {
+        it('should NOT fail validation if attribute is not defined', () => {
+            delete ticketAttributes.departmentToJobComment;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should ')
     });
 
     describe('attribute: numberOfProofsThatHaveNotBeenUploadedYet', () => {
@@ -1049,10 +1093,10 @@ describe('validation', () => {
         
             it('should add item to workflow database when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
-                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+                    departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
     
                 let savedTicket = await ticket.save({validateBeforeSave: false});
@@ -1065,10 +1109,10 @@ describe('validation', () => {
     
             it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
-                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+                    departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 let savedTicket = await ticket.save({validateBeforeSave: false});
                 await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
@@ -1100,12 +1144,12 @@ describe('validation', () => {
             it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
                 const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
-                const departments = getAllDepartmentsWithDepartmentStatuses();
+                const departments = departmentsEnum.getAllDepartmentsWithDepartmentStatuses();
                 let savedTicket = await ticket.save({validateBeforeSave: false});
     
                 for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
                     const department = chance.pickone(departments);
-                    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
+                    const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
                     newTicketDestination = {
                         department,
@@ -1125,10 +1169,10 @@ describe('validation', () => {
         
             it('should add item to workflow database when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
-                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+                    departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 const savedTicket = await ticket.save({validateBeforeSave: false});
 
@@ -1140,10 +1184,10 @@ describe('validation', () => {
     
             it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
-                const randomDepartment = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
+                const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
                 const newTicketDestination = {
                     department: randomDepartment,
-                    departmentStatus: chance.pickone(departmentToStatusesMappingForTicketObjects[randomDepartment])
+                    departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
                 };
                 let savedTicket = await ticket.save({validateBeforeSave: false});
 
@@ -1176,12 +1220,12 @@ describe('validation', () => {
             it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
                 const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
-                const departments = getAllDepartmentsWithDepartmentStatuses();
+                const departments = departmentsEnum.getAllDepartmentsWithDepartmentStatuses();
                 let savedTicket = await ticket.save({validateBeforeSave: false});
     
                 for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
                     const department = chance.pickone(departments);
-                    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[department]);
+                    const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
                     newTicketDestination = {
                         department,

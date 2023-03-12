@@ -13,8 +13,65 @@
                 <div class='bumper'></div>
             </div>
         <% }) %>
+        <div class='finish-tab'>
+            Finish Ticket
+        </div>
     </div>
     <div class='right-col col flex-top-center-row'>
+        <div class='finish-window'>
+            <h3>You are about to complete ticket #<%= ticket.ticketNumber ?? 'N/A' %>. Please verify all information is right. Subtract any downtine and confirm frames ran. </h3>
+            <label for='totalFrames'>Total Frames Ran:</label>
+            <input type='text' name='totalFrames' id='totalFrames'>
+            <label for='totalFrames'>Attempts:</label>
+            <input type='text' name='attemps' id='attemps'>
+            <div id='dom-click-target' class='flex-center-left-column'>
+                <div class='flex-center-left-row clone-master'>
+                    <div class='flex-center-left-column'>
+                        <div class="field-label-wrapper half-width">
+                            <label for="reason-select">Reason</label>
+                            <div class="custom-select full-width">
+                                <select id="reason-select">
+                                    <option value="">--Please choose an option--</option>
+                                    <option value="lunchBreak">Lunch Break</option>
+                                    <option value="bathroomBreak">Bathroom Break</option>
+                                    <option value="restartPress">Restart Press</option>
+                                    <option value="colorCalibration">Color Calibration</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='flex-center-left-column'>
+                        <div class="field-label-wrapper half-width">
+                            <label for="time-selection">Reason</label>
+                            <div class="custom-select full-width">
+                                <input type="text" list="time-selection" />
+                                <datalist id="time-selection">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                    <option>25</option>
+                                    <option>30</option>
+                                    <option>35</option>
+                                    <option>40</option>
+                                    <option>45</option>
+                                    <option>50</option>
+                                    <option>55</option>
+                                    <option>60</option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class='clone-button add-time-input submit-button'>Add +</button>
+                
+                <div class='flex-center-left-column full-width'>
+                    <label for='jobComments'>Job Comments</label>
+                    <textarea type='text' name='jobComments' id='jobComments'></textarea>
+                </div>
+            </div>
+        </div>
         <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>
                 <div class='ticket-details-wrapper'>

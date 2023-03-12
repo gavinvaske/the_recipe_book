@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 const productSchema = require('../schemas/product');
 const chargeSchema = require('./charge').schema;
 const destinationSchema = require('../schemas/destination');
+const departmentNotesSchema = require('../schemas/departmentNotes');
 const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 const WorkflowStepModel = require('../models/WorkflowStep');
-const {getAllDepartments} = require('../enums/departmentsEnum');
+const departmentsEnum = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -37,42 +38,12 @@ async function validateMaterialExists(materialId) {
 
 function validateKeysAreAllValidDepartments(departmentToHoldReason) {
     const potentiallyValidDepartmentNames = Object.keys(departmentToHoldReason.toJSON());
-    const validDepartmentNames = getAllDepartments();
+    const validDepartmentNames = departmentsEnum.getAllDepartments();
 
     return potentiallyValidDepartmentNames.every((departmentName) => {
         return validDepartmentNames.includes(departmentName);
     });
 }
-
-const departmentNotesSchema = new Schema({
-    orderPrep: {
-        type: String
-    },
-    artPrep: {
-        type: String
-    },
-    prePrinting: {
-        type: String
-    },
-    printing: {
-        type: String
-    },
-    cutting: {
-        type: String
-    },
-    winding: {
-        type: String
-    },
-    shipping: {
-        type: String
-    },
-    billing: {
-        type: String
-    }
-}, {
-    timestamps: true,
-    strict: 'throw'
-});
 
 const ticketSchema = new Schema({
     primaryMaterial: {
@@ -253,7 +224,13 @@ const ticketSchema = new Schema({
                 });
             }
             return sum;
-        }
+        },
+        set: function(totalMaterialLength) {
+            const feetPerAttempt = 50;
+
+            return totalMaterialLength + (this.attempts * feetPerAttempt);
+        },
+        min: 0
     },
     customerName: {
         type: String,
@@ -279,6 +256,16 @@ const ticketSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'TicketGroup',
         required: false
+    },
+    departmentToJobComment: {
+        type: departmentNotesSchema,
+        required: false
+    },
+    attempts: {
+        type: Number,
+        required: false,
+        default: 0,
+        min: 0
     }
 }, { timestamps: true });
 

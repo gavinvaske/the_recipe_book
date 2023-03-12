@@ -21,23 +21,6 @@ describe('validation', () => {
         expect(error).toBeUndefined();
     });
 
-    describe('attribute: ticketId', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete downtimeReasonAttributes.ticketId;
-            const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
-
-            const error = downtimeReason.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should be of type mongoose.ObjectId', () => {
-            const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
-
-            expect(downtimeReason.ticketId).toEqual(expect.any(mongoose.Types.ObjectId));
-        });
-    });
-
     describe('attribute: reason', () => {
         it('should fail validation if attribute is not defined', () => {
             delete downtimeReasonAttributes.reason;

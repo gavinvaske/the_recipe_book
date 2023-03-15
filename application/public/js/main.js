@@ -854,8 +854,7 @@ $( document ).ready(function() {
     });
 
     $('#dom-click-target').on('click', '.clone-button', function() {
-        alert('gavin function is located on line 856 of main.js');
-        $('.clone-master:first').clone().insertAfter('.clone-master:last');
+        $('.delay-reason-inputs').first().clone().insertAfter('.delay-reason-inputs:last');
     });
     
 
@@ -939,8 +938,27 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                let errorMessage = `Error while making GET request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`;
-                alert(errorMessage);
+                alert(`Error while making GET request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`);
+
+                if (errorCallback) {
+                    errorCallback(error);
+                }
+            }
+        });
+    }
+
+    function post(endpoint, body, callback, errorCallback) {
+        $.ajax({
+            url: endpoint,
+            type: 'POST',
+            data: body,
+            success: function(response) {
+                if (callback) {
+                    callback(response);
+                }
+            },
+            error: function(error) {
+                alert(`Error while making POST request to '${endpoint}'. The error message is "${error.responseText ? error.responseText : 'N/A'}"`);
 
                 if (errorCallback) {
                     errorCallback(error);
@@ -1061,6 +1079,29 @@ $( document ).ready(function() {
         }
     });
 
+    $('#finish-ticket-button').on('click', function() {
+        const ticketId = $(this).data('ticket-id');
+        const delayReasonToDurationInMinutes = {};
+
+        $('.delay-reason-inputs').each(function(index) {
+            const delayReason = $(this).find('.reason-select').first().val();
+            const delayDurationInMinutes = $(this).find('.time-selection').first().val();
+
+            delayReasonToDurationInMinutes[delayReason] = delayDurationInMinutes;
+        });
+
+        const requestBody = {
+            totalFramesRan: $('#totalFrames').val(),
+            attempts: $('#attempts').val(),
+            jobComments: $('#jobComments').val(),
+            delayReasonToDurationInMinutes
+        }
+
+        post(`/tickets/${ticketId}/next-department`, requestBody, () => {
+            alert('Ticket was transitioned was completed successfully! TODO: Storm, how should handle this?');
+        });
+    });
+
     var words = [
         '',
         'Quote 1',
@@ -1077,6 +1118,5 @@ $( document ).ready(function() {
         let newDelay = 500;
 
         $('text-box').html(getRandomWord()).fadeIn(newDelay);
-
     });
 });

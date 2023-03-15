@@ -23,47 +23,39 @@
             <label for='totalFrames'>Total Frames Ran:</label>
             <input type='text' name='totalFrames' id='totalFrames'>
             <label for='totalFrames'>Attempts:</label>
-            <input type='text' name='attemps' id='attemps'>
+            <input type='text' name='attempts' id='attempts'>
             <div id='dom-click-target' class='flex-center-left-column'>
-                <div class='flex-center-left-row clone-master'>
-                    <div class='flex-center-left-column'>
-                        <div class="field-label-wrapper half-width">
-                            <label for="reason-select">Reason</label>
-                            <div class="custom-select full-width">
-                                <select id="reason-select">
-                                    <option value="">--Please choose an option--</option>
-                                    <option value="lunchBreak">Lunch Break</option>
-                                    <option value="bathroomBreak">Bathroom Break</option>
-                                    <option value="restartPress">Restart Press</option>
-                                    <option value="colorCalibration">Color Calibration</option>
-                                </select>
-                            </div>
-                        </div>
+                <div class='flex-center-left-row delay-reason-inputs'>
+                    <label for="reason-select">Reason</label>
+                    <div class="full-width">
+                        <select class="reason-select">
+                            <option value="">--Please choose an option--</option>
+                            <% downtimeReasons.forEach((downtimeReason) => { %>
+                                <option value="<%= downtimeReason %>"><%= downtimeReason %></option>
+                            <% }) %>
+                        </select>
                     </div>
 
-                    <div class='flex-center-left-column'>
-                        <div class="field-label-wrapper half-width">
-                            <label for="time-selection">Reason</label>
-                            <div class="custom-select full-width">
-                                <input type="text" list="time-selection" />
-                                <datalist id="time-selection">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>15</option>
-                                    <option>20</option>
-                                    <option>25</option>
-                                    <option>30</option>
-                                    <option>35</option>
-                                    <option>40</option>
-                                    <option>45</option>
-                                    <option>50</option>
-                                    <option>55</option>
-                                    <option>60</option>
-                                </datalist>
-                            </div>
-                        </div>
+                    <label for="time-selection">Duration (minutes)</label>
+                    <div class="full-width">
+                        <select class="time-selection">
+                            <option value="">--Please choose a time--</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                            <option value="45">45</option>
+                            <option value="50">50</option>
+                            <option value="55">55</option>
+                            <option value="60">60</option>
+                        </select>
                     </div>
                 </div>
+
                 <button class='clone-button add-time-input submit-button'>Add +</button>
                 
                 <div class='flex-center-left-column full-width'>
@@ -71,6 +63,7 @@
                     <textarea type='text' name='jobComments' id='jobComments'></textarea>
                 </div>
             </div>
+            <button id="finish-ticket-button" type="submit" class="btn btn-primary submit-button" data-ticket-id="<%= ticket.id %>">Finish Ticket</button>
         </div>
         <div class='middle-col flex-top-center-column half-width'>
             <div class='card'>

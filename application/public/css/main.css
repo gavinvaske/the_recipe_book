@@ -4909,6 +4909,6 @@ background: #000;
   max-height: 150px;
 }
 
-#time-selection {
+.time-selection {
   width: 200px;
 }

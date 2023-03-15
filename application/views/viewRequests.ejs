@@ -1,1 +1,29 @@
-<h1>Welcome to viewRequests.ejs</h1>
+
+<script>
+    var bodyclass=document.createAttribute("class");
+    bodyclass.value="view-requests-body";
+    document.getElementsByTagName("body")[0].setAttributeNode(bodyclass);
+  </script>
+  
+<div class="page-wrapper view-tickets">
+    <%- include('partials/navbarMain.ejs') %>
+    <%- include('partials/sidebarMain.ejs') %>
+    <div class='tickets-card'>
+      <div class='workflow-order-header card'>
+        
+        <div class='header-description'>
+          <h1 class=''>Requests Workflow <span class='text-blue' id="department-select"> - All Departments</span></h1>
+          <!-- <p>All jobs tickets can be found in the departments below.</p> -->
+        </div>
+        <div class="alert-box full-width">
+            <%- include ("flashMessages") %>
+        </div>
+        
+        <%- include('partials/requests-workflow-navigation.ejs') %>
+        <%- include('partials/requests-workflow-sorting-filtering.ejs') %>
+  
+      </div>
+  
+      <div class='scroll-curtain'></div>
+      </div>
+    </div>

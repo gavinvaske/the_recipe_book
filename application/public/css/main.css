@@ -3889,7 +3889,8 @@ canvas{
   color: #157efb;
 }
 
-.view-tickets-body .header-description h1 {
+.view-tickets-body .header-description h1,
+.view-requests-body .header-description h1 {
   font-size: 1.5rem;
   line-height: 1.5rem;
   margin: 0;

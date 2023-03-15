@@ -11,6 +11,7 @@ const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
 const fileService = require('../services/fileService');
+const downtimeReasonService = require('../services/downtimeReason');
 
 router.use(verifyJwtToken);
 
@@ -37,6 +38,7 @@ router.get('/in-progress/:ticketId', async (request, response) => {
     const ticketObjectId = request.params.ticketId;
     try {
         const ticket = await TicketModel.findById(ticketObjectId).exec();
+        const downtimeReasons = await downtimeReasonService.getDowntimeReasons();
 
         const now = new Date();
         const ticketCreationDate = new Date(ticket.createdAt);
@@ -53,7 +55,8 @@ router.get('/in-progress/:ticketId', async (request, response) => {
 
         return response.render('viewOneInProgressTicket', {
             ticket,
-            ageOfTicket: dateTimeService.prettifyDuration(ageOfTicketInMinutes)
+            ageOfTicket: dateTimeService.prettifyDuration(ageOfTicketInMinutes),
+            downtimeReasons
         });
     } catch (error) {
         return response.status(SERVER_ERROR_CODE).send(error.message);
@@ -246,5 +249,14 @@ router.get('/:id', async (request, response) => {
         return response.redirect('back');
     }
 });
+
+// TOOD: Make this endpoint less verby and more nouny
+router.post('/:ticketId//next-department', (request, response) => {
+    console.log(request.body);
+
+    
+
+    response.send('blah')
+})
 
 module.exports = router;

@@ -23,45 +23,45 @@ const BILLING_READY = 'BILLING READY';
 const SHIPPING_READY = 'SHIPPING READY';
 
 // departments
-const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
-const ART_PREP_DEPARTMENT = 'ART-PREP';
-const PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
-const PRINTING_DEPARTMENT = 'PRINTING';
-const CUTTING_DEPARTMENT = 'CUTTING';
-const WINDING_DEPARTMENT = 'WINDING';
-const PACKAGING_DEPARTMENT = 'PACKAGING';
-const SHIPPING_DEPARTMENT = 'SHIPPING';
-const BILLING_DEPARTMENT = 'BILLING';
-const COMPLETE_DEPARTMENT = 'COMPLETED';
+module.exports.ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
+module.exports.ART_PREP_DEPARTMENT = 'ART-PREP';
+module.exports.PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
+module.exports.PRINTING_DEPARTMENT = 'PRINTING';
+module.exports.CUTTING_DEPARTMENT = 'CUTTING';
+module.exports.WINDING_DEPARTMENT = 'WINDING';
+module.exports.PACKAGING_DEPARTMENT = 'PACKAGING';
+module.exports.SHIPPING_DEPARTMENT = 'SHIPPING';
+module.exports.BILLING_DEPARTMENT = 'BILLING';
+module.exports.COMPLETE_DEPARTMENT = 'COMPLETED';
 
 module.exports.departmentToStatusesMappingForTicketObjects = {
-    [ORDER_PREP_DEPARTMENT]: [
+    [this.ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         PROOFING_COMPLETE,
         WAITING_ON_CUSTOMER,
         WAITING_ON_APPROVAL
     ],
-    [ART_PREP_DEPARTMENT]: [
+    [this.ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         NEEDS_PROOF
     ],
-    [PRE_PRINTING_DEPARTMENT]: [
+    [this.PRE_PRINTING_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         SEND_TO_PRINTING
     ],
-    [PRINTING_DEPARTMENT]: [
+    [this.PRINTING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         PRINTING_READY,
         PRINTER_ONE_SCHEDULE,
         PRINTER_TWO_SCHEDULE
     ],
-    [CUTTING_DEPARTMENT]: [
+    [this.CUTTING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         CUTTING_READY,
@@ -69,28 +69,28 @@ module.exports.departmentToStatusesMappingForTicketObjects = {
         DELTA_TWO_SCHEDULE,
         ROTOFLEX_ONE_SCHEDULE
     ],
-    [WINDING_DEPARTMENT]: [
+    [this.WINDING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         WINDING_READY
     ],
-    [PACKAGING_DEPARTMENT]: [
+    [this.PACKAGING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         PACKAGING_READY
     ],
-    [SHIPPING_DEPARTMENT]: [
+    [this.SHIPPING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         SHIPPING_READY,
         FARMED_OUT_TICKETS
     ],
-    [BILLING_DEPARTMENT]: [
+    [this.BILLING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         BILLING_READY
     ],
-    [COMPLETE_DEPARTMENT]: []
+    [this.COMPLETE_DEPARTMENT]: []
 };
 
 module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentStatuses) => {
@@ -101,14 +101,12 @@ module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentSt
 };
 
 module.exports.productionDepartmentsAndDepartmentStatuses = {
-    [PRE_PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PRE_PRINTING_DEPARTMENT],
-    [PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PRINTING_DEPARTMENT],
-    [CUTTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[CUTTING_DEPARTMENT],
-    [WINDING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[WINDING_DEPARTMENT],
-    [PACKAGING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[PACKAGING_DEPARTMENT]
+    [this.PRE_PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PRE_PRINTING_DEPARTMENT],
+    [this.PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PRINTING_DEPARTMENT],
+    [this.CUTTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.CUTTING_DEPARTMENT],
+    [this.WINDING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.WINDING_DEPARTMENT],
+    [this.PACKAGING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PACKAGING_DEPARTMENT]
 };
-
-module.exports.COMPLETE_DEPARTMENT = COMPLETE_DEPARTMENT;
 
 module.exports.getAllDepartments = () => {
     return Object.keys(this.departmentToStatusesMappingForTicketObjects);

@@ -58,7 +58,8 @@ const ticketSchema = new Schema({
     },
     departmentNotes: {
         type: departmentNotesSchema,
-        required: false
+        required: false,
+        default: {}
     },
     destination: {
         type: destinationSchema,
@@ -87,15 +88,18 @@ const ticketSchema = new Schema({
         required: false,
         alias: 'OrderDate'
     },
-    estimatedFootage: {
+    estimatedTotalMaterialLength: {
         type: Number,
         required: true,
-        validate : {
-            validator : Number.isInteger,
-            message   : 'Estimated Footage must be an integer'
+        default: function() {
+            let sum = 0;
+
+            this.products && this.products.forEach((product) => {
+                sum = sum + product.totalFeet;
+            });
+            return sum;
         },
-        min: 1,
-        alias: 'EstFootage'
+        min: 0
     },
     poNumber: {
         type: String,
@@ -187,8 +191,8 @@ const ticketSchema = new Schema({
     },
     totalLabelQty: {
         type: Number,
-        default: function() {
-            let sum = 0; // eslint-disable-line no-magic-numbers
+        default: function () {
+            let sum = 0;
 
             if (this.products.length) {
                 this.products.forEach((product) => {
@@ -216,14 +220,7 @@ const ticketSchema = new Schema({
         type: Number,
         required: true,
         default: function() {
-            let sum = 0; // eslint-disable-line no-magic-numbers
-
-            if (this.products.length) {
-                this.products.forEach((product) => {
-                    sum = sum + product.totalFeet;
-                });
-            }
-            return sum;
+            return this.estimatedTotalMaterialLength
         },
         set: function(totalMaterialLength) {
             const feetPerAttempt = 50;
@@ -259,7 +256,8 @@ const ticketSchema = new Schema({
     },
     departmentToJobComment: {
         type: departmentNotesSchema,
-        required: false
+        required: false,
+        default: {}
     },
     attempts: {
         type: Number,

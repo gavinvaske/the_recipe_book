@@ -17,7 +17,6 @@ describe('validation', () => {
             TicketNumber:  String(chance.integer({min: 0})),
             Ship_by_Date: chance.date({string: true}),
             OrderDate: chance.date({string: true}),
-            EstFootage: String(chance.integer({min: 1})),
             CustPONum: chance.string(),
             Priority: chance.pickone(getAllPriorities()),
             BillZip: chance.string(),
@@ -151,33 +150,35 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: estimatedFootage (aka EstFootage)', () => {
+    describe('attribute: estimatedTotalMaterialLength', () => {
+        beforeEach(() => {
+            const products = [ 
+                { totalFeet: chance.integer({min: 1}) },
+                { totalFeet: chance.integer({min: 1}) }
+            ];
+            ticketAttributes.products = products;
+            ticketAttributes.attempts = 0;
+        });
+
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.estimatedFootage).toBeDefined();
-        });
-
-        it('should fail if attribute is not an integer', () => {
-            ticketAttributes.EstFootage = chance.floating({fixed: 8});
-            const ticket = new TicketModel(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).not.toBe(undefined);
+            expect(ticket.estimatedTotalMaterialLength).toBeDefined();
         });
 
         it('should fail if attribute is less than zero', () => {
-            ticketAttributes.EstFootage = chance.integer({max: 0});
+            ticketAttributes.products = [];
+            const negativeMaterialLength = -1;
+            ticketAttributes.estimatedTotalMaterialLength = negativeMaterialLength;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error['errors']['estimatedTotalMaterialLength']).not.toBe(undefined);
         });
 
         it('should fail validation if attribute is missing', () => {
-            delete ticketAttributes.EstFootage;
+            delete ticketAttributes.estimatedTotalMaterialLength;
             const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
@@ -188,7 +189,32 @@ describe('validation', () => {
         it('should be of type Number', () => {
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(ticket.estimatedFootage).toEqual(expect.any(Number));
+            expect(ticket.estimatedTotalMaterialLength).toEqual(expect.any(Number));
+        });
+
+        it('should override the default value when estimatedTotalMaterialLength is set explicitly', () => {
+            const expectedMaterialLength = chance.integer({min: 1});
+            ticketAttributes.estimatedTotalMaterialLength = expectedMaterialLength;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.estimatedTotalMaterialLength).toEqual(expectedMaterialLength);
+        });
+
+        it('should compute the attribute correctly by summing each product[n].totalFeet', async () => {
+            const ticket = new TicketModel(ticketAttributes);
+            const expectedMaterialLength = 
+                ticketAttributes.products[0].totalFeet + 
+                ticketAttributes.products[1].totalFeet;
+
+            expect(ticket.estimatedTotalMaterialLength).toEqual(expectedMaterialLength);
+        });
+
+        it('should equal zero when no products exist', async () => {
+            ticketAttributes.products = [];
+            const ticket = new TicketModel(ticketAttributes);
+            const expectedMaterialLength = 0;
+
+            expect(ticket.estimatedTotalMaterialLength).toEqual(expectedMaterialLength);
         });
     });
 
@@ -613,7 +639,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if material length is less than zero', async () => {
-            const negativeLength = chance.integer({max: -1});
+            const negativeLength = -1;
             ticketAttributes.products = [];
             ticketAttributes.totalMaterialLength = negativeLength;
             const ticket = new TicketModel(ticketAttributes);
@@ -621,6 +647,15 @@ describe('validation', () => {
             const error = ticket.validateSync();
 
             expect(error).not.toBe(undefined);
+        });
+
+        it('should be set to the value of ticket.estimatedTotalMaterialLength by default', async () => {
+            const expectedMaterialLength = chance.integer({min: 1});
+            delete ticketAttributes.totalMaterialLength;
+            ticketAttributes.estimatedTotalMaterialLength = expectedMaterialLength
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalMaterialLength).toEqual(expectedMaterialLength);
         });
     });
 

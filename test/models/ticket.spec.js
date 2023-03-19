@@ -762,6 +762,13 @@ describe('validation', () => {
             expect(ticket.departmentNotes).toBeDefined();
         });
 
+        it('should default to an object when attribute is not defined', () => {
+            delete ticketAttributes.departmentNotes;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(typeof ticket.departmentNotes).toEqual('object');
+        });
+
         it('should pass validation if attribute is missing', () => {
             delete ticketAttributes.departmentNotes;
             const ticket = new TicketModel(ticketAttributes);
@@ -1109,6 +1116,13 @@ describe('validation', () => {
 
             expect(error).toBe(undefined);
         });
+
+        it('should default to an empty object when not defined', () => {
+            delete ticketAttributes.departmentToJobComment;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(typeof ticket.departmentToJobComment).toEqual('object');
+        })
 
         it('should store the note on the correct department', () => {
             const department = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());

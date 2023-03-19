@@ -104,7 +104,6 @@ module.exports.departmentToNextDepartmentAndStatus = {
     [this.BILLING_DEPARTMENT]: [this.COMPLETE_DEPARTMENT]
 };
 
-
 module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentStatuses) => {
     return departmentStatuses.filter((departmentStatus) => {
         const isAllowed = departmentStatus !== IN_PROGRESS;

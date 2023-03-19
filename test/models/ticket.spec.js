@@ -707,6 +707,43 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: totalFramesRan', () => {
+        it('should be set correctly', () => {
+            const expectedTotalFramesRan = chance.d100();
+            ticketAttributes.totalFramesRan = expectedTotalFramesRan;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalFramesRan).toEqual(expectedTotalFramesRan);
+        });
+
+        it('should NOT fail validation if attribute is not defined', () => {
+            delete ticketAttributes.totalFramesRan;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if attribute is less than 0', () => {
+            const negativeNumber = -1;
+            ticketAttributes.totalFramesRan = negativeNumber;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be of type number', () => {
+            ticketAttributes.totalFramesRan = chance.d12();
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.totalFramesRan).toEqual(expect.any(Number));
+        });
+    });
+
     describe('attribute: destination', () => {
         it('should pass validation if attribute is not defined', () => {
             delete ticketAttributes.destination;

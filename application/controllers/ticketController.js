@@ -252,7 +252,6 @@ router.get('/:id', async (request, response) => {
 
 router.post('/:ticketId/next-department', async (request, response) => {
     try {
-        console.log(request.body);
         const {attempts, totalFramesRan, jobComment} = request.body;
         const ticket = await TicketModel.findById(request.params.ticketId).exec();
 

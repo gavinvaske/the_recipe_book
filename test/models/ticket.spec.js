@@ -1122,7 +1122,7 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(typeof ticket.departmentToJobComment).toEqual('object');
-        })
+        });
 
         it('should store the note on the correct department', () => {
             const department = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());

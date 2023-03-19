@@ -9,6 +9,7 @@ const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 const WorkflowStepModel = require('../models/WorkflowStep');
 const departmentsEnum = require('../enums/departmentsEnum');
+const ticketService = require('../services/ticketService');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -45,12 +46,27 @@ function validateKeysAreAllValidDepartments(departmentToHoldReason) {
     });
 }
 
+function validateTotalMaterialIsCalculatedCorrectly(actualTotalMaterialLength) {
+    if (!this.totalFramesRan) {
+        return true;
+    }
+
+    const expectedTotalMaterialLength = ticketService.computeTotalMaterialLength(this.frameSize, this.totalFramesRan, this.attempts);
+
+    const acceptableDifference = 0.01;
+    const differenceBetweenActualAndExpected = Math.abs(expectedTotalMaterialLength - actualTotalMaterialLength);
+    
+    const isCalculatedCorrectly = differenceBetweenActualAndExpected <= acceptableDifference;
+    
+    return isCalculatedCorrectly;
+}
+
 const ticketSchema = new Schema({
     primaryMaterial: {
         type: String,
         required: false,
         default: function() {
-            if (this.products && this.products.length > 0) { // eslint-disable-line no-magic-numbers
+            if (this.products && this.products.length > 0) {
                 return this.products[0].primaryMaterial;
             }
         },
@@ -58,7 +74,8 @@ const ticketSchema = new Schema({
     },
     departmentNotes: {
         type: departmentNotesSchema,
-        required: false
+        required: false,
+        default: {}
     },
     destination: {
         type: destinationSchema,
@@ -87,15 +104,18 @@ const ticketSchema = new Schema({
         required: false,
         alias: 'OrderDate'
     },
-    estimatedFootage: {
+    estimatedTotalMaterialLength: {
         type: Number,
         required: true,
-        validate : {
-            validator : Number.isInteger,
-            message   : 'Estimated Footage must be an integer'
+        default: function() {
+            let sum = 0;
+
+            this.products && this.products.forEach((product) => {
+                sum = sum + product.totalFeet;
+            });
+            return sum;
         },
-        min: 1,
-        alias: 'EstFootage'
+        min: 0
     },
     poNumber: {
         type: String,
@@ -187,8 +207,8 @@ const ticketSchema = new Schema({
     },
     totalLabelQty: {
         type: Number,
-        default: function() {
-            let sum = 0; // eslint-disable-line no-magic-numbers
+        default: function () {
+            let sum = 0;
 
             if (this.products.length) {
                 this.products.forEach((product) => {
@@ -202,7 +222,7 @@ const ticketSchema = new Schema({
         type: Number,
         required: true,
         default: function() {
-            let sum = 0; // eslint-disable-line no-magic-numbers
+            let sum = 0;
 
             if (this.products.length) {
                 this.products.forEach((product) => {
@@ -216,20 +236,9 @@ const ticketSchema = new Schema({
         type: Number,
         required: true,
         default: function() {
-            let sum = 0; // eslint-disable-line no-magic-numbers
-
-            if (this.products.length) {
-                this.products.forEach((product) => {
-                    sum = sum + product.totalFeet;
-                });
-            }
-            return sum;
+            return this.estimatedTotalMaterialLength;
         },
-        set: function(totalMaterialLength) {
-            const feetPerAttempt = 50;
-
-            return totalMaterialLength + (this.attempts * feetPerAttempt);
-        },
+        validate: [validateTotalMaterialIsCalculatedCorrectly, '"ticket.totalMaterialLength" was not calculated correctly according to the formula: frameSize * totalFramesRan / 12'],
         min: 0
     },
     customerName: {
@@ -259,15 +268,24 @@ const ticketSchema = new Schema({
     },
     departmentToJobComment: {
         type: departmentNotesSchema,
-        required: false
+        required: false,
+        default: {}
     },
     attempts: {
         type: Number,
         required: false,
         default: 0,
         min: 0
+    },
+    totalFramesRan: {
+        type: Number,
+        required: false,
+        min: 0
     }
-}, { timestamps: true });
+}, { 
+    timestamps: true,
+    strict: 'throw'
+});
 
 ticketSchema.pre('save', function(next) {
     this.products && this.products.forEach((product) => {
@@ -275,6 +293,13 @@ ticketSchema.pre('save', function(next) {
     });
 
     next();
+});
+
+ticketSchema.virtual('frameSize').get(function() {
+    const product = this.products[0];
+    const frameSizeInInches = product.measureAround * product.labelsAround;
+
+    return frameSizeInInches;
 });
 
 ticketSchema.virtual('numberOfProofsThatHaveNotBeenUploadedYet').get(function() {

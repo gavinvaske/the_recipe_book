@@ -11,6 +11,7 @@ const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
 const fileService = require('../services/fileService');
+const downtimeReasonService = require('../services/downtimeReasonService');
 
 router.use(verifyJwtToken);
 
@@ -37,6 +38,7 @@ router.get('/in-progress/:ticketId', async (request, response) => {
     const ticketObjectId = request.params.ticketId;
     try {
         const ticket = await TicketModel.findById(ticketObjectId).exec();
+        const downtimeReasons = await downtimeReasonService.getDowntimeReasons();
 
         const now = new Date();
         const ticketCreationDate = new Date(ticket.createdAt);
@@ -53,7 +55,8 @@ router.get('/in-progress/:ticketId', async (request, response) => {
 
         return response.render('viewOneInProgressTicket', {
             ticket,
-            ageOfTicket: dateTimeService.prettifyDuration(ageOfTicketInMinutes)
+            ageOfTicket: dateTimeService.prettifyDuration(ageOfTicketInMinutes),
+            downtimeReasons
         });
     } catch (error) {
         return response.status(SERVER_ERROR_CODE).send(error.message);
@@ -244,6 +247,26 @@ router.get('/:id', async (request, response) => {
         console.log(error);
         request.flash('errors', ['An error occurred while loading the requested ticket:', error.message]);
         return response.redirect('back');
+    }
+});
+
+router.post('/:ticketId/next-department', async (request, response) => {
+    try {
+        const {attempts, totalFramesRan, jobComment} = request.body;
+        const ticket = await TicketModel.findById(request.params.ticketId).exec();
+
+        ticketService.transitionTicketToNextDepartment(ticket, {
+            attempts,
+            totalFramesRan,
+            jobComment
+        });
+
+        await ticket.save();
+
+        return response.send();
+    } catch (error) {
+        console.log(error);
+        response.status(INVALID_REQUEST_ERROR_CODE).send(error.message);
     }
 });
 

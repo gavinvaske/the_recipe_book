@@ -1,6 +1,11 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
-const {getAllDepartmentsWithDepartmentStatuses, departmentToStatusesMappingForTicketObjects, COMPLETE_DEPARTMENT} = require('../../application/enums/departmentsEnum');
+const {
+    getAllDepartmentsWithDepartmentStatuses, 
+    departmentToStatusesMappingForTicketObjects, 
+    COMPLETE_DEPARTMENT,
+    departmentToNextDepartmentAndStatus
+} = require('../../application/enums/departmentsEnum');
 const { when } = require('jest-when');
 
 const mockTicketModel = require('../../application/models/ticket');
@@ -303,6 +308,88 @@ describe('ticketService test suite', () => {
             const actualMaterialIdToLengthUsed = await ticketService.getLengthOfEachMaterialUsedByTickets(materialIds);
 
             expect(actualMaterialIdToLengthUsed).toEqual(expectedMaterialIdToLengthUsed);
+        });
+    });
+
+    describe('transitionTicketToNextDepartment', () => {
+        let attributesToUpdate,
+            ticket;
+
+        beforeEach(() => {
+            const departmentsToPickFrom = Object.keys(departmentToNextDepartmentAndStatus);
+            attributesToUpdate = {
+                attempts: chance.d100(),
+                totalFramesRan: chance.d12(),
+                jobComment: chance.string()
+            };
+            ticket = {
+                destination: {
+                    department: chance.pickone(departmentsToPickFrom)
+                },
+                frameSize: chance.floating({min: 1, fixed: 2}),
+                departmentToJobComment: {}
+            };
+        });
+
+        it('should not throw error if neccessary attributes are not provided', () => {
+            expect(() => ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate)).not.toThrow();
+        });
+
+        it('should throw error if ticket does not have a destination attribute', () => {
+            delete ticket.destination;
+
+            expect(() => ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate)).toThrow();
+        });
+
+        it('should update the attribute "attempts" and "totalFramesRan" attribute on the ticket', () => {
+            ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate);
+
+            expect(ticket.attempts).toEqual(attributesToUpdate.attempts);
+            expect(ticket.totalFramesRan).toEqual(attributesToUpdate.totalFramesRan);
+        });
+
+        it('should update the attribute "totalMaterialLength" attribute based on the correct formula', () => {
+            const feetPerAttempt = 50;
+            const inchesPerFoot = 12;
+            const expectedTotalMaterialLength = (attributesToUpdate.attempts * feetPerAttempt) + ((attributesToUpdate.totalFramesRan * ticket.frameSize) / inchesPerFoot);
+
+            ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate);
+
+            expect(ticket.totalMaterialLength).toEqual(expectedTotalMaterialLength);
+        });
+
+        it('should update the "destination.department" attribute to the next department', () => {
+            const [nextDepartment, nextDepartmentStatus] = departmentToNextDepartmentAndStatus[ticket.destination.department];
+
+            ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate);
+
+            expect(ticket.destination.department).toEqual(nextDepartment);
+            expect(ticket.destination.departmentStatus).toEqual(nextDepartmentStatus);
+        });
+
+        it('should update the "departmentToJobComment" attribute with job comment', () => {
+            const department = ticket.destination.department;
+            const expectedDepartmentToJobComment = {
+                [department]: attributesToUpdate.jobComment
+            };
+            ticketService.transitionTicketToNextDepartment(ticket, attributesToUpdate);
+
+            expect(ticket.departmentToJobComment).toEqual(expectedDepartmentToJobComment);
+        });
+    });
+
+    describe('computeTotalMaterialLength()', () => {
+        it('should compute the value correctly', () => {
+            const frameSize = chance.floating({fixed: 2, min: 1, max: 1000});
+            const totalFramesRan = chance.d100();
+            const attempts = chance.integer({min: 0, max: 10});
+            const inchesPerFoot = 12;
+            const feetPerAttempt = 50;
+            const expectedTotalMaterialLengthInFeet = ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
+        
+            const actualTotalMaterialLengthInFeet = ticketService.computeTotalMaterialLength(frameSize, totalFramesRan, attempts);
+
+            expect(actualTotalMaterialLengthInFeet).toBeCloseTo(expectedTotalMaterialLengthInFeet);
         });
     });
 });

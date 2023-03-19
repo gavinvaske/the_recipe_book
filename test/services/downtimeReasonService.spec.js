@@ -14,8 +14,6 @@ jest.mock('../../application/models/downtimeReason', () => {
 
 describe('downtimeReason test suite', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
-
         when(mockDowntimeReasonModel.exec)
             .calledWith()
             .mockResolvedValue([]);

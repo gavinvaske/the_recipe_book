@@ -11,7 +11,7 @@ const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
 const fileService = require('../services/fileService');
-const downtimeReasonService = require('../services/downtimeReason');
+const downtimeReasonService = require('../services/downtimeReasonService');
 
 router.use(verifyJwtToken);
 

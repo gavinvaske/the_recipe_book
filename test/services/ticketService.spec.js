@@ -377,6 +377,21 @@ describe('ticketService test suite', () => {
             expect(ticket.departmentToJobComment).toEqual(expectedDepartmentToJobComment);
         });
     });
+
+    describe('computeTotalMaterialLength()', () => {
+        it('should compute the value correctly', () => {
+            const frameSize = chance.floating({fixed: 2, min: 1, max: 1000});
+            const totalFramesRan = chance.d100();
+            const attempts = chance.integer({min: 0, max: 10});
+            const inchesPerFoot = 12;
+            const feetPerAttempt = 50;
+            const expectedTotalMaterialLengthInFeet = ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
+        
+            const actualTotalMaterialLengthInFeet = ticketService.computeTotalMaterialLength(frameSize, totalFramesRan, attempts);
+
+            expect(actualTotalMaterialLengthInFeet).toBeCloseTo(expectedTotalMaterialLengthInFeet);
+        });
+    })
 });
 
 function countNumberOfTicketsGroupedByDestination(ticketsGroupedByDestination) {

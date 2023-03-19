@@ -1,5 +1,5 @@
 const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
-const {departmentToStatusesMappingForTicketObjects, getAllDepartmentsWithDepartmentStatuses, COMPLETE_DEPARTMENT} = require('../enums/departmentsEnum');
+const departmentsEnum = require('../enums/departmentsEnum');
 const TicketModel = require('../models/ticket');
 
 function isEmptyObject(value) {
@@ -50,7 +50,7 @@ module.exports.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestinatio
         $or: [ 
             {'destination': null}, 
             {
-                'destination.department': {$ne: COMPLETE_DEPARTMENT}
+                'destination.department': {$ne: departmentsEnum.COMPLETE_DEPARTMENT}
             } 
         ]
     };
@@ -109,7 +109,7 @@ function buildTicketsGroupedByDestinationDataStructure(departmentsWithStatuses) 
     departmentsWithStatuses.forEach((department) => {
         ticketsGroupedByDestination[department] = {};
 
-        const departmentStatuses = departmentToStatusesMappingForTicketObjects[department];
+        const departmentStatuses = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
 
         departmentStatuses.forEach((departmentStatus) => {
             ticketsGroupedByDestination[department][departmentStatus] = [];
@@ -120,7 +120,7 @@ function buildTicketsGroupedByDestinationDataStructure(departmentsWithStatuses) 
 }
 
 module.exports.groupTicketsByDestination = (tickets) => {
-    const ticketsGroupedByDestination = buildTicketsGroupedByDestinationDataStructure(getAllDepartmentsWithDepartmentStatuses());
+    const ticketsGroupedByDestination = buildTicketsGroupedByDestinationDataStructure(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
 
     tickets.forEach((ticket) => {
         const department = ticket.destination ? ticket.destination.department : undefined;
@@ -152,4 +152,34 @@ module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
     });
 
     return materialIdToLengthUsedByTickets;
+};
+
+function getNextTicketDestination(ticket) {
+    const currentDepartment = ticket.destination.department;
+    const [nextDepartment, nextDepartmentStatus] = departmentsEnum.departmentToNextDepartmentAndStatus[currentDepartment];
+
+    return {
+        department: nextDepartment,
+        departmentStatus: nextDepartmentStatus
+    };
+}
+
+module.exports.transitionTicketToNextDepartment = (ticket, attributesToUpdate) => {
+    const {attempts, totalFramesRan, jobComment} = attributesToUpdate;
+    const currentDepartment = ticket.destination.department;
+
+    ticket.attempts = attempts;
+    ticket.totalFramesRan = totalFramesRan;
+    
+    ticket.totalMaterialLength = this.computeTotalMaterialLength(ticket.frameSize, ticket.totalFramesRan, ticket.attempts);
+
+    ticket.destination = getNextTicketDestination(ticket);
+    ticket.departmentToJobComment[currentDepartment] = jobComment;
+};
+
+module.exports.computeTotalMaterialLength = (frameSize, totalFramesRan, attempts) => {
+    const inchesPerFoot = 12;
+    const feetPerAttempt = 50;
+
+    return ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
 };

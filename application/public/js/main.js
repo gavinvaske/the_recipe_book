@@ -1083,7 +1083,7 @@ $( document ).ready(function() {
         const ticketId = $(this).data('ticket-id');
         const delayReasonToDurationInMinutes = {};
 
-        $('.delay-reason-inputs').each(function(index) {
+        $('.delay-reason-inputs').each(function() {
             const delayReason = $(this).find('.reason-select').first().val();
             const delayDurationInMinutes = $(this).find('.time-selection').first().val();
 
@@ -1093,9 +1093,9 @@ $( document ).ready(function() {
         const requestBody = {
             totalFramesRan: $('#totalFrames').val(),
             attempts: $('#attempts').val(),
-            jobComments: $('#jobComments').val(),
+            jobComment: $('#jobComments').val(),
             delayReasonToDurationInMinutes
-        }
+        };
 
         post(`/tickets/${ticketId}/next-department`, requestBody, () => {
             alert('Ticket was transitioned was completed successfully! TODO: Storm, how should handle this?');

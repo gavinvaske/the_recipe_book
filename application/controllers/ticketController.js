@@ -250,13 +250,25 @@ router.get('/:id', async (request, response) => {
     }
 });
 
-// TOOD: Make this endpoint less verby and more nouny
-router.post('/:ticketId//next-department', (request, response) => {
-    console.log(request.body);
+router.post('/:ticketId/next-department', async (request, response) => {
+    try {
+        console.log(request.body);
+        const {attempts, totalFramesRan, jobComment} = request.body;
+        const ticket = await TicketModel.findById(request.params.ticketId).exec();
 
-    
+        ticketService.transitionTicketToNextDepartment(ticket, {
+            attempts,
+            totalFramesRan,
+            jobComment
+        });
 
-    response.send('blah')
-})
+        await ticket.save();
+
+        return response.send();
+    } catch (error) {
+        console.log(error);
+        response.status(INVALID_REQUEST_ERROR_CODE).send(error.message);
+    }
+});
 
 module.exports = router;

@@ -93,6 +93,18 @@ module.exports.departmentToStatusesMappingForTicketObjects = {
     [this.COMPLETE_DEPARTMENT]: []
 };
 
+module.exports.departmentToNextDepartmentAndStatus = {
+    [this.ART_PREP_DEPARTMENT]: [this.PRE_PRINTING_DEPARTMENT, SEND_TO_PRINTING],
+    [this.PRE_PRINTING_DEPARTMENT]: [this.PRINTING_DEPARTMENT, PRINTING_READY],
+    [this.PRINTING_DEPARTMENT]: [this.CUTTING_DEPARTMENT, CUTTING_READY],
+    [this.CUTTING_DEPARTMENT]: [this.WINDING_DEPARTMENT, WINDING_READY],
+    [this.WINDING_DEPARTMENT]: [this.PACKAGING_DEPARTMENT, PACKAGING_READY],
+    [this.PACKAGING_DEPARTMENT]: [this.SHIPPING_DEPARTMENT, SHIPPING_READY],
+    [this.SHIPPING_DEPARTMENT]: [this.BILLING_DEPARTMENT, BILLING_READY],
+    [this.BILLING_DEPARTMENT]: [this.COMPLETE_DEPARTMENT]
+};
+
+
 module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentStatuses) => {
     return departmentStatuses.filter((departmentStatus) => {
         const isAllowed = departmentStatus !== IN_PROGRESS;

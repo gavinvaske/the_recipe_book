@@ -8,5 +8,5 @@ module.exports.getDowntimeReasons = async () => {
 
     return downtimeReasonMongooseObjects.map(({reason}) => {
         return reason;
-    })
-}
+    });
+};

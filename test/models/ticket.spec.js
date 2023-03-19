@@ -587,13 +587,14 @@ describe('validation', () => {
     });
 
     describe('attribute: totalMaterialLength', () => {
+        const inchesPerFoot = 12;
+
         beforeEach(() => {
             const products = [
                 {
-                    totalFeet: chance.integer({min: 1})
-                },
-                {
-                    totalFeet: chance.integer({min: 1})
+                    totalFeet: chance.integer({min: 1}),
+                    measureAround: chance.d12(),
+                    labelsAround: chance.d12()
                 }
             ];
             ticketAttributes.products = products;
@@ -606,36 +607,52 @@ describe('validation', () => {
             expect(ticket.totalMaterialLength).toEqual(expect.any(Number));
         });
 
-        it('should compute the attribute correctly when ticket.attempts is not defined', async () => {
-            delete ticketAttributes.attempts;
-            const ticket = new TicketModel(ticketAttributes);
-            const expectedMaterialLength = 
-                ticketAttributes.products[0].totalFeet + 
-                ticketAttributes.products[1].totalFeet;
+        it('should pass validation if ticket.totalFramesRan is not defined yet', async () => {
+            delete ticketAttributes.totalFramesRan;
 
-            expect(ticket.totalMaterialLength).toEqual(expectedMaterialLength);
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).toBe(undefined);
         });
 
-        it('should compute the attribute correctly when ticket.attempts is zero', async () => {
-            ticketAttributes.attempts = 0;
+        it('should fail validation if ticket.totalFramesRan is defined and ticket.totalMaterialLength is not computed correctly', async () => {
+            ticketAttributes.totalFramesRan = chance.d100();
             const ticket = new TicketModel(ticketAttributes);
-            const expectedMaterialLength = 
-                ticketAttributes.products[0].totalFeet + 
-                ticketAttributes.products[1].totalFeet;
 
-            expect(ticket.totalMaterialLength).toEqual(expectedMaterialLength);
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).not.toBe(undefined);
         });
 
-        it('should compute the attribute correctly when ticket.attempts is greater than zero', async () => {
+        it('should pass validation when the attribute is computed correctly', async () => {
+            ticketAttributes.totalFramesRan = chance.d100();
             ticketAttributes.attempts = chance.d100();
-            const extraFeetToAddPerAttempt = 50;
-            const ticket = new TicketModel(ticketAttributes);
-            const expectedMaterialLength = 
-                ticketAttributes.products[0].totalFeet 
-                + ticketAttributes.products[1].totalFeet 
-                + (ticketAttributes.attempts * extraFeetToAddPerAttempt);
 
-            expect(ticket.totalMaterialLength).toEqual(expectedMaterialLength);
+            const totalMaterialLength = computeTotalMaterialLength(ticketAttributes);
+            ticketAttributes.totalMaterialLength = totalMaterialLength;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).toBe(undefined);
+            expect(ticket.totalMaterialLength).toBe(totalMaterialLength);
+        });
+
+        it('should pass validation when ticket.attempts is not defined', async () => {
+            ticketAttributes.totalFramesRan = chance.d100();
+            delete ticketAttributes.attempts;
+            const totalMaterialLength = computeTotalMaterialLength(ticketAttributes);
+            ticketAttributes.totalMaterialLength = totalMaterialLength;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).toBe(undefined);
+            expect(ticket.totalMaterialLength).toBe(totalMaterialLength);
         });
 
         it('should fail validation if material length is less than zero', async () => {
@@ -646,16 +663,47 @@ describe('validation', () => {
 
             const error = ticket.validateSync();
 
-            expect(error).not.toBe(undefined);
+            expect(error['errors']['totalMaterialLength']).not.toBe(undefined);
         });
 
         it('should be set to the value of ticket.estimatedTotalMaterialLength by default', async () => {
             const expectedMaterialLength = chance.integer({min: 1});
             delete ticketAttributes.totalMaterialLength;
-            ticketAttributes.estimatedTotalMaterialLength = expectedMaterialLength
+            ticketAttributes.estimatedTotalMaterialLength = expectedMaterialLength;
+
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.totalMaterialLength).toEqual(expectedMaterialLength);
+        });
+
+        it('should pass validation if attribute is is less than 1/100 foot off the real value', async () => {
+            ticketAttributes.totalFramesRan = chance.d12();
+            delete ticketAttributes.attempts;
+            const tinyErrorThatShouldNotCauseValidationError = 0.009;
+
+            const totalMaterialLength = computeTotalMaterialLength(ticketAttributes);
+            ticketAttributes.totalMaterialLength = totalMaterialLength + tinyErrorThatShouldNotCauseValidationError;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).toBe(undefined);
+        });
+
+        it('should fail validation if attribute is greater than 1/100 foot off the real value', async () => {
+            ticketAttributes.totalFramesRan = chance.d12();
+            delete ticketAttributes.attempts;
+            const feetPerAttempt = 50;
+            const frameSize = ticketAttributes.products[0].measureAround * ticketAttributes.products[0].labelsAround;
+            const errorThatShouldCauseValidationFailure = 0.011;
+
+            const totalMaterialLength = ((ticketAttributes.totalFramesRan * frameSize) / inchesPerFoot) + (0 * feetPerAttempt);
+            ticketAttributes.totalMaterialLength = totalMaterialLength + errorThatShouldCauseValidationFailure;
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error['errors']['totalMaterialLength']).not.toBe(undefined);
         });
     });
 
@@ -1324,3 +1372,17 @@ describe('validation', () => {
         });
     });
 });
+
+function computeTotalMaterialLength(ticketAttributes) {
+    let {totalFramesRan, attempts} = ticketAttributes;
+
+    if (!attempts) {
+        attempts = 0;
+    }
+
+    const frameSize = ticketAttributes.products[0].measureAround * ticketAttributes.products[0].labelsAround; 
+    const inchesPerFoot = 12;
+    const feetPerAttempt = 50;
+
+    return ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
+}

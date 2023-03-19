@@ -82,7 +82,7 @@ describe('validation', () => {
         });
 
         it('should throw an error if an unknown key is attempted to be set onto the schema', () => {
-            const someRandomKey = chance.word();
+            const someRandomKey = chance.string();
             departmentNotesAttributes[someRandomKey] = chance.string();
 
             expect(() => new DepartmentNotesModel(departmentNotesAttributes)).toThrow();

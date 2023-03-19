@@ -391,7 +391,7 @@ describe('ticketService test suite', () => {
 
             expect(actualTotalMaterialLengthInFeet).toBeCloseTo(expectedTotalMaterialLengthInFeet);
         });
-    })
+    });
 });
 
 function countNumberOfTicketsGroupedByDestination(ticketsGroupedByDestination) {

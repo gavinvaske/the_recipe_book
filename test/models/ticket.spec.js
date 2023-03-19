@@ -1233,6 +1233,34 @@ describe('validation', () => {
         });
     });
 
+    describe('virtual attribute: frameSize', () => {
+        it('should throw an error if ticket.products is undefined', () => {
+            delete ticketAttributes.products;
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(() => ticket.frameSize).toThrowError();
+        });
+
+        it('should return the correctly calculated value when at ticket.products contains at least one item', () => {
+            const thisValueIsIgnoredAndThatIsGood = chance.string();
+            ticketAttributes.products = [
+                {
+                    measureAround: chance.floating({min: 1, fixed: 2}),
+                    labelsAround: chance.floating({min: 1, fixed: 2}),
+                },
+                {
+                    measureAround: thisValueIsIgnoredAndThatIsGood,
+                    labelsAround: thisValueIsIgnoredAndThatIsGood
+                }
+            ];
+            const expectedFrameSize = ticketAttributes.products[0].measureAround * ticketAttributes.products[0].labelsAround;
+
+            const ticket = new TicketModel(ticketAttributes);
+
+            expect(ticket.frameSize).toBeCloseTo(expectedFrameSize);
+        });
+    });
+
     describe('mongoose post hooks test suite', () => {
         beforeEach(async () => {
             jest.resetAllMocks();

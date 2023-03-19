@@ -3,7 +3,8 @@ const {
     productionDepartmentsAndDepartmentStatuses, 
     isInProgressDepartmentStatus, 
     departmentToStatusesMappingForTicketObjects, 
-    removeDepartmentStatusesAUserIsNotAllowedToSelect
+    removeDepartmentStatusesAUserIsNotAllowedToSelect,
+    departmentToNextDepartmentAndStatus
 } = require('../../application/enums/departmentsEnum');
 const chance = require('chance').Chance();
 
@@ -130,5 +131,36 @@ describe('departmentsEnum', () => {
             
             expect(isInProgressDepartmentStatus(departmentStatus)).toBe(true);
         });
+    });
+
+    describe('departmentToNextDepartmentAndStatus', () => {
+        let expectedDepartmentToNextDepartmentStatus;
+
+        beforeEach(() => {
+            expectedDepartmentToNextDepartmentStatus = {
+                'ART-PREP': ['PRE-PRINTING', 'SEND TO PRINTING'],
+                'PRE-PRINTING': ['PRINTING', 'PRINTING READY'],
+                'PRINTING': ['CUTTING', 'CUTTING READY'],
+                'CUTTING': ['WINDING', 'WINDING READY'],
+                'WINDING': ['PACKAGING', 'PACKAGING READY'],
+                'PACKAGING': ['SHIPPING', 'SHIPPING READY'],
+                'SHIPPING': ['BILLING', 'BILLING READY'],
+                'BILLING': ['COMPLETED'],
+            };
+        });
+
+        it('should have the correct keys defined', () => {
+            expect(Object.keys(departmentToNextDepartmentAndStatus)).toEqual(Object.keys(expectedDepartmentToNextDepartmentStatus));
+        });
+
+        it('should map each key to the correct value', () => {
+            Object.keys(departmentToNextDepartmentAndStatus).forEach((department) => {
+                const actualNextDepartmentAndDepartmentStatus = departmentToNextDepartmentAndStatus[department];
+                const expectedNextDepartmentAndDepartmentStatus = expectedDepartmentToNextDepartmentStatus[department];
+
+                expect(actualNextDepartmentAndDepartmentStatus).toEqual(expectedNextDepartmentAndDepartmentStatus);
+            });
+        });
+
     });
 });

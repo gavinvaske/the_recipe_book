@@ -54,6 +54,13 @@ describe('validation', () => {
         expect(error).toBe(undefined);
     });
 
+    it('should throw error if non-attribute is attempted to be set', () => {
+        const attributeThatDoesNotExistOnThisModel = chance.word();
+        ticketAttributes[attributeThatDoesNotExistOnThisModel] = chance.string();
+
+        expect(() => new TicketModel(ticketAttributes)).toThrowError();
+    });
+
     describe('attribute: ticketNumber (aka TicketNumber)', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);

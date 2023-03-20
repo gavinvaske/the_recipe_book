@@ -1,6 +1,7 @@
 const SpotPlateModel = require('../../application/models/spotPlate');
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
+const departmentsEnum = require('../../application/enums/departmentsEnum');
 
 describe('validation', () => {
     let spotPlateAttributes;
@@ -142,4 +143,83 @@ describe('validation', () => {
             expect(spotPlate.fileUploads[0]._id).toBeDefined();
         });
     });
+
+    describe('attribute: destination', () => {
+        it('should NOT fail validaiton if attribute is not set', () => {
+            delete spotPlateAttributes.destination;
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            const error = spotPlate.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination is empty object', () => {
+            spotPlateAttributes.destination = {};
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            const error = spotPlate.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if destination.department and destination.departmentStatus are defined correctly', () => {
+            const validSpotPlateDepartment = getRandomValidSpotPlateDepartment();
+            const validSpotPlateDepartmentStatus = getRandomValidSpotPlateDepartmentStatus(validSpotPlateDepartment);
+
+            spotPlateAttributes.destination = {
+                department: validSpotPlateDepartment,
+                departmentStatus: validSpotPlateDepartmentStatus
+            };
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            const error = spotPlate.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination.department is defined correctly but destination.departmentStatus is not', () => {
+            const validSpotPlateDepartment = getRandomValidSpotPlateDepartment();
+            const invalidSpotPlateDepartmentStatus = chance.word();
+
+            spotPlateAttributes.destination = {
+                department: validSpotPlateDepartment,
+                departmentStatus: invalidSpotPlateDepartmentStatus
+            };
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            const error = spotPlate.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if destination.department is not allowed, regardless of what destination.departmentStatus is', () => {
+            const invalidSpotPlateDepartment = chance.word();
+
+            const validDepartment = getRandomValidSpotPlateDepartment();
+            const validSpotPlateDepartment = getRandomValidSpotPlateDepartmentStatus(validDepartment);
+
+            spotPlateAttributes.destination = {
+                department: invalidSpotPlateDepartment,
+                departmentStatus: validSpotPlateDepartment
+            };
+            const spotPlate = new SpotPlateModel(spotPlateAttributes);
+
+            const error = spotPlate.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
 });
+
+function getRandomValidSpotPlateDepartment() {
+    return chance.pickone(Object.keys(departmentsEnum.departmentToDepartmentStatusesForSpotPlateRequests));
+}
+
+function getRandomValidSpotPlateDepartmentStatus(department) {
+    const validDepartmentStatusesToChoseFrom = departmentsEnum.departmentToDepartmentStatusesForSpotPlateRequests[department];
+
+    return validDepartmentStatusesToChoseFrom.length > 0 
+        ? chance.pickone(validDepartmentStatusesToChoseFrom) 
+        : undefined;
+}

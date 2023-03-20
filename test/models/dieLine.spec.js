@@ -1,6 +1,7 @@
 const DieLineModel = require('../../application/models/dieLine');
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
+const departmentsEnum = require('../../application/enums/departmentsEnum');
 
 describe('validation', () => {
     let dieLineAttributes;
@@ -142,4 +143,85 @@ describe('validation', () => {
             expect(dieLine.fileUploads[0]._id).toBeDefined();
         });
     });
+
+    describe('attribute: destination', () => {
+        it('should NOT fail validaiton if attribute is not set', () => {
+            delete dieLineAttributes.destination;
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            const error = dieLine.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination is empty object', () => {
+            dieLineAttributes.destination = {};
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            const error = dieLine.validateSync();
+
+            console.log(error)
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if destination.department and destination.departmentStatus are defined correctly', () => {
+            const validDieLineDepartment = getRandomValidDieLineDepartment();
+            const validDieLineDepartmentStatus = getRandomValidDieLineDepartmentStatus(validDieLineDepartment);
+
+            dieLineAttributes.destination = {
+                department: validDieLineDepartment,
+                departmentStatus: validDieLineDepartmentStatus
+            };
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            const error = dieLine.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination.department is defined correctly but destination.departmentStatus is not', () => {
+            const validDieLineDepartment = getRandomValidDieLineDepartment();
+            const invalidDieLineDepartmentStatus = chance.word();
+
+            dieLineAttributes.destination = {
+                department: validDieLineDepartment,
+                departmentStatus: invalidDieLineDepartmentStatus
+            };
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            const error = dieLine.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if destination.department is not allowed, regardless of what destination.departmentStatus is', () => {
+            const invalidSpotPlateDepartment = chance.word();
+
+            const validDepartment = getRandomValidDieLineDepartment();
+            const validDieLineDepartment = getRandomValidDieLineDepartmentStatus(validDepartment);
+
+            dieLineAttributes.destination = {
+                department: invalidSpotPlateDepartment,
+                departmentStatus: validDieLineDepartment
+            };
+            const dieLine = new DieLineModel(dieLineAttributes);
+
+            const error = dieLine.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
 });
+
+function getRandomValidDieLineDepartment() {
+    return chance.pickone(Object.keys(departmentsEnum.departmentToDepartmentStatusesForDieLineRequests));
+}
+
+function getRandomValidDieLineDepartmentStatus(department) {
+    const validDepartmentStatusesToChoseFrom = departmentsEnum.departmentToDepartmentStatusesForDieLineRequests[department];
+
+    return validDepartmentStatusesToChoseFrom.length > 0
+        ? chance.pickone(validDepartmentStatusesToChoseFrom)
+        : undefined;
+}

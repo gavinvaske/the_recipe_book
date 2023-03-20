@@ -781,6 +781,62 @@ describe('validation', () => {
 
             expect(ticket.destination._id).not.toBe(undefined);
         });
+
+        it('should fail validation if destination is empty object', () => {
+            ticketAttributes.destination = {};
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if destination.department and destination.departmentStatus are defined correctly', () => {
+            const validTicketDepartment = getRandomValidTicketDepartment();
+            const validTicketDepartmentStatus = getRandomValidTicketDepartmentStatus(validTicketDepartment);
+
+            ticketAttributes.destination = {
+                department: validTicketDepartment,
+                departmentStatus: validTicketDepartmentStatus
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination.department is defined correctly but destination.departmentStatus is not', () => {
+            const validTicketDepartment = getRandomValidTicketDepartment();
+            const invalidTicketDepartmentStatus = chance.word();
+
+            ticketAttributes.destination = {
+                department: validTicketDepartment,
+                departmentStatus: invalidTicketDepartmentStatus
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if destination.department is not allowed, regardless of what destination.departmentStatus is', () => {
+            const invalidTicketDepartment = chance.word();
+
+            const validDepartment = getRandomValidTicketDepartment();
+            const validTicketDepartment = getRandomValidTicketDepartmentStatus(validDepartment);
+
+            ticketAttributes.destination = {
+                department: invalidTicketDepartment,
+                departmentStatus: validTicketDepartment
+            };
+            const ticket = new TicketModel(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
     });
 
     describe('attribute: departmentNotes', () => {
@@ -1471,4 +1527,16 @@ function computeTotalMaterialLength(ticketAttributes) {
     const feetPerAttempt = 50;
 
     return ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
+}
+
+function getRandomValidTicketDepartment() {
+    return chance.pickone(Object.keys(departmentsEnum.departmentToStatusesMappingForTicketObjects));
+}
+
+function getRandomValidTicketDepartmentStatus(department) {
+    const validDepartmentStatusesToChoseFrom = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
+
+    return validDepartmentStatusesToChoseFrom.length > 0 
+        ? chance.pickone(validDepartmentStatusesToChoseFrom) 
+        : undefined;
 }

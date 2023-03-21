@@ -4,6 +4,7 @@ const mongooseService = require('../services/mongooseService');
 const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
 const s3Service = require('../services/s3Service');
+const dieLineService = require('../services/dieLineService');
 
 const MAX_NUMBER_OF_FILES = 100;
 
@@ -12,7 +13,15 @@ router.get('/', (request, response) => {
 });
 
 router.get('/form', (request, response) => {
-    return response.render('createDieLine');
+    const departments = dieLineService.getDepartments();
+    const startingDepartment = dieLineService.getStartingDepartment();
+    const departmentStatusesForStartingDepartment = dieLineService.getDepartmentStatusesForDepartment(startingDepartment);
+
+    return response.render('createDieLine', {
+        departments,
+        startingDepartment,
+        departmentStatusesForStartingDepartment
+    });
 });
 
 router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (request, response) => {
@@ -42,6 +51,15 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
     } finally {
         fileService.deleteMultipleFilesFromFileSystem(uploadedFiles);
     }
+});
+
+router.post('/department-statuses', (request, response) => {
+    const {departmentName} = request.body;
+    const departmentStatusesForThisDepartment = dieLineService.getDepartmentStatusesForDepartment(departmentName);
+
+    return response.json({
+        departmentStatuses: departmentStatusesForThisDepartment
+    });
 });
 
 module.exports = router;

@@ -4,6 +4,7 @@ const mongooseService = require('../services/mongooseService');
 const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
 const s3Service = require('../services/s3Service');
+const spotPlateService = require('../services/spotPlateService');
 
 const MAX_NUMBER_OF_FILES = 100;
 
@@ -12,7 +13,15 @@ router.get('/', (request, response) => {
 });
 
 router.get('/form', (request, response) => {
-    return response.render('createSpotPlate');
+    const departments = spotPlateService.getDepartments();
+    const startingDepartment = spotPlateService.getStartingDepartment();
+    const departmentStatusesForStartingDepartment = spotPlateService.getDepartmentStatusesForDepartment(startingDepartment);
+
+    return response.render('createSpotPlate', {
+        departments,
+        startingDepartment,
+        departmentStatusesForStartingDepartment
+    });
 });
 
 router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (request, response) => {

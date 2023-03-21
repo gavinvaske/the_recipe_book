@@ -22,6 +22,20 @@
                 <label for="files">Select files:</label>
                 <input type="file" id="files" name="file-uploads" multiple>
 
+                <select name="destination[department]" id="department-selection">
+                    <% departments.forEach((department) => { %>
+                        <% const isSelected = department === startingDepartment ? 'selected' : ''; %>
+                        <option value="<%= department %>" <%= isSelected %>><%= department %></option>
+                    <% }) %>
+                </select>
+
+                <select name="destination[departmentStatus]" id="department-selection">
+                    <% departmentStatusesForStartingDepartment.forEach((departmentStatus, index) => { %>
+                        <% const isSelected = index === 0 ? 'selected' : ''; %>
+                        <option value="<%= departmentStatus %>" <%= isSelected %>><%= departmentStatus %></option>
+                    <% }) %>
+                </select>
+
              </div>
             <button class="create-entry submit-button" type="submit" value="Create Spot Plate">Create</button>
         </form>

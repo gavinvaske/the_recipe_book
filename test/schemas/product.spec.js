@@ -530,8 +530,6 @@ describe('validation', () => {
             productAttributes.OrderQuantity = chance.floating({fixed: 8});
             const product = new ProductModel(productAttributes);
 
-            console.log(`productAttributes.OrderQuantity => ${productAttributes.OrderQuantity}`);
-
             const error = product.validateSync();
 
             expect(error).not.toBe(undefined);
@@ -1304,9 +1302,6 @@ describe('validation', () => {
             
             const expectedFinishes = [dieCuttingFinish];
             const product = new ProductModel(productAttributes);
-
-            console.log(product.finishes);
-            console.log(product.finishes);
 
             expect(product.finishes).toEqual(expectedFinishes);
             expect(product.finishes.length).toEqual(expectedFinishes.length);

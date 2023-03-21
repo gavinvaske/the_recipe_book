@@ -160,8 +160,6 @@ describe('validation', () => {
 
             const error = dieLine.validateSync();
 
-            console.log(error)
-
             expect(error).toBeDefined();
         });
 

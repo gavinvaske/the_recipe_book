@@ -46,8 +46,6 @@ describe('mongooseService test cases', () => {
             const key = Object.keys(errors)[0];
             const humanReadableErrorMessages = mongooseService.parseHumanReadableMessages(error);
     
-            console.log(humanReadableErrorMessages);
-    
             expect(humanReadableErrorMessages.length).toBe(1);
             expect(humanReadableErrorMessages[0]).toBe(errors[key]['message']);
         });
@@ -59,8 +57,6 @@ describe('mongooseService test cases', () => {
             const key = Object.keys(error.errors)[0];
             const {errors} = error;
             const humanReadableErrorMessages = mongooseService.parseHumanReadableMessages(error);
-    
-            console.log(humanReadableErrorMessages);
     
             expect(humanReadableErrorMessages.length).toBe(1);
             expect(humanReadableErrorMessages[0]).toBe(`'${errors[key]['name']}': ${errors[key]['message']}`);

@@ -53,4 +53,13 @@ router.post('/', upload.array('file-uploads', MAX_NUMBER_OF_FILES), async (reque
     }
 });
 
+router.post('/department-statuses', (request, response) => {
+    const {departmentName} = request.body;
+    const departmentStatusesForThisDepartment = spotPlateService.getDepartmentStatusesForDepartment(departmentName);
+
+    return response.json({
+        departmentStatuses: departmentStatusesForThisDepartment
+    });
+});
+
 module.exports = router;

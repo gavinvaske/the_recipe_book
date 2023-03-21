@@ -190,22 +190,21 @@ $( document ).ready(function() {
         });
     });
 
-    function populateDepartmentStatusesDropdown(departmentName) {
+    function populateDepartmentStatusesDropdown(departmentName, endpoint, departmentStatusDropdownSelector) {
         $.ajax({
-            url: '/tickets/find-department-statuses',
+            url: endpoint,
             type: 'POST',
             data: {
                 departmentName: departmentName
             },
             success: function(response) {
                 if (response.error) {
-                    alert(`Failed to find department statuses: ${response.error}`);
+                    alert(`Failed to populate the department status dropdown: ${response.error}`);
                 } else {
-                    const departmentStatuses = response.departmentStatuses;
-                    const departmentStatusDropdown = $('#department-status-selection');
+                    const {departmentStatuses} = response;
+                    const departmentStatusDropdown = $(departmentStatusDropdownSelector);
 
                     departmentStatusDropdown.empty();
-                    departmentStatusDropdown.append($('<option />').val('').text('-'));
 
                     departmentStatuses.forEach((departmentStatus) => {
                         departmentStatusDropdown.append($('<option />').val(departmentStatus).text(departmentStatus));
@@ -219,13 +218,25 @@ $( document ).ready(function() {
         });
     }
 
+    $('#die-line-department-selection').on('change', () => {
+        const selectedDepartmentName = $('#die-line-department-selection').val();
+        const endpointToQueryForDepartmentStatuses = '/die-lines/department-statuses';
+        populateDepartmentStatusesDropdown(selectedDepartmentName, endpointToQueryForDepartmentStatuses, '#die-line-department-status-selection');
+    });
+
+    $('#spot-plate-department-selection').on('change', () => {
+        const selectedDepartmentName = $('#spot-plate-department-selection').val();
+        const endpointToQueryForDepartmentStatuses ='/spot-plates/department-statuses';
+        populateDepartmentStatusesDropdown(selectedDepartmentName, endpointToQueryForDepartmentStatuses, '#spot-plate-department-status-selection');
+    });
+
     $('#department-selection').on('change', () => {
         const selectedDepartmentName = $('#department-selection').val();
 
         if (!selectedDepartmentName) {
             return;
         }
-        populateDepartmentStatusesDropdown(selectedDepartmentName);
+        populateDepartmentStatusesDropdown(selectedDepartmentName, '/tickets/find-department-statuses', '#department-status-selection');
     });
 
     $('.proof-upload').on('change', function() {

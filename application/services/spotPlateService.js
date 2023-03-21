@@ -12,4 +12,4 @@ module.exports.getStartingDepartment = () => {
 
 module.exports.getDepartmentStatusesForDepartment = (department) => {
     return departmentsEnum.departmentToDepartmentStatusesForSpotPlateRequests[department];
-}
+};

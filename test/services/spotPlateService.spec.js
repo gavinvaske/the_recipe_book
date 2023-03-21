@@ -6,7 +6,7 @@ describe('validation', () => {
     let spotPlateDepartments;
 
     beforeEach(() => {
-        spotPlateDepartments = Object.keys(departmentsEnum.departmentToDepartmentStatusesForSpotPlateRequests)
+        spotPlateDepartments = Object.keys(departmentsEnum.departmentToDepartmentStatusesForSpotPlateRequests);
     });
 
     describe('getDepartments()', () => {
@@ -16,17 +16,17 @@ describe('validation', () => {
             const actualDepartments = spotPlateService.getDepartments();
             
             expect(actualDepartments).toEqual(expectedDepartments);
-        })
+        });
     });
 
-    describe('getDepartments()', () => {
+    describe('getStartingDepartment()', () => {
         it('should return the first spot plate department', () => {
             const expectedDepartment = spotPlateDepartments[0];
 
             const actualDepartment = spotPlateService.getStartingDepartment();
             
             expect(actualDepartment).toEqual(expectedDepartment);
-        })
+        });
     });
 
     describe('getStartingDepartmentAndDepartmentStatuses()', () => {
@@ -36,7 +36,7 @@ describe('validation', () => {
             const actualDepartment = spotPlateService.getStartingDepartment();
             
             expect(actualDepartment).toEqual(expectedDepartment);
-        })
+        });
     });
 
     describe('getDepartmentStatusesForDepartment()', () => {
@@ -47,6 +47,6 @@ describe('validation', () => {
             const actualDepartment = spotPlateService.getDepartmentStatusesForDepartment(spotPlateDepartment);
             
             expect(actualDepartment).toEqual(expectedDepartmentStatuses);
-        })
+        });
     });
 });

@@ -15,6 +15,22 @@ const ticketService = require('../services/ticketService');
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
 const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+function isValidTicketDestination(destination) {
+    const {department, departmentStatus} = destination;
+
+    if (!destination.department && !destination.departmentStatus) return false;
+
+    const validDepartmentStatuses = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
+
+    if (!validDepartmentStatuses) return false;
+
+    if (validDepartmentStatuses.length === 0) { 
+        return !departmentStatus;
+    };
+    
+    return validDepartmentStatuses.includes(departmentStatus);
+}
+
 function stringOnlyContainsDigits(ticketNumber) {
     return TICKET_NUMBER_REGEX.test(ticketNumber);
 }
@@ -79,7 +95,8 @@ const ticketSchema = new Schema({
     },
     destination: {
         type: destinationSchema,
-        required: false
+        required: false,
+        validate: [isValidTicketDestination, 'A "Ticket" cannot be moved to the following destination: {VALUE}']
     },
     products: {
         type: [productSchema],

@@ -22,6 +22,10 @@ const FARMED_OUT_TICKETS = 'FARMED OUT TICKETS';
 const BILLING_READY = 'BILLING READY';
 const SHIPPING_READY = 'SHIPPING READY';
 
+const REQUEST_COMPLETE = 'REQUEST COMPLETE';
+const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
+const NEEDS_PLATE = 'NEEDS PLATE';
+
 // departments
 module.exports.ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
 module.exports.ART_PREP_DEPARTMENT = 'ART-PREP';
@@ -33,6 +37,40 @@ module.exports.PACKAGING_DEPARTMENT = 'PACKAGING';
 module.exports.SHIPPING_DEPARTMENT = 'SHIPPING';
 module.exports.BILLING_DEPARTMENT = 'BILLING';
 module.exports.COMPLETE_DEPARTMENT = 'COMPLETED';
+
+module.exports.departmentToDepartmentStatusesForDieLineRequests = {
+    [this.ORDER_PREP_DEPARTMENT]: [
+        NEEDS_ATTENTION,
+        ON_HOLD,
+        WAITING_ON_CUSTOMER,
+        REQUEST_COMPLETE,
+        WAITING_ON_APPROVAL
+    ],
+    [this.ART_PREP_DEPARTMENT]: [
+        NEEDS_ATTENTION,
+        ON_HOLD,
+        IN_PROGRESS,
+        NEEDS_DIE_LINE
+    ],
+    [this.COMPLETE_DEPARTMENT]: []
+};
+
+module.exports.departmentToDepartmentStatusesForSpotPlateRequests = {
+    [this.ORDER_PREP_DEPARTMENT]: [
+        NEEDS_ATTENTION,
+        ON_HOLD,
+        WAITING_ON_CUSTOMER,
+        REQUEST_COMPLETE,
+        WAITING_ON_APPROVAL
+    ],
+    [this.ART_PREP_DEPARTMENT]: [
+        NEEDS_ATTENTION,
+        ON_HOLD,
+        IN_PROGRESS,
+        NEEDS_PLATE
+    ],
+    [this.COMPLETE_DEPARTMENT]: []
+};
 
 module.exports.departmentToStatusesMappingForTicketObjects = {
     [this.ORDER_PREP_DEPARTMENT]: [

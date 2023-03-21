@@ -10,7 +10,7 @@ describe('validation', () => {
     });
 
     describe('getDepartments()', () => {
-        it('should return all spot plate departments', () => {
+        it('should return all die line departments', () => {
             const expectedDepartments = dieLineDepartments;
 
             const actualDepartments = dieLineService.getDepartments();
@@ -20,7 +20,7 @@ describe('validation', () => {
     });
 
     describe('getStartingDepartment()', () => {
-        it('should return the first spot plate department', () => {
+        it('should return the first die line department', () => {
             const expectedDepartment = dieLineDepartments[0];
 
             const actualDepartment = dieLineService.getStartingDepartment();

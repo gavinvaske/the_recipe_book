@@ -35,3 +35,58 @@ module.exports.computeLengthOfMaterial = (purchaseOrders) => {
 function getMaterialLengthOnPurchaseOrder(purchaseOrder) {
     return purchaseOrder.totalRolls * purchaseOrder.feetPerRoll;
 }
+
+module.exports.getMaterialIdToLengthInInventory = async (materialObjectIds) => {
+    const materialLengthsInInventory = await PurchaseOrderModel.aggregate([
+        { 
+            $match: { 
+                $and: [ 
+                    { material: { $in: materialObjectIds } }, 
+                    { hasArrived: true } 
+                ] 
+            },
+        },
+        { 
+            $group: {
+                _id: '$material', 
+                length: { $sum: { $multiply: [ "$totalRolls", "$feetPerRoll" ] } }
+            } 
+        }
+    ]);
+
+    const materialIdToLengthInInventory = {};
+
+    materialLengthsInInventory.forEach((material) => {
+        const {_id: materialId, length} = material;
+        
+        materialIdToLengthInInventory[materialId] = length;
+    });
+
+    return materialIdToLengthInInventory;
+}
+
+module.exports.getMaterialIdToLengthOrdered = async (materialObjectIds) => {
+    const materialLengthsOrdered = await PurchaseOrderModel.aggregate([
+        { 
+            $match: { 
+                material: { $in: materialObjectIds }
+            },
+        },
+        {
+            $group: {
+                _id: '$material',
+                length: { $sum: { $multiply: [ "$totalRolls", "$feetPerRoll" ] } }
+            }
+        }
+    ]);
+
+    const materialIdToLengthOrdered = {};
+
+    materialLengthsOrdered.forEach((material) => {
+        const {_id: materialId, length} = material;
+        
+        materialIdToLengthOrdered[materialId] = length;
+    });
+
+    return materialIdToLengthOrdered;
+}

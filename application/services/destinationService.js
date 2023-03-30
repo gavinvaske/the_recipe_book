@@ -17,11 +17,3 @@ module.exports.groupItemsByDestination = (items) => {
 
     return itemsGroupedByDestination;
 };
-
-module.exports.getObjectOrEmptyObject = (object) => {
-    return object ? object : {};
-};
-
-module.exports.getArrayOrEmptyArray = (array) => {
-    return array ? array : [];
-};

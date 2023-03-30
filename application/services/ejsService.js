@@ -1,7 +1,6 @@
 const workflowStepService = require('./workflowStepService');
 const userService = require('./userService');
 const dateTimeService = require('./dateTimeService');
-const destinationService = require('./destinationService');
 const helperService = require('./helperService');
 
 const helperMethods = {

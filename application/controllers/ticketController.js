@@ -12,6 +12,7 @@ const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');
 const fileService = require('../services/fileService');
 const downtimeReasonService = require('../services/downtimeReasonService');
+const destinationService = require('../services/destinationService');
 
 router.use(verifyJwtToken);
 
@@ -24,7 +25,7 @@ router.get('/', async (request, response) => {
         .populate({path: 'destination.assignee'})
         .exec();
 
-    const ticketsGroupedByDestination = ticketService.groupTicketsByDestination(tickets);
+    const ticketsGroupedByDestination = destinationService.groupItemsByDestination(tickets);
     const departmentToHoldReasons = await holdReasonService.getDepartmentToHoldReasons();
 
     return response.render('viewTickets', {

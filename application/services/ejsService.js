@@ -1,6 +1,8 @@
 const workflowStepService = require('./workflowStepService');
 const userService = require('./userService');
 const dateTimeService = require('./dateTimeService');
+const destinationService = require('./destinationService');
+const helperService = require('./helperService');
 
 const helperMethods = {
     prettifyDuration: dateTimeService.prettifyDuration,
@@ -11,7 +13,9 @@ const helperMethods = {
     getHowLongTicketHasBeenInDepartment: workflowStepService.getHowLongTicketHasBeenInDepartment,
     getHowLongTicketHasHadADepartmentStatus: workflowStepService.getHowLongTicketHasHadADepartmentStatus,
     getProfilePictureUrl: userService.getProfilePictureUrl,
-    getUserInitials: userService.getUserInitials
+    getUserInitials: userService.getUserInitials,
+    getObjectOrEmptyObject: helperService.getEmptyObjectIfUndefined,
+    getArrayOrEmptyArray: helperService.getEmptyArrayIfUndefined
 };
 
 module.exports = helperMethods;

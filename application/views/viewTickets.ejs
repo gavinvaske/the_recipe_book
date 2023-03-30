@@ -27,13 +27,13 @@
     
     <!--- Order Prep Department Start -->
       <% const orderPrepDepartmentName = 'ORDER-PREP' %>
-      <% const orderPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[orderPrepDepartmentName] %>
+      <% const orderPrepTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[orderPrepDepartmentName]) %>
       <% const numberOfOrderPrepTickets = Object.values(orderPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= orderPrepDepartmentName %>">
         <h4 class='department-name'>Order Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfOrderPrepTickets %></span></h4>
         
         <!-- Order Prep | Needs Attention -->
-        <% const orderPrepNeedsAttentionTickets = orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+        <% const orderPrepNeedsAttentionTickets = helperMethods.getEmptyArrayIfUndefined(orderPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'order-prep-needs-attention',
           cssClassToUseForTableColoring: 'green-master',
@@ -51,7 +51,7 @@
         }) %>
 
         <!-- Order Prep | On Hold -->
-        <% const orderPrepOnHoldTickets = orderPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const orderPrepOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(orderPrepTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'order-prep-on-hold',
           cssClassToUseForTableColoring: 'green-master',
@@ -70,7 +70,7 @@
         }) %>
 
         <!-- Order Prep | Proofing Complete -->
-        <% const orderPrepProofingComplete = orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE'] %>
+        <% const orderPrepProofingComplete = helperMethods.getEmptyArrayIfUndefined(orderPrepTicketsGroupedByDepartmentStatus['PROOFING COMPLETE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'order-prep-proofing-complete',
           cssClassToUseForTableColoring: 'green-master',
@@ -88,7 +88,7 @@
         }) %>
 
         <!-- Order Prep | Waiting on Customer -->
-        <% const orderPrepWaitingOnCustomerTickets = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER'] %>
+        <% const orderPrepWaitingOnCustomerTickets = helperMethods.getEmptyArrayIfUndefined(orderPrepTicketsGroupedByDepartmentStatus['WAITING ON CUSTOMER']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'order-prep-waiting-on-customer',
           cssClassToUseForTableColoring: 'green-master',
@@ -106,7 +106,7 @@
         }) %>
 
         <!-- Order Prep | Waiting on Approval -->
-        <% const orderPrepWaitingOnApproval = orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL'] %>
+        <% const orderPrepWaitingOnApproval = helperMethods.getEmptyArrayIfUndefined(orderPrepTicketsGroupedByDepartmentStatus['WAITING ON APPROVAL']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'order-prep-waiting-on-approval',
           cssClassToUseForTableColoring: 'green-master',
@@ -129,13 +129,13 @@
 
       <!--- Art Prep Department Start -->
       <% const artPrepDepartmentName = 'ART-PREP' %> 
-      <% const artPrepTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[artPrepDepartmentName] %>
+      <% const artPrepTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[artPrepDepartmentName]) %>
       <% const numberOfArtPrepTickets = Object.values(artPrepTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= artPrepDepartmentName %>">
         <h4 class='department-name'>Art Prep - <span class='text-blue' id='departmentTotalTickets'><%= numberOfArtPrepTickets %></span></h4>
         
         <!-- Art Prep | Needs Attention -->
-        <% const artPrepNeedsAttentionTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+        <% const artPrepNeedsAttentionTickets = helperMethods.getEmptyArrayIfUndefined(artPrepTicketsGroupedByDepartmentStatus['NEEDS ATTENTION']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'art-prep-needs-attention',
           cssClassToUseForTableColoring: 'red-master',
@@ -153,7 +153,7 @@
         }) %>
 
         <!-- Art Prep | On Hold -->
-        <% const artPrepOnHold = artPrepTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const artPrepOnHold = helperMethods.getEmptyArrayIfUndefined(artPrepTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'art-prep-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -172,7 +172,7 @@
         }) %>
 
         <!-- Art Prep | In Progress -->
-        <% const artPrepInProgressTickets = artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const artPrepInProgressTickets = helperMethods.getEmptyArrayIfUndefined(artPrepTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'art-prep-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -190,7 +190,7 @@
         }) %>
 
         <!-- Art Prep | Needs Proof -->
-        <% const artPrepNeedsProofTickets = artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF'] %>
+        <% const artPrepNeedsProofTickets = helperMethods.getEmptyArrayIfUndefined(artPrepTicketsGroupedByDepartmentStatus['NEEDS PROOF']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'art-prep-needs-proof',
           cssClassToUseForTableColoring: 'red-master',
@@ -214,13 +214,13 @@
 
       <!--- Pre Printing Department Start -->
       <% const prePrintingDepartmentName = 'PRE-PRINTING' %>
-      <% const prePrintingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[prePrintingDepartmentName] %>
+      <% const prePrintingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[prePrintingDepartmentName]) %>
       <% const numberOfPrePrintingTickets = Object.values(prePrintingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= prePrintingDepartmentName %>">
         <h4 class='department-name'>Pre-Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrePrintingTickets %></span></h4>
         
         <!-- Pre Printing | Needs Attention -->
-        <% const prePrintingNeedsAttentionTickets = prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION'] %>
+        <% const prePrintingNeedsAttentionTickets = helperMethods.getEmptyArrayIfUndefined(prePrintingTicketsGroupedByDepartmentStatus['NEEDS ATTENTION']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'pre-printing-needs-attention',
           cssClassToUseForTableColoring: 'red-master',
@@ -238,7 +238,7 @@
         }) %>
 
         <!-- Pre Printing | On Hold -->
-        <% const prePrintingOnHoldTickets = prePrintingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const prePrintingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(prePrintingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'pre-printing-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -256,7 +256,7 @@
         }) %>
 
         <!-- Pre Printing | In Progress -->
-        <% const prePrintingInProgressTickets = prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const prePrintingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(prePrintingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'pre-printing-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -274,7 +274,7 @@
         }) %>
 
         <!-- Pre Printing | Send to Printing -->
-        <% const prePrintingSendToPrintingTickets = prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING'] %>
+        <% const prePrintingSendToPrintingTickets = helperMethods.getEmptyArrayIfUndefined(prePrintingTicketsGroupedByDepartmentStatus['SEND TO PRINTING']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'pre-printing-send-to-printing',
           cssClassToUseForTableColoring: 'red-master',
@@ -298,13 +298,13 @@
 
       <!--- Printing Department Start -->
       <% const printingDepartmentName = 'PRINTING' %> 
-      <% const printingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[printingDepartmentName] %>
+      <% const printingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[printingDepartmentName]) %>
       <% const numberOfPrintingTickets = Object.values(printingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= printingDepartmentName %>">
         <h4 class='department-name'>Printing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPrintingTickets %></span></h4>
         
         <!-- Printing | On Hold -->
-        <% const printingOnHoldTickets = printingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const printingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(printingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'printing-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -323,7 +323,7 @@
         }) %>
 
         <!-- Printing | In Progress -->
-        <% const printingInProgressTickets = printingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const printingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(printingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'printing-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -341,7 +341,7 @@
         }) %>
 
         <!-- Printing | Printing Ready --> 
-        <% const printingReadyTickets = printingTicketsGroupedByDepartmentStatus['PRINTING READY'] %>
+        <% const printingReadyTickets = helperMethods.getEmptyArrayIfUndefined(printingTicketsGroupedByDepartmentStatus['PRINTING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'printing-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -359,7 +359,7 @@
         }) %>
 
         <!-- Printing | Printer One Schedule -->
-        <% const printingPrinterOneScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE'] %>
+        <% const printingPrinterOneScheduleTickets = helperMethods.getEmptyArrayIfUndefined(printingTicketsGroupedByDepartmentStatus['PRINTER ONE SCHEDULE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'printing-printer-one-schedule',
           cssClassToUseForTableColoring: 'red-master',
@@ -377,7 +377,7 @@
         }) %>
 
         <!-- Printing | Printer Two Schedule -->
-        <% const printingPrinterTwoScheduleTickets = printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE'] %>
+        <% const printingPrinterTwoScheduleTickets = helperMethods.getEmptyArrayIfUndefined(printingTicketsGroupedByDepartmentStatus['PRINTER TWO SCHEDULE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'printing-printer-two-schedule',
           cssClassToUseForTableColoring: 'red-master',
@@ -400,13 +400,13 @@
 
       <!--- Cutting Department Start -->
       <% const cuttingDepartmentName = 'CUTTING' %> 
-      <% const cuttingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[cuttingDepartmentName] %>
+      <% const cuttingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[cuttingDepartmentName]) %>
       <% const numberOfCuttingTickets = Object.values(cuttingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= cuttingDepartmentName %>">
         <h4 class='department-name'>Cutting - <span class='text-blue' id='departmentTotalTickets'><%= numberOfCuttingTickets %></span></h4>
         
         <!-- Cutting | On Hold -->
-        <% const cuttingOnHoldTickets = cuttingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const cuttingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -425,7 +425,8 @@
         }) %>
 
         <!-- Cutting | In Progress -->
-        <% const cuttingInProgressTickets = cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const cuttingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
+        <h1>test: <%= cuttingInProgressTickets[0].collection.collectionName %></h1>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -443,7 +444,7 @@
         }) %>
 
         <!-- Cutting | Cutting Ready -->
-        <% const cuttingReadyTickets = cuttingTicketsGroupedByDepartmentStatus['CUTTING READY'] %>
+        <% const cuttingReadyTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['CUTTING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-ready',
           cssClassToUseForTableColoring: 'red-master',
@@ -461,7 +462,7 @@
         }) %>
 
         <!-- Cutting | Delta One Schedule -->
-        <% const cuttingDeltaOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE'] %>
+        <% const cuttingDeltaOneScheduleTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['DELTA ONE SCHEDULE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-delta-one-schedule',
           cssClassToUseForTableColoring: 'red-master',
@@ -479,7 +480,7 @@
         }) %>
 
         <!-- Cutting | Delta Two Schedule -->
-        <% const cuttingDeltaTwoScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE'] %>
+        <% const cuttingDeltaTwoScheduleTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['DELTA TWO SCHEDULE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-delta-two-schedule',
           cssClassToUseForTableColoring: 'red-master',
@@ -497,7 +498,7 @@
         }) %>
 
         <!-- Cutting | RotoFlex One Schedule -->
-        <% const cuttingRotoflexOneScheduleTickets = cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE'] %>
+        <% const cuttingRotoflexOneScheduleTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['ROTOFLEX ONE SCHEDULE']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-rotoflex-one-schedule',
           cssClassToUseForTableColoring: 'red-master',
@@ -521,13 +522,13 @@
 
       <!--- Winding Department Start -->
       <% const windingDepartmentName = 'WINDING' %> 
-      <% const windingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[windingDepartmentName] %>
+      <% const windingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[windingDepartmentName]) %>
       <% const numberOfWindingTickets = Object.values(windingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= windingDepartmentName %>">
         <h4 class='department-name'>Winding - <span class='text-blue' id='departmentTotalTickets'><%= numberOfWindingTickets %></span></h4>
         
         <!-- Winding | On Hold -->
-        <% const windingOnHoldTickets = windingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const windingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(windingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'winding-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -546,7 +547,7 @@
         }) %>
 
         <!-- Winding | In Progress -->
-        <% const windingInProgressTickets = windingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const windingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(windingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'winding-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -564,7 +565,7 @@
         }) %>
 
         <!-- Winding | Winding Ready -->
-        <% const windingReadyTickets = windingTicketsGroupedByDepartmentStatus['WINDING READY'] %>
+        <% const windingReadyTickets = helperMethods.getEmptyArrayIfUndefined(windingTicketsGroupedByDepartmentStatus['WINDING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'winding-ready',
           cssClassToUseForTableColoring: 'red-master',
@@ -587,13 +588,13 @@
 
       <!--- Packaging Department Start -->
       <% const packagingDepartmentName = 'PACKAGING' %> 
-      <% const packagingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[packagingDepartmentName] %>
+      <% const packagingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[packagingDepartmentName]) %>
       <% const numberOfPackagingTickets = Object.values(packagingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= packagingDepartmentName %>">
         <h4 class='department-name'>Packaging - <span class='text-blue' id='departmentTotalTickets'><%= numberOfPackagingTickets %> </span></h4>
         
         <!-- Packaging | On Hold -->
-        <% const packagingOnHoldTickets = packagingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const packagingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(packagingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'packaging-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -612,7 +613,7 @@
         }) %>
 
         <!-- Packaging | In Progress -->
-        <% const packagingInProgressTickets = packagingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const packagingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(packagingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'packaging-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -630,7 +631,7 @@
         }) %>
 
         <!-- Packaging | Packaging Ready -->
-        <% const packagingReadyTickets = packagingTicketsGroupedByDepartmentStatus['PACKAGING READY'] %>
+        <% const packagingReadyTickets = helperMethods.getEmptyArrayIfUndefined(packagingTicketsGroupedByDepartmentStatus['PACKAGING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'packaging-ready',
           cssClassToUseForTableColoring: 'red-master',
@@ -654,13 +655,13 @@
 
       <!--- Shipping Department Start-->
       <% const shippingDepartmentName = 'SHIPPING' %>
-      <% const shippingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[shippingDepartmentName] %>
+      <% const shippingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[shippingDepartmentName]) %>
       <% const numberOfShippingTickets = Object.values(shippingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= shippingDepartmentName %>">
         <h4 class='department-name'>Shipping - <span class='text-blue' id='departmentTotalTickets'><%= numberOfShippingTickets %></span></h4>
         
         <!-- Shipping | On Hold -->
-        <% const shippingOnHoldTickets = shippingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const shippingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(shippingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'shipping-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -679,7 +680,7 @@
         }) %>
 
         <!-- Shipping | In Progress -->
-        <% const shippingInProgressTickets = shippingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const shippingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(shippingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'shipping-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -697,7 +698,7 @@
         }) %>
 
         <!-- Shipping | Shipping Ready -->
-        <% const shippingReadyTickets = shippingTicketsGroupedByDepartmentStatus['SHIPPING READY'] %>
+        <% const shippingReadyTickets = helperMethods.getEmptyArrayIfUndefined(shippingTicketsGroupedByDepartmentStatus['SHIPPING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'shipping-ready',
           cssClassToUseForTableColoring: 'red-master',
@@ -715,7 +716,7 @@
         }) %>
 
         <!-- Shipping | Farmed Out Tickets -->
-        <% const shippingFarmedOutTicketsTickets = shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS'] %>
+        <% const shippingFarmedOutTicketsTickets = helperMethods.getEmptyArrayIfUndefined(shippingTicketsGroupedByDepartmentStatus['FARMED OUT TICKETS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'shipping-farmed-out-tickets',
           cssClassToUseForTableColoring: 'red-master',
@@ -739,13 +740,13 @@
 
       <!-- Billing Department Start -->
       <% const billingDepartmentName = 'BILLING' %> 
-      <% const billingTicketsGroupedByDepartmentStatus = ticketsGroupedByDestination[billingDepartmentName] %>
+      <% const billingTicketsGroupedByDepartmentStatus = helperMethods.getEmptyObjectIfUndefined(ticketsGroupedByDestination[billingDepartmentName]) %>
       <% const numberOfBillingTickets = Object.values(billingTicketsGroupedByDepartmentStatus).flat().length %>
       <div class='department-wrapper' data-department="<%= billingDepartmentName %>">
         <h4 class='department-name'>Billing - <span class='text-blue' id='departmentTotalTickets'><%= numberOfBillingTickets %></span></h4>
         
         <!-- Billing | On Hold -->
-        <% const billingOnHoldTickets = billingTicketsGroupedByDepartmentStatus['ON HOLD'] %>
+        <% const billingOnHoldTickets = helperMethods.getEmptyArrayIfUndefined(billingTicketsGroupedByDepartmentStatus['ON HOLD']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'billing-on-hold',
           cssClassToUseForTableColoring: 'red-master',
@@ -764,7 +765,7 @@
         }) %>
 
         <!-- Billing | In Progress -->
-        <% const billingInProgressTickets = billingTicketsGroupedByDepartmentStatus['IN PROGRESS'] %>
+        <% const billingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(billingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'billing-in-progress',
           cssClassToUseForTableColoring: 'red-master',
@@ -782,7 +783,7 @@
         }) %>
 
         <!-- Billing | Billing Ready -->
-        <% const billingReadyTickets = billingTicketsGroupedByDepartmentStatus['BILLING READY'] %>
+        <% const billingReadyTickets = helperMethods.getEmptyArrayIfUndefined(billingTicketsGroupedByDepartmentStatus['BILLING READY']) %>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'billing-ready',
           cssClassToUseForTableColoring: 'green-master',

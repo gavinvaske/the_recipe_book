@@ -28,4 +28,12 @@ describe('ejsService test suite', () => {
     it('should have a method named getHowLongTicketHasHadADepartmentStatus()', () => {
         expect(ejsService.getHowLongTicketHasHadADepartmentStatus).toBeDefined();
     });
+
+    it('should have a method named getEmptyObjectIfUndefined()', () => {
+        expect(ejsService.getEmptyObjectIfUndefined).toBeDefined();
+    });
+
+    it('should have a method named getEmptyArrayIfUndefined()', () => {
+        expect(ejsService.getEmptyArrayIfUndefined).toBeDefined();
+    });
 });

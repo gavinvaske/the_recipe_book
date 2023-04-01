@@ -8,10 +8,6 @@ const spotPlateService = require('../services/spotPlateService');
 
 const MAX_NUMBER_OF_FILES = 100;
 
-router.get('/', (request, response) => {
-    return response.render('viewRequests');
-});
-
 router.get('/form', (request, response) => {
     const departments = spotPlateService.getDepartments();
     const startingDepartment = spotPlateService.getStartingDepartment();

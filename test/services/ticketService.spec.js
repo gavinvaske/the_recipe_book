@@ -1,8 +1,6 @@
 const chance = require('chance').Chance();
 const ticketService = require('../../application/services/ticketService');
 const {
-    getAllDepartmentsWithDepartmentStatuses, 
-    departmentToStatusesMappingForTicketObjects, 
     COMPLETE_DEPARTMENT,
     departmentToNextDepartmentAndStatus
 } = require('../../application/enums/departmentsEnum');
@@ -189,60 +187,6 @@ describe('ticketService test suite', () => {
         });
     });
 
-    describe('groupTicketsByDepartment', () => {
-        const allDepartmentsWithAtLeastOneDepartmentStatus = getAllDepartmentsWithDepartmentStatuses();
-
-        it('should generate correct number of departments in the datastructure even if no tickets were passed in', () => {
-            const emptyTicketsArray = [];
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
-
-            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.length);
-        });
-
-        it('should generate correct number of departmentsStatuses in the datastructure even if no tickets were passed in', () => {
-            const emptyTicketsArray = [];
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
-
-            expect(Object.keys(groupedTicketsByDepartment).length).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.length);
-            expect(Object.keys(groupedTicketsByDepartment).sort()).toEqual(allDepartmentsWithAtLeastOneDepartmentStatus.sort());
-        });
-
-        it('should map list of tickets according to department', () => {
-            const emptyTicketsArray = [];
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(emptyTicketsArray);
-            let departmentStatusesInDataStructure = [];
-            let allDepartmentStatuses = [];
-
-            Object.values(departmentToStatusesMappingForTicketObjects).forEach((departmentStatusesForOneDepartment) => {
-                allDepartmentStatuses.push(...departmentStatusesForOneDepartment);
-            });
-
-            Object.keys(groupedTicketsByDepartment).forEach((departmentName) => {
-                const group = groupedTicketsByDepartment[departmentName];
-
-                departmentStatusesInDataStructure = [
-                    ...departmentStatusesInDataStructure,
-                    ...Object.keys(group)
-                ]; 
-            });
-
-            console.log(departmentStatusesInDataStructure);
-
-            expect(departmentStatusesInDataStructure.length).toBe(allDepartmentStatuses.length);
-        });
-
-        it('should ignore tickets whose department and/or departmentStatus is unknown', () => {
-            const validTickets = chance.n(buildATicketWithAValidDesintation, chance.integer({min: 0, max: 100}));
-            const invalidTickets = chance.n(buildTicketWithoutAValidDestination, chance.integer({min: 0, max: 100}));
-            
-            const tickets = [...validTickets, ...invalidTickets];
-
-            const groupedTicketsByDepartment = ticketService.groupTicketsByDestination(tickets);
-
-            expect(countNumberOfTicketsGroupedByDestination(groupedTicketsByDepartment)).toBe(validTickets.length);
-        });
-    });
-
     describe('getLengthOfEachMaterialUsedByTickets()', () => {
         let materialIds;
 
@@ -393,42 +337,4 @@ describe('ticketService test suite', () => {
         });
     });
 });
-
-function countNumberOfTicketsGroupedByDestination(ticketsGroupedByDestination) {
-    let numberOfTickets = 0;
-
-    Object.keys(ticketsGroupedByDestination).forEach((department) => {
-        const departmentStatuses = Object.keys(ticketsGroupedByDestination[department]);
-        
-        departmentStatuses.forEach((departmentStatus) => {
-            numberOfTickets = numberOfTickets + ticketsGroupedByDestination[department][departmentStatus].length;
-        });
-    });
-
-    return numberOfTickets;
-}
-
-function buildATicketWithAValidDesintation() {
-    const departmentWithAtLeastOneDepartmentStatus = chance.pickone(getAllDepartmentsWithDepartmentStatuses());
-    const departmentStatus = chance.pickone(departmentToStatusesMappingForTicketObjects[departmentWithAtLeastOneDepartmentStatus]);
-
-    return {
-        destination: {
-            department: departmentWithAtLeastOneDepartmentStatus,
-            departmentStatus
-        }
-    };
-}
-
-function buildTicketWithoutAValidDestination() {
-    const invalidDepartment = chance.string();
-    const invalidDepartmentStatus = chance.string();
-
-    return {
-        destination: {
-            department: invalidDepartment,
-            departmentStatus: invalidDepartmentStatus
-        }
-    };
-}
 

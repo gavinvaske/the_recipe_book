@@ -103,40 +103,6 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
     };
 };
 
-function buildTicketsGroupedByDestinationDataStructure(departmentsWithStatuses) {
-    let ticketsGroupedByDestination = {};
-
-    departmentsWithStatuses.forEach((department) => {
-        ticketsGroupedByDestination[department] = {};
-
-        const departmentStatuses = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
-
-        departmentStatuses.forEach((departmentStatus) => {
-            ticketsGroupedByDestination[department][departmentStatus] = [];
-        });
-    });
-
-    return ticketsGroupedByDestination;
-}
-
-module.exports.groupTicketsByDestination = (tickets) => {
-    const ticketsGroupedByDestination = buildTicketsGroupedByDestinationDataStructure(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
-
-    tickets.forEach((ticket) => {
-        const department = ticket.destination ? ticket.destination.department : undefined;
-        const departmentStatus = ticket.destination ? ticket.destination.departmentStatus : undefined;
-
-        if (department && departmentStatus) {
-            const departmentAndDepartmentStatusCombinationIsValid = ticketsGroupedByDestination[department] && ticketsGroupedByDestination[department][departmentStatus];
-            if (departmentAndDepartmentStatusCombinationIsValid) {
-                ticketsGroupedByDestination[department][departmentStatus].push(ticket);
-            }
-        }
-    });
-
-    return ticketsGroupedByDestination;
-};
-
 module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
     const lengthOfEachMaterialAlreadyUsedByTickets = await TicketModel.aggregate([
         { $match: { primaryMaterial: { $in: materialIds } } },

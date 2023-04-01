@@ -338,89 +338,89 @@
                 <% } %>
                 
                 <% if (columnType === rowNumberColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: index + 1
                     })
                   %>
                 <% } else if (columnType === ticketNumberColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: '#' + ticket.ticketNumber
                     })
                   %>
                 <% } else if (columnType === priorityColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                     columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === holdReasonColumnType) { %>
-                  <%- include('ticketTableColumns/hold-reason-column.ejs', {
+                  <%- include('tableColumns/hold-reason-column.ejs', {
                       ticket: ticket,
                       allHoldReasonsForThisDepartment: allHoldReasonsForThisDepartment,
                       departmentIdentifier: departmentIdentifier
                     })
                   %>
                 <% } else if (columnType === locationColumnType) { %>
-                  <%- include('ticketTableColumns/user-column.ejs', {
+                  <%- include('tableColumns/user-column.ejs', {
                     ticket: ticket
                   }) 
                 %>
                 <% } else if (columnType === lengthColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.totalMaterialLength || 'N/A'
                     })
                   %>
                 <% } else if (columnType === materialColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.primaryMaterial || 'N/A'
                     })
                   %>
                 <% } else if (columnType === dieColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.products && ticket.products[0].productDie
                     })
                   %>
                 <% } else if (columnType === totalRollsColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.totalWindingRolls
                     }) 
                   %>
                 <% } else if (columnType === groupedColumnType) { %>
-                  <%- include('ticketTableColumns/grouped-column.ejs', {
+                  <%- include('tableColumns/grouped-column.ejs', {
                       columnValue: 'TODO'
                     }) 
                   %>
                 <% } else if (columnType === productsColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.products.length
                     })
                   %>
                 <% } else if (columnType === dueDateColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: helperMethods.getDayNumberAndMonth(ticket.shipDate)
                     }) 
                   %>
                 <% } else if (columnType === fromColumnType) { %>
-                  <%- include('ticketTableColumns/user-column.ejs', {
+                  <%- include('tableColumns/user-column.ejs', {
                       ticket: ticket
                     }) 
                   -%>
                 <% } else if (columnType === finishColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: 'TODO'
                     })
                   %>
                 <% } else if (columnType === sentDateColumnType) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: helperMethods.getDayNumberAndMonth(ticket.sentDate)
                     })
                   %>
                 <% } else if (columnType === followUpDateColumnType) { %>
-                  <%- include('ticketTableColumns/date-picker-column.ejs', {
+                  <%- include('tableColumns/date-picker-column.ejs', {
                       columnValue: helperMethods.getDayNumberAndMonth(ticket.followUpDate)
                     })
                   %>
                 <% } else if (columnType === proofsColumn) { %>
-                  <%- include('ticketTableColumns/text-column.ejs', {
+                  <%- include('tableColumns/text-column.ejs', {
                       columnValue: ticket.numberOfProofsThatHaveNotBeenUploadedYet || 'N/A'
                     })
                   %>

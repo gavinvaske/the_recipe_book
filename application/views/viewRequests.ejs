@@ -5,7 +5,7 @@
     document.getElementsByTagName("body")[0].setAttributeNode(bodyclass);
   </script>
   
-<div class="page-wrapper view-requests">
+  <div class="page-wrapper view-tickets">
     <%- include('partials/navbarMain.ejs') %>
     <%- include('partials/sidebarMain.ejs') %>
     <div class='tickets-card'>
@@ -20,7 +20,11 @@
         </div>
         
         <%- include('partials/requests-workflow-navigation.ejs') %>
-        <%- include('partials/requests-workflow-sorting-filtering.ejs') %>
+        <%- include('partials/ticket-workflow-sorting-filtering.ejs') %>
+  
+      </div>
+  
+      <div class='scroll-curtain'></div>
 
         <!--- Order Prep Department Start -->
         <% const orderPrepDepartmentName = 'ORDER-PREP' %>

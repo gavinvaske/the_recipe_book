@@ -13,8 +13,8 @@ const helperMethods = {
     getHowLongTicketHasHadADepartmentStatus: workflowStepService.getHowLongTicketHasHadADepartmentStatus,
     getProfilePictureUrl: userService.getProfilePictureUrl,
     getUserInitials: userService.getUserInitials,
-    getObjectOrEmptyObject: helperService.getEmptyObjectIfUndefined,
-    getArrayOrEmptyArray: helperService.getEmptyArrayIfUndefined
+    getEmptyObjectIfUndefined: helperService.getEmptyObjectIfUndefined,
+    getEmptyArrayIfUndefined: helperService.getEmptyArrayIfUndefined
 };
 
 module.exports = helperMethods;

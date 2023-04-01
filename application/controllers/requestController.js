@@ -4,13 +4,10 @@ const DieLineModel = require('../models/dieLine');
 const destinationService = require('../services/destinationService');
 
 router.get('/', async (request, response) => {
-    const dieLineRequests = await DieLineModel.find({}).exec();
-    const spotPlateRequests = await SpotPlateModel.find({}).exec();
+    const dieLineRequestPromises = DieLineModel.find({}).exec();
+    const spotPlateRequestPromises = SpotPlateModel.find({}).exec();
 
-    const requests = [
-        ...dieLineRequests,
-        ...spotPlateRequests
-    ];
+    const requests = (await Promise.all([dieLineRequestPromises, spotPlateRequestPromises])).flat();
 
     const requestsGroupedByDestination = destinationService.groupItemsByDestination(requests);
 

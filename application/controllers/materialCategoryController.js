@@ -5,7 +5,7 @@ const MaterialCategoryModel = require('../models/materialCategory');
 router.use(verifyJwtToken);
 
 const SHOW_ALL_MATERIAL_CATEGORIES_ENDPOINT = '/material-categories';
-const SERVER_ERROR_CODE = 500
+const SERVER_ERROR_CODE = 500;
 
 router.get('/', async (request, response) => {
     const materialCategories = await MaterialCategoryModel.find().exec();
@@ -26,7 +26,7 @@ router.get('/form/:id', async (request, response) => {
         console.log(error);
         request.flash('errors', [error.message]);
 
-        return response.redirect('back');
+        return response.status(SERVER_ERROR_CODE).redirect('back');
     }
 });
 
@@ -39,7 +39,7 @@ router.post('/form/:id', async (request, response) => {
         console.log(error);
         request.flash('errors', [error.message]);
 
-        return response.redirect('back');
+        return response.status(SERVER_ERROR_CODE).redirect('back');
     }
 });
 
@@ -47,7 +47,9 @@ router.post('/form', async (request, response) => {
     try {
         await MaterialCategoryModel.create(request.body);
     } catch (error) {
+        console.log(error);
         request.flash('errors', ['Unable to save the Material Category, the following error(s) occurred:', error.message]);
+        return;
     }
     request.flash('alerts', ['Material Category created successfully']);
 
@@ -63,6 +65,7 @@ router.get('/delete/:id', async (request, response) => {
 
         return response.redirect(SHOW_ALL_MATERIAL_CATEGORIES_ENDPOINT);
     } catch (error) {
+        console.log(error);
         return response.status(SERVER_ERROR_CODE).send(error.message);
     }
 });

@@ -20,6 +20,11 @@ const schema = new Schema({
 
             return vendorId;
         }
+    },
+    materialCategoryId: {
+        type: Schema.Types.ObjectId,
+        ref: 'MaterialCategory',
+        required: false
     }
 }, { timestamps: true });
 

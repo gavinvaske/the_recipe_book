@@ -98,4 +98,42 @@ describe('validation', () => {
             expect(material.vendorId).toEqual(null);
         });
     });
+
+    describe('attribute: materialCategoryId', () => {
+        it('should have attribute', () => {
+            materialAttributes.materialCategoryId = new mongoose.Types.ObjectId();
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialCategoryId).toBeDefined();
+        });
+
+        it('should fail validation if attribute is the wrong type', () => {
+            materialAttributes.materialCategoryId = chance.word();
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should handle storing valid mongoose object Ids', () => {
+            materialAttributes.materialCategoryId = new mongoose.Types.ObjectId();
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+            expect(mongoose.Types.ObjectId.isValid(material.materialCategoryId)).toBe(true);
+        });
+
+        it('should pass validation if attribute is missing', () => {
+            delete materialAttributes.materialCategoryId;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+    });
 });

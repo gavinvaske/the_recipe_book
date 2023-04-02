@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const MaterialModel = require('../models/material');
 const {verifyJwtToken} = require('../middleware/authorize');
+const VendorModel = require('../models/vendor');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 
@@ -33,11 +34,13 @@ router.get('/', async (request, response) => {
     }
 });
 
-router.get('/create', (request, response) => {
-    return response.render('createMaterial');
+router.get('/form', async (request, response) => {
+    const vendors = await VendorModel.find().exec();
+
+    return response.render('createMaterial', { vendors });
 });
 
-router.post('/create', async (request, response) => {
+router.post('/form', async (request, response) => {
     try {
         await MaterialModel.create(request.body);
     } catch (error) {
@@ -53,8 +56,9 @@ router.post('/create', async (request, response) => {
 router.get('/update/:id', async (request, response) => {
     try {
         const material = await MaterialModel.findById(request.params.id);
+        const vendors = await VendorModel.find().exec();
 
-        return response.render('updateMaterial', {material});
+        return response.render('updateMaterial', { material, vendors });
     } catch (error) {
         console.log(error);
         request.flash('errors', [error.message]);

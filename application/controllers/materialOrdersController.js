@@ -161,7 +161,7 @@ router.post('/update/:id', async (request, response) => {
             request.body.hasArrived = false;
         }
 
-        await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body).exec();
+        await MaterialOrderModel.findByIdAndUpdate(request.params.id, request.body, { runValidators: true }).exec();
 
         request.flash('alerts', 'Updated successfully');
         response.redirect('/material-orders');

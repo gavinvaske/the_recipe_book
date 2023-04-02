@@ -8,7 +8,7 @@ describe('validation', () => {
     beforeEach(() => {
         materialCategoryAttributes = {
             name: chance.word()
-        }
+        };
     });
 
     it('should validate when required attributes are defined', () => {
@@ -46,9 +46,18 @@ describe('validation', () => {
 
             expect(materialCategory.name).toEqual(name.toUpperCase());
         });
+
+        it('should fail validation if attribute is empty', () => {
+            materialCategoryAttributes.name = '';
+            const materialCategory = new MaterialCategoryModel(materialCategoryAttributes);
+
+            const error = materialCategory.validateSync();
+
+            expect(error).toBeDefined();
+        });
     });
 
-    describe('verify timestamps on created object', () => {
+    describe('database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
@@ -57,14 +66,25 @@ describe('validation', () => {
             await databaseService.closeDatabase();
         });
 
-        describe('verify timestamps on created object', () => {
-            it('should have a "createdAt" attribute once object is saved', async () => {
-                const materialCategory = new MaterialCategoryModel(materialCategoryAttributes);
-                let savedMaterialCategory = await materialCategory.save();
-    
-                expect(savedMaterialCategory.createdAt).toBeDefined();
-                expect(savedMaterialCategory.updatedAt).toBeDefined();
-            });
+        it('should have a "createdAt" attribute once object is saved', async () => {
+            const materialCategory = new MaterialCategoryModel(materialCategoryAttributes);
+            let savedMaterialCategory = await materialCategory.save();
+
+            expect(savedMaterialCategory.createdAt).toBeDefined();
+            expect(savedMaterialCategory.updatedAt).toBeDefined();
+        });
+
+        it('should soft delete items', async () => {
+            const materialCategory = new MaterialCategoryModel(materialCategoryAttributes);
+            const materialCategoryId = materialCategory._id;
+
+            await materialCategory.save();
+            await MaterialCategoryModel.deleteById(materialCategoryId);
+
+            const softDeletedMaterialCategory = await MaterialCategoryModel.findOneDeleted({_id: materialCategoryId}).exec();
+
+            expect(softDeletedMaterialCategory).toBeDefined();
+            expect(softDeletedMaterialCategory.deleted).toBe(true);
         });
     });
 });

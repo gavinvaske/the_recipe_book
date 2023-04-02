@@ -10,7 +10,11 @@ const schema = new Schema({
     materialId: {
         type: String,
         required: true
-
+    },
+    vendorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Vendor',
+        required: false,
     }
 }, { timestamps: true });
 

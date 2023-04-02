@@ -11,7 +11,7 @@
         <div class="alert-box">
             <%- include ("flashMessages") %>
         </div>
-        <form id="create-material-form" action="/materials/create", method="POST">
+        <form id="create-material-form" action="/materials/form", method="POST">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name">
@@ -19,6 +19,15 @@
              <div class="form-group">
                 <label for="materialId">Material ID</label>
                 <input type="text" name="materialId" id="materialId">
+             </div>
+             <div class="form-group">
+                <label for="vendor-selection">Vendor:</label>
+                <select name="vendorId" id="vendor-selection">
+                    <option value='' selected>Choose Here</option>
+                    <% vendors && vendors.forEach((vendor, index) => { %>
+                        <option value="<%= vendor.id %>"><%= vendor.name %></option>
+                    <% }) %>
+                </select>
              </div>
             <button class="create-entry submit-button" type="submit" value="Create Material">Create</button>
         </form>

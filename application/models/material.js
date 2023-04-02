@@ -15,6 +15,11 @@ const schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
         required: false,
+        set: function(vendorId) {
+            if (vendorId === '') return null;
+
+            return vendorId;
+        }
     }
 }, { timestamps: true });
 

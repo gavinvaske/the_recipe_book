@@ -86,5 +86,16 @@ describe('validation', () => {
 
             expect(error).toBeUndefined();
         });
+
+        it('should set the vendorId equal to null if an empty string is passed in', () => {
+            const vendorId = '';
+            materialAttributes.vendorId = vendorId;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+            expect(material.vendorId).toEqual(null);
+        });
     });
 });

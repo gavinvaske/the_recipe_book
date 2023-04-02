@@ -19,6 +19,14 @@
             <input type="text" name="name" id="name" value="<%= material.name %>">
             <label for="name">Material ID</label>
             <input type="text" name="materialId" id="materialId" value="<%= material.materialId %>">
+            <label for="vendor-selection">Vendor:</label>
+            <select name="vendorId" id="vendor-selection">
+                <option value='' <%= material.vendorId ? '' : 'selected' %>>N/A</option>
+                <% vendors && vendors.forEach((vendor, index) => { %>
+                    <% const isSelected = (material.vendorId && material.vendorId.toString() === vendor._id.toString()) ? 'selected' : ''; %>
+                    <option value="<%= vendor.id %>" <%= isSelected %>><%= vendor.name %></option>
+                <% }) %>
+            </select>
             <button type="submit" class="submit-button">Update Material</button>
         </form>
     </div>

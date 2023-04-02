@@ -147,7 +147,7 @@ router.get('/update/:id', async (request, response) => {
 
 router.post('/update/:id', async (request, response) => {
     try {
-        await WindingSetupModel.findByIdAndUpdate(request.params.id, request.body).exec();
+        await WindingSetupModel.findByIdAndUpdate(request.params.id, request.body, { runValidators: true }).exec();
 
         request.flash('alerts', 'Updated successfully');
         response.redirect(`/winding-setups/all/${request.body.recipe}`);

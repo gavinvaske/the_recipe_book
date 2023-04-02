@@ -69,7 +69,7 @@ router.get('/update/:id', async (request, response) => {
 
 router.post('/update/:id', async (request, response) => {
     try {
-        await MaterialModel.findByIdAndUpdate(request.params.id, request.body).exec();
+        await MaterialModel.findByIdAndUpdate(request.params.id, request.body, { runValidators: true }).exec();
 
         request.flash('alerts', 'Updated successfully');
         response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);

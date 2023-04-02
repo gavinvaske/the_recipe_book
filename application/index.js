@@ -66,6 +66,7 @@ app.use('/proofs', require('./controllers/proofController'));
 app.use('/die-lines', require('./controllers/dieLineController'));
 app.use('/spot-plates', require('./controllers/spotPlateController'));
 app.use('/requests', require('./controllers/requestController'));
+app.use('/material-categories', require('./controllers/materialCategoryController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

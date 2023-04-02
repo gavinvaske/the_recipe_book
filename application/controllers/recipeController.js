@@ -59,7 +59,7 @@ router.get('/delete/:id', async (request, response) => {
 
 router.post('/update/:id', async (request, response) => {
     try {
-        await RecipeModel.findByIdAndUpdate(request.params.id, request.body).exec();
+        await RecipeModel.findByIdAndUpdate(request.params.id, request.body, { runValidators: true }).exec();
 
         request.flash('alerts', 'Updated successfully');
         response.redirect('/recipes');

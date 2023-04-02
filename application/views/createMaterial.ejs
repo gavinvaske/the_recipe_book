@@ -29,6 +29,15 @@
                     <% }) %>
                 </select>
              </div>
+             <div class="form-group">
+                <label for="material-category-selection">Material Category:</label>
+                <select name="materialCategoryId" id="material-category-selection">
+                    <option value='' selected>Choose Here</option>
+                    <% materialCategories && materialCategories.forEach((materialCategory, index) => { %>
+                        <option value="<%= materialCategory.id %>"><%= materialCategory.name %></option>
+                    <% }) %>
+                </select>
+             </div>
             <button class="create-entry submit-button" type="submit" value="Create Material">Create</button>
         </form>
     </div>

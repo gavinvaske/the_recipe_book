@@ -2,6 +2,7 @@ const router = require('express').Router();
 const MaterialModel = require('../models/material');
 const {verifyJwtToken} = require('../middleware/authorize');
 const VendorModel = require('../models/vendor');
+const MaterialCategoryModel = require('../models/materialCategory');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 
@@ -36,8 +37,9 @@ router.get('/', async (request, response) => {
 
 router.get('/form', async (request, response) => {
     const vendors = await VendorModel.find().exec();
+    const materialCategories = await MaterialCategoryModel.find().exec();
 
-    return response.render('createMaterial', { vendors });
+    return response.render('createMaterial', { vendors, materialCategories });
 });
 
 router.post('/form', async (request, response) => {

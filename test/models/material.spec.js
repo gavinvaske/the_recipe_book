@@ -12,13 +12,20 @@ describe('validation', () => {
         };
     });
 
-    describe('successful validation', () => {
-        it('should validate when required attributes are defined', () => {
-            const finish = new MaterialModel(materialAttributes);
-    
-            const error = finish.validateSync();
-    
-            expect(error).toBe(undefined);
+    it('should validate when required attributes are defined', () => {
+        const finish = new MaterialModel(materialAttributes);
+
+        const error = finish.validateSync();
+
+        expect(error).toBe(undefined);
+    });
+
+    describe('attribute: name', () => {
+        it('should be a string', () => {
+            materialAttributes.name = chance.integer();
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.name).toEqual(expect.any(String));
         });
 
         it('should trim whitespace around "name"', () => {
@@ -27,7 +34,16 @@ describe('validation', () => {
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.name).toBe(name);
+            expect(material.name).toBe(name.toUpperCase());
+        });
+
+        it('should uppercase the attribute', () => {
+            const lowerCaseName = chance.string().toLowerCase();
+            materialAttributes.name = lowerCaseName;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.name).toBe(lowerCaseName.toUpperCase());
         });
     });
 

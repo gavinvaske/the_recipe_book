@@ -57,9 +57,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: vendorId', () => {
+    describe('attribute: vendor', () => {
         it('should not be a required attribute', () => {
-            delete materialAttributes.vendorId;
+            delete materialAttributes.vendor;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -68,8 +68,8 @@ describe('validation', () => {
         });
 
         it('should fail validation if the datatype is not a mongoose object ID', () => {
-            const invalidVendorId = chance.word();
-            materialAttributes.vendorId = invalidVendorId;
+            const invalidVendor = chance.word();
+            materialAttributes.vendor = invalidVendor;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -78,8 +78,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if value is a mongoose object id', () => {
-            const vendorId = new mongoose.Types.ObjectId();
-            materialAttributes.vendorId = vendorId;
+            materialAttributes.vendor = new mongoose.Types.ObjectId();
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();
@@ -87,29 +86,28 @@ describe('validation', () => {
             expect(error).toBeUndefined();
         });
 
-        it('should set the vendorId equal to null if an empty string is passed in', () => {
-            const vendorId = '';
-            materialAttributes.vendorId = vendorId;
+        it('should set the vendor equal to null if an empty string is passed in', () => {
+            materialAttributes.vendor = '';
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();
 
             expect(error).toBeUndefined();
-            expect(material.vendorId).toEqual(null);
+            expect(material.vendor).toEqual(null);
         });
     });
 
-    describe('attribute: materialCategoryId', () => {
+    describe('attribute: materialCategory', () => {
         it('should have attribute', () => {
-            materialAttributes.materialCategoryId = new mongoose.Types.ObjectId();
+            materialAttributes.materialCategory = new mongoose.Types.ObjectId();
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.materialCategoryId).toBeDefined();
+            expect(material.materialCategory).toBeDefined();
         });
 
         it('should fail validation if attribute is the wrong type', () => {
-            materialAttributes.materialCategoryId = chance.word();
+            materialAttributes.materialCategory = chance.word();
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -118,22 +116,32 @@ describe('validation', () => {
         });
 
         it('should handle storing valid mongoose object Ids', () => {
-            materialAttributes.materialCategoryId = new mongoose.Types.ObjectId();
+            materialAttributes.materialCategory = new mongoose.Types.ObjectId();
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
 
             expect(error).toBeUndefined();
-            expect(mongoose.Types.ObjectId.isValid(material.materialCategoryId)).toBe(true);
+            expect(mongoose.Types.ObjectId.isValid(material.materialCategory)).toBe(true);
         });
 
         it('should pass validation if attribute is missing', () => {
-            delete materialAttributes.materialCategoryId;
+            delete materialAttributes.materialCategory;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
 
             expect(error).toBeUndefined();
+        });
+
+        it('should set the attribute to null if an empty string is passed in', () => {
+            materialAttributes.materialCategory = '';
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+            expect(material.materialCategory).toEqual(null);
         });
     });
 });

@@ -20,11 +20,19 @@
             <label for="name">Material ID</label>
             <input type="text" name="materialId" id="materialId" value="<%= material.materialId %>">
             <label for="vendor-selection">Vendor:</label>
-            <select name="vendorId" id="vendor-selection">
-                <option value='' <%= material.vendorId ? '' : 'selected' %>>N/A</option>
+            <select name="vendor" id="vendor-selection">
+                <option value='' <%= material.vendor ? '' : 'selected' %>>N/A</option>
                 <% vendors && vendors.forEach((vendor, index) => { %>
-                    <% const isSelected = (material.vendorId && material.vendorId.toString() === vendor._id.toString()) ? 'selected' : ''; %>
+                    <% const isSelected = (material.vendor && material.vendor.toString() === vendor._id.toString()) ? 'selected' : ''; %>
                     <option value="<%= vendor.id %>" <%= isSelected %>><%= vendor.name %></option>
+                <% }) %>
+            </select>
+            <label for="material-category-selection">Material Category:</label>
+            <select name="materialCategory" id="material-category-selection">
+                <option value='' <%= material.materialCategory ? '' : 'selected' %>>N/A</option>
+                <% materialCategories && materialCategories.forEach((materialCategory, index) => { %>
+                    <% const isSelected = (material.materialCategory && material.materialCategory.toString() === materialCategory._id.toString()) ? 'selected' : ''; %>
+                    <option value="<%= materialCategory.id %>" <%= isSelected %>><%= materialCategory.name %></option>
                 <% }) %>
             </select>
             <button type="submit" class="submit-button">Update Material</button>

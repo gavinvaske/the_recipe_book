@@ -22,10 +22,19 @@
              </div>
              <div class="form-group">
                 <label for="vendor-selection">Vendor:</label>
-                <select name="vendorId" id="vendor-selection">
+                <select name="vendor" id="vendor-selection">
                     <option value='' selected>Choose Here</option>
                     <% vendors && vendors.forEach((vendor, index) => { %>
                         <option value="<%= vendor.id %>"><%= vendor.name %></option>
+                    <% }) %>
+                </select>
+             </div>
+             <div class="form-group">
+                <label for="material-category-selection">Material Category:</label>
+                <select name="materialCategory" id="material-category-selection">
+                    <option value='' selected>Choose Here</option>
+                    <% materialCategories && materialCategories.forEach((materialCategory, index) => { %>
+                        <option value="<%= materialCategory.id %>"><%= materialCategory.name %></option>
                     <% }) %>
                 </select>
              </div>

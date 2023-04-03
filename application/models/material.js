@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        uppercase: true
     },
     materialId: {
         type: String,

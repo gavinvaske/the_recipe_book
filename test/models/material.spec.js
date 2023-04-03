@@ -21,6 +21,13 @@ describe('validation', () => {
     });
 
     describe('attribute: name', () => {
+        it('should be a string', () => {
+            materialAttributes.name = chance.integer();
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.name).toEqual(expect.any(String));
+        });
+
         it('should trim whitespace around "name"', () => {
             const name = chance.string();
             materialAttributes.name = ' ' + name + ' ';

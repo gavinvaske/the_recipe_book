@@ -426,7 +426,6 @@
 
         <!-- Cutting | In Progress -->
         <% const cuttingInProgressTickets = helperMethods.getEmptyArrayIfUndefined(cuttingTicketsGroupedByDepartmentStatus['IN PROGRESS']) %>
-        <h1>test: <%= cuttingInProgressTickets[0].collection.collectionName %></h1>
         <%- include('partials/ticket-table.ejs', {
           tableIdentifier: 'cutting-in-progress',
           cssClassToUseForTableColoring: 'red-master',

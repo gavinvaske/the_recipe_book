@@ -100,6 +100,17 @@ const ticketSchema = new Schema({
     },
     products: {
         type: [productSchema],
+        set: function(products) {
+            try {
+                products && products.sort(function(product1, product2) {
+                    return getNumberToTheRightOfTheHyphen(product1.productNumber) - getNumberToTheRightOfTheHyphen(product2.productNumber);
+                });
+            } catch (error) {
+                console.log('Error occurred while sorting ticket.products: ' + error.message);
+            }
+            
+            return products;
+        }
     },
     extraCharges: {
         type: [chargeSchema]
@@ -363,6 +374,10 @@ async function addRowToWorkflowStepDbTable(next) {
         console.log(`Error during mongoose ticketSchema.pre('updateOne') or ticketSchema.pre('findOneAndUpdate') hook: ${error}; attributes used: ${JSON.stringify(workflowStepAttributes)}`);
         return next(error);
     }
+}
+
+function getNumberToTheRightOfTheHyphen(productNumber) {
+    return Number(productNumber.split('-')[1]);
 }
 
 ticketSchema.pre('updateOne', addRowToWorkflowStepDbTable);

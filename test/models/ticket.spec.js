@@ -61,6 +61,31 @@ describe('validation', () => {
         expect(() => new TicketModel(ticketAttributes)).toThrowError();
     });
 
+    describe('attribute: products', () => {
+        it('should store the products in ascending order according to their productNumber', () => {
+            const productNumbersInSortedOrder = ['164D-001', '164D-003', '164D-045'];
+            ticketAttributes.products = [
+                {productNumber: productNumbersInSortedOrder[1]},
+                {productNumber: productNumbersInSortedOrder[2]},
+                {productNumber: productNumbersInSortedOrder[0]},
+            ];
+
+            const {products} = new TicketModel(ticketAttributes);
+
+            expect(products[0].productNumber).toBe(productNumbersInSortedOrder[0]);
+            expect(products[1].productNumber).toBe(productNumbersInSortedOrder[1]);
+            expect(products[2].productNumber).toBe(productNumbersInSortedOrder[2]);
+        });
+
+        it('should default to an empty array', () => {
+            delete ticketAttributes.products;
+
+            const {products} = new TicketModel(ticketAttributes);
+
+            expect(products).toEqual([]);
+        });
+    });
+
     describe('attribute: ticketNumber (aka TicketNumber)', () => {
         it('should contain attribute', () => {
             const ticket = new TicketModel(ticketAttributes);

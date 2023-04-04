@@ -101,9 +101,13 @@ const ticketSchema = new Schema({
     products: {
         type: [productSchema],
         set: function(products) {
-            products && products.sort(function(product1, product2) {
-                return getNumberToTheRightOfTheHyphen(product1.productNumber) - getNumberToTheRightOfTheHyphen(product2.productNumber);
-            });
+            try {
+                products && products.sort(function(product1, product2) {
+                    return getNumberToTheRightOfTheHyphen(product1.productNumber) - getNumberToTheRightOfTheHyphen(product2.productNumber);
+                });
+            } catch (error) {
+                console.log('Error occurred while sorting ticket.products: ' + error.message);
+            }
             
             return products;
         }

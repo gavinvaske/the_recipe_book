@@ -62,12 +62,23 @@ describe('validation', () => {
     });
 
     describe('attribute: products', () => {
+        it('should have a single product with the correct productNumber', () => {
+            const productNumber = '164D-00006';
+            ticketAttributes.products = [
+                { productNumber: productNumber },
+            ];
+
+            const { products } = new TicketModel(ticketAttributes);
+
+            expect(products[0].productNumber).toBe(productNumber);
+        });
+
         it('should store the products in ascending order according to their productNumber', () => {
             const productNumbersInSortedOrder = ['164D-001', '164D-003', '164D-045'];
             ticketAttributes.products = [
-                {productNumber: productNumbersInSortedOrder[1]},
-                {productNumber: productNumbersInSortedOrder[2]},
-                {productNumber: productNumbersInSortedOrder[0]},
+                { productNumber: productNumbersInSortedOrder[1] },
+                { productNumber: productNumbersInSortedOrder[2] },
+                { productNumber: productNumbersInSortedOrder[0] },
             ];
 
             const {products} = new TicketModel(ticketAttributes);

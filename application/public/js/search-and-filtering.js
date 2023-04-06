@@ -23,8 +23,8 @@ function showAllNeccessaryTables(tables) {
         tableRows.each(function() {
             const row = $(this);
             row.show();
-        })
-    })
+        });
+    });
 };
 
 $('.search-input').on('keyup', function() {
@@ -45,8 +45,8 @@ $('.search-input').on('keyup', function() {
         rows && rows.each(function() {
             const row = $(this);
 
-            const searchableText = findSearchableText(row)
-            const isRowAMatch = searchableText.includes(searchQuery)
+            const searchableText = findSearchableText(row);
+            const isRowAMatch = searchableText.includes(searchQuery);
 
             if (isRowAMatch) {
                 row.show();

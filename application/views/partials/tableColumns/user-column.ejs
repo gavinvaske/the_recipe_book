@@ -8,7 +8,7 @@
         <% if (assignedUser) { %>
             <img src='<%= helperMethods.getProfilePictureUrl(assignedUser) %>'>
         <% } %>
-        <span class="tooltiptext assignee-name-column"><%= assignedUser ? assignedUser.fullName : 'N/A' %> </span>
+        <span class="tooltiptext assignee-name-column searchable"><%= assignedUser ? assignedUser.fullName : 'N/A' %> </span>
     </div>
-    <span class='department-name department-column'><%= destination ? destination.department : 'N/A' %></span>
+    <span class='department-name department-column searchable'><%= destination ? destination.department : 'N/A' %></span>
 </div>

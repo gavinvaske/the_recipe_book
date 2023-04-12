@@ -1,6 +1,6 @@
-const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
-const departmentsEnum = require('../enums/departmentsEnum');
 const TicketModel = require('../models/ticket');
+const departmentsEnum = require('../enums/departmentsEnum');
+const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
 
 function isEmptyObject(value) {
     if (!value) {

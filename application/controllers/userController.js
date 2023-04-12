@@ -58,7 +58,6 @@ router.get('/profile-picture', verifyJwtToken, async (request, response) => {
 });
 
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
-    console.log('hmm - did this work?')
     const maxImageSizeInBytes = 800000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   

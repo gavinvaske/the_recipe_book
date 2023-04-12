@@ -49,14 +49,16 @@ router.post('/profile', verifyJwtToken, async (request, response) => {
 
 router.get('/profile-picture', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
+    const { contentType, data } = user.profilePicture;
 
     return response.json({
-        imageType: user.profilePicture.contentType,
-        imageData: user.profilePicture.data.toString('base64')
+        imageType: contentType,
+        imageData: data ? data.toString('base64') : ''
     });
 });
 
 router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
+    console.log('hmm - did this work?')
     const maxImageSizeInBytes = 800000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   

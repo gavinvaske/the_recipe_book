@@ -14,8 +14,8 @@ $( document ).ready(function() {
 
     function updateTicket(ticketAttributes, ticketId, callback) {
         $.ajax({
-            url: `/tickets/update/${ticketId}`,
-            type: 'POST',
+            url: `/tickets/${ticketId}`,
+            type: 'PATCH',
             data: ticketAttributes,
             success: function(updatedTicket) {
                 if (callback) {

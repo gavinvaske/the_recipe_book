@@ -124,7 +124,7 @@ router.post('/find-department-statuses', (request, response) => {
     });
 });
 
-router.post('/update/:id', async (request, response) => {
+router.patch('/:id', async (request, response) => {
     const ticketId = request.params.id;
 
     try {

@@ -54,13 +54,6 @@ describe('validation', () => {
         expect(error).toBe(undefined);
     });
 
-    it('should throw error if non-attribute is attempted to be set', () => {
-        const attributeThatDoesNotExistOnThisModel = chance.word();
-        ticketAttributes[attributeThatDoesNotExistOnThisModel] = chance.string();
-
-        expect(() => new TicketModel(ticketAttributes)).toThrowError();
-    });
-
     describe('attribute: products', () => {
         it('should have a single product with the correct productNumber', () => {
             const productNumber = '164D-00006';

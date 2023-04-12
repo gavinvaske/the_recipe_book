@@ -49,10 +49,11 @@ router.post('/profile', verifyJwtToken, async (request, response) => {
 
 router.get('/profile-picture', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
+    const { contentType, data } = user.profilePicture;
 
     return response.json({
-        imageType: user.profilePicture.contentType,
-        imageData: user.profilePicture.data.toString('base64')
+        imageType: contentType,
+        imageData: data ? data.toString('base64') : ''
     });
 });
 

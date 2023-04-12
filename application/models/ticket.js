@@ -9,7 +9,6 @@ const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
 const MaterialModel = require('../models/material');
 const WorkflowStepModel = require('../models/WorkflowStep');
 const departmentsEnum = require('../enums/departmentsEnum');
-const ticketService = require('../services/ticketService');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -62,12 +61,19 @@ function validateKeysAreAllValidDepartments(departmentToHoldReason) {
     });
 }
 
+computeTotalMaterialLength = (frameSize, totalFramesRan, attempts) => {
+    const inchesPerFoot = 12;
+    const feetPerAttempt = 50;
+
+    return ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
+};
+
 function validateTotalMaterialIsCalculatedCorrectly(actualTotalMaterialLength) {
     if (!this.totalFramesRan) {
         return true;
     }
 
-    const expectedTotalMaterialLength = ticketService.computeTotalMaterialLength(this.frameSize, this.totalFramesRan, this.attempts);
+    const expectedTotalMaterialLength = computeTotalMaterialLength(this.frameSize, this.totalFramesRan, this.attempts);
 
     const acceptableDifference = 0.01;
     const differenceBetweenActualAndExpected = Math.abs(expectedTotalMaterialLength - actualTotalMaterialLength);
@@ -311,8 +317,7 @@ const ticketSchema = new Schema({
         min: 0
     }
 }, { 
-    timestamps: true,
-    strict: 'throw'
+    timestamps: true
 });
 
 ticketSchema.pre('save', function(next) {

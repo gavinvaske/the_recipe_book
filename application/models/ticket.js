@@ -311,8 +311,7 @@ const ticketSchema = new Schema({
         min: 0
     }
 }, { 
-    timestamps: true,
-    strict: 'throw'
+    timestamps: true
 });
 
 ticketSchema.pre('save', function(next) {

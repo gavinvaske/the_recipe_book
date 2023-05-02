@@ -72,22 +72,96 @@ module.exports.buildFilePlanRequest = (products, labelsAcross, labelsAround) => 
   ]
 */
 
-module.exports.computeFilePlanCandidates = (filePlanRequest) => {
-    const {products, numberOfLanes, labelsPerLane} = filePlanRequest;
-    const labelsPerFrame = numberOfLanes * labelsPerLane;
+function groupProductsByLabelQuantity(products) {
+  const labelQuantityToProducts = {};
 
-    return [
-        {
-            'masterGroups': [
-                {
-                    products: [
-                        {id: products[0].name, numberOfLanes: numberOfLanes},
-                    ],
-                    labelsPerLane: labelsPerLane,
-                    totalLanes: numberOfLanes,
-                    frames: products[0].labelQuantity / labelsPerFrame
-                }
-            ]
-        }
-    ];
+  products.forEach((product) => {
+    const { labelQuantity } = product;
+    const isTheFirstTimeSeeingThisLabelQuantity = !labelQuantityToProducts[labelQuantity]
+    
+    if (isTheFirstTimeSeeingThisLabelQuantity) {
+      labelQuantityToProducts[labelQuantity] = [];
+    }
+
+    labelQuantityToProducts[labelQuantity].push(product);
+  });
+
+  return labelQuantityToProducts;
+}
+
+function addProductToMasterGroup(masterGroup, product, numberOfLanes) {
+  if (!masterGroup.products) {
+    masterGroup.products = [];
+  }
+
+  masterGroup['products'].push(
+    { 
+      id: product.name, 
+      numberOfLanes: numberOfLanes,
+      labelQuantity: product.labelQuantity
+    }
+  )
+}
+
+module.exports.generateFilePlan = (filePlanRequest) => {
+  const {products, numberOfLanes, labelsPerLane} = filePlanRequest;
+  const labelsPerFrame = numberOfLanes * labelsPerLane;
+  let masterGroup = {};
+  const filePlan = {
+    'masterGroups': []
+  }
+
+  filePlan.labelsPerLane = labelsPerLane;
+  filePlan.totalLanes = numberOfLanes;
+
+  if (products.length === 1) {
+    addProductToMasterGroup(masterGroup, products[0], numberOfLanes);
+
+    masterGroup.frames = products[0].labelQuantity / labelsPerFrame
+    filePlan.masterGroups.push(masterGroup);
+
+    return filePlan;
+  }
+
+  const labelQuantityToProducts = groupProductsByLabelQuantity(products);
+
+  Object.keys(labelQuantityToProducts).some((labelQuantity) => {
+    const productsWithSameLabelQuantity = labelQuantityToProducts[labelQuantity];
+    const canDistributeProductsEvenlyAcrossOneFrame = productsWithSameLabelQuantity.length >= numberOfLanes;
+
+    if (!canDistributeProductsEvenlyAcrossOneFrame) {
+      return false;
+    }
+
+    masterGroup = {};
+    const numberOfLanesAllocatedToThisProduct = 1;  // TODO: This will be dynamic eventually
+
+    for (let i = 0; i < numberOfLanes; i++) {
+      const product = productsWithSameLabelQuantity[i];
+      addProductToMasterGroup(masterGroup, product, numberOfLanesAllocatedToThisProduct)
+    }
+
+    const percentOfFrameDedicatedToThisProduct = (numberOfLanesAllocatedToThisProduct / numberOfLanes);
+    masterGroup.frames = productsWithSameLabelQuantity[0].labelQuantity / labelsPerFrame / percentOfFrameDedicatedToThisProduct;
+
+    filePlan.masterGroups.push(masterGroup);
+  });
+
+  console.log('blahahahaha')
+  console.log(JSON.stringify(filePlan))
+
+  return filePlan;
 };
+
+  // return {
+  //   'masterGroups': [
+  //       {
+  //           products: [
+  //               {id: products[0].name, numberOfLanes: numberOfLanes},
+  //           ],
+  //           labelsPerLane: labelsPerLane,
+  //           totalLanes: numberOfLanes,
+  //           frames: products[0].labelQuantity / labelsPerFrame
+  //       }
+  //   ]
+  // };

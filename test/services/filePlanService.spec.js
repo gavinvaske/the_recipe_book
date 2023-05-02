@@ -108,100 +108,69 @@ describe('filePlanService.js', () => {
         });
 
         describe('buildFilePlanRequest() using for a single product', () => {
-            it('should return a single candidate if only one product exists', () => {
+            it('should return a single masterGroup if only one product exists', () => {
                 products = [getProductWithRandomAttributes()];
                 filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
     
-                const filePlanCandidates = filePlanService.computeFilePlanCandidates(filePlanRequest);
+                const filePlan = filePlanService.generateFilePlan(filePlanRequest);
     
-                expect(filePlanCandidates.length).toEqual(1);
+                expect(filePlan.masterGroups.length).toEqual(1);
             });
   
-            it('should return a single master group if only one product exists', () => {
-                products = [getProductWithRandomAttributes()];
-                filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
-    
-                const filePlanCandidates = filePlanService.computeFilePlanCandidates(filePlanRequest);
-
-                const filePlanCandidate = filePlanCandidates[0];
-    
-                expect(filePlanCandidate.masterGroups).toBeDefined();
-            });
-  
-            it('should return a single master group with the correct attributes defined if only one product exists', () => {
+            it('should return a the correct file plan if a single product exists', () => {
                 const product = getProductWithRandomAttributes();
                 products = [product];
                 filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
                 const labelsPerFrame = labelsAcross * labelsAround;
-                const expectedMasterGroups = [
+                const expectedFilePlan = {
+                  masterGroups: [
                     {
-                        products: [{id: product.name, numberOfLanes: labelsAcross}],
-                        labelsPerLane: labelsAround,
-                        totalLanes: labelsAcross,
+                        products: [{id: product.name, numberOfLanes: labelsAcross, labelQuantity: product.labelQuantity}],
                         frames: product.labelQuantity / labelsPerFrame
                     }
-                ];
-
-                const filePlanCandidates = filePlanService.computeFilePlanCandidates(filePlanRequest);
-                const filePlanCandidate = filePlanCandidates[0];
+                  ],
+                  labelsPerLane: labelsAround,
+                  totalLanes: labelsAcross,
+                }
+                
+                const filePlan = filePlanService.generateFilePlan(filePlanRequest);
         
-                expect(filePlanCandidate.masterGroups).toEqual(expectedMasterGroups);
+                expect(filePlan).toEqual(expectedFilePlan);
             });
         });
 
-        // describe('buildFilePlanRequest() using multiple product', () => {
-        //   it('should return two candidates if two products are defined', () => {
-        //     const firstProduct = filePlanService.buildProduct('PRODUCT-A', 1000);
-        //     const secondProduct = filePlanService.buildProduct('PRODUCT-B', 1000);
+        describe('buildFilePlanRequest() using multiple product', () => {
+          it('should return two candidates if two products are defined', () => {
+            const firstProduct = filePlanService.buildProduct('PRODUCT-A', 1000);
+            const secondProduct = filePlanService.buildProduct('PRODUCT-B', 1000);
 
-        //     products = [firstProduct, secondProduct];
-        //     labelsAcross = 2;
-        //     labelsAround = 2;
-        //     filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+            products = [firstProduct, secondProduct];
+            labelsAcross = 2;
+            labelsAround = 2;
+            filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
 
-        //     const labelsPerFrame = labelsAcross * labelsAround;
-        //     const expectedCandidates = [
-        //       {
-        //         'masterGroups': [
-        //           {
-        //             products: [
-        //               { id: firstProduct.name, numberOfLanes: 1 },
-        //               { id: secondProduct.name, numberOfLanes: 1 },
-        //             ],
-        //             labelsPerLane: labelsAround,
-        //             totalLanes: labelsAcross,
-        //             frames: (firstProduct.labelQuantity + secondProduct.labelQuantity) / labelsPerFrame
-        //           },
-        //         ]
-        //       },
-        //       {
-        //         'masterGroups': [
-        //           {
-        //             products: [
-        //               { id: firstProduct.name, numberOfLanes: 2 },
-        //             ],
-        //             labelsPerLane: labelsAround,
-        //             totalLanes: labelsAcross,
-        //             frames: firstProduct.labelQuantity / labelsPerFrame
-        //           },
-        //           {
-        //             products: [
-        //               { id: secondProduct.name, numberOfLanes: 2 },
-        //             ],
-        //             labelsPerLane: labelsAround,
-        //             totalLanes: labelsAcross,
-        //             frames: secondProduct.labelQuantity / labelsPerFrame
-        //           }
-        //         ]
-        //       }
-        //     ];
+            const labelsPerFrame = labelsAcross * labelsAround;
+            const expectedFilePlan = 
+              {
+                'masterGroups': [
+                  {
+                    products: [
+                      { id: firstProduct.name, numberOfLanes: 1, labelQuantity: firstProduct.labelQuantity },
+                      { id: secondProduct.name, numberOfLanes: 1, labelQuantity: secondProduct.labelQuantity },
+                    ],
+                    frames: (firstProduct.labelQuantity + secondProduct.labelQuantity) / labelsPerFrame
+                  }
+                ],
+                labelsPerLane: labelsAround,
+                totalLanes: labelsAcross,
+              };
 
-        //     console.log(JSON.stringify(expectedCandidates))
+            console.log(JSON.stringify(expectedFilePlan))
   
-        //     const filePlanCandidates = filePlanService.computeFilePlanCandidates(filePlanRequest);
+            const filePlan = filePlanService.generateFilePlan(filePlanRequest);
 
-    //     expect(filePlanCandidates).toEqual(expectedCandidates)
-    //   })
-    // })
+        expect(filePlan).toMatchObject(expectedFilePlan)
+      })
+    })
     });
 });

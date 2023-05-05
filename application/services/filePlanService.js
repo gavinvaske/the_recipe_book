@@ -162,6 +162,8 @@ function scaleProducts(products, productToScaleBy) {
 }
 
 function computeNumberOfFrames(product, numberOfLabelsPrintedOfThisProductPerFrame) {
+  console.log(`${product.labelQuantity} === product.labelQuantity`)
+  console.log(`${numberOfLabelsPrintedOfThisProductPerFrame} === numberOfLabelsPrintedOfThisProductPerFrame`)
   return Math.ceil(product.labelQuantity / numberOfLabelsPrintedOfThisProductPerFrame);
 }
 
@@ -199,7 +201,7 @@ module.exports.generateFilePlan = (filePlanRequest) => {
 
     addProductToMasterGroup(filePlanRequest, masterGroup, onlyProductInList, numberOfLanes);
 
-    masterGroup.frames = computeNumberOfFrames(onlyProductInList.labelQuantity, labelsPerFrame);
+    masterGroup.frames = computeNumberOfFrames(onlyProductInList, labelsPerFrame);
 
     addMasterGroupToFilePlan(filePlan, masterGroup);
 

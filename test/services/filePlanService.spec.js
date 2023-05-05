@@ -97,10 +97,11 @@ describe('filePlanService.js', () => {
     describe('buildFilePlanCandidates()', () => {
         let filePlanRequest,
             labelsAcross,
-            labelsAround;
+            labelsAround,
+            products;
 
         beforeEach(() => {
-            const products = chance.n(getProductWithRandomAttributes, chance.d100());
+            products = chance.n(getProductWithRandomAttributes, chance.d100());
             labelsAcross = chance.d100();
             labelsAround = chance.d100();
 
@@ -126,7 +127,7 @@ describe('filePlanService.js', () => {
                   masterGroups: [
                     {
                         products: [{id: product.name, numberOfLanes: labelsAcross}],
-                        frames: product.labelQuantity / labelsPerFrame
+                        frames: Math.ceil(product.labelQuantity / labelsPerFrame)
                     }
                   ],
                   labelsPerLane: labelsAround,

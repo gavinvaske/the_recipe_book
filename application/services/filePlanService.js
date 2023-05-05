@@ -97,6 +97,9 @@ function addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOf
     }
   )
 
+  console.log('master Group Below: ')
+  console.log(masterGroup)
+
   deleteProductFromFilePlan(filePlanRequest, product);
 }
 
@@ -163,8 +166,8 @@ function scaleProducts(products, productToScaleBy) {
   })
 }
 
-function computeNumberOfFrames(oneProductsLabelQty, numberOfLabelsPrintedOfThisProductPerFrame) {
-  return oneProductsLabelQty / numberOfLabelsPrintedOfThisProductPerFrame;
+function computeNumberOfFrames(product, numberOfLabelsPrintedOfThisProductPerFrame) {
+  return Math.ceil(product.labelQuantity / numberOfLabelsPrintedOfThisProductPerFrame);
 }
 
 function deleteProductFromFilePlan(filePlanRequest, productToRemove) {
@@ -186,6 +189,8 @@ function getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberO
       return true;
     }
   })
+
+  return groupOfProductsWithSameLabelQuantity;
 }
 
 module.exports.generateFilePlan = (filePlanRequest) => {
@@ -195,7 +200,7 @@ module.exports.generateFilePlan = (filePlanRequest) => {
   const filePlan = createTemplateFilePlan(numberOfLanes, labelsPerLane);
 
   if (products.length === 1) {
-    const onlyProductInList = products[0]
+    const onlyProductInList = products[0];
 
     addProductToMasterGroup(filePlanRequest, masterGroup, onlyProductInList, numberOfLanes);
 
@@ -210,14 +215,17 @@ module.exports.generateFilePlan = (filePlanRequest) => {
 
   const groupOfProductsWithSameLabelQuantity = getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes);
 
-  if (groupOfProductsWithSameLabelQuantity) {
-    groupOfProductsWithSameLabelQuantity.forEach((product) => {
-      addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOfLanes);
-    });
+  console.log('below: ')
+  console.log(groupOfProductsWithSameLabelQuantity)
 
+  if (groupOfProductsWithSameLabelQuantity) {
     const oneLane = 1;
 
-    masterGroup.frames = computeNumberOfFrames(groupOfProductsWithSameLabelQuantity[0], oneLane);
+    groupOfProductsWithSameLabelQuantity.forEach((product) => {
+      addProductToMasterGroup(filePlanRequest, masterGroup, product, oneLane);
+    });
+
+    masterGroup.frames = computeNumberOfFrames(groupOfProductsWithSameLabelQuantity[0], oneLane * labelsPerLane);
   }
 
   // const allPotentialMasterGroupDistributions = generateAllPossibleDistributes(numberOfLanes);

@@ -155,8 +155,8 @@ describe('filePlanService.js', () => {
                 'masterGroups': [
                   {
                     products: [
-                      { id: firstProduct.name, numberOfLanes: 1, labelQuantity: firstProduct.labelQuantity },
-                      { id: secondProduct.name, numberOfLanes: 1, labelQuantity: secondProduct.labelQuantity },
+                      { id: firstProduct.name, numberOfLanes: 1},
+                      { id: secondProduct.name, numberOfLanes: 1},
                     ],
                     frames: (firstProduct.labelQuantity + secondProduct.labelQuantity) / labelsPerFrame
                   }

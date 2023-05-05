@@ -97,9 +97,6 @@ function addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOf
     }
   )
 
-  console.log('master Group Below: ')
-  console.log(masterGroup)
-
   deleteProductFromFilePlan(filePlanRequest, product);
 }
 
@@ -128,8 +125,6 @@ function addMasterGroupToFilePlan(filePlan, masterGroup) {
 }
 
 function generateAllPossibleDistributes(numberOfLanes) {
-  console.log(`numberOfLanes => ${numberOfLanes}`); // TODO: Make use of numberOfLanes in this function
-
   if (numberOfLanes === 1) {
     return [
       {1: 1}
@@ -214,9 +209,6 @@ module.exports.generateFilePlan = (filePlanRequest) => {
   const labelQuantityToProducts = groupProductsByLabelQuantity(products);
 
   const groupOfProductsWithSameLabelQuantity = getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes);
-
-  console.log('below: ')
-  console.log(groupOfProductsWithSameLabelQuantity)
 
   if (groupOfProductsWithSameLabelQuantity) {
     const oneLane = 1;

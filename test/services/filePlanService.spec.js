@@ -125,7 +125,7 @@ describe('filePlanService.js', () => {
                 const expectedFilePlan = {
                   masterGroups: [
                     {
-                        products: [{id: product.name, numberOfLanes: labelsAcross, labelQuantity: product.labelQuantity}],
+                        products: [{id: product.name, numberOfLanes: labelsAcross}],
                         frames: product.labelQuantity / labelsPerFrame
                     }
                   ],

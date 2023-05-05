@@ -89,79 +89,141 @@ function groupProductsByLabelQuantity(products) {
   return labelQuantityToProducts;
 }
 
-function addProductToMasterGroup(masterGroup, product, numberOfLanes) {
-  if (!masterGroup.products) {
-    masterGroup.products = [];
-  }
-
-  masterGroup['products'].push(
-    { 
+function addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOfLanesPerFrameThisProductUses) {
+  masterGroup.products.push(
+    {
       id: product.name, 
-      numberOfLanes: numberOfLanes,
-      labelQuantity: product.labelQuantity
+      numberOfLanes: numberOfLanesPerFrameThisProductUses,
     }
   )
+
+  deleteProductFromFilePlan(filePlanRequest, product);
+}
+
+function createTemplateFilePlan(numberOfLanes, labelsPerLane) {
+  const filePlan = {
+    masterGroups: [],
+    labelsPerLane: labelsPerLane,
+    totalLanes: numberOfLanes
+  }
+
+  return filePlan;
+}
+
+function createTemplateMasterGroup() {
+  return {
+    'products': []
+  }
+}
+
+function addFramesToMasterGroup(masterGroup, framesToPrint) {
+  masterGroup.frames = framesToPrint;
+}
+
+function addMasterGroupToFilePlan(filePlan, masterGroup) {
+  filePlan.masterGroups.push(masterGroup);
+}
+
+function generateAllPossibleDistributes(numberOfLanes) {
+  console.log(`numberOfLanes => ${numberOfLanes}`); // TODO: Make use of numberOfLanes in this function
+
+  if (numberOfLanes === 1) {
+    return [
+      {1: 1}
+    ]
+  } else {
+    return [
+      {2: 1},
+      {1: 2}
+    ]
+  }
+}
+
+function shouldContinueGeneratingMasterGroups(filePlanRequest) {  // TODO: Build this so they come
+  return true;
+}
+
+function getNextLargestMasterGroupDistribution(allMasterGroupDistributions) {
+  const firstItemInList = allMasterGroupDistributions.splice(0, 1)[0];
+
+  return firstItemInList;
+}
+
+function selectNextProduct(products) {
+  return products[0];
+}
+
+function scaleProducts(products, productToScaleBy) {
+  return products.map((product) => {
+    const scalar = product.labelQuantity / productToScaleBy.labelQuantity;
+    return {
+      ...product,
+      labelQuantity: scalar
+    }
+  })
+}
+
+function computeNumberOfFrames(oneProductsLabelQty, numberOfLabelsPrintedOfThisProductPerFrame) {
+  return oneProductsLabelQty / numberOfLabelsPrintedOfThisProductPerFrame;
+}
+
+function deleteProductFromFilePlan(filePlanRequest, productToRemove) {
+  filePlanRequest.products.some((product, index) => {
+    if (product.id === productToRemove.id) {
+      filePlanRequest.products.splice(index, 1);
+      return true;
+    }
+  })
+}
+
+function getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes) {
+  let groupOfProductsWithSameLabelQuantity;
+
+  Object.values(labelQuantityToProducts).some((productsWithSameLabelQuantity) => {
+    if (productsWithSameLabelQuantity.length === numberOfLanes) {
+      groupOfProductsWithSameLabelQuantity = productsWithSameLabelQuantity;
+
+      return true;
+    }
+  })
 }
 
 module.exports.generateFilePlan = (filePlanRequest) => {
   const {products, numberOfLanes, labelsPerLane} = filePlanRequest;
   const labelsPerFrame = numberOfLanes * labelsPerLane;
-  let masterGroup = {};
-  const filePlan = {
-    'masterGroups': []
-  }
-
-  filePlan.labelsPerLane = labelsPerLane;
-  filePlan.totalLanes = numberOfLanes;
+  const masterGroup = createTemplateMasterGroup();
+  const filePlan = createTemplateFilePlan(numberOfLanes, labelsPerLane);
 
   if (products.length === 1) {
-    addProductToMasterGroup(masterGroup, products[0], numberOfLanes);
+    const onlyProductInList = products[0]
 
-    masterGroup.frames = products[0].labelQuantity / labelsPerFrame
-    filePlan.masterGroups.push(masterGroup);
+    addProductToMasterGroup(filePlanRequest, masterGroup, onlyProductInList, numberOfLanes);
+
+    masterGroup.frames = computeNumberOfFrames(onlyProductInList.labelQuantity, labelsPerFrame);
+
+    addMasterGroupToFilePlan(filePlan, masterGroup);
 
     return filePlan;
   }
 
   const labelQuantityToProducts = groupProductsByLabelQuantity(products);
 
-  Object.keys(labelQuantityToProducts).some((labelQuantity) => {
-    const productsWithSameLabelQuantity = labelQuantityToProducts[labelQuantity];
-    const canDistributeProductsEvenlyAcrossOneFrame = productsWithSameLabelQuantity.length >= numberOfLanes;
+  const groupOfProductsWithSameLabelQuantity = getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes);
 
-    if (!canDistributeProductsEvenlyAcrossOneFrame) {
-      return false;
-    }
+  if (groupOfProductsWithSameLabelQuantity) {
+    groupOfProductsWithSameLabelQuantity.forEach((product) => {
+      addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOfLanes);
+    });
 
-    masterGroup = {};
-    const numberOfLanesAllocatedToThisProduct = 1;  // TODO: This will be dynamic eventually
+    const oneLane = 1;
 
-    for (let i = 0; i < numberOfLanes; i++) {
-      const product = productsWithSameLabelQuantity[i];
-      addProductToMasterGroup(masterGroup, product, numberOfLanesAllocatedToThisProduct)
-    }
+    masterGroup.frames = computeNumberOfFrames(groupOfProductsWithSameLabelQuantity[0], oneLane);
+  }
 
-    const percentOfFrameDedicatedToThisProduct = (numberOfLanesAllocatedToThisProduct / numberOfLanes);
-    masterGroup.frames = productsWithSameLabelQuantity[0].labelQuantity / labelsPerFrame / percentOfFrameDedicatedToThisProduct;
-
-    filePlan.masterGroups.push(masterGroup);
-  });
-
-  console.log('blahahahaha')
-  console.log(JSON.stringify(filePlan))
+  // const allPotentialMasterGroupDistributions = generateAllPossibleDistributes(numberOfLanes);
+  // const nextLargestMasterGroupDistribution = getNextLargestMasterGroupDistribution(allPotentialMasterGroupDistributions);
+  
+  addMasterGroupToFilePlan(filePlan, masterGroup);
 
   return filePlan;
-};
-
-  // return {
-  //   'masterGroups': [
-  //       {
-  //           products: [
-  //               {id: products[0].name, numberOfLanes: numberOfLanes},
-  //           ],
-  //           labelsPerLane: labelsPerLane,
-  //           totalLanes: numberOfLanes,
-  //           frames: products[0].labelQuantity / labelsPerFrame
-  //       }
-  //   ]
-  // };
+}

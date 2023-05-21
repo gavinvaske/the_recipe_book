@@ -72,160 +72,123 @@ module.exports.buildFilePlanRequest = (products, labelsAcross, labelsAround) => 
   ]
 */
 
-function groupProductsByLabelQuantity(products) {
-  const labelQuantityToProducts = {};
-
-  products.forEach((product) => {
-    const { labelQuantity } = product;
-    const isTheFirstTimeSeeingThisLabelQuantity = !labelQuantityToProducts[labelQuantity]
-    
-    if (isTheFirstTimeSeeingThisLabelQuantity) {
-      labelQuantityToProducts[labelQuantity] = [];
-    }
-
-    labelQuantityToProducts[labelQuantity].push(product);
-  });
-
-  return labelQuantityToProducts;
-}
-
-function addProductToMasterGroup(filePlanRequest, masterGroup, product, numberOfLanesPerFrameThisProductUses) {
-  masterGroup.products.push(
-    {
-      id: product.name, 
-      numberOfLanes: numberOfLanesPerFrameThisProductUses,
-    }
-  )
-
-  deleteProductFromFilePlan(filePlanRequest, product);
-}
-
-function createTemplateFilePlan(numberOfLanes, labelsPerLane) {
-  const filePlan = {
-    masterGroups: [],
-    labelsPerLane: labelsPerLane,
-    totalLanes: numberOfLanes
+// https://www.geeksforgeeks.org/ways-to-sum-to-n-using-natural-numbers-up-to-k-with-repetitions-allowed/
+function getDistributions(numberOfLanes) {
+  if (numberOfLanes !== 4) {
+    throw new Error('Code is only setup to handle frames with 4 labels across')
   }
 
-  return filePlan;
-}
-
-function createTemplateMasterGroup() {
   return {
-    'products': []
-  }
-}
-
-function addFramesToMasterGroup(masterGroup, framesToPrint) {
-  masterGroup.frames = framesToPrint;
-}
-
-function addMasterGroupToFilePlan(filePlan, masterGroup) {
-  filePlan.masterGroups.push(masterGroup);
-}
-
-function generateAllPossibleDistributes(numberOfLanes) {
-  if (numberOfLanes === 1) {
-    return [
-      {1: 1}
-    ]
-  } else {
-    return [
-      {2: 1},
-      {1: 2}
-    ]
-  }
-}
-
-function shouldContinueGeneratingMasterGroups(filePlanRequest) {  // TODO: Build this so they come
-  return true;
-}
-
-function getNextLargestMasterGroupDistribution(allMasterGroupDistributions) {
-  const firstItemInList = allMasterGroupDistributions.splice(0, 1)[0];
-
-  return firstItemInList;
-}
-
-function selectNextProduct(products) {
-  return products[0];
+    4: [[1, 1, 1, 1]],
+    3: [[1, 1, 2]],
+    2: [[2, 2]],
+    1: [[4]]
+};
 }
 
 function scaleProducts(products, productToScaleBy) {
-  return products.map((product) => {
-    const scalar = product.labelQuantity / productToScaleBy.labelQuantity;
-    return {
-      ...product,
-      labelQuantity: scalar
-    }
-  })
-}
+    return products.map((product) => {
+        const productDeepCopy = JSON.parse(JSON.stringify(product));
 
-function computeNumberOfFrames(product, numberOfLabelsPrintedOfThisProductPerFrame) {
-  console.log(`${product.labelQuantity} === product.labelQuantity`)
-  console.log(`${numberOfLabelsPrintedOfThisProductPerFrame} === numberOfLabelsPrintedOfThisProductPerFrame`)
-  return Math.ceil(product.labelQuantity / numberOfLabelsPrintedOfThisProductPerFrame);
-}
+        productDeepCopy.scaledLabelQty = productDeepCopy.labelQuantity / productToScaleBy.labelQuantity;
 
-function deleteProductFromFilePlan(filePlanRequest, productToRemove) {
-  filePlanRequest.products.some((product, index) => {
-    if (product.id === productToRemove.id) {
-      filePlanRequest.products.splice(index, 1);
-      return true;
-    }
-  })
-}
-
-function getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes) {
-  let groupOfProductsWithSameLabelQuantity;
-
-  Object.values(labelQuantityToProducts).some((productsWithSameLabelQuantity) => {
-    if (productsWithSameLabelQuantity.length === numberOfLanes) {
-      groupOfProductsWithSameLabelQuantity = productsWithSameLabelQuantity;
-
-      return true;
-    }
-  })
-
-  return groupOfProductsWithSameLabelQuantity;
-}
-
-module.exports.generateFilePlan = (filePlanRequest) => {
-  const {products, numberOfLanes, labelsPerLane} = filePlanRequest;
-  const labelsPerFrame = numberOfLanes * labelsPerLane;
-  const masterGroup = createTemplateMasterGroup();
-  const filePlan = createTemplateFilePlan(numberOfLanes, labelsPerLane);
-
-  if (products.length === 1) {
-    const onlyProductInList = products[0];
-
-    addProductToMasterGroup(filePlanRequest, masterGroup, onlyProductInList, numberOfLanes);
-
-    masterGroup.frames = computeNumberOfFrames(onlyProductInList, labelsPerFrame);
-
-    addMasterGroupToFilePlan(filePlan, masterGroup);
-
-    return filePlan;
-  }
-
-  const labelQuantityToProducts = groupProductsByLabelQuantity(products);
-
-  const groupOfProductsWithSameLabelQuantity = getGroupOfSizeNHavingSameLabelQuantity(labelQuantityToProducts, numberOfLanes);
-
-  if (groupOfProductsWithSameLabelQuantity) {
-    const oneLane = 1;
-
-    groupOfProductsWithSameLabelQuantity.forEach((product) => {
-      addProductToMasterGroup(filePlanRequest, masterGroup, product, oneLane);
+        return productDeepCopy;
     });
-
-    masterGroup.frames = computeNumberOfFrames(groupOfProductsWithSameLabelQuantity[0], oneLane * labelsPerLane);
-  }
-
-  // const allPotentialMasterGroupDistributions = generateAllPossibleDistributes(numberOfLanes);
-  // const nextLargestMasterGroupDistribution = getNextLargestMasterGroupDistribution(allPotentialMasterGroupDistributions);
-  
-  addMasterGroupToFilePlan(filePlan, masterGroup);
-
-  return filePlan;
 }
+
+function removeUsedProducts(products, productsToRemove) {
+    return products.filter((product) => {
+        return !productsToRemove.some((productToRemove) => {
+            return product.name === productToRemove.name;
+        });
+    });
+}
+
+function checkIfDistributionExists(scaledProducts, distributionsToCheck) {
+    let group;
+    distributionsToCheck.some((distribution) => {
+        let tempMasterGroup = [];
+
+        const minimumNumberOfLanesInDistribution = Math.min(...distribution);
+
+        const groupWasFound = distribution.every((numberOfLanes) => {
+            const matchingProduct = scaledProducts.find((product) => {
+                const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
+
+                return product.scaledLabelQty * minimumNumberOfLanesInDistribution === numberOfLanes && !productWasAlreadySelected;
+            });
+
+            if (matchingProduct) {
+                matchingProduct.numberOfLanes = numberOfLanes;
+                delete matchingProduct.scaledLabelQty;
+                tempMasterGroup.push(matchingProduct);
+             
+                return true;
+            }
+            return false;
+        });
+  
+        if (groupWasFound) {
+            group = tempMasterGroup;
+            return true;
+        }
+    });
+  
+    return group;
+}
+
+function createMasterGroupFromProducts(products, frameSize) {
+  const totalLabelsInMasterGroup = products.reduce((accumulator, product) => {
+    return accumulator + product.labelQuantity;
+  }, 0);
+
+  return {
+    products,
+    frames: Math.ceil(totalLabelsInMasterGroup / frameSize)
+  }
+}
+
+function compareProductNames(productA, productB) {
+  return productA.name.localeCompare(productB.name)
+}
+
+module.exports.buildFilePlan = (filePlanRequest) => {
+    const { numberOfLanes, labelsPerLane } = filePlanRequest;
+    let { products } = filePlanRequest;
+
+    products.sort(compareProductNames);
+
+    let groupSize = numberOfLanes;
+    const frameSize = numberOfLanes * labelsPerLane;
+    const distributions = getDistributions(numberOfLanes);
+    const masterGroups = [];
+
+    while (products.length !== 0) {
+        const distributionsToCheck = distributions[groupSize];
+        let groupOfProducts;
+    
+        products.some((product) => {
+            const scaledProducts = scaleProducts(products, product);
+            groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, products);
+
+            if (!groupOfProducts) {
+              return false;
+            }
+
+            products = removeUsedProducts(products, groupOfProducts);
+
+            return true;
+        });
+    
+        if (groupOfProducts) {
+            const masterGroup = createMasterGroupFromProducts(groupOfProducts, frameSize);
+            masterGroups.push(masterGroup);
+        } else {
+            groupSize = groupSize - 1;
+        }
+      }
+
+    return {
+      masterGroups
+    }
+};

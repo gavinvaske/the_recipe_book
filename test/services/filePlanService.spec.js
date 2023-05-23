@@ -23,9 +23,6 @@ function computeOriginalFrames(products, frameSize) {
     const totalFrames = products.reduce((accumulator, product) => accumulator + Math.ceil(product.labelQuantity / frameSize), 0);
     const extraFrames = ((products.length - 1) * 20) + 25;
 
-    console.log('totalFrames', totalFrames);
-    console.log('extraFrames', extraFrames);
-
     return totalFrames + extraFrames;
 }
 

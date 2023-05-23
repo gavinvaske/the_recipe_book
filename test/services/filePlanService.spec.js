@@ -134,10 +134,12 @@ describe('filePlanService.js', () => {
                     }
                 ]
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
             expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
+            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
         });
 
         it('should return one master groups', () => {
@@ -175,12 +177,14 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 1
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
             expect(actualFilePlan.masterGroups.length).toEqual(1);
             expect(actualFilePlan.masterGroups[0].totalFrames).toEqual(expectedFilePlan.masterGroups[0].totalFrames);
             expect(actualFilePlan.masterGroups[0].products).toIncludeAllMembers(expectedFilePlan.masterGroups[0].products);
+            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
         });
 
         it('should return two master groups', () => {
@@ -223,10 +227,12 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 2
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
             expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
+            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
         });
 
         it('should return many master groups with one product each', () => {
@@ -274,10 +280,12 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 3
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
             expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
+            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
         });
 
         it('should group products if it results in an acceptable number of wasted frames', () => {
@@ -325,10 +333,12 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 1
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
             expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
+            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
         });
 
         it('should create master groups that minimize total number of frames in filePlan even if each master group results in wasted frames', () => {
@@ -390,6 +400,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 2
             };
+            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 

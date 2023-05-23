@@ -105,6 +105,13 @@ function compareProductNames(productA, productB) {
     return productA.name.localeCompare(productB.name);
 }
 
+function computeFramesToCompleteFilePlan(numberOfMasterGroups) {
+    const extraFramesPerMasterGroup = 20;
+    const extraFramesPerFilePlan = 25;
+
+    return ((numberOfMasterGroups - 1) * extraFramesPerMasterGroup) + extraFramesPerFilePlan;
+}
+
 module.exports.buildFilePlan = (filePlanRequest) => {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
     let { products } = filePlanRequest;
@@ -143,6 +150,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
 
     return {
         masterGroups,
-        numberOfMasterGroups: masterGroups.length
+        numberOfMasterGroups: masterGroups.length,
+        totalFrames: computeFramesToCompleteFilePlan(masterGroups.length)
     };
 };

@@ -105,11 +105,13 @@ function compareProductNames(productA, productB) {
     return productA.name.localeCompare(productB.name);
 }
 
-function computeFramesToCompleteFilePlan(numberOfMasterGroups) {
+function computeFramesToCompleteFilePlan(masterGroups) {
     const extraFramesPerMasterGroup = 20;
     const extraFramesPerFilePlan = 25;
+    const extraFrames = ((masterGroups.length - 1) * extraFramesPerMasterGroup) + extraFramesPerFilePlan;
+    const framesRequiredForPrinting = masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.totalFrames, 0)
 
-    return ((numberOfMasterGroups - 1) * extraFramesPerMasterGroup) + extraFramesPerFilePlan;
+    return framesRequiredForPrinting + extraFrames;
 }
 
 module.exports.buildFilePlan = (filePlanRequest) => {
@@ -151,6 +153,6 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     return {
         masterGroups,
         numberOfMasterGroups: masterGroups.length,
-        totalFrames: computeFramesToCompleteFilePlan(masterGroups.length)
+        totalFrames: computeFramesToCompleteFilePlan(masterGroups)
     };
 };

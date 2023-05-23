@@ -12,6 +12,13 @@ function getProductWithRandomAttributes() {
     return filePlanService.buildProduct(productName, labelQuantity);
 }
 
+function computeExpectedFrames(masterGroups) {
+    const totalFrames = masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.totalFrames, 0);
+    const extraFrames = ((masterGroups.length - 1) * 20) + 25;
+    
+    return totalFrames + extraFrames;
+}
+
 describe('filePlanService.js', () => {
     describe('buildProduct', () => {
         it('should return an object with the correct attributes', () => {
@@ -134,7 +141,7 @@ describe('filePlanService.js', () => {
                     }
                 ]
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
@@ -177,7 +184,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 1
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
@@ -227,7 +234,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 2
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
@@ -280,7 +287,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 3
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
@@ -333,7 +340,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 1
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
@@ -400,7 +407,7 @@ describe('filePlanService.js', () => {
                 ],
                 numberOfMasterGroups: 2
             };
-            expectedFilePlan.totalFrames = ((expectedFilePlan.masterGroups.length - 1) * 20) + 25;
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 

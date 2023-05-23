@@ -1,54 +1,54 @@
 function getDistribution(elementsPerDistribution, numberOfLanes) {
-  const group = Array(elementsPerDistribution).fill(1);
-  let startIndex = 0;
-  let endIndex = elementsPerDistribution - 1;
+    const group = Array(elementsPerDistribution).fill(1);
+    let startIndex = 0;
+    let endIndex = elementsPerDistribution - 1;
   
-  const startingValue = numberOfLanes - elementsPerDistribution + 1;
-  group[startIndex] = startingValue;
-  const groups = [];
+    const startingValue = numberOfLanes - elementsPerDistribution + 1;
+    group[startIndex] = startingValue;
+    const groups = [];
 
-  groups.push([...group])
+    groups.push([...group]);
   
-  while (startIndex !== (elementsPerDistribution - 1)) {
-      const startValue = group[startIndex];
+    while (startIndex !== (elementsPerDistribution - 1)) {
+        const startValue = group[startIndex];
       
-      if (startValue === 1) {
-          startIndex = startIndex + 1;
+        if (startValue === 1) {
+            startIndex = startIndex + 1;
 
-          if (startIndex === endIndex) {
-            endIndex = elementsPerDistribution - 1;
-          }
-      } else {
-          group[startIndex] = group[startIndex] - 1;
-          group[endIndex] = group[endIndex] + 1;
-          let nextEndIndex = endIndex - 1
-          if (nextEndIndex === startIndex) {
-              nextEndIndex = elementsPerDistribution - 1;
-          }
-          endIndex = nextEndIndex;
+            if (startIndex === endIndex) {
+                endIndex = elementsPerDistribution - 1;
+            }
+        } else {
+            group[startIndex] = group[startIndex] - 1;
+            group[endIndex] = group[endIndex] + 1;
+            let nextEndIndex = endIndex - 1;
+            if (nextEndIndex === startIndex) {
+                nextEndIndex = elementsPerDistribution - 1;
+            }
+            endIndex = nextEndIndex;
 
-          groups.push([...group])
-      }
-  }
+            groups.push([...group]);
+        }
+    }
   
-  return groups
+    return groups;
 }
 
 function removeDuplicatesFromDistributions(distributions) {
-distributions.forEach((distribution) => distribution.sort())
+    distributions.forEach((distribution) => distribution.sort());
 
-return distributions.filter(( t={}, a=> !(t[a]=a in t) ));
+    return distributions.filter(( t={}, a=> !(t[a]=a in t) ));
 }
 
 module.exports.getDistributions = (numberOfLanes) => {
-  const groupSizeToDistributions = {};
+    const groupSizeToDistributions = {};
 
-  for (let groupSize = 1; groupSize <= numberOfLanes; groupSize++) {
-    const distributionsWithDuplicates = getDistribution(groupSize, numberOfLanes);
-    const distributions = removeDuplicatesFromDistributions(distributionsWithDuplicates)
+    for (let groupSize = 1; groupSize <= numberOfLanes; groupSize++) {
+        const distributionsWithDuplicates = getDistribution(groupSize, numberOfLanes);
+        const distributions = removeDuplicatesFromDistributions(distributionsWithDuplicates);
 
-    groupSizeToDistributions[groupSize] = distributions;
-  }
+        groupSizeToDistributions[groupSize] = distributions;
+    }
 
-  return groupSizeToDistributions;
-}
+    return groupSizeToDistributions;
+};

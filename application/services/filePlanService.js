@@ -88,7 +88,6 @@ function createMasterGroupFromProducts(products, labelsPerLane) {
     let mostFramesRequiredByOneProduct = 0;
 
     products.forEach((product) => {
-    // delete product.scaledLabelQty;
         const framesRequiredForProduct = Math.ceil((product.labelQuantity) / (product.numberOfLanes * labelsPerLane));
 
         if (framesRequiredForProduct > mostFramesRequiredByOneProduct) {
@@ -112,7 +111,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
 
     products.sort(compareProductNames);
 
-    let groupSize = numberOfLanes;
+    let groupSize = products.length < numberOfLanes ? products.length : numberOfLanes;
     const distributions = distributionGeneratorService.getDistributions(numberOfLanes);
     const masterGroups = [];
 

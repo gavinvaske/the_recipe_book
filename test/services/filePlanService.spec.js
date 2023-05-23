@@ -139,7 +139,8 @@ describe('filePlanService.js', () => {
                         ],
                         totalFrames: Math.ceil(products[0].labelQuantity / frameSize)
                     }
-                ]
+                ],
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
@@ -182,7 +183,8 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(productA.labelQuantity / 2 / labelsAround)
                     }
                 ],
-                numberOfMasterGroups: 1
+                numberOfMasterGroups: 1,
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
@@ -232,7 +234,8 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(productC.labelQuantity / 4 / labelsAround)
                     }
                 ],
-                numberOfMasterGroups: 2
+                numberOfMasterGroups: 2,
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
@@ -285,7 +288,8 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(productC.labelQuantity / 4 / labelsAround)
                     }
                 ],
-                numberOfMasterGroups: 3
+                numberOfMasterGroups: 3,
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
@@ -338,7 +342,8 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(productA.labelQuantity / 1 / labelsAround)
                     }
                 ],
-                numberOfMasterGroups: 1
+                numberOfMasterGroups: 1,
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
@@ -405,7 +410,8 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(product6.labelQuantity / 5 / labelsAround)
                     },
                 ],
-                numberOfMasterGroups: 2
+                numberOfMasterGroups: 2,
+                totalProducts: products.length
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 

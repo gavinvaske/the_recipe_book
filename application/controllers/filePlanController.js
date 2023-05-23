@@ -30,9 +30,6 @@ router.post('/', (request, response) => {
   
     const filePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-    console.log(filePlan);
-
-  
     const tabSizeInSpaces = 4;
   
     response.set({'Content-Disposition':`attachment; filename=${filePlanName}.json`});

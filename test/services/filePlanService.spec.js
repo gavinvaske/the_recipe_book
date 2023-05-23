@@ -20,13 +20,13 @@ function computeExpectedFrames(masterGroups) {
 }
 
 function computeOriginalFrames(products, frameSize) {
-  const totalFrames = products.reduce((accumulator, product) => accumulator + Math.ceil(product.labelQuantity / frameSize), 0)
-  const extraFrames = ((products.length - 1) * 20) + 25;
+    const totalFrames = products.reduce((accumulator, product) => accumulator + Math.ceil(product.labelQuantity / frameSize), 0);
+    const extraFrames = ((products.length - 1) * 20) + 25;
 
-  console.log('totalFrames', totalFrames)
-  console.log('extraFrames', extraFrames)
+    console.log('totalFrames', totalFrames);
+    console.log('extraFrames', extraFrames);
 
-  return totalFrames + extraFrames;
+    return totalFrames + extraFrames;
 }
 
 describe('filePlanService.js', () => {
@@ -187,10 +187,10 @@ describe('filePlanService.js', () => {
                                 numberOfLanes: 1
                             },
                             {
-                              name: productA.name,
-                              labelQuantity: productA.labelQuantity,
-                              numberOfLanes: 2
-                          }
+                                name: productA.name,
+                                labelQuantity: productA.labelQuantity,
+                                numberOfLanes: 2
+                            }
                         ],
                         totalFrames: Math.ceil(productA.labelQuantity / 2 / labelsAround)
                     }

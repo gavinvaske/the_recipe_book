@@ -114,6 +114,15 @@ function computeFramesToCompleteFilePlan(masterGroups) {
     return framesRequiredForPrinting + extraFrames;
 }
 
+function computeOriginalFrames(products, frameSize) {
+    const extraFramesPerMasterGroup = 20;
+    const extraFramesPerFilePlan = 25;
+    const extraFrames = ((products.length - 1) * extraFramesPerMasterGroup) + extraFramesPerFilePlan;
+    const framesRequiredForPrinting = products.reduce((accumulator, product) => accumulator + Math.ceil(product.labelQuantity / frameSize), 0);
+
+    return framesRequiredForPrinting + extraFrames;
+}
+
 function computeTotalProducts(masterGroups) {
     return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0);
 }
@@ -121,6 +130,8 @@ function computeTotalProducts(masterGroups) {
 module.exports.buildFilePlan = (filePlanRequest) => {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
     let { products } = filePlanRequest;
+    const frameSize = numberOfLanes * labelsPerLane;
+    const originalFrames = computeOriginalFrames(products, frameSize);
 
     products.sort(compareProductNames);
 
@@ -158,6 +169,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
         masterGroups,
         numberOfMasterGroups: masterGroups.length,
         totalFrames: computeFramesToCompleteFilePlan(masterGroups),
-        totalProducts: computeTotalProducts(masterGroups)
+        totalProducts: computeTotalProducts(masterGroups),
+        originalFrames
     };
 };

@@ -19,6 +19,16 @@ function computeExpectedFrames(masterGroups) {
     return totalFrames + extraFrames;
 }
 
+function computeOriginalFrames(products, frameSize) {
+  const totalFrames = products.reduce((accumulator, product) => accumulator + Math.ceil(product.labelQuantity / frameSize), 0)
+  const extraFrames = ((products.length - 1) * 20) + 25;
+
+  console.log('totalFrames', totalFrames)
+  console.log('extraFrames', extraFrames)
+
+  return totalFrames + extraFrames;
+}
+
 describe('filePlanService.js', () => {
     describe('buildProduct', () => {
         it('should return an object with the correct attributes', () => {
@@ -109,8 +119,7 @@ describe('filePlanService.js', () => {
         let filePlanRequest,
             labelsAcross,
             labelsAround,
-            products,
-            frameSize;
+            products;
 
         beforeEach(() => {
             products = chance.n(getProductWithRandomAttributes, chance.d100());
@@ -126,6 +135,7 @@ describe('filePlanService.js', () => {
 
             products = [getProductWithRandomAttributes()];
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+            const frameSize = labelsAcross * labelsAround;
             
             const expectedFilePlan = {
                 masterGroups: [
@@ -140,14 +150,15 @@ describe('filePlanService.js', () => {
                         totalFrames: Math.ceil(products[0].labelQuantity / frameSize)
                     }
                 ],
-                totalProducts: products.length
+                numberOfMasterGroups: 1,
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-            expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
-            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
+            expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
         it('should return one master groups', () => {
@@ -156,6 +167,7 @@ describe('filePlanService.js', () => {
             const productA = {name: 'product-A', labelQuantity: 4000};
             const productB = {name: 'product-B', labelQuantity: 2000};
             const productC = {name: 'product-C', labelQuantity: 2000};
+            const frameSize = labelsAcross * labelsAround;
 
             products = [productA, productB, productC];
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
@@ -165,11 +177,6 @@ describe('filePlanService.js', () => {
                     {
                         products: [
                             {
-                                name: productA.name,
-                                labelQuantity: productA.labelQuantity,
-                                numberOfLanes: 2
-                            },
-                            {
                                 name: productB.name,
                                 labelQuantity: productB.labelQuantity,
                                 numberOfLanes: 1
@@ -178,22 +185,25 @@ describe('filePlanService.js', () => {
                                 name: productC.name,
                                 labelQuantity: productC.labelQuantity,
                                 numberOfLanes: 1
-                            }
+                            },
+                            {
+                              name: productA.name,
+                              labelQuantity: productA.labelQuantity,
+                              numberOfLanes: 2
+                          }
                         ],
                         totalFrames: Math.ceil(productA.labelQuantity / 2 / labelsAround)
                     }
                 ],
                 numberOfMasterGroups: 1,
-                totalProducts: products.length
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-            expect(actualFilePlan.masterGroups.length).toEqual(1);
-            expect(actualFilePlan.masterGroups[0].totalFrames).toEqual(expectedFilePlan.masterGroups[0].totalFrames);
-            expect(actualFilePlan.masterGroups[0].products).toIncludeAllMembers(expectedFilePlan.masterGroups[0].products);
-            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
+            expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
         it('should return two master groups', () => {
@@ -202,6 +212,7 @@ describe('filePlanService.js', () => {
             const productA = {name: 'product-A', labelQuantity: 8000};
             const productB = {name: 'product-B', labelQuantity: 8000};
             const productC = {name: 'product-C', labelQuantity: 3000};
+            const frameSize = labelsAcross * labelsAround;
 
             products = [productA, productB, productC];
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
@@ -235,14 +246,14 @@ describe('filePlanService.js', () => {
                     }
                 ],
                 numberOfMasterGroups: 2,
-                totalProducts: products.length
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-            expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
-            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
+            expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
         it('should return many master groups with one product each', () => {
@@ -251,6 +262,7 @@ describe('filePlanService.js', () => {
             const productA = {name: 'product-A', labelQuantity: 11030};
             const productB = {name: 'product-B', labelQuantity: 44510};
             const productC = {name: 'product-C', labelQuantity: 75290};
+            const frameSize = labelsAcross * labelsAround;
 
             products = chance.shuffle([productA, productB, productC]);
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
@@ -289,14 +301,14 @@ describe('filePlanService.js', () => {
                     }
                 ],
                 numberOfMasterGroups: 3,
-                totalProducts: products.length
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-            expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
-            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
+            expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
         it('should group products if it results in an acceptable number of wasted frames', () => {
@@ -305,6 +317,7 @@ describe('filePlanService.js', () => {
             const maxAcceptableWastedFrames = 20;
             const numberOfLanesTakenByOneProduct = 1;
             const maxAcceptableWastedLabels = maxAcceptableWastedFrames * labelsAround * numberOfLanesTakenByOneProduct - 1;
+            const frameSize = labelsAcross * labelsAround;
 
             const productA = {name: 'product-A', labelQuantity: (labelQuanity + maxAcceptableWastedLabels)};
             const productB = {name: 'product-B', labelQuantity: labelQuanity};
@@ -343,14 +356,14 @@ describe('filePlanService.js', () => {
                     }
                 ],
                 numberOfMasterGroups: 1,
-                totalProducts: products.length
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 
             const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
 
-            expect(actualFilePlan.masterGroups).toIncludeAllMembers(expectedFilePlan.masterGroups);
-            expect(actualFilePlan.totalFrames).toEqual(expectedFilePlan.totalFrames);
+            expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
         it('should create master groups that minimize total number of frames in filePlan even if each master group results in wasted frames', () => {
@@ -363,6 +376,7 @@ describe('filePlanService.js', () => {
             const product4 = {name: 'product-4', labelQuantity: 600};
             const product5 = {name: 'product-5', labelQuantity: 2400};
             const product6 = {name: 'product-6', labelQuantity: 200};
+            const frameSize = labelsAcross * labelsAround;
 
             products = chance.shuffle([product1, product2, product3, product4, product5, product6]);
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
@@ -411,7 +425,8 @@ describe('filePlanService.js', () => {
                     },
                 ],
                 numberOfMasterGroups: 2,
-                totalProducts: products.length
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
             };
             expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
 

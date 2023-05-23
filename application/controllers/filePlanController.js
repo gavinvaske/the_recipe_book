@@ -19,7 +19,6 @@ router.post('/', (request, response) => {
     const products = [];
 
     productsAsText.split('\n').forEach((spaceSeperatedProductAttributes) => {
-        console.log('spaceSeperatedProductAttributes', spaceSeperatedProductAttributes);
         const [name, labelQuantity] = spaceSeperatedProductAttributes.split(' ');
         const product = filePlanService.buildProduct(name, labelQuantity);
 

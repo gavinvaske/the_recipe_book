@@ -2,12 +2,16 @@
 
 <form action="/file-plan" method="POST">
   <div class="formbuilder-text form-group">
+    <label for="filePlanName" class="formbuilder-text-label">File Plan Name<span class="formbuilder-required">*</span></label>
+    <input type="text" placeholder="Ex: Hy-vee Sandwich Labels" class="form-control" name="filePlanName" access="false" required="required" aria-required="true">
+  </div>
+  <div class="formbuilder-text form-group">
       <label for="labelsAcross" class="formbuilder-text-label">Labels Across<span class="formbuilder-required">*</span></label>
-      <input type="text" placeholder="8" class="form-control" name="labelsAcross" access="false" required="required" aria-required="true">
+      <input type="text" placeholder="Ex: 8" class="form-control" name="labelsAcross" access="false" required="required" aria-required="true">
   </div>
   <div class="formbuilder-text form-group">
       <label for="labelsAround" class="formbuilder-text-label">Labels Around<span class="formbuilder-required">*</span></label>
-      <input type="text" placeholder="12" class="form-control" name="labelsAround" access="false" id="labels-around" required="required" aria-required="true">
+      <input type="text" placeholder="Ex: 12" class="form-control" name="labelsAround" access="false" id="labels-around" required="required" aria-required="true">
   </div>
   <div class="formbuilder-textarea form-group">
       <label for="products" class="formbuilder-textarea-label">Product Attributes</label>

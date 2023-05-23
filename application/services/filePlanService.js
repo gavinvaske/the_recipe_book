@@ -3,11 +3,11 @@ const distributionGeneratorService = require('./distributionGeneratorService');
 module.exports.buildProduct = (name, labelQuantity) => {
     if (!name) throw Error('The product\'s \'name\' must be defined');
 
-    if (!labelQuantity || labelQuantity <= 0) throw Error(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
+    if (!labelQuantity || isNaN(labelQuantity) || labelQuantity <= 0) throw Error(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
 
     return {
         name,
-        labelQuantity
+        labelQuantity: Number(labelQuantity)
     };
 };
 
@@ -114,6 +114,10 @@ function computeFramesToCompleteFilePlan(masterGroups) {
     return framesRequiredForPrinting + extraFrames;
 }
 
+function computeTotalProducts(masterGroups) {
+    return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0)
+}
+
 module.exports.buildFilePlan = (filePlanRequest) => {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
     let { products } = filePlanRequest;
@@ -153,6 +157,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     return {
         masterGroups,
         numberOfMasterGroups: masterGroups.length,
-        totalFrames: computeFramesToCompleteFilePlan(masterGroups)
+        totalFrames: computeFramesToCompleteFilePlan(masterGroups),
+        totalProducts: computeTotalProducts(masterGroups)
     };
 };

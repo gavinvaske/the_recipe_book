@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
+const filePlanService = require('../services/filePlanService');
 
 router.use(verifyJwtToken);
 
@@ -13,10 +14,29 @@ router.get('/', (request, response) => {
 
 router.post('/', (request, response) => {
   console.log('request.body', request.body);
+  const { filePlanName, products : productsAsText, labelsAcross, labelsAround } = request.body;
+  
+  const products = [];
 
-  return response.render('createFilePlan', {
-    'placeholder': PRODUCTS_PLACEHOLDER
+  productsAsText.split('\n').forEach((spaceSeperatedProductAttributes) => {
+    console.log('spaceSeperatedProductAttributes', spaceSeperatedProductAttributes)
+    const [name, labelQuantity] = spaceSeperatedProductAttributes.split(' ');
+    const product = filePlanService.buildProduct(name, labelQuantity)
+
+    products.push(product);
   });
+  
+  const filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+  
+  const filePlan = filePlanService.buildFilePlan(filePlanRequest);
+
+  console.log(filePlan);
+
+  
+  const tabSizeInSpaces = 4;
+  
+  response.set({"Content-Disposition":`attachment; filename=${filePlanName}.json`});
+  response.send(JSON.stringify(filePlan, null, tabSizeInSpaces));
 });
 
 module.exports = router;

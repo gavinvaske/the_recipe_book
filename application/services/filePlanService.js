@@ -109,13 +109,13 @@ function computeFramesToCompleteFilePlan(masterGroups) {
     const extraFramesPerMasterGroup = 20;
     const extraFramesPerFilePlan = 25;
     const extraFrames = ((masterGroups.length - 1) * extraFramesPerMasterGroup) + extraFramesPerFilePlan;
-    const framesRequiredForPrinting = masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.totalFrames, 0)
+    const framesRequiredForPrinting = masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.totalFrames, 0);
 
     return framesRequiredForPrinting + extraFrames;
 }
 
 function computeTotalProducts(masterGroups) {
-    return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0)
+    return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0);
 }
 
 module.exports.buildFilePlan = (filePlanRequest) => {

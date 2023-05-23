@@ -1,3 +1,5 @@
+const distributionGeneratorService = require('./distributionGeneratorService');
+
 module.exports.buildProduct = (name, labelQuantity) => {
     if (!name) throw Error('The product\'s \'name\' must be defined');
 
@@ -23,67 +25,18 @@ module.exports.buildFilePlanRequest = (products, labelsAcross, labelsAround) => 
     };
 };
 
-/* 
-  [
-    {
-      'masterGroups': [
-        {
-          products: [
-            {id: 'product-a', numberOfLanes: 1},
-            {id: 'product-b', numberOfLanes: 1},
-            {id: 'product-c', numberOfLanes: 2}
-          ],
-          labelsPerLane: 2,
-          totalLanes: 4,
-          frames: 625
-        },
-      ]
-    }
-  ]
 
-*/
-
-/* Data Modelings for: 'Master Group'
-  {
-    products: [
-      {id: 'product-a', numberOfLanes: 1}
-      {id: 'product-b', numberOfLanes: 1}
-      {id: 'product-c', numberOfLanes: 2}
-    ],
-    labelsPerLane: 2,
-    totalLanes: 4,
-    frames: 625
-  }
-*/
-
-/* Data Modelings for: 'FilePlanCandidate'
-  {
-    masterGroups: [MasterGroup1, MasterGroup2],
-    totalFrames: 123  # TODO: This attribute can technically be calculated on the fly? TBD?
-  }
-*/
-
-/* Data Modelings for: 'FilePlanCandidates'
-  [
-    FilePlanCandidate1,
-    FilePlanCandidate2,
-    ...
-    FilePlanCandidateN
-  ]
-*/
-
-// https://www.geeksforgeeks.org/ways-to-sum-to-n-using-natural-numbers-up-to-k-with-repetitions-allowed/
 function getDistributions(numberOfLanes) {
-  if (numberOfLanes !== 4) {
-    throw new Error('Code is only setup to handle frames with 4 labels across')
-  }
+    if (numberOfLanes !== 4) {
+        throw new Error('Code is only setup to handle frames with 4 labels across');
+    }
 
-  return {
-    4: [[1, 1, 1, 1]],
-    3: [[1, 1, 2]],
-    2: [[2, 2]],
-    1: [[4]]
-};
+    return {
+        1: [[4]],
+        2: [[2, 2], [1, 3]],
+        3: [[1, 1, 2]],
+        4: [[1, 1, 1, 1]],
+    };
 }
 
 function scaleProducts(products, productToScaleBy) {
@@ -104,7 +57,7 @@ function removeUsedProducts(products, productsToRemove) {
     });
 }
 
-function checkIfDistributionExists(scaledProducts, distributionsToCheck) {
+function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane) {
     let group;
     distributionsToCheck.some((distribution) => {
         let tempMasterGroup = [];
@@ -115,12 +68,14 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck) {
             const matchingProduct = scaledProducts.find((product) => {
                 const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
 
-                return product.scaledLabelQty * minimumNumberOfLanesInDistribution === numberOfLanes && !productWasAlreadySelected;
+                const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes)
+                const wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution))
+  
+                return wastedFrames <= 20 && !productWasAlreadySelected
             });
 
             if (matchingProduct) {
                 matchingProduct.numberOfLanes = numberOfLanes;
-                delete matchingProduct.scaledLabelQty;
                 tempMasterGroup.push(matchingProduct);
              
                 return true;
@@ -137,20 +92,28 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck) {
     return group;
 }
 
-function createMasterGroupFromProducts(products, frameSize) {
-  const totalLabelsInMasterGroup = products.reduce((accumulator, product) => {
-    return accumulator + product.labelQuantity;
-  }, 0);
+function createMasterGroupFromProducts(products, labelsPerLane) {
+  let mostFramesRequiredByOneProduct = 0;
 
-  return {
-    products,
-    frames: Math.ceil(totalLabelsInMasterGroup / frameSize)
-  }
+  products.forEach((product) => {
+    delete product.scaledLabelQty;
+    const framesRequiredForProduct = Math.ceil((product.labelQuantity) / (product.numberOfLanes * labelsPerLane));
+
+    if (framesRequiredForProduct > mostFramesRequiredByOneProduct) {
+      mostFramesRequiredByOneProduct = framesRequiredForProduct
+    }
+  })
+
+    return {
+        products,
+        totalFrames: mostFramesRequiredByOneProduct
+    };
 }
 
 function compareProductNames(productA, productB) {
-  return productA.name.localeCompare(productB.name)
+    return productA.name.localeCompare(productB.name);
 }
+// distributions() => '{"1":[[4]],"2":[[2,2],[1,3]],"3":[[1,1,2]],"4":[[1,1,1,1]]}'
 
 module.exports.buildFilePlan = (filePlanRequest) => {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
@@ -159,8 +122,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     products.sort(compareProductNames);
 
     let groupSize = numberOfLanes;
-    const frameSize = numberOfLanes * labelsPerLane;
-    const distributions = getDistributions(numberOfLanes);
+    const distributions = distributionGeneratorService.getDistributions(numberOfLanes);
     const masterGroups = [];
 
     while (products.length !== 0) {
@@ -169,10 +131,10 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     
         products.some((product) => {
             const scaledProducts = scaleProducts(products, product);
-            groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, products);
+            groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, product, labelsPerLane);
 
             if (!groupOfProducts) {
-              return false;
+                return false;
             }
 
             products = removeUsedProducts(products, groupOfProducts);
@@ -181,14 +143,14 @@ module.exports.buildFilePlan = (filePlanRequest) => {
         });
     
         if (groupOfProducts) {
-            const masterGroup = createMasterGroupFromProducts(groupOfProducts, frameSize);
+            const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
             masterGroups.push(masterGroup);
         } else {
             groupSize = groupSize - 1;
         }
-      }
+    }
 
     return {
-      masterGroups
-    }
+        masterGroups
+    };
 };

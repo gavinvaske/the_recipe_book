@@ -158,8 +158,95 @@ describe('filePlanService.js', () => {
             expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
-        it('should return one master groups', () => {
+          it('should return one master groups with 3 products instead of splitting into two master groups', () => {
+            labelsAcross = 10;
+            labelsAround = 5;
+
+            const productA = {name: 'product-A', labelQuantity: 4000};
+            const productB = {name: 'product-B', labelQuantity: 3500};
+            const productC = {name: 'product-C', labelQuantity: 100};
+            const frameSize = labelsAcross * labelsAround;
+
+            products = [productA, productB, productC];
+            filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+
+            const expectedFilePlan = {
+                masterGroups: [
+                    {
+                        products: [
+                            {
+                                name: productA.name,
+                                labelQuantity: productA.labelQuantity,
+                                numberOfLanes: 5
+                            },
+                            {
+                                name: productB.name,
+                                labelQuantity: productB.labelQuantity,
+                                numberOfLanes: 4
+                            },
+                            {
+                              name: productC.name,
+                              labelQuantity: productC.labelQuantity,
+                              numberOfLanes: 1
+                          },
+                        ],
+                        totalFrames: Math.ceil(productB.labelQuantity / 4 / labelsAround)
+                    }
+                ],
+                numberOfMasterGroups: 1,
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
+            };
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
+
+            const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
+
+            expect(actualFilePlan).toEqual(expectedFilePlan);
+        });
+
+        it('should return one master groups instead of splitting into two master groups', () => {
             labelsAcross = 4;
+            labelsAround = 5;
+
+            const productA = {name: 'product-A', labelQuantity: 4000};
+            const productB = {name: 'product-B', labelQuantity: 1000};
+            const frameSize = labelsAcross * labelsAround;
+
+            products = [productA, productB];
+            filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+
+            const expectedFilePlan = {
+                masterGroups: [
+                    {
+                        products: [
+                            {
+                                name: productB.name,
+                                labelQuantity: productB.labelQuantity,
+                                numberOfLanes: 1
+                            },
+                            {
+                                name: productA.name,
+                                labelQuantity: productA.labelQuantity,
+                                numberOfLanes: 3
+                            }
+                        ],
+                        totalFrames: Math.ceil(productA.labelQuantity / 3 / labelsAround)
+                    }
+                ],
+                numberOfMasterGroups: 1,
+                totalProducts: products.length,
+                originalFrames: computeOriginalFrames(products, frameSize)
+            };
+            expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
+
+            const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
+
+            expect(actualFilePlan).toEqual(expectedFilePlan);
+        });
+
+        it('should return one master group if it saves more labels than splitting them apart', () => {
+            labelsAcross = 4;
+            labelsAround = 75;
 
             const productA = {name: 'product-A', labelQuantity: 4000};
             const productB = {name: 'product-B', labelQuantity: 2000};
@@ -205,6 +292,7 @@ describe('filePlanService.js', () => {
 
         it('should return two master groups', () => {
             labelsAcross = 4;
+            labelsAround = 5
 
             const productA = {name: 'product-A', labelQuantity: 8000};
             const productB = {name: 'product-B', labelQuantity: 8000};
@@ -255,6 +343,7 @@ describe('filePlanService.js', () => {
 
         it('should return many master groups with one product each', () => {
             labelsAcross = 4;
+            labelsAround = 8;
 
             const productA = {name: 'product-A', labelQuantity: 11030};
             const productB = {name: 'product-B', labelQuantity: 44510};

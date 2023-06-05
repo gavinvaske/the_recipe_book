@@ -1,5 +1,4 @@
 const distributionGeneratorService = require('./distributionGeneratorService');
-const chance = require('chance').Chance();
 
 module.exports.buildProduct = (name, labelQuantity) => {
     if (!name) throw Error('The product\'s \'name\' must be defined');
@@ -45,66 +44,66 @@ function removeUsedProducts(products, productsToRemove) {
 }
 
 function isMasterGroupValid(masterGroup) {
-  const wastedFramesPerExtraMasterGroup = 20;
+    const wastedFramesPerExtraMasterGroup = 20;
 
-  return masterGroup.products.every((product) => {
-    const labelsPerFrame = masterGroup.labelsAcross * masterGroup.labelsAround;
-    const labelsToPrintThisProductByItself = Math.ceil(product.labelQuantity / labelsPerFrame);
+    return masterGroup.products.every((product) => {
+        const labelsPerFrame = masterGroup.labelsAcross * masterGroup.labelsAround;
+        const labelsToPrintThisProductByItself = Math.ceil(product.labelQuantity / labelsPerFrame);
     
-    const isItEfficientToKeepThisProductInThisMasterGroup = product.wastedFrames <= labelsToPrintThisProductByItself + wastedFramesPerExtraMasterGroup;
+        const isItEfficientToKeepThisProductInThisMasterGroup = product.wastedFrames <= labelsToPrintThisProductByItself + wastedFramesPerExtraMasterGroup;
 
-    return isItEfficientToKeepThisProductInThisMasterGroup ? true : false;
-  })
+        return isItEfficientToKeepThisProductInThisMasterGroup ? true : false;
+    });
 }
 
-function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane, frames) {
+function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane) {
     let group;
     const masterGroupCandidates = [];
     let acceptableWastedFramesSlidingWindow = 0;
     let maxNumberOfIterations = 500;
 
     while (acceptableWastedFramesSlidingWindow < maxNumberOfIterations && masterGroupCandidates.length === 0) {
-      distributionsToCheck.some((distribution) => {
-          let tempMasterGroup = [];
+        distributionsToCheck.some((distribution) => {
+            let tempMasterGroup = [];
 
-          const minimumNumberOfLanesInDistribution = Math.min(...distribution);
+            const minimumNumberOfLanesInDistribution = Math.min(...distribution);
 
-          const groupWasFound = distribution.every((numberOfLanes) => {
-              let wastedFrames;
+            const groupWasFound = distribution.every((numberOfLanes) => {
+                let wastedFrames;
 
-              const matchingProduct = scaledProducts.find((product) => {
-                  const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
+                const matchingProduct = scaledProducts.find((product) => {
+                    const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
 
-                  const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
-                  wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
+                    const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
+                    wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
     
-                  return wastedFrames <= acceptableWastedFramesSlidingWindow && !productWasAlreadySelected;
-              });
+                    return wastedFrames <= acceptableWastedFramesSlidingWindow && !productWasAlreadySelected;
+                });
 
-              if (matchingProduct) {
-                  const matchingProductDeepCopy = JSON.parse(JSON.stringify(matchingProduct));
-                  matchingProductDeepCopy.numberOfLanes = numberOfLanes;
-                  matchingProductDeepCopy.wastedFrames = wastedFrames;
-                  tempMasterGroup.push(matchingProductDeepCopy);
+                if (matchingProduct) {
+                    const matchingProductDeepCopy = JSON.parse(JSON.stringify(matchingProduct));
+                    matchingProductDeepCopy.numberOfLanes = numberOfLanes;
+                    matchingProductDeepCopy.wastedFrames = wastedFrames;
+                    tempMasterGroup.push(matchingProductDeepCopy);
               
-                  return true;
-              }
-              return false;
-          });
+                    return true;
+                }
+                return false;
+            });
 
-          if (!groupWasFound) {
-            return false;
-          }
+            if (!groupWasFound) {
+                return false;
+            }
 
-          group = tempMasterGroup;
-          const masterGroup = createMasterGroupFromProducts(group, labelsPerLane);
+            group = tempMasterGroup;
+            const masterGroup = createMasterGroupFromProducts(group, labelsPerLane);
 
-          if (isMasterGroupValid(masterGroup)) {
-            masterGroupCandidates.push(masterGroup)
-            return true;
-          }
-      });
-      acceptableWastedFramesSlidingWindow = acceptableWastedFramesSlidingWindow + 1;
+            if (isMasterGroupValid(masterGroup)) {
+                masterGroupCandidates.push(masterGroup);
+                return true;
+            }
+        });
+        acceptableWastedFramesSlidingWindow = acceptableWastedFramesSlidingWindow + 1;
     }
 
     masterGroupCandidates.sort((a, b) => a.totalFrames - b.totalFrames);
@@ -190,8 +189,8 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     
         if (groupOfProducts) {
             groupOfProducts.forEach((product) => {
-              delete product.scaledLabelQty;
-              delete product.wastedFrames;
+                delete product.scaledLabelQty;
+                delete product.wastedFrames;
             });
             const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
             masterGroups.push(masterGroup);

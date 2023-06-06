@@ -138,6 +138,8 @@ describe('filePlanService.js', () => {
                 masterGroups: [
                     {
                         labelsAcross,
+                        labelsAround,
+                        originalFrames: computeOriginalFrames([products[0]], frameSize),
                         products: [
                             {
                                 name: products[0].name,
@@ -175,6 +177,8 @@ describe('filePlanService.js', () => {
                 masterGroups: [
                     {
                         labelsAcross,
+                        labelsAround,
+                        originalFrames: computeOriginalFrames([productC, productB, productA], frameSize),
                         products: [
                             {
                                 name: productC.name,
@@ -206,6 +210,49 @@ describe('filePlanService.js', () => {
             expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
+        it('should group products even if large number of wasted frames, if it means saving frames overall', () => {
+          labelsAcross = 10;
+          labelsAround = 5;
+
+          const productA = { name: 'product-A', labelQuantity: 10000 };
+          const productB = { name: 'product-B', labelQuantity: 15 };
+          const frameSize = labelsAcross * labelsAround;
+
+          products = [productA, productB];
+          filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+
+          const expectedFilePlan = {
+              masterGroups: [
+                  {
+                      labelsAcross,
+                      labelsAround,
+                      originalFrames: computeOriginalFrames([productB, productA], frameSize),
+                      products: [
+                          {
+                              name: productB.name,
+                              labelQuantity: productB.labelQuantity,
+                              numberOfLanes: 1
+                          },
+                          {
+                              name: productA.name,
+                              labelQuantity: productA.labelQuantity,
+                              numberOfLanes: 9
+                          }
+                      ],
+                      totalFrames: Math.ceil(productA.labelQuantity / 9 / labelsAround)
+                  }
+              ],
+              numberOfMasterGroups: 1,
+              totalProducts: products.length,
+              originalFrames: computeOriginalFrames(products, frameSize)
+          };
+          expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
+
+          const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
+
+          expect(actualFilePlan).toEqual(expectedFilePlan);
+      });
+
         it('should return one master groups instead of splitting into two master groups', () => {
             labelsAcross = 4;
             labelsAround = 5;
@@ -221,6 +268,8 @@ describe('filePlanService.js', () => {
                 masterGroups: [
                     {
                         labelsAcross,
+                        labelsAround,
+                        originalFrames: computeOriginalFrames([productB, productA], frameSize),
                         products: [
                             {
                                 name: productB.name,
@@ -247,6 +296,65 @@ describe('filePlanService.js', () => {
             expect(actualFilePlan).toEqual(expectedFilePlan);
         });
 
+        it('should always group together products that result in the fewest number of wasted frames', () => {
+          labelsAcross = 2;
+          
+          const oneExtraFrame = labelsAcross * labelsAround * 1;
+          const twoExtraFrame = labelsAcross * labelsAround * 2;
+
+          const productA = { name: 'product-A', labelQuantity: 4000 };
+          const productB = { name: 'product-B', labelQuantity: 4000 + oneExtraFrame };
+          const productC = { name: 'product-C', labelQuantity: 4000 + twoExtraFrame };
+          const frameSize = labelsAcross * labelsAround;
+
+          products = chance.shuffle([productA, productB, productC]);
+          filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
+
+          const expectedFilePlan = {
+              masterGroups: [
+                  {
+                      labelsAcross,
+                      labelsAround,
+                      originalFrames: computeOriginalFrames([productA, productB], frameSize),
+                      products: [
+                          {
+                              name: productA.name,
+                              labelQuantity: productA.labelQuantity,
+                              numberOfLanes: 1
+                          },
+                          {
+                              name: productB.name,
+                              labelQuantity: productB.labelQuantity,
+                              numberOfLanes: 1
+                          }
+                      ],
+                      totalFrames: Math.ceil(productB.labelQuantity / 1 / labelsAround)
+                  },
+                  {
+                    labelsAcross,
+                    labelsAround,
+                    originalFrames: computeOriginalFrames([productC], frameSize),
+                    products: [
+                        {
+                            name: productC.name,
+                            labelQuantity: productC.labelQuantity,
+                            numberOfLanes: 2
+                        }
+                    ],
+                    totalFrames: Math.ceil(productC.labelQuantity / 2 / labelsAround)
+                }
+              ],
+              numberOfMasterGroups: 2,
+              totalProducts: products.length,
+              originalFrames: computeOriginalFrames(products, frameSize)
+          };
+          expectedFilePlan.totalFrames = computeExpectedFrames(expectedFilePlan.masterGroups);
+
+          const actualFilePlan = filePlanService.buildFilePlan(filePlanRequest);
+
+          expect(actualFilePlan).toEqual(expectedFilePlan);
+      });
+
         it('should return one master group if it saves more labels than splitting them apart', () => {
             labelsAcross = 4;
             labelsAround = 75;
@@ -264,6 +372,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productB, productC, productA], frameSize),
                         products: [
                             {
                                 name: productB.name,
@@ -312,6 +421,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productA, productB], frameSize),
                         products: [
                             {
                                 name: productA.name,
@@ -329,6 +439,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productC], frameSize),
                         products: [
                             {
                                 name: productC.name,
@@ -367,6 +478,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productA], frameSize),
                         products: [
                             {
                                 name: productA.name,
@@ -379,6 +491,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productB], frameSize),
                         products: [
                             {
                                 name: productB.name,
@@ -391,6 +504,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productC], frameSize),
                         products: [
                             {
                                 name: productC.name,
@@ -433,6 +547,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([productA, productB, productC, productD], frameSize),
                         products: [
                             {
                                 name: productA.name,
@@ -489,6 +604,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([product1, product4, product2, product5], frameSize),
                         products: [
                             {
                                 name: product1.name,
@@ -516,6 +632,7 @@ describe('filePlanService.js', () => {
                     {
                         labelsAcross,
                         labelsAround,
+                        originalFrames: computeOriginalFrames([product3, product6], frameSize),
                         products: [
                             {
                                 name: product3.name,

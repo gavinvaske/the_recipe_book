@@ -44,7 +44,7 @@ function removeUsedProducts(products, productsToRemove) {
 }
 
 function isMasterGroupValid(masterGroup) {
-  return masterGroup.totalFrames < masterGroup.originalFrames;
+    return masterGroup.totalFrames < masterGroup.originalFrames;
 }
 
 function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane) {
@@ -67,7 +67,7 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
 
                     const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
                     wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
-    
+
                     return wastedFrames <= acceptableWastedFramesSlidingWindow && !productWasAlreadySelected;
                 });
 
@@ -76,7 +76,7 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
                     matchingProductDeepCopy.numberOfLanes = numberOfLanes;
                     matchingProductDeepCopy.wastedFrames = wastedFrames;
                     tempMasterGroup.push(matchingProductDeepCopy);
-              
+
                     return true;
                 }
                 return false;
@@ -91,14 +91,13 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
 
             if (isMasterGroupValid(masterGroup)) {
                 masterGroupCandidates.push(masterGroup);
-                return true;
             }
         });
         acceptableWastedFramesSlidingWindow = acceptableWastedFramesSlidingWindow + 1;
     }
 
     masterGroupCandidates.sort((a, b) => a.totalFrames - b.totalFrames);
-  
+
     return masterGroupCandidates.length > 0 ? masterGroupCandidates[0].products : undefined;
 }
 
@@ -165,10 +164,11 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     const masterGroups = [];
 
     while (products.length !== 0) {
-        const distributionsToCheck = distributions[groupSize];
         let groupOfProducts;
-    
-        products.some((product) => {
+        const distributionsToCheck = distributions[groupSize];
+        const masterGroupCandidatesForDistribution = [];
+
+        products.forEach((product) => {
             const scaledProducts = scaleProducts(products, product);
             groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, product, labelsPerLane);
 
@@ -176,18 +176,22 @@ module.exports.buildFilePlan = (filePlanRequest) => {
                 return false;
             }
 
-            products = removeUsedProducts(products, groupOfProducts);
-
-            return true;
+            const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
+            masterGroupCandidatesForDistribution.push(masterGroup);
         });
-    
-        if (groupOfProducts) {
-            groupOfProducts.forEach((product) => {
+
+        if (masterGroupCandidatesForDistribution.length > 0) {
+            masterGroupCandidatesForDistribution.sort((a, b) => a.totalFrames - b.totalFrames);
+            const masterGroup = masterGroupCandidatesForDistribution[0];
+
+            masterGroup.products.forEach((product) => {
                 delete product.scaledLabelQty;
                 delete product.wastedFrames;
             });
-            const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
+
             masterGroups.push(masterGroup);
+
+            products = removeUsedProducts(products, masterGroup.products);
         } else {
             groupSize = groupSize - 1;
         }

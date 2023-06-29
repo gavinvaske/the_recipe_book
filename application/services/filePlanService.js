@@ -43,61 +43,85 @@ function removeUsedProducts(products, productsToRemove) {
     });
 }
 
+function isMasterGroupValid(masterGroup) {
+    return masterGroup.totalFrames < masterGroup.originalFrames;
+}
+
 function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane) {
     let group;
     const masterGroupCandidates = [];
+    let acceptableWastedFramesSlidingWindow = 0;
+    let maxNumberOfIterations = 500;
 
-    distributionsToCheck.some((distribution) => {
-        let tempMasterGroup = [];
+    while (acceptableWastedFramesSlidingWindow < maxNumberOfIterations) {
+        distributionsToCheck.some((distribution) => {
+            let tempMasterGroup = [];
 
-        const minimumNumberOfLanesInDistribution = Math.min(...distribution);
+            const minimumNumberOfLanesInDistribution = Math.min(...distribution);
 
-        const groupWasFound = distribution.every((numberOfLanes) => {
-            const matchingProduct = scaledProducts.find((product) => {
-                const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
+            const groupWasFound = distribution.every((numberOfLanes) => {
+                let wastedFrames;
 
-                const acceptableNumberOfWastedFrames = 20;
-                const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
-                const wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
-  
-                return wastedFrames <= acceptableNumberOfWastedFrames && !productWasAlreadySelected;
+                const matchingProduct = scaledProducts.find((product) => {
+                    const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
+
+                    const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
+                    wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
+
+                    return wastedFrames <= acceptableWastedFramesSlidingWindow && !productWasAlreadySelected;
+                });
+
+                if (matchingProduct) {
+                    const matchingProductDeepCopy = JSON.parse(JSON.stringify(matchingProduct));
+                    matchingProductDeepCopy.numberOfLanes = numberOfLanes;
+                    matchingProductDeepCopy.wastedFrames = wastedFrames;
+                    tempMasterGroup.push(matchingProductDeepCopy);
+
+                    return true;
+                }
+                return false;
             });
 
-            if (matchingProduct) {
-                const matchingProductDeepCopy = JSON.parse(JSON.stringify(matchingProduct));
-                matchingProductDeepCopy.numberOfLanes = numberOfLanes;
-                tempMasterGroup.push(matchingProductDeepCopy);
-             
-                return true;
+            if (!groupWasFound) {
+                return false;
             }
-            return false;
-        });
-  
-        if (groupWasFound) {
+
             group = tempMasterGroup;
-            masterGroupCandidates.push(createMasterGroupFromProducts(group, labelsPerLane));
-        }
-    });
+            const masterGroup = createMasterGroupFromProducts(group, labelsPerLane);
+
+            if (isMasterGroupValid(masterGroup)) {
+                masterGroupCandidates.push(masterGroup);
+            }
+        });
+        acceptableWastedFramesSlidingWindow = acceptableWastedFramesSlidingWindow + 1;
+    }
 
     masterGroupCandidates.sort((a, b) => a.totalFrames - b.totalFrames);
-  
+
     return masterGroupCandidates.length > 0 ? masterGroupCandidates[0].products : undefined;
 }
 
 function createMasterGroupFromProducts(products, labelsPerLane) {
     let mostFramesRequiredByOneProduct = 0;
+    let numberOfLanes = 0;
 
     products.forEach((product) => {
         const framesRequiredForProduct = Math.ceil((product.labelQuantity) / (product.numberOfLanes * labelsPerLane));
+        numberOfLanes = numberOfLanes + product.numberOfLanes;
 
         if (framesRequiredForProduct > mostFramesRequiredByOneProduct) {
             mostFramesRequiredByOneProduct = framesRequiredForProduct;
         }
     });
 
+    const labelsPerFrame = labelsPerLane * numberOfLanes;
+
     return {
         products,
-        totalFrames: mostFramesRequiredByOneProduct
+        totalFrames: mostFramesRequiredByOneProduct,
+        labelsAcross: numberOfLanes,
+        labelsAround: labelsPerLane,
+        originalFrames: computeOriginalFrames(products, labelsPerFrame)
     };
 }
 
@@ -140,10 +164,11 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     const masterGroups = [];
 
     while (products.length !== 0) {
-        const distributionsToCheck = distributions[groupSize];
         let groupOfProducts;
-    
-        products.some((product) => {
+        const distributionsToCheck = distributions[groupSize];
+        const masterGroupCandidatesForDistribution = [];
+
+        products.forEach((product) => {
             const scaledProducts = scaleProducts(products, product);
             groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, product, labelsPerLane);
 
@@ -151,15 +176,22 @@ module.exports.buildFilePlan = (filePlanRequest) => {
                 return false;
             }
 
-            products = removeUsedProducts(products, groupOfProducts);
-
-            return true;
-        });
-    
-        if (groupOfProducts) {
-            groupOfProducts.forEach((product) => delete product.scaledLabelQty);
             const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
+            masterGroupCandidatesForDistribution.push(masterGroup);
+        });
+
+        if (masterGroupCandidatesForDistribution.length > 0) {
+            masterGroupCandidatesForDistribution.sort((a, b) => a.totalFrames - b.totalFrames);
+            const masterGroup = masterGroupCandidatesForDistribution[0];
+
+            masterGroup.products.forEach((product) => {
+                delete product.scaledLabelQty;
+                delete product.wastedFrames;
+            });
+
             masterGroups.push(masterGroup);
+
+            products = removeUsedProducts(products, masterGroup.products);
         } else {
             groupSize = groupSize - 1;
         }

@@ -44,16 +44,7 @@ function removeUsedProducts(products, productsToRemove) {
 }
 
 function isMasterGroupValid(masterGroup) {
-    const wastedFramesPerExtraMasterGroup = 20;
-
-    return masterGroup.products.every((product) => {
-        const labelsPerFrame = masterGroup.labelsAcross * masterGroup.labelsAround;
-        const labelsToPrintThisProductByItself = Math.ceil(product.labelQuantity / labelsPerFrame);
-    
-        const isItEfficientToKeepThisProductInThisMasterGroup = product.wastedFrames <= labelsToPrintThisProductByItself + wastedFramesPerExtraMasterGroup;
-
-        return isItEfficientToKeepThisProductInThisMasterGroup ? true : false;
-    });
+  return masterGroup.totalFrames < masterGroup.originalFrames;
 }
 
 function checkIfDistributionExists(scaledProducts, distributionsToCheck, productToScaleBy, labelsPerLane) {
@@ -62,7 +53,7 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
     let acceptableWastedFramesSlidingWindow = 0;
     let maxNumberOfIterations = 500;
 
-    while (acceptableWastedFramesSlidingWindow < maxNumberOfIterations && masterGroupCandidates.length === 0) {
+    while (acceptableWastedFramesSlidingWindow < maxNumberOfIterations) {
         distributionsToCheck.some((distribution) => {
             let tempMasterGroup = [];
 
@@ -113,22 +104,25 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
 
 function createMasterGroupFromProducts(products, labelsPerLane) {
     let mostFramesRequiredByOneProduct = 0;
-    let labelsAcross = 0;
+    let numberOfLanes = 0;
 
     products.forEach((product) => {
         const framesRequiredForProduct = Math.ceil((product.labelQuantity) / (product.numberOfLanes * labelsPerLane));
-        labelsAcross = labelsAcross + product.numberOfLanes;
+        numberOfLanes = numberOfLanes + product.numberOfLanes;
 
         if (framesRequiredForProduct > mostFramesRequiredByOneProduct) {
             mostFramesRequiredByOneProduct = framesRequiredForProduct;
         }
     });
 
+    const labelsPerFrame = labelsPerLane * numberOfLanes;
+
     return {
         products,
         totalFrames: mostFramesRequiredByOneProduct,
-        labelsAcross,
-        labelsAround: labelsPerLane
+        labelsAcross: numberOfLanes,
+        labelsAround: labelsPerLane,
+        originalFrames: computeOriginalFrames(products, labelsPerFrame)
     };
 }
 

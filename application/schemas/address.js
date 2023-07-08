@@ -8,7 +8,7 @@ function validateZipCode(zipCode) {
     return ZIP_CODE_REGEX.test(zipCode);
 }
 
-const schema = new Schema({
+const addressSchema = new Schema({
     name: {
         type: String,
         required: true, 
@@ -40,6 +40,4 @@ const schema = new Schema({
     },
 }, { timestamps: true });
 
-const Address = mongoose.model('Address', schema);
-
-module.exports = Address;
+module.exports = addressSchema;

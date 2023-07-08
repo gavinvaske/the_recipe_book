@@ -65,10 +65,12 @@ function checkIfDistributionExists(scaledProducts, distributionsToCheck, product
                 const matchingProduct = scaledProducts.find((product) => {
                     const productWasAlreadySelected = tempMasterGroup.find((product2) => product2.name === product.name);
 
+                    if (productWasAlreadySelected) return false;
+                    
                     const extraFramesScalar = Math.abs(product.scaledLabelQty * minimumNumberOfLanesInDistribution - numberOfLanes);
                     wastedFrames = Math.ceil((extraFramesScalar * productToScaleBy.labelQuantity) / (numberOfLanes * labelsPerLane * minimumNumberOfLanesInDistribution));
 
-                    return wastedFrames <= acceptableWastedFramesSlidingWindow && !productWasAlreadySelected;
+                    return wastedFrames <= acceptableWastedFramesSlidingWindow;
                 });
 
                 if (matchingProduct) {
@@ -151,6 +153,13 @@ function computeTotalProducts(masterGroups) {
     return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0);
 }
 
+function findProductWithSmallestLabelQty(products) {
+  const productsDeepCopy = JSON.parse(JSON.stringify(products));
+  productsDeepCopy.sort((a, b) => a.labelQuantity - b.labelQuantity);
+
+  return productsDeepCopy[0];
+}
+
 module.exports.buildFilePlan = (filePlanRequest) => {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
     let { products } = filePlanRequest;
@@ -168,16 +177,18 @@ module.exports.buildFilePlan = (filePlanRequest) => {
         const distributionsToCheck = distributions[groupSize];
         const masterGroupCandidatesForDistribution = [];
 
+        productWithSmallestNumberOfLabels = findProductWithSmallestLabelQty(products);
+
         products.forEach((product) => {
-            const scaledProducts = scaleProducts(products, product);
-            groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, product, labelsPerLane);
+          const scaledProducts = scaleProducts(products, productWithSmallestNumberOfLabels);
+          groupOfProducts = checkIfDistributionExists(scaledProducts, distributionsToCheck, productWithSmallestNumberOfLabels, labelsPerLane);
 
-            if (!groupOfProducts) {
-                return false;
-            }
+          if (!groupOfProducts) {
+              return false;
+          }
 
-            const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
-            masterGroupCandidatesForDistribution.push(masterGroup);
+          const masterGroup = createMasterGroupFromProducts(groupOfProducts, labelsPerLane);
+          masterGroupCandidatesForDistribution.push(masterGroup);
         });
 
         if (masterGroupCandidatesForDistribution.length > 0) {

@@ -15,7 +15,7 @@ const schema = new Schema({
     vendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
-        required: false,
+        required: true,
         set: function(vendorObjectId) {
             if (vendorObjectId === '') return null;
 
@@ -25,7 +25,7 @@ const schema = new Schema({
     materialCategory: {
         type: Schema.Types.ObjectId,
         ref: 'MaterialCategory',
-        required: false,
+        required: true,
         set: function(materialCategoryObjectId) {
             if (materialCategoryObjectId === '') return null;
 

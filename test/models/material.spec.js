@@ -10,7 +10,10 @@ describe('validation', () => {
             name: chance.string(),
             materialId: chance.string(),
             vendor: new mongoose.Types.ObjectId(),
-            materialCategory: new mongoose.Types.ObjectId()
+            materialCategory: new mongoose.Types.ObjectId(),
+            thickness: chance.integer({ min: 0 }),
+            weight: chance.integer({ min: 0 }),
+            materialCost: `${chance.floating({ min: 0 })}`
         };
     });
 
@@ -59,9 +62,9 @@ describe('validation', () => {
         it('should be required', () => {
             delete materialAttributes.materialId;
             const material = new MaterialModel(materialAttributes);
-    
+
             const error = material.validateSync();
-    
+
             expect(error).not.toBe(undefined);
         });
 
@@ -70,7 +73,7 @@ describe('validation', () => {
             materialAttributes.materialId = '  ' + materialIdWithoutWhitespace + '  ';
 
             const material = new MaterialModel(materialAttributes);
-    
+
             expect(material.materialId).toEqual(materialIdWithoutWhitespace);
         });
     });
@@ -81,7 +84,7 @@ describe('validation', () => {
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
-    
+
             expect(error).toBeDefined();
         });
 
@@ -98,7 +101,7 @@ describe('validation', () => {
         it('should pass validation if value is a mongoose object id', () => {
             materialAttributes.vendor = new mongoose.Types.ObjectId();
             const material = new MaterialModel(materialAttributes);
-            
+
             const error = material.validateSync();
 
             expect(error).toBeUndefined();
@@ -135,6 +138,124 @@ describe('validation', () => {
 
         it('should fail validation if attribute is undefined', () => {
             delete materialAttributes.materialCategory;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: thickness', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.thickness;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.thickness = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.thickness).toEqual(expect.any(Number));
+        });
+    });
+
+    describe('attribute: weight', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.weight;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.weight = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.weight).toEqual(expect.any(Number));
+        });
+    });
+
+    describe('attribute: materialCost', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.materialCost;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.materialCost = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialCost).toEqual(expect.any(Number));
+        });
+
+        it('should not store floating points of more than 2 decimal places', () => {
+            const priceWithWayTooManyDecimals = '100.11999999999';
+            materialAttributes.materialCost = priceWithWayTooManyDecimals;
+            const expectedPrice = 100.11;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialCost).toEqual(expectedPrice);
+        });
+
+        it('should remove commas from price', () => {
+            const currencyWithCommas = '1,192,123.83';
+            const currencyWithoutCommas = 1192123.83;
+            materialAttributes.materialCost = currencyWithCommas;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialCost).toEqual(currencyWithoutCommas);
+        });
+
+        it('should fail validation if price is a non-number', () => {
+            const invalidPrice = chance.word();
+            materialAttributes.materialCost = invalidPrice;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if price is empty', () => {
+            const invalidPrice = '';
+            materialAttributes.materialCost = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();

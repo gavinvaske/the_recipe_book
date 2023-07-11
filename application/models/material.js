@@ -15,22 +15,12 @@ const schema = new Schema({
     vendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
-        required: true,
-        set: function(vendorObjectId) {
-            if (vendorObjectId === '') return null;
-
-            return vendorObjectId;
-        }
+        required: true
     },
     materialCategory: {
         type: Schema.Types.ObjectId,
         ref: 'MaterialCategory',
-        required: true,
-        set: function(materialCategoryObjectId) {
-            if (materialCategoryObjectId === '') return null;
-
-            return materialCategoryObjectId;
-        }
+        required: true
     }
 }, { timestamps: true });
 

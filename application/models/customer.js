@@ -27,9 +27,11 @@ const schema = new Schema({
     overRun: {
         type: Boolean
     },
-    // creditTerms: {}, // TODO
-    // dieCuttingNotes: {} // TODO
-}, { timestamps: true }); // TODO: Test timestamps
+    creditTerms: {
+        type: [Schema.Types.ObjectId],
+        ref: 'CreditTerm'
+    }
+}, { timestamps: true });
 
 const Customer = mongoose.model('Customer', schema);
 

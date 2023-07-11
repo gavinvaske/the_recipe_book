@@ -1,5 +1,8 @@
 const chance = require('chance').Chance();
 const CustomerModel = require('../../application/models/customer');
+const databaseService = require('../../application/services/databaseService');
+
+const mongoose = require('mongoose');
 
 function getAddress() {
     return {
@@ -41,7 +44,7 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete customerAttributes.name;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).toBeDefined();
@@ -67,7 +70,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.notes;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -93,7 +96,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.businessLocations;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -102,7 +105,7 @@ describe('validation', () => {
         it('should be an array with a single mongoose object', () => {
             customerAttributes.businessLocations = [getAddress()];
 
-            const {businessLocations} = new CustomerModel(customerAttributes);
+            const { businessLocations } = new CustomerModel(customerAttributes);
 
             expect(businessLocations.length).toEqual(1);
             expect(businessLocations[0]._id).toBeDefined();
@@ -112,7 +115,7 @@ describe('validation', () => {
             const addresses = [getAddress(), getAddress()];
             customerAttributes.businessLocations = addresses;
 
-            const {businessLocations} = new CustomerModel(customerAttributes);
+            const { businessLocations } = new CustomerModel(customerAttributes);
 
             expect(businessLocations.length).toEqual(addresses.length);
 
@@ -123,7 +126,7 @@ describe('validation', () => {
         it('should default to an empty array', () => {
             delete customerAttributes.businessLocations;
 
-            const {businessLocations} = new CustomerModel(customerAttributes);
+            const { businessLocations } = new CustomerModel(customerAttributes);
 
             expect(businessLocations).toEqual([]);
         });
@@ -133,7 +136,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.shippingLocations;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -142,7 +145,7 @@ describe('validation', () => {
         it('should be an array with a single mongoose object', () => {
             customerAttributes.shippingLocations = [getAddress()];
 
-            const {shippingLocations} = new CustomerModel(customerAttributes);
+            const { shippingLocations } = new CustomerModel(customerAttributes);
 
             expect(shippingLocations.length).toEqual(1);
             expect(shippingLocations[0]._id).toBeDefined();
@@ -152,7 +155,7 @@ describe('validation', () => {
             const addresses = [getAddress(), getAddress()];
             customerAttributes.shippingLocations = addresses;
 
-            const {shippingLocations} = new CustomerModel(customerAttributes);
+            const { shippingLocations } = new CustomerModel(customerAttributes);
 
             expect(shippingLocations.length).toEqual(addresses.length);
 
@@ -163,7 +166,7 @@ describe('validation', () => {
         it('should default to an empty array', () => {
             delete customerAttributes.shippingLocations;
 
-            const {shippingLocations} = new CustomerModel(customerAttributes);
+            const { shippingLocations } = new CustomerModel(customerAttributes);
 
             expect(shippingLocations).toEqual([]);
         });
@@ -173,7 +176,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.billingLocations;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -182,7 +185,7 @@ describe('validation', () => {
         it('should be an array with a single mongoose object', () => {
             customerAttributes.billingLocations = [getAddress()];
 
-            const {billingLocations} = new CustomerModel(customerAttributes);
+            const { billingLocations } = new CustomerModel(customerAttributes);
 
             expect(billingLocations.length).toEqual(1);
             expect(billingLocations[0]._id).toBeDefined();
@@ -192,7 +195,7 @@ describe('validation', () => {
             const addresses = [getAddress(), getAddress()];
             customerAttributes.billingLocations = addresses;
 
-            const {billingLocations} = new CustomerModel(customerAttributes);
+            const { billingLocations } = new CustomerModel(customerAttributes);
 
             expect(billingLocations.length).toEqual(addresses.length);
 
@@ -203,7 +206,7 @@ describe('validation', () => {
         it('should default to an empty array', () => {
             delete customerAttributes.billingLocations;
 
-            const {billingLocations} = new CustomerModel(customerAttributes);
+            const { billingLocations } = new CustomerModel(customerAttributes);
 
             expect(billingLocations).toEqual([]);
         });
@@ -213,7 +216,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.contacts;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -222,7 +225,7 @@ describe('validation', () => {
         it('should be an array with a single mongoose object', () => {
             customerAttributes.contacts = [getAddress()];
 
-            const {contacts} = new CustomerModel(customerAttributes);
+            const { contacts } = new CustomerModel(customerAttributes);
 
             expect(contacts.length).toEqual(1);
             expect(contacts[0]._id).toBeDefined();
@@ -231,7 +234,7 @@ describe('validation', () => {
         it('should be an array with a multiple mongoose object', () => {
             customerAttributes.contacts = [getContact(), getContact()];
 
-            const {contacts} = new CustomerModel(customerAttributes);
+            const { contacts } = new CustomerModel(customerAttributes);
 
             expect(contacts.length).toEqual(contacts.length);
 
@@ -242,7 +245,7 @@ describe('validation', () => {
         it('should default to an empty array', () => {
             delete customerAttributes.billingLocations;
 
-            const {contacts} = new CustomerModel(customerAttributes);
+            const { contacts } = new CustomerModel(customerAttributes);
 
             expect(contacts).toEqual([]);
         });
@@ -252,7 +255,7 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is undefined', () => {
             delete customerAttributes.overRun;
             const customer = new CustomerModel(customerAttributes);
-    
+
             const error = customer.validateSync();
 
             expect(error).not.toBeDefined();
@@ -262,6 +265,51 @@ describe('validation', () => {
             const customer = new CustomerModel(customerAttributes);
 
             expect(customer.overRun).toEqual(expect.any(Boolean));
+        });
+    });
+
+    describe('attribute: creditTerms', () => {
+        it('should NOT fail validation if attribute is undefined', () => {
+            delete customerAttributes.creditTerms;
+            const customer = new CustomerModel(customerAttributes);
+
+            const error = customer.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should handle storing an array of mongoose object IDs', () => {
+            const creditTerms = [
+                new mongoose.Types.ObjectId(),
+                new mongoose.Types.ObjectId()
+            ];
+            customerAttributes.creditTerms = creditTerms;
+
+            const customer = new CustomerModel(customerAttributes);
+
+            expect(customer.creditTerms.length).toEqual(creditTerms.length);
+            expect(customer.creditTerms[0]).toEqual(creditTerms[0]);
+            expect(customer.creditTerms[1]).toEqual(creditTerms[1]);
+        });
+    });
+
+    describe('verify timestamps on created object', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        describe('verify timestamps on created object', () => {
+            it('should have a "createdAt" attribute once object is saved', async () => {
+                const customer = new CustomerModel(customerAttributes);
+                let savedCustomer = await customer.save({ validateBeforeSave: false });
+
+                expect(savedCustomer.createdAt).toBeDefined();
+                expect(savedCustomer.updatedAt).toBeDefined();
+            });
         });
     });
 });

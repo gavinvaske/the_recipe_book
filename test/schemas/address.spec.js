@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 describe('validation', () => {
     let addressAttributes, 
-      AddressModel;
+        AddressModel;
 
     beforeEach(() => {
         addressAttributes = {

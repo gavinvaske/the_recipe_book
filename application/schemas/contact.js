@@ -36,18 +36,18 @@ const contactSchema = new Schema({
         validate: [validateEmail, 'The provided email "{VALUE}" is not a valid email']
     },
     contactStatus: {
-      type: String,
-      uppercase: true,
-      required: true
+        type: String,
+        uppercase: true,
+        required: true
     },
     notes: {
-      type: String
+        type: String
     },
     position: {
-      type: String
+        type: String
     },
     location: {
-      type: addressSchema
+        type: addressSchema
     }
 }, { timestamps: true });
 

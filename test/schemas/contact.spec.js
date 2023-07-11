@@ -55,7 +55,7 @@ describe('validation', () => {
 
         it('should convert to upper case', () => {
             const lowerCaseName = chance.string().toLowerCase();
-            contactAttributes.fullName = lowerCaseName
+            contactAttributes.fullName = lowerCaseName;
             const contact = new ContactModel(contactAttributes);
 
             expect(contact.fullName).toEqual(lowerCaseName.toUpperCase());
@@ -145,7 +145,7 @@ describe('validation', () => {
         });
 
         it('should pass validation if a valid email is used', () => {
-            const validEmail = chance.email()
+            const validEmail = chance.email();
             contactAttributes.email = validEmail;
             const contact = new ContactModel(contactAttributes);
 
@@ -234,7 +234,7 @@ describe('validation', () => {
                 city: chance.string(),
                 state: 'IOWA',
                 zipCode: '80766'
-            }
+            };
             const address = new AddressModel(addressAttributes);
             contactAttributes.location = address;
             const contact = new ContactModel(contactAttributes);

@@ -15,6 +15,9 @@ describe('validation', () => {
             weight: chance.integer({ min: 0 }),
             materialCost: `${chance.floating({ min: 0 })}`,
             freightCost: `${chance.floating({ min: 0 })}`,
+            width: chance.d12(),
+            faceColor: chance.string(),
+            adhesive: chance.string()
         };
     });
 
@@ -325,6 +328,66 @@ describe('validation', () => {
             materialAttributes.freightCost = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: materialCost', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.width).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.width;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.width = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: materialCost', () => {
+        it('should be a String', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.faceColor).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.faceColor;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: adhesive', () => {
+        it('should be a String', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.adhesive).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.adhesive;
+            const material = new MaterialModel(materialAttributes);
+            
             const error = material.validateSync();
 
             expect(error).toBeDefined();

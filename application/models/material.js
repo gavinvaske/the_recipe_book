@@ -58,9 +58,19 @@ const schema = new Schema({
         get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
         set: convertDollarsToPennies
     },
-    // width: {},
-    // faceColor: {},
-    // adhesive: {},
+    width: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    faceColor: {
+        type: String,
+        required: true
+    },
+    adhesive: {
+        type: String,
+        required: true
+    },
     // adhesiveCategory: {},
     // quotePrice: {},
     // description: {},

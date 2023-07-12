@@ -46,11 +46,18 @@ const schema = new Schema({
     materialCost: {
         type: Number,
         required: true,
+        min: 0,
         get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
         set: convertDollarsToPennies,
-        min: 0
+
     },
-    // freightCost: {},
+    freightCost: {
+        type: Number,
+        required: true,
+        min: 0,
+        get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
+        set: convertDollarsToPennies
+    },
     // width: {},
     // faceColor: {},
     // adhesive: {},

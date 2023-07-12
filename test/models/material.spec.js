@@ -13,7 +13,8 @@ describe('validation', () => {
             materialCategory: new mongoose.Types.ObjectId(),
             thickness: chance.integer({ min: 0 }),
             weight: chance.integer({ min: 0 }),
-            materialCost: `${chance.floating({ min: 0 })}`
+            materialCost: `${chance.floating({ min: 0 })}`,
+            freightCost: `${chance.floating({ min: 0 })}`,
         };
     });
 
@@ -256,6 +257,72 @@ describe('validation', () => {
         it('should fail validation if price is empty', () => {
             const invalidPrice = '';
             materialAttributes.materialCost = invalidPrice;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: materialCost', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.freightCost).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.freightCost;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.freightCost = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should not store floating points of more than 2 decimal places', () => {
+            const priceWithWayTooManyDecimals = '100.11999999999';
+            materialAttributes.freightCost = priceWithWayTooManyDecimals;
+            const expectedPrice = 100.11;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.freightCost).toEqual(expectedPrice);
+        });
+
+        it('should remove commas from price', () => {
+            const currencyWithCommas = '1,192,123.83';
+            const currencyWithoutCommas = 1192123.83;
+            materialAttributes.freightCost = currencyWithCommas;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.freightCost).toEqual(currencyWithoutCommas);
+        });
+
+        it('should fail validation if price is a non-number', () => {
+            const invalidPrice = chance.word();
+            materialAttributes.freightCost = invalidPrice;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if price is empty', () => {
+            const invalidPrice = '';
+            materialAttributes.freightCost = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();

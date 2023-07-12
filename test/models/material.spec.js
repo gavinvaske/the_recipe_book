@@ -1,6 +1,7 @@
 const chance = require('chance').Chance();
 const MaterialModel = require('../../application/models/material');
 const mongoose = require('mongoose');
+const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
     let materialAttributes;
@@ -17,7 +18,12 @@ describe('validation', () => {
             freightCost: `${chance.floating({ min: 0 })}`,
             width: chance.d12(),
             faceColor: chance.string(),
-            adhesive: chance.string()
+            adhesive: chance.string(),
+            adhesiveCategory: new mongoose.Types.ObjectId(),
+            quotePrice: chance.integer({ min: 0 }),
+            description: chance.string(),
+            whenToUse: chance.string(),
+            alternativeStock: chance.string()
         };
     });
 
@@ -268,7 +274,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: materialCost', () => {
+    describe('attribute: freightCost', () => {
         it('should be a Number', () => {
             const material = new MaterialModel(materialAttributes);
 
@@ -334,7 +340,7 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: materialCost', () => {
+    describe('attribute: width', () => {
         it('should be a Number', () => {
             const material = new MaterialModel(materialAttributes);
 
@@ -391,6 +397,140 @@ describe('validation', () => {
             const error = material.validateSync();
 
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: adhesiveCategory', () => {
+        it('should be a mongoose object ID', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(mongoose.Types.ObjectId.isValid(material.adhesiveCategory)).toBe(true);
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.adhesiveCategory;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: quotePrice', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.quotePrice).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.quotePrice;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail if attribute is negative', () => {
+            materialAttributes.quotePrice = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should not store floating points of more than 2 decimal places', () => {
+            const priceWithWayTooManyDecimals = '888.11999999999';
+            materialAttributes.quotePrice = priceWithWayTooManyDecimals;
+            const expectedPrice = 888.11;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.quotePrice).toEqual(expectedPrice);
+        });
+
+        it('should remove commas from price', () => {
+            const currencyWithCommas = '7,194,123.83';
+            const currencyWithoutCommas = 7194123.83;
+            materialAttributes.freightCost = currencyWithCommas;
+
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.freightCost).toEqual(currencyWithoutCommas);
+        });
+    });
+
+    describe('attribute: description', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.description).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.description;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: whenToUse', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.whenToUse).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.whenToUse;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: alternativeStock', () => {
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.alternativeStock).toEqual(expect.any(String));
+        });
+
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.alternativeStock;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('verify timestamps on created object', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        describe('verify timestamps on created object', () => {
+            it('should have a "createdAt" attribute once object is saved', async () => {
+                const material = new MaterialModel(materialAttributes);
+                let savedMaterial = await material.save({ validateBeforeSave: false });
+
+                expect(savedMaterial.createdAt).toBeDefined();
+                expect(savedMaterial.updatedAt).toBeDefined();
+            });
         });
     });
 });

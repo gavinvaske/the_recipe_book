@@ -71,11 +71,29 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    // adhesiveCategory: {},
-    // quotePrice: {},
-    // description: {},
-    // whenToUse: {},
-    // alternativeStock: {}
+    adhesiveCategory: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    quotePrice: {
+        type: Number,
+        required: true,
+        min: 0,
+        get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
+        set: convertDollarsToPennies
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    whenToUse: {
+        type: String,
+        required: true
+    },
+    alternativeStock: {
+        type: String,
+        required: true
+    }
 
 }, { timestamps: true });
 

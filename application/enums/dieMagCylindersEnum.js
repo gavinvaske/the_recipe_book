@@ -1,0 +1,1 @@
+module.exports.dieMagCylinders = [25, 19] 

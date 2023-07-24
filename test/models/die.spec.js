@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const DieModel = require('../../application/models/Die')
+const DieModel = require('../../application/models/Die');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const { toolTypes } = require('../../application/enums/toolTypesEnum');
 const { dieVendors } = require('../../application/enums/dieVendorsEnum');
@@ -7,12 +7,12 @@ const { dieMagCylinders } = require('../../application/enums/dieMagCylindersEnum
 const { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } = require('../../application/enums/dieStatusesEnum');
 
 function getRandomCost() {
-    return chance.floating({ min: 0, fixed: 2 })
+    return chance.floating({ min: 0, fixed: 2 });
 }
 
 const delay = (delayInMs) => {
     return new Promise(resolve => setTimeout(resolve, delayInMs));
-  }
+};
 
 describe('validation', () => {
     let dieAttributes;
@@ -62,7 +62,7 @@ describe('validation', () => {
 
             const error = die.validateSync();
 
-            expect(error).toBeDefined()
+            expect(error).toBeDefined();
         });
 
         it('should fail if string is not an accepted enum value', () => {
@@ -171,7 +171,7 @@ describe('validation', () => {
         it('should be a string', () => {
             const die = new DieModel(dieAttributes);
         
-            expect(die.dieNumber).toEqual(expect.any(String))
+            expect(die.dieNumber).toEqual(expect.any(String));
         });
 
         it('should fail if the string DOES NOT follow the correct regex pattern', () => {
@@ -181,8 +181,8 @@ describe('validation', () => {
 
             const error = die.validateSync();
             
-            expect(error).toBeDefined()
-        })
+            expect(error).toBeDefined();
+        });
 
         it('should automatically capitalize dieNumber and not fail if dieNumber is valid', () => {
             const lowercaseDieNumber = 'xldr-0001';
@@ -190,7 +190,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.dieNumber).toEqual(die.dieNumber.toUpperCase());
-        })
+        });
 
         it('should pass validation if dieNumbers are valid', () => {
             const validDieNumbers = ['DC-0001', 'DR-9999', 'DRC-6666', 'DO-3212', 'DS-0987', 'XLDR-0001', 'DSS-7777', 'DB-1234'];
@@ -203,7 +203,7 @@ describe('validation', () => {
                 
                 expect(error).toBeUndefined();
             });
-        })
+        });
     });
 
     describe('attribute: numberAcross', () => {
@@ -241,7 +241,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.numberAcross).toEqual(expect.any(Number));
-        })
+        });
     });
 
     describe('attribute: numberAround', () => {
@@ -279,7 +279,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.numberAround).toEqual(expect.any(Number));
-        })
+        });
     });
 
     describe('attribute: gear', () => {
@@ -317,7 +317,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.gear).toEqual(expect.any(Number));
-        })
+        });
     });
 
 
@@ -328,7 +328,7 @@ describe('validation', () => {
 
             const error = die.validateSync();
 
-            expect(error).toBeDefined()
+            expect(error).toBeDefined();
         });
 
         it('should fail if string is not an accepted enum value', () => {
@@ -355,7 +355,7 @@ describe('validation', () => {
 
         it('should get converted to uppercase', () => {
             const lowercaseToolType = chance.pickone(toolTypes).toLowerCase();;
-            dieAttributes.toolType = lowercaseToolType
+            dieAttributes.toolType = lowercaseToolType;
             const die = new DieModel(dieAttributes);
 
             expect(die.toolType).toEqual(lowercaseToolType.toUpperCase());
@@ -388,7 +388,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.notes).toEqual(expect.any(String));
-        })
+        });
 
         it('should trim whitespace', () => {
             const expectedNotes = chance.string();
@@ -396,7 +396,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.notes).toEqual(expectedNotes);
-        })
+        });
     });
 
     describe('attribute: cost', () => {
@@ -423,15 +423,16 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should only store up to 2 decimal places', () => {
             const expectedCost = 123.11;
-            dieAttributes.cost = expectedCost + 0.009;
+            const smallDecimalToIgnore = 0.009;
+            dieAttributes.cost = expectedCost + smallDecimalToIgnore;
             const die = new DieModel(dieAttributes);
             
             expect(die.cost).toEqual(expectedCost);
-        })
+        });
     });
 
     describe('attribute: vendor', () => {
@@ -442,7 +443,7 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should be a string', () => {
             const vendor = chance.pickone(dieVendors);
@@ -461,7 +462,7 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should pass validation if string IS AN accepted enum value', () => {
             const validVendor = chance.pickone(dieVendors);
@@ -471,7 +472,7 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).not.toBeDefined();
-        })
+        });
 
         it('should convert to uppercase', () => {
             const lowercaseVendor = chance.pickone(dieVendors).toLowerCase();
@@ -479,7 +480,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.vendor).toEqual(lowercaseVendor.toUpperCase());
-        })
+        });
     });
 
     describe('attribute: magCylinder', () => {
@@ -518,7 +519,7 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).not.toBeDefined();
-        })
+        });
     });
     describe('attribute: cornerRadius', () => {
         it('should fail validation if attribute is not defined', () => {
@@ -535,7 +536,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.cornerRadius).toEqual(expect.any(Number));
-        })
+        });
     });
     describe('attribute: spaceAcross', () => {
         it('should fail validation if attribute is not defined', () => {
@@ -552,7 +553,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.spaceAcross).toEqual(expect.any(Number));
-        })
+        });
     });
 
     describe('attribute: spaceAround', () => {
@@ -563,14 +564,14 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should be a number', () => {
             dieAttributes.spaceAround = String(chance.floating());
             const die = new DieModel(dieAttributes);
             
             expect(die.spaceAround).toEqual(expect.any(Number));
-        })
+        });
     });
 
     describe('attribute: facestock', () => {
@@ -581,14 +582,14 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should be a string', () => {
             dieAttributes.facestock = chance.string();
             const die = new DieModel(dieAttributes);
             
             expect(die.facestock).toEqual(expect.any(String));
-        })
+        });
 
         it('should trim whitespace', () => {
             const expectedFacestock = chance.string();
@@ -596,7 +597,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.facestock).toEqual(expectedFacestock);
-        })
+        });
     });
 
     describe('attribute: liner', () => {
@@ -615,7 +616,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.liner).toEqual(expect.any(String));
-        })
+        });
 
         it('should trim whitespace', () => {
             const expectedLiner = chance.string();
@@ -624,7 +625,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.liner).toEqual(expectedLiner);
-        })
+        });
     });
 
     describe('attribute: specialType', () => {
@@ -643,7 +644,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.specialType).toEqual(expect.any(String));
-        })
+        });
     });
 
     describe('attribute: serialNumber', () => {
@@ -662,7 +663,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.serialNumber).toEqual(expect.any(String));
-        })
+        });
 
         it('should trim whitespace', () => {
             const expectedSerialNumber = chance.string();
@@ -671,7 +672,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.serialNumber).toEqual(expectedSerialNumber);
-        })
+        });
     });
 
     describe('attribute: status', () => {
@@ -718,7 +719,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.status).toEqual(validLowercaseStatus.toUpperCase());
-        })
+        });
     });
 
     describe('attribute: quantity', () => {
@@ -729,7 +730,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.quantity).toEqual(expectedQuantity);
-        })
+        });
 
         it('should fail if value is not an integer', () => {
             const invalidDieNumber = chance.floating();
@@ -757,7 +758,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.quantity).toEqual(expect.any(Number));
-        })
+        });
     });
 
     describe('attribute: orderDate', () => {
@@ -768,7 +769,7 @@ describe('validation', () => {
             const error = die.validateSync();
             
             expect(error).not.toBeDefined();
-        })
+        });
 
         it('should be set to a date when die.status is set to "ORDERED"', () => {
             delete dieAttributes.orderDate;
@@ -778,7 +779,7 @@ describe('validation', () => {
             
             expect(die.orderDate).toBeDefined();
             expect(die.orderDate instanceof Date).toEqual(true);
-        })
+        });
 
         it('should not update the date again if die.status is unchanged from "ORDERED"', async () => {
             delete dieAttributes.orderDate;
@@ -792,7 +793,7 @@ describe('validation', () => {
             await delay(delayInMilliseconds);
 
             die.status = ORDERED_DIE_STATUS;
-            expect(die.orderDate).toEqual(originalDate)
+            expect(die.orderDate).toEqual(originalDate);
         });
     });
 
@@ -828,7 +829,7 @@ describe('validation', () => {
             await delay(delayInMilliseconds);
 
             die.status = IN_STOCK_DIE_STATUS;
-            expect(die.arrivalDate).toEqual(originalDate)
+            expect(die.arrivalDate).toEqual(originalDate);
         });
     });
     

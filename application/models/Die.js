@@ -7,7 +7,7 @@ const { dieVendors } = require('../enums/dieVendorsEnum');
 const { dieMagCylinders } = require('../enums/dieMagCylindersEnum');
 const { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } = require('../enums/dieStatusesEnum');
 
-const DIE_NUMBER_PREFIXES = ['DC', 'DR', 'DRC' , 'DO', 'DS', 'XLDR', 'DSS', 'DB']
+const DIE_NUMBER_PREFIXES = ['DC', 'DR', 'DRC' , 'DO', 'DS', 'XLDR', 'DSS', 'DB'];
 const DIE_NUMBER_REGEX = /^(\d{4})$/;
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
@@ -18,7 +18,7 @@ function convertDollarsToPennies(dollarAmount) {
 
 function validateDieNumberFormat(dieNumber) {
     dieNumber = dieNumber.toUpperCase();
-    const dieNumberParts = dieNumber.split('-')
+    const dieNumberParts = dieNumber.split('-');
 
     if (dieNumberParts.length !== 2) {
         return false;
@@ -77,7 +77,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : "numberAcross: '{VALUE}' must be a whole number"
+            message   : 'numberAcross: \'{VALUE}\' must be a whole number'
         },
         min: 0
     },
@@ -86,7 +86,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : "numberAround: '{VALUE}' must be a whole number"
+            message   : 'numberAround: \'{VALUE}\' must be a whole number'
         },
         min: 0
     },
@@ -95,7 +95,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : "gear: '{VALUE}' must be a whole number"
+            message   : 'gear: \'{VALUE}\' must be a whole number'
         },
         min: 0
     },
@@ -166,7 +166,7 @@ const schema = new Schema({
         type: Number,
         validate : {
             validator : Number.isInteger,
-            message   : "'quantity' must be an integer, but the value provided was: '{VALUE}'"
+            message   : '\'quantity\' must be an integer, but the value provided was: \'{VALUE}\''
         },
         default: 1,
         min: 0

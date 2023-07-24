@@ -6,4 +6,4 @@ module.exports.dieStatuses = [
     this.ORDERED_DIE_STATUS,
     this.IN_STOCK_DIE_STATUS,
     this.REPLACEMENT_ORDERED_DIE_STATUS
-]
+];

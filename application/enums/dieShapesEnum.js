@@ -1,7 +1,7 @@
-const SQUARE = "SQUARE";
-const CIRCLE = "CIRCLE";
-const OVAL = "OVAL";
-const SPECIAL_SHAPE = "SPECIAL SHAPE";
+const SQUARE = 'SQUARE';
+const CIRCLE = 'CIRCLE';
+const OVAL = 'OVAL';
+const SPECIAL_SHAPE = 'SPECIAL SHAPE';
 
 module.exports.dieShapes = [
     SQUARE,

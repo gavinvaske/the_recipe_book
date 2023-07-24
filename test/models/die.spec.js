@@ -41,10 +41,6 @@ describe('validation', () => {
             serialNumber: chance.string(),
             status: chance.pickone(dieStatuses),
             quantity: chance.d100()
-            // dieNumber: 'ABC-123',
-            // pitch: `${chance.floating()} CP`,
-            // gear: chance.d100(),
-            // shape: chance.string()
         };
     });
 

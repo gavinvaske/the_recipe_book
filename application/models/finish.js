@@ -1,18 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-
-const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
-const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
-
-
-function convertPenniesToDollars(amountInPennies) {
-    return Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY));
-}
-
-function convertDollarsToPennies(dollarAmount) {
-    return parseInt(dollarAmount * NUMBER_OF_PENNIES_IN_A_DOLLAR);
-}
+const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
 const schema = new Schema({
     name: {

@@ -1,17 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-
-const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
-const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
-
-function convertDollarsToPennies(numberAsString) {
-    const currencyWithoutCommas = String(numberAsString).split(',').join('');
-
-    if (currencyWithoutCommas === undefined || currencyWithoutCommas === '') throw new Error('Cannot save an undefined currency amount');
-
-    return parseInt(Number(currencyWithoutCommas * NUMBER_OF_PENNIES_IN_A_DOLLAR));
-}
+const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
 const schema = new Schema({
     name: { // TODO: Automatically generate it? Talk to storm (Maybe if its not provided, automatically generate it)
@@ -47,7 +37,7 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
+        get: convertPenniesToDollars,
         set: convertDollarsToPennies,
 
     },
@@ -55,8 +45,8 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
-        set: convertDollarsToPennies
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
     },
     width: {
         type: Number,
@@ -79,8 +69,8 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        get: amountInPennies => Number((amountInPennies / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
-        set: convertDollarsToPennies
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
     },
     description: {
         type: String,

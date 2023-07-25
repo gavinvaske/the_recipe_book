@@ -228,6 +228,16 @@ describe('validation', () => {
                 
                 expect(finish.finishCost).toBe(expectedCost);
             });
+
+            it('should handle commas in the cost', () => {
+                const costWithCommas = '199,876.95';
+                const costWithoutCommas = 199876.95;
+                finishAttributes.finishCost = costWithCommas;
+                
+                const finish = new FinishModel(finishAttributes);
+                
+                expect(finish.finishCost).toBe(costWithoutCommas);
+            });
         });
 
         describe('attribute: freightCost', () => {

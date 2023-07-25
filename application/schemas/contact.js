@@ -2,20 +2,7 @@ const mongoose = require('mongoose');
 const addressSchema = require('./address');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-
-const PHONE_VALIDATION_REGEX = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-const validatePhoneNumber = function (phoneNumber) {
-    if (!phoneNumber) {
-        return true;
-    }
-    return PHONE_VALIDATION_REGEX.test(phoneNumber);
-};
-
-const validateEmail = function (email) {
-    return EMAIL_VALIDATION_REGEX.test(email);
-};
+const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
 
 const contactSchema = new Schema({
     fullName: {

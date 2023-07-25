@@ -1,22 +1,10 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
+const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
 
 const USER = 'USER';
 const ADMIN = 'ADMIN';
-const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-const PHONE_VALIDATION_REGEX = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-
-const validatePhone = function(phoneNumber) {
-    if (!phoneNumber) {
-        return true;
-    }
-    return PHONE_VALIDATION_REGEX.test(phoneNumber);
-};
-
-const validateEmail = function(email) {
-    return EMAIL_VALIDATION_REGEX.test(email);
-};
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -34,7 +22,6 @@ const userSchema = new Schema({
         unique: true,
         required: 'Email address is required',
         validate: [validateEmail, 'Please fill a valid email address'],
-        match: [EMAIL_VALIDATION_REGEX, 'Please fill a valid email address']
     },
     password: {
         type: String,
@@ -72,7 +59,7 @@ const userSchema = new Schema({
     },
     phoneNumber: {
         type: String,
-        validate: [validatePhone, 'Your phone number must be 10 digits and/or formatted correctly']
+        validate: [validatePhoneNumber, 'The provided phone number "{VALUE}" is not a valid phone number']
     },
     birthDate: {
         type: Date

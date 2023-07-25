@@ -63,14 +63,15 @@ const schema = new Schema({
     },
     adhesiveCategory: {
         type: Schema.Types.ObjectId,
+        ref: 'AdhesiveCategory',
         required: true
     },
     quotePrice: {
         type: Number,
         required: true,
-        min: 0,
         get: convertPenniesToDollars,
         set: convertDollarsToPennies,
+        min: 0
     },
     description: {
         type: String,
@@ -82,7 +83,16 @@ const schema = new Schema({
     },
     alternativeStock: {
         type: String,
-        required: true
+        required: false
+    },
+    length: {
+        type: Number,
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : '"material.length" must be an integer. The provided value was: \'{VALUE}\''
+        },
+        min: 0
     }
 
 }, { timestamps: true });

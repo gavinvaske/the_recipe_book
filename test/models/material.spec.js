@@ -23,7 +23,8 @@ describe('validation', () => {
             quotePrice: chance.integer({ min: 0 }),
             description: chance.string(),
             whenToUse: chance.string(),
-            alternativeStock: chance.string()
+            alternativeStock: chance.string(),
+            length: chance.integer({ min: 0 }),
         };
     });
 
@@ -504,8 +505,43 @@ describe('validation', () => {
             expect(material.alternativeStock).toEqual(expect.any(String));
         });
 
-        it('should fail validation if attribute is undefined', () => {
+        it('should NOT FAIL validation if attribute is undefined', () => {
             delete materialAttributes.alternativeStock;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: length', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete materialAttributes.length;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+            
+            expect(material.length).toEqual(expect.any(Number));
+        });
+
+        it('should fail validation if attribute is negative', () => {
+            materialAttributes.length = chance.integer({ max: -1 });
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if attribute is not an integer', () => {
+            materialAttributes.length = chance.floating({ min: 0 });
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();

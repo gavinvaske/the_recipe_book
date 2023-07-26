@@ -10,8 +10,7 @@ function getAddress() {
         street: chance.address(),
         city: chance.city(),
         state: chance.state(),
-        zipCode: chance.zip(),
-        overRun: chance.bool()
+        zipCode: chance.zip()
     };
 }
 
@@ -28,7 +27,8 @@ describe('validation', () => {
         customerAttributes = {
             name: chance.string(),
             notes: chance.string(),
-            overRun: chance.bool()
+            overrun: chance.d100(),
+            customerId: chance.string()
         };
     });
 
@@ -213,13 +213,13 @@ describe('validation', () => {
     });
 
     describe('attribute: contacts', () => {
-        it('should NOT fail validation if attribute is undefined', () => {
-            delete customerAttributes.contacts;
+        it('should fail validation if attribute is empty', () => {
+            customerAttributes.contacts = [];
             const customer = new CustomerModel(customerAttributes);
 
             const error = customer.validateSync();
 
-            expect(error).not.toBeDefined();
+            expect(error).toBeDefined();
         });
 
         it('should be an array with a single mongoose object', () => {
@@ -251,20 +251,21 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: overRun', () => {
-        it('should NOT fail validation if attribute is undefined', () => {
-            delete customerAttributes.overRun;
+    describe('attribute: overrun', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete customerAttributes.overrun;
             const customer = new CustomerModel(customerAttributes);
 
             const error = customer.validateSync();
 
-            expect(error).not.toBeDefined();
+            expect(error).toBeDefined();
         });
 
-        it('should be of type Boolean', () => {
+        it('should be of type Number', () => {
+            customerAttributes.overrun = chance.d100();
             const customer = new CustomerModel(customerAttributes);
 
-            expect(customer.overRun).toEqual(expect.any(Boolean));
+            expect(customer.overrun).toEqual(expect.any(Number));
         });
     });
 
@@ -290,6 +291,32 @@ describe('validation', () => {
             expect(customer.creditTerms.length).toEqual(creditTerms.length);
             expect(customer.creditTerms[0]).toEqual(creditTerms[0]);
             expect(customer.creditTerms[1]).toEqual(creditTerms[1]);
+        });
+    });
+
+    describe('attribute: customerId', () => {
+        it('should fail validation if attribute is undefined', () => {
+            delete customerAttributes.customerId;
+            const customer = new CustomerModel(customerAttributes);
+
+            const error = customer.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be of type String', () => {
+            const customer = new CustomerModel(customerAttributes);
+
+            expect(customer.customerId).toEqual(expect.any(String));
+        });
+
+        it('should convert to upper case', () => {
+            const lowerCaseCustomerId = chance.string().toLowerCase();
+            customerAttributes.customerId = lowerCaseCustomerId;
+
+            const customer = new CustomerModel(customerAttributes);
+
+            expect(customer.customerId).toEqual(lowerCaseCustomerId.toUpperCase());
         });
     });
 

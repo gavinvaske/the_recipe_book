@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const addressSchema = require('../schemas/address');
 const contactSchema = require('../schemas/contact');
 
+function doesArrayContainElements(value) {
+    return value.length > 0;
+}
+
 const schema = new Schema({
     name: {
         type: String,
@@ -22,14 +26,21 @@ const schema = new Schema({
         type: [addressSchema]
     },
     contacts: {
-        type: [contactSchema]
+        type: [contactSchema],
+        validate: [doesArrayContainElements, 'Must have at least one contact']
     },
-    overRun: {
-        type: Boolean
+    overrun: {
+        type: Number,
+        required: true
     },
     creditTerms: {
         type: [Schema.Types.ObjectId],
         ref: 'CreditTerm'
+    },
+    customerId: {
+        type: String,
+        required: true,
+        uppercase: true,
     }
 }, { timestamps: true });
 

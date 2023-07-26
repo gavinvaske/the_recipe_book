@@ -1,5 +1,6 @@
 const chance = require('chance').Chance();
 const VendorModel = require('../../application/models/vendor');
+const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {
     let vendorAttributes;
@@ -246,6 +247,26 @@ describe('validation', () => {
             const error = vendor.validateSync();
             
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('verify timestamps on created object', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        describe('verify timestamps on created object', () => {
+            it('should have a "createdAt" attribute once object is saved', async () => {
+                const vendor = new VendorModel(vendorAttributes);
+                let savedVendor = await vendor.save({ validateBeforeSave: false });
+
+                expect(savedVendor.createdAt).toBeDefined();
+                expect(savedVendor.updatedAt).toBeDefined();
+            });
         });
     });
 });

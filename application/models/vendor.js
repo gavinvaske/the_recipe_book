@@ -32,6 +32,16 @@ const schema = new Schema({
     primaryContactName: {
         type: String,
         required: true
+    },
+    primaryContactPhoneNumber: {
+        type: String,
+        required: true,
+        validate: [validatePhoneNumber, 'Invalid attribute "primaryContactPhoneNumber": The provided phone number "{VALUE}" is not a valid phone number']
+    },
+    primaryContactEmail: {
+        type: String,
+        required: true,
+        validate: [validateEmail, 'Invalid attribute "primaryContactEmail": The provided email "{VALUE}" is not a valid email address']
     }
 }, { timestamps: true });
 

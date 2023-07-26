@@ -95,7 +95,7 @@ describe('validation', () => {
             const material = new MaterialModel(materialAttributes);
 
             expect(material.materialId).toEqual(lowerCaseMaterialId.toUpperCase());
-        })
+        });
     });
 
     describe('attribute: vendor', () => {

@@ -13,6 +13,8 @@ describe('validation', () => {
             notes: chance.paragraph(),
             website: chance.url(),
             primaryContactName: chance.string(),
+            primaryContactPhoneNumber: chance.phone(),
+            primaryContactEmail: chance.email()
         };
     });
 
@@ -184,6 +186,66 @@ describe('validation', () => {
             const vendor = new VendorModel(vendorAttributes);
             
             expect(vendor.primaryContactName).toEqual(expect.any(String));
+        });
+    });
+
+    describe('attribute: primaryContactPhoneNumber', () => {
+        it('should be required', () => {
+            delete vendorAttributes.primaryContactPhoneNumber;
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if primaryContactPhoneNumber is valid', () => {
+            vendorAttributes.primaryContactPhoneNumber = chance.phone();
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+        
+        it('should fail validation if primaryContactPhoneNumber is not a valid phone number', () => {
+            const invalidPhoneNumber = chance.string();
+            vendorAttributes.primaryContactPhoneNumber = invalidPhoneNumber;
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: primaryContactEmail', () => {
+        it('should be required', () => {
+            delete vendorAttributes.primaryContactEmail;
+            const vendor = new VendorModel(vendorAttributes);
+
+            const error = vendor.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if primaryContactEmail is valid', () => {
+            vendorAttributes.primaryContactEmail = chance.email();
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if primaryContactEmail is not a valid email', () => {
+            const invalidEmail = chance.string();
+            vendorAttributes.primaryContactEmail = invalidEmail;
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+            
+            expect(error).toBeDefined();
         });
     });
 });

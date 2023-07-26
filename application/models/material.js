@@ -4,14 +4,15 @@ const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
 const schema = new Schema({
-    name: { // TODO: Automatically generate it? Talk to storm (Maybe if its not provided, automatically generate it)
+    name: {
         type: String,
         required: true,
         uppercase: true
     },
     materialId: {
         type: String,
-        required: true
+        required: true,
+        uppercase: true
     },
     vendor: {
         type: Schema.Types.ObjectId,

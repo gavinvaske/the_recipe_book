@@ -80,13 +80,22 @@ describe('validation', () => {
         });
 
         it('should trim whitespace', () => {
-            const materialIdWithoutWhitespace = materialAttributes.materialId;
+            const materialIdWithoutWhitespace = chance.string().toUpperCase();
             materialAttributes.materialId = '  ' + materialIdWithoutWhitespace + '  ';
 
             const material = new MaterialModel(materialAttributes);
 
             expect(material.materialId).toEqual(materialIdWithoutWhitespace);
         });
+
+        it('should uppercase the attribute', () => {
+            const lowerCaseMaterialId = chance.string().toLowerCase();
+            materialAttributes.materialId = lowerCaseMaterialId;
+            
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.materialId).toEqual(lowerCaseMaterialId.toUpperCase());
+        })
     });
 
     describe('attribute: vendor', () => {

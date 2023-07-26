@@ -28,7 +28,8 @@ describe('validation', () => {
             name: chance.string(),
             notes: chance.string(),
             overrun: chance.d100(),
-            customerId: chance.string()
+            customerId: chance.string(),
+            contacts: [getContact()],
         };
     });
 
@@ -223,7 +224,7 @@ describe('validation', () => {
         });
 
         it('should be an array with a single mongoose object', () => {
-            customerAttributes.contacts = [getAddress()];
+            customerAttributes.contacts = [getContact()];
 
             const { contacts } = new CustomerModel(customerAttributes);
 
@@ -240,14 +241,6 @@ describe('validation', () => {
 
             expect(contacts[0]._id).toBeDefined();
             expect(contacts[1]._id).toBeDefined();
-        });
-
-        it('should default to an empty array', () => {
-            delete customerAttributes.billingLocations;
-
-            const { contacts } = new CustomerModel(customerAttributes);
-
-            expect(contacts).toEqual([]);
         });
     });
 

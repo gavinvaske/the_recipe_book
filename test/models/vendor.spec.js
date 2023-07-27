@@ -1,12 +1,23 @@
 const chance = require('chance').Chance();
 const VendorModel = require('../../application/models/vendor');
 const databaseService = require('../../application/services/databaseService');
+const mongoose = require('mongoose');
 
 describe('validation', () => {
     let vendorAttributes;
 
     beforeEach(() => {
         jest.resetAllMocks();
+
+        addressAttributes = {
+            name: chance.string(),
+            street: chance.string(),
+            unitOrSuite: chance.string(),
+            city: chance.string(),
+            state: chance.string(),
+            zipCode: '80426',
+        };
+
         vendorAttributes = {
             name: chance.string(),
             phoneNumber: chance.phone(),
@@ -15,7 +26,8 @@ describe('validation', () => {
             website: chance.url(),
             primaryContactName: chance.string(),
             primaryContactPhoneNumber: chance.phone(),
-            primaryContactEmail: chance.email()
+            primaryContactEmail: chance.email(),
+            address: addressAttributes
         };
     });
 
@@ -168,6 +180,24 @@ describe('validation', () => {
             const vendor = new VendorModel(vendorAttributes);
             
             expect(vendor.website).toBe(website);
+        });
+    });
+
+    describe('attribute: address', () => {
+        it('should be required', () => {
+            delete vendorAttributes.address;
+            const vendor = new VendorModel(vendorAttributes);
+            
+            const error = vendor.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be an instance of a mongoose object', () => {
+            const vendor = new VendorModel(vendorAttributes);
+
+            expect(vendor.address._id).toEqual(expect.any(mongoose.Types.ObjectId));
+            expect(vendor.address.street.toUpperCase()).toEqual(vendorAttributes.address.street.toUpperCase());
         });
     });
 

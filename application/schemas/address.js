@@ -11,7 +11,7 @@ function validateZipCode(zipCode) {
 const addressSchema = new Schema({
     name: {
         type: String,
-        required: true, 
+        required: false, 
     },
     street: {
         type: String,

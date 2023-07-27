@@ -27,13 +27,13 @@ describe('validation', () => {
     });
 
     describe('attribute: name', () => {
-        it('should fail validation if attribute is undefined', () => {
+        it('should NOT fail validation if attribute is undefined', () => {
             delete addressAttributes.name;
             const address = new AddressModel(addressAttributes);
     
             const error = address.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).not.toBeDefined();
         });
 
         it('should be of type String', () => {

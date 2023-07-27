@@ -334,7 +334,7 @@ describe('validation', () => {
 
         describe('attribute: customerId', () => {
             it('should be unique', async () => {
-                const customerId = chance.string().toUpperCase();
+                const customerId = '123456789';
                 customerAttributes.customerId = customerId;
                 const customer1 = new CustomerModel(customerAttributes);
 

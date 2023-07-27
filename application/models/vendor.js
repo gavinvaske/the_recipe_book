@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
+const addressSchema = require('../schemas/address');
 
 const schema = new Schema({
     name: {
@@ -25,10 +26,10 @@ const schema = new Schema({
         type: String,
         required: false
     },
-    // address: {   // TOOD: Add address attribute and validate using google maps API
-    //     type: String,
-    //     required: true
-    // },
+    address: {
+        type: addressSchema,
+        required: true
+    },
     primaryContactName: {
         type: String,
         required: true

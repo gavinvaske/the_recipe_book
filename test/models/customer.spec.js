@@ -313,7 +313,7 @@ describe('validation', () => {
         });
     });
 
-    describe('verify timestamps on created object', () => {
+    describe('verify database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
@@ -329,6 +329,21 @@ describe('validation', () => {
 
                 expect(savedCustomer.createdAt).toBeDefined();
                 expect(savedCustomer.updatedAt).toBeDefined();
+            });
+        });
+
+        describe('attribute: customerId', () => {
+            it('should be unique', async () => {
+                const customerId = chance.string().toUpperCase();
+                customerAttributes.customerId = customerId;
+                const customer1 = new CustomerModel(customerAttributes);
+
+                customerAttributes.customerId = customerId.toLowerCase();
+                const customer2 = new CustomerModel(customerAttributes);
+
+                await customer1.save();
+
+                await expect(customer2.save()).rejects.toThrowError(Error);
             });
         });
     });

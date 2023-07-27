@@ -29,18 +29,19 @@ const schema = new Schema({
         type: [contactSchema],
         validate: [doesArrayContainElements, 'Must have at least one contact']
     },
-    overrun: {
-        type: Number,
-        required: true
-    },
     creditTerms: {
         type: [Schema.Types.ObjectId],
         ref: 'CreditTerm'
+    },
+    overrun: {
+        type: Number,
+        required: true
     },
     customerId: {
         type: String,
         required: true,
         uppercase: true,
+        unique: true
     }
 }, { timestamps: true });
 

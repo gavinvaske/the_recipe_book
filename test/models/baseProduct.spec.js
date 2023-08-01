@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const ProductModel = require('../../application/models/product');
+const ProductModel = require('../../application/models/baseProduct');
 const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 const CustomerModel = require('../../application/models/customer');

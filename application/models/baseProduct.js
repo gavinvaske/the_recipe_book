@@ -3,8 +3,8 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const CustomerModel = require('./Customer');
 const DieModel = require('./Die');
-const { unwindDirections, defaultUnwindDirection } = require('../../application/enums/unwindDirectionsEnum');
-const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
+const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
+const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
 
 async function generateUniqueProductNumber() {
     const customer = await CustomerModel.findById(this.customerId);
@@ -142,6 +142,6 @@ productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
 
-const ProductModel = mongoose.model('Product', productSchema);
+const ProductModel = mongoose.model('BaseProduct', productSchema);
 
 module.exports = ProductModel;

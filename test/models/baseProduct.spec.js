@@ -3,6 +3,7 @@ const ProductModel = require('../../application/models/baseProduct');
 const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 const CustomerModel = require('../../application/models/customer');
+const MaterialModel = require('../../application/models/material');
 const { unwindDirections, defaultUnwindDirection } = require('../../application/enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
 const DieModel = require('../../application/models/die');
@@ -17,7 +18,7 @@ describe('Product Model', () => {
             dieId: mongoose.Types.ObjectId(),
             unwindDirection: chance.pickone(unwindDirections),
             artNotes: chance.string(),
-            primaryMaterial: mongoose.Types.ObjectId(),
+            primaryMaterialId: mongoose.Types.ObjectId(),
             finish: mongoose.Types.ObjectId(),
             finishType: chance.pickone(finishTypes),
             customerId: mongoose.Types.ObjectId(),
@@ -131,7 +132,7 @@ describe('Product Model', () => {
             expect(error).toBeDefined();
         });
     });
-
+    
     describe('attribute: ovOrEpm', () => {
         let ovOrEpmOptions, defaultOvOrEpmOption;
 
@@ -200,9 +201,9 @@ describe('Product Model', () => {
         });
     });
 
-    describe('attribute: primaryMaterial', () => {
+    describe('attribute: primaryMaterialId', () => {
         it('should be required', () => {
-            delete productAttributes.primaryMaterial;
+            delete productAttributes.primaryMaterialId;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -213,11 +214,11 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             const product = new ProductModel(productAttributes);
             
-            expect(product.primaryMaterial).toBeInstanceOf(mongoose.Types.ObjectId);
+            expect(product.primaryMaterialId).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
-            productAttributes.primaryMaterial = chance.word();
+            productAttributes.primaryMaterialId = chance.word();
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -465,6 +466,7 @@ describe('Product Model', () => {
     describe('verify database interactions', () => {
         let savedCustomer,
             savedDie,
+            savedPrimaryMaterial,
             dieAttributes;
 
         beforeEach(async () => {
@@ -477,12 +479,21 @@ describe('Product Model', () => {
 
             dieAttributes = {
                 sizeAround: chance.floating({ min: 0.01, fixed: 4 }),
-                spaceAround: chance.floating({ min: 0.01, fixed: 4 })
+                spaceAround: chance.floating({ min: 0.01, fixed: 4 }),
+                sizeAcross: chance.floating({ min: 0.01, fixed: 4 }),
+                spaceAcross: chance.floating({ min: 0.01, fixed: 4 }),
+            };
+            const materialAttributes = {
+                width: chance.floating({ min: 0.01, fixed: 4 }),
             };
             const die = new DieModel(dieAttributes);
+            const primaryMaterial = new MaterialModel(materialAttributes);
+
             savedDie = await die.save({ validateBeforeSave: false });
+            savedPrimaryMaterial = await primaryMaterial.save({ validateBeforeSave: false });
 
             productAttributes.dieId = savedDie._id;
+            productAttributes.primaryMaterialId = savedPrimaryMaterial._id;
         });
 
         afterEach(async () => {
@@ -493,7 +504,7 @@ describe('Product Model', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const product = new ProductModel(productAttributes);
 
-                let savedProduct = await product.save();
+                let savedProduct = await product.save({ validateBeforeSave: false });
 
                 expect(savedProduct.createdAt).toBeDefined();
                 expect(savedProduct.updatedAt).toBeDefined();
@@ -510,9 +521,9 @@ describe('Product Model', () => {
                 const product2 = new ProductModel(productAttributes);
                 const product3 = new ProductModel(productAttributes);
 
-                let savedProduct1 = await product1.save();
-                let savedProduct2 = await product2.save();
-                let savedProduct3 = await product3.save();
+                let savedProduct1 = await product1.save({ validateBeforeSave: false });
+                let savedProduct2 = await product2.save({ validateBeforeSave: false });
+                let savedProduct3 = await product3.save({ validateBeforeSave: false });
 
                 expect(savedProduct1.productNumber).toBe(expectedProductNumber1);
                 expect(savedProduct2.productNumber).toBe(expectedProductNumber2);
@@ -550,6 +561,18 @@ describe('Product Model', () => {
                 savedProduct = await savedProduct.save({ validateBeforeSave: false });
                 
                 expect(savedProduct.overrun).toEqual(0);
+            });
+        });
+
+        describe('attribute: numberAcross', () => {
+            it('should have a default value if not defined', async () => {
+                delete productAttributes.numberAcross;
+                const product = new ProductModel(productAttributes);
+                const expectedDefaultValue = Math.floor((savedDie.sizeAcross + savedDie.spaceAcross) / savedPrimaryMaterial.width);
+
+                const savedProduct = await product.save({ validateBeforeSave: false });
+
+                expect(savedProduct.numberAcross).toEqual(expectedDefaultValue);
             });
         });
     });

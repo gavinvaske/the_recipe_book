@@ -3,6 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const CustomerModel = require('./Customer');
 const DieModel = require('./Die');
+const MaterialModel = require('./Material');
 const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
 
@@ -36,12 +37,19 @@ async function calculateOverrun() {
     this.overrun = customer.overrun;
 }
 
+async function calculateDefaultValueForNumberAcross() {
+    const valueWasOverriddenByUser = Boolean(this.numberAcross);
+
+    if (valueWasOverriddenByUser) return;
+
+    const material = await MaterialModel.findById(this.primaryMaterialId);
+    const die = await DieModel.findById(this.dieId);
+    const numberAcross = (die.sizeAcross + die.spaceAcross) / material.width;
+
+    this.numberAcross = Math.floor(numberAcross);
+}
+
 const productSchema = new Schema({
-    customerId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Customer',
-        required: true
-    },
     productNumber: {
         type: String,
         unique: true
@@ -60,6 +68,9 @@ const productSchema = new Schema({
         enum: unwindDirections,
         default: defaultUnwindDirection
     },
+    numberAcross: {
+        type: Number
+    },
     // numberAround: {  // TODO: Clarify these with Storm
     //     type: Number,
     //     required: true
@@ -77,7 +88,7 @@ const productSchema = new Schema({
     artNotes: {
         type: String
     },
-    primaryMaterial: {
+    primaryMaterialId: {
         type: Schema.Types.ObjectId,
         ref: 'Material',
         required: true
@@ -141,6 +152,7 @@ const productSchema = new Schema({
 productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
+productSchema.pre('save', calculateDefaultValueForNumberAcross);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 

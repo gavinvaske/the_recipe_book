@@ -1,0 +1,27 @@
+<% const requiredAttributesAreDefined = typeof discussionId != 'undefined' %>
+
+<% if (!requiredAttributesAreDefined) { %>
+    <% throw new Error(`Error: a "dicussionId" attribute must be passed to the comment-section partial"`) %> 
+<% } %>
+
+<div id="disqus_thread"></div>
+
+<script>
+    var disqus_config = function () {
+        const endpoint = window.location.pathname;
+        const discussionId = endpoint;
+        const baseUrl = window.location.origin;
+
+        console.log(`discussionId => ${discussionId} and baseUrl => ${baseUrl}`);
+
+        this.page.url = baseUrl;
+        this.page.identifier = discussionId;
+    };
+
+(function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://eli-9.disqus.com/embed.js';    // This is viewable / configured on disqus.com
+    s.setAttribute('data-timestamp', + new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>

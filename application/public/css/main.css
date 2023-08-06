@@ -4543,7 +4543,7 @@ iframe {
   width: 100%;
   height: 100%;
   border-radius: .428rem;
-  display: none;
+/*   display: none; */
 }
 .job-notes {
   position: absolute;

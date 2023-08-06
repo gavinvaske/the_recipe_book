@@ -67,7 +67,7 @@ const schema = new Schema({
         validate: [validateDieNumberFormat, 'The provided dieNumber "{VALUE}" must be in the following format: characters followed a dash followed by numbers'],
         uppercase: true
     },
-    numberAcross: {
+    dieNumberAcross: {
         type: Number,
         required: true,
         validate : {
@@ -76,7 +76,7 @@ const schema = new Schema({
         },
         min: 0
     },
-    numberAround: {
+    dieNumberAround: {
         type: Number,
         required: true,
         validate : {

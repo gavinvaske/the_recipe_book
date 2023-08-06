@@ -24,8 +24,8 @@ describe('validation', () => {
             sizeAcross: chance.floating({ min: 0 }),
             sizeAround: chance.floating({ min: 0 }),
             dieNumber: 'DC-1234',
-            numberAcross: chance.d100(),
-            numberAround: chance.d100(),
+            dieNumberAcross: chance.d100(),
+            dieNumberAround: chance.d100(),
             gear: chance.d100(),
             toolType: chance.pickone(toolTypes),
             notes: chance.string(),
@@ -203,9 +203,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: numberAcross', () => {
+    describe('attribute: dieNumberAcross', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete dieAttributes.numberAcross;
+            delete dieAttributes.dieNumberAcross;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -214,7 +214,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
-            dieAttributes.numberAcross = chance.floating({ min: 0 });
+            dieAttributes.dieNumberAcross = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -224,7 +224,7 @@ describe('validation', () => {
 
         it('should fail validation if value IS NEGATIVE', () => {
             const negativeValue = chance.d100() * -1;
-            dieAttributes.numberAcross = negativeValue;
+            dieAttributes.dieNumberAcross = negativeValue;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -233,17 +233,17 @@ describe('validation', () => {
         });
 
         it('should be a number', () => {
-            const expectedNumberAcross = chance.d100();
-            dieAttributes.numberAcross = String(expectedNumberAcross);
+            const expectedDieNumberAcross = chance.d100();
+            dieAttributes.dieNumberAcross = String(expectedDieNumberAcross);
             const die = new DieModel(dieAttributes);
 
-            expect(die.numberAcross).toEqual(expect.any(Number));
+            expect(die.dieNumberAcross).toEqual(expect.any(Number));
         });
     });
 
-    describe('attribute: numberAround', () => {
+    describe('attribute: dieNumberAround', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete dieAttributes.numberAround;
+            delete dieAttributes.dieNumberAround;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -252,7 +252,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
-            dieAttributes.numberAround = chance.floating({ min: 0 });
+            dieAttributes.dieNumberAround = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -262,7 +262,7 @@ describe('validation', () => {
 
         it('should fail validation if value IS NEGATIVE', () => {
             const negativeValue = chance.d100() * -1;
-            dieAttributes.numberAround = negativeValue;
+            dieAttributes.dieNumberAround = negativeValue;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -271,11 +271,11 @@ describe('validation', () => {
         });
 
         it('should be a number', () => {
-            const numberAroundAsNumber = chance.d100();
-            dieAttributes.numberAround = String(numberAroundAsNumber);
+            const dieNumberAroundAsNumber = chance.d100();
+            dieAttributes.dieNumberAround = String(dieNumberAroundAsNumber);
             const die = new DieModel(dieAttributes);
 
-            expect(die.numberAround).toEqual(expect.any(Number));
+            expect(die.dieNumberAround).toEqual(expect.any(Number));
         });
     });
 

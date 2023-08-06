@@ -341,7 +341,7 @@ describe('validation', () => {
                 customerAttributes.customerId = customerId.toLowerCase();
                 const customer2 = new CustomerModel(customerAttributes);
 
-                await customer1.save();
+                const savedCustomer1 = await customer1.save(); // eslint-disable-line no-unused-vars
 
                 await expect(customer2.save()).rejects.toThrowError(Error);
             });

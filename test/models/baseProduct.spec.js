@@ -7,6 +7,9 @@ const MaterialModel = require('../../application/models/material');
 const { unwindDirections, defaultUnwindDirection } = require('../../application/enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
 const DieModel = require('../../application/models/die');
+const constantsEnum = require('../../application/enums/constantsEnum');
+
+const MILLIMETERS_PER_INCH = 25.4;
 
 describe('Product Model', () => {
     let productAttributes;
@@ -573,6 +576,39 @@ describe('Product Model', () => {
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
                 expect(savedProduct.numberAcross).toEqual(expectedDefaultValue);
+            });
+
+            it('should be overridable by the user', async () => {
+                const expectedNumberAcross = chance.floating({ min: 1, max: 100 });
+                productAttributes.numberAcross = expectedNumberAcross;
+                const product = new ProductModel(productAttributes);
+
+                const savedProduct = await product.save({ validateBeforeSave: false });
+
+                expect(savedProduct.numberAcross).toEqual(expectedNumberAcross);
+            });
+        });
+
+        describe('attribute: numberAround', () => {
+            it('should have a default value if not defined', async () => {
+                delete productAttributes.numberAround;
+                const product = new ProductModel(productAttributes);
+                const expectedDefaultValueInInches = Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)) * (savedDie.sizeAround + savedDie.spaceAround));
+                const expectedDefaultValueInMillimeters = expectedDefaultValueInInches * MILLIMETERS_PER_INCH;
+
+                const savedProduct = await product.save({ validateBeforeSave: false });
+
+                expect(savedProduct.numberAround).toEqual(expectedDefaultValueInMillimeters);
+            });
+
+            it('should be overridable by the user', async () => {
+                const expectedNumberAround = chance.floating({ min: 1, max: 100 });
+                productAttributes.numberAround = expectedNumberAround;
+                const product = new ProductModel(productAttributes);
+
+                const savedProduct = await product.save({ validateBeforeSave: false });
+
+                expect(savedProduct.numberAround).toEqual(expectedNumberAround);
             });
         });
     });

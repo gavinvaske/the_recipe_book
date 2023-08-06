@@ -6,6 +6,7 @@ const DieModel = require('./Die');
 const MaterialModel = require('./Material');
 const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
+const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
 
 async function generateUniqueProductNumber() {
     const customer = await CustomerModel.findById(this.customerId);
@@ -49,6 +50,24 @@ async function calculateDefaultValueForNumberAcross() {
     this.numberAcross = Math.floor(numberAcross);
 }
 
+function convertInchesToMillimeters(inches) {
+    const MILLIMETERS_PER_INCH = 25.4;
+
+    return inches * MILLIMETERS_PER_INCH;
+}
+
+async function calculateDefaultValueForNumberAround() {
+    const valueWasOverriddenByUser = Boolean(this.numberAround);
+
+    if (valueWasOverriddenByUser) return;
+
+    const die = await DieModel.findById(this.dieId);
+
+    const numberAround = Math.floor((MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)) * (die.sizeAround + die.spaceAround));
+
+    this.numberAround = convertInchesToMillimeters(numberAround);
+}
+
 const productSchema = new Schema({
     productNumber: {
         type: String,
@@ -68,14 +87,13 @@ const productSchema = new Schema({
         enum: unwindDirections,
         default: defaultUnwindDirection
     },
-    numberAcross: {
+    numberAcross: { // TODO: Ask storm if I should round down the inches before millimeter conversion?
         type: Number
     },
-    // numberAround: {  // TODO: Clarify these with Storm
-    //     type: Number,
-    //     required: true
-    // },
-    // topToBottom: {
+    numberAround: { // TODO: Ask storm if I should round down the inches before millimeter conversion? (See calculateDefaultValueForNumberAround) | ALSO ask about his comment on Lucid Chart
+        type: Number
+    },
+    // frameRepeat: {
     //     type: Number,
     //     required: true,
     // },
@@ -153,6 +171,7 @@ productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
 productSchema.pre('save', calculateDefaultValueForNumberAcross);
+productSchema.pre('save', calculateDefaultValueForNumberAround);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 

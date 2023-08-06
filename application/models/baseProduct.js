@@ -45,15 +45,19 @@ async function calculateDefaultValueForNumberAcross() {
 
     const material = await MaterialModel.findById(this.primaryMaterialId);
     const die = await DieModel.findById(this.dieId);
-    const numberAcross = (die.sizeAcross + die.spaceAcross) / material.width;
+    const numberAcross = Math.floor((die.sizeAcross + die.spaceAcross) / material.width);
 
-    this.numberAcross = Math.floor(numberAcross);
+    this.numberAcross = numberAcross;
 }
 
 function convertInchesToMillimeters(inches) {
     const MILLIMETERS_PER_INCH = 25.4;
 
     return inches * MILLIMETERS_PER_INCH;
+}
+
+function roundDownToNearestEvenWholeNumber(value) {
+    return Math.floor(value / 2) * 2;
 }
 
 async function calculateDefaultValueForNumberAround() {
@@ -63,9 +67,22 @@ async function calculateDefaultValueForNumberAround() {
 
     const die = await DieModel.findById(this.dieId);
 
-    const numberAround = Math.floor((MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)) * (die.sizeAround + die.spaceAround));
+    const numberAround = Math.floor(MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround));
+    const isSizeAroundLessThanOrEqualToOne = die.sizeAround <= 1;
 
-    this.numberAround = convertInchesToMillimeters(numberAround);
+    if (isSizeAroundLessThanOrEqualToOne) {
+        this.numberAround = roundDownToNearestEvenWholeNumber(numberAround);
+    } else {
+        this.numberAround = numberAround;
+    };
+}
+
+async function calculateFrameRepeat() {
+    const die = await DieModel.findById(this.dieId);
+    const frameRepeatInInches = Math.floor(MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)) * (die.sizeAround + die.spaceAround);
+    const frameRepeatInMillimeters = convertInchesToMillimeters(frameRepeatInInches);
+
+    this.frameRepeat = frameRepeatInMillimeters;
 }
 
 const productSchema = new Schema({
@@ -87,16 +104,15 @@ const productSchema = new Schema({
         enum: unwindDirections,
         default: defaultUnwindDirection
     },
-    numberAcross: { // TODO: Ask storm if I should round down the inches before millimeter conversion?
+    numberAcross: {
         type: Number
     },
-    numberAround: { // TODO: Ask storm if I should round down the inches before millimeter conversion? (See calculateDefaultValueForNumberAround) | ALSO ask about his comment on Lucid Chart
+    numberAround: {
         type: Number
     },
-    // frameRepeat: {
-    //     type: Number,
-    //     required: true,
-    // },
+    frameRepeat: {
+        type: Number,
+    },
     ovOrEpm: {
         type: String,
         uppercase: true,
@@ -172,6 +188,7 @@ productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
 productSchema.pre('save', calculateDefaultValueForNumberAcross);
 productSchema.pre('save', calculateDefaultValueForNumberAround);
+productSchema.pre('save', calculateFrameRepeat);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 

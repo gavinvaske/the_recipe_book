@@ -11,6 +11,10 @@ const constantsEnum = require('../../application/enums/constantsEnum');
 
 const MILLIMETERS_PER_INCH = 25.4;
 
+function roundDownToNearestEvenNumber(value) {
+    return Math.floor(value / 2) * 2;
+}
+
 describe('Product Model', () => {
     let productAttributes;
 
@@ -25,7 +29,7 @@ describe('Product Model', () => {
             finish: mongoose.Types.ObjectId(),
             finishType: chance.pickone(finishTypes),
             customerId: mongoose.Types.ObjectId(),
-            authorUserId: mongoose.Types.ObjectId(),
+            authorUserId: mongoose.Types.ObjectId()
         };
     });
 
@@ -481,10 +485,10 @@ describe('Product Model', () => {
             productAttributes.customerId = savedCustomer._id;
 
             dieAttributes = {
-                sizeAround: chance.floating({ min: 0.01, fixed: 4 }),
-                spaceAround: chance.floating({ min: 0.01, fixed: 4 }),
-                sizeAcross: chance.floating({ min: 0.01, fixed: 4 }),
-                spaceAcross: chance.floating({ min: 0.01, fixed: 4 }),
+                sizeAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
+                spaceAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
+                sizeAcross: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
+                spaceAcross: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
             };
             const materialAttributes = {
                 width: chance.floating({ min: 0.01, fixed: 4 }),
@@ -593,12 +597,11 @@ describe('Product Model', () => {
             it('should have a default value if not defined', async () => {
                 delete productAttributes.numberAround;
                 const product = new ProductModel(productAttributes);
-                const expectedDefaultValueInInches = Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)) * (savedDie.sizeAround + savedDie.spaceAround));
-                const expectedDefaultValueInMillimeters = expectedDefaultValueInInches * MILLIMETERS_PER_INCH;
+                const expectedDefaultValueInInches = Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)));
 
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAround).toEqual(expectedDefaultValueInMillimeters);
+                expect(savedProduct.numberAround).toEqual(expectedDefaultValueInInches);
             });
 
             it('should be overridable by the user', async () => {
@@ -609,6 +612,32 @@ describe('Product Model', () => {
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
                 expect(savedProduct.numberAround).toEqual(expectedNumberAround);
+            });
+
+            it('should round the value down to the nearest whole even number if die.sizeAround <= 1', async () => {
+                delete productAttributes.numberAround;
+                
+                await DieModel.findByIdAndUpdate(savedDie._id, { sizeAround: 0.69 }, { runValidators: false });
+                savedDie = await DieModel.findById(savedDie._id);
+
+                const valueBeforeRoundingToDownToNearestEvenNumber = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround));
+                const expectedNumberAround = roundDownToNearestEvenNumber(valueBeforeRoundingToDownToNearestEvenNumber);
+
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+
+                expect(savedProduct.numberAround).toEqual(expectedNumberAround);
+            });
+        });
+
+        describe('attribute: frameRepeat', () => {
+            it('should have the correct computed value', async () => {
+                delete productAttributes.frameRepeat; // This value is NOT user definable. It is computed automatically upon saving the product
+                const frameRepeatInInches = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)) * (savedDie.sizeAround + savedDie.spaceAround);
+                const frameRepeatInMillimeters = frameRepeatInInches * MILLIMETERS_PER_INCH;
+
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+
+                expect(savedProduct.frameRepeat).toEqual(frameRepeatInMillimeters);
             });
         });
     });

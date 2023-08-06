@@ -571,61 +571,61 @@ describe('Product Model', () => {
             });
         });
 
-        describe('attribute: numberAcross', () => {
+        describe('attribute: frameNumberAcross', () => {
             it('should have a default value if not defined', async () => {
-                delete productAttributes.numberAcross;
+                delete productAttributes.frameNumberAcross;
                 const product = new ProductModel(productAttributes);
                 const expectedDefaultValue = Math.floor((savedDie.sizeAcross + savedDie.spaceAcross) / savedPrimaryMaterial.width);
 
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAcross).toEqual(expectedDefaultValue);
+                expect(savedProduct.frameNumberAcross).toEqual(expectedDefaultValue);
             });
 
             it('should be overridable by the user', async () => {
-                const expectedNumberAcross = chance.floating({ min: 1, max: 100 });
-                productAttributes.numberAcross = expectedNumberAcross;
+                const expectedFrameNumberAcross = chance.floating({ min: 1, max: 100 });
+                productAttributes.frameNumberAcross = expectedFrameNumberAcross;
                 const product = new ProductModel(productAttributes);
 
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAcross).toEqual(expectedNumberAcross);
+                expect(savedProduct.frameNumberAcross).toEqual(expectedFrameNumberAcross);
             });
         });
 
-        describe('attribute: numberAround', () => {
+        describe('attribute: frameNumberAround', () => {
             it('should have a default value if not defined', async () => {
-                delete productAttributes.numberAround;
+                delete productAttributes.frameNumberAround;
                 const product = new ProductModel(productAttributes);
                 const expectedDefaultValueInInches = Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)));
 
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAround).toEqual(expectedDefaultValueInInches);
+                expect(savedProduct.frameNumberAround).toEqual(expectedDefaultValueInInches);
             });
 
             it('should be overridable by the user', async () => {
-                const expectedNumberAround = chance.floating({ min: 1, max: 100 });
-                productAttributes.numberAround = expectedNumberAround;
+                const expectedFrameNumberAround = chance.floating({ min: 1, max: 100 });
+                productAttributes.frameNumberAround = expectedFrameNumberAround;
                 const product = new ProductModel(productAttributes);
 
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAround).toEqual(expectedNumberAround);
+                expect(savedProduct.frameNumberAround).toEqual(expectedFrameNumberAround);
             });
 
             it('should round the value down to the nearest whole even number if die.sizeAround <= 1', async () => {
-                delete productAttributes.numberAround;
+                delete productAttributes.frameNumberAround;
                 
                 await DieModel.findByIdAndUpdate(savedDie._id, { sizeAround: 0.69 }, { runValidators: false });
                 savedDie = await DieModel.findById(savedDie._id);
 
                 const valueBeforeRoundingToDownToNearestEvenNumber = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround));
-                const expectedNumberAround = roundDownToNearestEvenNumber(valueBeforeRoundingToDownToNearestEvenNumber);
+                const expectedFrameNumberAround = roundDownToNearestEvenNumber(valueBeforeRoundingToDownToNearestEvenNumber);
 
                 const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
 
-                expect(savedProduct.numberAround).toEqual(expectedNumberAround);
+                expect(savedProduct.frameNumberAround).toEqual(expectedFrameNumberAround);
             });
         });
 

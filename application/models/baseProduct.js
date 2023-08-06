@@ -38,16 +38,16 @@ async function calculateOverrun() {
     this.overrun = customer.overrun;
 }
 
-async function calculateDefaultValueForNumberAcross() {
-    const valueWasOverriddenByUser = Boolean(this.numberAcross);
+async function calculateDefaultValueForFrameNumberAcross() {
+    const valueWasOverriddenByUser = Boolean(this.frameNumberAcross);
 
     if (valueWasOverriddenByUser) return;
 
     const material = await MaterialModel.findById(this.primaryMaterialId);
     const die = await DieModel.findById(this.dieId);
-    const numberAcross = Math.floor((die.sizeAcross + die.spaceAcross) / material.width);
+    const frameNumberAcross = Math.floor((die.sizeAcross + die.spaceAcross) / material.width);
 
-    this.numberAcross = numberAcross;
+    this.frameNumberAcross = frameNumberAcross;
 }
 
 function convertInchesToMillimeters(inches) {
@@ -60,20 +60,20 @@ function roundDownToNearestEvenWholeNumber(value) {
     return Math.floor(value / 2) * 2;
 }
 
-async function calculateDefaultValueForNumberAround() {
-    const valueWasOverriddenByUser = Boolean(this.numberAround);
+async function calculateDefaultValueForFrameNumberAround() {
+    const valueWasOverriddenByUser = Boolean(this.frameNumberAround);
 
     if (valueWasOverriddenByUser) return;
 
     const die = await DieModel.findById(this.dieId);
 
-    const numberAround = Math.floor(MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround));
+    const frameNumberAround = Math.floor(MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround));
     const isSizeAroundLessThanOrEqualToOne = die.sizeAround <= 1;
 
     if (isSizeAroundLessThanOrEqualToOne) {
-        this.numberAround = roundDownToNearestEvenWholeNumber(numberAround);
+        this.frameNumberAround = roundDownToNearestEvenWholeNumber(frameNumberAround);
     } else {
-        this.numberAround = numberAround;
+        this.frameNumberAround = frameNumberAround;
     };
 }
 
@@ -104,10 +104,10 @@ const productSchema = new Schema({
         enum: unwindDirections,
         default: defaultUnwindDirection
     },
-    numberAcross: {
+    frameNumberAcross: {
         type: Number
     },
-    numberAround: {
+    frameNumberAround: {
         type: Number
     },
     frameRepeat: {
@@ -186,8 +186,8 @@ const productSchema = new Schema({
 productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
-productSchema.pre('save', calculateDefaultValueForNumberAcross);
-productSchema.pre('save', calculateDefaultValueForNumberAround);
+productSchema.pre('save', calculateDefaultValueForFrameNumberAcross);
+productSchema.pre('save', calculateDefaultValueForFrameNumberAround);
 productSchema.pre('save', calculateFrameRepeat);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);

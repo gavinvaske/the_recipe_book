@@ -126,13 +126,29 @@ const schema = new Schema({
         type: Number,
         required: true
     },
-    spaceAcross: {
+    topAndBottom: {
         type: Number,
         required: true
     },
-    spaceAround: {
+    leftAndRight: {
         type: Number,
         required: true
+    },
+    spaceAcross: {
+        type: Number,
+        required: true,
+        set: function (spaceAcross) {
+            this.topAndBottom = spaceAcross / 2;
+            return spaceAcross;
+        }
+    },
+    spaceAround: {
+        type: Number,
+        required: true,
+        set: function (spaceAround) {
+            this.leftAndRight = spaceAround / 2;
+            return spaceAround;
+        }
     },
     facestock: {
         type: String,

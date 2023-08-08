@@ -551,6 +551,17 @@ describe('validation', () => {
             
             expect(die.spaceAcross).toEqual(expect.any(Number));
         });
+
+        it('should set the value of "topAndBottom" according to correct formula whenever "spaceAcross" is set', () => {
+            delete dieAttributes.topAndBottom;
+            const spaceAcross = chance.d100();
+            dieAttributes.spaceAcross = spaceAcross;
+            const expectedTopAndBottom = spaceAcross / 2;
+
+            const die = new DieModel(dieAttributes);
+
+            expect(die.topAndBottom).toEqual(expectedTopAndBottom);
+        });
     });
 
     describe('attribute: spaceAround', () => {
@@ -568,6 +579,17 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.spaceAround).toEqual(expect.any(Number));
+        });
+
+        it('should set the value of "leftAndRight" according to correct formula whenever "spaceAround" is set', () => {
+            delete dieAttributes.leftAndRight;
+            const spaceAround = chance.d100();
+            dieAttributes.spaceAround = spaceAround;
+            const expectedLeftAndRight = spaceAround / 2;
+
+            const die = new DieModel(dieAttributes);
+
+            expect(die.leftAndRight).toEqual(expectedLeftAndRight);
         });
     });
 

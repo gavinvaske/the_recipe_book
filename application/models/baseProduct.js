@@ -1,22 +1,20 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const CustomerModel = require('./Customer');
 const DieModel = require('./Die');
-const MaterialModel = require('./Material');
 const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
 const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
 
 async function generateUniqueProductNumber() {
-    const customer = await CustomerModel.findById(this.customerId);
-    const howManyProductsDoesThisCustomerHave = await ProductModel.countDocuments({ customerId: this.customerId });
+    await this.populate('customer'); // TODO: No tests fail even without an await before this line... something is wrong
+    const howManyProductsDoesThisCustomerHave = await ProductModel.countDocuments({ customer: this.customer._id });
 
     const nextProductId = howManyProductsDoesThisCustomerHave + 1;
     const numberOfDigitsInProductId = 3;
     const nextProductIdWithLeadingZero = nextProductId.toString().padStart(numberOfDigitsInProductId, '0');
 
-    productNumber = `${customer.customerId}-${nextProductIdWithLeadingZero}`;
+    productNumber = `${this.customer.customerId}-${nextProductIdWithLeadingZero}`;
 
     this.productNumber = productNumber;
 }
@@ -38,12 +36,12 @@ function roundDownToNearestEvenWholeNumber(value) {
     return Math.floor(value / 2) * 2;
 }
 
-async function calculateFrameRepeat() {
-    const die = await DieModel.findById(this.die);
-    const frameRepeatInInches = Math.floor(MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)) * (die.sizeAround + die.spaceAround);
-    const frameRepeatInMillimeters = convertInchesToMillimeters(frameRepeatInInches);
+async function setDefaultOverun() {
+    if (this.overun !== undefined) return;
+    
+    await this.populate('customer');
 
-    this.frameRepeat = frameRepeatInMillimeters;
+    this.overun = this.customer.overun;
 }
 
 const productSchema = new Schema({
@@ -83,7 +81,7 @@ const productSchema = new Schema({
     artNotes: {
         type: String
     },
-    primaryMaterialId: {
+    primaryMaterial: {
         type: Schema.Types.ObjectId,
         ref: 'Material',
         required: true
@@ -131,16 +129,16 @@ const productSchema = new Schema({
     pressCount: {
         type: Number
     },
-    customerId: {
+    customer: {
         type: Schema.Types.ObjectId,
         ref: 'Customer',
         required: true
     },
-    overrun: { // TODO: Clarify this with Storm
+    overun: {
         type: Number,
         required: false
     },
-    authorUserId: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -149,15 +147,14 @@ const productSchema = new Schema({
 
 productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
-productSchema.pre('save', calculateOverrun);
-// productSchema.pre('save', calculateFrameRepeat);
+productSchema.pre('save', setDefaultOverun);
 
 productSchema.virtual('frameNumberAcrossAsync').get(async function() {
     if (this.userDefinedFrameNumberAcross) return this.userDefinedFrameNumberAcross;
     
-    await this.populate(['primaryMaterialId', 'die']);
+    await this.populate(['primaryMaterial', 'die']);
 
-    return Math.floor((this.die.sizeAcross + this.die.spaceAcross) / this.primaryMaterialId.width);
+    return Math.floor((this.die.sizeAcross + this.die.spaceAcross) / this.primaryMaterial.width);
 });
 
 productSchema.virtual('frameNumberAroundAsync').get(async function () {

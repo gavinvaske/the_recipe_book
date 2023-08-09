@@ -24,6 +24,7 @@ function getContact() {
         contactStatus: chance.string()
     };
 }
+
 describe('validation', () => {
     let customerAttributes;
 
@@ -31,7 +32,7 @@ describe('validation', () => {
         customerAttributes = {
             name: chance.string(),
             notes: chance.string(),
-            overrun: chance.d100(),
+            overun: chance.d100(),
             customerId: chance.string(),
             contacts: [getContact()],
         };
@@ -248,9 +249,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: overrun', () => {
+    describe('attribute: overun', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete customerAttributes.overrun;
+            delete customerAttributes.overun;
             const customer = new CustomerModel(customerAttributes);
 
             const error = customer.validateSync();
@@ -259,10 +260,10 @@ describe('validation', () => {
         });
 
         it('should be of type Number', () => {
-            customerAttributes.overrun = chance.d100();
+            customerAttributes.overun = chance.d100();
             const customer = new CustomerModel(customerAttributes);
 
-            expect(customer.overrun).toEqual(expect.any(Number));
+            expect(customer.overun).toEqual(expect.any(Number));
         });
     });
 

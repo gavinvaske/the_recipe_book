@@ -33,7 +33,7 @@ const schema = new Schema({
         type: [Schema.Types.ObjectId],
         ref: 'CreditTerm'
     },
-    overrun: {
+    overun: {
         type: Number,
         required: true
     },

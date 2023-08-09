@@ -20,16 +20,15 @@ describe('Product Model', () => {
 
     beforeEach(() => {
         productAttributes = {
-            customerId: mongoose.Types.ObjectId(),
+            customer: mongoose.Types.ObjectId(),
             productDescription: chance.string(),
             die: mongoose.Types.ObjectId(),
             unwindDirection: chance.pickone(unwindDirections),
             artNotes: chance.string(),
-            primaryMaterialId: mongoose.Types.ObjectId(),
+            primaryMaterial: mongoose.Types.ObjectId(),
             finish: mongoose.Types.ObjectId(),
             finishType: chance.pickone(finishTypes),
-            customerId: mongoose.Types.ObjectId(),
-            authorUserId: mongoose.Types.ObjectId(),
+            author: mongoose.Types.ObjectId(),
             frameNumberAcross: chance.d100(),
             frameNumberAround: chance.d100()
         };
@@ -43,9 +42,9 @@ describe('Product Model', () => {
         expect(error).not.toBeDefined();
     });
 
-    describe('attribute: customerId', () => {
+    describe('attribute: customer', () => {
         it('should be required', () => {
-            delete productAttributes.customerId;
+            delete productAttributes.customer;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -56,11 +55,11 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.customerId).toBeInstanceOf(mongoose.Types.ObjectId);
+            expect(product.customer).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
-            productAttributes.customerId = chance.word();
+            productAttributes.customer = chance.word();
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -210,9 +209,9 @@ describe('Product Model', () => {
         });
     });
 
-    describe('attribute: primaryMaterialId', () => {
+    describe('attribute: primaryMaterial', () => {
         it('should be required', () => {
-            delete productAttributes.primaryMaterialId;
+            delete productAttributes.primaryMaterial;
             const product = new ProductModel(productAttributes);
 
             const error = product.validateSync();
@@ -223,11 +222,11 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             const product = new ProductModel(productAttributes);
             
-            expect(product.primaryMaterialId).toBeInstanceOf(mongoose.Types.ObjectId);
+            expect(product.primaryMaterial).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
-            productAttributes.primaryMaterialId = chance.word();
+            productAttributes.primaryMaterial = chance.word();
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -420,9 +419,9 @@ describe('Product Model', () => {
         });
     });
     
-    describe('attribute: customerId', () => {
+    describe('attribute: customer', () => {
         it('should be required', () => {
-            delete productAttributes.customerId;
+            delete productAttributes.customer;
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -433,11 +432,11 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             const product = new ProductModel(productAttributes);
             
-            expect(product.customerId).toBeInstanceOf(mongoose.Types.ObjectId);
+            expect(product.customer).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail validation if attribute is not a valid mongoose ObjectId', () => {
-            productAttributes.customerId = chance.word();
+            productAttributes.customer = chance.word();
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -446,9 +445,9 @@ describe('Product Model', () => {
         });
     });
 
-    describe('attribute: authorUserId', () => {
+    describe('attribute: author', () => {
         it('should be required', () => {
-            delete productAttributes.authorUserId;
+            delete productAttributes.author;
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -459,11 +458,11 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             const product = new ProductModel(productAttributes);
 
-            expect(product.authorUserId).toBeInstanceOf(mongoose.Types.ObjectId);
+            expect(product.author).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail validation if attribute is not a valid mongoose ObjectId', () => {
-            productAttributes.authorUserId = chance.word();
+            productAttributes.author = chance.word();
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
@@ -481,10 +480,13 @@ describe('Product Model', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
 
-            const customer = new CustomerModel({ customerId: chance.word() });
+            const customer = new CustomerModel({ 
+                customerId: chance.word(),
+                overun: chance.d100()
+            });
             savedCustomer = await customer.save({ validateBeforeSave: false });
 
-            productAttributes.customerId = savedCustomer._id;
+            productAttributes.customer = savedCustomer._id;
 
             dieAttributes = {
                 sizeAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
@@ -502,7 +504,7 @@ describe('Product Model', () => {
             savedPrimaryMaterial = await primaryMaterial.save({ validateBeforeSave: false });
 
             productAttributes.die = savedDie._id;
-            productAttributes.primaryMaterialId = savedPrimaryMaterial._id;
+            productAttributes.primaryMaterial = savedPrimaryMaterial._id;
         });
 
         afterEach(async () => {
@@ -589,8 +591,8 @@ describe('Product Model', () => {
 
                 const actualFrameNumberAcross = await savedProduct.frameNumberAroundAsync;
 
-                expect(actualFrameNumberAcross).toBe(expectedFrameNumberAround)
-            })
+                expect(actualFrameNumberAcross).toBe(expectedFrameNumberAround);
+            });
         });
 
         describe('attribute: productNumber', () => {
@@ -626,23 +628,24 @@ describe('Product Model', () => {
             });
         });
 
-        describe('attribute: overrun', () => {
-            it('should default product.overrun to customer.overrun when product is initially created', async () => {
-                const expectedOverrun = savedCustomer.overrun;
+        describe('attribute: overun', () => {
+            it('should default product.overun to customer.overun when product is initially created', async () => {
+                const expectedOverun = savedCustomer.overun;
                 const product = new ProductModel(productAttributes);
                 let savedProduct = await product.save({ validateBeforeSave: false });
                 
-                expect(savedProduct.overrun).toEqual(expectedOverrun);
+                expect(savedProduct.overun).toBeDefined();
+                expect(savedProduct.overun).toEqual(expectedOverun);
             });
 
-            it('should NOT use the value from customer.overrun if product.overrun is EXPLICITLY set to equal 0', async () => {
+            it('should NOT use the value from customer.overun if product.overun is EXPLICITLY set to equal 0', async () => {
                 const product = new ProductModel(productAttributes);
                 let savedProduct = await product.save({ validateBeforeSave: false });
 
-                savedProduct.overrun = 0; // EXPLICITLY set to 0
+                savedProduct.overun = 0; // EXPLICITLY set to 0
                 savedProduct = await savedProduct.save({ validateBeforeSave: false });
                 
-                expect(savedProduct.overrun).toEqual(0);
+                expect(savedProduct.overun).toEqual(0);
             });
         });
 

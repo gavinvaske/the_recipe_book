@@ -28,16 +28,6 @@ async function calculatePressCount() {
     this.pressCount = pressCount;
 }
 
-async function calculateOverrun() {
-    const valueWasExplicitlySetToZero = this.overrun === 0;
-
-    if (valueWasExplicitlySetToZero) return;
-
-    const customer = await CustomerModel.findById(this.customerId);
-
-    this.overrun = customer.overrun;
-}
-
 function convertInchesToMillimeters(inches) {
     const MILLIMETERS_PER_INCH = 25.4;
 
@@ -76,16 +66,13 @@ const productSchema = new Schema({
         default: defaultUnwindDirection,
         required: true
     },
-    userDefinedFrameNumberAcross: {
+    userDefinedFrameNumberAcross: { // Don't use this value. Use the virtual frameNumberAcrossAsync
         type: Number,
         required: false
     },
-    userDefinedFrameNumberAround: {
+    userDefinedFrameNumberAround: { // Don't use this value. Use the virtual frameNumberAroundAsync
         type: Number,
         required: false
-    },
-    frameRepeat: {
-        type: Number,
     },
     ovOrEpm: {
         type: String,
@@ -163,7 +150,7 @@ const productSchema = new Schema({
 productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', calculateOverrun);
-productSchema.pre('save', calculateFrameRepeat);
+// productSchema.pre('save', calculateFrameRepeat);
 
 productSchema.virtual('frameNumberAcrossAsync').get(async function() {
     if (this.userDefinedFrameNumberAcross) return this.userDefinedFrameNumberAcross;
@@ -186,6 +173,16 @@ productSchema.virtual('frameNumberAroundAsync').get(async function () {
     } else {
         return frameNumberAround;
     };
+});
+
+productSchema.virtual('frameRepeatAsync').get(async function () {
+    await this.populate('die');
+
+    const { sizeAround, spaceAround } = this.die;
+    const frameRepeatInInches = Math.floor(MAX_FRAME_LENGTH_INCHES / (sizeAround + spaceAround)) * (sizeAround + spaceAround);
+    const frameRepeatInMillimeters = convertInchesToMillimeters(frameRepeatInInches);
+
+    return frameRepeatInMillimeters;
 });
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);

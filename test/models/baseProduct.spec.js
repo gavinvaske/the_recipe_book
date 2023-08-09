@@ -646,15 +646,16 @@ describe('Product Model', () => {
             });
         });
 
-        describe('attribute: frameRepeat', () => {
+        describe('virtual: frameRepeatAsync', () => {
             it('should have the correct computed value', async () => {
-                delete productAttributes.frameRepeat; // This value is NOT user definable. It is computed automatically upon saving the product
                 const frameRepeatInInches = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)) * (savedDie.sizeAround + savedDie.spaceAround);
                 const frameRepeatInMillimeters = frameRepeatInInches * MILLIMETERS_PER_INCH;
 
                 const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
 
-                expect(savedProduct.frameRepeat).toEqual(frameRepeatInMillimeters);
+                const actualFrameRepeat = await savedProduct.frameRepeatAsync;
+
+                expect(actualFrameRepeat).toEqual(frameRepeatInMillimeters);
             });
         });
     });

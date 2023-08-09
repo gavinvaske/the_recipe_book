@@ -184,7 +184,14 @@ productSchema.virtual('labelsPerFrameAsync').get(async function () {
     const frameNumberAround = await this.frameNumberAroundAsync;
 
     return frameNumberAcross * frameNumberAround;
-})
+});
+
+productSchema.virtual('coreHeightAsync').get(async function () {
+    await this.populate('die');
+    const extraHeight = 0.125;
+
+    return this.die.sizeAcross + extraHeight;
+});
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 

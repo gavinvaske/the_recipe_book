@@ -16,7 +16,7 @@ function roundDownToNearestEvenNumber(value) {
 }
 
 function calculateFrameNumberAcross(die, material) {
-    return Math.floor((die.sizeAcross + die.spaceAcross) / material.width)
+    return Math.floor((die.sizeAcross + die.spaceAcross) / material.width);
 }
 function calculateFrameNumberAround(die) {
     return Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)));
@@ -497,8 +497,8 @@ describe('Product Model', () => {
 
             dieAttributes = {
                 sizeAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
-                spaceAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
                 sizeAcross: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
+                spaceAround: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
                 spaceAcross: chance.floating({ min: 0.01, max: 10, fixed: 4 }),
             };
             const materialAttributes = {
@@ -660,11 +660,11 @@ describe('Product Model', () => {
             it('should have the correct computed value', async () => {
                 const frameRepeatInInches = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)) * (savedDie.sizeAround + savedDie.spaceAround);
                 const frameRepeatInMillimeters = frameRepeatInInches * MILLIMETERS_PER_INCH;
-
+                
                 const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
-
                 const actualFrameRepeat = await savedProduct.frameRepeatAsync;
 
+                expect(actualFrameRepeat).toBeDefined();
                 expect(actualFrameRepeat).toEqual(frameRepeatInMillimeters);
             });
         });
@@ -672,12 +672,25 @@ describe('Product Model', () => {
         describe('virtual: labelsPerFrameAsync', () => {
             it('should have the correct computed value', async () => {
                 const expectedLabelsPerFrame = calculateFrameNumberAcross(savedDie, savedPrimaryMaterial) * calculateFrameNumberAround(savedDie);
-
+                
                 const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
-
                 const actualLabelsPerFrameAsync = await savedProduct.labelsPerFrameAsync;
 
+                expect(actualLabelsPerFrameAsync).toBeDefined();
                 expect(actualLabelsPerFrameAsync).toEqual(expectedLabelsPerFrame);
+            });
+        });
+
+        describe('virtual: coreHeightAsync', () => {
+            it('should have the correct computed value', async () => {
+                const extraHeight = 0.125;
+                const expectedCoreHeight = savedDie.sizeAcross + extraHeight;
+                
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+                const actualCoreHeight = await savedProduct.coreHeightAsync;
+
+                expect(actualCoreHeight).toBeDefined();;
+                expect(actualCoreHeight).toEqual(expectedCoreHeight);
             });
         });
     });

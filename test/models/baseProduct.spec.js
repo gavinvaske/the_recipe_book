@@ -15,6 +15,13 @@ function roundDownToNearestEvenNumber(value) {
     return Math.floor(value / 2) * 2;
 }
 
+function calculateFrameNumberAcross(die, material) {
+    return Math.floor((die.sizeAcross + die.spaceAcross) / material.width)
+}
+function calculateFrameNumberAround(die) {
+    return Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround)));
+}
+
 describe('Product Model', () => {
     let productAttributes;
 
@@ -264,13 +271,13 @@ describe('Product Model', () => {
     });
 
     describe('attribute: finish', () => {
-        it('should be required', () => {
+        it('should NOT be required', () => {
             delete productAttributes.finish;
             const product = new ProductModel(productAttributes);
             
             const error = product.validateSync();
             
-            expect(error).toBeDefined();
+            expect(error).not.toBeDefined();
         });
 
         it('should be a valid mongoose ObjectId', () => {
@@ -528,7 +535,7 @@ describe('Product Model', () => {
             });
 
             it('should be computed correctly', async () => {
-                const expectedFrameNumberAcross = Math.floor((savedDie.sizeAcross + savedDie.spaceAcross) / savedPrimaryMaterial.width);
+                const expectedFrameNumberAcross = calculateFrameNumberAcross(savedDie, savedPrimaryMaterial);
                 const baseProduct = new ProductModel(productAttributes);
                 const savedProduct = await baseProduct.save({ validateBeforeSave: false });
                 
@@ -561,7 +568,7 @@ describe('Product Model', () => {
 
                 console.log('BaseProduct.die.sizeAround = ', savedDie.sizeAround);
                 const product = new ProductModel(productAttributes);
-                const expectedDefaultValueInInches = Math.floor((constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround)));
+                const expectedDefaultValueInInches = calculateFrameNumberAround(savedDie);
                 const savedProduct = await product.save({ validateBeforeSave: false });
 
                 const actualFrameNumberAround = await savedProduct.frameNumberAroundAsync;
@@ -573,7 +580,7 @@ describe('Product Model', () => {
                 await DieModel.findByIdAndUpdate(savedDie._id, { sizeAround: 0.69 }, { runValidators: false });
                 savedDie = await DieModel.findById(savedDie._id);
 
-                const valueBeforeRoundingToDownToNearestEvenNumber = Math.floor(constantsEnum.MAX_FRAME_LENGTH_INCHES / (savedDie.sizeAround + savedDie.spaceAround));
+                const valueBeforeRoundingToDownToNearestEvenNumber = calculateFrameNumberAround(savedDie);;
                 const expectedFrameNumberAround = roundDownToNearestEvenNumber(valueBeforeRoundingToDownToNearestEvenNumber);
 
                 const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
@@ -629,7 +636,7 @@ describe('Product Model', () => {
         });
 
         describe('attribute: overun', () => {
-            it('should default product.overun to customer.overun when product is initially created', async () => {
+            it('should default product.secondaryMaterial to customer.overun when product is initially created', async () => {
                 const expectedOverun = savedCustomer.overun;
                 const product = new ProductModel(productAttributes);
                 let savedProduct = await product.save({ validateBeforeSave: false });
@@ -659,6 +666,18 @@ describe('Product Model', () => {
                 const actualFrameRepeat = await savedProduct.frameRepeatAsync;
 
                 expect(actualFrameRepeat).toEqual(frameRepeatInMillimeters);
+            });
+        });
+
+        describe('virtual: labelsPerFrameAsync', () => {
+            it('should have the correct computed value', async () => {
+                const expectedLabelsPerFrame = calculateFrameNumberAcross(savedDie, savedPrimaryMaterial) * calculateFrameNumberAround(savedDie);
+
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+
+                const actualLabelsPerFrameAsync = await savedProduct.labelsPerFrameAsync;
+
+                expect(actualLabelsPerFrameAsync).toEqual(expectedLabelsPerFrame);
             });
         });
     });

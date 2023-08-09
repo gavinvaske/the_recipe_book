@@ -94,11 +94,8 @@ const productSchema = new Schema({
     finish: {
         type: Schema.Types.ObjectId,
         ref: 'Finish',
-        required: true
+        required: false
     },
-    // labelsPerFrame: {
-    //     type: Number
-    // },
     pressNotes: {
         type: String,
         required: false
@@ -181,6 +178,13 @@ productSchema.virtual('frameRepeatAsync').get(async function () {
 
     return frameRepeatInMillimeters;
 });
+
+productSchema.virtual('labelsPerFrameAsync').get(async function () {
+    const frameNumberAcross = await this.frameNumberAcrossAsync;
+    const frameNumberAround = await this.frameNumberAroundAsync;
+
+    return frameNumberAcross * frameNumberAround;
+})
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 

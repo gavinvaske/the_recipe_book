@@ -38,7 +38,8 @@ describe('Product Model', () => {
             author: mongoose.Types.ObjectId(),
             frameNumberAcross: chance.d100(),
             frameNumberAround: chance.d100(),
-            labelsPerRoll: chance.d100()
+            labelsPerRoll: chance.d100(),
+            numberOfColors: chance.d12()
         };
     });
 
@@ -496,8 +497,45 @@ describe('Product Model', () => {
             const product = new ProductModel(productAttributes);
             
             expect(product.spotPlate).toEqual(definedValue);
-        })
-    })
+        });
+    });
+
+    describe('attribute: numberOfColors', () => {
+        it('should be required', () => {
+            delete productAttributes.numberOfColors;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a number', () => {
+            const product = new ProductModel(productAttributes);
+
+            expect(product.numberOfColors).toEqual(expect.any(Number));
+        });
+
+        it('should be a whole number', () => {
+            const nonWholeNumber = chance.floating({ min: 1 });
+            productAttributes.numberOfColors = nonWholeNumber;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a non-negative number', () => {
+            const negativeNumber = chance.d100() * -1;
+            productAttributes.numberOfColors = negativeNumber;
+            const product = new ProductModel(productAttributes);
+
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
 
     describe('verify database interactions', () => {
         let savedCustomer,
@@ -748,6 +786,20 @@ describe('Product Model', () => {
 
                 expect(actualLabelCellAroundAsync).toBeDefined();
                 expect(actualLabelCellAroundAsync).toEqual(expectedLabelCellAroundAsync);
+            });
+        });
+
+        describe('virtual: frameSizeAsync', () => {
+            it('should have the correct computed value', async () => {
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+                const labelCellAround = await savedProduct.labelCellAroundAsync;
+                const frameNumberAround = await savedProduct.frameNumberAroundAsync;
+                const expectedFrameSize = labelCellAround * frameNumberAround;
+
+                const actualFrameSize = await savedProduct.frameSizeAsync;
+
+                expect(actualFrameSize).toBeDefined();
+                expect(actualFrameSize).toEqual(expectedFrameSize);
             });
         });
     });

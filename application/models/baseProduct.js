@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const DieModel = require('./Die');
 const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
 const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
 
 async function generateUniqueProductNumber() {
-    await this.populate('customer'); // TODO: No tests fail even without an await before this line... something is wrong
+    await this.populate('customer');
     const howManyProductsDoesThisCustomerHave = await ProductModel.countDocuments({ customer: this.customer._id });
 
     const nextProductId = howManyProductsDoesThisCustomerHave + 1;
@@ -20,8 +19,8 @@ async function generateUniqueProductNumber() {
 }
 
 async function calculatePressCount() {
-    const die = await DieModel.findById(this.die);
-    const pressCount = (die.sizeAround + die.spaceAround) * (this.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
+    await this.populate('die');
+    const pressCount = (this.die.sizeAround + this.die.spaceAround) * (this.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
 
     this.pressCount = pressCount;
 }
@@ -143,6 +142,15 @@ const productSchema = new Schema({
     spotPlate: {
         type: Boolean,
         default: false
+    },
+    numberOfColors: {
+        type: Number,
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message   : 'numberOfColors must be an integer. The provided value was: \'{VALUE}\''
+        },
+        min: 0
     }
 }, { timestamps: true });
 
@@ -151,7 +159,7 @@ productSchema.pre('save', calculatePressCount);
 productSchema.pre('save', setDefaultOverun);
 
 productSchema.virtual('frameNumberAcrossAsync').get(async function() {
-    if (this.userDefinedFrameNumberAcross) return this.userDefinedFrameNumberAcross;
+    if (this.userDefinedFrameNumberAcross !== undefined) return this.userDefinedFrameNumberAcross;
     
     await this.populate(['primaryMaterial', 'die']);
 
@@ -159,7 +167,7 @@ productSchema.virtual('frameNumberAcrossAsync').get(async function() {
 });
 
 productSchema.virtual('frameNumberAroundAsync').get(async function () {
-    if (this.userDefinedFrameNumberAround) return this.userDefinedFrameNumberAround;
+    if (this.userDefinedFrameNumberAround !== undefined) return this.userDefinedFrameNumberAround;
 
     await this.populate('die');
 
@@ -201,20 +209,24 @@ productSchema.virtual('pressCountAsync').get(async function () {
     await this.populate('die');
 
     const { sizeAround, spaceAround } = this.die;
-
     return (sizeAround + spaceAround) * (this.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
 });
 
 productSchema.virtual('labelCellAcrossAsync').get(async function () {
     await this.populate('die');
-
     return this.die.sizeAcross + this.die.spaceAcross;
 });
 
 productSchema.virtual('labelCellAroundAsync').get(async function () {
     await this.populate('die');
-
     return this.die.sizeAround + this.die.spaceAround;
+});
+
+productSchema.virtual('frameSizeAsync').get(async function () {
+    const labelCellAround = await this.labelCellAroundAsync;
+    const frameNumberAround = await this.frameNumberAroundAsync;
+
+    return labelCellAround * frameNumberAround;
 });
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);

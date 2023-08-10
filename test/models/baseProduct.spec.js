@@ -37,7 +37,8 @@ describe('Product Model', () => {
             finishType: chance.pickone(finishTypes),
             author: mongoose.Types.ObjectId(),
             frameNumberAcross: chance.d100(),
-            frameNumberAround: chance.d100()
+            frameNumberAround: chance.d100(),
+            labelsPerRoll: chance.d100()
         };
     });
 
@@ -691,6 +692,18 @@ describe('Product Model', () => {
 
                 expect(actualCoreHeight).toBeDefined();;
                 expect(actualCoreHeight).toEqual(expectedCoreHeight);
+            });
+        });
+
+        describe('virtual: pressCountAsync', () => {
+            it('should have the correct computed value', async () => {
+                const expectedPressCount = (savedDie.sizeAround + savedDie.spaceAround) * (productAttributes.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
+                
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+                const actualPressCount = await savedProduct.pressCountAsync;
+
+                expect(actualPressCount).toBeDefined();;
+                expect(actualPressCount).toEqual(expectedPressCount);
             });
         });
     });

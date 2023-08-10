@@ -193,6 +193,14 @@ productSchema.virtual('coreHeightAsync').get(async function () {
     return this.die.sizeAcross + extraHeight;
 });
 
+productSchema.virtual('pressCountAsync').get(async function () {
+    await this.populate('die');
+
+    const { sizeAround, spaceAround } = this.die;
+
+    return (sizeAround + spaceAround) * (this.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
+});
+
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 
 module.exports = ProductModel;

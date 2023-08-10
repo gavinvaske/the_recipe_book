@@ -479,6 +479,26 @@ describe('Product Model', () => {
         });
     });
 
+    describe('attribute: spotPlate', () => {
+        it('should default to FALSE', () => {
+            const expectedDefaultValue = false;
+            delete productAttributes.spotPlate;
+
+            const product = new ProductModel(productAttributes);
+
+            expect(product.spotPlate).toBe(expectedDefaultValue);
+        });
+
+        it('should use defined value instead of default value', () => {
+            const definedValue = true;
+            productAttributes.spotPlate = definedValue;
+
+            const product = new ProductModel(productAttributes);
+            
+            expect(product.spotPlate).toEqual(definedValue);
+        })
+    })
+
     describe('verify database interactions', () => {
         let savedCustomer,
             savedDie,
@@ -704,6 +724,30 @@ describe('Product Model', () => {
 
                 expect(actualPressCount).toBeDefined();;
                 expect(actualPressCount).toEqual(expectedPressCount);
+            });
+        });
+
+        describe('virtual: labelCellAcrossAsync', () => {
+            it('should have the correct computed value', async () => {
+                const expectedLabelCellAcross = savedDie.sizeAcross + savedDie.spaceAcross;
+                
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+                const actualLabelCellAcrossAsync = await savedProduct.labelCellAcrossAsync;
+
+                expect(actualLabelCellAcrossAsync).toBeDefined();
+                expect(actualLabelCellAcrossAsync).toEqual(expectedLabelCellAcross);
+            });
+        });
+
+        describe('virtual: labelCellAroundAsync', () => {
+            it('should have the correct computed value', async () => {
+                const expectedLabelCellAroundAsync = savedDie.sizeAround + savedDie.spaceAround;
+                
+                const savedProduct = await new ProductModel(productAttributes).save({ validateBeforeSave: false });
+                const actualLabelCellAroundAsync = await savedProduct.labelCellAroundAsync;
+
+                expect(actualLabelCellAroundAsync).toBeDefined();
+                expect(actualLabelCellAroundAsync).toEqual(expectedLabelCellAroundAsync);
             });
         });
     });

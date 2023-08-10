@@ -139,6 +139,10 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    spotPlate: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
@@ -199,6 +203,18 @@ productSchema.virtual('pressCountAsync').get(async function () {
     const { sizeAround, spaceAround } = this.die;
 
     return (sizeAround + spaceAround) * (this.labelsPerRoll / 10); // eslint-disable-line no-magic-numbers
+});
+
+productSchema.virtual('labelCellAcrossAsync').get(async function () {
+    await this.populate('die');
+
+    return this.die.sizeAcross + this.die.spaceAcross;
+});
+
+productSchema.virtual('labelCellAroundAsync').get(async function () {
+    await this.populate('die');
+
+    return this.die.sizeAround + this.die.spaceAround;
 });
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);

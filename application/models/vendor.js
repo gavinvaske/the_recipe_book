@@ -43,6 +43,10 @@ const schema = new Schema({
         type: String,
         required: true,
         validate: [validateEmail, 'Invalid attribute "primaryContactEmail": The provided email "{VALUE}" is not a valid email address']
+    },
+    mfgSpecNumber: {
+        type: String,
+        required: false
     }
 }, { timestamps: true });
 

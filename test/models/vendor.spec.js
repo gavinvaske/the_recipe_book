@@ -280,6 +280,25 @@ describe('validation', () => {
         });
     });
 
+    describe('attribute: mfgSpecNumber', () => {
+        it('should not be required', () => {
+            delete vendorAttributes.mfgSpecNumber;
+            const vendor = new VendorModel(vendorAttributes);
+
+            const error = vendor.validateSync();
+
+            expect(error).not.toBeDefined();
+        });
+
+        it('should be a string', () => {
+            vendorAttributes.mfgSpecNumber = chance.string();
+
+            const vendor = new VendorModel(vendorAttributes);
+
+            expect(vendor.mfgSpecNumber).toEqual(expect.any(String));
+        });
+    });
+
     describe('verify timestamps on created object', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();

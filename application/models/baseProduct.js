@@ -132,7 +132,7 @@ const productSchema = new Schema({
     },
     overun: {
         type: Number,
-        required: false
+        required: false // This attribute is defaulted to customer.overun on-save of this object if not specified
     },
     author: {
         type: Schema.Types.ObjectId,

@@ -8,6 +8,8 @@ const { dieMagCylinders } = require('../enums/dieMagCylindersEnum');
 const { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } = require('../enums/dieStatusesEnum');
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
+mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+
 const DIE_NUMBER_PREFIXES = ['DC', 'DR', 'DRC' , 'DO', 'DS', 'XLDR', 'DSS', 'DB'];
 const DIE_NUMBER_REGEX = /^(\d{4})$/;
 

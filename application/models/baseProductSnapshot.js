@@ -8,6 +8,8 @@ const FinishModel = require('./finish');
 const CustomerModel = require('./customer');
 const UserModel = require('./user');
 
+mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+
 const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
 const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
 

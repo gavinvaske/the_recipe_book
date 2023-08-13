@@ -543,7 +543,7 @@ describe('validation', () => {
         });
     });
 
-    describe('verify timestamps on created object', () => {
+    describe('verify database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
@@ -552,7 +552,20 @@ describe('validation', () => {
             await databaseService.closeDatabase();
         });
 
-        describe('verify timestamps on created object', () => {
+        it('should soft delete items', async () => {
+            const material = new MaterialModel(materialAttributes);
+            const id = material._id;
+
+            await material.save();
+            await MaterialModel.deleteById(id);
+
+            const softDeletedMaterial = await MaterialModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedMaterial).toBeDefined();
+            expect(softDeletedMaterial.deleted).toBe(true);
+        });
+
+        describe('verify database interactions', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const material = new MaterialModel(materialAttributes);
                 let savedMaterial = await material.save({ validateBeforeSave: false });

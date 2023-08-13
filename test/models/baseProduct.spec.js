@@ -624,6 +624,19 @@ describe('Product Model', () => {
             });
         });
 
+        it('should soft delete items', async () => {
+            const product = new ProductModel(productAttributes);
+            const productId = product._id;
+
+            await product.save();
+            await ProductModel.deleteById(productId);
+
+            const softDeletedProduct = await ProductModel.findOneDeleted({_id: productId}).exec();
+
+            expect(softDeletedProduct).toBeDefined();
+            expect(softDeletedProduct.deleted).toBe(true);
+        });
+
         describe('attribute: productNumber', () => {
             it('should generate the attribute in the correct format', async () => {
                 const expectedProductNumber1 = `${savedCustomer.customerId}-001`;

@@ -3,6 +3,8 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
+mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+
 const schema = new Schema({
     name: {
         type: String,

@@ -522,5 +522,18 @@ describe('BaseProductSnapshot', () => {
                 expect(savedBaseProductSnapshot.updatedAt).toBeDefined();
             });
         });
+
+        it('should soft delete items', async () => {
+            const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
+            const id = baseProductSnapshot._id;
+
+            await baseProductSnapshot.save();
+            await BaseProductSnapshotModel.deleteById(id);
+
+            const softDeletedBaseProductSnapshot = await BaseProductSnapshotModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedBaseProductSnapshot).toBeDefined();
+            expect(softDeletedBaseProductSnapshot.deleted).toBe(true);
+        });
     });
 });

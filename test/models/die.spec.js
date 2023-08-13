@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const DieModel = require('../../application/models/Die');
+const DieModel = require('../../application/models/die');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const { toolTypes } = require('../../application/enums/toolTypesEnum');
 const { dieVendors } = require('../../application/enums/dieVendorsEnum');
@@ -856,6 +856,19 @@ describe('validation', () => {
 
         afterEach(async () => {
             await databaseService.closeDatabase();
+        });
+
+        it('should soft delete items', async () => {
+            const die = new DieModel(dieAttributes);
+            const id = die._id;
+
+            await die.save();
+            await DieModel.deleteById(id);
+
+            const softDeletedDie = await DieModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedDie).toBeDefined();
+            expect(softDeletedDie.deleted).toBe(true);
         });
 
         describe('verify timestamps on created object', () => {

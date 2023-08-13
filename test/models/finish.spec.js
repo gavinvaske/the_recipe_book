@@ -388,13 +388,26 @@ describe('validation', () => {
         });
     });
 
-    describe('verify timestamps on created object', () => {
+    describe('verify database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
             await databaseService.closeDatabase();
+        });
+
+        it('should soft delete items', async () => {
+            const finish = new FinishModel(finishAttributes);
+            const id = finish._id;
+
+            await finish.save();
+            await FinishModel.deleteById(id);
+
+            const softDeletedFinish = await FinishModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedFinish).toBeDefined();
+            expect(softDeletedFinish.deleted).toBe(true);
         });
 
         describe('verify timestamps on created object', () => {

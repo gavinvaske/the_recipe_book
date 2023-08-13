@@ -299,13 +299,26 @@ describe('validation', () => {
         });
     });
 
-    describe('verify timestamps on created object', () => {
+    describe('verify database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
             await databaseService.closeDatabase();
+        });
+
+        it('should soft delete items', async () => {
+            const vendor = new VendorModel(vendorAttributes);
+            const id = vendor._id;
+
+            await vendor.save();
+            await VendorModel.deleteById(id);
+
+            const softDeletedVendor = await VendorModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedVendor).toBeDefined();
+            expect(softDeletedVendor.deleted).toBe(true);
         });
 
         describe('verify timestamps on created object', () => {

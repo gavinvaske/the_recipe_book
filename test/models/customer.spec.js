@@ -319,6 +319,19 @@ describe('validation', () => {
             await databaseService.closeDatabase();
         });
 
+        it('should soft delete items', async () => {
+            const customer = new CustomerModel(customerAttributes);
+            const id = customer._id;
+
+            await customer.save();
+            await CustomerModel.deleteById(id);
+
+            const softDeletedCustomer = await CustomerModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedCustomer).toBeDefined();
+            expect(softDeletedCustomer.deleted).toBe(true);
+        });
+
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const customer = new CustomerModel(customerAttributes);

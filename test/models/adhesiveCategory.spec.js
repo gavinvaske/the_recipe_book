@@ -53,6 +53,19 @@ describe('validation', () => {
             await databaseService.closeDatabase();
         });
 
+        it('should soft delete items', async () => {
+            const adhesiveCategory = new AdhesiveCategoryModel(adhesiveCategoryAttributes);
+            const id = adhesiveCategory._id;
+
+            await adhesiveCategory.save();
+            await AdhesiveCategoryModel.deleteById(id);
+
+            const softDeletedAdhesiveCategory = await AdhesiveCategoryModel.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedAdhesiveCategory).toBeDefined();
+            expect(softDeletedAdhesiveCategory.deleted).toBe(true);
+        });
+
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
                 const adhesiveCategory = new AdhesiveCategoryModel(adhesiveCategoryAttributes);

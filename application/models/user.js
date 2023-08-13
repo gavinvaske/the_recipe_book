@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
-
-const USER = 'USER';
-const ADMIN = 'ADMIN';
+const { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } = require('../../application/enums/userTypesEnum');
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -30,8 +28,8 @@ const userSchema = new Schema({
     },
     userType: {
         type: String,
-        enum: [USER, ADMIN],
-        default: USER
+        enum: AVAILABLE_USER_TYPES,
+        default: DEFAULT_USER_TYPE
     },
     profilePicture: {
         data: {

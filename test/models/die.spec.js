@@ -6,6 +6,7 @@ const { dieVendors } = require('../../application/enums/dieVendorsEnum');
 const { dieMagCylinders } = require('../../application/enums/dieMagCylindersEnum');
 const { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } = require('../../application/enums/dieStatusesEnum');
 const databaseService = require('../../application/services/databaseService');
+const testDataGenerator = require('../testDataGenerator');
 
 function getRandomCost() {
     return chance.floating({ min: 0, fixed: 2 });
@@ -19,29 +20,7 @@ describe('validation', () => {
     let dieAttributes;
 
     beforeEach(() => {
-        dieAttributes = {
-            dieShape: chance.pickone(dieShapes),
-            sizeAcross: chance.floating({ min: 0 }),
-            sizeAround: chance.floating({ min: 0 }),
-            dieNumber: 'DC-1234',
-            dieNumberAcross: chance.d100(),
-            dieNumberAround: chance.d100(),
-            gear: chance.d100(),
-            toolType: chance.pickone(toolTypes),
-            notes: chance.string(),
-            cost: getRandomCost(),
-            vendor: chance.pickone(dieVendors),
-            magCylinder: chance.pickone(dieMagCylinders),
-            cornerRadius: chance.floating(),
-            spaceAcross: chance.floating(),
-            spaceAround: chance.floating(),
-            facestock: chance.string(),
-            liner: chance.string(),
-            specialType: chance.string(),
-            serialNumber: chance.string(),
-            status: chance.pickone(dieStatuses),
-            quantity: chance.d100()
-        };
+        dieAttributes = testDataGenerator.mockData.Die();
     });
 
     it('should not fail validation if all attributes are defined correctly', () => {
@@ -562,6 +541,15 @@ describe('validation', () => {
 
             expect(die.topAndBottom).toEqual(expectedTopAndBottom);
         });
+
+        it('should fail if attribute is negative', () => {
+            dieAttributes.spaceAcross = chance.d100() * -1;
+            const die = new DieModel(dieAttributes);
+
+            const error = die.validateSync();
+
+            expect(error).toBeDefined();
+        });
     });
 
     describe('attribute: spaceAround', () => {
@@ -590,6 +578,15 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             expect(die.leftAndRight).toEqual(expectedLeftAndRight);
+        });
+
+        it('should fail if attribute is negative', () => {
+            dieAttributes.spaceAround = chance.d100() * -1;
+            const die = new DieModel(dieAttributes);
+
+            const error = die.validateSync();
+
+            expect(error).toBeDefined();
         });
     });
 

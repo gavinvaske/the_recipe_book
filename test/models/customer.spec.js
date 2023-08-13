@@ -1,8 +1,9 @@
+const mongoose = require('mongoose');
 const chance = require('chance').Chance();
 const CustomerModel = require('../../application/models/customer');
 const databaseService = require('../../application/services/databaseService');
 
-const mongoose = require('mongoose');
+const testDataGenerator = require('../testDataGenerator');
 
 const delay = (delayInMs) => {
     return new Promise(resolve => setTimeout(resolve, delayInMs));
@@ -19,23 +20,14 @@ function getAddress() {
 }
 
 function getContact() {
-    return {
-        fullName: chance.string(),
-        contactStatus: chance.string()
-    };
+    return testDataGenerator.mockData.Contact();
 }
 
 describe('validation', () => {
     let customerAttributes;
 
     beforeEach(() => {
-        customerAttributes = {
-            name: chance.string(),
-            notes: chance.string(),
-            overun: chance.d100(),
-            customerId: chance.string(),
-            contacts: [getContact()],
-        };
+        customerAttributes = testDataGenerator.mockData.Customer();
     });
 
     it('should validate if all attributes are defined successfully', () => {

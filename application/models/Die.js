@@ -140,7 +140,8 @@ const schema = new Schema({
         set: function (spaceAcross) {
             this.topAndBottom = spaceAcross / 2;
             return spaceAcross;
-        }
+        },
+        min: 0
     },
     spaceAround: {
         type: Number,
@@ -148,7 +149,8 @@ const schema = new Schema({
         set: function (spaceAround) {
             this.leftAndRight = spaceAround / 2;
             return spaceAround;
-        }
+        },
+        min: 0
     },
     facestock: {
         type: String,
@@ -182,9 +184,6 @@ const schema = new Schema({
         default: 1,
         min: 0
     },
-    // rotations: {},
-    // uses: {},
-    // lastUse: {},
     orderDate: {
         type: Date,
         required: false
@@ -193,7 +192,6 @@ const schema = new Schema({
         type: Date,
         required: false
     },
-    // iterations: {},
 }, { timestamps: true });
 
 const Die = mongoose.model('Die', schema);

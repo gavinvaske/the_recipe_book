@@ -2,27 +2,13 @@ const chance = require('chance').Chance();
 const mongoose = require('mongoose');
 const FinishModel = require('../../application/models/finish');
 const databaseService = require('../../application/services/databaseService');
+const testDataGenerator = require('../testDataGenerator');
 
 describe('validation', () => {
     let finishAttributes;
 
     beforeEach(() => {
-        jest.resetAllMocks();
-        finishAttributes = {
-            name: chance.string(),
-            finishId: chance.string(),
-            vendor: mongoose.Types.ObjectId(),
-            category: mongoose.Types.ObjectId(),
-            thickness: chance.integer({ min: 0 }),
-            weight: chance.d100(),
-            finishCost: chance.floating({ min: 0, fixed: 2 }),
-            freightCost: chance.floating({ min: 0, fixed: 2 }),
-            width: chance.d100(),
-            quotePrice: chance.floating({ min: 0, fixed: 2 }),
-            description: chance.string(),
-            whenToUse: chance.string(),
-            alternativeFinish: chance.string()
-        };
+        finishAttributes = testDataGenerator.mockData.Finish();
     });
 
     describe('successful validation', () => {

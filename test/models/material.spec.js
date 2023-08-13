@@ -3,29 +3,13 @@ const MaterialModel = require('../../application/models/material');
 const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 
+const testDataGenerator = require('../testDataGenerator');
+
 describe('validation', () => {
     let materialAttributes;
 
     beforeEach(() => {
-        materialAttributes = {
-            name: chance.string(),
-            materialId: chance.string(),
-            vendor: new mongoose.Types.ObjectId(),
-            materialCategory: new mongoose.Types.ObjectId(),
-            thickness: chance.integer({ min: 0 }),
-            weight: chance.integer({ min: 0 }),
-            materialCost: `${chance.floating({ min: 0 })}`,
-            freightCost: `${chance.floating({ min: 0 })}`,
-            width: chance.d12(),
-            faceColor: chance.string(),
-            adhesive: chance.string(),
-            adhesiveCategory: new mongoose.Types.ObjectId(),
-            quotePrice: chance.integer({ min: 0 }),
-            description: chance.string(),
-            whenToUse: chance.string(),
-            alternativeStock: chance.string(),
-            length: chance.integer({ min: 0 }),
-        };
+        materialAttributes = testDataGenerator.mockData.Material();
     });
 
     it('should validate when required attributes are defined', () => {

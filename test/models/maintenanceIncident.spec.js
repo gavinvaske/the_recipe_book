@@ -136,7 +136,7 @@ describe('MaintenanceIncident', () => {
             const savedIncident = await maintenanceIncident.save();
 
             expect(savedIncident).toBeDefined();
-        })
+        });
 
         it('should NOT allow saving maintenanceIncident if the incidentName exists in the MaintenanceIncidentTypes table', async () => {
             const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
@@ -147,13 +147,13 @@ describe('MaintenanceIncident', () => {
             let errorMessage;
 
             try {
-                await maintenanceIncident.save()
+                await maintenanceIncident.save();
             } catch (error) {
                 errorMessage = error;
             }
 
             expect(errorMessage).toBeDefined();
-        })
+        });
 
         it('should soft delete items', async () => {
             const incidentType = new TypeModel({ incidentName: maintenanceIncidentAttributes.incidentName });

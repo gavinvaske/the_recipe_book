@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const MaintenanceIncidentModel = require('../../application/models/maintenanceIncident');
+const TypeModel = require('../../application/models/maintenanceIncidentType');
 const databaseService = require('../../application/services/databaseService');
 const chance = require('chance').Chance();
 
@@ -126,7 +127,38 @@ describe('MaintenanceIncident', () => {
             await databaseService.closeDatabase();
         });
 
+        it('should allow saving maintenanceIncident if the incidentName exists in the MaintenanceIncidentTypes table', async () => {
+            const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
+            const incidentType = new TypeModel({ incidentName: maintenanceIncident.incidentName });
+
+            await incidentType.save();
+            
+            const savedIncident = await maintenanceIncident.save();
+
+            expect(savedIncident).toBeDefined();
+        })
+
+        it('should NOT allow saving maintenanceIncident if the incidentName exists in the MaintenanceIncidentTypes table', async () => {
+            const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
+            const incidentType = new TypeModel({ incidentName: chance.string() });
+
+            await incidentType.save();
+
+            let errorMessage;
+
+            try {
+                await maintenanceIncident.save()
+            } catch (error) {
+                errorMessage = error;
+            }
+
+            expect(errorMessage).toBeDefined();
+        })
+
         it('should soft delete items', async () => {
+            const incidentType = new TypeModel({ incidentName: maintenanceIncidentAttributes.incidentName });
+            await incidentType.save();
+
             const incident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
             const id = incident._id;
 
@@ -140,6 +172,9 @@ describe('MaintenanceIncident', () => {
         });
 
         it('should have timestamps once object is saved', async () => {
+            const incidentType = new TypeModel({ incidentName: maintenanceIncidentAttributes.incidentName });
+            await incidentType.save();
+
             const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
 
             let savedMaintenanceIncident = await maintenanceIncident.save({ validateBeforeSave: false });

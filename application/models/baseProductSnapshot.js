@@ -114,7 +114,7 @@ const baseProductSnapshotSchema = new Schema({
     rotoRepeat: {
         type: Number,
         default: function () {
-            return this.frameNumberAround * this.die.spaceAround * this.die.dieNumberAround;
+            return this.frameNumberAround * this.die.spaceAround * this.die.numberAround;
         },
         required: true
     },

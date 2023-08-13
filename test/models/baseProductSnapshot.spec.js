@@ -406,7 +406,7 @@ describe('BaseProductSnapshot', () => {
             
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
             const { frameNumberAround, die } = baseProductSnapshot;
-            const expectedRotoRepeat = (frameNumberAround * die.spaceAround) * die.dieNumberAround;
+            const expectedRotoRepeat = (frameNumberAround * die.spaceAround) * die.numberAround;
 
             expect(baseProductSnapshot.rotoRepeat).toBeDefined();
             expect(baseProductSnapshot.rotoRepeat).toEqual(expectedRotoRepeat);

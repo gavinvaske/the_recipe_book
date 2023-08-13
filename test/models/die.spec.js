@@ -182,9 +182,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: dieNumberAcross', () => {
+    describe('attribute: numberAcross', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete dieAttributes.dieNumberAcross;
+            delete dieAttributes.numberAcross;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -193,7 +193,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
-            dieAttributes.dieNumberAcross = chance.floating({ min: 0 });
+            dieAttributes.numberAcross = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -203,7 +203,7 @@ describe('validation', () => {
 
         it('should fail validation if value IS NEGATIVE', () => {
             const negativeValue = chance.d100() * -1;
-            dieAttributes.dieNumberAcross = negativeValue;
+            dieAttributes.numberAcross = negativeValue;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -212,17 +212,17 @@ describe('validation', () => {
         });
 
         it('should be a number', () => {
-            const expectedDieNumberAcross = chance.d100();
-            dieAttributes.dieNumberAcross = String(expectedDieNumberAcross);
+            const expectedNumberAcross = chance.d100();
+            dieAttributes.numberAcross = String(expectedNumberAcross);
             const die = new DieModel(dieAttributes);
 
-            expect(die.dieNumberAcross).toEqual(expect.any(Number));
+            expect(die.numberAcross).toEqual(expect.any(Number));
         });
     });
 
-    describe('attribute: dieNumberAround', () => {
+    describe('attribute: numberAround', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete dieAttributes.dieNumberAround;
+            delete dieAttributes.numberAround;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -231,7 +231,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
-            dieAttributes.dieNumberAround = chance.floating({ min: 0 });
+            dieAttributes.numberAround = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -241,7 +241,7 @@ describe('validation', () => {
 
         it('should fail validation if value IS NEGATIVE', () => {
             const negativeValue = chance.d100() * -1;
-            dieAttributes.dieNumberAround = negativeValue;
+            dieAttributes.numberAround = negativeValue;
             const die = new DieModel(dieAttributes);
             
             const error = die.validateSync();
@@ -250,11 +250,11 @@ describe('validation', () => {
         });
 
         it('should be a number', () => {
-            const dieNumberAroundAsNumber = chance.d100();
-            dieAttributes.dieNumberAround = String(dieNumberAroundAsNumber);
+            const numberAroundAsNumber = chance.d100();
+            dieAttributes.numberAround = String(numberAroundAsNumber);
             const die = new DieModel(dieAttributes);
 
-            expect(die.dieNumberAround).toEqual(expect.any(Number));
+            expect(die.numberAround).toEqual(expect.any(Number));
         });
     });
 

@@ -7,7 +7,8 @@ const schema = new Schema({
     incidentName: {
         type: String,
         uppercase: true,
-        required: true
+        required: true,
+        unique: true
     },
 }, { timestamps: true });
 

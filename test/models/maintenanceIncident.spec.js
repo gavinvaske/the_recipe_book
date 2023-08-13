@@ -45,7 +45,7 @@ describe('MaintenanceIncident', () => {
             const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
 
             expect(maintenanceIncident.incidentName).toEqual(lowerCaseIncidentName.toUpperCase());
-        })
+        });
     });
 
     describe('attribute: timeToComplete', () => {
@@ -72,7 +72,7 @@ describe('MaintenanceIncident', () => {
             const error = maintenanceIncident.validateSync();
 
             expect(error).toBeDefined();
-        })
+        });
     });
 
     describe('attribute: notes', () => {
@@ -97,8 +97,8 @@ describe('MaintenanceIncident', () => {
             const maintenanceIncident = new MaintenanceIncidentModel(maintenanceIncidentAttributes);
             
             expect(maintenanceIncident.notes).toEqual(expectedNotes);
-        })
-    })
+        });
+    });
 
     describe('attribute: author', () => {
         it('should be a mongoose objectId', () => {
@@ -114,7 +114,7 @@ describe('MaintenanceIncident', () => {
             const error = maintenanceIncident.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
     });
 
     describe('verify database interactions', () => {

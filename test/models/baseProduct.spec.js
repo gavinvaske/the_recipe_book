@@ -613,15 +613,13 @@ describe('Product Model', () => {
             await databaseService.closeDatabase();
         });
 
-        describe('verify timestamps on created object', () => {
-            it('should have a "createdAt" attribute once object is saved', async () => {
-                const product = new ProductModel(productAttributes);
+        it('should have a timestamps once object is saved', async () => {
+            const product = new ProductModel(productAttributes);
 
-                let savedProduct = await product.save();
+            let savedProduct = await product.save();
 
-                expect(savedProduct.createdAt).toBeDefined();
-                expect(savedProduct.updatedAt).toBeDefined();
-            });
+            expect(savedProduct.createdAt).toBeDefined();
+            expect(savedProduct.updatedAt).toBeDefined();
         });
 
         it('should soft delete items', async () => {

@@ -511,16 +511,14 @@ describe('BaseProductSnapshot', () => {
         afterEach(async () => {
             await databaseService.closeDatabase();
         });
+        
+        it('should have timestamps once object is saved', async () => {
+            const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
-        describe('verify timestamps on created object', () => {
-            it('should have a "createdAt" attribute once object is saved', async () => {
-                const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
+            let savedBaseProductSnapshot = await baseProductSnapshot.save({ validateBeforeSave: false });
 
-                let savedBaseProductSnapshot = await baseProductSnapshot.save({ validateBeforeSave: false });
-
-                expect(savedBaseProductSnapshot.createdAt).toBeDefined();
-                expect(savedBaseProductSnapshot.updatedAt).toBeDefined();
-            });
+            expect(savedBaseProductSnapshot.createdAt).toBeDefined();
+            expect(savedBaseProductSnapshot.updatedAt).toBeDefined();
         });
 
         it('should soft delete items', async () => {

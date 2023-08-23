@@ -22,6 +22,7 @@ function convertInchesToMillimeters(inches) {
     return inches * MILLIMETERS_PER_INCH;
 }
 
+// TODO (8-21-2023): Gavin do I need this anymore after Storm deleted purchasedProduct?
 const baseProductSnapshotSchema = new Schema({
     ...sharedBaseProductMongooseAttributes,
     die: {

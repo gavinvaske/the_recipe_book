@@ -74,7 +74,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : 'numberAcross: \'{VALUE}\' must be a whole number'
+            message: '{VALUE} is not an integer'
         },
         min: 0
     },
@@ -83,7 +83,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : 'numberAround: \'{VALUE}\' must be a whole number'
+            message: '{VALUE} is not an integer'
         },
         min: 0
     },
@@ -92,7 +92,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : 'gear: \'{VALUE}\' must be a whole number'
+            message: '{VALUE} is not an integer'
         },
         min: 0
     },
@@ -181,7 +181,7 @@ const schema = new Schema({
         type: Number,
         validate : {
             validator : Number.isInteger,
-            message   : '\'quantity\' must be an integer, but the value provided was: \'{VALUE}\''
+            message: '{VALUE} is not an integer'
         },
         default: 1,
         min: 0

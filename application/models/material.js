@@ -93,7 +93,7 @@ const schema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : '"material.length" must be an integer. The provided value was: \'{VALUE}\''
+            message: '{VALUE} is not an integer'
         },
         min: 0
     }

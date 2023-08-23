@@ -46,7 +46,7 @@ module.exports.sharedBaseProductMongooseAttributes = {
         min: 0,
         validate : {
             validator : Number.isInteger,
-            message   : 'labelsPerRoll must be an integer. The provided value was: \'{VALUE}\''
+            message: '{VALUE} is not an integer'
         },
     },
     dieCuttingNotes: {
@@ -65,7 +65,7 @@ module.exports.sharedBaseProductMongooseAttributes = {
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : 'numberOfColors must be an integer. The provided value was: \'{VALUE}\''
+            message: '{VALUE} is not an integer'
         },
         min: 0
     }

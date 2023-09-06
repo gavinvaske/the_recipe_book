@@ -534,7 +534,7 @@ describe('validation', () => {
         });
 
         it('should fail validation if attribute is not an integer', () => {
-            materialAttributes.length = chance.floating({ min: 0 });
+            materialAttributes.length = 5.55;
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();

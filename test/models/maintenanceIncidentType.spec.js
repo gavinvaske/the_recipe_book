@@ -80,6 +80,9 @@ describe('MaintenanceIncidentType', () => {
         it('should not allow duplicate incident names', async () => {
             const maintenanceIncidentType1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);            
             const maintenanceIncidentType2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
+
+            const millisecondsToDelayToFixTestFlakyness = 50;
+            await delay(millisecondsToDelayToFixTestFlakyness);
             
             await maintenanceIncidentType1.save();
             expect(maintenanceIncidentType2.save()).rejects.toThrowError();

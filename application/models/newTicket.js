@@ -10,6 +10,13 @@ async function generateUniqueTicketNumber() {
     this.ticketNumber = startingTicketNumber + numberOfTicketsInDatabase;
 }
 
+async function appendCustomerNotes() {
+    await this.populate('customer');
+
+    const ticketNotesWithCustomerNotesAppended = `${this.ticketNotes}\n\nCustomer Notes:\n${this.customer.notes}`
+    this.ticketNotes = ticketNotesWithCustomerNotesAppended;
+}
+
 const timeInSecondsAttribute = {
     type: Number,
     min: 0,
@@ -98,7 +105,14 @@ const schema = new Schema({
         type: Number,
         index: true
     },
-    // ticketNotes: {}, // TODO (9-5-2023): I need a customerId on the ticket in order to add their notes to the ticket
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: 'Customer',
+        required: true
+    },
+    ticketNotes: {
+        type: String
+    },
     shipDate: {
         type: Date,
         required: true
@@ -267,6 +281,7 @@ const schema = new Schema({
 }, { timestamps: true });
 
 schema.pre('save', generateUniqueTicketNumber);
+schema.pre('save', appendCustomerNotes);
 
 const Ticket = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model
 

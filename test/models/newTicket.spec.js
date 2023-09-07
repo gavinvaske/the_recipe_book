@@ -1,7 +1,10 @@
 const chance = require('chance').Chance();
 const Ticket = require('../../application/models/newTicket');
+const Customer = require('../../application/models/customer');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
+
+const testDataGenerator = require('../testDataGenerator');
 
 function verifyTimeFieldInSeconds(ticketAttributes, fieldName) {
     let ticket, error;
@@ -34,6 +37,7 @@ describe('Ticket validation', () => {
 
     beforeEach(() => {
         ticketAttributes = {
+            customer: mongoose.Types.ObjectId(),
             shipDate: chance.date(),
             totalStockLength: chance.d100(),
             totalFramesRan: chance.d100(),
@@ -63,6 +67,23 @@ describe('Ticket validation', () => {
 
         expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
     });
+
+    describe('attribute: customer', () => {
+        it('should be required', () => {
+            delete ticketAttributes.customer;
+            const ticket = new Ticket(ticketAttributes);
+            
+            const error = ticket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a mongoose ObjectId', () => {
+            const ticket = new Ticket(ticketAttributes);
+
+            expect(ticket.customer).toEqual(expect.any(mongoose.Types.ObjectId));
+        })
+    })
 
     describe('attribute: ticketNumber', () => {
         it('should be a number', () => {
@@ -1681,8 +1702,14 @@ describe('Ticket validation', () => {
     });
 
     describe('database interaction validations', () => {
+        let customerAttributes, savedCustomer;
+
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
+            customerAttributes = testDataGenerator.mockData.Customer();
+            const customer = new Customer(customerAttributes);
+            savedCustomer = await customer.save();
+            ticketAttributes.customer = savedCustomer._id;
         });
 
         afterEach(async () => {
@@ -1713,5 +1740,18 @@ describe('Ticket validation', () => {
                 expect(savedTicket3.ticketNumber).toEqual(startingTicketNumber + 2);
             });
         });
+
+        describe('attribute: ticketNotes', () => {
+            it('should append ticket.customer.notes to ticket.ticketNotes', async () => {
+                ticketAttributes.ticketNotes = chance.string();
+                const ticket = new Ticket(ticketAttributes);
+                const savedTicket = await ticket.save();
+                const expectedTicketNotesAfterSaving = `${ticketAttributes.ticketNotes}\n\nCustomer Notes:\n${savedCustomer.notes}`
+
+                console.log(savedTicket.ticketNotes);
+
+                expect(savedTicket.ticketNotes).toEqual(expectedTicketNotesAfterSaving);
+            })
+        })
     });
 });

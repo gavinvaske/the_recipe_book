@@ -322,11 +322,6 @@ async function addRowToWorkflowStepDbTable(next, destination, ticketId) {
 schema.pre('save', generateUniqueTicketNumber);
 schema.pre('save', appendCustomerNotes);
 
-schema.pre('updateMany', async function(next) {
-    const errorMessage = 'The code to add records to the workflowStepDbTable table must be implemented before this method can be used.';
-    return next(errorMessage);
-});
-
 schema.pre(['updateOne', 'findOneAndUpdate'], async function(next) {
     const destination = this.getUpdate().$set.destination;
     const ticketId = this.getQuery()._id;

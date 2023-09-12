@@ -5,6 +5,7 @@ const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
+mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
 const testDataGenerator = require('../testDataGenerator');
 
@@ -1816,6 +1817,19 @@ describe('Ticket validation', () => {
 
         afterEach(async () => {
             await databaseService.closeDatabase();
+        });
+
+        it('should soft delete items', async () => {
+            const ticket = new Ticket(ticketAttributes);
+            const id = ticket._id;
+
+            await ticket.save();
+            await Ticket.deleteById(id);
+
+            const softDeletedAdhesiveCategory = await Ticket.findOneDeleted({_id: id}).exec();
+
+            expect(softDeletedAdhesiveCategory).toBeDefined();
+            expect(softDeletedAdhesiveCategory.deleted).toBe(true);
         });
 
         describe('attribute: ticketNumber', () => {

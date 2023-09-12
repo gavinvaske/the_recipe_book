@@ -13,7 +13,7 @@ async function generateUniqueTicketNumber() {
 async function appendCustomerNotes() {
     await this.populate('customer');
 
-    const ticketNotesWithCustomerNotesAppended = `${this.ticketNotes}\n\nCustomer Notes:\n${this.customer.notes}`
+    const ticketNotesWithCustomerNotesAppended = `${this.ticketNotes}\n\nCustomer Notes:\n${this.customer.notes}`;
     this.ticketNotes = ticketNotesWithCustomerNotesAppended;
 }
 
@@ -277,7 +277,10 @@ const schema = new Schema({
     },
     packagingJobComments: {
         type: String
-    }
+    },
+    // products: {},
+    // packingSlips: {},
+    // location: { // department // departmentStatus }
 }, { timestamps: true });
 
 schema.pre('save', generateUniqueTicketNumber);

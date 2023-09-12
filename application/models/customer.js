@@ -21,6 +21,13 @@ const shippingLocationsSchema = new mongoose.Schema({
 });
 
 const schema = new Schema({
+    customerId: {
+        type: String,
+        required: true,
+        uppercase: true,
+        unique: true,
+        index: true
+    },
     name: {
         type: String,
         required: true,
@@ -48,12 +55,6 @@ const schema = new Schema({
     overun: {
         type: Number,
         required: true
-    },
-    customerId: {
-        type: String,
-        required: true,
-        uppercase: true,
-        unique: true
     }
 }, { timestamps: true });
 

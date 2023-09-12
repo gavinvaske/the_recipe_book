@@ -38,6 +38,22 @@ describe('validation', () => {
         expect(error).toBe(undefined);
     });
 
+    it('should have the correct indexes', async () => {
+        const indexMetaData = CustomerModel.schema.indexes();
+        const expectedIndexes = ['customerId'];
+
+        console.log('indexMetaData: ', indexMetaData);
+
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
+
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
     describe('attribute: name', () => {
         it('should fail validation if attribute is undefined', () => {
             delete customerAttributes.name;

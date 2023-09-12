@@ -10,6 +10,16 @@ function doesArrayContainElements(value) {
     return value.length > 0;
 }
 
+// ShippingLocations inherit the attributes from the address schema and add additional properties.
+// To learn more, read about "discriminators" here: https://mongoosejs.com/docs/discriminators.html
+const shippingLocationsSchema = new mongoose.Schema({
+    ...addressSchema.obj,
+    freightAccountNumber: {
+        type: String
+    },
+    // shippingMethod: {},   // TODO (9-11-2023): Add this from lucid chart after talking to storm
+});
+
 const schema = new Schema({
     name: {
         type: String,
@@ -22,7 +32,7 @@ const schema = new Schema({
         type: [addressSchema]
     },
     shippingLocations: {
-        type: [addressSchema]
+        type: [shippingLocationsSchema]
     },
     billingLocations: {
         type: [addressSchema]

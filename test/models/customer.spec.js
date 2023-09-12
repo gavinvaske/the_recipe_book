@@ -168,6 +168,25 @@ describe('validation', () => {
 
             expect(shippingLocations).toEqual([]);
         });
+
+        it('should have a freightAccountNumber', () => {
+            const freightAccountNumber = chance.string();
+            const address = {
+                ...getAddress(),
+                freightAccountNumber
+            };
+            const addresses = [address];
+            customerAttributes.shippingLocations = addresses;
+            const customer = new CustomerModel(customerAttributes);
+
+            console.log('customer.shippingLocations', customer.shippingLocations);
+
+            const error = customer.validateSync();
+
+            expect(error).toBeUndefined();
+            expect(customer.shippingLocations.length).toEqual(addresses.length);
+            expect(customer.shippingLocations[0].freightAccountNumber).toEqual(freightAccountNumber);
+        });
     });
 
     describe('attribute: billingLocations', () => {

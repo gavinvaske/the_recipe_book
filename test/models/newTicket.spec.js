@@ -82,8 +82,8 @@ describe('Ticket validation', () => {
             const ticket = new Ticket(ticketAttributes);
 
             expect(ticket.customer).toEqual(expect.any(mongoose.Types.ObjectId));
-        })
-    })
+        });
+    });
 
     describe('attribute: ticketNumber', () => {
         it('should be a number', () => {
@@ -1746,12 +1746,12 @@ describe('Ticket validation', () => {
                 ticketAttributes.ticketNotes = chance.string();
                 const ticket = new Ticket(ticketAttributes);
                 const savedTicket = await ticket.save();
-                const expectedTicketNotesAfterSaving = `${ticketAttributes.ticketNotes}\n\nCustomer Notes:\n${savedCustomer.notes}`
+                const expectedTicketNotesAfterSaving = `${ticketAttributes.ticketNotes}\n\nCustomer Notes:\n${savedCustomer.notes}`;
 
                 console.log(savedTicket.ticketNotes);
 
                 expect(savedTicket.ticketNotes).toEqual(expectedTicketNotesAfterSaving);
-            })
-        })
+            });
+        });
     });
 });

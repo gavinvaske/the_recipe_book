@@ -33,7 +33,7 @@ describe('validation', () => {
     
             const error = address.validateSync();
 
-            expect(error).not.toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should be of type String', () => {
@@ -58,7 +58,7 @@ describe('validation', () => {
     
             const error = address.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should be of type String', () => {
@@ -83,7 +83,7 @@ describe('validation', () => {
     
             const error = address.validateSync();
 
-            expect(error).not.toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should be of type String', () => {
@@ -102,13 +102,13 @@ describe('validation', () => {
     });
 
     describe('attribute: city', () => {
-        it('should fail validation if attribute is not defined', () => {
+        it('should NOT fail validation if attribute is not defined', () => {
             delete addressAttributes.city;
             const address = new AddressModel(addressAttributes);
     
             const error = address.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should be of type String', () => {
@@ -127,13 +127,13 @@ describe('validation', () => {
     });
 
     describe('attribute: zipCode', () => {
-        it('should fail validation if attribute is not defined', () => {
+        it('should NOT fail validation if attribute is not defined', () => {
             delete addressAttributes.zipCode;
             const address = new AddressModel(addressAttributes);
     
             const error = address.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should be of type String', () => {
@@ -164,13 +164,13 @@ describe('validation', () => {
     });
 
     describe('attribute: state', () => {
-        it('should fail validation if attribute is not defined', () => {
+        it('should NOT fail validation if attribute is not defined', () => {
             delete addressAttributes.state;
             const address = new AddressModel(addressAttributes);
     
             const error = address.validateSync();
 
-            expect(error).toBeDefined();
+            expect(error).toBeUndefined();
         });
 
         it('should convert to uppercase', () => {

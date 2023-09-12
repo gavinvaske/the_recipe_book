@@ -19,6 +19,7 @@ module.exports.mockData = {
     Contact: getContact,
     User: getUser,
     SharedBaseProductAttributes: getSharedBaseProduct,
+    Address: getAddress
 };
 
 function getDie() {
@@ -122,5 +123,16 @@ function getSharedBaseProduct() {
         finishType: chance.pickone(finishTypes),
         labelsPerRoll: chance.d100(),
         numberOfColors: chance.d12()
+    };
+}
+
+function getAddress() {
+    return {
+        name: chance.string(),
+        street: chance.street(),
+        unitOrSuite: chance.word(),
+        city: chance.city(),
+        state: chance.state(),
+        zipCode: chance.zip()
     };
 }

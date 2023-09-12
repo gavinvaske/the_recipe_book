@@ -135,4 +135,16 @@ describe('constantsEnum', () => {
 
         expect(constantsEnum.CUTTING_ROLL_CHANGE_OVER_MINUTES).toEqual(expectedValue);
     });
+
+    describe('FACTORY_ADDRESS : should equal the correct value', () => {
+        const expectedValue = {
+            name: 'The Label Advantage',
+            street: '1785 GUTHRIE AVENUE',
+            city: 'DES MOINES',
+            state: 'IOWA',
+            zipCode: '50316'
+        };
+
+        expect(constantsEnum.FACTORY_ADDRESS).toEqual(expectedValue);
+    });
 });

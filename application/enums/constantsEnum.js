@@ -36,4 +36,12 @@ module.exports.CORE_GATHERING_MINUTES = 3;
 module.exports.PRINTING_ROLL_CHANGE_OVER_MINUTES = 7;
 module.exports.CUTTING_ROLL_CHANGE_OVER_MINUTES = 10;
 
+module.exports.FACTORY_ADDRESS = {
+    name: 'The Label Advantage',
+    street: '1785 GUTHRIE AVENUE',
+    city: 'DES MOINES',
+    state: 'IOWA',
+    zipCode: '50316'
+};
+
 

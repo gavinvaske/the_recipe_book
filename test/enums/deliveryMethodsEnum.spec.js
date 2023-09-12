@@ -1,4 +1,4 @@
-const deliveryMethods = require('../../application/enums/deliveryMethods');
+const deliveryMethods = require('../../application/enums/deliveryMethodsEnum');
 
 describe('File deliveryMethods', () => {
     it('should have the correct value for SHIPPING_DELIVERY_METHOD', () => {

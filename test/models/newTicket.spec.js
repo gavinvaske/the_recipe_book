@@ -1,6 +1,8 @@
 const chance = require('chance').Chance();
 const Ticket = require('../../application/models/newTicket');
 const Customer = require('../../application/models/customer');
+const WorkflowStepModel = require('../../application/models/WorkflowStep');
+const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
 
@@ -30,6 +32,18 @@ function verifyTimeFieldInSeconds(ticketAttributes, fieldName) {
     ticket = new Ticket(ticketAttributes);
     // should defualt to 0
     expect(ticket[fieldName]).toEqual(0);
+}
+
+function getRandomValidTicketDepartment() {
+    return chance.pickone(Object.keys(departmentsEnum.departmentToStatusesMappingForTicketObjects));
+}
+
+function getRandomValidTicketDepartmentStatus(department) {
+    const validDepartmentStatusesToChoseFrom = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
+
+    return validDepartmentStatusesToChoseFrom.length > 0 
+        ? chance.pickone(validDepartmentStatusesToChoseFrom) 
+        : undefined;
 }
 
 describe('Ticket validation', () => {
@@ -1701,6 +1715,94 @@ describe('Ticket validation', () => {
         });
     });
 
+    describe('attribute: destination', () => {
+        it('should pass validation if attribute is not defined', () => {
+            delete ticketAttributes.destination;
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should fail validation if attribute is not the correct type', () => {
+            ticketAttributes.destination = chance.word();
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).not.toBe(undefined);
+        });
+
+        it('should be a mongoose object with an _id attribute', () => {
+            const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
+            ticketAttributes.destination = {
+                department: randomDepartment,
+                departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
+            };
+
+            const ticket = new Ticket(ticketAttributes);
+
+            expect(ticket.destination._id).not.toBe(undefined);
+        });
+
+        it('should fail validation if destination is empty object', () => {
+            ticketAttributes.destination = {};
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if destination.department and destination.departmentStatus are defined correctly', () => {
+            const validTicketDepartment = getRandomValidTicketDepartment();
+            const validTicketDepartmentStatus = getRandomValidTicketDepartmentStatus(validTicketDepartment);
+
+            ticketAttributes.destination = {
+                department: validTicketDepartment,
+                departmentStatus: validTicketDepartmentStatus
+            };
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if destination.department is defined correctly but destination.departmentStatus is not', () => {
+            const validTicketDepartment = getRandomValidTicketDepartment();
+            const invalidTicketDepartmentStatus = chance.word();
+
+            ticketAttributes.destination = {
+                department: validTicketDepartment,
+                departmentStatus: invalidTicketDepartmentStatus
+            };
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if destination.department is not allowed, regardless of what destination.departmentStatus is', () => {
+            const invalidTicketDepartment = chance.word();
+
+            const validDepartment = getRandomValidTicketDepartment();
+            const validTicketDepartment = getRandomValidTicketDepartmentStatus(validDepartment);
+
+            ticketAttributes.destination = {
+                department: invalidTicketDepartment,
+                departmentStatus: validTicketDepartment
+            };
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
     describe('database interaction validations', () => {
         let customerAttributes, savedCustomer;
 
@@ -1751,6 +1853,113 @@ describe('Ticket validation', () => {
                 console.log(savedTicket.ticketNotes);
 
                 expect(savedTicket.ticketNotes).toEqual(expectedTicketNotesAfterSaving);
+            });
+        });
+
+        describe('Adding record(s) to WorkflowStep table', () => {
+            let destination;
+
+            beforeEach(() => {
+                const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());
+                const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment]);
+                destination = {
+                    department: randomDepartment,
+                    departmentStatus: departmentStatus
+                };
+            });
+
+            describe('mongoose ticketSchema.pre("save")', () => {
+                it('should add item to workflow database when one ticket is saved with a destination', async () => {
+                    ticketAttributes.destination = destination;
+                    const ticket = new Ticket(ticketAttributes);
+                    await ticket.save({ validateBeforeSave: false });
+
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    expect(allWorkflowStepsInDatabase.length).toBe(1);
+
+                    const [workflowStep] = allWorkflowStepsInDatabase;
+                    expect(workflowStep.destination.department).toEqual(destination.department);
+                    expect(workflowStep.destination.departmentStatus).toEqual(destination.departmentStatus);
+                });
+
+                it('should NOT add item to workflow database when one ticket is saved without a destination', async () => {
+                    delete ticketAttributes.destination;
+                    const ticket = new Ticket(ticketAttributes);
+                    
+                    await ticket.save({ validateBeforeSave: false });
+
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    expect(allWorkflowStepsInDatabase.length).toBe(0);
+                });
+            });
+
+            describe('mongoose ticketSchema.pre("findOneAndUpdate")', () => {
+                it('should add item to workflow database when one ticket is updated', async () => {
+                    const ticket = new Ticket(ticketAttributes);
+        
+                    let savedTicket = await ticket.save({validateBeforeSave: false});
+                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
+        
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    
+                    expect(allWorkflowStepsInDatabase.length).toBe(1);
+
+                    const [workflowStep] = allWorkflowStepsInDatabase;
+                    expect(workflowStep.destination.department).toEqual(destination.department);
+                    expect(workflowStep.destination.departmentStatus).toEqual(destination.departmentStatus);
+                });
+        
+                it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
+                    const ticket = new Ticket(ticketAttributes);
+                    let savedTicket = await ticket.save({validateBeforeSave: false});
+                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
+        
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    const workflowStep = allWorkflowStepsInDatabase[0];
+                    
+                    expect(allWorkflowStepsInDatabase.length).toBe(1);
+                    expect(String(workflowStep.ticketId)).toBe(String(savedTicket._id));
+                    expect(workflowStep.destination.department).toBe(destination.department);
+                    expect(workflowStep.destination.departmentStatus).toBe(destination.departmentStatus);
+                    expect(workflowStep.destination.createdAt).toBeDefined();
+                    expect(workflowStep.destination.updatedAt).toBeDefined();
+                    expect(workflowStep.createdAt).toBeDefined();
+                    expect(workflowStep.updatedAt).toBeDefined();
+                });
+        
+                it('should NOT add item to workflow database when one ticket is updated but the destination attribute was NOT updated', async () => {
+                    const ticket = new Ticket(ticketAttributes);
+                    let savedTicket = await ticket.save({validateBeforeSave: false});
+                    const ticketAttributesOtherThanDestinationToUpdate = {};
+                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: ticketAttributesOtherThanDestinationToUpdate}, {runValidators: true}).exec();
+        
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    
+                    expect(allWorkflowStepsInDatabase.length).toBe(0);
+                });
+        
+                it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
+                    const ticket = new Ticket(ticketAttributes);
+                    const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
+                    const departments = departmentsEnum.getAllDepartmentsWithDepartmentStatuses();
+                    let savedTicket = await ticket.save({validateBeforeSave: false});
+        
+                    for (let i=0; i < numberOfUpdatesToTicketDestination; i++) {
+                        const department = chance.pickone(departments);
+                        const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
+        
+                        newTicketDestination = {
+                            department,
+                            departmentStatus
+                        };
+        
+                        await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+                    }
+        
+                    const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
+                    
+                    expect(allWorkflowStepsInDatabase.length).toBe(numberOfUpdatesToTicketDestination);
+                });
             });
         });
     });

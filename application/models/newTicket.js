@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
+const destinationSchema = require('../schemas/destination');
+const departmentsEnum = require('../enums/departmentsEnum');
+const WorkflowStepModel = require('../models/WorkflowStep');
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
 async function generateUniqueTicketNumber() {
@@ -15,6 +18,20 @@ async function appendCustomerNotes() {
 
     const ticketNotesWithCustomerNotesAppended = `${this.ticketNotes}\n\nCustomer Notes:\n${this.customer.notes}`;
     this.ticketNotes = ticketNotesWithCustomerNotesAppended;
+}
+
+function isValidTicketDestination(destination) {
+    const {department, departmentStatus} = destination;
+
+    if (!destination.department && !destination.departmentStatus) return false;
+
+    const validDepartmentStatuses = departmentsEnum.departmentToStatusesMappingForTicketObjects[department];
+
+    if (!validDepartmentStatuses) return false;
+
+    if (validDepartmentStatuses.length === 0) return !departmentStatus;
+    
+    return validDepartmentStatuses.includes(departmentStatus);
 }
 
 const timeInSecondsAttribute = {
@@ -278,13 +295,51 @@ const schema = new Schema({
     packagingJobComments: {
         type: String
     },
+    destination: {
+        type: destinationSchema,
+        required: false,
+        validate: [isValidTicketDestination, 'A "Ticket" cannot be moved to the following destination: {VALUE}']
+    },
     // products: {},
     // packingSlips: {},
-    // location: { // department // departmentStatus }
 }, { timestamps: true });
+
+async function addRowToWorkflowStepDbTable(next, destination, ticketId) {
+    if (!destination) return next();
+
+    const workflowStepAttributes = { ticketId, destination };
+
+    try {
+        const workflowStep = new WorkflowStepModel(workflowStepAttributes);
+
+        await WorkflowStepModel.create(workflowStep);
+    } catch (error) {
+        console.log('Error when saving a workflowStep to the database: ', error, '\nThe workflowStepAttributes attributes were: ', workflowStepAttributes);
+        return next(error);
+    }
+}
 
 schema.pre('save', generateUniqueTicketNumber);
 schema.pre('save', appendCustomerNotes);
+
+schema.pre('updateMany', async function(next) {
+    const errorMessage = 'The code to add records to the workflowStepDbTable table must be implemented before this method can be used.';
+    return next(errorMessage);
+});
+
+schema.pre(['updateOne', 'findOneAndUpdate'], async function(next) {
+    const destination = this.getUpdate().$set.destination;
+    const ticketId = this.getQuery()._id;
+
+    await addRowToWorkflowStepDbTable(next, destination, ticketId);
+});
+
+schema.pre('save', async function(next) {
+    const destination = this.destination;
+    const ticketId = this._id;
+
+    await addRowToWorkflowStepDbTable(next, destination, ticketId);
+});
 
 const Ticket = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model
 

@@ -1065,28 +1065,6 @@ describe('Ticket validation', () => {
         });
     });
 
-    describe('attribute: productIdToNumberOfFinishedRolls', () => {
-        it('should not be required', () => {
-            delete ticketAttributes.productIdToNumberOfFinishedRolls;
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a map whose id is a mongoose object id and the value is a number representing the number of finished rolls for that product', () => {
-            const productIdToNumberOfFinishedRolls = {
-                [new mongoose.Types.ObjectId()]: chance.d100(),
-                [new mongoose.Types.ObjectId()]: chance.d100()
-            };
-            ticketAttributes.productIdToNumberOfFinishedRolls = productIdToNumberOfFinishedRolls;
-            const ticket = new Ticket(ticketAttributes);
-
-            expect(ticket.productIdToNumberOfFinishedRolls.toJSON()).toEqual(productIdToNumberOfFinishedRolls);
-        });
-    });
-
     describe('attribute: windingJobComments', () => {
         it('should not be required', () => {
             delete ticketAttributes.windingJobComments;
@@ -1236,28 +1214,6 @@ describe('Ticket validation', () => {
         });
     });
 
-    describe('attribute: productIdToFinishedLabelQty', () => {
-        it('should not be required', () => {
-            delete ticketAttributes.productIdToFinishedLabelQty;
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a map whose id is a mongoose object id and the value is a number representing the number of finished rolls for that product', () => {
-            const productIdToFinishedLabelQty = {
-                [new mongoose.Types.ObjectId()]: chance.d100(),
-                [new mongoose.Types.ObjectId()]: chance.d100()
-            };
-            ticketAttributes.productIdToFinishedLabelQty = productIdToFinishedLabelQty;
-            const ticket = new Ticket(ticketAttributes);
-
-            expect(ticket.productIdToFinishedLabelQty.toJSON()).toEqual(productIdToFinishedLabelQty);
-        });
-    });
-
     describe('attribute: packagingJobComments', () => {
         it('should be a string', () => {
             ticketAttributes.packagingJobComments = chance.d100();
@@ -1373,6 +1329,76 @@ describe('Ticket validation', () => {
         });
     });
 
+    describe('attribute: packingSlips', () => {
+        it('should pass validation if attribute is defined correctly', () => {
+            delete ticketAttributes.packingSlips;
+            const ticket = new Ticket(ticketAttributes);
+            
+            const error = ticket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+        
+        it('should default to an empty array', () => {
+            delete ticketAttributes.packingSlips;
+            const ticket = new Ticket(ticketAttributes);
+            
+            expect(ticket.packingSlips).toEqual([]);
+        });
+
+        it('should be an array of mongoose object ids', () => {
+            const packingSlips = [
+                mongoose.Types.ObjectId(),
+                mongoose.Types.ObjectId()
+            ];
+            ticketAttributes.packingSlips = packingSlips;
+            const ticket = new Ticket(ticketAttributes);
+            
+            expect(ticket.packingSlips.length).toEqual(packingSlips.length);
+
+            expect(ticket.packingSlips[0]).toEqual(expect.any(mongoose.Types.ObjectId));
+            expect(ticket.packingSlips[0]).toEqual(packingSlips[0]);
+
+            expect(ticket.packingSlips[1]).toEqual(expect.any(mongoose.Types.ObjectId));
+            expect(ticket.packingSlips[1]).toEqual(packingSlips[1]);
+        });
+    });
+
+    describe('attribute: products', () => {
+        it('should pass validation if attribute is defined correctly', () => {
+            const products = [
+                { baseProduct: mongoose.Types.ObjectId() },
+                { baseProduct: mongoose.Types.ObjectId() },
+                { baseProduct: mongoose.Types.ObjectId() },
+            ];
+            ticketAttributes.products = products;
+            const ticket = new Ticket(ticketAttributes);
+            
+            const error = ticket.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(ticket.products.length).toEqual(products.length);
+        });
+
+        it('should have the correct fields on each product', () => {
+            const products = [
+                { 
+                    baseProduct: mongoose.Types.ObjectId(), 
+                    labelQuantity: chance.d100(),
+                    numberOfFinishedRolls: chance.d100(), 
+                    finishedLabelQuantity: chance.d100() 
+                },
+            ];
+            ticketAttributes.products = products;
+            const ticket = new Ticket(ticketAttributes);
+            
+            expect(ticket.products[0].baseProduct).toEqual(products[0].baseProduct);
+            expect(ticket.products[0].labelQuantity).toEqual(products[0].labelQuantity);
+            expect(ticket.products[0].numberOfFinishedRolls).toEqual(products[0].numberOfFinishedRolls);
+            expect(ticket.products[0].finishedLabelQuantity).toEqual(products[0].finishedLabelQuantity);
+        });
+    });
+
     describe('database interaction validations', () => {
         let customerAttributes, savedCustomer;
 
@@ -1399,6 +1425,24 @@ describe('Ticket validation', () => {
 
             expect(softDeletedAdhesiveCategory).toBeDefined();
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
+        });
+
+        describe('attribute: products', () => {
+            it('should have timestamps', async () => {
+                ticketAttributes.products = [
+                    {
+                        baseProduct: mongoose.Types.ObjectId(),
+                        labelQuantity: chance.d100(),
+                        numberOfFinishedRolls: chance.d100(),
+                        finishedLabelQuantity: chance.d100()
+                    }
+                ];
+                const ticket = new Ticket(ticketAttributes);
+                const savedTicket = await ticket.save();
+                
+                expect(savedTicket.products[0].createdAt).toBeDefined();
+                expect(savedTicket.products[0].updatedAt).toBeDefined();
+            });
         });
 
         describe('attribute: ticketNumber', () => {

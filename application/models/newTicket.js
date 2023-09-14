@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const destinationSchema = require('../schemas/destination');
 const departmentsEnum = require('../enums/departmentsEnum');
 const WorkflowStepModel = require('../models/WorkflowStep');
+const purchasedProductSchema = require('../schemas/purchasedProduct');
+
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
 async function generateUniqueTicketNumber() {
@@ -240,10 +242,10 @@ const schema = new Schema({
         type: String
     },
     rewindingDuration: timeInSecondsAttribute,
-    productIdToNumberOfFinishedRolls: { // TODO (8-29-2023): Gavin, should this be a Map? Or an array?
-        type: Map,
-        of: Number,
-    },
+    // productIdToNumberOfFinishedRolls: { // TODO (8-29-2023): Gavin, should this be a Map? Or an array?
+    //     type: Map,
+    //     of: Number,
+    // },
     windingJobComments: {
         type: String
     },
@@ -262,10 +264,10 @@ const schema = new Schema({
         default: 0,
         min: 0
     },
-    productIdToFinishedLabelQty: {
-        type: Map,
-        of: Number,
-    },
+    // productIdToFinishedLabelQty: {
+    //     type: Map,
+    //     of: Number,
+    // },
     packagingJobComments: {
         type: String
     },
@@ -274,8 +276,13 @@ const schema = new Schema({
         required: false,
         validate: [isValidTicketDestination, 'A "Ticket" cannot be moved to the following destination: {VALUE}']
     },
-    // products: {},
-    // packingSlips: {},
+    products: {
+        type: [purchasedProductSchema]
+    },
+    packingSlips: {
+        type: [Schema.Types.ObjectId],
+        ref: 'PackingSlip',
+    },
 }, { timestamps: true });
 
 async function addRowToWorkflowStepDbTable(next, destination, ticketId) {

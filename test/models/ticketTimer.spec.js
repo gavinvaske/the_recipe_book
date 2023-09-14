@@ -1,4 +1,4 @@
-const TicketTimer = require('../../application/models/ticketTimer');
+const TicketTimeLedger = require('../../application/models/ticketTimeLedger');
 const { TIMER_TYPES } = require('../../application/enums/timerTypesEnum');
 const { TIMER_STATES } = require('../../application/enums/timerStatesEnum');
 const databaseService = require('../../application/services/databaseService');
@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const chance = require('chance').Chance();
 
 describe('File: ticketTimer.js', () => {
-    let ticketTimerAttributes;
+    let ticketTimeLedgerAttributes;
     
     beforeEach(() => {
-        ticketTimerAttributes = {
+        ticketTimeLedgerAttributes = {
             ticketId: mongoose.Types.ObjectId(),
             timerType: chance.pickone(TIMER_TYPES),
             state: chance.pickone(TIMER_STATES)
@@ -17,7 +17,7 @@ describe('File: ticketTimer.js', () => {
     });
 
     it('should pass validation if all required attributes are defined correctly', () => {
-        const ticketTimer = new TicketTimer(ticketTimerAttributes);
+        const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
         
         const error = ticketTimer.validateSync();
         
@@ -25,7 +25,7 @@ describe('File: ticketTimer.js', () => {
     });
 
     it('should have the correct indexes', async () => {
-        const indexMetaData = TicketTimer.schema.indexes();
+        const indexMetaData = TicketTimeLedger.schema.indexes();
         const expectedIndexes = ['ticketId'];
 
         console.log('indexMetaData: ', indexMetaData);
@@ -42,7 +42,7 @@ describe('File: ticketTimer.js', () => {
 
     describe('attribute: ticketId', () => {
         it('should be a mongoose objectId', () => {
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
 
             const error = ticketTimer.validateSync();
 
@@ -51,8 +51,8 @@ describe('File: ticketTimer.js', () => {
         });
 
         it('should be required', () => {
-            delete ticketTimerAttributes.ticketId;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            delete ticketTimeLedgerAttributes.ticketId;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
 
             const error = ticketTimer.validateSync();
 
@@ -62,23 +62,23 @@ describe('File: ticketTimer.js', () => {
 
     describe('attribute: timerType', () => {
         it('should be a string', () => {
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
 
             expect(ticketTimer.timerType).toEqual(expect.any(String));
         });
 
         it('should automatically uppercase the value', () => {
-            const lowerCaseTimerType = ticketTimerAttributes.timerType.toLowerCase();
-            ticketTimerAttributes.timerType = lowerCaseTimerType;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const lowerCaseTimerType = ticketTimeLedgerAttributes.timerType.toLowerCase();
+            ticketTimeLedgerAttributes.timerType = lowerCaseTimerType;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             expect(ticketTimer.timerType).toEqual(lowerCaseTimerType.toUpperCase());
         });
 
         it('should fail if value does not equal one of the allowed values', () => {
             const invalidTimerType = chance.string();
-            ticketTimerAttributes.timerType = invalidTimerType;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            ticketTimeLedgerAttributes.timerType = invalidTimerType;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             const error = ticketTimer.validateSync();
             
@@ -86,8 +86,8 @@ describe('File: ticketTimer.js', () => {
         });
 
         it('should be required', () => {
-            delete ticketTimerAttributes.timerType;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            delete ticketTimeLedgerAttributes.timerType;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             const error = ticketTimer.validateSync();
             
@@ -97,23 +97,23 @@ describe('File: ticketTimer.js', () => {
 
     describe('attribute: state', () => {
         it('should be a string', () => {
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
 
             expect(ticketTimer.state).toEqual(expect.any(String));
         });
 
         it('should automatically uppercase the value', () => {
-            const lowerCaseState = ticketTimerAttributes.state.toLowerCase();
-            ticketTimerAttributes.state = lowerCaseState;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const lowerCaseState = ticketTimeLedgerAttributes.state.toLowerCase();
+            ticketTimeLedgerAttributes.state = lowerCaseState;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             expect(ticketTimer.state).toEqual(lowerCaseState.toUpperCase());
         });
 
         it('should fail if value does not equal one of the allowed values', () => {
             const invalidState = chance.string();
-            ticketTimerAttributes.state = invalidState;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            ticketTimeLedgerAttributes.state = invalidState;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             const error = ticketTimer.validateSync();
             
@@ -121,8 +121,8 @@ describe('File: ticketTimer.js', () => {
         });
 
         it('should be required', () => {
-            delete ticketTimerAttributes.state;
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            delete ticketTimeLedgerAttributes.state;
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             
             const error = ticketTimer.validateSync();
             
@@ -140,7 +140,7 @@ describe('File: ticketTimer.js', () => {
         });
 
         it('should have timestamps', async () => {
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
 
             const savedTicketTimer = await ticketTimer.save();
 
@@ -149,13 +149,13 @@ describe('File: ticketTimer.js', () => {
         });
 
         it('should soft delete items', async () => {
-            const ticketTimer = new TicketTimer(ticketTimerAttributes);
+            const ticketTimer = new TicketTimeLedger(ticketTimeLedgerAttributes);
             const id = ticketTimer._id;
 
             await ticketTimer.save();
-            await TicketTimer.deleteById(id);
+            await TicketTimeLedger.deleteById(id);
 
-            const softDeletedItem = await TicketTimer.findOneDeleted({_id: id}).exec();
+            const softDeletedItem = await TicketTimeLedger.findOneDeleted({_id: id}).exec();
 
             expect(softDeletedItem).toBeDefined();
             expect(softDeletedItem.deleted).toBe(true);

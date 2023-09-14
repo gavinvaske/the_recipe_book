@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
-const downtimeLedgerSchema = new Schema({
+const ticketTimeLedgerSchema = new Schema({
     ticketId: {
         type: Schema.Types.ObjectId,
         ref: 'Ticket',
@@ -27,6 +27,6 @@ const downtimeLedgerSchema = new Schema({
     }
 }, { timestamps: true });
 
-const DowntimeLedger = mongoose.model('downtimeLedger', downtimeLedgerSchema);
+const TicketTimeLedger = mongoose.model('TicketTimeLedger', ticketTimeLedgerSchema);
 
-module.exports = DowntimeLedger;
+module.exports = TicketTimeLedger;

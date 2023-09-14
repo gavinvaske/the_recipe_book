@@ -9,6 +9,10 @@ mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
 const testDataGenerator = require('../testDataGenerator');
 
+function createObjectWithValueField(value) {
+    return { value };
+}
+
 function verifyTimeFieldInSeconds(ticketAttributes, fieldName) {
     let ticket, error;
     
@@ -33,6 +37,40 @@ function verifyTimeFieldInSeconds(ticketAttributes, fieldName) {
     ticket = new Ticket(ticketAttributes);
     // should defualt to 0
     expect(ticket[fieldName]).toEqual(0);
+}
+
+function verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, attributeName) {
+    delete ticketAttributes[attributeName];
+    let ticket, objectValueField;
+
+    // (1) should have a value field
+    ticketAttributes[attributeName] = [ createObjectWithValueField(chance.d100()) ];
+    ticket = new Ticket(ticketAttributes);
+
+    [ objectValueField ] = ticket[attributeName];
+
+    expect(objectValueField.value).toBeDefined();
+    expect(objectValueField.value).toBe(ticketAttributes[attributeName][0].value);
+
+    // (2) should default value field to 0 when attribute is given an empty object in its array
+    const emptyObject = {};
+    ticketAttributes[attributeName] = [ emptyObject ];
+    ticket = new Ticket(ticketAttributes);
+
+    [ objectValueField ] = ticket[attributeName];
+
+    expect(objectValueField.value).toEqual(0);
+
+    // (3) should fail validation if attribute[n].value is not a positive integer
+    const negativeNumber = -1;
+    const floatingPointNumber = 1.5;
+    const invalidValue = chance.pickone([negativeNumber, floatingPointNumber]);
+    ticketAttributes[attributeName] = [ createObjectWithValueField(invalidValue) ];
+    ticket = new Ticket(ticketAttributes);
+
+    const error = ticket.validateSync();
+
+    expect(error).toBeDefined();
 }
 
 function getRandomValidTicketDepartment() {
@@ -397,56 +435,8 @@ describe('Ticket validation', () => {
             expect(ticket.colorCalibrations).toEqual([]);
         });
 
-        it('should have a time and feet field', () => {
-            const time = chance.d100();
-            const feet = chance.d100();
-            ticketAttributes.colorCalibrations = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.colorCalibrations[0].time).toEqual(time);
-            expect(ticket.colorCalibrations[0].feet).toEqual(feet);
-        });
-
-        it('should throw an error if the feet is not a whole number', () => {
-            const feet = 100.50;
-            const time = chance.d100();
-            ticketAttributes.colorCalibrations = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the time is negative', () => {
-            const feet = chance.d100();
-            const time = -1;
-            ticketAttributes.colorCalibrations = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the feet is negative', () => {
-            const feet = -1;
-            const time = chance.d100();
-            ticketAttributes.colorCalibrations = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the time to 0', () => {
-            const feet = chance.d100();
-            const time = undefined;
-            ticketAttributes.colorCalibrations = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.colorCalibrations[0].time).toEqual(0);
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'colorCalibrations');
         });
     });
 
@@ -458,56 +448,8 @@ describe('Ticket validation', () => {
             expect(ticket.scalings).toEqual([]);
         });
 
-        it('should have a time and feet field', () => {
-            const time = chance.d100();
-            const feet = chance.d100();
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.scalings[0].time).toEqual(time);
-            expect(ticket.scalings[0].feet).toEqual(feet);
-        });
-
-        it('should throw an error if the feet is not a whole number', () => {
-            const feet = 100.50;
-            const time = chance.d100();
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the time is negative', () => {
-            const feet = chance.d100();
-            const time = -1;
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the feet is negative', () => {
-            const feet = -1;
-            const time = chance.d100();
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the time to 0', () => {
-            const feet = chance.d100();
-            const time = undefined;
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.scalings[0].time).toEqual(0);
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'scalings');
         });
     });
 
@@ -519,57 +461,8 @@ describe('Ticket validation', () => {
             expect(ticket.printCleaners).toEqual([]);
         });
 
-        it('should have a time and feet field', () => {
-            const time = chance.d100();
-            const feet = chance.d100();
-            ticketAttributes.printCleaners = [ { time, feet } ];
-            
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.printCleaners[0].time).toEqual(time);
-            expect(ticket.printCleaners[0].feet).toEqual(feet);
-        });
-
-        it('should throw an error if the feet is not a whole number', () => {
-            const feet = 100.50;
-            const time = chance.d100();
-            ticketAttributes.printCleaners = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the time is negative', () => {
-            const feet = chance.d100();
-            const time = -1;
-            ticketAttributes.printCleaners = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the feet is negative', () => {
-            const feet = -1;
-            const time = chance.d100();
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the time to 0', () => {
-            const feet = chance.d100();
-            const time = undefined;
-            ticketAttributes.scalings = [ { time, feet } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.scalings[0].time).toEqual(0);
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'printCleaners');
         });
     });
 
@@ -624,58 +517,8 @@ describe('Ticket validation', () => {
             expect(ticket.proofRunups).toEqual([]);
         });
 
-        it('should have a time and imagePlacement field', () => {
-            const time = chance.d100();
-            const imagePlacement = chance.bool();
-            ticketAttributes.proofRunups = [ { time, imagePlacement } ];
-            
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.proofRunups[0].time).toEqual(time);
-            expect(ticket.proofRunups[0].imagePlacement).toEqual(imagePlacement);
-        });
-
-        it('should have throw an error if the time field is negative', () => {
-            const time = -1;
-            const imagePlacement = chance.bool();
-            ticketAttributes.proofRunups = [ { time, imagePlacement } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the time to 0', () => {
-            const time = undefined;
-            const imagePlacement = chance.bool();
-            ticketAttributes.proofRunups = [ { time, imagePlacement } ];
-            
-            const ticket = new Ticket(ticketAttributes);
-
-            expect(ticket.proofRunups[0].time).toEqual(0);
-        });
-
-        it('should throw an error if the time is not a whole number', () => {
-            const time = 34.01;
-            const imagePlacement = chance.bool();
-            ticketAttributes.proofRunups = [ { time, imagePlacement } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the imagePlacement field is undefined', () => {
-            const time = chance.d100();
-            const imagePlacement = undefined;
-            ticketAttributes.proofRunups = [ { time, imagePlacement } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'proofRunups');
         });
     });
 
@@ -767,9 +610,9 @@ describe('Ticket validation', () => {
         });
     });
 
-    describe('attribute: newMaterialSpliceTime', () => {
+    describe('attribute: newMaterialSplices', () => {
         it('should not be required', () => {
-            delete ticketAttributes.newMaterialSpliceTime;
+            delete ticketAttributes.newMaterialSplices;
             const ticket = new Ticket(ticketAttributes);
             
             const error = ticket.validateSync();
@@ -778,52 +621,20 @@ describe('Ticket validation', () => {
         });
 
         it('should be a field containing a positive integer representing a number of seconds', () => {
-            verifyTimeFieldInSeconds(ticketAttributes, 'newMaterialSpliceTime');
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'newMaterialSplices');
         });
     });
 
-    describe('attribute: existingMaterialSpliceTimes', () => {
+    describe('attribute: existingMaterialSplices', () => {
         it('should default to an empty array', () => {
-            delete ticketAttributes.existingMaterialSpliceTimes;
+            delete ticketAttributes.existingMaterialSplices;
             const ticket = new Ticket(ticketAttributes);
             
-            expect(ticket.existingMaterialSpliceTimes).toEqual([]);
+            expect(ticket.existingMaterialSplices).toEqual([]);
         });
 
-        it('should have a time field that is a number', () => {
-            const time = chance.d100();
-            ticketAttributes.existingMaterialSpliceTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.existingMaterialSpliceTimes[0].time).toEqual(time);
-        });
-
-        it('should have a time field that defaults to 0', () => {
-            const time = undefined;
-            ticketAttributes.existingMaterialSpliceTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.existingMaterialSpliceTimes[0].time).toEqual(0);
-        });
-
-        it('should throw an error if the time field is negative', () => {
-            const time = -1;
-            ticketAttributes.existingMaterialSpliceTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should throw an error if the time field is not a whole number', () => {
-            const time = 9.7;
-            ticketAttributes.existingMaterialSpliceTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'existingMaterialSplices');
         });
     });
 
@@ -835,76 +646,8 @@ describe('Ticket validation', () => {
             expect(ticket.materialWrapUps).toEqual([]);
         });
 
-        it('should default time and feetLost and framesAdded to 0', () => {
-            const time = undefined;
-            const feetLost = undefined;
-            const framesAdded = undefined;
-            ticketAttributes.materialWrapUps = [ { time, feetLost, framesAdded } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.materialWrapUps[0].time).toEqual(0);
-            expect(ticket.materialWrapUps[0].feetLost).toEqual(0);
-            expect(ticket.materialWrapUps[0].framesAdded).toEqual(0);
-        });
-
-        it('should fail if the time field is negative', () => {
-            const time = -1;
-            ticketAttributes.materialWrapUps = [ { time, feetLost: chance.d100(), framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should fail if the time field is not a whole number', () => {
-            const time = 34.3;
-            ticketAttributes.materialWrapUps = [ { time, feetLost: chance.d100(), framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should fail if the feetLost field is negative', () => {
-            const feetLost = -1;
-            ticketAttributes.materialWrapUps = [ { time: chance.d100(), feetLost, framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail if the feetLost field is not a whole number', () => {
-            const feetLost = 34.8;
-            ticketAttributes.materialWrapUps = [ { time: chance.d100(), feetLost, framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the framesAdded field is not a whole number', () => {
-            const framesAdded = 87.76;
-            ticketAttributes.materialWrapUps = [ { time: chance.d100(), feetLost: chance.d100(), framesAdded } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the framesAdded field is negative', () => {
-            const framesAdded = -1;
-            ticketAttributes.materialWrapUps = [ { time: chance.d100(), feetLost: chance.d100(), framesAdded } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'materialWrapUps');
         });
     });
 
@@ -916,120 +659,34 @@ describe('Ticket validation', () => {
             expect(ticket.webBreaks).toEqual([]);
         });
 
-        it('should default time and feetLost and framesAdded to 0', () => {
-            const time = undefined;
-            const feetLost = undefined;
-            const framesAdded = undefined;
-            ticketAttributes.webBreaks = [ { time, feetLost, framesAdded } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.webBreaks[0].time).toEqual(0);
-            expect(ticket.webBreaks[0].feetLost).toEqual(0);
-            expect(ticket.webBreaks[0].framesAdded).toEqual(0);
-        });
-
-        it('should fail validation if the time field is not a whole number', () => {
-            const time = 99.99;
-            ticketAttributes.webBreaks = [ { time, feetLost: chance.d100(), framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            const error = ticket.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validaiton if the feetLost field is not a whole number', () => {
-            const feetLost = 99.99;
-            ticketAttributes.webBreaks = [ { time: chance.d100(), feetLost, framesAdded: chance.d100() } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the framesAdded field is not a whole number', () => {
-            const framesAdded = 99.99;
-            ticketAttributes.webBreaks = [ { time: chance.d100(), feetLost: chance.d100(), framesAdded } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'webBreaks');
         });
     });
 
-    describe('attribute: newInkBuildTimes', () => {
+    describe('attribute: newInkBuilds', () => {
         it('should default to an empty array', () => {
-            delete ticketAttributes.newInkBuildTimes;
+            delete ticketAttributes.newInkBuilds;
             const ticket = new Ticket(ticketAttributes);
             
-            expect(ticket.newInkBuildTimes).toEqual([]);
+            expect(ticket.newInkBuilds).toEqual([]);
         });
 
-        it('should have a time field that is a number', () => {
-            const time = chance.d100();
-            ticketAttributes.newInkBuildTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.newInkBuildTimes[0].time).toEqual(time);
-        });
-
-        it('should fail if the time field is not a whole number', () => {
-            const time = 99.99;
-            ticketAttributes.newInkBuildTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the time field is negative', () => {
-            const time = -1;
-            ticketAttributes.newInkBuildTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'newInkBuilds');
         });
     });
 
-    describe('attribute: imagePlacementTimes', () => {
+    describe('attribute: imagePlacements', () => {
         it('should default to an empty array', () => {
-            delete ticketAttributes.imagePlacementTimes;
+            delete ticketAttributes.imagePlacements;
             const ticket = new Ticket(ticketAttributes);
             
-            expect(ticket.imagePlacementTimes).toEqual([]);
+            expect(ticket.imagePlacements).toEqual([]);
         });
 
-        it('should have a time field that is a number', () => {
-            const time = chance.d100();
-            ticketAttributes.imagePlacementTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.imagePlacementTimes[0].time).toEqual(time);
-        });
-
-        it('should fail validation if the time field is not a whole number', () => {
-            const time = 99.99;
-            ticketAttributes.imagePlacementTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the time field is negative', () => {
-            const time = -1;
-            ticketAttributes.imagePlacementTimes = [ { time } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'imagePlacements');
         });
     });
 
@@ -1041,40 +698,8 @@ describe('Ticket validation', () => {
             expect(ticket.colorSeperations).toEqual([]);
         });
 
-        it('should have a value field that is a number', () => {
-            const value = chance.d100();
-            ticketAttributes.colorSeperations = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.colorSeperations[0].value).toEqual(value);
-        });
-
-        it('should fail validation if the value field is not a whole number', () => {
-            const value = 99.99;
-            ticketAttributes.colorSeperations = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the value field is negative', () => {
-            const value = -1;
-            ticketAttributes.colorSeperations = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the value field to 0 if the value field is not specified', () => {
-            const value = undefined;
-            ticketAttributes.colorSeperations = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.colorSeperations[0].value).toEqual(0);
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'colorSeperations');
         });
     });
 
@@ -1086,40 +711,8 @@ describe('Ticket validation', () => {
             expect(ticket.trailingEdges).toEqual([]);
         });
 
-        it('should have a value field that is a number', () => {
-            const value = chance.d100();
-            ticketAttributes.trailingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.trailingEdges[0].value).toEqual(value);
-        });
-
-        it('should fail validation if the value field is not a whole number', () => {
-            const value = 99.99;
-            ticketAttributes.trailingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the value field is negative', () => {
-            const value = -1;
-            ticketAttributes.trailingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should default the value field to 0 if the value field is not specified', () => {
-            const value = undefined;
-            ticketAttributes.trailingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            expect(ticket.trailingEdges[0].value).toEqual(0);
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'trailingEdges');
         });
     });
 
@@ -1131,32 +724,8 @@ describe('Ticket validation', () => {
             expect(ticket.leadingEdges).toEqual([]);
         });
 
-        it('should have a value field that is a number', () => {
-            const value = chance.d100();
-            ticketAttributes.leadingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-
-            expect(ticket.leadingEdges[0].value).toEqual(value);
-        });
-
-        it('should fail validation if the value field is not a whole number', () => {
-            const value = 100.50;
-            ticketAttributes.leadingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should fail validation if the value field is negative', () => {
-            const value = -1;
-            ticketAttributes.leadingEdges = [ { value } ];
-            const ticket = new Ticket(ticketAttributes);
-            
-            const error = ticket.validateSync();
-            
-            expect(error).toBeDefined();
+        it('should should be an array of objects which contain a positive integer value field', () => {
+            verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketAttributes, 'leadingEdges');
         });
     });
 
@@ -1973,6 +1542,111 @@ describe('Ticket validation', () => {
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
                     
                     expect(allWorkflowStepsInDatabase.length).toBe(numberOfUpdatesToTicketDestination);
+                });
+            });
+
+            describe('attributes which are arrays of objects, and whose objects has a single value field', () => {
+                beforeEach(() => {
+                    ticketAttributes = {
+                        ...ticketAttributes,
+                        colorCalibrations: [ createObjectWithValueField(chance.d100()) ],
+                        scalings: [ createObjectWithValueField(chance.d100()) ],
+                        printCleaners: [ createObjectWithValueField(chance.d100()) ],
+                        proofRunups: [ createObjectWithValueField(chance.d100()) ],
+                        newMaterialSplices: [ createObjectWithValueField(chance.d100()) ],
+                        existingMaterialSplices: [ createObjectWithValueField(chance.d100()) ],
+                        materialWrapUps: [ createObjectWithValueField(chance.d100()) ],
+                        webBreaks: [ createObjectWithValueField(chance.d100()) ],
+                        newInkBuilds: [ createObjectWithValueField(chance.d100()) ],
+                        imagePlacements: [ createObjectWithValueField(chance.d100()) ],
+                        colorSeperations: [ createObjectWithValueField(chance.d100()) ],
+                        trailingEdges: [ createObjectWithValueField(chance.d100()) ],
+                        leadingEdges: [ createObjectWithValueField(chance.d100()) ]
+                    };
+                });
+                it('should have timestamps and _id on each element in colorCalibrations[n]', async () => {
+                    ticketAttributes.colorCalibrations = [ { value: chance.d100() } ];
+                    const ticket = new Ticket(ticketAttributes);
+
+                    const savedTicket = await ticket.save();
+
+                    const { colorCalibrations } = savedTicket;
+
+                    expect(colorCalibrations[0].updatedAt).toBeDefined();
+                    expect(colorCalibrations[0].createdAt).toBeDefined();
+                    expect(colorCalibrations[0]._id).toBeDefined();
+
+                    const { scalings } = savedTicket;
+
+                    expect(scalings[0].updatedAt).toBeDefined();
+                    expect(scalings[0].createdAt).toBeDefined();
+                    expect(scalings[0]._id).toBeDefined();
+
+                    const { printCleaners } = savedTicket;
+
+                    expect(printCleaners[0].updatedAt).toBeDefined();
+                    expect(printCleaners[0].createdAt).toBeDefined();
+                    expect(printCleaners[0]._id).toBeDefined();
+
+                    const { proofRunups } = savedTicket;
+
+                    expect(proofRunups[0].updatedAt).toBeDefined();
+                    expect(proofRunups[0].createdAt).toBeDefined();
+                    expect(proofRunups[0]._id).toBeDefined();
+
+                    const { newMaterialSplices } = savedTicket;
+                    
+                    expect(newMaterialSplices[0].updatedAt).toBeDefined();
+                    expect(newMaterialSplices[0].createdAt).toBeDefined();
+                    expect(newMaterialSplices[0]._id).toBeDefined();
+
+                    const { existingMaterialSplices } = savedTicket;
+
+                    expect(existingMaterialSplices[0].updatedAt).toBeDefined();
+                    expect(existingMaterialSplices[0].createdAt).toBeDefined();
+                    expect(existingMaterialSplices[0]._id).toBeDefined();
+
+                    const { materialWrapUps } = savedTicket;
+
+                    expect(materialWrapUps[0].updatedAt).toBeDefined();
+                    expect(materialWrapUps[0].createdAt).toBeDefined();
+                    expect(materialWrapUps[0]._id).toBeDefined();
+
+                    const { webBreaks } = savedTicket;
+
+                    expect(webBreaks[0].updatedAt).toBeDefined();
+                    expect(webBreaks[0].createdAt).toBeDefined();
+                    expect(webBreaks[0]._id).toBeDefined();
+
+                    const { newInkBuilds } = savedTicket;
+
+                    expect(newInkBuilds[0].updatedAt).toBeDefined();
+                    expect(newInkBuilds[0].createdAt).toBeDefined();
+                    expect(newInkBuilds[0]._id).toBeDefined();
+
+                    const { imagePlacements } = savedTicket;
+
+                    expect(imagePlacements[0].updatedAt).toBeDefined();
+                    expect(imagePlacements[0].createdAt).toBeDefined();
+                    expect(imagePlacements[0]._id).toBeDefined();
+
+                    const { colorSeperations } = savedTicket;
+                    
+                    expect(colorSeperations[0].updatedAt).toBeDefined();
+                    expect(colorSeperations[0].createdAt).toBeDefined();
+                    expect(colorSeperations[0]._id).toBeDefined();
+
+                    const { trailingEdges } = savedTicket;
+
+                    expect(trailingEdges[0].updatedAt).toBeDefined();
+                    expect(trailingEdges[0].createdAt).toBeDefined();
+                    expect(trailingEdges[0]._id).toBeDefined();
+
+                    const { leadingEdges } = savedTicket;
+
+                    expect(leadingEdges[0].updatedAt).toBeDefined();
+                    expect(leadingEdges[0].createdAt).toBeDefined();
+                    expect(leadingEdges[0]._id).toBeDefined();
                 });
             });
         });

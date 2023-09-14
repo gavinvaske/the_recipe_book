@@ -50,43 +50,6 @@ const timeAndFeetSchema = new Schema({
     }
 });
 
-const timeSchema = new Schema({
-    time: timeInSecondsAttribute
-});
-
-const proofRunupSchema = new Schema({
-    time: timeInSecondsAttribute,
-    imagePlacement: {
-        type: Boolean,
-        required: true
-    }
-});
-
-const valueSchema = new Schema({
-    value: {
-        type: Number,
-        min: 0,
-        validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' },
-        default: 0
-    }
-});
-
-const timeAndFeetLostAndFramesAddedSchema = new Schema({
-    time: timeInSecondsAttribute,
-    feetLost: {
-        type: Number,
-        min: 0,
-        validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' },
-        default: 0
-    },
-    framesAdded: {
-        type: Number,
-        min: 0,
-        validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' },
-        default: 0
-    }
-});
-
 const dieCutterDownSchema = new Schema({
     time: timeInSecondsAttribute,
     reason: {
@@ -98,6 +61,15 @@ const dieCutterDownSchema = new Schema({
         validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' }
     }
 });
+
+const positiveIntegerSchema = new Schema({
+    value: {
+        type: Number,
+        min: 0,
+        validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' },
+        default: 0
+    }
+}, { timestamps: true });
 
 const boxSchema = new Schema({
     rollsPerBox: {
@@ -177,13 +149,13 @@ const schema = new Schema({
         min: 0
     },
     colorCalibrations: {
-        type: [timeAndFeetSchema]
+        type: [positiveIntegerSchema]
     },
     scalings: {
-        type: [timeAndFeetSchema]
+        type: [positiveIntegerSchema]
     },
     printCleaners: {
-        type: [timeAndFeetSchema]
+        type: [positiveIntegerSchema]
     },
     bcsCleaners: {
         type: Number,
@@ -192,7 +164,7 @@ const schema = new Schema({
         validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' }
     },
     proofRunups: {
-        type: [proofRunupSchema]
+        type: [positiveIntegerSchema]
     },
     dieLineFrames: {
         type: Number,
@@ -206,30 +178,32 @@ const schema = new Schema({
         min: 0,
         validate: { validator: Number.isInteger, message: '{VALUE} is not an integer' }
     },
-    newMaterialSpliceTime: timeInSecondsAttribute,
-    existingMaterialSpliceTimes: {
-        type: [timeSchema]
+    newMaterialSplices: {
+        type: [positiveIntegerSchema]
+    },
+    existingMaterialSplices: {
+        type: [positiveIntegerSchema]
     },
     materialWrapUps: {
-        type: [timeAndFeetLostAndFramesAddedSchema]
+        type: [positiveIntegerSchema]
     },
     webBreaks: {
-        type: [timeAndFeetLostAndFramesAddedSchema]
+        type: [positiveIntegerSchema]
     },
-    newInkBuildTimes: {
-        type: [timeSchema]
+    newInkBuilds: {
+        type: [positiveIntegerSchema]
     },
-    imagePlacementTimes: {
-        type: [timeSchema]
+    imagePlacements: {
+        type: [positiveIntegerSchema]
     },
     colorSeperations: {
-        type: [valueSchema]
+        type: [positiveIntegerSchema]
     },
     trailingEdges: {
-        type: [valueSchema]
+        type: [positiveIntegerSchema]
     },
     leadingEdges: {
-        type: [valueSchema]
+        type: [positiveIntegerSchema]
     },
     printingJobComments: {
         type: String

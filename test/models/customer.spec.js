@@ -205,7 +205,7 @@ describe('validation', () => {
         it('should have a deliveryMethod attribute', () => {
             const deliveryMethod = mongoose.Types.ObjectId();
             const address = {
-              ...getAddress(),
+                ...getAddress(),
                 deliveryMethod
             };
             const addresses = [address];
@@ -218,7 +218,7 @@ describe('validation', () => {
             expect(customer.shippingLocations.length).toEqual(addresses.length);
             expect(customer.shippingLocations[0].deliveryMethod).toEqual(deliveryMethod);
             expect(customer.shippingLocations[0].deliveryMethod).toEqual(expect.any(mongoose.Types.ObjectId));
-        })
+        });
     });
 
     describe('attribute: billingLocations', () => {

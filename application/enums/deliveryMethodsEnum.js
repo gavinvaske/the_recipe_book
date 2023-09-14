@@ -1,7 +1,0 @@
-module.exports.SHIPPING_DELIVERY_METHOD = 'SHIPPING';
-module.exports.PICKUP_DELIVERY_METHOD = 'PICKUP';
-
-module.exports.DELIVERY_METHODS = [
-    this.SHIPPING_DELIVERY_METHOD, 
-    this.PICKUP_DELIVERY_METHOD
-];

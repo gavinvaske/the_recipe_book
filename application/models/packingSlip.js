@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const addressSchema = require('../schemas/address');
 const { FACTORY_ADDRESS } = require('../enums/constantsEnum');
 const { validatePhoneNumber } = require('../services/dataValidationService');
-const { DELIVERY_METHODS, SHIPPING_DELIVERY_METHOD } = require('../enums/deliveryMethodsEnum');
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
@@ -43,9 +42,8 @@ const packingSlipSchema = new Schema({
         type: addressSchema,
     },
     deliveryMethod: {
-        type: String,
-        enum: DELIVERY_METHODS,
-        default: SHIPPING_DELIVERY_METHOD
+        type: Schema.Types.ObjectId,
+        ref: 'DeliveryMethod'
     },
     shippingCarrier: {
         type: String,

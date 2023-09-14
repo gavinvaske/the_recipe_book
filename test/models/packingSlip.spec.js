@@ -1,8 +1,8 @@
 const PackingSlipModel = require('../../application/models/packingSlip');
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
-const { DELIVERY_METHODS } = require('../../application/enums/deliveryMethodsEnum');
 const testDataGenerator = require('../testDataGenerator');
+const mongoose = require('mongoose');
 
 describe('File: packingSlip.js', () => {
     let packingSlipAttributes;
@@ -206,36 +206,20 @@ describe('File: packingSlip.js', () => {
     });
 
     describe('attribute: deliveryMethod', () => {
-        it('should have the correct default value', () => {
+        it('should not be required', () => {
             delete packingSlipAttributes.deliveryMethod;
-            const expectedDefaultValue = 'SHIPPING';
-            
-            const packingSlip = new PackingSlipModel(packingSlipAttributes);
-            
-            expect(packingSlip.deliveryMethod).toEqual(expectedDefaultValue);
-        });
-
-        it('should pass validation if the delivery method is one of the allowed values', () => {
-            const deliveryMethod = chance.pickone(DELIVERY_METHODS);
-            packingSlipAttributes.deliveryMethod = deliveryMethod;
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
 
-            console.log('deliveryMethod: ', packingSlip.deliveryMethod);
-            
             const error = packingSlip.validateSync();
-            
+
             expect(error).toBeUndefined();
-            expect(packingSlip.deliveryMethod).toEqual(deliveryMethod);
         });
 
-        it('should pass validation if the delivery method is one of the allowed values', () => {
-            const invalidDeliveryMethod = chance.string();
-            packingSlipAttributes.deliveryMethod = invalidDeliveryMethod;
+        it('should be a mongoose object id', () => {
+            packingSlipAttributes.deliveryMethod = mongoose.Types.ObjectId();
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
             
-            const error = packingSlip.validateSync();
-            
-            expect(error).toBeDefined();
+            expect(packingSlip.deliveryMethod).toEqual(expect.any(mongoose.Types.ObjectId));
         });
     });
 

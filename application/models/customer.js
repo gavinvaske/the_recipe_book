@@ -17,7 +17,10 @@ const shippingLocationsSchema = new mongoose.Schema({
     freightAccountNumber: {
         type: String
     },
-    // shippingMethod: {},   // TODO (9-11-2023): Add this from lucid chart after talking to storm
+    deliveryMethod: {
+        type: Schema.Types.ObjectId,
+        ref: 'DeliveryMethod'
+    }
 });
 
 const schema = new Schema({

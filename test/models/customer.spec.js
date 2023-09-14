@@ -185,7 +185,7 @@ describe('validation', () => {
             expect(shippingLocations).toEqual([]);
         });
 
-        it('should have a freightAccountNumber', () => {
+        it('should have a freightAccountNumber attribute', () => {
             const freightAccountNumber = chance.string();
             const address = {
                 ...getAddress(),
@@ -195,14 +195,30 @@ describe('validation', () => {
             customerAttributes.shippingLocations = addresses;
             const customer = new CustomerModel(customerAttributes);
 
-            console.log('customer.shippingLocations', customer.shippingLocations);
-
             const error = customer.validateSync();
 
             expect(error).toBeUndefined();
             expect(customer.shippingLocations.length).toEqual(addresses.length);
             expect(customer.shippingLocations[0].freightAccountNumber).toEqual(freightAccountNumber);
         });
+
+        it('should have a deliveryMethod attribute', () => {
+            const deliveryMethod = mongoose.Types.ObjectId();
+            const address = {
+              ...getAddress(),
+                deliveryMethod
+            };
+            const addresses = [address];
+            customerAttributes.shippingLocations = addresses;
+            const customer = new CustomerModel(customerAttributes);
+
+            const error = customer.validateSync();
+
+            expect(error).toBeUndefined();
+            expect(customer.shippingLocations.length).toEqual(addresses.length);
+            expect(customer.shippingLocations[0].deliveryMethod).toEqual(deliveryMethod);
+            expect(customer.shippingLocations[0].deliveryMethod).toEqual(expect.any(mongoose.Types.ObjectId));
+        })
     });
 
     describe('attribute: billingLocations', () => {

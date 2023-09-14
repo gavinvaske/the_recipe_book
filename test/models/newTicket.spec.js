@@ -1399,6 +1399,29 @@ describe('Ticket validation', () => {
         });
     });
 
+    describe('attribute: estimatedTicket', () => {
+        it('should not be required', () => {
+            delete ticketAttributes.estimatedTicket;
+            const ticket = new Ticket(ticketAttributes);
+
+            const error = ticket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be set to the correct value', () => {
+            const expectedEstimatedTicket = testDataGenerator.mockData.EstimatedTicket();
+            ticketAttributes.estimatedTicket = expectedEstimatedTicket;
+            const ticket = new Ticket(ticketAttributes);
+            
+            for (const [key, value] of Object.entries(expectedEstimatedTicket)) {
+                expect(ticket.estimatedTicket[key]).toEqual(value);
+            }
+            console.log('deleted: ', ticket.estimatedTicket.deleted);
+            expect(ticket.estimatedTicket.deleted).toBe(false);
+        });
+    });
+
     describe('database interaction validations', () => {
         let customerAttributes, savedCustomer;
 

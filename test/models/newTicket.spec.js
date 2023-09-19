@@ -2,6 +2,7 @@ const chance = require('chance').Chance();
 const Ticket = require('../../application/models/newTicket');
 const Customer = require('../../application/models/customer');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
+const TicketTimeLedgerModel = require('../../application/models/ticketTimeLedger');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
@@ -1410,15 +1411,11 @@ describe('Ticket validation', () => {
         });
 
         it('should be set to the correct value', () => {
-            const expectedEstimatedTicket = testDataGenerator.mockData.EstimatedTicket();
-            ticketAttributes.estimatedTicket = expectedEstimatedTicket;
+            const estimatedTicketObjectId = mongoose.Types.ObjectId();
+            ticketAttributes.estimatedTicket = estimatedTicketObjectId;
             const ticket = new Ticket(ticketAttributes);
             
-            for (const [key, value] of Object.entries(expectedEstimatedTicket)) {
-                expect(ticket.estimatedTicket[key]).toEqual(value);
-            }
-            console.log('deleted: ', ticket.estimatedTicket.deleted);
-            expect(ticket.estimatedTicket.deleted).toBe(false);
+            expect(ticket.estimatedTicket).toBe(estimatedTicketObjectId);
         });
     });
 
@@ -1716,6 +1713,27 @@ describe('Ticket validation', () => {
                     expect(leadingEdges[0]._id).toBeDefined();
                 });
             });
+
+            describe('delete this!', () => {
+                it('should not get committed', async () => {
+                    const ticket = new Ticket(ticketAttributes);
+                    const savedTicket = await ticket.save();
+
+                    const ticketTimeRecord = new TicketTimeLedgerModel({
+                        ticketId: savedTicket._id,
+                        timerType: 'CUTTING',
+                        state: 'STARTED'
+                    })
+
+                    await ticketTimeRecord.save();
+
+                    const ticket2 = new Ticket(ticketAttributes);
+                    await ticket2.save();
+
+                    const allRecordsInDb = await TicketTimeLedgerModel.find({});
+                    console.log('allRecordsInDb', allRecordsInDb.length)
+                })
+            })
         });
     });
 });

@@ -174,9 +174,8 @@ const estimatedTicketSchema = new Schema({
     packagingBoxTime: {
         ...timeInSecondsAttribute
     }
-}, { 
-    timestamps: true,
-    strict: 'throw'
-});
+}, { timestamps: true });
 
-module.exports = estimatedTicketSchema;
+const estimatedTicket = mongoose.model('EstimatedTicket', estimatedTicketSchema);
+
+module.exports = estimatedTicket;

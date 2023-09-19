@@ -1,7 +1,5 @@
-const mongoose = require('mongoose');
+const EstimatedTicket = require('../../application/models/estimatedTicket');
 const chance = require('chance').Chance();
-const estimatedTicketSchema = require('../../application/schemas/estimatedTicket');
-const EstimatedTicket = mongoose.model('EstimatedTicket', estimatedTicketSchema);
 const databaseService = require('../../application/services/databaseService');
 
 function verifyLengthAttribute(estimatedTicketAttributes, attributeName) {
@@ -135,13 +133,6 @@ describe('File: estimatedTicket.js', () => {
 
     beforeEach(() => {
         estimatedTicketAttributes = {};
-    });
-
-    it('should throw error if unknwon attribute is set', () => {
-        const unknownAttribute = chance.word();
-        estimatedTicketAttributes[unknownAttribute] = chance.d100();
-
-        expect(() => new EstimatedTicket(estimatedTicketAttributes)).toThrow();
     });
 
     describe('attribute: initialStockLength', () => {

@@ -20,7 +20,11 @@ const numberOfFramesAttribute = {
 
 const numberOfRollsAttribute = {
     type: Number,
-    min: 0
+    min: 0,
+    validate : {
+        validator : Number.isInteger,
+        message: '{VALUE} is not an integer'
+    },
 };
 
 const costAttribute = {
@@ -31,9 +35,17 @@ const costAttribute = {
 };
 
 // const percentageAttribute = {}   // TODO (9-13-2023): Finish this after talking to Storm
-// const msiAttribute = {}  // TODO (9-13-2023): Finish this after talking to Storm
+const msiAttribute = {
+    type: Number,
+    min: 0
+}
 
 const estimatedTicketSchema = new Schema({
+    productQty: {
+        type: Number,
+        min: 0,
+        required: true
+    },
     initialStockLength: {
         ...lengthInFeetAttribute
     },
@@ -61,9 +73,9 @@ const estimatedTicketSchema = new Schema({
     // throwAwayStockPercentage: {
     //     ...percentageAttribute
     // },
-    // totalStockMsi: {
-    //     ...msiAttribute
-    // },
+    totalStockMsi: {
+        ...msiAttribute
+    },
     totalRollsOfPaper: {
         ...numberOfRollsAttribute
     },

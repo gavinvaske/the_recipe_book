@@ -81,7 +81,16 @@ function verifyNumberOfRollsAttribute(estimatedTicketAttributes, attributeName) 
     estimatedTicketAttributes[attributeName] = negativeValue;
     estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
     
-    const error = estimatedTicket.validateSync();
+    let error = estimatedTicket.validateSync();
+
+    expect(error).toBeDefined();
+
+    // (3) should be an integer
+    const floatingPointValue = chance.floating({ min: 0 });
+    estimatedTicketAttributes[attributeName] = floatingPointValue;
+    estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+    error = estimatedTicket.validateSync();
 
     expect(error).toBeDefined();
 }
@@ -132,7 +141,34 @@ describe('File: estimatedTicket.js', () => {
     let estimatedTicketAttributes;
 
     beforeEach(() => {
-        estimatedTicketAttributes = {};
+        estimatedTicketAttributes = {
+            productQty: chance.d100()
+        };
+    });
+
+    describe('attribute: productQty', () => {
+        it('should be required', () => {
+            delete estimatedTicketAttributes.productQty;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+
+        it('should be a number', () => {
+            verifyLengthAttribute(estimatedTicketAttributes, 'productQty');
+        });
+
+        it('should be a positive number', () => {
+            const negativeValue = -1;
+            estimatedTicketAttributes.productQty = negativeValue;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        })
     });
 
     describe('attribute: initialStockLength', () => {

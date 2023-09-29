@@ -136,7 +136,7 @@ describe('constantsEnum', () => {
         expect(constantsEnum.CUTTING_ROLL_CHANGE_OVER_MINUTES).toEqual(expectedValue);
     });
 
-    describe('FACTORY_ADDRESS : should equal the correct value', () => {
+    it('FACTORY_ADDRESS : should equal the correct value', () => {
         const expectedValue = {
             name: 'The Label Advantage',
             street: '1785 GUTHRIE AVENUE',
@@ -146,5 +146,119 @@ describe('constantsEnum', () => {
         };
 
         expect(constantsEnum.FACTORY_ADDRESS).toEqual(expectedValue);
+    });
+
+    it('MAX_FRAME_AROUND : should equal the correct value', () => {
+        const expectedValue = 38.58;
+
+        expect(constantsEnum.MAX_FRAME_AROUND).toEqual(expectedValue);
+    });
+
+    it('MAX_FRAME_ACROSS : should equal the correct value', () => {
+        const expectedValue = 12.50;
+
+        expect(constantsEnum.MAX_FRAME_ACROSS).toEqual(expectedValue);
+    });
+
+    it('MAX_MATERIAL_SIZE_ACROSS : should equal the correct value', () => {
+        const expectedValue = 12.75;
+        
+        expect(constantsEnum.MAX_MATERIAL_SIZE_ACROSS).toEqual(expectedValue);
+    });
+
+    it('INLINE_PRIMING_COST : should equal the correct value', () => {
+        const expectedValue = 0.20;
+
+        expect(constantsEnum.INLINE_PRIMING_COST).toEqual(expectedValue);
+    });
+
+    it('SCALING_CLICKS : should equal the correct value', () => {
+        const expectedValue = 72;
+
+        expect(constantsEnum.SCALING_CLICKS).toEqual(expectedValue);
+    });
+
+    it('COST_PER_COLOR : should equal the correct value', () => {
+        const expectedValue = 0.0095;
+
+        expect(constantsEnum.COST_PER_COLOR).toEqual(expectedValue);
+    });
+
+    it('NEW_MATERIAL_STOCK_SPLICE : should equal the correct value', () => {
+        const expectedValue = 7;
+
+        expect(constantsEnum.NEW_MATERIAL_STOCK_SPLICE).toEqual(expectedValue);
+    });
+
+    it('BOX_CREATION_TIME : should equal the correct value', () => {
+        const expectedValue = 0.50;
+
+        expect(constantsEnum.BOX_CREATION_TIME).toEqual(expectedValue);
+    });
+
+    it('PACKAGING_PER_BOX_TIME : should equal the correct value', () => {
+        const expectedValue = 3;
+
+        expect(constantsEnum.PACKAGING_PER_BOX_TIME).toEqual(expectedValue);
+    });
+
+    it('CORE_GATHERING_TIME : should equal the correct value', () => {
+        const expectedValue = 3;
+
+        expect(constantsEnum.CORE_GATHERING_TIME).toEqual(expectedValue);
+    });
+
+    it('LABEL_DROP_OFF_TIME : should equal the correct value', () => {
+        const expectedValue = 3;
+
+        expect(constantsEnum.LABEL_DROP_OFF_TIME).toEqual(expectedValue);
+    });
+
+    it('REWIND_SPEED : should equal the correct value', () => {
+        const expectedValue = 200;
+
+        expect(constantsEnum.REWIND_SPEED).toEqual(expectedValue);
+    });
+
+    it('COLOR_CALIBRATION_TIME : should equal the correct value', () => {
+        const expectedValue = 7;
+
+        expect(constantsEnum.COLOR_CALIBRATION_TIME).toEqual(expectedValue);
+    });
+
+    it('PRINTING_PROOF_TIME : should equal the correct value', () => {
+        const expectedValue = 7;
+        
+        expect(constantsEnum.PRINTING_PROOF_TIME).toEqual(expectedValue);
+    });
+
+    it('PRINTING_TEAR_DOWN_TIME : should equal the correct value', () => {
+        const expectedValue = 7;
+
+        expect(constantsEnum.PRINTING_TEAR_DOWN_TIME).toEqual(expectedValue);
+    });
+
+    it('PRINTING_ROLL_CHANGE_OVER_TIME : should equal the correct value', () => {
+        const expectedValue = 10;
+
+        expect(constantsEnum.PRINTING_ROLL_CHANGE_OVER_TIME).toEqual(expectedValue);
+    });
+
+    it('CUTTING_STOCK_SPLICE : should equal the correct value', () => {
+        const expectedValue = 10;
+
+        expect(constantsEnum.CUTTING_STOCK_SPLICE).toEqual(expectedValue);
+    });
+
+    it('DIE_SETUP : should equal the correct value', () => {
+        const expectedValue = 7;
+
+        expect(constantsEnum.DIE_SETUP).toEqual(expectedValue);
+    });
+
+    it('PACKING_SLIP_TIME : should equal the correct value', () => {
+        const expectedValue = 7;
+
+        expect(constantsEnum.PACKING_SLIP_TIME).toEqual(expectedValue);
     });
 });

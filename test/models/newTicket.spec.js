@@ -1713,27 +1713,6 @@ describe('Ticket validation', () => {
                     expect(leadingEdges[0]._id).toBeDefined();
                 });
             });
-
-            describe('delete this!', () => {
-                it('should not get committed', async () => {
-                    const ticket = new Ticket(ticketAttributes);
-                    const savedTicket = await ticket.save();
-
-                    const ticketTimeRecord = new TicketTimeLedgerModel({
-                        ticketId: savedTicket._id,
-                        timerType: 'CUTTING',
-                        state: 'STARTED'
-                    })
-
-                    await ticketTimeRecord.save();
-
-                    const ticket2 = new Ticket(ticketAttributes);
-                    await ticket2.save();
-
-                    const allRecordsInDb = await TicketTimeLedgerModel.find({});
-                    console.log('allRecordsInDb', allRecordsInDb.length)
-                })
-            })
         });
     });
 });

@@ -314,9 +314,9 @@ schema.pre('save', async function(next) {
     await addRowToWorkflowStepDbTable(next, destination, ticketId);
 });
 
-schema.post('save', async function(next) {
-    await ticketTimeService.getTimersForTicket(this._id)
-})
+schema.post('save', async function() {
+    await ticketTimeService.getTimersForTicket(this._id);
+});
 
 const Ticket = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model
 

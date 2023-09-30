@@ -17,7 +17,7 @@ module.exports.NEWLY_LOADED_ROLL_WASTE_FEET = 78;
 module.exports.PRINT_CLEANER_FEET = 40;
 module.exports.PROOF_RUNUP_FEET = 23;
 module.exports.SCALING_FEET = 30;
- module.exports.COLOR_CALIBRATION_FEET = 69.69696969; // TODO: This was marked TBD by storm, verify this value at some point.
+module.exports.COLOR_CALIBRATION_FEET = 69.69696969; // TODO: This was marked TBD by storm, verify this value at some point.
 module.exports.DIE_LINE_SETUP_FEET = 6; // TODO: This was marked red in color by storm, verify this value at some point
 module.exports.NEW_BLANKET_FEET = 88;
 module.exports.NEW_PIP_FEET = 41;
@@ -38,7 +38,7 @@ module.exports.CUTTING_ROLL_CHANGE_OVER_MINUTES = 10;
 
 module.exports.MAX_FRAME_AROUND = 38.58;
 module.exports.MAX_FRAME_ACROSS = 12.50;
-module.exports.MAX_MATERIAL_SIZE_ACROSS  = 12.75;
+module.exports.MAX_MATERIAL_SIZE_ACROSS = 12.75;
 module.exports.INLINE_PRIMING_COST = 0.20;
 module.exports.SCALING_CLICKS = 72;
 module.exports.COST_PER_COLOR = 0.0095;

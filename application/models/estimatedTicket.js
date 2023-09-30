@@ -126,7 +126,15 @@ const estimatedTicketSchema = new Schema({
         },
         min: 0
     },
-    // cornerRadius: {},
+    cornerRadius: {
+        type: Number,
+        validate: {
+            validator: numberHasFourDecimalPlacesOrLess,
+            message: '{VALUE} has more than four decimals'
+        },
+        min: 0,
+        max: 1
+    },
     shape: {
         type: String,
         enum: dieShapes

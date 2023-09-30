@@ -463,6 +463,77 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
+    describe('attribute: cornerRadius', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.cornerRadius;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be allowed to be 0', () => {
+            const allowedValue = 0;
+            estimatedTicketAttributes.cornerRadius = allowedValue;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        })
+
+        it('should not be less than 0', () => {
+            const minCornerRadius = 0;
+            estimatedTicketAttributes.cornerRadius = minCornerRadius - 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+
+        it('should be allowed to be 1', () => {
+            const allowedValue = 1;
+            estimatedTicketAttributes.cornerRadius = allowedValue;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        })
+
+        it('should not be greater than 1', () => {
+            const maxCornerRadius = 1;
+            estimatedTicketAttributes.cornerRadius = maxCornerRadius + 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
+            estimatedTicketAttributes.cornerRadius = chance.pickone(notAllowedValues);
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow floating point values with 4 decimal places or less', () => {
+            const allowedValues = [0.5, 0.1234, 0.123];
+            estimatedTicketAttributes.cornerRadius = chance.pickone(allowedValues);
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        })
+    })
+
     describe('attribute: shape', () => {
         it('should not be required', () => {
             delete estimatedTicketAttributes.shape;

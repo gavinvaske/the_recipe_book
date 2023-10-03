@@ -4,6 +4,7 @@ const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
+const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
 
 function verifyLengthAttribute(estimatedTicketAttributes, attributeName) {
     let estimatedTicket;
@@ -145,11 +146,45 @@ describe('File: estimatedTicket.js', () => {
 
     beforeEach(() => {
         estimatedTicketAttributes = {
-            productQty: chance.d100(),
-            reinsertion: chance.bool(),
-            variableData: chance.bool(),
-            sheeted: chance.bool()
+            estimateId: chance.string(),
+            productQty: chance.d100()
         };
+    });
+
+    it('should have the correct indexes', async () => {
+        const indexMetaData = EstimatedTicket.schema.indexes();
+        const expectedIndexes = ['estimateId'];
+
+        console.log('indexMetaData: ', indexMetaData);
+
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
+
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
+    describe('attribute: estimateId', () => {
+        it('should be required', () => {
+            delete estimatedTicketAttributes.estimateId;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a string', () => {
+            const expectedEstimateId = chance.string();
+            estimatedTicketAttributes.estimateId = expectedEstimateId;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.estimateId).toEqual(expectedEstimateId);
+        });
     });
 
     // * Inputs * //
@@ -481,7 +516,7 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeUndefined();
-        })
+        });
 
         it('should not be less than 0', () => {
             const minCornerRadius = 0;
@@ -491,7 +526,7 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should be allowed to be 1', () => {
             const allowedValue = 1;
@@ -501,7 +536,7 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeUndefined();
-        })
+        });
 
         it('should not be greater than 1', () => {
             const maxCornerRadius = 1;
@@ -511,7 +546,7 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
 
         it('should not allow floating point values with more than 4 decimal places', () => {
             const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
@@ -531,8 +566,8 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeUndefined();
-        })
-    })
+        });
+    });
 
     describe('attribute: shape', () => {
         it('should not be required', () => {
@@ -663,9 +698,9 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    describe('attribute: materialSelect', () => {
+    describe('attribute: material', () => {
         it('should not be required', () => {
-            delete estimatedTicketAttributes.materialSelect;
+            delete estimatedTicketAttributes.material;
             const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
             
             const error = estimatedTicket.validateSync();
@@ -674,11 +709,11 @@ describe('File: estimatedTicket.js', () => {
         });
 
         it('should be a mongoose.Schema.Types.ObjectId', () => {
-            const expectedMaterialSelect = mongoose.Types.ObjectId();
-            estimatedTicketAttributes.materialSelect = expectedMaterialSelect;
+            const expectedMaterial = mongoose.Types.ObjectId();
+            estimatedTicketAttributes.material = expectedMaterial;
             const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
             
-            expect(estimatedTicket.materialSelect).toEqual(expectedMaterialSelect);
+            expect(estimatedTicket.material).toEqual(expectedMaterial);
         });
     });
 
@@ -878,9 +913,9 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    describe('attribute: overrideFinishSelect', () => {
+    describe('attribute: overrideFinish', () => {
         it('should not be required', () => {
-            delete estimatedTicketAttributes.overrideFinishSelect;
+            delete estimatedTicketAttributes.overrideFinish;
             const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
             
             const error = estimatedTicket.validateSync();
@@ -889,11 +924,11 @@ describe('File: estimatedTicket.js', () => {
         });
 
         it('should be a mongoose.Types.ObjectId', () => {
-            const expectedOverrideFinishSelect = new mongoose.Types.ObjectId();
-            estimatedTicketAttributes.overrideFinishSelect = expectedOverrideFinishSelect;
+            const expectedOverrideFinish = new mongoose.Types.ObjectId();
+            estimatedTicketAttributes.overrideFinish = expectedOverrideFinish;
             const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
 
-            expect(estimatedTicket.overrideFinishSelect).toEqual(expectedOverrideFinishSelect);
+            expect(estimatedTicket.overrideFinish).toEqual(expectedOverrideFinish);
         });
     });
 
@@ -965,7 +1000,7 @@ describe('File: estimatedTicket.js', () => {
         });
 
         it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.543, 9999.1234324234];
+            const invalidValues = [1.12345, 9999.1234324234];
             estimatedTicketAttributes.overrideFinishFreightMsi = chance.pickone(invalidValues);
             const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
             
@@ -1320,6 +1355,15 @@ describe('File: estimatedTicket.js', () => {
         it('should be a number of frames attribute', () => {
             verifyNumberOfFramesAttribute(estimatedTicketAttributes, 'extraFrames');
         });
+
+        it('should default to 25', () => {
+            const expectedDefaultExtraFrames = 25;
+            delete estimatedTicketAttributes.extraFrames;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.extraFrames).toEqual(expectedDefaultExtraFrames);
+        });
     });
 
     describe('attribute: totalFrames', () => {
@@ -1340,7 +1384,35 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    // describe('attribute: totalFinishMsi', () => {})
+    describe('attribute: totalFinishMsi', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.totalFinishMsi;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedTotalFinishMsi = chance.d100();
+            estimatedTicketAttributes.totalFinishMsi = expectedTotalFinishMsi;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.totalFinishMsi).toEqual(expectedTotalFinishMsi);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minTotalFinishMsi = 0;
+            estimatedTicketAttributes.totalFinishMsi = minTotalFinishMsi - 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
 
     describe('attribute: totalFinishCost', () => {
         it('should be a cost attribute', () => {
@@ -1357,6 +1429,30 @@ describe('File: estimatedTicket.js', () => {
     describe('attribute: boxCost', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(estimatedTicketAttributes, 'boxCost');
+        });
+    });
+
+    describe('attribute: inlinePrimingCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(estimatedTicketAttributes, 'inlinePrimingCost');
+        });
+    });
+
+    describe('attribute: scalingClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(estimatedTicketAttributes, 'scalingClickCost');
+        });
+    });
+
+    describe('attribute: proofRunupClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(estimatedTicketAttributes, 'proofRunupClickCost');
+        });
+    });
+
+    describe('attribute: printCleanerClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(estimatedTicketAttributes, 'printCleanerClickCost');
         });
     });
 
@@ -1385,7 +1481,19 @@ describe('File: estimatedTicket.js', () => {
 
     describe('attribute: reinsertionPrintingTime', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(estimatedTicketAttributes,'reinsertionPrintingTime');
+            verifyTimeAttribute(estimatedTicketAttributes, 'reinsertionPrintingTime');
+        });
+    });
+
+    describe('attribute: rollChangeOverTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'rollChangeOverTime');
+        });
+    });
+
+    describe('attribute: printingStockTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'printingStockTime');
         });
     });
 
@@ -1395,21 +1503,15 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    describe('attribute: totalLabelPrintingTime', () => {
+    describe('attribute: totalTimeAtPrinting', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(estimatedTicketAttributes, 'totalLabelPrintingTime');
+            verifyTimeAttribute(estimatedTicketAttributes, 'totalTimeAtPrinting');
         });
     });
 
     describe('attribute: throwAwayPrintTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(estimatedTicketAttributes, 'throwAwayPrintTime');
-        });
-    });
-
-    describe('attribute: totalTimeAtPrinting', () => {
-        it('should be a time attribute', () => {
-            verifyTimeAttribute(estimatedTicketAttributes, 'totalTimeAtPrinting');
         });
     });
 
@@ -1425,8 +1527,17 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    // describe('attribute: dieSetup', () => {})
-    // describe('attribute: sheetedSetup', () => {})
+    describe('attribute: dieSetupTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'dieSetupTime');
+        });
+    });
+
+    describe('attribute: sheetedSetupTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'sheetedSetupTime');
+        });
+    });
 
     describe('attribute: cuttingStockTime', () => {
         it('should be a time attribute', () => {
@@ -1446,9 +1557,9 @@ describe('File: estimatedTicket.js', () => {
         });
     });
 
-    describe('attribute: totalCuttingTime', () => {
+    describe('attribute: totalTimeAtCutting', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(estimatedTicketAttributes, 'totalCuttingTime');
+            verifyTimeAttribute(estimatedTicketAttributes, 'totalTimeAtCutting');
         });
     });
 
@@ -1520,6 +1631,183 @@ describe('File: estimatedTicket.js', () => {
     describe('attribute: packagingBoxTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(estimatedTicketAttributes, 'packagingBoxTime');
+        });
+    });
+
+    describe('attribute: packingSlipsTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'packingSlipsTime');
+        });
+    });
+
+    describe('attribute: totalShippingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'totalShippingTime');
+        });
+    });
+
+    describe('attribute: totalShippingCost', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(estimatedTicketAttributes, 'totalShippingCost');
+        });
+    });
+
+    describe('attribute: customer', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.customer;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            const error = estimatedTicket.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a mongoose.types.ObjectId', () => {
+            const expectedCustomer = new mongoose.Types.ObjectId();
+            estimatedTicketAttributes.customer = expectedCustomer;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            expect(estimatedTicket.customer).toEqual(expectedCustomer);
+            expect(estimatedTicket.customer).toEqual(expect.any(mongoose.Types.ObjectId));
+        });
+    });
+
+    describe('attribute: frameLength', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.frameLength;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFrameLength = 1;
+            estimatedTicketAttributes.frameLength = expectedFrameLength;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.frameLength).toEqual(expectedFrameLength);
+        });
+
+        it('should not be less than 0', () => {
+            const minFrameLength = 0;
+            estimatedTicketAttributes.frameLength = minFrameLength - 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be greater than MAX_FRAME_LENGTH_INCHES', () => {
+            estimatedTicketAttributes.frameLength = MAX_FRAME_LENGTH_INCHES + 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: frameUtilization', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.frameUtilization;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFrameUtilization = 1;
+            estimatedTicketAttributes.frameUtilization = expectedFrameUtilization;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.frameUtilization).toEqual(expectedFrameUtilization);
+        });
+
+        it('should not be less than 0', () => {
+            const minFrameUtilization = 0;
+            estimatedTicketAttributes.frameUtilization = minFrameUtilization - 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be greater than 1', () => {
+            const maxFrameUtilization = 1;
+            estimatedTicketAttributes.frameUtilization = maxFrameUtilization + 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: finishedRollLength', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.finishedRollLength;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFinishRollLength = chance.d100();
+            estimatedTicketAttributes.finishedRollLength = expectedFinishRollLength;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.finishedRollLength).toEqual(expectedFinishRollLength);
+        });
+    });
+
+    describe('attribute: printingSpeed', () => {
+        it('should not be required', () => {
+            delete estimatedTicketAttributes.printingSpeed;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedPrintingSpeed = chance.d100();
+            estimatedTicketAttributes.printingSpeed = expectedPrintingSpeed;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.printingSpeed).toEqual(expectedPrintingSpeed);
+        });
+
+        it('should not be less than 0', () => {
+            const minPrintingSpeed = 0;
+            estimatedTicketAttributes.printingSpeed = minPrintingSpeed - 1;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be a floating point number', () => {
+            const floatingPointPrintingSpeed = chance.floating({ min: 0.1, max: 0.9 });
+            estimatedTicketAttributes.printingSpeed = floatingPointPrintingSpeed;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeDefined();
         });
     });
 

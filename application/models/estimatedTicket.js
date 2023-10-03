@@ -3,6 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 const { dieShapes } = require('../enums/dieShapesEnum');
+const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
 
 function numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces) {
     const digitsInDecimalPlace = number.toString().split('.')[1];
@@ -59,7 +60,15 @@ const msiAttribute = {
     min: 0
 };
 
+const DEFAULT_EXTRA_FRAMES = 25;
+
 const estimatedTicketSchema = new Schema({
+    estimateId: {
+        type: String,
+        required: true,
+        index: true
+    },
+
     // * Inputs * //
     profitMargin: {
         type: Number,
@@ -102,7 +111,7 @@ const estimatedTicketSchema = new Schema({
         type: Boolean,
         default: false
     },
-    labelQty: { /// TODO (9-28-2023): Storm says to make this an array, but I think I should just do one number and instead have an array of EstimatedTicket
+    labelQty: {
         type: Number,
         min: 0
     },
@@ -155,7 +164,7 @@ const estimatedTicketSchema = new Schema({
         },
         min: 0
     },
-    materialSelect: {
+    material: {
         type: Schema.Types.ObjectId,
         ref: 'Material'
     },
@@ -191,7 +200,7 @@ const estimatedTicketSchema = new Schema({
         },
         min: 0
     },
-    overrideFinishSelect: {
+    overrideFinish: {
         type: Schema.Types.ObjectId,
         ref: 'Finish'
     },
@@ -253,14 +262,15 @@ const estimatedTicketSchema = new Schema({
             message: '{VALUE} is not an integer'
         }
     },
+
     // * Outputs * //
-    productQty: {
+    productQty: { // TODO (10-2-2023): Where does this come from?
         type: Number,
         min: 0,
         required: true
     },
     initialStockLength: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
     },
     colorCalibrationFeet: {
         ...lengthInFeetAttribute
@@ -293,7 +303,8 @@ const estimatedTicketSchema = new Schema({
         ...numberOfRollsAttribute
     },
     extraFrames: {
-        ...numberOfFramesAttribute
+        ...numberOfFramesAttribute,
+        default: DEFAULT_EXTRA_FRAMES
     },
     totalFrames: {
         ...numberOfFramesAttribute
@@ -304,9 +315,9 @@ const estimatedTicketSchema = new Schema({
     totalFinishFeet: {
         ...lengthInFeetAttribute
     },
-    // totalFinishMsi: {
-    //     ...msiAttribute
-    // },
+    totalFinishMsi: {
+        ...msiAttribute
+    },
     totalFinishCost: {
         ...costAttribute
     },
@@ -314,6 +325,18 @@ const estimatedTicketSchema = new Schema({
         ...costAttribute
     },
     boxCost: {
+        ...costAttribute
+    },
+    inlinePrimingCost: {
+        ...costAttribute
+    },
+    scalingClickCost: {
+        ...costAttribute
+    },
+    proofRunupClickCost: {
+        ...costAttribute
+    },
+    printCleanerClickCost: {
         ...costAttribute
     },
     totalMaterialsCost: {
@@ -331,16 +354,19 @@ const estimatedTicketSchema = new Schema({
     reinsertionPrintingTime: {
         ...timeInSecondsAttribute
     },
+    rollChangeOverTime: {
+        ...timeInSecondsAttribute,
+    },
+    printingStockTime: {
+        ...timeInSecondsAttribute,
+    },
     printTearDownTime: {
         ...timeInSecondsAttribute
     },
-    totalLabelPrintingTime: {
+    totalTimeAtPrinting: {
         ...timeInSecondsAttribute
     },
     throwAwayPrintTime: {
-        ...timeInSecondsAttribute
-    },
-    totalTimeAtPrinting: {
         ...timeInSecondsAttribute
     },
     totalPrintingCost: {
@@ -349,23 +375,30 @@ const estimatedTicketSchema = new Schema({
     cuttingStockSpliceCost: {
         ...costAttribute
     },
-    // dieSetup: {}     // (9-13-2023) Is this a time/feet/cost field? Rename accordingly after talking to Storm
-    // sheetedSetup: {}  // (9-13-2023) Is this a time/feet/cost field? Rename accordingly after talking to Storm
+    dieSetupTime: {
+        ...timeInSecondsAttribute
+    },
+    sheetedSetupTime: {
+        ...timeInSecondsAttribute
+    },
     cuttingStockTime: {
         ...timeInSecondsAttribute
     },
     cuttingTearDownTime: {
-        ...timeInSecondsAttribute
+        ...timeInSecondsAttribute,
     },
     sheetedTearDownTime: {
         ...timeInSecondsAttribute
     },
-    totalCuttingTime: {
+    totalTimeAtCutting: {
         ...timeInSecondsAttribute
     },
     totalCuttingCost: {
         ...costAttribute
     },
+    // throwAwayCuttingTime: {
+    //     ...timeInSecondsAttribute,
+    // }
     coreGatheringTime: {
         ...timeInSecondsAttribute
     },
@@ -398,6 +431,46 @@ const estimatedTicketSchema = new Schema({
     },
     packagingBoxTime: {
         ...timeInSecondsAttribute
+    },
+    packingSlipsTime: {
+        ...timeInSecondsAttribute
+    },
+    totalShippingTime: {
+        ...timeInSecondsAttribute
+    },
+    totalShippingCost: {
+        ...costAttribute
+    },
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: 'Customer'
+    },
+
+    // Job Variables //
+    frameLength: {
+        type: Number,
+        min: 0,
+        max: MAX_FRAME_LENGTH_INCHES
+    },
+    frameUtilization: {
+        type: Number,
+        min: 0,
+        max: 1
+    },
+    finishedRollLength: {
+        type: Number,
+        min: 0
+    },
+    // finishedRollDiameter: {  // TODO (10-2-2023): Storm marked this as TBD on lucid, revist it later
+    //     type: Number
+    // },
+    printingSpeed: {
+        type: Number,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer'
+        }
     }
 }, { timestamps: true });
 

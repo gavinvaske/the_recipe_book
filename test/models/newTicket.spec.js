@@ -2,7 +2,6 @@ const chance = require('chance').Chance();
 const Ticket = require('../../application/models/newTicket');
 const Customer = require('../../application/models/customer');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
-const TicketTimeLedgerModel = require('../../application/models/ticketTimeLedger');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');

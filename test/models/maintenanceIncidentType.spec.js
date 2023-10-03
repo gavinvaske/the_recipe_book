@@ -81,7 +81,7 @@ describe('MaintenanceIncidentType', () => {
             const maintenanceIncidentType1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);            
             const maintenanceIncidentType2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
 
-            const millisecondsToDelayToFixTestFlakyness = 50;
+            const millisecondsToDelayToFixTestFlakyness = 15;
             await delay(millisecondsToDelayToFixTestFlakyness);
             
             await maintenanceIncidentType1.save();
@@ -95,7 +95,7 @@ describe('MaintenanceIncidentType', () => {
             const savedIncident = await maintenanceIncidentType1.save();
             await MaintenanceIncidentTypeModel.deleteById(savedIncident._id);
 
-            const millisecondsToDelayToFixTestFlakyness = 50;
+            const millisecondsToDelayToFixTestFlakyness = 15;
             await delay(millisecondsToDelayToFixTestFlakyness);
 
             expect(maintenanceIncidentType2.save()).resolves.not.toThrowError();

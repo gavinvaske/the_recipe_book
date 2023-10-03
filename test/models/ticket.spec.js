@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
 
+const delay = (delayInMs) => {
+    return new Promise(resolve => setTimeout(resolve, delayInMs));
+};
+
 describe('validation', () => {
     let ticketAttributes;
 
@@ -1368,6 +1372,8 @@ describe('validation', () => {
 
                 try {
                     await ticket.save();
+                    const millisecondsToDelayToFixTestFlakyness = 15;
+                    delay(millisecondsToDelayToFixTestFlakyness);
                     await duplicateTicket.save();
                 } catch (error) {
                     errorMessage = error.message;

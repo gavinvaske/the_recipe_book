@@ -1,0 +1,1940 @@
+/* eslint-disable no-magic-numbers */
+const Quote = require('../../application/models/quote');
+const chance = require('chance').Chance();
+const databaseService = require('../../application/services/databaseService');
+const mongoose = require('mongoose');
+const { dieShapes } = require('../../application/enums/dieShapesEnum');
+const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
+
+function verifyLengthAttribute(quoteAttributes, attributeName) {
+    let quote;
+
+    // (1) should be a number
+    const expectedLength = chance.d100();
+    quoteAttributes[attributeName] = expectedLength;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedLength);
+
+    // (2) should be a positive value
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    const error = quote.validateSync();
+
+    expect(error).toBeDefined();
+}
+
+function verifyNumberOfFramesAttribute(quoteAttributes, attributeName) {
+    let quote;
+
+    // (1) should be a number
+    const expectedNumberOfRolls = chance.d100();
+    quoteAttributes[attributeName] = expectedNumberOfRolls;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
+
+    // (2) should be a positive value
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    const error = quote.validateSync();
+
+    expect(error).toBeDefined();
+}
+
+function verifyTimeAttribute(quoteAttributes, attributeName) {
+    let quote;
+
+    // (1) should be a number
+    const expectedTimeInSeconds = chance.d100();
+    quoteAttributes[attributeName] = expectedTimeInSeconds;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedTimeInSeconds);
+
+    // (2) should be a positive value
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    const error = quote.validateSync();
+
+    expect(error).toBeDefined();
+}
+
+function verifyNumberOfRollsAttribute(quoteAttributes, attributeName) {
+    let quote;
+
+    // (1) should be a number
+    const expectedNumberOfRolls = chance.d100();
+    quoteAttributes[attributeName] = expectedNumberOfRolls;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
+
+    // (2) should be a positive value
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    let error = quote.validateSync();
+
+    expect(error).toBeDefined();
+
+    // (3) should be an integer
+    const floatingPointValue = chance.floating({ min: 0 });
+    quoteAttributes[attributeName] = floatingPointValue;
+    quote = new Quote(quoteAttributes);
+
+    error = quote.validateSync();
+
+    expect(error).toBeDefined();
+}
+
+function verifyCostAttribute(quoteAttributes, attributeName) {
+    let quote;
+
+    // (1) should be a number
+    const expectedNumberOfRolls = chance.d100();
+    quoteAttributes[attributeName] = expectedNumberOfRolls;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
+
+    // (2) should ignore decimals smaller than 2 decimal places
+    const expectedValue = chance.d100();
+    const decimalToIgnore = 0.00999999999;
+    quoteAttributes[attributeName] = expectedValue + decimalToIgnore;
+
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expectedValue);
+
+    // (3) should be a positive value
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    const error = quote.validateSync();
+    
+    expect(error).toBeDefined();
+
+    // (4) should handle floating point decimals up to 2 decimal places
+    const numberOfDecimals = 2;
+    const floatingPointWithTwoDecimals = chance.floating({ min: 0, fixed: numberOfDecimals });
+    quoteAttributes[attributeName] = floatingPointWithTwoDecimals;
+    const penniesPerDollar = 100;
+    
+    quote = new Quote(quoteAttributes);
+
+    // values is converted to pennies below to prevent floating point rounding errors
+    expect(Math.floor(quote[attributeName] * penniesPerDollar))
+        .toEqual(Math.floor(floatingPointWithTwoDecimals * penniesPerDollar));
+}
+
+function generateProduct() {
+    return {
+        productId: mongoose.Types.ObjectId(),
+        labelQty: chance.d100()
+    };
+}
+
+function generateNProducts() {
+    const n = chance.d10();
+    
+    return chance.n(generateProduct, n);
+}
+
+describe('File: quote.js', () => {
+    let quoteAttributes;
+
+    beforeEach(() => {
+        quoteAttributes = {
+            quoteId: chance.string(),
+            productQty: chance.d100(),
+            sizeAround: 1,
+            spaceAround: 1,
+            productQty: 1,
+            numberAround: 1,
+            sizeAroundOverride: chance.d100(),
+            spaceAroundOverride: chance.d100(),
+            products: generateNProducts()
+        };
+    });
+
+    it('should have the correct indexes', async () => {
+        const indexMetaData = Quote.schema.indexes();
+        const expectedIndexes = ['quoteId'];
+
+        console.log('indexMetaData: ', indexMetaData);
+
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
+
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
+    describe('attribute: quoteId', () => {
+        it('should be required', () => {
+            delete quoteAttributes.quoteId;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a string', () => {
+            const expectedQuoteId = chance.string();
+            quoteAttributes.quoteId = expectedQuoteId;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.quoteId).toEqual(expectedQuoteId);
+        });
+    });
+
+    // * Inputs * //
+    describe('attribute: profitMargin', () => {
+        it('should default to 30', () => {
+            delete quoteAttributes.profitMargin;
+            const defaultProfitMargin = 30;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.profitMargin).toEqual(defaultProfitMargin);
+        });
+
+        it('should be a number', () => {
+            const expectedProfitMargin = chance.floating({ min: 0, max: 100 });
+            quoteAttributes.profitMargin = expectedProfitMargin;
+
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.profitMargin).toEqual(expectedProfitMargin);
+        });
+
+        it('should not be greater than 100', () => {
+            const maxProfitMargin = 100;
+            quoteAttributes.profitMargin = maxProfitMargin + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: labelsPerRoll', () => {
+        it('should default to 1,000', () => {
+            delete quoteAttributes.labelsPerRoll;
+            const defaultLabelsPerRoll = 1000;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.labelsPerRoll).toEqual(defaultLabelsPerRoll);
+        });
+
+        it('should be a number', () => {
+            const expectedLabelsPerRoll = chance.d100();
+            quoteAttributes.labelsPerRoll = expectedLabelsPerRoll;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.labelsPerRoll).toEqual(expectedLabelsPerRoll);
+        });
+
+        it('should be greater than or equal to 1', () => {
+            const minLabelsPerRoll = 1;
+            quoteAttributes.labelsPerRoll = minLabelsPerRoll - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be less than or equal to 1,000,000', () => {
+            const maxLabelsPerRoll = 1000000;
+            quoteAttributes.labelsPerRoll = maxLabelsPerRoll + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be an integer', () => {
+            const floatingPointValue = chance.floating({ min: 0, max: 1000 });
+            quoteAttributes.labelsPerRoll = floatingPointValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: numberOfDesigns', () => {
+        it('should be a number', () => {
+            const expectedNumberOfDesigns = chance.d100();
+            quoteAttributes.numberOfDesigns = expectedNumberOfDesigns;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.numberOfDesigns).toEqual(expectedNumberOfDesigns);
+        });
+
+        it('should befault to 1', () => {
+            delete quoteAttributes.numberOfDesigns;
+            const defaultNumberOfDesigns = 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.numberOfDesigns).toEqual(defaultNumberOfDesigns);
+        });
+        
+        it('should be greater than or equal to 1', () => {
+            const minNumberOfDesigns = 1;
+            quoteAttributes.numberOfDesigns = minNumberOfDesigns - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be an integer', () => {
+            const floatingPointValue = chance.floating({ min: 0, max: 100 });
+            quoteAttributes.numberOfDesigns = floatingPointValue;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: reinsertion', () => {
+        it('should be a boolean', () => {
+            const expectedReinsertion = chance.bool();
+            quoteAttributes.reinsertion = expectedReinsertion;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.reinsertion).toEqual(expectedReinsertion);
+        });
+
+        it('should default to false', () => {
+            delete quoteAttributes.reinsertion;
+            const defaultReinsertion = false;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.reinsertion).toEqual(defaultReinsertion);
+        });
+    });
+
+    describe('attribute: variableData', () => {
+        it('should be a boolean', () => {
+            const expectedVariableData = chance.bool();
+            quoteAttributes.variableData = expectedVariableData;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.variableData).toEqual(expectedVariableData);
+        });
+
+        it('should default to false', () => {
+            delete quoteAttributes.variableData;
+            const defaultVariableData = false;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.variableData).toEqual(defaultVariableData);
+        });
+    });
+
+    describe('attribute: sheeted', () => {
+        it('should be a boolean', () => {
+            const expectedSheeted = chance.bool();
+            quoteAttributes.sheeted = expectedSheeted;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.sheeted).toEqual(expectedSheeted);
+        });
+
+        it('should default to false', () => {
+            delete quoteAttributes.sheeted;
+            const defaultSheeted = false;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+            expect(quote.sheeted).toEqual(defaultSheeted);
+        });
+    });
+
+    describe('attribute: labelQty', () => {
+        it('should be a number', () => {
+            const expectedLabelQty = chance.d100();
+            quoteAttributes.labelQty = expectedLabelQty;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.labelQty).toEqual(expectedLabelQty);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minLabelQty = 0;
+            quoteAttributes.labelQty = minLabelQty - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: die', () => {
+        it('should be a mongoose.Schema.Types.ObjectId', () => {
+            const expectedDie = mongoose.Types.ObjectId();
+            quoteAttributes.die = expectedDie;
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.die).toEqual(expectedDie);
+            expect(quote.die).toEqual(expect.any(mongoose.Types.ObjectId));
+        });
+    });
+
+    describe('attribute: sizeAcross', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.sizeAcross;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minSizeAcross = 0;
+            quoteAttributes.sizeAcross = minSizeAcross - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not allow floating points with more than 4 decimal places', () => {
+            const floatingPointValueWith5DecimalPlaces = 1.00001;
+            quoteAttributes.sizeAcross = floatingPointValueWith5DecimalPlaces;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow floating point values with 4 decimal places', () => {
+            const floatingPointValueWith5DecimalPlaces = 2.0002;
+            quoteAttributes.sizeAcross = floatingPointValueWith5DecimalPlaces;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should allow integers', () => {
+            const integerValue = chance.d100();
+            quoteAttributes.sizeAcross = integerValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: sizeAroundOverride', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.sizeAroundOverride;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should not be less than 0', () => {
+            const minSizeAroundOverride = 0;
+            quoteAttributes.sizeAroundOverride = minSizeAroundOverride - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow floating point values with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.sizeAroundOverride = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
+            quoteAttributes.sizeAroundOverride = chance.pickone(notAllowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: cornerRadius', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.cornerRadius;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be allowed to be 0', () => {
+            const allowedValue = 0;
+            quoteAttributes.cornerRadius = allowedValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should not be less than 0', () => {
+            const minCornerRadius = 0;
+            quoteAttributes.cornerRadius = minCornerRadius - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be allowed to be 1', () => {
+            const allowedValue = 1;
+            quoteAttributes.cornerRadius = allowedValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should not be greater than 1', () => {
+            const maxCornerRadius = 1;
+            quoteAttributes.cornerRadius = maxCornerRadius + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
+            quoteAttributes.cornerRadius = chance.pickone(notAllowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow floating point values with 4 decimal places or less', () => {
+            const allowedValues = [0.5, 0.1234, 0.123];
+            quoteAttributes.cornerRadius = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: shape', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.shape;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a valid enum value', () => {
+            const allowedValue = chance.pickone(dieShapes);
+            quoteAttributes.shape = allowedValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail if the value is not a valid enum value', () => {
+            const notAllowedValue = chance.string();
+            quoteAttributes.shape = notAllowedValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideSpaceAround', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideSpaceAround;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideSpaceAround = chance.d100();
+            quoteAttributes.overrideSpaceAround = expectedOverrideSpaceAround;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideSpaceAround).toEqual(expectedOverrideSpaceAround);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideSpaceAround = 0;
+            quoteAttributes.overrideSpaceAround = minOverrideSpaceAround - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideSpaceAround = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideSpaceAround = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: overrideSpaceAcross', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideSpaceAcross;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideSpaceAcross = chance.d100();
+            quoteAttributes.overrideSpaceAcross = expectedOverrideSpaceAcross;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideSpaceAcross).toEqual(expectedOverrideSpaceAcross);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideSpaceAcross = 0;
+            quoteAttributes.overrideSpaceAcross = minOverrideSpaceAcross - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideSpaceAcross = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideSpaceAcross = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: material', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.material;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a mongoose.Schema.Types.ObjectId', () => {
+            const expectedMaterial = mongoose.Types.ObjectId();
+            quoteAttributes.material = expectedMaterial;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.material).toEqual(expectedMaterial);
+        });
+    });
+
+    describe('attribute: overrideMaterialFreightMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideMaterialFreightMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideMaterialFreightMsi = chance.d100();
+            quoteAttributes.overrideMaterialFreightMsi = expectedOverrideMaterialFreightMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideMaterialFreightMsi).toEqual(expectedOverrideMaterialFreightMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideMaterialFreightMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideMaterialFreightMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideMaterialTotalCostMsi = 0;
+            quoteAttributes.overrideMaterialFreightMsi = minOverrideMaterialTotalCostMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+    
+    describe('attribute: overrideMaterialTotalCostMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideMaterialTotalCostMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideMaterialTotalCostMsi = chance.d100();
+            quoteAttributes.overrideMaterialTotalCostMsi = expectedOverrideMaterialTotalCostMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideMaterialTotalCostMsi).toEqual(expectedOverrideMaterialTotalCostMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideMaterialTotalCostMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideMaterialTotalCostMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideMaterialTotalCostMsi = 0;
+            quoteAttributes.overrideMaterialTotalCostMsi = minOverrideMaterialTotalCostMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideMaterialQuotedMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideMaterialQuotedMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideMaterialQuotedMsi = chance.d100();
+            quoteAttributes.overrideMaterialQuotedMsi = expectedOverrideMaterialQuotedMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideMaterialQuotedMsi).toEqual(expectedOverrideMaterialQuotedMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideMaterialQuotedMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideMaterialQuotedMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideMaterialQuotedMsi = 0;
+            quoteAttributes.overrideMaterialQuotedMsi = minOverrideMaterialQuotedMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideMaterialThickness', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideMaterialThickness;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideMaterialThickness = chance.d100();
+            quoteAttributes.overrideMaterialThickness = expectedOverrideMaterialThickness;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideMaterialThickness).toEqual(expectedOverrideMaterialThickness);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideMaterialThickness = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideMaterialThickness = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideMaterialThickness = 0;
+            quoteAttributes.overrideMaterialThickness = minOverrideMaterialThickness - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideFinish', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinish;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a mongoose.Types.ObjectId', () => {
+            const expectedOverrideFinish = new mongoose.Types.ObjectId();
+            quoteAttributes.overrideFinish = expectedOverrideFinish;
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.overrideFinish).toEqual(expectedOverrideFinish);
+        });
+    });
+
+    describe('attribute: overrideFinishCostMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinishCostMsi;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideFinishCostMsi = chance.d100();
+            quoteAttributes.overrideFinishCostMsi = expectedOverrideFinishCostMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideFinishCostMsi).toEqual(expectedOverrideFinishCostMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideFinishCostMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideFinishCostMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideFinishCostMsi = 0;
+            quoteAttributes.overrideFinishCostMsi = minOverrideFinishCostMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideFinishFreightMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinishFreightMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideFinishFreightMsi = chance.d100();
+            quoteAttributes.overrideFinishFreightMsi = expectedOverrideFinishFreightMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideFinishFreightMsi).toEqual(expectedOverrideFinishFreightMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 9999.1234324234];
+            quoteAttributes.overrideFinishFreightMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.123, 999999.123];
+            quoteAttributes.overrideFinishFreightMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideFinishFreightMsi = 0;
+            quoteAttributes.overrideFinishFreightMsi = minOverrideFinishFreightMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideFinishTotalCostMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinishTotalCostMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideFinishTotalCostMsi = chance.d100();
+            quoteAttributes.overrideFinishTotalCostMsi = expectedOverrideFinishTotalCostMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideFinishTotalCostMsi).toEqual(expectedOverrideFinishTotalCostMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideFinishTotalCostMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideFinishTotalCostMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideFinishTotalCostMsi = 0;
+            quoteAttributes.overrideFinishTotalCostMsi = minOverrideFinishTotalCostMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideFinishQuotedMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinishQuotedMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideFinishQuotedMsi = chance.d100();
+            quoteAttributes.overrideFinishQuotedMsi = expectedOverrideFinishQuotedMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideFinishQuotedMsi).toEqual(expectedOverrideFinishQuotedMsi);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideFinishQuotedMsi = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideFinishQuotedMsi = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideFinishQuotedMsi = 0;
+            quoteAttributes.overrideFinishQuotedMsi = minOverrideFinishQuotedMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: overrideFinishThickness', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.overrideFinishThickness;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedOverrideFinishThickness = chance.d100();
+            quoteAttributes.overrideFinishThickness = expectedOverrideFinishThickness;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.overrideFinishThickness).toEqual(expectedOverrideFinishThickness);
+        });
+
+        it('should not allow floating point values with more than 4 decimal places', () => {
+            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
+            quoteAttributes.overrideFinishThickness = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 4 decimal places or less', () => {
+            const allowedValues = [chance.d100(), 100.1234, 999999.123];
+            quoteAttributes.overrideFinishThickness = chance.pickone(allowedValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minOverrideFinishThickness = 0;
+            quoteAttributes.overrideFinishThickness = minOverrideFinishThickness - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: coreDiameter', () => {
+        it('should default to 3', () => {
+            delete quoteAttributes.coreDiameter;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.coreDiameter).toEqual(3);
+        });
+
+        it('should be a number', () => {
+            const expectedCoreDiameter = chance.d100();
+            quoteAttributes.coreDiameter = expectedCoreDiameter;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.coreDiameter).toEqual(expectedCoreDiameter);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minCoreDiameter = 0;
+            quoteAttributes.coreDiameter = minCoreDiameter - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not allow floating points with more than 2 decimal places', () => {
+            const invalidValues = [1.123, 123.54321, 9999.1234324234];
+            quoteAttributes.coreDiameter = chance.pickone(invalidValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should allow numbers with 2 decimal places or less', () => {
+            const validValues = [1.12, 123.2, chance.d100()];
+            quoteAttributes.coreDiameter = chance.pickone(validValues);
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: numberOfColors', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.numberOfColors;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should not be less than 1', () => {
+            const minNumberOfColors = 1;
+            quoteAttributes.numberOfColors = minNumberOfColors - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be greater than 12', () => {
+            const maxNumberOfColors = 12;
+            quoteAttributes.numberOfColors = maxNumberOfColors + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be an integer', () => {
+            const expectedNumberOfColors = 1.15;
+            quoteAttributes.numberOfColors = expectedNumberOfColors;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    // * Outputs * //
+    describe('attribute: productQty', () => {
+        it('should be required', () => {
+            delete quoteAttributes.productQty;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a number', () => {
+            verifyLengthAttribute(quoteAttributes, 'productQty');
+        });
+
+        it('should be a positive number', () => {
+            const negativeValue = -1;
+            quoteAttributes.productQty = negativeValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: initialStockLength', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'initialStockLength');
+        });
+    });
+
+    describe('attribute: colorCalibrationFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'colorCalibrationFeet');
+        });
+    });
+
+    describe('attribute: proofRunupFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'proofRunupFeet');
+        });
+    });
+
+    describe('attribute: printCleanerFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'printCleanerFeet');
+        });
+    });
+
+    describe('attribute: scalingFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'scalingFeet');
+        });
+    });
+
+    describe('attribute: newMaterialSetupFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'newMaterialSetupFeet');
+        });
+    });
+
+    describe('attribute: dieLineSetupFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'dieLineSetupFeet');
+        });
+    });
+
+    describe('attribute: totalStockFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'totalStockFeet');
+        });
+    });
+
+    // describe('attribute: throwAwayStockPercentage', () => {})
+
+    // describe('attribute: totalStockMsi', () => {})
+
+    describe('attribute: totalRollsOfPaper', () => {
+        it('should be a number of rolls attribute', () => {
+            verifyNumberOfRollsAttribute(quoteAttributes, 'totalRollsOfPaper');
+        });
+    });
+
+    describe('attribute: extraFrames', () => {
+        it('should be a number of frames attribute', () => {
+            verifyNumberOfFramesAttribute(quoteAttributes, 'extraFrames');
+        });
+
+        it('should default to 25', () => {
+            const expectedDefaultExtraFrames = 25;
+            delete quoteAttributes.extraFrames;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.extraFrames).toEqual(expectedDefaultExtraFrames);
+        });
+    });
+
+    describe('attribute: totalFrames', () => {
+        it('should be a number of frames attribute', () => {
+            verifyNumberOfFramesAttribute(quoteAttributes, 'totalFrames');
+        });
+    });
+
+    describe('attribute: totalStockCosts', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalStockCosts');
+        });
+    });
+
+    describe('attribute: totalFinishFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'totalFinishFeet');
+        });
+    });
+
+    describe('attribute: totalFinishMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalFinishMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedTotalFinishMsi = chance.d100();
+            quoteAttributes.totalFinishMsi = expectedTotalFinishMsi;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalFinishMsi).toEqual(expectedTotalFinishMsi);
+        });
+
+        it('should be greater than or equal to 0', () => {
+            const minTotalFinishMsi = 0;
+            quoteAttributes.totalFinishMsi = minTotalFinishMsi - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: totalFinishCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalFinishCost');
+        });
+    });
+
+    describe('attribute: totalCoreCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalCoreCost');
+        });
+    });
+
+    describe('attribute: boxCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'boxCost');
+        });
+    });
+
+    describe('attribute: inlinePrimingCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'inlinePrimingCost');
+        });
+    });
+
+    describe('attribute: scalingClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'scalingClickCost');
+        });
+    });
+
+    describe('attribute: proofRunupClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'proofRunupClickCost');
+        });
+    });
+
+    describe('attribute: printCleanerClickCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'printCleanerClickCost');
+        });
+    });
+
+    describe('attribute: totalMaterialsCost', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'totalMaterialsCost');
+        });
+    });
+
+    describe('attribute: stockSpliceTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'stockSpliceTime');
+        });
+    });
+    describe('attribute: colorCalibrationTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'colorCalibrationTime');
+        });
+    });
+
+    describe('attribute: printingProofTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'printingProofTime');
+        });
+    });
+
+    describe('attribute: reinsertionPrintingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'reinsertionPrintingTime');
+        });
+    });
+
+    describe('attribute: rollChangeOverTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'rollChangeOverTime');
+        });
+    });
+
+    describe('attribute: printingStockTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'printingStockTime');
+        });
+    });
+
+    describe('attribute: printTearDownTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'printTearDownTime');
+        });
+    });
+
+    describe('attribute: totalTimeAtPrinting', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'totalTimeAtPrinting');
+        });
+    });
+
+    describe('attribute: throwAwayPrintTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'throwAwayPrintTime');
+        });
+    });
+
+    describe('attribute: totalPrintingCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalPrintingCost');
+        });
+    });
+
+    describe('attribute: cuttingStockSpliceCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'cuttingStockSpliceCost');
+        });
+    });
+
+    describe('attribute: dieSetupTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'dieSetupTime');
+        });
+    });
+
+    describe('attribute: sheetedSetupTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'sheetedSetupTime');
+        });
+    });
+
+    describe('attribute: cuttingStockTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'cuttingStockTime');
+        });
+    });
+
+    describe('attribute: cuttingTearDownTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'cuttingTearDownTime');
+        });
+    });
+
+    describe('attribute: sheetedTearDownTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes,'sheetedTearDownTime');
+        });
+    });
+
+    describe('attribute: totalTimeAtCutting', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'totalTimeAtCutting');
+        });
+    });
+
+    describe('attribute: totalCuttingCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalCuttingCost');
+        });
+    });
+
+    describe('attribute: coreGatheringTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'coreGatheringTime');
+        });
+    });
+
+    describe('attribute: changeOverTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'changeOverTime');
+        });
+    });
+
+    describe('attribute: windingAllRollsTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'windingAllRollsTime');
+        });
+    });
+
+    describe('attribute: labelDropoffAtShippingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'labelDropoffAtShippingTime');
+        });
+    });
+
+    describe('attribute: totalWindingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'totalWindingTime');
+        });
+    });
+
+    describe('attribute: throwAwayWindingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'throwAwayWindingTime');
+        });
+    });
+    describe('attribute: totalFinishedRolls', () => {
+        it('should be a number of rolls attribute', () => {
+            verifyNumberOfRollsAttribute(quoteAttributes, 'totalFinishedRolls');
+        });
+    });
+
+    describe('attribute: totalWindingCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalWindingCost');
+        });
+    });
+
+    describe('attribute: totalCostOfMachineTime', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalCostOfMachineTime');
+        });
+    });
+
+    describe('attribute: boxCreationTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'boxCreationTime');
+        });
+    });
+
+    describe('attribute: packagingBoxTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'packagingBoxTime');
+        });
+    });
+
+    describe('attribute: packingSlipsTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'packingSlipsTime');
+        });
+    });
+
+    describe('attribute: totalShippingTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'totalShippingTime');
+        });
+    });
+
+    describe('attribute: totalShippingCost', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'totalShippingCost');
+        });
+    });
+
+    describe('attribute: customer', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.customer;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a mongoose.types.ObjectId', () => {
+            const expectedCustomer = new mongoose.Types.ObjectId();
+            quoteAttributes.customer = expectedCustomer;
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.customer).toEqual(expectedCustomer);
+            expect(quote.customer).toEqual(expect.any(mongoose.Types.ObjectId));
+        });
+    });
+
+    describe('attribute: frameLength', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.frameLength;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFrameLength = 1;
+            quoteAttributes.frameLength = expectedFrameLength;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.frameLength).toEqual(expectedFrameLength);
+        });
+
+        it('should not be less than 0', () => {
+            const minFrameLength = 0;
+            quoteAttributes.frameLength = minFrameLength - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be greater than MAX_FRAME_LENGTH_INCHES', () => {
+            quoteAttributes.frameLength = MAX_FRAME_LENGTH_INCHES + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: frameUtilization', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.frameUtilization;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFrameUtilization = 1;
+            quoteAttributes.frameUtilization = expectedFrameUtilization;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
+        });
+
+        it('should not be less than 0', () => {
+            const minFrameUtilization = 0;
+            quoteAttributes.frameUtilization = minFrameUtilization - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be greater than 1', () => {
+            const maxFrameUtilization = 1;
+            quoteAttributes.frameUtilization = maxFrameUtilization + 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: finishedRollLength', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.finishedRollLength;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedFinishRollLength = chance.d100();
+            quoteAttributes.finishedRollLength = expectedFinishRollLength;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.finishedRollLength).toEqual(expectedFinishRollLength);
+        });
+    });
+
+    describe('attribute: printingSpeed', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.printingSpeed;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedPrintingSpeed = chance.d100();
+            quoteAttributes.printingSpeed = expectedPrintingSpeed;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.printingSpeed).toEqual(expectedPrintingSpeed);
+        });
+
+        it('should not be less than 0', () => {
+            const minPrintingSpeed = 0;
+            quoteAttributes.printingSpeed = minPrintingSpeed - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be a floating point number', () => {
+            const floatingPointPrintingSpeed = chance.floating({ min: 0.1, max: 0.9 });
+            quoteAttributes.printingSpeed = floatingPointPrintingSpeed;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: products', () => {
+        let expectedProduct;
+
+        beforeEach(() => {
+            expectedProduct = {
+                productId: mongoose.Types.ObjectId(),
+                labelQty: chance.d100()
+            };
+            quoteAttributes.products = [expectedProduct];
+        });
+
+        it('should not be a required attribute', () => {
+            delete quoteAttributes.products;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should default to an empty array', () => {
+            delete quoteAttributes.products;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.products).toEqual([]);
+        });
+
+        it('should be an array containing objects with the correct attributes', () => {
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.products[0]._id).toBeDefined();
+            expect(quote.products[0].productId).toEqual(expectedProduct.productId);
+            expect(quote.products[0].labelQty).toEqual(expectedProduct.labelQty);
+        });
+
+        describe('attribute: products[n].productId', () => {
+            it('should fail validation if attribute does not exist', () => {
+                delete quoteAttributes.products[0].productId;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+
+            it('should be a mongoose.Types.ObjectId type', () => {
+                const quote = new Quote(quoteAttributes);
+                
+                expect(quote.products[0].productId).toEqual(expect.any(mongoose.Types.ObjectId));
+            });
+        });
+
+        describe('attribute: products[n].labelQty', () => {
+            it('should fail validation if attribute IS NOT defined', () => {
+                delete quoteAttributes.products[0].labelQty;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+
+            it('should be a number type', () => {
+                const quote = new Quote(quoteAttributes);
+                
+                expect(quote.products[0].labelQty).toEqual(expect.any(Number));
+            });
+
+            it('should not be less than 0', () => {
+                quoteAttributes.products[0].labelQty = -1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+
+                expect(error).toBeDefined();
+            });
+
+            it('should fail validation if attribute is a floating point number', () => {
+                quoteAttributes.products[0].labelQty = chance.floating({ min: 0.1, max: 0.9 });
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+    });
+
+    describe('database interactions', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        it('should have timestamps', async () => {
+            const quote = new Quote(quoteAttributes);
+            let savedquote = await quote.save();
+
+            expect(savedquote.createdAt).toBeDefined();
+            expect(savedquote.updatedAt).toBeDefined();
+        });
+    });
+});

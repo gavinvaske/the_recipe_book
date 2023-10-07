@@ -79,8 +79,8 @@ const productWithQtySchema = new Schema({
 
 const DEFAULT_EXTRA_FRAMES = 25;
 
-const estimatedTicketSchema = new Schema({
-    estimateId: {
+const quoteSchema = new Schema({
+    quoteId: {
         type: String,
         required: true,
         index: true
@@ -494,6 +494,6 @@ const estimatedTicketSchema = new Schema({
     }
 }, { timestamps: true });
 
-const estimatedTicket = mongoose.model('EstimatedTicket', estimatedTicketSchema);
+const Quote = mongoose.model('Quote', quoteSchema);
 
-module.exports = estimatedTicket;
+module.exports = Quote;

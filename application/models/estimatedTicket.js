@@ -60,6 +60,23 @@ const msiAttribute = {
     min: 0
 };
 
+const productWithQtySchema = new Schema({
+    productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'BaseProduct',
+        required: true
+    },
+    labelQty: {
+        type: Number,
+        min: 0,
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message: '{VALUE} is not an integer'
+        }
+    }
+});
+
 const DEFAULT_EXTRA_FRAMES = 25;
 
 const estimatedTicketSchema = new Schema({
@@ -270,7 +287,7 @@ const estimatedTicketSchema = new Schema({
         required: true
     },
     initialStockLength: {
-        ...lengthInFeetAttribute,
+        ...lengthInFeetAttribute
     },
     colorCalibrationFeet: {
         ...lengthInFeetAttribute
@@ -471,6 +488,9 @@ const estimatedTicketSchema = new Schema({
             validator: Number.isInteger,
             message: '{VALUE} is not an integer'
         }
+    },
+    products: {
+        type: [productWithQtySchema]
     }
 }, { timestamps: true });
 

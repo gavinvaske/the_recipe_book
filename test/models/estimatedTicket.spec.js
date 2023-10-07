@@ -141,13 +141,33 @@ function verifyCostAttribute(estimatedTicketAttributes, attributeName) {
         .toEqual(Math.floor(floatingPointWithTwoDecimals * penniesPerDollar));
 }
 
+function generateProduct() {
+    return {
+        productId: mongoose.Types.ObjectId(),
+        labelQty: chance.d100()
+    };
+}
+
+function generateNProducts() {
+    const n = chance.d10();
+    
+    return chance.n(generateProduct, n);
+}
+
 describe('File: estimatedTicket.js', () => {
     let estimatedTicketAttributes;
 
     beforeEach(() => {
         estimatedTicketAttributes = {
             estimateId: chance.string(),
-            productQty: chance.d100()
+            productQty: chance.d100(),
+            sizeAround: 1,
+            spaceAround: 1,
+            productQty: 1,
+            numberAround: 1,
+            sizeAroundOverride: chance.d100(),
+            spaceAroundOverride: chance.d100(),
+            products: generateNProducts()
         };
     });
 
@@ -1808,6 +1828,95 @@ describe('File: estimatedTicket.js', () => {
             const error = estimatedTicket.validateSync();
             
             expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: products', () => {
+        let expectedProduct;
+
+        beforeEach(() => {
+            expectedProduct = {
+                productId: mongoose.Types.ObjectId(),
+                labelQty: chance.d100()
+            };
+            estimatedTicketAttributes.products = [expectedProduct];
+        });
+
+        it('should not be a required attribute', () => {
+            delete estimatedTicketAttributes.products;
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            const error = estimatedTicket.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should default to an empty array', () => {
+            delete estimatedTicketAttributes.products;
+            
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+
+            expect(estimatedTicket.products).toEqual([]);
+        });
+
+        it('should be an array containing objects with the correct attributes', () => {
+            const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+            
+            expect(estimatedTicket.products[0]._id).toBeDefined();
+            expect(estimatedTicket.products[0].productId).toEqual(expectedProduct.productId);
+            expect(estimatedTicket.products[0].labelQty).toEqual(expectedProduct.labelQty);
+        });
+
+        describe('attribute: products[n].productId', () => {
+            it('should fail validation if attribute does not exist', () => {
+                delete estimatedTicketAttributes.products[0].productId;
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                const error = estimatedTicket.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+
+            it('should be a mongoose.Types.ObjectId type', () => {
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                expect(estimatedTicket.products[0].productId).toEqual(expect.any(mongoose.Types.ObjectId));
+            });
+        });
+
+        describe('attribute: products[n].labelQty', () => {
+            it('should fail validation if attribute IS NOT defined', () => {
+                delete estimatedTicketAttributes.products[0].labelQty;
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                const error = estimatedTicket.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+
+            it('should be a number type', () => {
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                expect(estimatedTicket.products[0].labelQty).toEqual(expect.any(Number));
+            });
+
+            it('should not be less than 0', () => {
+                estimatedTicketAttributes.products[0].labelQty = -1;
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                const error = estimatedTicket.validateSync();
+
+                expect(error).toBeDefined();
+            });
+
+            it('should fail validation if attribute is a floating point number', () => {
+                estimatedTicketAttributes.products[0].labelQty = chance.floating({ min: 0.1, max: 0.9 });
+                const estimatedTicket = new EstimatedTicket(estimatedTicketAttributes);
+                
+                const error = estimatedTicket.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
     });
 

@@ -60,3 +60,12 @@ You can run these "lint rules" against your code locally manually to see if you 
 
 ### What and Where are the Tests
 This repo contains many tests which all live in the folder named `test` (pretty logical eh?). The tests in this folder mimick much of the `application` folder structure. To manually run all of the tests locally, execute the command `npm run test`. That command will then execute every test in the `test` folder, and give a human-readable-ish explaination of which tests failed or passed. If any tests fail, you will need to investigate which of your code changes caused the test to fail.
+
+
+### Database Standards
+Below is a list of rules that must be followed regarding the storage of common data attributes in any database table this application uses:
+
+  1. **Date/Time Attributes:** Any Date/Time attribute MUST be stored in UTC
+  2. **Duration Attributes:** (i.e. 1.5 hours, 16 minutes, 32 seconds, etc) SHOULD be stored in seconds. This means that if you need to store 1.5 hours, you must convert it into seconds before storing it in the database. (**Note:** if you need a higher precision than seconds, figure that out on a case-by-case basis)
+    * Note: If this were a true enterprise system with more requirements, I would change this requirement to be milliseconds, microseconds, ect. But in this application, that is overkill, and up to 1 second of precision is all that is required
+  3. **Currency Attributes:** Must be stored in cents. This application only deals with USD, and any dollar amount must be converted into pennies before it is stored in the database. The number of pennies MUST be an integer, no floating point pennies are allowed in the database.

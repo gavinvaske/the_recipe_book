@@ -4,9 +4,11 @@ const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
 module.exports.convertDollarsToPennies = (numberAsString) => {
     const currencyWithoutCommas = String(numberAsString).split(',').join('');
 
-    if (currencyWithoutCommas === undefined || currencyWithoutCommas === '') throw new Error('Cannot save an undefined currency amount');
+    if (currencyWithoutCommas === null || currencyWithoutCommas === undefined || currencyWithoutCommas === '') throw new Error('Cannot save an undefined currency amount');
 
-    return parseInt(Number(currencyWithoutCommas * NUMBER_OF_PENNIES_IN_A_DOLLAR));
+    var currencyWithOnlyTwoDecimalPlaces = currencyWithoutCommas.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]    // https://stackoverflow.com/a/4187164
+    
+    return Number(Number(currencyWithOnlyTwoDecimalPlaces).toFixed(2).replace('.', ''))
 };
 
 module.exports.convertPenniesToDollars = (amountInPennies) => {

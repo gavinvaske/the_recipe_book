@@ -37,6 +37,7 @@ module.exports.PRINTING_ROLL_CHANGE_OVER_MINUTES = 7;
 module.exports.CUTTING_ROLL_CHANGE_OVER_MINUTES = 10;
 module.exports.SHEETED_SETUP_TIME = 30;
 module.exports.SHEETED_TEAR_DOWN_TIME = 15;
+module.exports.CUTTING_TEAR_DOWN_TIME = 5;
 
 module.exports.MAX_FRAME_AROUND = 38.58;
 module.exports.MAX_FRAME_ACROSS = 12.50;

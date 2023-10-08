@@ -140,19 +140,19 @@ describe('constantsEnum', () => {
         const expectedValue = 30;
 
         expect(constantsEnum.SHEETED_SETUP_TIME).toEqual(expectedValue);
-    })
+    });
 
     it('SHEETED_TEAR_DOWN_TIME : should equal the correct value', () => {
         const expectedValue = 15;
 
         expect(constantsEnum.SHEETED_TEAR_DOWN_TIME).toEqual(expectedValue);
-    })
+    });
 
     it('CUTTING_TEAR_DOWN_TIME : should equal the correct value', () => {
         const expectedValue = 5;
 
         expect(constantsEnum.CUTTING_TEAR_DOWN_TIME).toEqual(expectedValue);
-    })
+    });
 
     it('FACTORY_ADDRESS : should equal the correct value', () => {
         const expectedValue = {

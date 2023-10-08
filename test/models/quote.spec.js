@@ -90,7 +90,7 @@ function verifyNumberOfRollsAttribute(quoteAttributes, attributeName) {
     expect(error).toBeDefined();
 
     // (3) should be an integer
-    const floatingPointValue = chance.floating({ min: 0 });
+    const floatingPointValue = chance.floating({ min: 0.1, max: 0.9 });
     quoteAttributes[attributeName] = floatingPointValue;
     quote = new Quote(quoteAttributes);
 
@@ -130,7 +130,8 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
 
     // (4) should handle floating point decimals up to 2 decimal places
     const numberOfDecimals = 2;
-    const floatingPointWithTwoDecimals = chance.floating({ min: 0, fixed: numberOfDecimals });
+    const floatingPointWithTwoDecimals = chance.floating({ min: 0, fixed: numberOfDecimals});
+    console.log('floatingPointWithTwoDecimals: ', floatingPointWithTwoDecimals);
     quoteAttributes[attributeName] = floatingPointWithTwoDecimals;
     const penniesPerDollar = 100;
     
@@ -281,7 +282,7 @@ describe('File: quote.js', () => {
         });
 
         it('should be an integer', () => {
-            const floatingPointValue = chance.floating({ min: 0, max: 1000 });
+            const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
             quoteAttributes.labelsPerRoll = floatingPointValue;
             const quote = new Quote(quoteAttributes);
             
@@ -322,7 +323,7 @@ describe('File: quote.js', () => {
         });
 
         it('should be an integer', () => {
-            const floatingPointValue = chance.floating({ min: 0, max: 100 });
+            const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
             quoteAttributes.numberOfDesigns = floatingPointValue;
             const quote = new Quote(quoteAttributes);
 
@@ -374,24 +375,24 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: sheeted', () => {
+    describe('attribute: isSheeted', () => {
         it('should be a boolean', () => {
-            const expectedSheeted = chance.bool();
-            quoteAttributes.sheeted = expectedSheeted;
+            const expectedIsSheeted = chance.bool();
+            quoteAttributes.isSheeted = expectedIsSheeted;
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.sheeted).toEqual(expectedSheeted);
+            expect(quote.isSheeted).toEqual(expectedIsSheeted);
         });
 
         it('should default to false', () => {
-            delete quoteAttributes.sheeted;
-            const defaultSheeted = false;
+            delete quoteAttributes.isSheeted;
+            const defaultIsSheeted = false;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
             
             expect(error).toBeUndefined();
-            expect(quote.sheeted).toEqual(defaultSheeted);
+            expect(quote.isSheeted).toEqual(defaultIsSheeted);
         });
     });
 
@@ -1518,6 +1519,15 @@ describe('File: quote.js', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'stockSpliceTime');
         });
+
+        it('should default to the constant NEW_MATERIAL_STOCK_SPLICE', () => {
+            delete quoteAttributes.stockSpliceTime;
+
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.stockSpliceTime).toBeDefined();
+            expect(quote.stockSpliceTime).toEqual(constants.NEW_MATERIAL_STOCK_SPLICE);
+        });
     });
 
     describe('attribute: colorCalibrationTime', () => {
@@ -1579,6 +1589,7 @@ describe('File: quote.js', () => {
             
             const quote = new Quote(quoteAttributes);
 
+            expect(quote.printTearDownTime).toBeDefined();
             expect(quote.printTearDownTime).toEqual(expectedValue);
         });
     });
@@ -1620,11 +1631,39 @@ describe('File: quote.js', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'dieSetupTime');
         });
+
+        it('should default to the constant DIE_SETUP', () => {
+            delete quoteAttributes.dieSetupTime;
+
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.dieSetupTime).toBeDefined();
+            expect(quote.dieSetupTime).toEqual(constants.DIE_SETUP);
+        });
     });
 
     describe('attribute: sheetedSetupTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'sheetedSetupTime');
+        });
+
+        it('should default to the constant SHEETED_SETUP_TIME IFF the attribute "isSheeted" equals true', () => {
+            quoteAttributes.isSheeted = true;
+            delete quoteAttributes.sheetedSetupTime;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.sheetedSetupTime).toBeDefined();
+            expect(quote.sheetedSetupTime).toEqual(constants.SHEETED_SETUP_TIME);
+        });
+
+        it('should default to 0 IFF the attribute "isSheeted" does not equal true', () => {
+            quoteAttributes.isSheeted = chance.pickone([null, undefined, false]);
+            delete quoteAttributes.sheetedSetupTime;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.sheetedSetupTime).toEqual(0);
         });
     });
 
@@ -1638,11 +1677,39 @@ describe('File: quote.js', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'cuttingTearDownTime');
         });
+
+        it('should default to the constant CUTTING_TEAR_DOWN_TIME', () => {
+            delete quoteAttributes.cuttingTearDownTime;
+
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.cuttingTearDownTime).toBeDefined();
+            expect(quote.cuttingTearDownTime).toEqual(constants.CUTTING_TEAR_DOWN_TIME);
+        });
     });
 
     describe('attribute: sheetedTearDownTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes,'sheetedTearDownTime');
+        });
+
+        it('should default to the constant SHEETED_TEAR_DOWN_TIME IFF the attribute "isSheeted" is equal to TRUE', () => {
+            quoteAttributes.isSheeted = true;
+            delete quoteAttributes.sheetedTearDownTime;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.sheetedTearDownTime).toBeDefined();
+            expect(quote.sheetedTearDownTime).toEqual(constants.SHEETED_TEAR_DOWN_TIME);
+        });
+
+        it('should default to 0 IFF the attribute "isSheeted" does not equal true', () => {
+            quoteAttributes.isSheeted = chance.pickone([null, undefined, false]);
+            delete quoteAttributes.sheetedTearDownTime;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.sheetedTearDownTime).toEqual(0);
         });
     });
 
@@ -1661,6 +1728,15 @@ describe('File: quote.js', () => {
     describe('attribute: coreGatheringTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'coreGatheringTime');
+        });
+
+        it('should default to the constant CORE_GATHERING_TIME', () => {
+            delete quoteAttributes.coreGatheringTime;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.coreGatheringTime).toBeDefined();
+            expect(quote.coreGatheringTime).toEqual(constants.CORE_GATHERING_TIME);
         });
     });
 

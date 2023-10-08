@@ -6,9 +6,9 @@ module.exports.convertDollarsToPennies = (numberAsString) => {
 
     if (currencyWithoutCommas === null || currencyWithoutCommas === undefined || currencyWithoutCommas === '') throw new Error('Cannot save an undefined currency amount');
 
-    var currencyWithOnlyTwoDecimalPlaces = currencyWithoutCommas.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]    // https://stackoverflow.com/a/4187164
+    var currencyWithOnlyTwoDecimalPlaces = currencyWithoutCommas.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]; // https://stackoverflow.com/a/4187164
     
-    return Number(Number(currencyWithOnlyTwoDecimalPlaces).toFixed(2).replace('.', ''))
+    return Number(Number(currencyWithOnlyTwoDecimalPlaces).toFixed(2).replace('.', ''));
 };
 
 module.exports.convertPenniesToDollars = (amountInPennies) => {

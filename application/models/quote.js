@@ -135,7 +135,7 @@ const quoteSchema = new Schema({
         type: Boolean,
         default: false
     },
-    sheeted: {
+    isSheeted: {
         type: Boolean,
         default: false
     },
@@ -375,7 +375,8 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     stockSpliceTime: {
-        ...timeDurationAttribute
+        ...timeDurationAttribute,
+        default: constants.NEW_MATERIAL_STOCK_SPLICE
     },
     colorCalibrationTime: {
         ...timeDurationAttribute,
@@ -412,19 +413,29 @@ const quoteSchema = new Schema({
         default: constants.CUTTING_STOCK_SPLICE
     },
     dieSetupTime: {
-        ...timeDurationAttribute
+        ...timeDurationAttribute,
+        default: constants.DIE_SETUP
     },
     sheetedSetupTime: {
-        ...timeDurationAttribute
+        ...timeDurationAttribute,
+        default: function() {
+            if (this.isSheeted) return constants.SHEETED_SETUP_TIME;
+            return 0;
+        }
     },
     cuttingStockTime: {
         ...timeDurationAttribute
     },
     cuttingTearDownTime: {
         ...timeDurationAttribute,
+        default: constants.CUTTING_TEAR_DOWN_TIME
     },
     sheetedTearDownTime: {
-        ...timeDurationAttribute
+        ...timeDurationAttribute,
+        default: function() {
+            if (this.isSheeted) return constants.SHEETED_TEAR_DOWN_TIME;
+            return 0;
+        }
     },
     totalTimeAtCutting: {
         ...timeDurationAttribute
@@ -436,7 +447,8 @@ const quoteSchema = new Schema({
     //     ...timeInSecondsAttribute,
     // }
     coreGatheringTime: {
-        ...timeDurationAttribute
+        ...timeDurationAttribute,
+        default: constants.CORE_GATHERING_TIME
     },
     changeOverTime: {
         ...timeDurationAttribute

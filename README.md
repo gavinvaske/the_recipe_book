@@ -69,3 +69,6 @@ Below is a list of rules that must be followed regarding the storage of common d
   2. **Duration Attributes:** (i.e. 1.5 hours, 16 minutes, 32 seconds, etc) SHOULD be stored in seconds. This means that if you need to store 1.5 hours, you must convert it into seconds before storing it in the database. (**Note:** if you need a higher precision than seconds, figure that out on a case-by-case basis)
     * Note: If this were a true enterprise system with more requirements, I would change this requirement to be milliseconds, microseconds, ect. But in this application, that is overkill, and up to 1 second of precision is all that is required
   3. **Currency Attributes:** Must be stored in cents. This application only deals with USD, and any dollar amount must be converted into pennies before it is stored in the database. The number of pennies MUST be an integer, no floating point pennies are allowed in the database.
+    * **Ex:** $109.74 must be stored in the database as 10974
+  5. **Percentage Attributes:** Must be stored in floating point form.
+    * **Ex:** 30.35% must be stored in the database as 0.3035

@@ -4,7 +4,7 @@ const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
-const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
+const constants = require('../../application/enums/constantsEnum');
 
 function verifyLengthAttribute(quoteAttributes, attributeName) {
     let quote;
@@ -1323,11 +1323,27 @@ describe('File: quote.js', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'colorCalibrationFeet');
         });
+
+        it('should default to the constant COLOR_CALIBRATION_FEET', () => {
+            delete quoteAttributes.colorCalibrationFeet;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.colorCalibrationFeet).toBeDefined();
+            expect(quote.colorCalibrationFeet).toEqual(constants.COLOR_CALIBRATION_FEET);
+        });
     });
 
     describe('attribute: proofRunupFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'proofRunupFeet');
+        });
+
+        it('should default to the constant PROOF_RUNUP_FEET', () => {
+            delete quoteAttributes.proofRunupFeet;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.proofRunupFeet).toBeDefined();
+            expect(quote.proofRunupFeet).toEqual(constants.PROOF_RUNUP_FEET);
         });
     });
 
@@ -1341,11 +1357,27 @@ describe('File: quote.js', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'scalingFeet');
         });
+
+        it('should default to the constant SCALING_FEET', () => {
+            delete quoteAttributes.scalingFeet;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.scalingFeet).toBeDefined();
+            expect(quote.scalingFeet).toEqual(constants.SCALING_FEET);
+        });
     });
 
     describe('attribute: newMaterialSetupFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'newMaterialSetupFeet');
+        });
+
+        it('should default to the constant NEWLY_LOADED_ROLL_WASTE_FEET', () => {
+            delete quoteAttributes.newMaterialSetupFeet;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.newMaterialSetupFeet).toBeDefined();
+            expect(quote.newMaterialSetupFeet).toEqual(constants.NEWLY_LOADED_ROLL_WASTE_FEET);
         });
     });
 
@@ -1487,9 +1519,19 @@ describe('File: quote.js', () => {
             verifyTimeAttribute(quoteAttributes, 'stockSpliceTime');
         });
     });
+
     describe('attribute: colorCalibrationTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'colorCalibrationTime');
+        });
+
+        it('should default to the constant COLOR_CALIBRATION_TIME', () => {
+            delete quoteAttributes.colorCalibrationTime;
+            const expectedValue = constants.COLOR_CALIBRATION_TIME;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.colorCalibrationTime).toBeDefined();
+            expect(quote.colorCalibrationTime).toEqual(expectedValue);
         });
     });
 
@@ -1502,6 +1544,15 @@ describe('File: quote.js', () => {
     describe('attribute: reinsertionPrintingTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'reinsertionPrintingTime');
+        });
+
+        it('should default to 0', () => {
+            delete quoteAttributes.reinsertionPrintingTime;
+            const expectedDefaultReinsertionPrintingTime = 0;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.reinsertionPrintingTime).toEqual(expectedDefaultReinsertionPrintingTime);
         });
     });
 
@@ -1520,6 +1571,15 @@ describe('File: quote.js', () => {
     describe('attribute: printTearDownTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'printTearDownTime');
+        });
+
+        it('should default to the constant PRINTING_TEAR_DOWN_TIME', () => {
+            delete quoteAttributes.printTearDownTime;
+            const expectedValue = constants.PRINTING_TEAR_DOWN_TIME;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.printTearDownTime).toEqual(expectedValue);
         });
     });
 
@@ -1544,6 +1604,15 @@ describe('File: quote.js', () => {
     describe('attribute: cuttingStockSpliceCost', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'cuttingStockSpliceCost');
+        });
+
+        it('should default to the constant CUTTING_STOCK_SPLICE', () => {
+            delete quoteAttributes.cuttingStockSpliceCost;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.cuttingStockSpliceCost).toBeDefined();
+            expect(quote.cuttingStockSpliceCost).toEqual(constants.CUTTING_STOCK_SPLICE);
         });
     });
 
@@ -1722,7 +1791,7 @@ describe('File: quote.js', () => {
         });
 
         it('should not be greater than MAX_FRAME_LENGTH_INCHES', () => {
-            quoteAttributes.frameLength = MAX_FRAME_LENGTH_INCHES + 1;
+            quoteAttributes.frameLength = constants.MAX_FRAME_LENGTH_INCHES + 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();

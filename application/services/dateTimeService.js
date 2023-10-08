@@ -93,11 +93,11 @@ module.exports.getDayNumberAndMonth = (utcDate) => {
 module.exports.convertMinutesToSeconds = (minutes) => {
     if (!minutes) return 0;
 
-    return Math.round(minutes * SECONDS_PER_MINUTE)
-}
+    return Math.round(minutes * SECONDS_PER_MINUTE);
+};
 
 module.exports.convertSecondsToMinutes = (seconds) => {
     if (!seconds) return seconds;
 
     return seconds / SECONDS_PER_MINUTE;
-}
+};

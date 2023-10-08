@@ -3,7 +3,8 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 const { dieShapes } = require('../enums/dieShapesEnum');
-const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
+const constants = require('../enums/constantsEnum');
+const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 
 function numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces) {
     const digitsInDecimalPlace = number.toString().split('.')[1];
@@ -28,9 +29,15 @@ const lengthInFeetAttribute = {
     min: 0
 };
 
-const timeInSecondsAttribute = {
+const timeDurationAttribute = {
     type: Number,
-    min: 0
+    set: convertMinutesToSeconds,
+    get: convertSecondsToMinutes,
+    min: 0,
+    validate: {
+        validator: Number.isInteger,
+        message: '{VALUE} is not an integer'
+    }
 };
 
 const numberOfFramesAttribute = {
@@ -51,7 +58,11 @@ const costAttribute = {
     type: Number,
     min: 0,
     set: convertDollarsToPennies,
-    get: convertPenniesToDollars
+    get: convertPenniesToDollars,
+    validate: {
+        validator: Number.isInteger,
+        message: '{VALUE} is not an integer'
+    }
 };
 
 // const percentageAttribute = {}   // TODO (9-13-2023): Finish this after talking to Storm
@@ -290,19 +301,23 @@ const quoteSchema = new Schema({
         ...lengthInFeetAttribute
     },
     colorCalibrationFeet: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
+        default: constants.COLOR_CALIBRATION_FEET
     },
     proofRunupFeet: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
+        default: constants.PROOF_RUNUP_FEET
     },
     printCleanerFeet: {
         ...lengthInFeetAttribute
     },
     scalingFeet: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
+        default: constants.SCALING_FEET
     },
     newMaterialSetupFeet: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
+        default: constants.NEWLY_LOADED_ROLL_WASTE_FEET
     },
     dieLineSetupFeet: {
         ...lengthInFeetAttribute
@@ -360,55 +375,59 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     stockSpliceTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     colorCalibrationTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute,
+        default: constants.COLOR_CALIBRATION_TIME
     },
     printingProofTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     reinsertionPrintingTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute,
+        default: 0
     },
     rollChangeOverTime: {
-        ...timeInSecondsAttribute,
+        ...timeDurationAttribute,
     },
     printingStockTime: {
-        ...timeInSecondsAttribute,
+        ...timeDurationAttribute,
     },
     printTearDownTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute,
+        default: constants.PRINTING_TEAR_DOWN_TIME
     },
     totalTimeAtPrinting: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     throwAwayPrintTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalPrintingCost: {
         ...costAttribute
     },
     cuttingStockSpliceCost: {
-        ...costAttribute
+        ...costAttribute,
+        default: constants.CUTTING_STOCK_SPLICE
     },
     dieSetupTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     sheetedSetupTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     cuttingStockTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     cuttingTearDownTime: {
-        ...timeInSecondsAttribute,
+        ...timeDurationAttribute,
     },
     sheetedTearDownTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalTimeAtCutting: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalCuttingCost: {
         ...costAttribute
@@ -417,22 +436,22 @@ const quoteSchema = new Schema({
     //     ...timeInSecondsAttribute,
     // }
     coreGatheringTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     changeOverTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     windingAllRollsTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     labelDropoffAtShippingTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalWindingTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     throwAwayWindingTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalFinishedRolls: {
         ...numberOfRollsAttribute
@@ -444,16 +463,16 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     boxCreationTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     packagingBoxTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     packingSlipsTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalShippingTime: {
-        ...timeInSecondsAttribute
+        ...timeDurationAttribute
     },
     totalShippingCost: {
         ...costAttribute
@@ -467,7 +486,7 @@ const quoteSchema = new Schema({
     frameLength: {
         type: Number,
         min: 0,
-        max: MAX_FRAME_LENGTH_INCHES
+        max: constants.MAX_FRAME_LENGTH_INCHES
     },
     frameUtilization: {
         type: Number,

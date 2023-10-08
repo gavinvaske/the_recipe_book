@@ -277,7 +277,7 @@ describe('dateTimeService test suite', () => {
             const actualValue = dateTimeService.convertMinutesToSeconds(minutes);
             
             expect(actualValue).toBe(expectedValue);
-        })
+        });
 
         it('should round up to the nearest second according to standard rounding rules', () => {
             const minutesToRoundUp = 1.51;
@@ -286,7 +286,7 @@ describe('dateTimeService test suite', () => {
             const actualNumberOfSeconds = dateTimeService.convertMinutesToSeconds(minutesToRoundUp);
             
             expect(actualNumberOfSeconds).toBe(expectedNumberOfSeconds);
-        })
+        });
 
         it('should round down to the nearest second according to standard rounding rules', () => {
             const minutesToRoundUp = 69.69;
@@ -295,8 +295,8 @@ describe('dateTimeService test suite', () => {
             const actualNumberOfSeconds = dateTimeService.convertMinutesToSeconds(minutesToRoundUp);
             
             expect(actualNumberOfSeconds).toBe(expectedNumberOfSeconds);
-        })
-    })
+        });
+    });
 
     describe('Function: convertSecondsToMinutes', () => {
         it('should return whatever was passed in, if a falsy value is passed in', () => {
@@ -316,7 +316,7 @@ describe('dateTimeService test suite', () => {
             
             expect(actualValue).toBeDefined();
             expect(actualValue).toBe(expectedValue);
-        })
+        });
 
         it('should convert seconds to minutes and keep the floating point (case 2)', () => {
             const seconds = 99;
@@ -326,7 +326,7 @@ describe('dateTimeService test suite', () => {
 
             expect(actualValue).toBeDefined();
             expect(actualValue).toBe(expectedValue);
-        })
+        });
 
         it('should convert seconds to minutes', () => {
             const seconds = 60000;
@@ -347,5 +347,5 @@ describe('dateTimeService test suite', () => {
             expect(actualValue).toBeDefined();
             expect(actualValue).toBe(expectedValue);
         });
-    })
+    });
 });

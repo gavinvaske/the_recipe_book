@@ -136,6 +136,18 @@ describe('constantsEnum', () => {
         expect(constantsEnum.CUTTING_ROLL_CHANGE_OVER_MINUTES).toEqual(expectedValue);
     });
 
+    it('SHEETED_SETUP_TIME : should equal the correct value', () => {
+        const expectedValue = 30;
+
+        expect(constantsEnum.SHEETED_SETUP_TIME).toEqual(expectedValue);
+    })
+
+    it('SHEETED_TEAR_DOWN_TIME : should equal the correct value', () => {
+        const expectedValue = 15;
+
+        expect(constantsEnum.SHEETED_TEAR_DOWN_TIME).toEqual(expectedValue);
+    })
+
     it('FACTORY_ADDRESS : should equal the correct value', () => {
         const expectedValue = {
             name: 'The Label Advantage',

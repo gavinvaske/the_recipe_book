@@ -5,7 +5,6 @@ const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
-mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
 const testDataGenerator = require('../testDataGenerator');
 

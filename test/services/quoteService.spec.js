@@ -5,7 +5,7 @@ describe('File: quoteService.js', () => {
     let quoteInputParameters;
 
     beforeEach(() => {
-        quoteInputParameters = {}
+        quoteInputParameters = {};
     });
 
     describe('Function: quoteService', () => {
@@ -17,8 +17,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.colorCalibrationFeet).toBeDefined();
                 expect(quote.colorCalibrationFeet).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: proofRunupFeet', () => {
             it('should set attribute to a constant value', () => {
@@ -28,8 +28,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.proofRunupFeet).toBeDefined();
                 expect(quote.proofRunupFeet).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: scalingFeet', () => {
             it('should set attribute to a constant value', () => {
@@ -39,8 +39,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.scalingFeet).toBeDefined();
                 expect(quote.scalingFeet).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: newMaterialSetupFeet', () => {
             it('should set attribute to a constant value', () => {
@@ -50,8 +50,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.newMaterialSetupFeet).toBeDefined();
                 expect(quote.newMaterialSetupFeet).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: stockSpliceTime', () => {
             it('should set attribute to a constant value', () => {
@@ -61,8 +61,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.stockSpliceTime).toBeDefined();
                 expect(quote.stockSpliceTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: colorCalibrationTime', () => {
             it('should set attribute to a constant value', () => {
@@ -72,8 +72,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.colorCalibrationTime).toBeDefined();
                 expect(quote.colorCalibrationTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: reinsertionPrintingTime', () => {
             it('should set attribute to a constant value', () => {
@@ -83,8 +83,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.reinsertionPrintingTime).toBeDefined();
                 expect(quote.reinsertionPrintingTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: printTearDownTime', () => {
             it('should set attribute to a constant value', () => {
@@ -94,8 +94,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.printTearDownTime).toBeDefined();
                 expect(quote.printTearDownTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: cuttingStockSpliceCost', () => {
             it('should set attribute to a constant value', () => {
@@ -105,8 +105,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.cuttingStockSpliceCost).toBeDefined();
                 expect(quote.cuttingStockSpliceCost).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: dieSetupTime', () => {
             it('should set attribute to a constant value', () => {
@@ -116,8 +116,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.dieSetupTime).toBeDefined();
                 expect(quote.dieSetupTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: sheetedSetupTime', () => {
             it('should set attribute to a constant value if "isSheeted" is TRUE', () => {
@@ -128,7 +128,7 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.sheetedSetupTime).toBeDefined();
                 expect(quote.sheetedSetupTime).toEqual(expectedValue);
-            })
+            });
 
             it('should set attribute to ZERO if "isSheeted" is FALSE', () => {
                 quoteInputParameters.isSheeted = false;
@@ -138,8 +138,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.sheetedSetupTime).toBeDefined();
                 expect(quote.sheetedSetupTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: cuttingTearDownTime', () => {
             it('should set attribute to a constant value', () => {
@@ -149,8 +149,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.cuttingTearDownTime).toBeDefined();
                 expect(quote.cuttingTearDownTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: sheetedTearDownTime', () => {
             it('should set attribute to a constant value if "isSheeted" is TRUE', () => {
@@ -161,7 +161,7 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.sheetedTearDownTime).toBeDefined();
                 expect(quote.sheetedTearDownTime).toEqual(expectedValue);
-            })
+            });
 
             it('should set attribute to ZERO if "isSheeted" is FALSY', () => {
                 delete quoteInputParameters.isSheeted;
@@ -171,8 +171,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.sheetedTearDownTime).toBeDefined();
                 expect(quote.sheetedTearDownTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: coreGatheringTime', () => {
             it('should set attribute to a constant value', () => {
@@ -182,8 +182,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.coreGatheringTime).toBeDefined();
                 expect(quote.coreGatheringTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: labelDropoffAtShippingTime', () => {
             it('should set attribute to a constant value', () => {
@@ -193,8 +193,8 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.labelDropoffAtShippingTime).toBeDefined();
                 expect(quote.labelDropoffAtShippingTime).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: packingSlipsTime', () => {
             it('should set attribute to a constant value', () => {
@@ -204,7 +204,7 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.packingSlipsTime).toBeDefined();
                 expect(quote.packingSlipsTime).toEqual(expectedValue);
-            })
-        })
-    })
-})
+            });
+        });
+    });
+});

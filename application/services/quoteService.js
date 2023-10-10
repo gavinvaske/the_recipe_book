@@ -23,7 +23,7 @@ module.exports.createQuote = (quoteInputs) => {
         coreGatheringTime: constants.CORE_GATHERING_TIME,
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME
-    }
+    };
 
     return quote;
 };

@@ -24,6 +24,11 @@ function numberHasTwoDecimalPlacesOrLess(number) {
     return numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces);
 }
 
+function roundPercentage(percentage) {
+    const numberOfDecimalPlaces = 4;
+    return Number(percentage.toFixed(numberOfDecimalPlaces));
+}
+
 const lengthInFeetAttribute = {
     type: Number,
     min: 0
@@ -65,10 +70,16 @@ const costAttribute = {
     }
 };
 
-// const percentageAttribute = {}   // TODO (9-13-2023): Finish this after talking to Storm
 const msiAttribute = {
     type: Number,
     min: 0
+};
+
+const percentageAttribute = {
+    type: Number,
+    min: 0,
+    max: 1,
+    set: roundPercentage
 };
 
 const productWithQtySchema = new Schema({
@@ -176,7 +187,7 @@ const quoteSchema = new Schema({
         type: String,
         enum: dieShapes
     },
-    overrideSpaceAround: {
+    spaceAroundOverride: {
         type: Number,
         validate: {
             validator: numberHasFourDecimalPlacesOrLess,
@@ -301,35 +312,46 @@ const quoteSchema = new Schema({
         ...lengthInFeetAttribute
     },
     colorCalibrationFeet: {
-        ...lengthInFeetAttribute,
-        default: constants.COLOR_CALIBRATION_FEET
+        ...lengthInFeetAttribute
     },
     proofRunupFeet: {
-        ...lengthInFeetAttribute,
-        default: constants.PROOF_RUNUP_FEET
+        ...lengthInFeetAttribute
     },
     printCleanerFeet: {
         ...lengthInFeetAttribute
     },
     scalingFeet: {
-        ...lengthInFeetAttribute,
-        default: constants.SCALING_FEET
+        ...lengthInFeetAttribute
     },
     newMaterialSetupFeet: {
-        ...lengthInFeetAttribute,
-        default: constants.NEWLY_LOADED_ROLL_WASTE_FEET
+        ...lengthInFeetAttribute
     },
     dieLineSetupFeet: {
-        ...lengthInFeetAttribute
+        ...lengthInFeetAttribute,
+        // default: function() {
+        //     if (!this.frameLength) return;
+
+        //     return (this.frameLength * 2) / INCHES_PER_FOOT;
+        // }
     },
     totalStockFeet: {
         ...lengthInFeetAttribute
     },
-    // throwAwayStockPercentage: {
-    //     ...percentageAttribute
-    // },
+    throwAwayStockPercentage: {
+        ...percentageAttribute,
+        // default: function() {
+        //     if (!this.initialStockLength || !this.totalStockFeet) return;
+
+        //     return 1 - (this.initialStockLength / this.totalStockFeet);
+        // }
+    },
     totalStockMsi: {
-        ...msiAttribute
+        ...msiAttribute,
+        // default: function() {
+        //     if (!this.totalStockFeet) return;
+
+        //     return (this.totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS) * (INCHES_PER_FOOT / 1000); // eslint-disable-line no-magic-numbers
+        // }
     },
     totalRollsOfPaper: {
         ...numberOfRollsAttribute
@@ -375,19 +397,16 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     stockSpliceTime: {
-        ...timeDurationAttribute,
-        default: constants.NEW_MATERIAL_STOCK_SPLICE
+        ...timeDurationAttribute
     },
     colorCalibrationTime: {
-        ...timeDurationAttribute,
-        default: constants.COLOR_CALIBRATION_TIME
+        ...timeDurationAttribute
     },
     printingProofTime: {
         ...timeDurationAttribute
     },
     reinsertionPrintingTime: {
-        ...timeDurationAttribute,
-        default: 0
+        ...timeDurationAttribute
     },
     rollChangeOverTime: {
         ...timeDurationAttribute,
@@ -396,8 +415,7 @@ const quoteSchema = new Schema({
         ...timeDurationAttribute,
     },
     printTearDownTime: {
-        ...timeDurationAttribute,
-        default: constants.PRINTING_TEAR_DOWN_TIME
+        ...timeDurationAttribute
     },
     totalTimeAtPrinting: {
         ...timeDurationAttribute
@@ -409,33 +427,22 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     cuttingStockSpliceCost: {
-        ...costAttribute,
-        default: constants.CUTTING_STOCK_SPLICE
+        ...costAttribute
     },
     dieSetupTime: {
-        ...timeDurationAttribute,
-        default: constants.DIE_SETUP
+        ...timeDurationAttribute
     },
     sheetedSetupTime: {
-        ...timeDurationAttribute,
-        default: function() {
-            if (this.isSheeted) return constants.SHEETED_SETUP_TIME;
-            return 0;
-        }
+        ...timeDurationAttribute
     },
     cuttingStockTime: {
         ...timeDurationAttribute
     },
     cuttingTearDownTime: {
-        ...timeDurationAttribute,
-        default: constants.CUTTING_TEAR_DOWN_TIME
+        ...timeDurationAttribute
     },
     sheetedTearDownTime: {
-        ...timeDurationAttribute,
-        default: function() {
-            if (this.isSheeted) return constants.SHEETED_TEAR_DOWN_TIME;
-            return 0;
-        }
+        ...timeDurationAttribute
     },
     totalTimeAtCutting: {
         ...timeDurationAttribute
@@ -447,8 +454,7 @@ const quoteSchema = new Schema({
     //     ...timeInSecondsAttribute,
     // }
     coreGatheringTime: {
-        ...timeDurationAttribute,
-        default: constants.CORE_GATHERING_TIME
+        ...timeDurationAttribute
     },
     changeOverTime: {
         ...timeDurationAttribute
@@ -498,12 +504,15 @@ const quoteSchema = new Schema({
     frameLength: {
         type: Number,
         min: 0,
-        max: constants.MAX_FRAME_LENGTH_INCHES
+        max: constants.MAX_FRAME_LENGTH_INCHES,
+        required: false
     },
     frameUtilization: {
-        type: Number,
-        min: 0,
-        max: 1
+        ...percentageAttribute,
+        // default: function() {
+        //     if (!this.frameLength) return;
+        //     return this.frameLength / constants.MAX_FRAME_LENGTH_INCHES;
+        // }
     },
     finishedRollLength: {
         type: Number,
@@ -523,7 +532,10 @@ const quoteSchema = new Schema({
     products: {
         type: [productWithQtySchema]
     }
-}, { timestamps: true });
+}, { 
+    timestamps: true,
+    strict: 'throw' // TODO: Test this line.
+});
 
 const Quote = mongoose.model('Quote', quoteSchema);
 

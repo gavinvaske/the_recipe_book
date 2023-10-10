@@ -6,6 +6,46 @@ const mongoose = require('mongoose');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const constants = require('../../application/enums/constantsEnum');
 
+const NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES = 4;
+
+function verifyPercentageAttribute(quoteAttributes, attributeName) {
+    let quote, error;
+
+    // (1) should be a number
+    const expectedPercentage = chance.floating({ min: 0.1, max: 0.9, fixed: NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES });
+    quoteAttributes[attributeName] = expectedPercentage;
+    quote = new Quote(quoteAttributes);
+
+    expect(quote[attributeName]).toEqual(expect.any(Number));
+    expect(quote[attributeName]).toEqual(expectedPercentage);
+
+    // (2) Should not be less than 0
+    const negativeValue = -1;
+    quoteAttributes[attributeName] = negativeValue;
+    quote = new Quote(quoteAttributes);
+    
+    error = quote.validateSync();
+
+    expect(error).toBeDefined();
+
+    // (3) Should not be greater than 1
+    const greaterThanOneValue = 1.01;
+    quoteAttributes[attributeName] = greaterThanOneValue;
+    quote = new Quote(quoteAttributes);
+
+    error = quote.validateSync();
+    
+    expect(error).toBeDefined();
+
+    // (4) should round to 4 decimal places
+    const decimalToRound = 0.5555555555555555;
+    const expectedDecimalValue = 0.5556;
+    quoteAttributes[attributeName] = decimalToRound;
+    quote = new Quote(quoteAttributes);
+    
+    expect(quote[attributeName]).toEqual(expectedDecimalValue);
+}
+
 function verifyLengthAttribute(quoteAttributes, attributeName) {
     let quote;
 
@@ -162,14 +202,15 @@ describe('File: quote.js', () => {
         quoteAttributes = {
             quoteId: chance.string(),
             productQty: chance.d100(),
-            sizeAround: 1,
-            spaceAround: 1,
-            productQty: 1,
-            numberAround: 1,
             sizeAroundOverride: chance.d100(),
             spaceAroundOverride: chance.d100(),
-            products: generateNProducts()
+            products: generateNProducts(),
+            frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
+            totalStockFeet: chance.d100()
         };
+
+        const aNumberLessThanTotalStockFeet = quoteAttributes.totalStockFeet - 1;
+        quoteAttributes.initialStockLength = aNumberLessThanTotalStockFeet;
     });
 
     it('should have the correct indexes', async () => {
@@ -186,6 +227,14 @@ describe('File: quote.js', () => {
         });
 
         expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
+    it('should pass validation if all required attributes are present', () => {
+        const quote = new Quote(quoteAttributes);
+        
+        const error = quote.validateSync();
+        
+        expect(error).toBeUndefined();
     });
 
     describe('attribute: quoteId', () => {
@@ -621,9 +670,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: overrideSpaceAround', () => {
+    describe('attribute: spaceAroundOverride', () => {
         it('should not be required', () => {
-            delete quoteAttributes.overrideSpaceAround;
+            delete quoteAttributes.spaceAroundOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -632,16 +681,16 @@ describe('File: quote.js', () => {
         });
 
         it('should be a number', () => {
-            const expectedOverrideSpaceAround = chance.d100();
-            quoteAttributes.overrideSpaceAround = expectedOverrideSpaceAround;
+            const expectedSpaceAroundOverride = chance.d100();
+            quoteAttributes.spaceAroundOverride = expectedSpaceAroundOverride;
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.overrideSpaceAround).toEqual(expectedOverrideSpaceAround);
+            expect(quote.spaceAroundOverride).toEqual(expectedSpaceAroundOverride);
         });
 
         it('should be greater than or equal to 0', () => {
-            const minOverrideSpaceAround = 0;
-            quoteAttributes.overrideSpaceAround = minOverrideSpaceAround - 1;
+            const minSpaceAroundOverride = 0;
+            quoteAttributes.spaceAroundOverride = minSpaceAroundOverride - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -651,7 +700,7 @@ describe('File: quote.js', () => {
 
         it('should not allow floating point values with more than 4 decimal places', () => {
             const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideSpaceAround = chance.pickone(invalidValues);
+            quoteAttributes.spaceAroundOverride = chance.pickone(invalidValues);
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -661,7 +710,7 @@ describe('File: quote.js', () => {
 
         it('should allow numbers with 4 decimal places or less', () => {
             const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideSpaceAround = chance.pickone(allowedValues);
+            quoteAttributes.spaceAroundOverride = chance.pickone(allowedValues);
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1325,26 +1374,11 @@ describe('File: quote.js', () => {
             verifyLengthAttribute(quoteAttributes, 'colorCalibrationFeet');
         });
 
-        it('should default to the constant COLOR_CALIBRATION_FEET', () => {
-            delete quoteAttributes.colorCalibrationFeet;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.colorCalibrationFeet).toBeDefined();
-            expect(quote.colorCalibrationFeet).toEqual(constants.COLOR_CALIBRATION_FEET);
-        });
     });
 
     describe('attribute: proofRunupFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'proofRunupFeet');
-        });
-
-        it('should default to the constant PROOF_RUNUP_FEET', () => {
-            delete quoteAttributes.proofRunupFeet;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.proofRunupFeet).toBeDefined();
-            expect(quote.proofRunupFeet).toEqual(constants.PROOF_RUNUP_FEET);
         });
     });
 
@@ -1358,27 +1392,11 @@ describe('File: quote.js', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'scalingFeet');
         });
-
-        it('should default to the constant SCALING_FEET', () => {
-            delete quoteAttributes.scalingFeet;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.scalingFeet).toBeDefined();
-            expect(quote.scalingFeet).toEqual(constants.SCALING_FEET);
-        });
     });
 
     describe('attribute: newMaterialSetupFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'newMaterialSetupFeet');
-        });
-
-        it('should default to the constant NEWLY_LOADED_ROLL_WASTE_FEET', () => {
-            delete quoteAttributes.newMaterialSetupFeet;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.newMaterialSetupFeet).toBeDefined();
-            expect(quote.newMaterialSetupFeet).toEqual(constants.NEWLY_LOADED_ROLL_WASTE_FEET);
         });
     });
 
@@ -1388,15 +1406,45 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: throwAwayStockPercentage', () => {
+        it('should be a percentage attribute', () => {
+            verifyPercentageAttribute(quoteAttributes, 'throwAwayStockPercentage');
+        });
+    });
+
     describe('attribute: totalStockFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'totalStockFeet');
         });
     });
 
-    // describe('attribute: throwAwayStockPercentage', () => {})
+    describe('attribute: totalStockMsi', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalStockFeet;
+            delete quoteAttributes.totalStockMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
 
-    // describe('attribute: totalStockMsi', () => {})
+        it('should be a number', () => {
+            const expectedTotalStockMsi = chance.d100();
+            quoteAttributes.totalStockMsi = expectedTotalStockMsi;
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.totalStockMsi).toEqual(expectedTotalStockMsi);
+        });
+
+        // it('should default to the correctly calculated value', () => {
+        //     delete quoteAttributes.totalStockMsi;
+        //     const quote = new Quote(quoteAttributes);
+        //     const expectedValue = (quote.totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS) * (12 / 1000);
+
+        //     expect(quote.totalStockMsi).toEqual(expectedValue);
+        // });
+    });
 
     describe('attribute: totalRollsOfPaper', () => {
         it('should be a number of rolls attribute', () => {
@@ -1519,29 +1567,11 @@ describe('File: quote.js', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'stockSpliceTime');
         });
-
-        it('should default to the constant NEW_MATERIAL_STOCK_SPLICE', () => {
-            delete quoteAttributes.stockSpliceTime;
-
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.stockSpliceTime).toBeDefined();
-            expect(quote.stockSpliceTime).toEqual(constants.NEW_MATERIAL_STOCK_SPLICE);
-        });
     });
 
     describe('attribute: colorCalibrationTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'colorCalibrationTime');
-        });
-
-        it('should default to the constant COLOR_CALIBRATION_TIME', () => {
-            delete quoteAttributes.colorCalibrationTime;
-            const expectedValue = constants.COLOR_CALIBRATION_TIME;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.colorCalibrationTime).toBeDefined();
-            expect(quote.colorCalibrationTime).toEqual(expectedValue);
         });
     });
 
@@ -1554,15 +1584,6 @@ describe('File: quote.js', () => {
     describe('attribute: reinsertionPrintingTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'reinsertionPrintingTime');
-        });
-
-        it('should default to 0', () => {
-            delete quoteAttributes.reinsertionPrintingTime;
-            const expectedDefaultReinsertionPrintingTime = 0;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.reinsertionPrintingTime).toEqual(expectedDefaultReinsertionPrintingTime);
         });
     });
 
@@ -1581,16 +1602,6 @@ describe('File: quote.js', () => {
     describe('attribute: printTearDownTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'printTearDownTime');
-        });
-
-        it('should default to the constant PRINTING_TEAR_DOWN_TIME', () => {
-            delete quoteAttributes.printTearDownTime;
-            const expectedValue = constants.PRINTING_TEAR_DOWN_TIME;
-            
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.printTearDownTime).toBeDefined();
-            expect(quote.printTearDownTime).toEqual(expectedValue);
         });
     });
 
@@ -1616,54 +1627,17 @@ describe('File: quote.js', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'cuttingStockSpliceCost');
         });
-
-        it('should default to the constant CUTTING_STOCK_SPLICE', () => {
-            delete quoteAttributes.cuttingStockSpliceCost;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.cuttingStockSpliceCost).toBeDefined();
-            expect(quote.cuttingStockSpliceCost).toEqual(constants.CUTTING_STOCK_SPLICE);
-        });
     });
 
     describe('attribute: dieSetupTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'dieSetupTime');
         });
-
-        it('should default to the constant DIE_SETUP', () => {
-            delete quoteAttributes.dieSetupTime;
-
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.dieSetupTime).toBeDefined();
-            expect(quote.dieSetupTime).toEqual(constants.DIE_SETUP);
-        });
     });
 
     describe('attribute: sheetedSetupTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'sheetedSetupTime');
-        });
-
-        it('should default to the constant SHEETED_SETUP_TIME IFF the attribute "isSheeted" equals true', () => {
-            quoteAttributes.isSheeted = true;
-            delete quoteAttributes.sheetedSetupTime;
-            
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.sheetedSetupTime).toBeDefined();
-            expect(quote.sheetedSetupTime).toEqual(constants.SHEETED_SETUP_TIME);
-        });
-
-        it('should default to 0 IFF the attribute "isSheeted" does not equal true', () => {
-            quoteAttributes.isSheeted = chance.pickone([null, undefined, false]);
-            delete quoteAttributes.sheetedSetupTime;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.sheetedSetupTime).toEqual(0);
         });
     });
 
@@ -1677,39 +1651,11 @@ describe('File: quote.js', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'cuttingTearDownTime');
         });
-
-        it('should default to the constant CUTTING_TEAR_DOWN_TIME', () => {
-            delete quoteAttributes.cuttingTearDownTime;
-
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.cuttingTearDownTime).toBeDefined();
-            expect(quote.cuttingTearDownTime).toEqual(constants.CUTTING_TEAR_DOWN_TIME);
-        });
     });
 
     describe('attribute: sheetedTearDownTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes,'sheetedTearDownTime');
-        });
-
-        it('should default to the constant SHEETED_TEAR_DOWN_TIME IFF the attribute "isSheeted" is equal to TRUE', () => {
-            quoteAttributes.isSheeted = true;
-            delete quoteAttributes.sheetedTearDownTime;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.sheetedTearDownTime).toBeDefined();
-            expect(quote.sheetedTearDownTime).toEqual(constants.SHEETED_TEAR_DOWN_TIME);
-        });
-
-        it('should default to 0 IFF the attribute "isSheeted" does not equal true', () => {
-            quoteAttributes.isSheeted = chance.pickone([null, undefined, false]);
-            delete quoteAttributes.sheetedTearDownTime;
-            
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.sheetedTearDownTime).toEqual(0);
         });
     });
 
@@ -1728,15 +1674,6 @@ describe('File: quote.js', () => {
     describe('attribute: coreGatheringTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'coreGatheringTime');
-        });
-
-        it('should default to the constant CORE_GATHERING_TIME', () => {
-            delete quoteAttributes.coreGatheringTime;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.coreGatheringTime).toBeDefined();
-            expect(quote.coreGatheringTime).toEqual(constants.CORE_GATHERING_TIME);
         });
     });
 
@@ -1913,6 +1850,34 @@ describe('File: quote.js', () => {
             const error = quote.validateSync();
             
             expect(error).toBeDefined();
+        });
+
+        // it('should default to the correctly calculated value', () => {
+        //     delete quoteAttributes.frameUtilization;
+        //     const expectedNumberOfDecimals = 4;
+        //     const expectedFrameUtilization = Number((quoteAttributes.frameLength / constants.MAX_FRAME_LENGTH_INCHES).toFixed(expectedNumberOfDecimals));
+
+        //     const quote = new Quote(quoteAttributes);
+            
+        //     expect(quote.frameUtilization).toBeDefined();
+        //     expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
+        // });
+
+        it('should store round to 4 decimal places of precision', () => {
+            const frameUtilization = 0.5555555555;
+            const expectedFrameUtilization = 0.5556;
+            quoteAttributes.frameUtilization = frameUtilization;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
+        });
+
+        it('should be undefined if frameLength is not defined', () => {
+            delete quoteAttributes.frameLength;
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.frameUtilization).toBeUndefined();
         });
     });
 

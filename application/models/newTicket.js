@@ -5,7 +5,6 @@ const destinationSchema = require('../schemas/destination');
 const departmentsEnum = require('../enums/departmentsEnum');
 const WorkflowStepModel = require('../models/WorkflowStep');
 const purchasedProductSchema = require('../schemas/purchasedProduct');
-const ticketTimeService = require('../services/ticketTimeLedgerService');
 
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 
@@ -312,10 +311,6 @@ schema.pre('save', async function(next) {
     const ticketId = this._id;
 
     await addRowToWorkflowStepDbTable(next, destination, ticketId);
-});
-
-schema.post('save', async function() {
-    await ticketTimeService.getTimersForTicket(this._id);
 });
 
 const Ticket = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model

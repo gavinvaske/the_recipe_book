@@ -171,7 +171,6 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
     // (4) should handle floating point decimals up to 2 decimal places
     const numberOfDecimals = 2;
     const floatingPointWithTwoDecimals = chance.floating({ min: 0, fixed: numberOfDecimals});
-    console.log('floatingPointWithTwoDecimals: ', floatingPointWithTwoDecimals);
     quoteAttributes[attributeName] = floatingPointWithTwoDecimals;
     const penniesPerDollar = 100;
     
@@ -195,18 +194,23 @@ function generateNProducts() {
     return chance.n(generateProduct, n);
 }
 
+function generateRandomPercentage() {
+    return chance.floating({ min: 0, max: 1, fixed: NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES});
+}
+
 describe('File: quote.js', () => {
     let quoteAttributes;
 
     beforeEach(() => {
         quoteAttributes = {
+            profitMargin: generateRandomPercentage(),
             quoteId: chance.string(),
             productQty: chance.d100(),
             sizeAroundOverride: chance.d100(),
             spaceAroundOverride: chance.d100(),
             products: generateNProducts(),
             frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
-            totalStockFeet: chance.d100()
+            totalStockFeet: chance.d100(),
         };
 
         const aNumberLessThanTotalStockFeet = quoteAttributes.totalStockFeet - 1;
@@ -259,34 +263,17 @@ describe('File: quote.js', () => {
 
     // * Inputs * //
     describe('attribute: profitMargin', () => {
-        it('should default to 30', () => {
+        it('should be required', () => {
             delete quoteAttributes.profitMargin;
-            const defaultProfitMargin = 30;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-            expect(quote.profitMargin).toEqual(defaultProfitMargin);
-        });
-
-        it('should be a number', () => {
-            const expectedProfitMargin = chance.floating({ min: 0, max: 100 });
-            quoteAttributes.profitMargin = expectedProfitMargin;
-
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.profitMargin).toEqual(expectedProfitMargin);
-        });
-
-        it('should not be greater than 100', () => {
-            const maxProfitMargin = 100;
-            quoteAttributes.profitMargin = maxProfitMargin + 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
             
             expect(error).toBeDefined();
+        });
+
+        it('should be a percentage attribute', () => {
+            verifyPercentageAttribute(quoteAttributes, 'profitMargin');
         });
     });
 
@@ -1403,6 +1390,12 @@ describe('File: quote.js', () => {
     describe('attribute: dieLineSetupFeet', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'dieLineSetupFeet');
+        });
+    });
+
+    describe('attribute: dieCutterSetupFeet', () => {
+        it('should be a length attribute', () => {
+            verifyLengthAttribute(quoteAttributes, 'dieCutterSetupFeet');
         });
     });
 

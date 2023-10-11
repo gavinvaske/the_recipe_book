@@ -110,11 +110,8 @@ const quoteSchema = new Schema({
 
     // * Inputs * //
     profitMargin: {
-        type: Number,
-        min: 0,
+        ...percentageAttribute,
         required: true,
-        default: 30,
-        max: 100
     },
     labelsPerRoll: {
         type: Number,
@@ -333,6 +330,9 @@ const quoteSchema = new Schema({
 
         //     return (this.frameLength * 2) / INCHES_PER_FOOT;
         // }
+    },
+    dieCutterSetupFeet: {
+        ...lengthInFeetAttribute
     },
     totalStockFeet: {
         ...lengthInFeetAttribute

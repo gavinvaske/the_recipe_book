@@ -1,6 +1,5 @@
 const constants = require('../enums/constantsEnum');
 const Die = require('../../application/models/die');
-const Quote = require('../../application/models/quote');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -39,9 +38,16 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
+    quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
 
-    return new Quote(quoteAttributes);
+    return quoteAttributes;
 };
+
+function computeThrowAwayStockPercentage(quoteAttributes) {
+    const { initialStockLength, totalStockFeet } = quoteAttributes;
+
+    return 1 - (initialStockLength / totalStockFeet);
+}
 
 function computeTotalStockFeet(quoteAttributes) {
     const { 

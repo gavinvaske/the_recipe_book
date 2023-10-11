@@ -69,13 +69,6 @@ describe('File: quoteService.js', () => {
             expect(DieMock.findById).toHaveBeenCalledWith(dieId);
         });
 
-        it('should have a _id field that is a mongoose ObjectId', async () => {
-            const quote = await createQuote(quoteInputAttributes);
-            
-            expect(quote._id).toBeDefined();
-            expect(quote._id).toEqual(expect.any(mongoose.Types.ObjectId));
-        });
-
         describe('attribute: initialStockLength', () => {
             it('should compute using sizeAroundOverride and spaceAroundOverride when defined', async () => {
                 quoteInputAttributes = {
@@ -230,6 +223,18 @@ describe('File: quoteService.js', () => {
                 expect(sanityCheck).toEqual(true);
                 expect(quote.totalRollsOfPaper).toBeDefined();
                 expect(quote.totalRollsOfPaper).toEqual(expectedNumberOfRolls);
+            });
+        });
+
+        describe('attribute: throwAwayStockPercentage', () => {
+            it('should compute attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { initialStockLength, totalStockFeet } = quote;
+
+                const expectedValue = 1 - (initialStockLength / totalStockFeet);
+
+                expect(quote.throwAwayStockPercentage).toBeDefined();
+                expect(quote.throwAwayStockPercentage).toEqual(expectedValue);
             });
         });
 

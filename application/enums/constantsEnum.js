@@ -58,6 +58,7 @@ module.exports.PRINTING_ROLL_CHANGE_OVER_TIME = 10;
 module.exports.CUTTING_STOCK_SPLICE = 10;
 module.exports.DIE_SETUP = 7;
 module.exports.PACKING_SLIP_TIME = 7;
+module.exports.DIE_CUTTER_SETUP_FEET = 80;
 
 module.exports.FACTORY_ADDRESS = {
     name: 'The Label Advantage',

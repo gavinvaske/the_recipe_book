@@ -279,4 +279,10 @@ describe('constantsEnum', () => {
 
         expect(constantsEnum.PACKING_SLIP_TIME).toEqual(expectedValue);
     });
+
+    it('DIE_CUTTER_SETUP_FEET : should equal the correct value', () => {
+        const expectedValue = 80;
+
+        expect(constantsEnum.DIE_CUTTER_SETUP_FEET).toEqual(expectedValue);
+    });
 });

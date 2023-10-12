@@ -1372,7 +1372,7 @@ describe('validation', () => {
 
                 try {
                     await ticket.save();
-                    const millisecondsToDelayToFixTestFlakyness = 15;
+                    const millisecondsToDelayToFixTestFlakyness = 25;
                     delay(millisecondsToDelayToFixTestFlakyness);
                     await duplicateTicket.save();
                 } catch (error) {

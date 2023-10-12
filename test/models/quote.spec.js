@@ -1466,9 +1466,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: totalStockCosts', () => {
+    describe('attribute: totalStockCost', () => {
         it('should be a cost attribute', () => {
-            verifyCostAttribute(quoteAttributes, 'totalStockCosts');
+            verifyCostAttribute(quoteAttributes, 'totalStockCost');
         });
     });
 
@@ -1520,9 +1520,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: boxCost', () => {
+    describe('attribute: totalBoxCost', () => {
         it('should be a cost attribute', () => {
-            verifyCostAttribute(quoteAttributes, 'boxCost');
+            verifyCostAttribute(quoteAttributes, 'totalBoxCost');
         });
     });
 

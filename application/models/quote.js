@@ -325,11 +325,6 @@ const quoteSchema = new Schema({
     },
     dieLineSetupFeet: {
         ...lengthInFeetAttribute,
-        // default: function() {
-        //     if (!this.frameLength) return;
-
-        //     return (this.frameLength * 2) / INCHES_PER_FOOT;
-        // }
     },
     dieCutterSetupFeet: {
         ...lengthInFeetAttribute
@@ -339,19 +334,9 @@ const quoteSchema = new Schema({
     },
     throwAwayStockPercentage: {
         ...percentageAttribute,
-        // default: function() {
-        //     if (!this.initialStockLength || !this.totalStockFeet) return;
-
-        //     return 1 - (this.initialStockLength / this.totalStockFeet);
-        // }
     },
     totalStockMsi: {
         ...msiAttribute,
-        // default: function() {
-        //     if (!this.totalStockFeet) return;
-
-        //     return (this.totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS) * (INCHES_PER_FOOT / 1000); // eslint-disable-line no-magic-numbers
-        // }
     },
     totalRollsOfPaper: {
         ...numberOfRollsAttribute
@@ -363,7 +348,7 @@ const quoteSchema = new Schema({
     totalFrames: {
         ...numberOfFramesAttribute
     },
-    totalStockCosts: {
+    totalStockCost: {
         ...costAttribute
     },
     totalFinishFeet: {
@@ -378,7 +363,7 @@ const quoteSchema = new Schema({
     totalCoreCost: {
         ...costAttribute
     },
-    boxCost: {
+    totalBoxCost: {
         ...costAttribute
     },
     inlinePrimingCost: {
@@ -509,10 +494,6 @@ const quoteSchema = new Schema({
     },
     frameUtilization: {
         ...percentageAttribute,
-        // default: function() {
-        //     if (!this.frameLength) return;
-        //     return this.frameLength / constants.MAX_FRAME_LENGTH_INCHES;
-        // }
     },
     finishedRollLength: {
         type: Number,

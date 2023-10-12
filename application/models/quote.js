@@ -387,7 +387,7 @@ const quoteSchema = new Schema({
     colorCalibrationTime: {
         ...timeDurationAttribute
     },
-    printingProofTime: {
+    proofPrintingTime: {
         ...timeDurationAttribute
     },
     reinsertionPrintingTime: {

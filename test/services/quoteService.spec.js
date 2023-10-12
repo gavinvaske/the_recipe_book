@@ -370,15 +370,15 @@ describe('File: quoteService.js', () => {
             });
         });
 
-        describe('attribute: printingProofTime', () => {
+        describe('attribute: proofPrintingTime', () => {
             it('should compute the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { numberOfDesigns } = quote;
 
                 const expectedValue = numberOfDesigns * constants.PRINTING_PROOF_TIME;
 
-                expect(quote.printingProofTime).not.toBeFalsy();
-                expect(quote.printingProofTime).toEqual(expectedValue);
+                expect(quote.proofPrintingTime).not.toBeFalsy();
+                expect(quote.proofPrintingTime).toEqual(expectedValue);
             });
         });
 
@@ -414,6 +414,19 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.stockSpliceTime).not.toBeFalsy();
                 expect(quote.stockSpliceTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalTimeAtPrinting', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, printTearDownTime } = quote;
+            
+                const expectedValue = stockSpliceTime + colorCalibrationTime + proofPrintingTime 
+                    + reinsertionPrintingTime + printTearDownTime;
+
+                expect(quote.totalTimeAtPrinting).not.toBeFalsy();
+                expect(quote.totalTimeAtPrinting).toEqual(expectedValue);
             });
         });
 

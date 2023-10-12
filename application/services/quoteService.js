@@ -54,12 +54,27 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.scalingClickCost = computeScalingClickCost(quoteAttributes);
     quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(quoteAttributes);
     quoteAttributes.printCleanerClickCost = computePrintCleanerClickCost(quoteAttributes);
-    quoteAttributes.printingProofTime = computePrintingProofTime(quoteAttributes);
+    quoteAttributes.proofPrintingTime = computeProofPrintingTime(quoteAttributes);
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
     quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
-
+    quoteAttributes.totalTimeAtPrinting = computeTotalTimeAtPrinting(quoteAttributes);
+    //quoteAttributes.throwAwayStockTime = computeThrowAwayStockTime(quoteAttributes);
+    
     return quoteAttributes;
 };
+
+function computeTotalTimeAtPrinting(quoteAttributes) {
+    const { stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, printTearDownTime } = quoteAttributes;
+
+    const sum = stockSpliceTime + colorCalibrationTime + proofPrintingTime 
+        + reinsertionPrintingTime + printTearDownTime;
+
+    return sum;
+}
+
+// function computeThrowAwayStockTime(quoteAttributes) {
+//     const { printingStockTime, totalTimeAtPrinting }
+// }
 
 function computePrintingStockTime(quoteAttributes) {
     const { totalStockFeet, printingSpeed } = quoteAttributes;
@@ -85,7 +100,7 @@ function computeRollChangeOverTime(quoteAttributes) {
     return totalRollsOfPaper * constants.PRINTING_ROLL_CHANGE_OVER_TIME;
 }
 
-function computePrintingProofTime(quoteAttributes) {
+function computeProofPrintingTime(quoteAttributes) {
     const { numberOfDesigns } = quoteAttributes;
 
     return numberOfDesigns * constants.PRINTING_PROOF_TIME;

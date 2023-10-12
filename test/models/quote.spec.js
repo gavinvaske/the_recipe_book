@@ -1568,9 +1568,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: printingProofTime', () => {
+    describe('attribute: proofPrintingTime', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(quoteAttributes, 'printingProofTime');
+            verifyTimeAttribute(quoteAttributes, 'proofPrintingTime');
         });
     });
 

@@ -4,6 +4,7 @@ const Die = require('../../application/models/die');
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
+const FOUR = 4;
 
 const DEFAULT_EXTRA_FRAMES = 25;
 // updateQuote(...)
@@ -36,6 +37,7 @@ module.exports.createQuote = async (quoteInputs) => {
         extraFrames: DEFAULT_EXTRA_FRAMES
     };
 
+    quoteAttributes.printingSpeed = computePrintingSpeed(die, quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
     quoteAttributes.frameLength = computeFrameLength(die, quoteAttributes);
     quoteAttributes.initialStockLength = computeInitialStockLength(die, quoteAttributes);
@@ -49,10 +51,64 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
     quoteAttributes.inlinePrimingCost = computeInlinePrimingCost(quoteAttributes);
-    quoteAttributes.scalingClicks = computeScalingClicks(quoteAttributes);
+    quoteAttributes.scalingClickCost = computeScalingClickCost(quoteAttributes);
+    quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(quoteAttributes);
+    quoteAttributes.printCleanerClickCost = computePrintCleanerClickCost(quoteAttributes);
+    quoteAttributes.printingProofTime = computePrintingProofTime(quoteAttributes);
+    quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
+    quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computePrintingStockTime(quoteAttributes) {
+    const { totalStockFeet, printingSpeed } = quoteAttributes;
+
+    return Math.ceil(totalStockFeet * printingSpeed);
+}
+
+function computePrintingSpeed(die, quoteAttributes) {
+    const { numberOfColors, sizeAroundOverride, spaceAroundOverride } = quoteAttributes;
+    const sizeAround = sizeAroundOverride 
+        ? sizeAroundOverride : die.sizeAround;
+    const spaceAround = spaceAroundOverride
+        ? spaceAroundOverride : die.spaceAround;
+
+    const unroundedPrintingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (sizeAround + spaceAround))); // eslint-disable-line no-magic-numbers
+
+    return Math.round(unroundedPrintingSpeed);
+}
+
+function computeRollChangeOverTime(quoteAttributes) {
+    const { totalRollsOfPaper } = quoteAttributes;
+
+    return totalRollsOfPaper * constants.PRINTING_ROLL_CHANGE_OVER_TIME;
+}
+
+function computePrintingProofTime(quoteAttributes) {
+    const { numberOfDesigns } = quoteAttributes;
+
+    return numberOfDesigns * constants.PRINTING_PROOF_TIME;
+}
+
+
+function computePrintCleanerClickCost(quoteAttributes) {
+    const { totalStockFeet } = quoteAttributes;
+    const { PRINT_CLEANER_FRAME, COST_PER_COLOR } = constants;
+    let scalar = 1;
+
+    if (totalStockFeet >= FEET_PER_ROLL) {
+        scalar = Math.floor(totalStockFeet / FEET_PER_ROLL);
+    }
+
+    return scalar * (PRINT_CLEANER_FRAME * COST_PER_COLOR * FOUR);
+}
+
+function computeProofRunupClickCost(quoteAttributes) {
+    const { numberOfColors, numberOfDesigns } = quoteAttributes;
+
+    return constants.COST_PER_COLOR * numberOfColors * 2 * numberOfDesigns;
+}
 
 function computeTotalFinishedRolls(quoteAttributes) {
     const { labelQty, labelsPerRoll } = quoteAttributes;
@@ -62,7 +118,7 @@ function computeTotalFinishedRolls(quoteAttributes) {
     return Math.ceil(numberOfFinishedRolls);
 }
 
-function computeScalingClicks(quoteAttributes) {
+function computeScalingClickCost(quoteAttributes) {
     const { numberOfColors } = quoteAttributes;
     const { SCALING_CLICKS, COST_PER_COLOR } = constants;
 

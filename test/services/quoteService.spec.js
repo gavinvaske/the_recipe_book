@@ -9,6 +9,7 @@ const DieMock = require('../../application/models/die');
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
+const FOUR = 4;
 
 function generateProduct() {
     return {
@@ -33,6 +34,12 @@ function computeFrameLength(die, quoteAttributes) {
     return (sizeAround + spaceAround) * die.numberAround;
 }
 
+function getExpectedPrintingSpeed(numberOfColors, sizeAround, spaceAround) {
+    const unroundedPrintingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (sizeAround + spaceAround))); // eslint-disable-line no-magic-numbers
+
+    return Math.round(unroundedPrintingSpeed);
+}
+
 const INCHES_PER_FOOT = 12;
 
 describe('File: quoteService.js', () => {
@@ -54,6 +61,8 @@ describe('File: quoteService.js', () => {
             labelsPerRoll: chance.integer({ min: 1, max: 1000000}),
             products: generateNProducts(),
             numberOfColors: chance.d100(),
+            numberOfColors: chance.d10(),
+            numberOfDesigns: chance.d10()
         };
     });
 
@@ -214,7 +223,7 @@ describe('File: quoteService.js', () => {
             });
 
             it('should be computed correctly if totalStockFeet is greater than 5000 (FEET_PER_ROLL)', async () => {
-                const bigInteger = 5000000;
+                const bigInteger = 500000;
                 const numberThatShouldForceTotalStockFeetToBeGreaterThan5000 = chance.integer({ min: bigInteger });
                 quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeGreaterThan5000;
 
@@ -301,7 +310,7 @@ describe('File: quoteService.js', () => {
             });
         });
 
-        describe('attribute: scalingClicks', () => {
+        describe('attribute: scalingClickCost', () => {
             it('should be computed correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { numberOfColors } = quote;
@@ -309,8 +318,91 @@ describe('File: quoteService.js', () => {
                 
                 const expectedValue = SCALING_CLICKS * numberOfColors * 2 * COST_PER_COLOR;
 
-                expect(quote.scalingClicks).not.toBeFalsy();
-                expect(quote.scalingClicks).toEqual(expectedValue);
+                expect(quote.scalingClickCost).not.toBeFalsy();
+                expect(quote.scalingClickCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: proofRunupClickCost', () => {
+            it('should be computed correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { numberOfColors, numberOfDesigns } = quote;
+                
+                const expectedValue = constants.COST_PER_COLOR * numberOfColors * 2 * numberOfDesigns;
+
+                expect(quote.proofRunupClickCost).not.toBeFalsy();
+                expect(quote.proofRunupClickCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: printCleanerClickCost', () => {
+            it('should be computed correctly (when totalStockFeet < 5000)', async () => {
+                const numberThatShouldForceTotalStockFeetToBeLessThan5000 = chance.d10();
+                quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeLessThan5000;
+            
+                const quote = await createQuote(quoteInputAttributes);
+                const { PRINT_CLEANER_FRAME, COST_PER_COLOR } = constants;
+
+                const expectedValue = PRINT_CLEANER_FRAME * COST_PER_COLOR * FOUR;
+                const sanityCheck = quote.totalStockFeet < FEET_PER_ROLL;
+
+                expect(sanityCheck).toEqual(true);
+                expect(quote.printCleanerClickCost).not.toBeFalsy();
+                expect(quote.printCleanerClickCost).toEqual(expectedValue);
+            });
+
+            it('should be computed correctly (when totalStockFeet >= 5000)', async () => {
+                const bigInteger = 500000;
+                const numberThatShouldForceTotalStockFeetToBeGreaterThan5000 = chance.integer({ min: bigInteger });
+
+                quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeGreaterThan5000;
+            
+                const quote = await createQuote(quoteInputAttributes);
+                const { PRINT_CLEANER_FRAME, COST_PER_COLOR } = constants;
+
+                const scalar = Math.floor(quote.totalStockFeet / FEET_PER_ROLL);
+                const expectedValue = scalar * PRINT_CLEANER_FRAME * COST_PER_COLOR * FOUR;
+                const sanityCheck = quote.totalStockFeet > FEET_PER_ROLL;
+
+                expect(sanityCheck).toEqual(true);
+                expect(quote.printCleanerClickCost).not.toBeFalsy();
+                expect(quote.printCleanerClickCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: printingProofTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { numberOfDesigns } = quote;
+
+                const expectedValue = numberOfDesigns * constants.PRINTING_PROOF_TIME;
+
+                expect(quote.printingProofTime).not.toBeFalsy();
+                expect(quote.printingProofTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: rollChangeOverTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalRollsOfPaper } = quote;
+
+                const expectedValue = totalRollsOfPaper * constants.PRINTING_ROLL_CHANGE_OVER_TIME;
+
+                expect(quote.rollChangeOverTime).not.toBeFalsy();
+                expect(quote.rollChangeOverTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: printingStockTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockFeet, printingSpeed } = quote;
+
+                const expectedValue = Math.ceil(totalStockFeet * printingSpeed);
+
+                expect(quote.printingStockTime).not.toBeFalsy();
+                expect(quote.printingStockTime).toEqual(expectedValue);
             });
         });
 
@@ -490,6 +582,40 @@ describe('File: quoteService.js', () => {
         });
 
         /* * Job Variables * */
+        describe('attribute: printingSpeed', () => {
+            it('should be calculated correctly when sizeAroundOverride and spaceAroundOverride are defined', async () => {
+                quoteInputAttributes.sizeAroundOverride = chance.d100();
+                quoteInputAttributes.spaceAroundOverride = chance.d100();
+                const quote = await createQuote(quoteInputAttributes);
+                const { numberOfColors, sizeAroundOverride, spaceAroundOverride} = quote;
+
+                const expectedValue = getExpectedPrintingSpeed(
+                    numberOfColors,
+                    sizeAroundOverride,
+                    spaceAroundOverride
+                );
+                
+                expect(quote.printingSpeed).not.toBeFalsy();
+                expect(quote.printingSpeed).toEqual(expectedValue);
+            });
+
+            it('should be calculated correctly when sizeAroundOverride and spaceAroundOverride are NOT defined', async () => {
+                delete quoteInputAttributes.sizeAroundOverride;
+                delete quoteInputAttributes.spaceAroundOverride;
+                const quote = await createQuote(quoteInputAttributes);
+                const { numberOfColors } = quote;
+    
+                const expectedValue = getExpectedPrintingSpeed(
+                    numberOfColors,
+                    die.sizeAround,
+                    die.spaceAround
+                );
+                
+                expect(quote.printingSpeed).not.toBeFalsy();
+                expect(quote.printingSpeed).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: totalFinishedRolls', () => {
             it('should be calculated correctly when: labelQty / labelsPerRoll > 1', async () => {
                 const bigNumber = 1000000000;

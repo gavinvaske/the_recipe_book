@@ -3,6 +3,9 @@ const Die = require('../../application/models/die');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
+const ONE_THOUSAND = 1000;
+
+const DEFAULT_EXTRA_FRAMES = 25;
 // updateQuote(...)
 // createQuote(...)
 // (?) computeQuote(...)
@@ -29,9 +32,11 @@ module.exports.createQuote = async (quoteInputs) => {
         coreGatheringTime: constants.CORE_GATHERING_TIME,
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME,
-        dieCutterSetupFeet: constants.DIE_CUTTER_SETUP_FEET
+        dieCutterSetupFeet: constants.DIE_CUTTER_SETUP_FEET,
+        extraFrames: DEFAULT_EXTRA_FRAMES
     };
 
+    quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
     quoteAttributes.frameLength = computeFrameLength(die, quoteAttributes);
     quoteAttributes.initialStockLength = computeInitialStockLength(die, quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
@@ -39,9 +44,62 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
+    quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
+    quoteAttributes.totalFinishFeet = computeTotalFinishFeet(quoteAttributes);
+    quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
+    quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
+    quoteAttributes.inlinePrimingCost = computeInlinePrimingCost(quoteAttributes);
+    quoteAttributes.scalingClicks = computeScalingClicks(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeTotalFinishedRolls(quoteAttributes) {
+    const { labelQty, labelsPerRoll } = quoteAttributes;
+
+    const numberOfFinishedRolls = labelQty / labelsPerRoll;
+
+    return Math.ceil(numberOfFinishedRolls);
+}
+
+function computeScalingClicks(quoteAttributes) {
+    const { numberOfColors } = quoteAttributes;
+    const { SCALING_CLICKS, COST_PER_COLOR } = constants;
+
+    return SCALING_CLICKS * numberOfColors * 2 * COST_PER_COLOR;
+}
+
+function computeInlinePrimingCost(quoteAttributes) {
+    const { totalStockMsi } = quoteAttributes;
+
+    return totalStockMsi * constants.INLINE_PRIMING_COST;
+}
+
+function computeTotalCoreCost(quoteAttributes) {
+    const { totalFinishedRolls } = quoteAttributes;
+
+    return totalFinishedRolls * constants.PER_CORE_COST;
+}
+
+function computeTotalFinishMsi(quoteAttributes) {
+    const { totalFinishFeet } = quoteAttributes;
+
+    return (totalFinishFeet * constants.MAX_MATERIAL_SIZE_ACROSS * INCHES_PER_FOOT) / ONE_THOUSAND;
+}
+
+function computeTotalFinishFeet(quoteAttributes) {
+    const { dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quoteAttributes;
+    
+    const sum = dieCutterSetupFeet + printCleanerFeet + dieLineSetupFeet;
+
+    return sum;
+}
+
+function computeTotalStockMsi(quoteAttributes) {
+    const { totalStockFeet } = quoteAttributes;
+
+    return (totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS * INCHES_PER_FOOT) / ONE_THOUSAND;
+}
 
 function computeThrowAwayStockPercentage(quoteAttributes) {
     const { initialStockLength, totalStockFeet } = quoteAttributes;

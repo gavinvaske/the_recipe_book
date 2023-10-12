@@ -8,6 +8,7 @@ jest.mock('../../application/models/die');
 const DieMock = require('../../application/models/die');
 
 const FEET_PER_ROLL = 5000;
+const ONE_THOUSAND = 1000;
 
 function generateProduct() {
     return {
@@ -50,7 +51,9 @@ describe('File: quoteService.js', () => {
         quoteInputAttributes = {
             die: die._id,
             labelQty: chance.integer({ min: 5000, max: 10000000}),
-            products: generateNProducts()
+            labelsPerRoll: chance.integer({ min: 1, max: 1000000}),
+            products: generateNProducts(),
+            numberOfColors: chance.d100(),
         };
     });
 
@@ -82,7 +85,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.initialStockLength).toBeDefined();
+                expect(quote.initialStockLength).not.toBeFalsy();
                 expect(quote.initialStockLength).toEqual(expectedValue);
             });
 
@@ -99,7 +102,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.initialStockLength).toBeDefined();
+                expect(quote.initialStockLength).not.toBeFalsy();
                 expect(quote.initialStockLength).toEqual(expectedValue);
             });
         });
@@ -114,7 +117,7 @@ describe('File: quoteService.js', () => {
                 const sum = initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet + scalingFeet + newMaterialSetupFeet;
                 const expectedValue = Math.ceil(sum / FEET_PER_ROLL) * constants.PRINT_CLEANER_FEET;
 
-                expect(quote.printCleanerFeet).toBeDefined();
+                expect(quote.printCleanerFeet).not.toBeFalsy();
                 expect(quote.printCleanerFeet).toEqual(expectedValue);
             });
         });
@@ -125,7 +128,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.colorCalibrationFeet).toBeDefined();
+                expect(quote.colorCalibrationFeet).not.toBeFalsy();
                 expect(quote.colorCalibrationFeet).toEqual(expectedValue);
             });
         });
@@ -136,7 +139,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.proofRunupFeet).toBeDefined();
+                expect(quote.proofRunupFeet).not.toBeFalsy();
                 expect(quote.proofRunupFeet).toEqual(expectedValue);
             });
         });
@@ -147,7 +150,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.scalingFeet).toBeDefined();
+                expect(quote.scalingFeet).not.toBeFalsy();
                 expect(quote.scalingFeet).toEqual(expectedValue);
             });
         });
@@ -158,7 +161,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.newMaterialSetupFeet).toBeDefined();
+                expect(quote.newMaterialSetupFeet).not.toBeFalsy();
                 expect(quote.newMaterialSetupFeet).toEqual(expectedValue);
             });
         });
@@ -175,7 +178,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.dieLineSetupFeet).toBeDefined();
+                expect(quote.dieLineSetupFeet).not.toBeFalsy();
                 expect(quote.dieLineSetupFeet).toEqual(expectedValue);
             });
         });
@@ -191,7 +194,7 @@ describe('File: quoteService.js', () => {
                     initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet 
                     + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
                 
-                expect(quote.totalStockFeet).toBeDefined();
+                expect(quote.totalStockFeet).not.toBeFalsy();
                 expect(quote.totalStockFeet).toEqual(expectedTotalStockFeet);
             });
         });
@@ -221,7 +224,7 @@ describe('File: quoteService.js', () => {
                 const sanityCheck = quote.totalStockFeet > FEET_PER_ROLL;
                 
                 expect(sanityCheck).toEqual(true);
-                expect(quote.totalRollsOfPaper).toBeDefined();
+                expect(quote.totalRollsOfPaper).not.toBeFalsy();
                 expect(quote.totalRollsOfPaper).toEqual(expectedNumberOfRolls);
             });
         });
@@ -233,8 +236,81 @@ describe('File: quoteService.js', () => {
 
                 const expectedValue = 1 - (initialStockLength / totalStockFeet);
 
-                expect(quote.throwAwayStockPercentage).toBeDefined();
+                expect(quote.throwAwayStockPercentage).not.toBeFalsy();
                 expect(quote.throwAwayStockPercentage).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalStockMsi', () => {
+            it('should compute attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockFeet } = quote;
+
+                const expectedValue = (totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS * INCHES_PER_FOOT) / ONE_THOUSAND;
+            
+                expect(quote.totalStockMsi).not.toBeFalsy();
+                expect(quote.totalStockMsi).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalFinishFeet', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quote;
+
+                const expectedValue = printCleanerFeet + dieCutterSetupFeet + dieLineSetupFeet;
+
+                expect(quote.totalFinishFeet).not.toBeFalsy();
+                expect(quote.totalFinishFeet).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalFinishMsi', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalFinishFeet } = quote;
+                
+                const expectedValue = (totalFinishFeet * constants.MAX_MATERIAL_SIZE_ACROSS * INCHES_PER_FOOT) / ONE_THOUSAND;
+
+                expect(quote.totalFinishMsi).not.toBeFalsy();
+                expect(quote.totalFinishMsi).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalCoreCost', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalFinishedRolls } = quote;
+
+                const expectedValue = totalFinishedRolls * constants.PER_CORE_COST;
+
+                expect(quote.totalCoreCost).not.toBeFalsy();
+                expect(quote.totalCoreCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: inlinePrimingCost', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockMsi } = quote;
+
+                const expectedValue = totalStockMsi * constants.INLINE_PRIMING_COST;
+
+                expect(quote.inlinePrimingCost).not.toBeFalsy();
+                expect(quote.inlinePrimingCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: scalingClicks', () => {
+            it('should be computed correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { numberOfColors } = quote;
+                const { SCALING_CLICKS, COST_PER_COLOR } = constants;
+                
+                const expectedValue = SCALING_CLICKS * numberOfColors * 2 * COST_PER_COLOR;
+
+                expect(quote.scalingClicks).not.toBeFalsy();
+                expect(quote.scalingClicks).toEqual(expectedValue);
             });
         });
 
@@ -244,7 +320,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.stockSpliceTime).toBeDefined();
+                expect(quote.stockSpliceTime).not.toBeFalsy();
                 expect(quote.stockSpliceTime).toEqual(expectedValue);
             });
         });
@@ -255,7 +331,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.colorCalibrationTime).toBeDefined();
+                expect(quote.colorCalibrationTime).not.toBeFalsy();
                 expect(quote.colorCalibrationTime).toEqual(expectedValue);
             });
         });
@@ -277,7 +353,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.printTearDownTime).toBeDefined();
+                expect(quote.printTearDownTime).not.toBeFalsy();
                 expect(quote.printTearDownTime).toEqual(expectedValue);
             });
         });
@@ -288,7 +364,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.cuttingStockSpliceCost).toBeDefined();
+                expect(quote.cuttingStockSpliceCost).not.toBeFalsy();
                 expect(quote.cuttingStockSpliceCost).toEqual(expectedValue);
             });
         });
@@ -299,7 +375,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.dieSetupTime).toBeDefined();
+                expect(quote.dieSetupTime).not.toBeFalsy();
                 expect(quote.dieSetupTime).toEqual(expectedValue);
             });
         });
@@ -311,7 +387,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.sheetedSetupTime).toBeDefined();
+                expect(quote.sheetedSetupTime).not.toBeFalsy();
                 expect(quote.sheetedSetupTime).toEqual(expectedValue);
             });
 
@@ -332,7 +408,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.cuttingTearDownTime).toBeDefined();
+                expect(quote.cuttingTearDownTime).not.toBeFalsy();
                 expect(quote.cuttingTearDownTime).toEqual(expectedValue);
             });
         });
@@ -344,7 +420,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.sheetedTearDownTime).toBeDefined();
+                expect(quote.sheetedTearDownTime).not.toBeFalsy();
                 expect(quote.sheetedTearDownTime).toEqual(expectedValue);
             });
 
@@ -365,7 +441,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.coreGatheringTime).toBeDefined();
+                expect(quote.coreGatheringTime).not.toBeFalsy();
                 expect(quote.coreGatheringTime).toEqual(expectedValue);
             });
         });
@@ -376,7 +452,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.labelDropoffAtShippingTime).toBeDefined();
+                expect(quote.labelDropoffAtShippingTime).not.toBeFalsy();
                 expect(quote.labelDropoffAtShippingTime).toEqual(expectedValue);
             });
         });
@@ -387,7 +463,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.packingSlipsTime).toBeDefined();
+                expect(quote.packingSlipsTime).not.toBeFalsy();
                 expect(quote.packingSlipsTime).toEqual(expectedValue);
             });
         });
@@ -398,12 +474,52 @@ describe('File: quoteService.js', () => {
 
                 const quote = await createQuote(quoteInputAttributes);
 
-                expect(quote.dieCutterSetupFeet).toBeDefined();
+                expect(quote.dieCutterSetupFeet).not.toBeFalsy();
                 expect(quote.dieCutterSetupFeet).toEqual(expectedValue);
             });
         });
 
+        describe('attribute: extraFrames', () => {
+            it('should default the attribute to equal 25, until we create an algorithm to calculate it dynamically', async () => {
+                const expectedDefaultValue = 25;
+                const quote = await createQuote(quoteInputAttributes);
+                
+                expect(quote.extraFrames).not.toBeFalsy();
+                expect(quote.extraFrames).toEqual(expectedDefaultValue);
+            });
+        });
+
         /* * Job Variables * */
+        describe('attribute: totalFinishedRolls', () => {
+            it('should be calculated correctly when: labelQty / labelsPerRoll > 1', async () => {
+                const bigNumber = 1000000000;
+                const smallNumber = chance.d10();
+                quoteInputAttributes.labelQty = bigNumber;
+                quoteInputAttributes.labelsPerRoll = smallNumber;
+                const quote = await createQuote(quoteInputAttributes);
+                const { labelQty, labelsPerRoll } = quote;
+
+                const expectedValue = Math.ceil(labelQty / labelsPerRoll);
+                
+                expect(quote.totalFinishedRolls).not.toBeFalsy();
+                expect(quote.totalFinishedRolls).toEqual(expectedValue);
+            });
+
+            it('should be calculated correctly when: labelQty / labelsPerRoll > 0 && labelQty / labelsPerRoll <= 1', async () => {
+                const bigNumber = 1000000000;
+                const smallNumber = chance.d10();
+                quoteInputAttributes.labelQty = smallNumber;
+                quoteInputAttributes.labelsPerRoll = bigNumber;
+
+                const quote = await createQuote(quoteInputAttributes);
+
+                const expectedValue = 1;
+                
+                expect(quote.totalFinishedRolls).not.toBeFalsy();
+                expect(quote.totalFinishedRolls).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: frameLength', () => {
             it('should compute using sizeAroundOverride and spaceAroundOverride when defined', async () => {
                 quoteInputAttributes = {
@@ -415,7 +531,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.frameLength).toBeDefined();
+                expect(quote.frameLength).not.toBeFalsy();
                 expect(quote.frameLength).toEqual(expectedValue);
             });
 
@@ -429,7 +545,7 @@ describe('File: quoteService.js', () => {
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.frameLength).toBeDefined();
+                expect(quote.frameLength).not.toBeFalsy();
                 expect(quote.frameLength).toEqual(expectedValue);
             });
         });

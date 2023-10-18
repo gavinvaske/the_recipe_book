@@ -1363,13 +1363,16 @@ describe('validation', () => {
                 ticketAttributes.ticketNumber = 'fkljsafhweiourhwrhwkeljk89742982394';
                 const ticket = new TicketModel(ticketAttributes);
                 const duplicateTicket = new TicketModel(ticketAttributes);
+                const duplicateTicket2 = new TicketModel(ticketAttributes);
+                const duplicateTicket3 = new TicketModel(ticketAttributes);
                 let errorMessage = '';
                 const numberOfUniqueTickets = 1;
 
                 try {
                     await ticket.save();
-
                     await duplicateTicket.save();
+                    await duplicateTicket2.save();
+                    await duplicateTicket3.save();
                 } catch (error) {
                     errorMessage = error.message;
                 }

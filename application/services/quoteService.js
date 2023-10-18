@@ -6,6 +6,8 @@ const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
 
+const MINUTES_PER_HOUR = 60;
+
 const DEFAULT_EXTRA_FRAMES = 25;
 // updateQuote(...)
 // createQuote(...)
@@ -25,7 +27,7 @@ module.exports.createQuote = async (quoteInputs) => {
         colorCalibrationTime: constants.COLOR_CALIBRATION_TIME,
         reinsertionPrintingTime: 0,
         printTearDownTime: constants.PRINTING_TEAR_DOWN_TIME,
-        cuttingStockSpliceCost: constants.CUTTING_STOCK_SPLICE,
+        cuttingStockSpliceTime: constants.CUTTING_STOCK_SPLICE_TIME,
         dieSetupTime: constants.DIE_SETUP,
         sheetedSetupTime: isSheeted ? constants.SHEETED_SETUP_TIME : 0,
         cuttingTearDownTime: constants.CUTTING_TEAR_DOWN_TIME,
@@ -34,7 +36,8 @@ module.exports.createQuote = async (quoteInputs) => {
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME,
         dieCutterSetupFeet: constants.DIE_CUTTER_SETUP_FEET,
-        extraFrames: DEFAULT_EXTRA_FRAMES
+        extraFrames: DEFAULT_EXTRA_FRAMES,
+        cuttingStockTime: 0 // TODO: Storm is working on this algorithm. Until he's done, I'm defaulting this to 0. Fix this once he's
     };
 
     quoteAttributes.printingSpeed = computePrintingSpeed(die, quoteAttributes);
@@ -58,13 +61,37 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
     quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
     quoteAttributes.totalTimeAtPrinting = computeTotalTimeAtPrinting(quoteAttributes);
-    //quoteAttributes.throwAwayStockTime = computeThrowAwayStockTime(quoteAttributes);
-    
+    quoteAttributes.throwAwayStockTimePercentage = computeThrowAwayStockTimePercentage(quoteAttributes);
+    quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
+    quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
+
     return quoteAttributes;
 };
 
+function computeTotalTimeAtCutting(quoteAttributes) {
+    const { 
+        cuttingStockSpliceTime, dieSetupTime, sheetedSetupTime, 
+        cuttingStockTime, cuttingTearDownTime, sheetedTearDownTime 
+    } = quoteAttributes;
+
+    const sum = 
+        cuttingStockSpliceTime + dieSetupTime + sheetedSetupTime 
+        + cuttingStockTime + cuttingTearDownTime + sheetedTearDownTime;
+
+    return sum;
+}
+
+function computeTotalPrintingCost(quoteAttributes) {
+    const { totalTimeAtPrinting } = quoteAttributes;
+
+    return (totalTimeAtPrinting / MINUTES_PER_HOUR) * constants.PRINTING_HOURLY_RATE;
+}
+
 function computeTotalTimeAtPrinting(quoteAttributes) {
-    const { stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, printTearDownTime } = quoteAttributes;
+    const { 
+        stockSpliceTime, colorCalibrationTime, proofPrintingTime, 
+        reinsertionPrintingTime, printTearDownTime 
+    } = quoteAttributes;
 
     const sum = stockSpliceTime + colorCalibrationTime + proofPrintingTime 
         + reinsertionPrintingTime + printTearDownTime;
@@ -72,9 +99,11 @@ function computeTotalTimeAtPrinting(quoteAttributes) {
     return sum;
 }
 
-// function computeThrowAwayStockTime(quoteAttributes) {
-//     const { printingStockTime, totalTimeAtPrinting }
-// }
+function computeThrowAwayStockTimePercentage(quoteAttributes) {
+    const { printingStockTime, totalTimeAtPrinting } = quoteAttributes;
+
+    return 1 - (printingStockTime / totalTimeAtPrinting);
+}
 
 function computePrintingStockTime(quoteAttributes) {
     const { totalStockFeet, printingSpeed } = quoteAttributes;

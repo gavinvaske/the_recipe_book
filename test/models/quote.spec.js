@@ -1604,9 +1604,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: throwAwayPrintTime', () => {
+    describe('attribute: throwAwayPrintTimePercentage', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(quoteAttributes, 'throwAwayPrintTime');
+            verifyPercentageAttribute(quoteAttributes, 'throwAwayPrintTimePercentage');
         });
     });
 
@@ -1616,9 +1616,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: cuttingStockSpliceCost', () => {
-        it('should be a cost attribute', () => {
-            verifyCostAttribute(quoteAttributes, 'cuttingStockSpliceCost');
+    describe('attribute: cuttingStockSpliceTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes, 'cuttingStockSpliceTime');
         });
     });
 

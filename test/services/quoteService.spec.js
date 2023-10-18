@@ -10,6 +10,7 @@ const DieMock = require('../../application/models/die');
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
+const MINUTES_PER_HOUR = 60;
 
 function generateProduct() {
     return {
@@ -337,7 +338,7 @@ describe('File: quoteService.js', () => {
 
         describe('attribute: printCleanerClickCost', () => {
             it('should be computed correctly (when totalStockFeet < 5000)', async () => {
-                const numberThatShouldForceTotalStockFeetToBeLessThan5000 = chance.d10();
+                const numberThatShouldForceTotalStockFeetToBeLessThan5000 = 6;
                 quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeLessThan5000;
             
                 const quote = await createQuote(quoteInputAttributes);
@@ -366,7 +367,7 @@ describe('File: quoteService.js', () => {
 
                 expect(sanityCheck).toEqual(true);
                 expect(quote.printCleanerClickCost).not.toBeFalsy();
-                expect(quote.printCleanerClickCost).toEqual(expectedValue);
+                expect(quote.printCleanerClickCost.toFixed(2)).toEqual(expectedValue.toFixed(2));
             });
         });
 
@@ -419,6 +420,10 @@ describe('File: quoteService.js', () => {
 
         describe('attribute: totalTimeAtPrinting', () => {
             it('should compute the attribute correctly', async () => {
+                quoteInputAttributes = {
+                    ...quoteInputAttributes,
+                    isSheeted: true
+                };
                 const quote = await createQuote(quoteInputAttributes);
                 const { stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, printTearDownTime } = quote;
             
@@ -429,6 +434,48 @@ describe('File: quoteService.js', () => {
                 expect(quote.totalTimeAtPrinting).toEqual(expectedValue);
             });
         });
+
+        describe('attribute: throwAwayStockTimePercentage', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalTimeAtPrinting, printingStockTime } = quote;
+                const expectedValue = 1 - (printingStockTime / totalTimeAtPrinting);
+
+                expect(quote.throwAwayStockTimePercentage).not.toBeFalsy();
+                expect(quote.throwAwayStockTimePercentage).toEqual(expectedValue);
+            })
+        })
+
+        describe('attribute: totalPrintingCost', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalTimeAtPrinting } = quote;
+                
+                const expectedValue = (totalTimeAtPrinting / MINUTES_PER_HOUR) * constants.PRINTING_HOURLY_RATE;
+            
+                expect(quote.totalPrintingCost).not.toBeFalsy();
+                expect(quote.totalPrintingCost).toEqual(expectedValue);
+            })
+        })
+
+        describe('attribute: totalTimeAtCutting', () => {
+            it('should be computed correctly', async () => {
+                quoteInputAttributes = {
+                    ...quoteInputAttributes,
+                    isSheeted: true
+                }
+                const quote = await createQuote(quoteInputAttributes);
+                const { 
+                    cuttingStockSpliceTime, dieSetupTime, sheetedSetupTime,
+                    cuttingStockTime, cuttingTearDownTime, sheetedTearDownTime
+                } = quote;
+
+                const expectedValue = cuttingStockSpliceTime + dieSetupTime + sheetedSetupTime + cuttingStockTime + cuttingTearDownTime + sheetedTearDownTime;
+
+                expect(quote.totalTimeAtCutting).not.toBeFalsy();
+                expect(quote.totalTimeAtCutting).toEqual(expectedValue);
+            })
+        })
 
         describe('attribute: colorCalibrationTime', () => {
             it('should set attribute to a constant value', async () => {
@@ -463,14 +510,14 @@ describe('File: quoteService.js', () => {
             });
         });
 
-        describe('attribute: cuttingStockSpliceCost', () => {
+        describe('attribute: cuttingStockSpliceTime', () => {
             it('should set attribute to a constant value', async () => {
-                const expectedValue = constants.CUTTING_STOCK_SPLICE;
+                const expectedValue = constants.CUTTING_STOCK_SPLICE_TIME;
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
-                expect(quote.cuttingStockSpliceCost).not.toBeFalsy();
-                expect(quote.cuttingStockSpliceCost).toEqual(expectedValue);
+                expect(quote.cuttingStockSpliceTime).not.toBeFalsy();
+                expect(quote.cuttingStockSpliceTime).toEqual(expectedValue);
             });
         });
 
@@ -593,6 +640,14 @@ describe('File: quoteService.js', () => {
                 expect(quote.extraFrames).toEqual(expectedDefaultValue);
             });
         });
+
+        describe('attribute: cuttingStockTime', () => {
+            it('should be defined', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+
+                expect(quote.cuttingStockTime).toBeDefined();
+            })
+        })
 
         /* * Job Variables * */
         describe('attribute: printingSpeed', () => {

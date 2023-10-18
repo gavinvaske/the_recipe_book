@@ -405,14 +405,14 @@ const quoteSchema = new Schema({
     totalTimeAtPrinting: {
         ...timeDurationAttribute
     },
-    throwAwayPrintTime: {
-        ...timeDurationAttribute
+    throwAwayPrintTimePercentage: {
+        ...percentageAttribute
     },
     totalPrintingCost: {
         ...costAttribute
     },
-    cuttingStockSpliceCost: {
-        ...costAttribute
+    cuttingStockSpliceTime: {
+        ...timeDurationAttribute
     },
     dieSetupTime: {
         ...timeDurationAttribute

@@ -262,10 +262,10 @@ describe('constantsEnum', () => {
         expect(constantsEnum.PRINTING_ROLL_CHANGE_OVER_TIME).toEqual(expectedValue);
     });
 
-    it('CUTTING_STOCK_SPLICE : should equal the correct value', () => {
+    it('CUTTING_STOCK_SPLICE_TIME : should equal the correct value', () => {
         const expectedValue = 10;
 
-        expect(constantsEnum.CUTTING_STOCK_SPLICE).toEqual(expectedValue);
+        expect(constantsEnum.CUTTING_STOCK_SPLICE_TIME).toEqual(expectedValue);
     });
 
     it('DIE_SETUP : should equal the correct value', () => {

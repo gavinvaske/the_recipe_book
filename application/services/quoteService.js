@@ -64,9 +64,16 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.throwAwayStockTimePercentage = computeThrowAwayStockTimePercentage(quoteAttributes);
     quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
+    quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeTotalCuttingCost(quoteAttributes) {
+    const { totalTimeAtCutting } = quoteAttributes;
+
+    return (totalTimeAtCutting / MINUTES_PER_HOUR) * constants.CUTTING_HOURLY_RATE;
+}
 
 function computeTotalTimeAtCutting(quoteAttributes) {
     const { 

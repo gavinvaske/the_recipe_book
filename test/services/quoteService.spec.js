@@ -477,6 +477,18 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: totalCuttingCost', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalTimeAtCutting } = quote;
+
+                const expectedValue = (totalTimeAtCutting / MINUTES_PER_HOUR) * constants.CUTTING_HOURLY_RATE;
+                
+                expect(quote.totalCuttingCost).not.toBeFalsy();
+                expect(quote.totalCuttingCost).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: colorCalibrationTime', () => {
             it('should set attribute to a constant value', async () => {
                 const expectedValue = constants.COLOR_CALIBRATION_TIME;

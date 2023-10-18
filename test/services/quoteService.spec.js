@@ -443,8 +443,8 @@ describe('File: quoteService.js', () => {
 
                 expect(quote.throwAwayStockTimePercentage).not.toBeFalsy();
                 expect(quote.throwAwayStockTimePercentage).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: totalPrintingCost', () => {
             it('should compute the attribute correctly', async () => {
@@ -455,15 +455,15 @@ describe('File: quoteService.js', () => {
             
                 expect(quote.totalPrintingCost).not.toBeFalsy();
                 expect(quote.totalPrintingCost).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: totalTimeAtCutting', () => {
             it('should be computed correctly', async () => {
                 quoteInputAttributes = {
                     ...quoteInputAttributes,
                     isSheeted: true
-                }
+                };
                 const quote = await createQuote(quoteInputAttributes);
                 const { 
                     cuttingStockSpliceTime, dieSetupTime, sheetedSetupTime,
@@ -474,8 +474,8 @@ describe('File: quoteService.js', () => {
 
                 expect(quote.totalTimeAtCutting).not.toBeFalsy();
                 expect(quote.totalTimeAtCutting).toEqual(expectedValue);
-            })
-        })
+            });
+        });
 
         describe('attribute: colorCalibrationTime', () => {
             it('should set attribute to a constant value', async () => {
@@ -646,8 +646,8 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
 
                 expect(quote.cuttingStockTime).toBeDefined();
-            })
-        })
+            });
+        });
 
         /* * Job Variables * */
         describe('attribute: printingSpeed', () => {

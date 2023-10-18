@@ -9,10 +9,6 @@ const mongoose = require('mongoose');
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
 
-const delay = (delayInMs) => {
-    return new Promise(resolve => setTimeout(resolve, delayInMs));
-};
-
 describe('validation', () => {
     let ticketAttributes;
 
@@ -1364,7 +1360,7 @@ describe('validation', () => {
         describe('mongoose ticketSchema.post("save")', () => {
             it('should not allow two objects with duplicate ticketNumbers to be saved to the database', async () => {
                 delete ticketAttributes.destination;
-                ticketAttributes.ticketNumber = '123';
+                ticketAttributes.ticketNumber = 'fkljsafhweiourhwrhwkeljk89742982394';
                 const ticket = new TicketModel(ticketAttributes);
                 const duplicateTicket = new TicketModel(ticketAttributes);
                 let errorMessage = '';
@@ -1372,8 +1368,7 @@ describe('validation', () => {
 
                 try {
                     await ticket.save();
-                    const millisecondsToDelayToFixTestFlakyness = 25;
-                    delay(millisecondsToDelayToFixTestFlakyness);
+
                     await duplicateTicket.save();
                 } catch (error) {
                     errorMessage = error.message;

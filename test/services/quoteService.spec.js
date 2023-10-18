@@ -4,8 +4,12 @@ const chance = require('chance').Chance();
 const mongoose = require('mongoose');
 
 jest.mock('../../application/models/die');
+jest.mock('../../application/models/material');
+jest.mock('../../application/models/finish');
 
 const DieMock = require('../../application/models/die');
+const MaterialMock = require('../../application/models/material');
+const FinishMock = require('../../application/models/finish');
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
@@ -44,7 +48,7 @@ function getExpectedPrintingSpeed(numberOfColors, sizeAround, spaceAround) {
 const INCHES_PER_FOOT = 12;
 
 describe('File: quoteService.js', () => {
-    let quoteInputAttributes, die;
+    let quoteInputAttributes, die, material, finish;
 
     beforeEach(() => {
         die = {
@@ -53,11 +57,23 @@ describe('File: quoteService.js', () => {
             spaceAround: chance.d100(),
             numberAround: chance.integer({ min: 1, max: 3})
         };
+        material = {
+            _id: mongoose.Types.ObjectId(),
+            quotePrice: chance.d100()
+        };
+        finish = {
+            _id: mongoose.Types.ObjectId(),
+            quotePrice: chance.d100()
+        };
 
         DieMock.findById.mockResolvedValue(die);
+        MaterialMock.findById.mockResolvedValue(material);
+        FinishMock.findById.mockResolvedValue(finish);
 
         quoteInputAttributes = {
+            material: material._id,
             die: die._id,
+            finish: finish._id,
             labelQty: chance.integer({ min: 5000, max: 10000000}),
             labelsPerRoll: chance.integer({ min: 1, max: 1000000}),
             products: generateNProducts(),
@@ -489,6 +505,34 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: totalFinishCost', () => {
+            it('should compute the attribute correctly when overrideFinishCostMsi IS DEFINED', async () => {
+                const overrideFinishCostMsi = chance.d100();
+                quoteInputAttributes = {
+                    ...quoteInputAttributes,
+                    overrideFinishCostMsi: overrideFinishCostMsi
+                };
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalFinishMsi } = quote;
+
+                const expectedValue = overrideFinishCostMsi * totalFinishMsi;
+
+                expect(quote.totalFinishCost).not.toBeFalsy();
+                expect(quote.totalFinishCost).toEqual(expectedValue);
+            });
+
+            it('should compute the attribute correctly when overrideFinishCostMsi IS UNDEFINED', async () => {
+                delete quoteInputAttributes.overrideFinishCostMsi;
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalFinishMsi } = quote;
+
+                const expectedValue = totalFinishMsi * finish.quotePrice;
+
+                expect(quote.totalFinishCost).not.toBeFalsy();
+                expect(quote.totalFinishCost).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: colorCalibrationTime', () => {
             it('should set attribute to a constant value', async () => {
                 const expectedValue = constants.COLOR_CALIBRATION_TIME;
@@ -650,6 +694,43 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.extraFrames).not.toBeFalsy();
                 expect(quote.extraFrames).toEqual(expectedDefaultValue);
+            });
+        });
+
+        describe('attribute: totalFrames', () => {
+            it('should be calculated correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockFeet, frameLength } = quote;
+
+                const expectedValue = Math.ceil((totalStockFeet / frameLength) * INCHES_PER_FOOT);
+
+                expect(quote.totalFrames).not.toBeFalsy();
+                expect(quote.totalFrames).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalStockCost', () => {
+            it('should be overridable by the user', async () => {
+                const overrideMaterialQuotedMsi = chance.d100();
+                quoteInputAttributes.overrideMaterialQuotedMsi = overrideMaterialQuotedMsi;
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockMsi } = quote;
+
+                const expectedValue = totalStockMsi * overrideMaterialQuotedMsi;
+
+                expect(quote.totalStockCost).not.toBeFalsy();
+                expect(quote.totalStockCost).toEqual(expectedValue);
+            });
+
+            it('should be calculated correctly when overrideMaterialQuotedMsi is not defined', async () => {
+                delete quoteInputAttributes.overrideMaterialQuotedMsi;
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockMsi } = quote;
+
+                const expectedValue = totalStockMsi * material.quotePrice;
+
+                expect(quote.totalStockCost).not.toBeFalsy();
+                expect(quote.totalStockCost).toEqual(expectedValue);
             });
         });
 

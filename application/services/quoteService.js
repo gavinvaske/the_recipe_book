@@ -1,5 +1,7 @@
 const constants = require('../enums/constantsEnum');
-const Die = require('../../application/models/die');
+const DieModel = require('../../application/models/die');
+const MaterialModel = require('../../application/models/material');
+const FinishModel = require('../../application/models/finish');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -13,9 +15,16 @@ const DEFAULT_EXTRA_FRAMES = 25;
 // createQuote(...)
 // (?) computeQuote(...)
 module.exports.createQuote = async (quoteInputs) => {
-    const { isSheeted, die : dieId } = quoteInputs;
+    const { 
+        isSheeted, 
+        die : dieId, 
+        material : materialId, 
+        finish: finishId 
+    } = quoteInputs;
 
-    const die = dieId ? await Die.findById(dieId) : null;
+    const die = dieId ? await DieModel.findById(dieId) : null;
+    const material = materialId ? await MaterialModel.findById(materialId) : null;
+    const finish = finishId ? await FinishModel.findById(finishId) : null;
 
     const quoteAttributes = {
         ...quoteInputs,
@@ -48,8 +57,10 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
+    quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
+    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, material);
     quoteAttributes.totalFinishFeet = computeTotalFinishFeet(quoteAttributes);
     quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
@@ -65,9 +76,34 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
+    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, finish);
 
     return quoteAttributes;
 };
+
+function computeTotalFinishCost(quoteAttributes, finish) {
+    const { totalFinishMsi, overrideFinishCostMsi } = quoteAttributes;
+
+    const costPerMsi = overrideFinishCostMsi 
+        ? overrideFinishCostMsi : finish.quotePrice;
+
+    return totalFinishMsi * costPerMsi;
+}
+
+function computeTotalStockCost(quoteAttributes, material) {
+    const { overrideMaterialQuotedMsi, totalStockMsi} = quoteAttributes;
+
+    const materialQuotedMsi = overrideMaterialQuotedMsi 
+        ? overrideMaterialQuotedMsi : material.quotePrice;
+
+    return totalStockMsi * materialQuotedMsi;
+}
+
+function computeTotalFrames(quoteAttributes) {
+    const { totalStockFeet, frameLength } = quoteAttributes;
+
+    return Math.ceil((totalStockFeet / frameLength) * INCHES_PER_FOOT);
+}
 
 function computeTotalCuttingCost(quoteAttributes) {
     const { totalTimeAtCutting } = quoteAttributes;

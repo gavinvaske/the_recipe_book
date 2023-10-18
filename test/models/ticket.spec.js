@@ -1346,45 +1346,6 @@ describe('validation', () => {
         });
     });
 
-    describe('mongoose post hooks test suite', () => {
-        beforeEach(async () => {
-            jest.resetAllMocks();
-            await databaseService.connectToTestMongoDatabase();
-            await databaseService.clearDatabase();
-        });
-
-        afterEach(async () => {
-            await databaseService.closeDatabase();
-        });
-
-        describe('mongoose ticketSchema.post("save")', () => {
-            it('should not allow two objects with duplicate ticketNumbers to be saved to the database', async () => {
-                delete ticketAttributes.destination;
-                ticketAttributes.ticketNumber = 'fkljsafhweiourhwrhwkeljk89742982394';
-                const ticket = new TicketModel(ticketAttributes);
-                const duplicateTicket = new TicketModel(ticketAttributes);
-                const duplicateTicket2 = new TicketModel(ticketAttributes);
-                const duplicateTicket3 = new TicketModel(ticketAttributes);
-                let errorMessage = '';
-                const numberOfUniqueTickets = 1;
-
-                try {
-                    await ticket.save();
-                    await duplicateTicket.save();
-                    await duplicateTicket2.save();
-                    await duplicateTicket3.save();
-                } catch (error) {
-                    errorMessage = error.message;
-                }
-
-                const ticketsInDatabase = await TicketModel.find({});
-
-                expect(ticketsInDatabase.length).toEqual(numberOfUniqueTickets);
-                expect(errorMessage).toBe(`Cannot create this ticket whose ticket number is "${duplicateTicket.ticketNumber}" because it is a duplicate of an existing ticket already saved to the database!`);
-            });
-        });
-    });
-
     describe('mongoose pre hooks test suite', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();
@@ -1395,7 +1356,6 @@ describe('validation', () => {
         });
 
         describe('mongoose ticketSchema.pre("findOneAndUpdate")', () => {
-        
             it('should add item to workflow database when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
                 const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());

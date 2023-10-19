@@ -53,6 +53,7 @@ describe('File: quoteService.js', () => {
     beforeEach(() => {
         die = {
             _id: mongoose.Types.ObjectId(),
+            sizeAcross: chance.d100(),
             sizeAround: chance.d100(),
             spaceAround: chance.d100(),
             numberAround: chance.integer({ min: 1, max: 3})
@@ -411,6 +412,88 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: finishedRollLength', () => {
+            describe('When quote.labelQty >= quote.labelsPerRoll', () => {
+                beforeEach(() => {
+                    const labelsPerRoll = chance.d100();
+                    const labelQty = chance.pickone([labelsPerRoll, labelsPerRoll + 1]);
+                    quoteInputAttributes = {
+                        ...quoteInputAttributes,
+                        labelsPerRoll,
+                        labelQty
+                    };
+                });
+                it('should compute the attribute correctly when sizeAcrossOverride and spaceAroundOverride ARE defined', async () => {
+                    const sizeAcrossOverride = chance.d100();
+                    const spaceAroundOverride = chance.d100();
+                    quoteInputAttributes = {
+                        ...quoteInputAttributes,
+                        sizeAcrossOverride,
+                        spaceAroundOverride
+                    };
+                    const quote = await createQuote(quoteInputAttributes);
+                    const { labelsPerRoll } = quote;
+    
+                    const expectedValue = ((sizeAcrossOverride + spaceAroundOverride) * labelsPerRoll) / INCHES_PER_FOOT;
+
+                    expect(quote.finishedRollLength).not.toBeFalsy();
+                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                });
+
+                it('should compute the attribute correctly when sizeAcrossOverride and spaceAroundOverride ARE NOT defined', async () => {
+                    delete quoteInputAttributes.sizeAcrossOverride;
+                    delete quoteInputAttributes.spaceAroundOverride;
+                    const quote = await createQuote(quoteInputAttributes);
+                    const { labelsPerRoll } = quote;
+    
+                    const expectedValue = ((die.sizeAcross + die.spaceAround) * labelsPerRoll) / INCHES_PER_FOOT;
+                
+                    expect(quote.finishedRollLength).not.toBeFalsy();
+                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                });
+            });
+            describe('When quote.labelQty < quote.labelsPerRoll', () => {
+                beforeEach(() => {
+                    const labelsPerRoll = chance.d100();
+                    const labelQty = labelsPerRoll - 1;
+                    quoteInputAttributes = {
+                        ...quoteInputAttributes,
+                        labelsPerRoll,
+                        labelQty
+                    };
+                });
+
+                it('should compute the attribute correctly when sizeAcrossOverride and spaceAroundOverride ARE defined', async () => {
+                    const sizeAcrossOverride = chance.d100();
+                    const spaceAroundOverride = chance.d100();
+                    quoteInputAttributes = {
+                        ...quoteInputAttributes,
+                        sizeAcrossOverride,
+                        spaceAroundOverride
+                    };
+                    const quote = await createQuote(quoteInputAttributes);
+                    const { labelQty } = quote;
+
+                    const expectedValue = ((sizeAcrossOverride + spaceAroundOverride) * labelQty) / INCHES_PER_FOOT;
+
+                    expect(quote.finishedRollLength).not.toBeFalsy();
+                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                });
+
+                it('should compute the attribute correctly when sizeAcrossOverride and spaceAroundOverride ARE NOT defined', async () => {
+                    delete quoteInputAttributes.sizeAcrossOverride;
+                    delete quoteInputAttributes.spaceAroundOverride;
+                    const quote = await createQuote(quoteInputAttributes);
+                    const { labelQty } = quote;
+
+                    const expectedValue = ((die.sizeAcross + die.spaceAround) * labelQty) / INCHES_PER_FOOT;
+
+                    expect(quote.finishedRollLength).not.toBeFalsy();
+                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                });
+            });
+        });
+
         describe('attribute: printingStockTime', () => {
             it('should compute the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
@@ -502,6 +585,41 @@ describe('File: quoteService.js', () => {
                 
                 expect(quote.totalCuttingCost).not.toBeFalsy();
                 expect(quote.totalCuttingCost).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: throwAwayCuttingTimePercentage', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { cuttingStockTime, totalTimeAtCutting } = quote;
+
+                const expectedValue = 1 - (cuttingStockTime / totalTimeAtCutting);
+
+                expect(quote.throwAwayCuttingTimePercentage).not.toBeFalsy();
+                expect(quote.throwAwayCuttingTimePercentage).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: changeOverTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+
+                const expectedValue = quote.totalFinishedRolls * constants.REWINDING_CHANGE_OVER_MINUTES;
+
+                expect(quote.changeOverTime).not.toBeFalsy();
+                expect(quote.changeOverTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalWindingRollTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalFinishedRolls, finishedRollLength } = quote;
+    
+                const expectedValue = totalFinishedRolls * (finishedRollLength / constants.REWIND_SPEED);
+    
+                expect(quote.totalWindingRollTime).not.toBeFalsy();
+                expect(quote.totalWindingRollTime).toEqual(expectedValue);
             });
         });
 

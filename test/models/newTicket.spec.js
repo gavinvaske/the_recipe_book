@@ -1495,8 +1495,6 @@ describe('Ticket validation', () => {
                 const savedTicket = await ticket.save();
                 const expectedTicketNotesAfterSaving = `${ticketAttributes.ticketNotes}\n\nCustomer Notes:\n${savedCustomer.notes}`;
 
-                console.log(savedTicket.ticketNotes);
-
                 expect(savedTicket.ticketNotes).toEqual(expectedTicketNotesAfterSaving);
             });
         });

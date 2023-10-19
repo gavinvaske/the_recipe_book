@@ -76,10 +76,51 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
+    quoteAttributes.throwAwayCuttingTimePercentage = computeThrowAwayCuttingTimePercentage(quoteAttributes);
     quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, finish);
+    quoteAttributes.changeOverTime = computeChangeOverTime(quoteAttributes);
+    quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, die);
+    quoteAttributes.totalWindingRollTime = computeTotalWindingRollTime(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeFinishedRollLength(quoteAttributes, die) {
+    const { 
+        labelQty, labelsPerRoll, 
+        sizeAcrossOverride, spaceAroundOverride
+    } = quoteAttributes;
+
+    const sizeAcross = sizeAcrossOverride 
+        ? sizeAcrossOverride : die.sizeAcross;
+    const spaceAround = spaceAroundOverride 
+        ? spaceAroundOverride : die.spaceAround;
+
+    if (labelQty >= labelsPerRoll) {
+        return ((sizeAcross + spaceAround) * labelsPerRoll) / INCHES_PER_FOOT;
+    } else {
+        return ((sizeAcross + spaceAround) * labelQty) / INCHES_PER_FOOT;
+    }
+}
+
+
+function computeTotalWindingRollTime(quoteAttributes) {
+    const { totalFinishedRolls, finishedRollLength } = quoteAttributes;
+
+    return totalFinishedRolls * (finishedRollLength / constants.REWIND_SPEED);
+}
+
+function computeChangeOverTime(quoteAttributes) {
+    const { totalFinishedRolls } = quoteAttributes;
+
+    return totalFinishedRolls * constants.REWINDING_CHANGE_OVER_MINUTES;
+}
+
+function computeThrowAwayCuttingTimePercentage(quoteAttributes) {
+    const { cuttingStockTime, totalTimeAtCutting } = quoteAttributes;
+
+    return 1 - (cuttingStockTime / totalTimeAtCutting);
+}
 
 function computeTotalFinishCost(quoteAttributes, finish) {
     const { totalFinishMsi, overrideFinishCostMsi } = quoteAttributes;

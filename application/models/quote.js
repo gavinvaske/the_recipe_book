@@ -453,7 +453,7 @@ const quoteSchema = new Schema({
     totalWindingTime: {
         ...timeDurationAttribute
     },
-    throwAwayWindingTime: {
+    throwAwayWindingTimePercentage: {
         ...timeDurationAttribute
     },
     totalFinishedRolls: {

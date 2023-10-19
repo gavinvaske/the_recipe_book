@@ -1700,9 +1700,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: throwAwayWindingTime', () => {
+    describe('attribute: throwAwayWindingTimePercentage', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(quoteAttributes, 'throwAwayWindingTime');
+            verifyTimeAttribute(quoteAttributes, 'throwAwayWindingTimePercentage');
         });
     });
     describe('attribute: totalFinishedRolls', () => {

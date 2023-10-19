@@ -29,34 +29,36 @@ describe('dateTimeService test suite', () => {
     });
 
     describe('convertMillisecondsToMinutes()', () => {
-        const secondsPerMinute = 60;
         const millisecondsPerSecond = 1000;
 
         it('should convert milliseconds to mintues correctly (v1)', () => {
             const numberOfSeconds = 30;
             const thirtySecondsInMilliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 0.5;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(thirtySecondsInMilliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
 
         it('should convert milliseconds to mintues correctly (v2)', () => {
             const numberOfSeconds = 9993;
             const milliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 166.55;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(milliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
 
         it('should convert zero milliseconds to 0 minutes', () => {
             const numberOfSeconds = 0;
             const milliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 0;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(milliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
     });
 

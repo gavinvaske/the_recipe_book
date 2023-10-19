@@ -659,6 +659,30 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: totalCostOfMachineTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalPrintingCost, totalCuttingCost, totalWindingCost } = quote;
+                
+                const expectedValue = totalPrintingCost + totalCuttingCost + totalWindingCost;
+
+                expect(quote.totalCostOfMachineTime).not.toBeFalsy();
+                expect(quote.totalCostOfMachineTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: frameUtilization', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { frameLength } = quote;
+
+                const expectedValue = frameLength / constants.MAX_FRAME_AROUND;
+
+                expect(quote.frameUtilization).not.toBeFalsy();
+                expect(quote.frameUtilization).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: totalFinishCost', () => {
             it('should compute the attribute correctly when overrideFinishCostMsi IS DEFINED', async () => {
                 const overrideFinishCostMsi = chance.d100();

@@ -84,9 +84,23 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalWindingTime = computeTotalWindingTime(quoteAttributes);
     quoteAttributes.throwAwayWindingTimePercentage = computeThrowAwayWindingTimePercentage(quoteAttributes);
     quoteAttributes.totalWindingCost = computeTotalWindingCost(quoteAttributes);
+    quoteAttributes.totalCostOfMachineTime = computeTotalCostOfMachineTime(quoteAttributes);
+    quoteAttributes.frameUtilization = computeFrameUtilization(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeFrameUtilization(quoteAttributes) {
+    const { frameLength } = quoteAttributes;
+
+    return frameLength / constants.MAX_FRAME_AROUND;
+}
+
+function computeTotalCostOfMachineTime(quoteAttributes) {
+    const { totalPrintingCost, totalCuttingCost, totalWindingCost } = quoteAttributes;
+
+    return totalPrintingCost + totalCuttingCost + totalWindingCost;
+}
 
 function computeTotalWindingCost(quoteAttributes) {
     const { totalWindingTime } = quoteAttributes;

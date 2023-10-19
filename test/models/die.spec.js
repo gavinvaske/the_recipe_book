@@ -401,13 +401,14 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should only store up to 2 decimal places', () => {
-            const expectedCost = 123.11;
-            const smallDecimalToIgnore = 0.009;
-            dieAttributes.cost = expectedCost + smallDecimalToIgnore;
+        it('should round to 2nd decimal place', () => {
+            const unroundedCost = 123.119;
+            const roundedCost = 123.12;
+            dieAttributes.cost = unroundedCost;
+
             const die = new DieModel(dieAttributes);
             
-            expect(die.cost).toEqual(expectedCost);
+            expect(die.cost).toEqual(roundedCost);
         });
     });
 

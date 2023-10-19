@@ -227,10 +227,10 @@ describe('validation', () => {
             expect(material.materialCost).toEqual(expect.any(Number));
         });
 
-        it('should not store floating points of more than 2 decimal places', () => {
+        it('should round floating point values to 2nd decimal places', () => {
             const priceWithWayTooManyDecimals = '100.11999999999';
             materialAttributes.materialCost = priceWithWayTooManyDecimals;
-            const expectedPrice = 100.11;
+            const expectedPrice = 100.12;
 
             const material = new MaterialModel(materialAttributes);
 
@@ -293,10 +293,10 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not store floating points of more than 2 decimal places', () => {
+        it('should round floating point values to 2nd decimal place', () => {
             const priceWithWayTooManyDecimals = '100.11999999999';
             materialAttributes.freightCost = priceWithWayTooManyDecimals;
-            const expectedPrice = 100.11;
+            const expectedPrice = 100.12;
 
             const material = new MaterialModel(materialAttributes);
 
@@ -436,10 +436,10 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not store floating points of more than 2 decimal places', () => {
+        it('should round floating points to 2nd decimal places', () => {
             const priceWithWayTooManyDecimals = '888.11999999999';
             materialAttributes.quotePrice = priceWithWayTooManyDecimals;
-            const expectedPrice = 888.11;
+            const expectedPrice = 888.12;
 
             const material = new MaterialModel(materialAttributes);
 

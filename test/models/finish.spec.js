@@ -205,14 +205,14 @@ describe('validation', () => {
                 expect(error).toBeDefined();
             });
 
-            it('should only store 2 decimal places', () => {
-                const expectedCost = 123.99;
-                const decimalToIgnore = 0.009;
-                finishAttributes.finishCost = expectedCost + decimalToIgnore;
+            it('should round to second decimal place', () => {
+                const unroundedDecimal = 123.99999;
+                const roundedDecimal = 124;
+                finishAttributes.finishCost = unroundedDecimal;
 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.finishCost).toBe(expectedCost);
+                expect(finish.finishCost).toBe(roundedDecimal);
             });
 
             it('should handle commas in the cost', () => {
@@ -309,14 +309,14 @@ describe('validation', () => {
                 expect(error).toBeDefined();
             });
 
-            it('should only store 2 decimal places', () => {
-                const expectedCost = 123.99;
-                const decimalToIgnore = 0.009;
-                finishAttributes.quotePrice = expectedCost + decimalToIgnore;
+            it('should round to 2nd decimal place', () => {
+                const unroundedValue = 549835438950.505;
+                const roundedValue = 549835438950.51;
+                finishAttributes.quotePrice = unroundedValue;
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.quotePrice).toBe(expectedCost);
+                expect(finish.quotePrice).toBe(roundedValue);
             });
         });
 

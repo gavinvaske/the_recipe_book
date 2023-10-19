@@ -754,7 +754,7 @@ describe('validation', () => {
             expect(product.price).toBeDefined();
         });
 
-        it('should not store floating points of more than 2 decimal places', () => {
+        it('should round to 2nd decimal place', () => {
             const priceWithWayTooManyDecimals = '100.112222222';
             productAttributes.PriceM = priceWithWayTooManyDecimals;
             const expectedPrice = 100.11;

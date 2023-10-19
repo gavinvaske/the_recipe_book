@@ -327,12 +327,12 @@ describe('File: packingSlip.js', () => {
         });
 
         it('should only store up to 2 decimal places', () => {
-            const expectedCost = 123.11;
-            const smallDecimalToIgnore = 0.00999;
-            packingSlipAttributes.freightCost = expectedCost + smallDecimalToIgnore;
+            const unroundedCost = 123.99999999;
+            const roundedCost = 124;
+            packingSlipAttributes.freightCost = unroundedCost;
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
             
-            expect(packingSlip.freightCost).toEqual(expectedCost);
+            expect(packingSlip.freightCost).toEqual(roundedCost);
         });
     });
 

@@ -155,7 +155,7 @@ const quoteSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Die'
     },
-    sizeAcross: {
+    sizeAcrossOverride: {
         type: Number,
         validate: {
             validator: numberHasFourDecimalPlacesOrLess,
@@ -435,16 +435,16 @@ const quoteSchema = new Schema({
     totalCuttingCost: {
         ...costAttribute
     },
-    // throwAwayCuttingTime: {
-    //     ...timeInSecondsAttribute,
-    // }
+    throwAwayCuttingTimePercentage: {
+        ...percentageAttribute,
+    },
     coreGatheringTime: {
         ...timeDurationAttribute
     },
     changeOverTime: {
         ...timeDurationAttribute
     },
-    windingAllRollsTime: {
+    totalWindingRollTime: {
         ...timeDurationAttribute
     },
     labelDropoffAtShippingTime: {

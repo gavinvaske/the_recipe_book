@@ -463,9 +463,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: sizeAcross', () => {
+    describe('attribute: sizeAcrossOverride', () => {
         it('should not be required', () => {
-            delete quoteAttributes.sizeAcross;
+            delete quoteAttributes.sizeAcrossOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -475,7 +475,7 @@ describe('File: quote.js', () => {
 
         it('should be greater than or equal to 0', () => {
             const minSizeAcross = 0;
-            quoteAttributes.sizeAcross = minSizeAcross - 1;
+            quoteAttributes.sizeAcrossOverride = minSizeAcross - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -485,7 +485,7 @@ describe('File: quote.js', () => {
 
         it('should not allow floating points with more than 4 decimal places', () => {
             const floatingPointValueWith5DecimalPlaces = 1.00001;
-            quoteAttributes.sizeAcross = floatingPointValueWith5DecimalPlaces;
+            quoteAttributes.sizeAcrossOverride = floatingPointValueWith5DecimalPlaces;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -495,7 +495,7 @@ describe('File: quote.js', () => {
 
         it('should allow floating point values with 4 decimal places', () => {
             const floatingPointValueWith5DecimalPlaces = 2.0002;
-            quoteAttributes.sizeAcross = floatingPointValueWith5DecimalPlaces;
+            quoteAttributes.sizeAcrossOverride = floatingPointValueWith5DecimalPlaces;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -505,7 +505,7 @@ describe('File: quote.js', () => {
 
         it('should allow integers', () => {
             const integerValue = chance.d100();
-            quoteAttributes.sizeAcross = integerValue;
+            quoteAttributes.sizeAcrossOverride = integerValue;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1664,6 +1664,12 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: throwAwayCuttingTimePercentage', () => {
+        it('should be a percentage attribute', () => {
+            verifyPercentageAttribute(quoteAttributes, 'throwAwayCuttingTimePercentage');
+        });
+    });
+
     describe('attribute: coreGatheringTime', () => {
         it('should be a time attribute', () => {
             verifyTimeAttribute(quoteAttributes, 'coreGatheringTime');
@@ -1676,9 +1682,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: windingAllRollsTime', () => {
+    describe('attribute: totalWindingRollTime', () => {
         it('should be a time attribute', () => {
-            verifyTimeAttribute(quoteAttributes, 'windingAllRollsTime');
+            verifyTimeAttribute(quoteAttributes, 'totalWindingRollTime');
         });
     });
 

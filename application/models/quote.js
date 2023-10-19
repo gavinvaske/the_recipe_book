@@ -5,28 +5,17 @@ const { convertDollarsToPennies, convertPenniesToDollars } = require('../service
 const { dieShapes } = require('../enums/dieShapesEnum');
 const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
+const Decimal = require('decimal.js');
 
-function numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces) {
-    const digitsInDecimalPlace = number.toString().split('.')[1];
+const FOUR_DECIMAL_PLACES = 4;
+const TWO_DECIMAL_PLACES = 2;
 
-    if (!digitsInDecimalPlace) return true;
+function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
+    return function (number) {
+        const moreAccurateNumber = new Decimal(number);
 
-    return digitsInDecimalPlace.length <= maxNumberOfDecimalPlaces;
-}
-
-function numberHasFourDecimalPlacesOrLess(number) {
-    const maxNumberOfDecimalPlaces = 4;
-    return numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces);
-}
-
-function numberHasTwoDecimalPlacesOrLess(number) {
-    const maxNumberOfDecimalPlaces = 2;
-    return numberHasNDecimalPlacesOrLess(number, maxNumberOfDecimalPlaces);
-}
-
-function roundPercentage(percentage) {
-    const numberOfDecimalPlaces = 4;
-    return Number(percentage.toFixed(numberOfDecimalPlaces));
+        return moreAccurateNumber.toFixed(nthDecimalPlaces);
+    };
 }
 
 const lengthInFeetAttribute = {
@@ -79,7 +68,7 @@ const percentageAttribute = {
     type: Number,
     min: 0,
     max: 1,
-    set: roundPercentage
+    set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
 };
 
 const productWithQtySchema = new Schema({
@@ -157,26 +146,17 @@ const quoteSchema = new Schema({
     },
     sizeAcrossOverride: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     sizeAroundOverride: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     cornerRadius: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0,
         max: 1
     },
@@ -186,18 +166,12 @@ const quoteSchema = new Schema({
     },
     spaceAroundOverride: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideSpaceAcross: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     material: {
@@ -206,34 +180,22 @@ const quoteSchema = new Schema({
     },
     overrideMaterialFreightMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideMaterialTotalCostMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideMaterialQuotedMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideMaterialThickness: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideFinish: {
@@ -242,50 +204,32 @@ const quoteSchema = new Schema({
     },
     overrideFinishCostMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideFinishFreightMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideFinishTotalCostMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideFinishQuotedMsi: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     overrideFinishThickness: {
         type: Number,
-        validate: {
-            validator: numberHasFourDecimalPlacesOrLess,
-            message: '{VALUE} has more than four decimals'
-        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
     coreDiameter: {
         type: Number,
-        validate: {
-            validator: numberHasTwoDecimalPlacesOrLess,
-            message: '{VALUE} has more than two decimals'
-        },
+        set: roundNumberToNthDecimalPlace(TWO_DECIMAL_PLACES),
         min: 0,
         default: 3
     },

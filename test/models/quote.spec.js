@@ -6,13 +6,13 @@ const mongoose = require('mongoose');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const constants = require('../../application/enums/constantsEnum');
 
-const NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES = 4;
+const FOUR_DECIMAL_PLACES = 4;
 
 function verifyPercentageAttribute(quoteAttributes, attributeName) {
     let quote, error;
 
     // (1) should be a number
-    const expectedPercentage = chance.floating({ min: 0.1, max: 0.9, fixed: NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES });
+    const expectedPercentage = chance.floating({ min: 0.1, max: 0.9, fixed: FOUR_DECIMAL_PLACES });
     quoteAttributes[attributeName] = expectedPercentage;
     quote = new Quote(quoteAttributes);
 
@@ -150,9 +150,9 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
 
-    // (2) should ignore decimals smaller than 2 decimal places
+    // (2) should round decimals smaller than 2 decimal places
     const expectedValue = chance.d100();
-    const decimalToIgnore = 0.00999999999;
+    const decimalToIgnore = 0.004;
     quoteAttributes[attributeName] = expectedValue + decimalToIgnore;
 
     quote = new Quote(quoteAttributes);
@@ -195,7 +195,7 @@ function generateNProducts() {
 }
 
 function generateRandomPercentage() {
-    return chance.floating({ min: 0, max: 1, fixed: NUMBER_OF_DECIMAL_PLACES_FOR_PERCENTAGES});
+    return chance.floating({ min: 0, max: 1, fixed: FOUR_DECIMAL_PLACES});
 }
 
 describe('File: quote.js', () => {
@@ -483,14 +483,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not allow floating points with more than 4 decimal places', () => {
-            const floatingPointValueWith5DecimalPlaces = 1.00001;
-            quoteAttributes.sizeAcrossOverride = floatingPointValueWith5DecimalPlaces;
+        it('should round the 4th decimal place', () => {
+            const unroundedValue = 1.00005;
+            const roundedValue = 1.0001;
+            quoteAttributes.sizeAcrossOverride = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+            expect(quote.sizeAcrossOverride).toEqual(roundedValue);
         });
 
         it('should allow floating point values with 4 decimal places', () => {
@@ -544,14 +544,14 @@ describe('File: quote.js', () => {
             expect(error).toBeUndefined();
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
-            quoteAttributes.sizeAroundOverride = chance.pickone(notAllowedValues);
+        it('should round to the 4th decimal places', () => {
+            const unroundedValue = 987.00005;
+            const roundedValue = 987.0001;
+            quoteAttributes.sizeAroundOverride = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+            expect(quote.sizeAroundOverride).toEqual(roundedValue);
         });
     });
 
@@ -605,14 +605,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const notAllowedValues = [1.00001, 8888.12345, 661.123456789];
-            quoteAttributes.cornerRadius = chance.pickone(notAllowedValues);
+        it('should round to the 4th decimal places', () => {
+            const unroundedValue = 654645.12385;
+            const roundedValue = 654645.1239;
+            quoteAttributes.cornerRadius = unroundedValue;
+
             const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+
+            expect(quote.cornerRadius).toEqual(roundedValue);
         });
 
         it('should allow floating point values with 4 decimal places or less', () => {
@@ -685,24 +685,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.spaceAroundOverride = chance.pickone(invalidValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 987.00005;
+            const roundedValue = 987.0001;
+            quoteAttributes.spaceAroundOverride = unroundedValue;
 
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.spaceAroundOverride = chance.pickone(allowedValues);
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.spaceAroundOverride).toEqual(roundedValue);
         });
     });
 
@@ -734,24 +724,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideSpaceAcross = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 1234567890000.111199999999999;
+            const roundedValue = 1234567890000.1112;
+            quoteAttributes.overrideSpaceAcross = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideSpaceAcross = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideSpaceAcross).toEqual(roundedValue);
         });
     });
 
@@ -792,24 +772,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideMaterialFreightMsi).toEqual(expectedOverrideMaterialFreightMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideMaterialFreightMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 987654321.00005;
+            const roundedValue = 987654321.0001;
+            quoteAttributes.overrideMaterialFreightMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideMaterialFreightMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideMaterialFreightMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -841,24 +811,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideMaterialTotalCostMsi).toEqual(expectedOverrideMaterialTotalCostMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideMaterialTotalCostMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 9999.1234324234;
+            const roundedValue = 9999.1234;
+            quoteAttributes.overrideMaterialTotalCostMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideMaterialTotalCostMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideMaterialTotalCostMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -890,24 +850,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideMaterialQuotedMsi).toEqual(expectedOverrideMaterialQuotedMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideMaterialQuotedMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 123.54321;
+            const roundedValue = 123.5432;
+            quoteAttributes.overrideMaterialQuotedMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideMaterialQuotedMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-
-            const error = quote.validateSync();
-
-            expect(error).toBeUndefined();
+            expect(quote.overrideMaterialQuotedMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -939,24 +889,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideMaterialThickness).toEqual(expectedOverrideMaterialThickness);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideMaterialThickness = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 111.2222222222222;
+            const roundedValue = 111.2222;
+            quoteAttributes.overrideMaterialThickness = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideMaterialThickness = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideMaterialThickness).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1007,24 +947,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideFinishCostMsi).toEqual(expectedOverrideFinishCostMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideFinishCostMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 1000.999999999999;
+            const roundedValue = 1001;
+            quoteAttributes.overrideFinishCostMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideFinishCostMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideFinishCostMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1056,24 +986,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideFinishFreightMsi).toEqual(expectedOverrideFinishFreightMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 9999.1234324234];
-            quoteAttributes.overrideFinishFreightMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 987.12279;
+            const roundedValue = 987.1228;
+            quoteAttributes.overrideFinishFreightMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.123, 999999.123];
-            quoteAttributes.overrideFinishFreightMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideFinishFreightMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1105,24 +1025,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideFinishTotalCostMsi).toEqual(expectedOverrideFinishTotalCostMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideFinishTotalCostMsi = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 654.10009;
+            const roundedValue = 654.1001;
+            quoteAttributes.overrideFinishTotalCostMsi = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideFinishTotalCostMsi = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideFinishTotalCostMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1154,24 +1064,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideFinishQuotedMsi).toEqual(expectedOverrideFinishQuotedMsi);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideFinishQuotedMsi = chance.pickone(invalidValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 1.00005;
+            const roundedValue = 1.0001;
+            quoteAttributes.overrideFinishQuotedMsi = unroundedValue;
 
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideFinishQuotedMsi = chance.pickone(allowedValues);
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideFinishQuotedMsi).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1203,24 +1103,14 @@ describe('File: quote.js', () => {
             expect(quote.overrideFinishThickness).toEqual(expectedOverrideFinishThickness);
         });
 
-        it('should not allow floating point values with more than 4 decimal places', () => {
-            const invalidValues = [1.12345, 123.54321, 9999.1234324234];
-            quoteAttributes.overrideFinishThickness = chance.pickone(invalidValues);
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 8888888888888.0000999999999999;
+            const roundedValue = 8888888888888.0001;
+            quoteAttributes.overrideFinishThickness = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.overrideFinishThickness = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.overrideFinishThickness).toEqual(roundedValue);
         });
 
         it('should be greater than or equal to 0', () => {
@@ -1262,24 +1152,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not allow floating points with more than 2 decimal places', () => {
-            const invalidValues = [1.123, 123.54321, 9999.1234324234];
-            quoteAttributes.coreDiameter = chance.pickone(invalidValues);
+        it('should round to the 2nd decimal place', () => {
+            const unroundedValue = 1.123;
+            const roundedValue = 1.12;
+            quoteAttributes.coreDiameter = unroundedValue;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should allow numbers with 2 decimal places or less', () => {
-            const validValues = [1.12, 123.2, chance.d100()];
-            quoteAttributes.coreDiameter = chance.pickone(validValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+            expect(quote.coreDiameter).toEqual(roundedValue);
         });
     });
 
@@ -1863,13 +1743,13 @@ describe('File: quote.js', () => {
         // });
 
         it('should store round to 4 decimal places of precision', () => {
-            const frameUtilization = 0.5555555555;
-            const expectedFrameUtilization = 0.5556;
-            quoteAttributes.frameUtilization = frameUtilization;
+            const unroundedValue = 0.5555555555;
+            const roundedValue = 0.5556;
+            quoteAttributes.frameUtilization = unroundedValue;
             
             const quote = new Quote(quoteAttributes);
 
-            expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
+            expect(quote.frameUtilization).toEqual(roundedValue);
         });
 
         it('should be undefined if frameLength is not defined', () => {

@@ -81,9 +81,36 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.changeOverTime = computeChangeOverTime(quoteAttributes);
     quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, die);
     quoteAttributes.totalWindingRollTime = computeTotalWindingRollTime(quoteAttributes);
+    quoteAttributes.totalWindingTime = computeTotalWindingTime(quoteAttributes);
+    quoteAttributes.throwAwayWindingTimePercentage = computeThrowAwayWindingTimePercentage(quoteAttributes);
+    quoteAttributes.totalWindingCost = computeTotalWindingCost(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeTotalWindingCost(quoteAttributes) {
+    const { totalWindingTime } = quoteAttributes;
+
+    return (totalWindingTime / MINUTES_PER_HOUR) * constants.WINDING_HOURLY_RATE;
+}
+
+function computeThrowAwayWindingTimePercentage(quoteAttributes) {
+    const { totalWindingRollTime, totalWindingTime } = quoteAttributes;
+
+    return 1 - (totalWindingRollTime / totalWindingTime);
+}
+
+function computeTotalWindingTime(quoteAttributes) {
+    const { 
+        coreGatheringTime, changeOverTime, 
+        totalWindingRollTime, labelDropoffAtShippingTime 
+    } = quoteAttributes;
+
+    const sum = coreGatheringTime + changeOverTime 
+        + totalWindingRollTime + labelDropoffAtShippingTime;
+
+    return sum;
+}
 
 function computeFinishedRollLength(quoteAttributes, die) {
     const { 

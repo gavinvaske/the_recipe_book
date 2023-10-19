@@ -623,6 +623,42 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: totalWindingTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { coreGatheringTime, changeOverTime, totalWindingRollTime, labelDropoffAtShippingTime } = quote;
+
+                const expectedValue = coreGatheringTime + changeOverTime + totalWindingRollTime + labelDropoffAtShippingTime;
+
+                expect(quote.totalWindingTime).not.toBeFalsy();
+                expect(quote.totalWindingTime).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: throwAwayWindingTimePercentage', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalWindingRollTime, totalWindingTime } = quote;
+
+                const expectedValue = 1 - (totalWindingRollTime / totalWindingTime);
+
+                expect(quote.throwAwayWindingTimePercentage).not.toBeFalsy();
+                expect(quote.throwAwayWindingTimePercentage).toEqual(expectedValue);
+            });
+        });
+
+        describe('attribute: totalWindingCost', () => {
+            it('should compute the attribute correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalWindingTime } = quote;
+
+                const expectedValue = (totalWindingTime / MINUTES_PER_HOUR) * constants.WINDING_HOURLY_RATE;
+
+                expect(quote.totalWindingCost).not.toBeFalsy();
+                expect(quote.totalWindingCost).toEqual(expectedValue);
+            });
+        });
+
         describe('attribute: totalFinishCost', () => {
             it('should compute the attribute correctly when overrideFinishCostMsi IS DEFINED', async () => {
                 const overrideFinishCostMsi = chance.d100();

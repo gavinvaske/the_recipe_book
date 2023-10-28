@@ -1,11 +1,24 @@
 const chance = require('chance').Chance();
 const packagingService = require('../../application/services/packagingService');
+const { howManyCirclesCanFitInThisSquare : howManyCirclesCanFitInThisSquareMock } = require('../../application/enums/circlesPerSquareEnum');
 
 const ONE_EIGHTH_INCH_BUFFER = 0.125;
 
+
+jest.mock('../../application/enums/circlesPerSquareEnum', () => {
+    return {
+        howManyCirclesCanFitInThisSquare: jest.fn()
+    };
+});
+
 describe('File: packagingService.js', () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
     describe('Function: getNumberOfLayers()', () => {
         let boxHeight, rollHeight;
+
         beforeEach(() => {
             rollHeight = chance.d100();
             boxHeight = chance.floating({ min: 0, max: 100}) + chance.floating({ min: 0, max: 100});
@@ -40,6 +53,18 @@ describe('File: packagingService.js', () => {
             const actualNumberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
             
             expect(actualNumberOfLayers).toEqual(expectedNumberOfLayers);
+        });
+    });
+
+    describe('Function: getRollsPerLayer()', () => {
+        it('should call helper function with rollDiameter + 1/8 inch buffer', () => {
+            const boxSideLength = chance.d100();
+            const rollDiameter = chance.d100();
+
+            packagingService.getRollsPerLayer(rollDiameter, boxSideLength);
+
+            expect(howManyCirclesCanFitInThisSquareMock).toHaveBeenCalledTimes(1);
+            expect(howManyCirclesCanFitInThisSquareMock).toHaveBeenCalledWith(rollDiameter + ONE_EIGHTH_INCH_BUFFER, boxSideLength);
         });
     });
 });

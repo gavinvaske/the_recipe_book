@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const packagingService = require('../services/packagingService');
-const { getSvgForNCirclesInSquare } = require('../enums/circlesPerSquareEnum')
+const { getSvgForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
 
 router.post('/rolls-per-box', (request, response) => {
     const { boxSideLength, boxHeight, rollDiameter, rollHeight } = request.body;

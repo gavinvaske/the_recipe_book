@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 const path = require('path');
 
-function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIntoUnitSquare, svgLayoutFilePath) {
+function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIntoUnitSquare) {
     return {
         numberOfCircles: nCircles, 
         /* 
@@ -19,7 +19,7 @@ module.exports.getSvgForNCirclesInSquare = (nCirlces) => {
     const pathToSvg = path.join(__dirname, '..', 'svgs', svgFileName);
 
     return pathToSvg;
-}
+};
 
 /*
     The function below is clever but not intuitive at a glance why it works.

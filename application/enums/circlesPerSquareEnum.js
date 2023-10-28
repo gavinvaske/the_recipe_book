@@ -9,12 +9,11 @@ function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIn
             If nCircles = 10, then the circle radius of each must be scaled down such that it can fit in a unit square (1x1 square). 
             As nCircles increases, this radius must decrease. This value is a constant obtained via the chart found on: http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html
         */
-        radiusPerCircleScaledToFitIntoUnitSquare,
-        svgLayoutFilePath
+        radiusPerCircleScaledToFitIntoUnitSquare
     };
 }
 
-function getSvgForNCirclesInSquare(nCirlces) {
+module.exports.getSvgForNCirclesInSquare = (nCirlces) => {
     const svgFileName = `${nCirlces}_circles_in_a_square.svg`;
 
     const pathToSvg = path.join(__dirname, '..', 'svgs', svgFileName);
@@ -72,24 +71,24 @@ const TWENTY = 20;
 
 const nCirclesInSquareToLayoutDetails = {
     /* The radius below were obtained via: http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html */
-    [ONE]: layoutDetailsForNCirclesInSquare(ONE, 0.500000, getSvgForNCirclesInSquare(ONE)),
-    [TWO]: layoutDetailsForNCirclesInSquare(TWO, 0.292893, getSvgForNCirclesInSquare(TWO)),
-    [THREE]: layoutDetailsForNCirclesInSquare(THREE, 0.254333, getSvgForNCirclesInSquare(THREE)),
-    [FOUR]: layoutDetailsForNCirclesInSquare(FOUR, 0.250000, getSvgForNCirclesInSquare(FOUR)),
-    [FIVE]: layoutDetailsForNCirclesInSquare(FIVE, 0.207106, getSvgForNCirclesInSquare(FIVE)),
-    [SIX]: layoutDetailsForNCirclesInSquare(SIX, 0.187680, getSvgForNCirclesInSquare(SIX)),
-    [SEVEN]: layoutDetailsForNCirclesInSquare(SEVEN, 0.174457, getSvgForNCirclesInSquare(SEVEN)),
-    [EIGHT]: layoutDetailsForNCirclesInSquare(EIGHT, 0.170540, getSvgForNCirclesInSquare(EIGHT)),
-    [NINE]: layoutDetailsForNCirclesInSquare(NINE, 0.166666, getSvgForNCirclesInSquare(NINE)),
-    [TEN]: layoutDetailsForNCirclesInSquare(TEN, 0.148204, getSvgForNCirclesInSquare(TEN)),
-    [ELEVEN]: layoutDetailsForNCirclesInSquare(ELEVEN, 0.142399, getSvgForNCirclesInSquare(ELEVEN)),
-    [TWELVE]: layoutDetailsForNCirclesInSquare(TWELVE, 0.139958, getSvgForNCirclesInSquare(TWELVE)),
-    [THIRTEEN]: layoutDetailsForNCirclesInSquare(THIRTEEN, 0.133993, getSvgForNCirclesInSquare(THIRTEEN)),
-    [FOURTEEN]: layoutDetailsForNCirclesInSquare(FOURTEEN, 0.129331, getSvgForNCirclesInSquare(FOURTEEN)),
-    [FIFTEEN]: layoutDetailsForNCirclesInSquare(FIFTEEN, 0.127166, getSvgForNCirclesInSquare(FIFTEEN)),
-    [SIXTEEN]: layoutDetailsForNCirclesInSquare(SIXTEEN, 0.125000, getSvgForNCirclesInSquare(SIXTEEN)),
-    [SEVENTEEN]: layoutDetailsForNCirclesInSquare(SEVENTEEN, 0.117196, getSvgForNCirclesInSquare(SEVENTEEN)),
-    [EIGHTEEN]: layoutDetailsForNCirclesInSquare(EIGHTEEN, 0.115521, getSvgForNCirclesInSquare(EIGHTEEN)),
-    [NINETEEN]: layoutDetailsForNCirclesInSquare(NINETEEN, 0.112265, getSvgForNCirclesInSquare(NINETEEN)),
-    [TWENTY]: layoutDetailsForNCirclesInSquare(TWENTY, 0.111382, getSvgForNCirclesInSquare(TWENTY))
+    [ONE]: layoutDetailsForNCirclesInSquare(ONE, 0.500000),
+    [TWO]: layoutDetailsForNCirclesInSquare(TWO, 0.292893),
+    [THREE]: layoutDetailsForNCirclesInSquare(THREE, 0.254333),
+    [FOUR]: layoutDetailsForNCirclesInSquare(FOUR, 0.250000),
+    [FIVE]: layoutDetailsForNCirclesInSquare(FIVE, 0.207106),
+    [SIX]: layoutDetailsForNCirclesInSquare(SIX, 0.187680),
+    [SEVEN]: layoutDetailsForNCirclesInSquare(SEVEN, 0.174457),
+    [EIGHT]: layoutDetailsForNCirclesInSquare(EIGHT, 0.170540),
+    [NINE]: layoutDetailsForNCirclesInSquare(NINE, 0.166666),
+    [TEN]: layoutDetailsForNCirclesInSquare(TEN, 0.148204),
+    [ELEVEN]: layoutDetailsForNCirclesInSquare(ELEVEN, 0.142399),
+    [TWELVE]: layoutDetailsForNCirclesInSquare(TWELVE, 0.139958),
+    [THIRTEEN]: layoutDetailsForNCirclesInSquare(THIRTEEN, 0.133993),
+    [FOURTEEN]: layoutDetailsForNCirclesInSquare(FOURTEEN, 0.129331),
+    [FIFTEEN]: layoutDetailsForNCirclesInSquare(FIFTEEN, 0.127166),
+    [SIXTEEN]: layoutDetailsForNCirclesInSquare(SIXTEEN, 0.125000),
+    [SEVENTEEN]: layoutDetailsForNCirclesInSquare(SEVENTEEN, 0.117196),
+    [EIGHTEEN]: layoutDetailsForNCirclesInSquare(EIGHTEEN, 0.115521),
+    [NINETEEN]: layoutDetailsForNCirclesInSquare(NINETEEN, 0.112265),
+    [TWENTY]: layoutDetailsForNCirclesInSquare(TWENTY, 0.111382)
 };

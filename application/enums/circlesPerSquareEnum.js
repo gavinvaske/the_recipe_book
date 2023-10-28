@@ -1,6 +1,9 @@
 /* eslint-disable no-magic-numbers */
 const path = require('path');
 
+const SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.111382;
+const LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.500000;
+
 function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIntoUnitSquare) {
     return {
         numberOfCircles: nCircles, 
@@ -21,6 +24,12 @@ module.exports.getSvgForNCirclesInSquare = (nCirlces) => {
     return pathToSvg;
 };
 
+function computeMaxAllowedCircleDiameter(squareSideLength, circleRadiusScaledToFitIntoUnitSquare) {
+    const circleDiameterScaledToFitIntoUnitSquare = circleRadiusScaledToFitIntoUnitSquare * 2;
+
+    return circleDiameterScaledToFitIntoUnitSquare * squareSideLength;
+}
+
 /*
     The function below is clever but not intuitive at a glance why it works.
     It provides a subset of solutions to a traveling saleman (NP) related problem in
@@ -29,9 +38,20 @@ module.exports.getSvgForNCirclesInSquare = (nCirlces) => {
 module.exports.howManyCirclesCanFitInThisSquare = (circleDiameter, squareSideLength) => {
     let largestNumberOfCirclesThatCanFitIntoSquare;
 
+    const maximumCircleDiameter = computeMaxAllowedCircleDiameter(squareSideLength, LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE);
+    const minimumCircleDiameter = computeMaxAllowedCircleDiameter(squareSideLength, SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE);
+    
+    if (circleDiameter > maximumCircleDiameter) {
+        return 0;
+    }
+
+    if (circleDiameter < minimumCircleDiameter) {
+        throw new Error(`The max number of circles per layer that can be computed is ${Object.keys(nCirclesInSquareToLayoutDetails).length}. The circle diameter of ${circleDiameter} results in more than this number and cannot be computed.`);
+    }
+
     Object.keys(nCirclesInSquareToLayoutDetails).forEach((nCircles) => {
         const { radiusPerCircleScaledToFitIntoUnitSquare } = nCirclesInSquareToLayoutDetails[nCircles];
-        const maximumCircleDiameter = squareSideLength * (radiusPerCircleScaledToFitIntoUnitSquare * 2);
+        const maximumCircleDiameter = computeMaxAllowedCircleDiameter(squareSideLength, radiusPerCircleScaledToFitIntoUnitSquare);
         
         const canNCiclesFitInThisSquare = circleDiameter <= maximumCircleDiameter;
         
@@ -39,12 +59,10 @@ module.exports.howManyCirclesCanFitInThisSquare = (circleDiameter, squareSideLen
 
         const wasBetterLayoutFound = !largestNumberOfCirclesThatCanFitIntoSquare || Number(nCircles) > largestNumberOfCirclesThatCanFitIntoSquare;
 
-        if (wasBetterLayoutFound) largestNumberOfCirclesThatCanFitIntoSquare = nCircles;
+        if (wasBetterLayoutFound) largestNumberOfCirclesThatCanFitIntoSquare = Number(nCircles);
     });
 
-    return largestNumberOfCirclesThatCanFitIntoSquare 
-        ? Number(largestNumberOfCirclesThatCanFitIntoSquare) 
-        : null;
+    return largestNumberOfCirclesThatCanFitIntoSquare;
 
 };
 
@@ -71,7 +89,7 @@ const TWENTY = 20;
 
 const nCirclesInSquareToLayoutDetails = {
     /* The radius below were obtained via: http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html */
-    [ONE]: layoutDetailsForNCirclesInSquare(ONE, 0.500000),
+    [ONE]: layoutDetailsForNCirclesInSquare(ONE, LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE),
     [TWO]: layoutDetailsForNCirclesInSquare(TWO, 0.292893),
     [THREE]: layoutDetailsForNCirclesInSquare(THREE, 0.254333),
     [FOUR]: layoutDetailsForNCirclesInSquare(FOUR, 0.250000),
@@ -90,5 +108,5 @@ const nCirclesInSquareToLayoutDetails = {
     [SEVENTEEN]: layoutDetailsForNCirclesInSquare(SEVENTEEN, 0.117196),
     [EIGHTEEN]: layoutDetailsForNCirclesInSquare(EIGHTEEN, 0.115521),
     [NINETEEN]: layoutDetailsForNCirclesInSquare(NINETEEN, 0.112265),
-    [TWENTY]: layoutDetailsForNCirclesInSquare(TWENTY, 0.111382)
+    [TWENTY]: layoutDetailsForNCirclesInSquare(TWENTY, SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE)
 };

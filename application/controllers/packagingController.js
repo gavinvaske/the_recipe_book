@@ -2,7 +2,11 @@ const router = require('express').Router();
 const packagingService = require('../services/packagingService');
 const { getSvgForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
 
-router.post('/rolls-per-box', (request, response) => {
+router.get('/estimator', (request, response) => {
+    return response.render('createPackagingEstimate');
+});
+
+router.post('/estimate', (request, response) => {
     const { boxSideLength, boxHeight, rollDiameter, rollHeight } = request.body;
     
     const numberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
@@ -15,6 +19,12 @@ router.post('/rolls-per-box', (request, response) => {
         rollsPerBox: rollsPerLayer * numberOfLayers,
         svgLayoutFilePath
     });
+
+    // return response.json({
+    //     test: 'test'
+    // });
+
+    //return response.send('test');
 });
 
 module.exports = router;

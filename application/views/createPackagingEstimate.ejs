@@ -1,0 +1,32 @@
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper create-table-entry">
+    <div class="card">
+        <div class="header">
+            <div class="title-icon-box">
+                <h1 class="text-blue card-title">Create New Packaging Estimate</h1>
+            </div>
+            <p>Fill out the form below to create a new packaging estimate. Remember, you're <b>awesome :)</b></p>
+        </div>
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
+        <form id="create-packaging-estimate-form" action="/packaging/rolls-per-box", method="POST">
+            <div class="form-group">
+                <label for="boxSideLength">Box Side Length</label>
+                <input type="text" name="boxSideLength" value="14.25" required>
+                
+                <label for="boxHeight" placeholder="12">Box Height Length</label>
+                <input type="text" name="boxHeight" id="name" value="14.25" required>
+                
+                <label for="rollDiameter" placeholder="12">Per Roll Diameter</label>
+                <input type="text" name="rollDiameter" id="name" required>
+
+             </div>
+
+             <div class="full-width flex-center-left-row">
+                <button id="create-packaging-estimate-button" class="btn btn-primary save-form-button" type="submit" value="Create Estimate">Create Estimate</button>
+            </div>
+        </form>
+    </div>
+</div>

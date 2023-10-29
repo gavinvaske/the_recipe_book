@@ -25,7 +25,7 @@ resource "aws_s3_bucket_public_access_block" "file-uploads-public-access-block" 
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
-
+ƒ
 resource "aws_s3_bucket_policy" "allow-public-access" {
   bucket = aws_s3_bucket.the-label-factory-file-uploads.id
   policy = data.aws_iam_policy_document.allow-public-access.json

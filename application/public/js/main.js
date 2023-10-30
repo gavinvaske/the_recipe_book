@@ -1138,13 +1138,13 @@ $( document ).ready(function() {
             $('#number-of-boxes-result').text(response.numberOfBoxes || 'N/A');
 
             const img = $('#circles-in-square-layout');
-            const { circlesInSquareLayoutImage } = response;
+            const { circlesInSquareLayoutImagePath } = response;
 
-            if (!circlesInSquareLayoutImage) {
+            if (!circlesInSquareLayoutImagePath) {
                 img.hide();
                 img.attr('src', '');
             } else {
-                img.attr('src', circlesInSquareLayoutImage);
+                img.attr('src', circlesInSquareLayoutImagePath);
                 img.show();
             }
             $('#package-estimate-results-card').show();

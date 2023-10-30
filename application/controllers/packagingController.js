@@ -26,7 +26,7 @@ router.post('/estimate', (request, response) => {
         
         const numberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
         const rollsPerLayer = packagingService.getRollsPerLayer(rollDiameter, boxSideLength);
-        const circlesInSquareLayoutImage = getSvgForNCirclesInSquare(rollsPerLayer);
+        const circlesInSquareLayoutImagePath = getSvgForNCirclesInSquare(rollsPerLayer);
     
         const rollsPerBox = rollsPerLayer * numberOfLayers;
         const numberOfBoxes = numberOfRolls ? Math.ceil(numberOfRolls / rollsPerBox) : null;
@@ -35,7 +35,7 @@ router.post('/estimate', (request, response) => {
             numberOfLayers,
             rollsPerLayer,
             rollsPerBox,
-            circlesInSquareLayoutImage,
+            circlesInSquareLayoutImagePath,
             numberOfBoxes
         });
     } catch (error) {

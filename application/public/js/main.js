@@ -1132,7 +1132,22 @@ $( document ).ready(function() {
         };
 
         post('/packaging/estimate', requestBody, (response) => {
-            alert(JSON.stringify(response));
+            $('#number-of-layers-result').text(response.numberOfLayers || 'N/A');
+            $('#rolls-per-layer-result').text(response.rollsPerLayer || 'N/A');
+            $('#rolls-per-box-result').text(response.rollsPerBox || 'N/A');
+            $('#number-of-boxes-result').text(response.numberOfBoxes || 'N/A');
+
+            const img = $('#circles-in-square-layout');
+            const { circlesInSquareLayoutImage } = response;
+
+            if (!circlesInSquareLayoutImage) {
+                img.hide();
+                img.attr('src', '');
+            } else {
+                img.attr('src', circlesInSquareLayoutImage);
+                img.show();
+            }
+            $('#package-estimate-results-card').show();
         });
     });
 

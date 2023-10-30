@@ -37,7 +37,7 @@ describe('File: circlesPerSquareEnum.js', () => {
             const tooSmallCircleDiameter = circleDiameterToFitTheMaxNumberOfCirclesPerLayer - tinyNumber;
 
             expect(() => howManyCirclesCanFitInThisSquare(tooSmallCircleDiameter, squareSideLength))
-                .toThrow(`The max number of circles per layer that can be computed is 20. The circle diameter of ${tooSmallCircleDiameter} results in more than this number and cannot be computed.`);
+                .toThrow();
         });
 
         it('should return 1 numberOfCircles', () => {

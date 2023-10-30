@@ -1,5 +1,4 @@
 /* eslint-disable no-magic-numbers */
-const path = require('path');
 
 const SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.111382;
 const LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.500000;
@@ -16,10 +15,10 @@ function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIn
     };
 }
 
-module.exports.getSvgForNCirclesInSquare = (nCirlces) => {
-    const svgFileName = `${nCirlces}_circles_in_a_square.svg`;
+module.exports.getImageForNCirclesInSquare = (nCirlces) => {
+    const svgFileName = `${nCirlces}_circles_in_a_square.png`;
 
-    const pathToSvg = path.join(__dirname, '..', 'svgs', svgFileName);
+    const pathToSvg = `/images/circlesInSquare/${svgFileName}`;
 
     return pathToSvg;
 };
@@ -46,7 +45,7 @@ module.exports.howManyCirclesCanFitInThisSquare = (circleDiameter, squareSideLen
     }
 
     if (circleDiameter < minimumCircleDiameter) {
-        throw new Error(`The max number of circles per layer that can be computed is ${Object.keys(nCirclesInSquareToLayoutDetails).length}. The circle diameter of ${circleDiameter} results in more than this number and cannot be computed.`);
+        throw new Error(`The max number of circles per layer that can be computed is ${Object.keys(nCirclesInSquareToLayoutDetails).length}. The circle diameter is too small, please use a larger circle diameter if possible, or increase the box length.`);
     }
 
     Object.keys(nCirclesInSquareToLayoutDetails).forEach((nCircles) => {

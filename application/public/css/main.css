@@ -155,14 +155,7 @@
   img {
     border-style: none;
   }
-
-  #city-wrapper {
-    width: 500px;
-    height: 500px;
-    fill: #CCCCCC;
-  }
-
-
+  
 td {
   display: table-cell;
   vertical-align: inherit;

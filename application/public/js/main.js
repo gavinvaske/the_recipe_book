@@ -1151,29 +1151,6 @@ $( document ).ready(function() {
         });
     });
 
-    // $('#create-packaging-estimate-button').on('click', function(e) {
-    //     e.preventDefault();
-    //     const form = $('#create-packaging-estimate-form')
-
-    //     const boxSideLength = Number(form.attr('boxSideLength'));
-    //     const boxHeight = Number(form.attr('boxHeight'));
-    //     const rollDiameter = Number(form.attr('rollDiameter'));
-    //     const rollHeight = Number(form.attr('rollHeight'));
-
-    //     const requestBody = {
-    //         boxSideLength,
-    //         boxHeight,
-    //         rollDiameter,
-    //         rollHeight
-    //     }
-    //     console.log('request:', requestBody)
-
-    //     post('/packaging/estimate', requestBody, (response) => {
-    //         alert(JSON.stringify(response))
-    //     })
-    // });
-        
-
     var words = [
         '',
         'Quote 1',

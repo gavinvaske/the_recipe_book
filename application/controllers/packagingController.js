@@ -7,24 +7,38 @@ router.get('/estimator', (request, response) => {
 });
 
 router.post('/estimate', (request, response) => {
-    const { boxSideLength, boxHeight, rollDiameter, rollHeight } = request.body;
+    try {
+        const { 
+            boxSideLength : boxSideLengthAsString, 
+            boxHeight : boxHeightAsString, 
+            rollDiameter : rollDiameterAsString, 
+            rollHeight : rollHeightAsString, 
+            numberOfRolls : numberOfRollsAsString
+        } = request.body;
     
-    const numberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
-    const rollsPerLayer = packagingService.getRollsPerLayer(rollDiameter, boxSideLength);
-    const svgLayoutFilePath = getSvgForNCirclesInSquare(rollsPerLayer);
+        const boxSideLength = Number(boxSideLengthAsString);
+        const boxHeight = Number(boxHeightAsString);
+        const rollDiameter = Number(rollDiameterAsString);
+        const rollHeight = Number(rollHeightAsString);
+        const numberOfRolls = Number(numberOfRollsAsString);
+        
+        const numberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
+        const rollsPerLayer = packagingService.getRollsPerLayer(rollDiameter, boxSideLength);
+        const svgLayoutFilePath = getSvgForNCirclesInSquare(rollsPerLayer);
     
-    return response.json({
-        numberOfLayers,
-        rollsPerLayer,
-        rollsPerBox: rollsPerLayer * numberOfLayers,
-        svgLayoutFilePath
-    });
-
-    // return response.json({
-    //     test: 'test'
-    // });
-
-    //return response.send('test');
+        const rollsPerBox = rollsPerLayer * numberOfLayers;
+        const numberOfBoxes = numberOfRolls ? Math.ceil(numberOfRolls / rollsPerBox) : null;
+        
+        return response.json({
+            numberOfLayers,
+            rollsPerLayer,
+            rollsPerBox,
+            svgLayoutFilePath,
+            numberOfBoxes
+        });
+    } catch (error) {
+        return response.error(error);
+    }
 });
 
 module.exports = router;

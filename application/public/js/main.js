@@ -1115,21 +1115,21 @@ $( document ).ready(function() {
 
     $('#create-packaging-estimate-form').on('submit', function(e) {
         e.preventDefault();
-        console.log('test1', $(this).attr('boxSideLength'));
-        console.log('test2', $(this).data('boxSideLength'));
+        const form = $(this);
 
-        const boxSideLength = Number($(this).attr('boxSideLength'));
-        const boxHeight = Number($(this).attr('boxHeight'));
-        const rollDiameter = Number($(this).attr('rollDiameter'));
-        const rollHeight = Number($(this).attr('rollHeight'));
+        const boxSideLength = Number(form.find('input[name=boxSideLength]').val());
+        const boxHeight = Number(form.find('input[name=boxHeight]').val());
+        const rollDiameter = Number(form.find('input[name=rollDiameter]').val());
+        const rollHeight = Number(form.find('input[name=rollHeight]').val());
+        const numberOfRolls = Number(form.find('input[name=numberOfRolls]').val());
 
         const requestBody = {
             boxSideLength,
             boxHeight,
             rollDiameter,
-            rollHeight
+            rollHeight,
+            numberOfRolls
         };
-        console.log('request:', requestBody);
 
         post('/packaging/estimate', requestBody, (response) => {
             alert(JSON.stringify(response));

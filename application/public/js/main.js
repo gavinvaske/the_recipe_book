@@ -1113,6 +1113,44 @@ $( document ).ready(function() {
         });
     });
 
+    $('#create-packaging-estimate-form').on('submit', function(e) {
+        e.preventDefault();
+        const form = $(this);
+
+        const boxSideLength = Number(form.find('input[name=boxSideLength]').val());
+        const boxHeight = Number(form.find('input[name=boxHeight]').val());
+        const rollDiameter = Number(form.find('input[name=rollDiameter]').val());
+        const rollHeight = Number(form.find('input[name=rollHeight]').val());
+        const numberOfRolls = Number(form.find('input[name=numberOfRolls]').val());
+
+        const requestBody = {
+            boxSideLength,
+            boxHeight,
+            rollDiameter,
+            rollHeight,
+            numberOfRolls
+        };
+
+        post('/packaging/estimate', requestBody, (response) => {
+            $('#number-of-layers-result').text(response.numberOfLayers || 'N/A');
+            $('#rolls-per-layer-result').text(response.rollsPerLayer || 'N/A');
+            $('#rolls-per-box-result').text(response.rollsPerBox || 'N/A');
+            $('#number-of-boxes-result').text(response.numberOfBoxes || 'N/A');
+
+            const img = $('#circles-in-square-layout');
+            const { circlesInSquareLayoutImagePath } = response;
+
+            if (!circlesInSquareLayoutImagePath) {
+                img.hide();
+                img.attr('src', '');
+            } else {
+                img.attr('src', circlesInSquareLayoutImagePath);
+                img.show();
+            }
+            $('#package-estimate-results-card').show();
+        });
+    });
+
     var words = [
         '',
         'Quote 1',

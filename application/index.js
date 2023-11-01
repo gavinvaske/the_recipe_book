@@ -68,6 +68,7 @@ app.use('/spot-plates', require('./controllers/spotPlateController'));
 app.use('/requests', require('./controllers/requestController'));
 app.use('/material-categories', require('./controllers/materialCategoryController'));
 app.use('/file-plan', require('./controllers/filePlanController'));
+app.use('/packaging', require('./controllers/packagingController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

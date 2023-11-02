@@ -1,9 +1,9 @@
 // Material Specs
 module.exports.MAX_FRAME_LENGTH_INCHES = 38.58;
 module.exports.PER_BOX_MAX_POUNDS = 32;
-module.exports.BOX_LENGTH_INCHES = 14;
+module.exports.BOX_LENGTH_INCHES = 14.25;
 module.exports.BOX_HEIGHT_INCHES = 12;
-module.exports.BOX_WIDTH_INCHES = 14;
+module.exports.BOX_WIDTH_INCHES = 14.25;
 
 // Hourly Rates
 module.exports.PRINTING_HOURLY_RATE = 154;

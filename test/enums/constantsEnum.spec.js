@@ -12,7 +12,7 @@ describe('constantsEnum', () => {
         expect(constantsEnum.PER_BOX_MAX_POUNDS).toEqual(expectedValue);
     });
     it('BOX_LENGTH_INCHES : should equal the correct value', () => {
-        const expectedValue = 14;
+        const expectedValue = 14.25;
 
         expect(constantsEnum.BOX_LENGTH_INCHES).toEqual(expectedValue);
     });
@@ -22,9 +22,13 @@ describe('constantsEnum', () => {
         expect(constantsEnum.BOX_HEIGHT_INCHES).toEqual(expectedValue);
     });
     it('BOX_WIDTH_INCHES : should equal the correct value', () => {
-        const expectedValue = 14;
+        const expectedValue = 14.25;
 
         expect(constantsEnum.BOX_WIDTH_INCHES).toEqual(expectedValue);
+    });
+
+    it('should equal one another (its a box, boxes are square)', () => {
+        expect(constantsEnum.BOX_LENGTH_INCHES).toEqual(constantsEnum.BOX_WIDTH_INCHES);
     });
     
     it('PRINTING_HOURLY_RATE : should equal the correct value', () => {

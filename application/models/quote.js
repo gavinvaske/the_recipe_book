@@ -456,6 +456,22 @@ const quoteSchema = new Schema({
     },
     products: {
         type: [productWithQtySchema]
+    },
+    totalNumberOfRolls: {
+        type: Number,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer'
+        }
+    },
+    totalBoxes: {
+        type: Number,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer'
+        }
     }
 }, { 
     timestamps: true,

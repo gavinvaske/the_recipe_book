@@ -1820,6 +1820,86 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: totalNumberOfRolls', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalNumberOfRolls;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedTotalNumberOfRolls = chance.d100();
+            quoteAttributes.totalNumberOfRolls = expectedTotalNumberOfRolls;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalNumberOfRolls).toEqual(expectedTotalNumberOfRolls);
+        });
+
+        it('should not be negative', () => {
+            const minTotalNumberOfRolls = 0;
+            quoteAttributes.totalNumberOfRolls = minTotalNumberOfRolls - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be an integer', () => {
+            const floatingPointValue = 0.55;
+            quoteAttributes.totalNumberOfRolls = floatingPointValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: totalBoxes', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalBoxes;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedTotalBoxes = chance.d100();
+            quoteAttributes.totalBoxes = expectedTotalBoxes;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalBoxes).toEqual(expectedTotalBoxes);
+        });
+
+        it('should not be negative', () => {
+            const minTotalBoxes = 0;
+            quoteAttributes.totalBoxes = minTotalBoxes - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be an integer', () => {
+            const floatingPointValue = 0.88;
+            quoteAttributes.totalBoxes = floatingPointValue;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
     describe('attribute: products', () => {
         let expectedProduct;
 

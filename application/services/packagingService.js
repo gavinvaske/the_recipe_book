@@ -1,4 +1,5 @@
 const { howManyCirclesCanFitInThisSquare } = require('../enums/circlesPerSquareEnum');
+const isNil = require('lodash.isnil');
 
 const ONE_EIGHTH_INCH = 0.125;
 
@@ -14,4 +15,10 @@ module.exports.getRollsPerLayer = (rollDiameter, boxSideLength) => {
     const rollDiameterPlusBuffer = rollDiameter + buffer;
 
     return howManyCirclesCanFitInThisSquare(rollDiameterPlusBuffer, boxSideLength);
+};
+
+module.exports.getNumberOfBoxes = (rollsPerBox, numberOfRolls) => {
+    if (isNil(rollsPerBox) || isNil(numberOfRolls)) return null;
+
+    return Math.ceil(numberOfRolls / rollsPerBox);
 };

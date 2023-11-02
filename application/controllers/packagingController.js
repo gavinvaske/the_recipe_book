@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const packagingService = require('../services/packagingService');
-const { getImageForNCirclesInSquare: getSvgForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
+const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
 
 const SERVER_ERROR_STATUS = 500;
 
@@ -26,10 +26,10 @@ router.post('/estimate', (request, response) => {
         
         const numberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
         const rollsPerLayer = packagingService.getRollsPerLayer(rollDiameter, boxSideLength);
-        const circlesInSquareLayoutImagePath = getSvgForNCirclesInSquare(rollsPerLayer);
+        const circlesInSquareLayoutImagePath = getImageForNCirclesInSquare(rollsPerLayer);
     
         const rollsPerBox = rollsPerLayer * numberOfLayers;
-        const numberOfBoxes = numberOfRolls ? Math.ceil(numberOfRolls / rollsPerBox) : null;
+        const numberOfBoxes = packagingService.getNumberOfBoxes(rollsPerBox, numberOfRolls);
         
         return response.json({
             numberOfLayers,

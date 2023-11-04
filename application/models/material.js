@@ -2,8 +2,25 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+const Decimal = require('decimal.js');
 
 mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+
+const FOUR_DECIMAL_PLACES = 4;
+
+function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
+    return function (number) {
+        const moreAccurateNumber = new Decimal(number);
+
+        return moreAccurateNumber.toFixed(nthDecimalPlaces);
+    };
+}
+
+const weightPerMsiAttribute = {
+    type: Number,
+    min: 0,
+    set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
+}
 
 const schema = new Schema({
     name: {
@@ -96,9 +113,23 @@ const schema = new Schema({
             message: '{VALUE} is not an integer'
         },
         min: 0
-    }
-
-}, { timestamps: true });
+    },
+    facesheetWeightPerMsi: {
+        ...weightPerMsiAttribute,
+        required: true
+    },
+    adhesiveWeightPerMsi: {
+        ...weightPerMsiAttribute,
+        required: true
+    },
+    linerWeightPerMsi: {
+        ...weightPerMsiAttribute,
+        required: true
+    },
+}, {
+    timestamps: true,
+    strict: 'throw'
+});
 
 const Material = mongoose.model('Material', schema);
 

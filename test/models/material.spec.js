@@ -5,11 +5,43 @@ const databaseService = require('../../application/services/databaseService');
 
 const testDataGenerator = require('../testDataGenerator');
 
+function verifyWeightPerMsiAttribute(materialAttributes, attributeName) {
+    let material, error;
+
+    // (1) should be a number
+    const expectedWeightPerMsi = 0.01;
+    materialAttributes[attributeName] = expectedWeightPerMsi;
+    material = new MaterialModel(materialAttributes);
+
+    expect(material[attributeName]).toEqual(expectedWeightPerMsi);
+
+    // (2) should not be less than 0
+    materialAttributes[attributeName] = -0.01;
+    material = new MaterialModel(materialAttributes);
+    error = material.validateSync();
+    expect(error).toBeDefined();
+
+    // (3) should round to 4th decimal place
+    const decimalToRound = 0.0023555555;
+    const expectedRoundedDecimal = 0.0024;
+    materialAttributes[attributeName] = decimalToRound;
+    material = new MaterialModel(materialAttributes);
+
+    expect(material[attributeName]).toEqual(expectedRoundedDecimal);
+}
+
 describe('validation', () => {
     let materialAttributes;
 
     beforeEach(() => {
         materialAttributes = testDataGenerator.mockData.Material();
+    });
+
+    it('should throw error if unknown attribute(s) are defined', () => {
+        const unknownAttribute = chance.word();
+        materialAttributes[unknownAttribute] = chance.integer();
+
+        expect(() => new MaterialModel(materialAttributes)).toThrow();
     });
 
     it('should validate when required attributes are defined', () => {
@@ -542,6 +574,51 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
     });
+
+    describe('attribute: facesheetWeightPerMsi', () => {
+        it('should be a weightPerMsi attribute', () => {
+            verifyWeightPerMsiAttribute(materialAttributes, 'facesheetWeightPerMsi')
+        })
+
+        it('should be required', () => {
+            delete materialAttributes.facesheetWeightPerMsi;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    })
+
+    describe('attribute: adhesiveWeightPerMsi', () => {
+        it('should be a weightPerMsi attribute', () => {
+            verifyWeightPerMsiAttribute(materialAttributes, 'adhesiveWeightPerMsi')
+        })
+
+        it('should be required', () => {
+            delete materialAttributes.adhesiveWeightPerMsi;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    })
+
+    describe('attribute: linerWeightPerMsi', () => {
+        it('should be a weightPerMsi attribute', () => {
+            verifyWeightPerMsiAttribute(materialAttributes, 'linerWeightPerMsi')
+        })
+
+        it('should be required', () => {
+            delete materialAttributes.linerWeightPerMsi;
+            const material = new MaterialModel(materialAttributes);
+            
+            const error = material.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    })
 
     describe('verify database interactions', () => {
         beforeEach(async () => {

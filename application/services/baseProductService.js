@@ -12,7 +12,7 @@ module.exports.getCombinedMaterialThicknessByBaseProductId = async (baseProductI
     const primaryMaterialThickness = (primaryMaterial && primaryMaterial.thickness) ? primaryMaterial.thickness : 0;
     const secondaryMaterialThickness = (secondaryMaterial && secondaryMaterial.thickness) ? secondaryMaterial.thickness : 0;
     const finishThickness = (finish && finish.thickness) ? finish.thickness : 0;
-    const combinedThickness = primaryMaterialThickness + secondaryMaterialThickness + finishThickness
+    const combinedThickness = primaryMaterialThickness + secondaryMaterialThickness + finishThickness;
 
     return combinedThickness;
-}
+};

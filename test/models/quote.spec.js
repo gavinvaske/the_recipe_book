@@ -5,6 +5,7 @@ const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const constants = require('../../application/enums/constantsEnum');
+const testDataGenerator = require('../testDataGenerator');
 
 const FOUR_DECIMAL_PLACES = 4;
 
@@ -215,6 +216,13 @@ describe('File: quote.js', () => {
 
         const aNumberLessThanTotalStockFeet = quoteAttributes.totalStockFeet - 1;
         quoteAttributes.initialStockLength = aNumberLessThanTotalStockFeet;
+    });
+
+    it('should throw error if unknown attribute(s) are defined', () => {
+        const unknownAttribute = chance.word();
+        quoteAttributes[unknownAttribute] = chance.integer();
+
+        expect(() => new Quote(quoteAttributes)).toThrow();
     });
 
     it('should have the correct indexes', async () => {
@@ -735,9 +743,23 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: material', () => {
+    describe('attribute: primaryMaterialOverride', () => {
+        beforeEach(() => {
+            const material = testDataGenerator.mockData.Material();
+            quoteAttributes.primaryMaterialOverride = {
+                name: material.name,
+                thickness: material.thickness,
+                costPerMsi: material.costPerMsi,
+                freightCostPerMsi: material.freightCostPerMsi,
+                quotePricePerMsi: material.quotePricePerMsi,
+                facesheetWeightPerMsi: material.facesheetWeightPerMsi,
+                adhesiveWeightPerMsi: material.adhesiveWeightPerMsi,
+                linerWeightPerMsi: material.linerWeightPerMsi,
+            };
+        });
+
         it('should not be required', () => {
-            delete quoteAttributes.material;
+            delete quoteAttributes.primaryMaterialOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -745,382 +767,365 @@ describe('File: quote.js', () => {
             expect(error).toBeUndefined();
         });
 
-        it('should be a mongoose.Schema.Types.ObjectId', () => {
-            const expectedMaterial = mongoose.Types.ObjectId();
-            quoteAttributes.material = expectedMaterial;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.material).toEqual(expectedMaterial);
-        });
-    });
+        it('should share the same validation rules with secondaryMaterialOverride', () => {
+            quoteAttributes.secondaryMaterialOverride = quoteAttributes.primaryMaterialOverride;
 
-    describe('attribute: overrideMaterialFreightMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideMaterialFreightMsi;
-            const quote = new Quote(quoteAttributes);
+            let quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
+            let error = quote.validateSync();
             
             expect(error).toBeUndefined();
-        });
+            
+            // This next part of this test "ensures" that the above code doesn't result in a false positive
+            const unknownAttribute = chance.word();
+            quoteAttributes.secondaryMaterialOverride[unknownAttribute] = chance.word();
+            quote = new Quote(quoteAttributes);
 
-        it('should be a number', () => {
-            const expectedOverrideMaterialFreightMsi = chance.d100();
-            quoteAttributes.overrideMaterialFreightMsi = expectedOverrideMaterialFreightMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialFreightMsi).toEqual(expectedOverrideMaterialFreightMsi);
-        });
+            error = quote.validateSync();
 
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 987654321.00005;
-            const roundedValue = 987654321.0001;
-            quoteAttributes.overrideMaterialFreightMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialFreightMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideMaterialTotalCostMsi = 0;
-            quoteAttributes.overrideMaterialFreightMsi = minOverrideMaterialTotalCostMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
             expect(error).toBeDefined();
         });
-    });
+
+        describe('attribute: name', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.name;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should be a string', () => {
+                const quote = new Quote(quoteAttributes);
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.name).toEqual(expect.any(String));
+            });
+
+            it('should automatically uppercase the name', () => {
+                const lowerCaseString = chance.string().toLowerCase();
+                quoteAttributes.primaryMaterialOverride.name = lowerCaseString;
+                const quote = new Quote(quoteAttributes);
+                
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.name).toEqual(lowerCaseString.toUpperCase());
+            });
+        });
+
+        describe('attribute: thickness', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.thickness;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+            
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.thickness).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeThickness = -1;
+                quoteAttributes.primaryMaterialOverride.thickness = negativeThickness;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+
+        describe('attribute: costPerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.costPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.costPerMsi).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeCostPerMsi = -1;
+                quoteAttributes.primaryMaterialOverride.costPerMsi = negativeCostPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+
+        describe('attribute: freightCostPerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.freightCostPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
     
-    describe('attribute: overrideMaterialTotalCostMsi', () => {
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.freightCostPerMsi).toEqual(expect.any(Number));
+            });
+    
+            it('should be greater than or equal to 0', () => {
+                const minOverrideMaterialTotalCostMsi = 0;
+                quoteAttributes.primaryMaterialOverride.freightCostPerMsi = minOverrideMaterialTotalCostMsi - 1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+
+        describe('attribute: quotePricePerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.quotePricePerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.quotePricePerMsi).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeQuotePricePerMsi = -1;
+                quoteAttributes.primaryMaterialOverride.quotePricePerMsi = negativeQuotePricePerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+
+        describe('attribute: facesheetWeightPerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.primaryMaterialOverride.facesheetWeightPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { primaryMaterialOverride } = quote;
+                
+                expect(primaryMaterialOverride.facesheetWeightPerMsi).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeFacesheetWeightPerMsi = -1;
+                quoteAttributes.primaryMaterialOverride.facesheetWeightPerMsi = negativeFacesheetWeightPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+        });
+    });
+
+    describe('attribute: finishOverride', () => {
+        beforeEach(() => {
+            const finish = testDataGenerator.mockData.Finish();
+            quoteAttributes.finishOverride = {
+                name: finish.name,
+                thickness: finish.thickness,
+                costPerMsi: finish.costPerMsi,
+                freightCostPerMsi: finish.freightCostPerMsi,
+                quotePricePerMsi: finish.quotePricePerMsi,
+            };
+        });
+
         it('should not be required', () => {
-            delete quoteAttributes.overrideMaterialTotalCostMsi;
+            delete quoteAttributes.finishOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
-
+            
             expect(error).toBeUndefined();
         });
 
-        it('should be a number', () => {
-            const expectedOverrideMaterialTotalCostMsi = chance.d100();
-            quoteAttributes.overrideMaterialTotalCostMsi = expectedOverrideMaterialTotalCostMsi;
+        it('should validate successfully when all required attributes are defined', () => {
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.overrideMaterialTotalCostMsi).toEqual(expectedOverrideMaterialTotalCostMsi);
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
         });
 
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 9999.1234324234;
-            const roundedValue = 9999.1234;
-            quoteAttributes.overrideMaterialTotalCostMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialTotalCostMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideMaterialTotalCostMsi = 0;
-            quoteAttributes.overrideMaterialTotalCostMsi = minOverrideMaterialTotalCostMsi - 1;
+        it('should fail validation if unknown attribute is defined', () => {
+            const unknownAttribute = chance.word();
+            quoteAttributes.finishOverride[unknownAttribute] = chance.word();
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
             
             expect(error).toBeDefined();
         });
-    });
 
-    describe('attribute: overrideMaterialQuotedMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideMaterialQuotedMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+        describe('attribute: name', () => {
+            it('should be required', () => {
+                delete quoteAttributes.finishOverride.name;
+                const quote = new Quote(quoteAttributes);
+
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should automatically uppercase the name', () => {
+                const lowerCaseString = chance.string().toLowerCase();
+                quoteAttributes.finishOverride.name = lowerCaseString;
+                const quote = new Quote(quoteAttributes);
+                
+                const { finishOverride } = quote;
+                
+                expect(finishOverride.name).toEqual(lowerCaseString.toUpperCase());
+            });
         });
 
-        it('should be a number', () => {
-            const expectedOverrideMaterialQuotedMsi = chance.d100();
-            quoteAttributes.overrideMaterialQuotedMsi = expectedOverrideMaterialQuotedMsi;
-            const quote = new Quote(quoteAttributes);
+        describe('attribute: thickness', () => {
+            it('should be required', () => {
+                delete quoteAttributes.finishOverride.thickness;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
             
-            expect(quote.overrideMaterialQuotedMsi).toEqual(expectedOverrideMaterialQuotedMsi);
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { finishOverride } = quote;
+                
+                expect(finishOverride.thickness).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeThickness = -1;
+                quoteAttributes.finishOverride.thickness = negativeThickness;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 123.54321;
-            const roundedValue = 123.5432;
-            quoteAttributes.overrideMaterialQuotedMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialQuotedMsi).toEqual(roundedValue);
+        describe('attribute: costPerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.finishOverride.costPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { finishOverride } = quote;
+                
+                expect(finishOverride.costPerMsi).toEqual(expect.any(Number));
+            });
+
+            it('should not be negative', () => {
+                const negativeCostPerMsi = -1;
+                quoteAttributes.finishOverride.costPerMsi = negativeCostPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should be greater than or equal to 0', () => {
-            const minOverrideMaterialQuotedMsi = 0;
-            quoteAttributes.overrideMaterialQuotedMsi = minOverrideMaterialQuotedMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
+        describe('attribute: freightCostPerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.finishOverride.freightCostPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
 
-    describe('attribute: overrideMaterialThickness', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideMaterialThickness;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { finishOverride } = quote;
+                
+                expect(finishOverride.freightCostPerMsi).toEqual(expect.any(Number));
+            });
 
-        it('should be a number', () => {
-            const expectedOverrideMaterialThickness = chance.d100();
-            quoteAttributes.overrideMaterialThickness = expectedOverrideMaterialThickness;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialThickness).toEqual(expectedOverrideMaterialThickness);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 111.2222222222222;
-            const roundedValue = 111.2222;
-            quoteAttributes.overrideMaterialThickness = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideMaterialThickness).toEqual(roundedValue);
+            it('should not be negative', () => {
+                const negativeFreightCostPerMsi = -1;
+                quoteAttributes.finishOverride.freightCostPerMsi = negativeFreightCostPerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should be greater than or equal to 0', () => {
-            const minOverrideMaterialThickness = 0;
-            quoteAttributes.overrideMaterialThickness = minOverrideMaterialThickness - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
+        describe('attribute: quotePricePerMsi', () => {
+            it('should be required', () => {
+                delete quoteAttributes.finishOverride.quotePricePerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
 
-            expect(error).toBeDefined();
-        });
-    });
+            it('should be a number', () => {
+                const quote = new Quote(quoteAttributes);
+                const { finishOverride } = quote;
+                
+                expect(finishOverride.quotePricePerMsi).toEqual(expect.any(Number));
+            });
 
-    describe('attribute: overrideFinish', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinish;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a mongoose.Types.ObjectId', () => {
-            const expectedOverrideFinish = new mongoose.Types.ObjectId();
-            quoteAttributes.overrideFinish = expectedOverrideFinish;
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.overrideFinish).toEqual(expectedOverrideFinish);
-        });
-    });
-
-    describe('attribute: overrideFinishCostMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinishCostMsi;
-            const quote = new Quote(quoteAttributes);
-
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideFinishCostMsi = chance.d100();
-            quoteAttributes.overrideFinishCostMsi = expectedOverrideFinishCostMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishCostMsi).toEqual(expectedOverrideFinishCostMsi);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 1000.999999999999;
-            const roundedValue = 1001;
-            quoteAttributes.overrideFinishCostMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishCostMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideFinishCostMsi = 0;
-            quoteAttributes.overrideFinishCostMsi = minOverrideFinishCostMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: overrideFinishFreightMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinishFreightMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideFinishFreightMsi = chance.d100();
-            quoteAttributes.overrideFinishFreightMsi = expectedOverrideFinishFreightMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishFreightMsi).toEqual(expectedOverrideFinishFreightMsi);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 987.12279;
-            const roundedValue = 987.1228;
-            quoteAttributes.overrideFinishFreightMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishFreightMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideFinishFreightMsi = 0;
-            quoteAttributes.overrideFinishFreightMsi = minOverrideFinishFreightMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: overrideFinishTotalCostMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinishTotalCostMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideFinishTotalCostMsi = chance.d100();
-            quoteAttributes.overrideFinishTotalCostMsi = expectedOverrideFinishTotalCostMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishTotalCostMsi).toEqual(expectedOverrideFinishTotalCostMsi);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 654.10009;
-            const roundedValue = 654.1001;
-            quoteAttributes.overrideFinishTotalCostMsi = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishTotalCostMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideFinishTotalCostMsi = 0;
-            quoteAttributes.overrideFinishTotalCostMsi = minOverrideFinishTotalCostMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: overrideFinishQuotedMsi', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinishQuotedMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideFinishQuotedMsi = chance.d100();
-            quoteAttributes.overrideFinishQuotedMsi = expectedOverrideFinishQuotedMsi;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishQuotedMsi).toEqual(expectedOverrideFinishQuotedMsi);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 1.00005;
-            const roundedValue = 1.0001;
-            quoteAttributes.overrideFinishQuotedMsi = unroundedValue;
-
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishQuotedMsi).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideFinishQuotedMsi = 0;
-            quoteAttributes.overrideFinishQuotedMsi = minOverrideFinishQuotedMsi - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: overrideFinishThickness', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideFinishThickness;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideFinishThickness = chance.d100();
-            quoteAttributes.overrideFinishThickness = expectedOverrideFinishThickness;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishThickness).toEqual(expectedOverrideFinishThickness);
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 8888888888888.0000999999999999;
-            const roundedValue = 8888888888888.0001;
-            quoteAttributes.overrideFinishThickness = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideFinishThickness).toEqual(roundedValue);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideFinishThickness = 0;
-            quoteAttributes.overrideFinishThickness = minOverrideFinishThickness - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+            it('should not be negative', () => {
+                const negativeQuotePricePerMsi = -1;
+                quoteAttributes.finishOverride.quotePricePerMsi = negativeQuotePricePerMsi;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
     });
 
@@ -1309,14 +1314,6 @@ describe('File: quote.js', () => {
 
             expect(quote.totalStockMsi).toEqual(expectedTotalStockMsi);
         });
-
-        // it('should default to the correctly calculated value', () => {
-        //     delete quoteAttributes.totalStockMsi;
-        //     const quote = new Quote(quoteAttributes);
-        //     const expectedValue = (quote.totalStockFeet * constants.MAX_MATERIAL_SIZE_ACROSS) * (12 / 1000);
-
-        //     expect(quote.totalStockMsi).toEqual(expectedValue);
-        // });
     });
 
     describe('attribute: totalRollsOfPaper', () => {

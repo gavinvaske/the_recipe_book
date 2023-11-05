@@ -6,6 +6,12 @@ const { dieShapes } = require('../enums/dieShapesEnum');
 const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');
+const MaterialModel = require('../models/material');
+const FinishModel = require('../models/finish');
+
+// MaterialModel.schema.path('cost')
+// console.log('material 69: ', MaterialModel.schema.path('name'));
+console.log('material 72: ', MaterialModel.schema.paths['name']);
 
 const FOUR_DECIMAL_PLACES = 4;
 const TWO_DECIMAL_PLACES = 2;
@@ -87,6 +93,25 @@ const productWithQtySchema = new Schema({
         }
     }
 });
+
+const materialOverrideSchema = new Schema({
+    name: MaterialModel.schema.obj['name'],
+    thickness: MaterialModel.schema.obj['thickness'],
+    costPerMsi: MaterialModel.schema.obj['costPerMsi'],
+    freightCostPerMsi: MaterialModel.schema.obj['freightCostPerMsi'],
+    quotePricePerMsi: MaterialModel.schema.obj['quotePricePerMsi'],
+    facesheetWeightPerMsi: MaterialModel.schema.obj['facesheetWeightPerMsi'],
+    adhesiveWeightPerMsi: MaterialModel.schema.obj['adhesiveWeightPerMsi'],
+    linerWeightPerMsi: MaterialModel.schema.obj['linerWeightPerMsi'],
+}, { strict: 'throw' });
+
+const finishOverrideSchema = new Schema({
+    name: FinishModel.schema.obj['name'],
+    thickness: FinishModel.schema.obj['thickness'],
+    costPerMsi: FinishModel.schema.obj['costPerMsi'],
+    freightCostPerMsi: FinishModel.schema.obj['freightCostPerMsi'],
+    quotePricePerMsi: FinishModel.schema.obj['quotePricePerMsi'],
+}, { strict: 'throw' });
 
 const DEFAULT_EXTRA_FRAMES = 25;
 
@@ -174,58 +199,14 @@ const quoteSchema = new Schema({
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
         min: 0
     },
-    material: {
-        type: Schema.Types.ObjectId,
-        ref: 'Material'
+    primaryMaterialOverride: {
+        type: materialOverrideSchema
     },
-    overrideMaterialFreightMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
+    secondaryMaterialOverride: {
+        type: materialOverrideSchema
     },
-    overrideMaterialTotalCostMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideMaterialQuotedMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideMaterialThickness: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideFinish: {
-        type: Schema.Types.ObjectId,
-        ref: 'Finish'
-    },
-    overrideFinishCostMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideFinishFreightMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideFinishTotalCostMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideFinishQuotedMsi: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideFinishThickness: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
+    finishOverride: {
+        type: finishOverrideSchema
     },
     coreDiameter: {
         type: Number,
@@ -472,10 +453,10 @@ const quoteSchema = new Schema({
             validator: Number.isInteger,
             message: '{VALUE} is not an integer'
         }
-    }
+    },
 }, { 
     timestamps: true,
-    strict: 'throw' // TODO: Test this line.
+    strict: 'throw'
 });
 
 const Quote = mongoose.model('Quote', quoteSchema);

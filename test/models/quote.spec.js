@@ -283,29 +283,27 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: labelsPerRoll', () => {
-        it('should default to 1,000', () => {
-            delete quoteAttributes.labelsPerRoll;
-            const defaultLabelsPerRoll = 1000;
+    describe('attribute: labelsPerRollOverride', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.labelsPerRollOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
             
             expect(error).toBeUndefined();
-            expect(quote.labelsPerRoll).toEqual(defaultLabelsPerRoll);
         });
 
         it('should be a number', () => {
             const expectedLabelsPerRoll = chance.d100();
-            quoteAttributes.labelsPerRoll = expectedLabelsPerRoll;
+            quoteAttributes.labelsPerRollOverride = expectedLabelsPerRoll;
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.labelsPerRoll).toEqual(expectedLabelsPerRoll);
+            expect(quote.labelsPerRollOverride).toEqual(expectedLabelsPerRoll);
         });
 
         it('should be greater than or equal to 1', () => {
             const minLabelsPerRoll = 1;
-            quoteAttributes.labelsPerRoll = minLabelsPerRoll - 1;
+            quoteAttributes.labelsPerRollOverride = minLabelsPerRoll - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -315,7 +313,7 @@ describe('File: quote.js', () => {
 
         it('should be less than or equal to 1,000,000', () => {
             const maxLabelsPerRoll = 1000000;
-            quoteAttributes.labelsPerRoll = maxLabelsPerRoll + 1;
+            quoteAttributes.labelsPerRollOverride = maxLabelsPerRoll + 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -325,7 +323,7 @@ describe('File: quote.js', () => {
 
         it('should be an integer', () => {
             const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
-            quoteAttributes.labelsPerRoll = floatingPointValue;
+            quoteAttributes.labelsPerRollOverride = floatingPointValue;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -343,15 +341,16 @@ describe('File: quote.js', () => {
             expect(quote.numberOfDesigns).toEqual(expectedNumberOfDesigns);
         });
 
-        it('should befault to 1', () => {
+        it('should default to the number of products (quote.products.length)', () => {
             delete quoteAttributes.numberOfDesigns;
-            const defaultNumberOfDesigns = 1;
+            const expectedNumberOfDesigns = quoteAttributes.products.length;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
             
             expect(error).toBeUndefined();
-            expect(quote.numberOfDesigns).toEqual(defaultNumberOfDesigns);
+            expect(quote.numberOfDesigns).not.toBeFalsy();
+            expect(quote.numberOfDesigns).toEqual(expectedNumberOfDesigns);
         });
         
         it('should be greater than or equal to 1', () => {
@@ -1102,9 +1101,9 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: numberOfColors', () => {
+    describe('attribute: numberOfColorsOverride', () => {
         it('should not be required', () => {
-            delete quoteAttributes.numberOfColors;
+            delete quoteAttributes.numberOfColorsOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1114,7 +1113,7 @@ describe('File: quote.js', () => {
 
         it('should not be less than 1', () => {
             const minNumberOfColors = 1;
-            quoteAttributes.numberOfColors = minNumberOfColors - 1;
+            quoteAttributes.numberOfColorsOverride = minNumberOfColors - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1124,7 +1123,7 @@ describe('File: quote.js', () => {
 
         it('should not be greater than 12', () => {
             const maxNumberOfColors = 12;
-            quoteAttributes.numberOfColors = maxNumberOfColors + 1;
+            quoteAttributes.numberOfColorsOverride = maxNumberOfColors + 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1134,7 +1133,7 @@ describe('File: quote.js', () => {
 
         it('should be an integer', () => {
             const expectedNumberOfColors = 1.15;
-            quoteAttributes.numberOfColors = expectedNumberOfColors;
+            quoteAttributes.numberOfColorsOverride = expectedNumberOfColors;
             const quote = new Quote(quoteAttributes);
 
             const error = quote.validateSync();

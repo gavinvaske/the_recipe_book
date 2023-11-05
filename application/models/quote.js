@@ -131,12 +131,10 @@ const quoteSchema = new Schema({
         ...percentageAttribute,
         required: true,
     },
-    labelsPerRoll: {
+    labelsPerRollOverride: {
         type: Number,
         min: 1,
         max: 1000000,
-        required: true,
-        default: 1000,
         validate : {
             validator : Number.isInteger,
             message: '{VALUE} is not an integer'
@@ -146,7 +144,9 @@ const quoteSchema = new Schema({
         type: Number,
         min: 1,
         max: 1000,
-        default: 1,
+        default: function() {
+            return this.products.length;
+        },
         required: true,
         validate : {
             validator : Number.isInteger,
@@ -187,7 +187,7 @@ const quoteSchema = new Schema({
         min: 0,
         default: 3
     },
-    numberOfColors: {
+    numberOfColorsOverride: {
         type: Number,
         min: 1,
         max: 12,

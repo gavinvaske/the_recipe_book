@@ -12,11 +12,11 @@ describe('validation', () => {
     });
 
     it('should fail validation if unknown attribute is defined', () => {
-        const unknownAttribute = chance.word();
+        const unknownAttribute = chance.string();
         finishAttributes[unknownAttribute] = chance.string();
 
         expect(() => new FinishModel(finishAttributes)).toThrow();
-    })
+    });
 
     describe('successful validation', () => {
         it('should validate when required attributes are defined', () => {

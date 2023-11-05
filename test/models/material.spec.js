@@ -38,7 +38,7 @@ describe('validation', () => {
     });
 
     it('should throw error if unknown attribute(s) are defined', () => {
-        const unknownAttribute = chance.word();
+        const unknownAttribute = chance.string();
         materialAttributes[unknownAttribute] = chance.integer();
 
         expect(() => new MaterialModel(materialAttributes)).toThrow();

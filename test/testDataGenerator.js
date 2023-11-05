@@ -25,7 +25,7 @@ module.exports.mockData = {
 
 function getDie() {
     return {
-        dieShape: chance.pickone(dieShapes),
+        shape: chance.pickone(dieShapes),
         sizeAcross: chance.floating({ min: 0, max: 10, fixed: 2 }),
         sizeAround: chance.floating({ min: 0, max: 10, fixed: 2 }),
         dieNumber: 'DC-1234',

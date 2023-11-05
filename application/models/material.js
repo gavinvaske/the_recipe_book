@@ -20,7 +20,7 @@ const weightPerMsiAttribute = {
     type: Number,
     min: 0,
     set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-}
+};
 
 const schema = new Schema({
     name: {
@@ -53,7 +53,7 @@ const schema = new Schema({
         required: true,
         min: 0
     },
-    materialCost: {
+    costPerMsi: {
         type: Number,
         required: true,
         min: 0,
@@ -61,7 +61,7 @@ const schema = new Schema({
         set: convertDollarsToPennies,
 
     },
-    freightCost: {
+    freightCostPerMsi: {
         type: Number,
         required: true,
         min: 0,
@@ -86,7 +86,7 @@ const schema = new Schema({
         ref: 'AdhesiveCategory',
         required: true
     },
-    quotePrice: {
+    quotePricePerMsi: {
         type: Number,
         required: true,
         get: convertPenniesToDollars,

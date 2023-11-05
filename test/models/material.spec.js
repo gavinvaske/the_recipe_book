@@ -234,9 +234,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: materialCost', () => {
+    describe('attribute: costPerMsi', () => {
         it('should fail validation if attribute is undefined', () => {
-            delete materialAttributes.materialCost;
+            delete materialAttributes.costPerMsi;
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();
@@ -245,7 +245,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is negative', () => {
-            materialAttributes.materialCost = chance.integer({ max: -1 });
+            materialAttributes.costPerMsi = chance.integer({ max: -1 });
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -256,32 +256,32 @@ describe('validation', () => {
         it('should be a Number', () => {
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.materialCost).toEqual(expect.any(Number));
+            expect(material.costPerMsi).toEqual(expect.any(Number));
         });
 
         it('should round floating point values to 2nd decimal places', () => {
             const priceWithWayTooManyDecimals = '100.11999999999';
-            materialAttributes.materialCost = priceWithWayTooManyDecimals;
+            materialAttributes.costPerMsi = priceWithWayTooManyDecimals;
             const expectedPrice = 100.12;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.materialCost).toEqual(expectedPrice);
+            expect(material.costPerMsi).toEqual(expectedPrice);
         });
 
         it('should remove commas from price', () => {
             const currencyWithCommas = '1,192,123.83';
             const currencyWithoutCommas = 1192123.83;
-            materialAttributes.materialCost = currencyWithCommas;
+            materialAttributes.costPerMsi = currencyWithCommas;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.materialCost).toEqual(currencyWithoutCommas);
+            expect(material.costPerMsi).toEqual(currencyWithoutCommas);
         });
 
         it('should fail validation if price is a non-number', () => {
             const invalidPrice = chance.word();
-            materialAttributes.materialCost = invalidPrice;
+            materialAttributes.costPerMsi = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -291,7 +291,7 @@ describe('validation', () => {
 
         it('should fail validation if price is empty', () => {
             const invalidPrice = '';
-            materialAttributes.materialCost = invalidPrice;
+            materialAttributes.costPerMsi = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -300,15 +300,15 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: freightCost', () => {
+    describe('attribute: freightCostPerMsi', () => {
         it('should be a Number', () => {
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.freightCost).toEqual(expect.any(Number));
+            expect(material.freightCostPerMsi).toEqual(expect.any(Number));
         });
 
         it('should fail validation if attribute is undefined', () => {
-            delete materialAttributes.freightCost;
+            delete materialAttributes.freightCostPerMsi;
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();
@@ -317,7 +317,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is negative', () => {
-            materialAttributes.freightCost = chance.integer({ max: -1 });
+            materialAttributes.freightCostPerMsi = chance.integer({ max: -1 });
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -327,27 +327,27 @@ describe('validation', () => {
 
         it('should round floating point values to 2nd decimal place', () => {
             const priceWithWayTooManyDecimals = '100.11999999999';
-            materialAttributes.freightCost = priceWithWayTooManyDecimals;
+            materialAttributes.freightCostPerMsi = priceWithWayTooManyDecimals;
             const expectedPrice = 100.12;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.freightCost).toEqual(expectedPrice);
+            expect(material.freightCostPerMsi).toEqual(expectedPrice);
         });
 
         it('should remove commas from price', () => {
             const currencyWithCommas = '1,192,123.83';
             const currencyWithoutCommas = 1192123.83;
-            materialAttributes.freightCost = currencyWithCommas;
+            materialAttributes.freightCostPerMsi = currencyWithCommas;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.freightCost).toEqual(currencyWithoutCommas);
+            expect(material.freightCostPerMsi).toEqual(currencyWithoutCommas);
         });
 
         it('should fail validation if price is a non-number', () => {
             const invalidPrice = chance.word();
-            materialAttributes.freightCost = invalidPrice;
+            materialAttributes.freightCostPerMsi = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -357,7 +357,7 @@ describe('validation', () => {
 
         it('should fail validation if price is empty', () => {
             const invalidPrice = '';
-            materialAttributes.freightCost = invalidPrice;
+            materialAttributes.freightCostPerMsi = invalidPrice;
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -443,15 +443,15 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: quotePrice', () => {
+    describe('attribute: quotePricePerMsi', () => {
         it('should be a Number', () => {
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.quotePrice).toEqual(expect.any(Number));
+            expect(material.quotePricePerMsi).toEqual(expect.any(Number));
         });
 
         it('should fail validation if attribute is undefined', () => {
-            delete materialAttributes.quotePrice;
+            delete materialAttributes.quotePricePerMsi;
             const material = new MaterialModel(materialAttributes);
             
             const error = material.validateSync();
@@ -460,7 +460,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is negative', () => {
-            materialAttributes.quotePrice = chance.integer({ max: -1 });
+            materialAttributes.quotePricePerMsi = chance.integer({ max: -1 });
             const material = new MaterialModel(materialAttributes);
 
             const error = material.validateSync();
@@ -470,22 +470,22 @@ describe('validation', () => {
 
         it('should round floating points to 2nd decimal places', () => {
             const priceWithWayTooManyDecimals = '888.11999999999';
-            materialAttributes.quotePrice = priceWithWayTooManyDecimals;
+            materialAttributes.quotePricePerMsi = priceWithWayTooManyDecimals;
             const expectedPrice = 888.12;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.quotePrice).toEqual(expectedPrice);
+            expect(material.quotePricePerMsi).toEqual(expectedPrice);
         });
 
         it('should remove commas from price', () => {
             const currencyWithCommas = '7,194,123.83';
             const currencyWithoutCommas = 7194123.83;
-            materialAttributes.freightCost = currencyWithCommas;
+            materialAttributes.quotePricePerMsi = currencyWithCommas;
 
             const material = new MaterialModel(materialAttributes);
 
-            expect(material.freightCost).toEqual(currencyWithoutCommas);
+            expect(material.quotePricePerMsi).toEqual(currencyWithoutCommas);
         });
     });
 
@@ -577,8 +577,8 @@ describe('validation', () => {
 
     describe('attribute: facesheetWeightPerMsi', () => {
         it('should be a weightPerMsi attribute', () => {
-            verifyWeightPerMsiAttribute(materialAttributes, 'facesheetWeightPerMsi')
-        })
+            verifyWeightPerMsiAttribute(materialAttributes, 'facesheetWeightPerMsi');
+        });
 
         it('should be required', () => {
             delete materialAttributes.facesheetWeightPerMsi;
@@ -587,13 +587,13 @@ describe('validation', () => {
             const error = material.validateSync();
             
             expect(error).toBeDefined();
-        })
-    })
+        });
+    });
 
     describe('attribute: adhesiveWeightPerMsi', () => {
         it('should be a weightPerMsi attribute', () => {
-            verifyWeightPerMsiAttribute(materialAttributes, 'adhesiveWeightPerMsi')
-        })
+            verifyWeightPerMsiAttribute(materialAttributes, 'adhesiveWeightPerMsi');
+        });
 
         it('should be required', () => {
             delete materialAttributes.adhesiveWeightPerMsi;
@@ -602,13 +602,13 @@ describe('validation', () => {
             const error = material.validateSync();
             
             expect(error).toBeDefined();
-        })
-    })
+        });
+    });
 
     describe('attribute: linerWeightPerMsi', () => {
         it('should be a weightPerMsi attribute', () => {
-            verifyWeightPerMsiAttribute(materialAttributes, 'linerWeightPerMsi')
-        })
+            verifyWeightPerMsiAttribute(materialAttributes, 'linerWeightPerMsi');
+        });
 
         it('should be required', () => {
             delete materialAttributes.linerWeightPerMsi;
@@ -617,8 +617,8 @@ describe('validation', () => {
             const error = material.validateSync();
             
             expect(error).toBeDefined();
-        })
-    })
+        });
+    });
 
     describe('verify database interactions', () => {
         beforeEach(async () => {

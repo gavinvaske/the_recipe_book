@@ -47,7 +47,7 @@ function setDieStatus(newStatus) {
 }
 
 const schema = new Schema({
-    dieShape: {
+    shape: {
         type: String,
         required: true,
         enum: [...dieShapes],
@@ -126,7 +126,8 @@ const schema = new Schema({
     },
     cornerRadius: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     topAndBottom: {
         type: Number,

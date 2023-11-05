@@ -31,9 +31,9 @@ describe('validation', () => {
         expect(error).toBeUndefined();
     });
 
-    describe('attribute: dieShape', () => {
+    describe('attribute: shape', () => {
         it('should fail validation if attribute is not defined', () => {
-            delete dieAttributes.dieShape;
+            delete dieAttributes.shape;
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
@@ -43,7 +43,7 @@ describe('validation', () => {
 
         it('should fail if string is not an accepted enum value', () => {
             const definitlyNotARealShape = chance.string();
-            dieAttributes.dieShape = definitlyNotARealShape;
+            dieAttributes.shape = definitlyNotARealShape;
 
             const die = new DieModel(dieAttributes);
 
@@ -54,7 +54,7 @@ describe('validation', () => {
 
         it('should NOT fail if string IS AN accepted enum value', () => {
             const acceptableShape = chance.pickone(dieShapes);
-            dieAttributes.dieShape = acceptableShape;
+            dieAttributes.shape = acceptableShape;
 
             const die = new DieModel(dieAttributes);
 
@@ -65,7 +65,7 @@ describe('validation', () => {
 
         it('should NOT fail if string IS A accepted enum value but lowercased', () => {
             const acceptableShape = chance.pickone(dieShapes);
-            dieAttributes.dieShape = acceptableShape.toLowerCase();
+            dieAttributes.shape = acceptableShape.toLowerCase();
 
             const die = new DieModel(dieAttributes);
 
@@ -498,6 +498,7 @@ describe('validation', () => {
             expect(error).not.toBeDefined();
         });
     });
+
     describe('attribute: cornerRadius', () => {
         it('should fail validation if attribute is not defined', () => {
             delete dieAttributes.cornerRadius;
@@ -513,6 +514,15 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
             
             expect(die.cornerRadius).toEqual(expect.any(Number));
+        });
+        
+        it('should not be negative', () => {
+            dieAttributes.cornerRadius = -1;
+            const die = new DieModel(dieAttributes);
+            
+            const error = die.validateSync();
+            
+            expect(error).toBeDefined();
         });
     });
     describe('attribute: spaceAcross', () => {

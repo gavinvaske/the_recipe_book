@@ -35,7 +35,7 @@ describe('File: baseProduct.js', () => {
                     primaryMaterial: primaryMaterial._id,
                     secondaryMaterial: secondaryMaterial._id,
                     customer: customer._id
-                }
+                };
                 baseProduct = new BaseProductModel(baseProductAttributes);
 
                 await baseProduct.save({ validateBeforeSave: false });
@@ -58,7 +58,7 @@ describe('File: baseProduct.js', () => {
                 baseProductAttributes = {
                     ...baseProductAttributes,
                     secondaryMaterial: undefined
-                }
+                };
                 baseProduct = new BaseProductModel(baseProductAttributes);
                 await baseProduct.save({ validateBeforeSave: false });
                 const expectectedCombinedMaterialThickness = primaryMaterial.thickness + finish.thickness;
@@ -67,7 +67,7 @@ describe('File: baseProduct.js', () => {
 
                 expect(actualCombinedMaterialThickness).not.toBeFalsy();
                 expect(actualCombinedMaterialThickness).toBe(expectectedCombinedMaterialThickness);
-            })
+            });
 
             it('should compute the material thickness correctly when finish is not defined', async () => {
                 baseProductAttributes = {
@@ -82,7 +82,7 @@ describe('File: baseProduct.js', () => {
 
                 expect(actualCombinedMaterialThickness).not.toBeFalsy();
                 expect(actualCombinedMaterialThickness).toBe(expectectedCombinedMaterialThickness);
-            })
+            });
 
             it('should compute the material thickness correctly when primaryMaterial is not defined', async () => {
                 baseProductAttributes = {
@@ -97,8 +97,8 @@ describe('File: baseProduct.js', () => {
 
                 expect(actualCombinedMaterialThickness).not.toBeFalsy();
                 expect(actualCombinedMaterialThickness).toBe(expectectedCombinedMaterialThickness);
-            })
+            });
 
-        })
-    })
-})
+        });
+    });
+});

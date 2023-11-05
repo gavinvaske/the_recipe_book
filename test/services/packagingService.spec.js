@@ -67,4 +67,46 @@ describe('File: packagingService.js', () => {
             expect(howManyCirclesCanFitInThisSquareMock).toHaveBeenCalledWith(rollDiameter + ONE_EIGHTH_INCH_BUFFER, boxSideLength);
         });
     });
+
+    describe('Function: getNumberOfBoxes()', () => {
+        let rollsPerBox, numberOfRolls;
+
+        beforeEach(() => {
+            rollsPerBox = chance.d100();
+            numberOfRolls = chance.d100();
+        });
+
+        it('should return null if rollsPerBox is not defined', () => {
+            rollsPerBox = chance.pickone([undefined, null]);
+
+            const actualNumberOfBoxes = packagingService.getNumberOfBoxes(rollsPerBox, numberOfRolls);
+
+            expect(actualNumberOfBoxes).toEqual(null);
+        });
+
+        it('should return null if numberOfRolls is not defined', () => {
+            numberOfRolls = chance.pickone([undefined, null]);
+            
+            const actualNumberOfBoxes = packagingService.getNumberOfBoxes(rollsPerBox, numberOfRolls);
+            
+            expect(actualNumberOfBoxes).toEqual(null);
+        });
+
+        it('should return 0 if number of numberOfRolls is 0', () => {
+            numberOfRolls = 0;
+            
+            const actualNumberOfBoxes = packagingService.getNumberOfBoxes(rollsPerBox, numberOfRolls);
+            
+            expect(actualNumberOfBoxes).toEqual(0);
+        });
+
+        it('should return the correct number of boxes', () => {
+            const expectedNumberOfBoxes = Math.ceil(numberOfRolls / rollsPerBox);
+            
+            const actualNumberOfBoxes = packagingService.getNumberOfBoxes(rollsPerBox, numberOfRolls);
+            
+            expect(actualNumberOfBoxes).not.toBeFalsy();
+            expect(actualNumberOfBoxes).toEqual(expectedNumberOfBoxes);
+        });
+    });
 });

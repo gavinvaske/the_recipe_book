@@ -2,17 +2,14 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
-const { dieShapes } = require('../enums/dieShapesEnum');
 const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');
 const MaterialModel = require('../models/material');
 const FinishModel = require('../models/finish');
+const DieModel = require('./die');
 
-// MaterialModel.schema.path('cost')
-// console.log('material 69: ', MaterialModel.schema.path('name'));
-console.log('material 72: ', MaterialModel.schema.paths['name']);
-
+const DEFAULT_EXTRA_FRAMES = 25;
 const FOUR_DECIMAL_PLACES = 4;
 const TWO_DECIMAL_PLACES = 2;
 
@@ -113,7 +110,14 @@ const finishOverrideSchema = new Schema({
     quotePricePerMsi: FinishModel.schema.obj['quotePricePerMsi'],
 }, { strict: 'throw' });
 
-const DEFAULT_EXTRA_FRAMES = 25;
+const dieOverrideSchema = new Schema({
+    sizeAcross: DieModel.schema.obj['sizeAcross'],
+    sizeAround: DieModel.schema.obj['sizeAround'],
+    cornerRadius: DieModel.schema.obj['cornerRadius'],
+    shape: DieModel.schema.obj['shape'],
+    spaceAround: DieModel.schema.obj['spaceAround'],
+    spaceAcross: DieModel.schema.obj['spaceAcross'],
+}, { strict: 'throw' });
 
 const quoteSchema = new Schema({
     quoteId: {
@@ -165,39 +169,8 @@ const quoteSchema = new Schema({
         type: Number,
         min: 0
     },
-    die: {
-        type: Schema.Types.ObjectId,
-        ref: 'Die'
-    },
-    sizeAcrossOverride: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    sizeAroundOverride: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    cornerRadius: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0,
-        max: 1
-    },
-    shape: {
-        type: String,
-        enum: dieShapes
-    },
-    spaceAroundOverride: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
-    },
-    overrideSpaceAcross: {
-        type: Number,
-        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
-        min: 0
+    dieOverride: {
+        type: dieOverrideSchema
     },
     primaryMaterialOverride: {
         type: materialOverrideSchema

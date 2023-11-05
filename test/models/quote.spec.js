@@ -207,8 +207,6 @@ describe('File: quote.js', () => {
             profitMargin: generateRandomPercentage(),
             quoteId: chance.string(),
             productQty: chance.d100(),
-            sizeAroundOverride: chance.d100(),
-            spaceAroundOverride: chance.d100(),
             products: generateNProducts(),
             frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
             totalStockFeet: chance.d100(),
@@ -219,7 +217,7 @@ describe('File: quote.js', () => {
     });
 
     it('should throw error if unknown attribute(s) are defined', () => {
-        const unknownAttribute = chance.word();
+        const unknownAttribute = chance.string();
         quoteAttributes[unknownAttribute] = chance.integer();
 
         expect(() => new Quote(quoteAttributes)).toThrow();
@@ -460,20 +458,39 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: die', () => {
-        it('should be a mongoose.Schema.Types.ObjectId', () => {
-            const expectedDie = mongoose.Types.ObjectId();
-            quoteAttributes.die = expectedDie;
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.die).toEqual(expectedDie);
-            expect(quote.die).toEqual(expect.any(mongoose.Types.ObjectId));
+    describe('attribute: dieOverride', () => {
+        beforeEach(() => {
+            const die = testDataGenerator.mockData.Die();
+            quoteAttributes.dieOverride = {
+                sizeAcross: die.sizeAcross,
+                sizeAround: die.sizeAround,
+                cornerRadius: die.cornerRadius,
+                shape: die.shape,
+                spaceAround: die.spaceAround,
+                spaceAcross: die.spaceAcross
+            };
         });
-    });
 
-    describe('attribute: sizeAcrossOverride', () => {
+        it('should pass validation when all required attributes are provided', () => {
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should fail validation if unknown attribute is provided', () => {
+            const unknownAttribute = chance.string();
+            quoteAttributes.dieOverride[unknownAttribute] = chance.string();
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
         it('should not be required', () => {
-            delete quoteAttributes.sizeAcrossOverride;
+            delete quoteAttributes.dieOverride;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -481,265 +498,182 @@ describe('File: quote.js', () => {
             expect(error).toBeUndefined();
         });
 
-        it('should be greater than or equal to 0', () => {
-            const minSizeAcross = 0;
-            quoteAttributes.sizeAcrossOverride = minSizeAcross - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+        describe('attribute: dieOverride.sizeAcross', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.sizeAcross;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).not.toBeUndefined();
+            });
+    
+            it('should be greater than or equal to 0', () => {
+                const minSizeAcross = 0;
+                quoteAttributes.dieOverride.sizeAcross = minSizeAcross - 1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should allow floating point values with 4 decimal places', () => {
+                const floatingPointValueWith5DecimalPlaces = 2.0002;
+                quoteAttributes.dieOverride.sizeAcross = floatingPointValueWith5DecimalPlaces;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeUndefined();
+            });
+    
+            it('should allow integers', () => {
+                const integerValue = chance.d100();
+                quoteAttributes.dieOverride.sizeAcross = integerValue;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeUndefined();
+            });
+        });
+        describe('attribute: dieOverride.sizeAround', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.sizeAround;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should not be negative', () => {
+                quoteAttributes.dieOverride.sizeAround = -1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should round the 4th decimal place', () => {
-            const unroundedValue = 1.00005;
-            const roundedValue = 1.0001;
-            quoteAttributes.sizeAcrossOverride = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.sizeAcrossOverride).toEqual(roundedValue);
+        describe('attribute: dieOverride.cornerRadius', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.cornerRadius;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should be allowed to be 0', () => {
+                const allowedValue = 0;
+                quoteAttributes.dieOverride.cornerRadius = allowedValue;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeUndefined();
+            });
+    
+            it('should not be negative', () => {
+                quoteAttributes.dieOverride.cornerRadius = -1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should allow floating point values with 4 decimal places', () => {
-            const floatingPointValueWith5DecimalPlaces = 2.0002;
-            quoteAttributes.sizeAcrossOverride = floatingPointValueWith5DecimalPlaces;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
+        describe('attribute: dieOverride.shape', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.shape;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should be a valid enum value', () => {
+                const allowedValue = chance.pickone(dieShapes);
+                quoteAttributes.dieOverride.shape = allowedValue;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeUndefined();
+            });
+    
+            it('should fail if the value is not a valid enum value', () => {
+                const notAllowedValue = chance.string();
+                quoteAttributes.dieOverride.shape = notAllowedValue;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+    
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should allow integers', () => {
-            const integerValue = chance.d100();
-            quoteAttributes.sizeAcrossOverride = integerValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-    });
-
-    describe('attribute: sizeAroundOverride', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.sizeAroundOverride;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should not be less than 0', () => {
-            const minSizeAroundOverride = 0;
-            quoteAttributes.sizeAroundOverride = minSizeAroundOverride - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+        describe('attribute: dieOverride.spaceAround', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.spaceAround;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should be a number', () => {
+                const expectedSpaceAround = chance.d100();
+                quoteAttributes.dieOverride.spaceAround = expectedSpaceAround;
+                
+                const { dieOverride } = new Quote(quoteAttributes);
+                
+                expect(dieOverride.spaceAround).toEqual(expectedSpaceAround);
+            });
+    
+            it('should not be negative', () => {
+                quoteAttributes.dieOverride.spaceAround = -1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
 
-        it('should allow floating point values with 4 decimal places or less', () => {
-            const allowedValues = [chance.d100(), 100.1234, 999999.123];
-            quoteAttributes.sizeAroundOverride = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should round to the 4th decimal places', () => {
-            const unroundedValue = 987.00005;
-            const roundedValue = 987.0001;
-            quoteAttributes.sizeAroundOverride = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.sizeAroundOverride).toEqual(roundedValue);
-        });
-    });
-
-    describe('attribute: cornerRadius', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.cornerRadius;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be allowed to be 0', () => {
-            const allowedValue = 0;
-            quoteAttributes.cornerRadius = allowedValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should not be less than 0', () => {
-            const minCornerRadius = 0;
-            quoteAttributes.cornerRadius = minCornerRadius - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should be allowed to be 1', () => {
-            const allowedValue = 1;
-            quoteAttributes.cornerRadius = allowedValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should not be greater than 1', () => {
-            const maxCornerRadius = 1;
-            quoteAttributes.cornerRadius = maxCornerRadius + 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should round to the 4th decimal places', () => {
-            const unroundedValue = 654645.12385;
-            const roundedValue = 654645.1239;
-            quoteAttributes.cornerRadius = unroundedValue;
-
-            const quote = new Quote(quoteAttributes);
-
-            expect(quote.cornerRadius).toEqual(roundedValue);
-        });
-
-        it('should allow floating point values with 4 decimal places or less', () => {
-            const allowedValues = [0.5, 0.1234, 0.123];
-            quoteAttributes.cornerRadius = chance.pickone(allowedValues);
-            const quote = new Quote(quoteAttributes);
-
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-    });
-
-    describe('attribute: shape', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.shape;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a valid enum value', () => {
-            const allowedValue = chance.pickone(dieShapes);
-            quoteAttributes.shape = allowedValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should fail if the value is not a valid enum value', () => {
-            const notAllowedValue = chance.string();
-            quoteAttributes.shape = notAllowedValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: spaceAroundOverride', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.spaceAroundOverride;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedSpaceAroundOverride = chance.d100();
-            quoteAttributes.spaceAroundOverride = expectedSpaceAroundOverride;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.spaceAroundOverride).toEqual(expectedSpaceAroundOverride);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minSpaceAroundOverride = 0;
-            quoteAttributes.spaceAroundOverride = minSpaceAroundOverride - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 987.00005;
-            const roundedValue = 987.0001;
-            quoteAttributes.spaceAroundOverride = unroundedValue;
-
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.spaceAroundOverride).toEqual(roundedValue);
-        });
-    });
-
-    describe('attribute: overrideSpaceAcross', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.overrideSpaceAcross;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedOverrideSpaceAcross = chance.d100();
-            quoteAttributes.overrideSpaceAcross = expectedOverrideSpaceAcross;
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideSpaceAcross).toEqual(expectedOverrideSpaceAcross);
-        });
-
-        it('should be greater than or equal to 0', () => {
-            const minOverrideSpaceAcross = 0;
-            quoteAttributes.overrideSpaceAcross = minOverrideSpaceAcross - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should round to the 4th decimal place', () => {
-            const unroundedValue = 1234567890000.111199999999999;
-            const roundedValue = 1234567890000.1112;
-            quoteAttributes.overrideSpaceAcross = unroundedValue;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.overrideSpaceAcross).toEqual(roundedValue);
+        describe('attribute: dieOverride.spaceAcross', () => {
+            it('should be required', () => {
+                delete quoteAttributes.dieOverride.spaceAcross;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
+    
+            it('should be a number', () => {
+                const expectedSpaceAcross = chance.d100();
+                quoteAttributes.dieOverride.spaceAcross = expectedSpaceAcross;
+                const { dieOverride } = new Quote(quoteAttributes);
+                
+                expect(dieOverride.spaceAcross).toEqual(expectedSpaceAcross);
+            });
+    
+            it('should not be negative', () => {
+                quoteAttributes.dieOverride.spaceAcross = -1;
+                const quote = new Quote(quoteAttributes);
+                
+                const error = quote.validateSync();
+                
+                expect(error).toBeDefined();
+            });
         });
     });
 
@@ -986,7 +920,7 @@ describe('File: quote.js', () => {
         });
 
         it('should fail validation if unknown attribute is defined', () => {
-            const unknownAttribute = chance.word();
+            const unknownAttribute = chance.string();
             quoteAttributes.finishOverride[unknownAttribute] = chance.word();
             const quote = new Quote(quoteAttributes);
             

@@ -11,6 +11,13 @@ describe('validation', () => {
         finishAttributes = testDataGenerator.mockData.Finish();
     });
 
+    it('should fail validation if unknown attribute is defined', () => {
+        const unknownAttribute = chance.word();
+        finishAttributes[unknownAttribute] = chance.string();
+
+        expect(() => new FinishModel(finishAttributes)).toThrow();
+    })
+
     describe('successful validation', () => {
         it('should validate when required attributes are defined', () => {
             const finish = new FinishModel(finishAttributes);
@@ -44,7 +51,16 @@ describe('validation', () => {
     
                 const finish = new FinishModel(finishAttributes);
     
-                expect(finish.name).toBe(name);
+                expect(finish.name).toBe(name.toUpperCase());
+            });
+
+            it('should automatically uppercase', () => {
+                const lowerCaseName = chance.string().toLowerCase();
+                finishAttributes.name = lowerCaseName;
+                
+                const finish = new FinishModel(finishAttributes);
+                
+                expect(finish.name).toBe(lowerCaseName.toUpperCase());
             });
         });
 
@@ -178,9 +194,9 @@ describe('validation', () => {
             });
         });
 
-        describe('attribute: finishCost', () => {
+        describe('attribute: costPerMsi', () => {
             it('should fail validation if attribute is undefined', () => {
-                delete finishAttributes.finishCost;
+                delete finishAttributes.costPerMsi;
                 const finish = new FinishModel(finishAttributes);
                 
                 const error = finish.validateSync();
@@ -189,15 +205,15 @@ describe('validation', () => {
             });
 
             it('should be a number', () => {
-                finishAttributes.finishCost = String(chance.floating({ min: 0, fixed: 2 }));
+                finishAttributes.costPerMsi = String(chance.floating({ min: 0, fixed: 2 }));
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.finishCost).toEqual(expect.any(Number));
+                expect(finish.costPerMsi).toEqual(expect.any(Number));
             });
 
             it('should be greater than or equal to 0', () => {
-                finishAttributes.finishCost = -1;
+                finishAttributes.costPerMsi = -1;
                 const finish = new FinishModel(finishAttributes);
                 
                 const error = finish.validateSync();
@@ -208,27 +224,27 @@ describe('validation', () => {
             it('should round to second decimal place', () => {
                 const unroundedDecimal = 123.99999;
                 const roundedDecimal = 124;
-                finishAttributes.finishCost = unroundedDecimal;
+                finishAttributes.costPerMsi = unroundedDecimal;
 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.finishCost).toBe(roundedDecimal);
+                expect(finish.costPerMsi).toBe(roundedDecimal);
             });
 
             it('should handle commas in the cost', () => {
                 const costWithCommas = '199,876.95';
                 const costWithoutCommas = 199876.95;
-                finishAttributes.finishCost = costWithCommas;
+                finishAttributes.costPerMsi = costWithCommas;
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.finishCost).toBe(costWithoutCommas);
+                expect(finish.costPerMsi).toBe(costWithoutCommas);
             });
         });
 
-        describe('attribute: freightCost', () => {
+        describe('attribute: freightCostPerMsi', () => {
             it('should fail validation if attribute is undefined', () => {
-                delete finishAttributes.freightCost;
+                delete finishAttributes.freightCostPerMsi;
                 const finish = new FinishModel(finishAttributes);
                 
                 const error = finish.validateSync();
@@ -237,15 +253,15 @@ describe('validation', () => {
             });
 
             it('should be a number', () => {
-                finishAttributes.freightCost = String(chance.floating({ min: 0, fixed: 2 }));
+                finishAttributes.freightCostPerMsi = String(chance.floating({ min: 0, fixed: 2 }));
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.freightCost).toEqual(expect.any(Number));
+                expect(finish.freightCostPerMsi).toEqual(expect.any(Number));
             });
 
             it('should be greater than or equal to 0', () => {
-                finishAttributes.freightCost = -1;
+                finishAttributes.freightCostPerMsi = -1;
                 const finish = new FinishModel(finishAttributes);
 
                 const error = finish.validateSync();
@@ -282,9 +298,9 @@ describe('validation', () => {
             });
         });
 
-        describe('attribute: quotePrice', () => {
+        describe('attribute: quotePricePerMsi', () => {
             it('should fail validation if attribute is undefined', () => {
-                delete finishAttributes.quotePrice;
+                delete finishAttributes.quotePricePerMsi;
                 const finish = new FinishModel(finishAttributes);
                 
                 const error = finish.validateSync();
@@ -293,15 +309,15 @@ describe('validation', () => {
             });
 
             it('should be a number', () => {
-                finishAttributes.quotePrice = String(chance.floating({ min: 0, fixed: 2 }));
+                finishAttributes.quotePricePerMsi = String(chance.floating({ min: 0, fixed: 2 }));
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.quotePrice).toEqual(expect.any(Number));
+                expect(finish.quotePricePerMsi).toEqual(expect.any(Number));
             });
 
             it('should be greater than or equal to 0.00', () => {
-                finishAttributes.quotePrice = -1;
+                finishAttributes.quotePricePerMsi = -1;
                 const finish = new FinishModel(finishAttributes);
                 
                 const error = finish.validateSync();
@@ -312,11 +328,11 @@ describe('validation', () => {
             it('should round to 2nd decimal place', () => {
                 const unroundedValue = 549835438950.505;
                 const roundedValue = 549835438950.51;
-                finishAttributes.quotePrice = unroundedValue;
+                finishAttributes.quotePricePerMsi = unroundedValue;
                 
                 const finish = new FinishModel(finishAttributes);
                 
-                expect(finish.quotePrice).toBe(roundedValue);
+                expect(finish.quotePricePerMsi).toBe(roundedValue);
             });
         });
 

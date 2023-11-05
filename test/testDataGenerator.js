@@ -57,17 +57,20 @@ function getMaterial() {
         materialCategory: new mongoose.Types.ObjectId(),
         thickness: chance.integer({ min: 0 }),
         weight: chance.integer({ min: 0 }),
-        materialCost: `${chance.floating({ min: 0 })}`,
-        freightCost: `${chance.floating({ min: 0 })}`,
+        costPerMsi: `${chance.floating({ min: 0 })}`,
+        freightCostPerMsi: `${chance.floating({ min: 0 })}`,
         width: chance.d12(),
         faceColor: chance.string(),
         adhesive: chance.string(),
         adhesiveCategory: new mongoose.Types.ObjectId(),
-        quotePrice: chance.integer({ min: 0 }),
+        quotePricePerMsi: chance.integer({ min: 0 }),
         description: chance.string(),
         whenToUse: chance.string(),
         alternativeStock: chance.string(),
-        length: chance.integer({ min: 0 })
+        length: chance.integer({ min: 0 }),
+        facesheetWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
+        adhesiveWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
+        linerWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
     };
 }
 
@@ -79,10 +82,10 @@ function getFinish() {
         category: mongoose.Types.ObjectId(),
         thickness: chance.integer({ min: 0 }),
         weight: chance.d100(),
-        finishCost: chance.floating({ min: 0, fixed: 2 }),
-        freightCost: chance.floating({ min: 0, fixed: 2 }),
+        costPerMsi: chance.floating({ min: 0, fixed: 2 }),
+        freightCostPerMsi: chance.floating({ min: 0, fixed: 2 }),
         width: chance.d100(),
-        quotePrice: chance.floating({ min: 0, fixed: 2 }),
+        quotePricePerMsi: chance.floating({ min: 0, fixed: 2 }),
         description: chance.string(),
         whenToUse: chance.string(),
         alternativeFinish: chance.string()

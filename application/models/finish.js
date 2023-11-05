@@ -9,6 +9,7 @@ const schema = new Schema({
     name: {
         type: String,
         required: true,
+        uppercase: true
     },
     finishId: {
         type: String,
@@ -34,14 +35,14 @@ const schema = new Schema({
         required: true,
         min: 0
     },
-    finishCost: {
+    costPerMsi: {
         type: Number,
         required: true,
         min: 0,
         get: convertPenniesToDollars,
         set: convertDollarsToPennies,
     },
-    freightCost: {
+    freightCostPerMsi: {
         type: Number,
         required: true,
         min: 0,
@@ -53,7 +54,7 @@ const schema = new Schema({
         required: true,
         min: 0
     },
-    quotePrice: {
+    quotePricePerMsi: {
         type: Number,
         required: true,
         min: 0,
@@ -72,7 +73,10 @@ const schema = new Schema({
         type: String,
         required: false
     }
-}, { timestamps: true });
+}, {
+    timestamps: true,
+    strict: 'throw'
+});
 
 const Finish = mongoose.model('Finish', schema);
 

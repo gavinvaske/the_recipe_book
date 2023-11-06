@@ -1,7 +1,10 @@
+/* eslint-disable complexity */
 const constants = require('../enums/constantsEnum');
 const DieModel = require('../../application/models/die');
 const MaterialModel = require('../../application/models/material');
+const BaseProductModel = require('../../application/models/baseProduct');
 const FinishModel = require('../../application/models/finish');
+const isNil = require('lodash.isNil');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -15,19 +18,44 @@ const DEFAULT_EXTRA_FRAMES = 25;
 // createQuote(...)
 // (?) computeQuote(...)
 module.exports.createQuote = async (quoteInputs) => {
-    const { 
-        isSheeted, 
-        die : dieId, 
-        material : materialId, 
-        finish: finishId 
+    const {
+        isSheeted,
+        products,
+        dieOverride, 
+        primaryMaterialOverride, 
+        secondaryMaterialOverride,
+        finishOverride,
+        numberOfColorsOverride,
+        labelsPerRollOverride,
+        numberOfDesignsOverride
     } = quoteInputs;
 
-    const die = dieId ? await DieModel.findById(dieId) : null;
-    const material = materialId ? await MaterialModel.findById(materialId) : null;
-    const finish = finishId ? await FinishModel.findById(finishId) : null;
+    /* 
+        Grab one productId from the list, it could be any product from the list. 
+        We need one product to figure out which finish, die, ect to use on this quote.
+    */
+    const oneProductId = (products && products.length) ? products[0].productId : null;
+    const aProduct = oneProductId ? await BaseProductModel.findById(oneProductId) : null;
+
+    const overridableValues = {
+        numberOfColors: !isNil(numberOfColorsOverride)
+            ? numberOfColorsOverride : aProduct.numberOfColors,
+        die: !isNil(dieOverride)
+            ? dieOverride : await getDieFromProduct(aProduct),
+        primaryMaterial: !isNil(primaryMaterialOverride) 
+            ? primaryMaterialOverride : await getPrimaryMaterialFromProduct(aProduct),
+        secondaryMaterial: !isNil(secondaryMaterialOverride) 
+            ? secondaryMaterialOverride : await getSecondaryMaterialFromProduct(aProduct),
+        finish: !isNil(finishOverride) 
+            ? finishOverride : await getFinishFromProduct(aProduct),
+        labelsPerRoll: !isNil(labelsPerRollOverride) 
+            ? labelsPerRollOverride : aProduct.labelsPerRoll
+    };
 
     const quoteAttributes = {
         ...quoteInputs,
+        ...overridableValues,
+        numberOfDesigns: (products && products.length) ? products.length : numberOfDesignsOverride,
         colorCalibrationFeet: constants.COLOR_CALIBRATION_FEET,
         proofRunupFeet: constants.PROOF_RUNUP_FEET,
         scalingFeet: constants.SCALING_FEET,
@@ -49,10 +77,10 @@ module.exports.createQuote = async (quoteInputs) => {
         cuttingStockTime: 0 // TODO: Storm is working on this algorithm. Until he's done, I'm defaulting this to 0. Fix this once he's
     };
 
-    quoteAttributes.printingSpeed = computePrintingSpeed(die, quoteAttributes);
+    quoteAttributes.printingSpeed = computePrintingSpeed(overridableValues.die, quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
-    quoteAttributes.frameLength = computeFrameLength(die, quoteAttributes);
-    quoteAttributes.initialStockLength = computeInitialStockLength(die, quoteAttributes);
+    quoteAttributes.frameLength = computeFrameLength(overridableValues.die, quoteAttributes);
+    quoteAttributes.initialStockLength = computeInitialStockLength(overridableValues.die, quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
@@ -60,7 +88,10 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
-    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, material);
+
+    // TODO: Investigate why the formula below only uses one of the materials?!
+    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, overridableValues.primaryMaterial); // TODO: Why does this only factor one material?
+    
     quoteAttributes.totalFinishFeet = computeTotalFinishFeet(quoteAttributes);
     quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
@@ -77,18 +108,49 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
     quoteAttributes.throwAwayCuttingTimePercentage = computeThrowAwayCuttingTimePercentage(quoteAttributes);
-    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, finish);
+    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, overridableValues.finish);
     quoteAttributes.changeOverTime = computeChangeOverTime(quoteAttributes);
-    quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, die);
+    quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, overridableValues.die);
     quoteAttributes.totalWindingRollTime = computeTotalWindingRollTime(quoteAttributes);
     quoteAttributes.totalWindingTime = computeTotalWindingTime(quoteAttributes);
     quoteAttributes.throwAwayWindingTimePercentage = computeThrowAwayWindingTimePercentage(quoteAttributes);
     quoteAttributes.totalWindingCost = computeTotalWindingCost(quoteAttributes);
     quoteAttributes.totalCostOfMachineTime = computeTotalCostOfMachineTime(quoteAttributes);
     quoteAttributes.frameUtilization = computeFrameUtilization(quoteAttributes);
+    quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes); // TODO: Update this on Lucid
 
     return quoteAttributes;
 };
+
+async function getDieFromProduct(product) {
+    const { die: dieId } = product;
+    
+    return await DieModel.findById(dieId); 
+}
+
+async function getPrimaryMaterialFromProduct(product) {
+    const { primaryMaterial: primaryMaterialId } = product;
+
+    return await MaterialModel.findById(primaryMaterialId); 
+}
+
+async function getSecondaryMaterialFromProduct(product) {
+    const { secondaryMaterial: secondaryMaterialId } = product;
+
+    return await MaterialModel.findById(secondaryMaterialId);
+}
+
+async function getFinishFromProduct(product) {
+    const { finish: finishId } = product;
+    
+    return await FinishModel.findById(finishId);
+}
+
+function computeTotalNumberOfRolls(quoteAttributes) {
+    const { labelQty, labelsPerRoll } = quoteAttributes;
+
+    return Math.ceil(labelQty / labelsPerRoll);
+}
 
 function computeFrameUtilization(quoteAttributes) {
     const { frameLength } = quoteAttributes;
@@ -127,15 +189,8 @@ function computeTotalWindingTime(quoteAttributes) {
 }
 
 function computeFinishedRollLength(quoteAttributes, die) {
-    const { 
-        labelQty, labelsPerRoll, 
-        sizeAcrossOverride, spaceAroundOverride
-    } = quoteAttributes;
-
-    const sizeAcross = sizeAcrossOverride 
-        ? sizeAcrossOverride : die.sizeAcross;
-    const spaceAround = spaceAroundOverride 
-        ? spaceAroundOverride : die.spaceAround;
+    const { labelQty, labelsPerRoll } = quoteAttributes;
+    const { sizeAcross, spaceAround } = die;
 
     if (labelQty >= labelsPerRoll) {
         return ((sizeAcross + spaceAround) * labelsPerRoll) / INCHES_PER_FOOT;
@@ -173,7 +228,7 @@ function computeTotalFinishCost(quoteAttributes, finish) {
 }
 
 function computeTotalStockCost(quoteAttributes, material) {
-    const { overrideMaterialQuotedMsi, totalStockMsi} = quoteAttributes;
+    const { overrideMaterialQuotedMsi, totalStockMsi } = quoteAttributes;
 
     const materialQuotedMsi = overrideMaterialQuotedMsi 
         ? overrideMaterialQuotedMsi : material.quotePrice;

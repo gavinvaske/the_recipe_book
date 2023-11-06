@@ -332,30 +332,18 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: numberOfDesigns', () => {
+    describe('attribute: numberOfDesignsOverride', () => {
         it('should be a number', () => {
             const expectedNumberOfDesigns = chance.d100();
-            quoteAttributes.numberOfDesigns = expectedNumberOfDesigns;
+            quoteAttributes.numberOfDesignsOverride = expectedNumberOfDesigns;
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.numberOfDesigns).toEqual(expectedNumberOfDesigns);
-        });
-
-        it('should default to the number of products (quote.products.length)', () => {
-            delete quoteAttributes.numberOfDesigns;
-            const expectedNumberOfDesigns = quoteAttributes.products.length;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-            expect(quote.numberOfDesigns).not.toBeFalsy();
-            expect(quote.numberOfDesigns).toEqual(expectedNumberOfDesigns);
+            expect(quote.numberOfDesignsOverride).toEqual(expectedNumberOfDesigns);
         });
         
         it('should be greater than or equal to 1', () => {
             const minNumberOfDesigns = 1;
-            quoteAttributes.numberOfDesigns = minNumberOfDesigns - 1;
+            quoteAttributes.numberOfDesignsOverride = minNumberOfDesigns - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -365,7 +353,7 @@ describe('File: quote.js', () => {
 
         it('should be an integer', () => {
             const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
-            quoteAttributes.numberOfDesigns = floatingPointValue;
+            quoteAttributes.numberOfDesignsOverride = floatingPointValue;
             const quote = new Quote(quoteAttributes);
 
             const error = quote.validateSync();

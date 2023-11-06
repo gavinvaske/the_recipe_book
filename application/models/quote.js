@@ -140,14 +140,10 @@ const quoteSchema = new Schema({
             message: '{VALUE} is not an integer'
         }
     },
-    numberOfDesigns: {
+    numberOfDesignsOverride: {
         type: Number,
         min: 1,
         max: 1000,
-        default: function() {
-            return this.products.length;
-        },
-        required: true,
         validate : {
             validator : Number.isInteger,
             message: '{VALUE} is not an integer'

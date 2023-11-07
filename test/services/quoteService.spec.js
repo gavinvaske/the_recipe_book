@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 const constants = require('../../application/enums/constantsEnum');
 const { createQuote } = require('../../application/services/quoteService');
 const chance = require('chance').Chance();
@@ -23,6 +24,24 @@ function generateProduct(mongooseProductId) {
     return {
         productId: mongooseProductId,
         labelQty: chance.d100()
+    };
+}
+
+function generateMaterial() {
+    return {
+        _id: mongoose.Types.ObjectId(),
+        quotePrice: chance.d100(),
+        thickness: chance.d10(),
+        costPerMsi: chance.d100()
+    };
+}
+
+function generateFinish() {
+    return {
+        _id: mongoose.Types.ObjectId(),
+        quotePrice: chance.d100(),
+        thickness: chance.d10(),
+        costPerMsi: chance.d100()
     };
 }
 
@@ -56,18 +75,9 @@ describe('File: quoteService.js', () => {
             spaceAround: chance.d100(),
             numberAround: chance.integer({ min: 1, max: 3})
         };
-        primaryMaterial = {
-            _id: mongoose.Types.ObjectId(),
-            quotePrice: chance.d100()
-        };
-        secondaryMaterial = {
-            _id: mongoose.Types.ObjectId(),
-            quotePrice: chance.d100()
-        };
-        finish = {
-            _id: mongoose.Types.ObjectId(),
-            quotePrice: chance.d100()
-        };
+        primaryMaterial = generateMaterial();
+        secondaryMaterial = generateMaterial();
+        finish = generateFinish();
         baseProduct = {
             _id: mongoose.Types.ObjectId(),
             die: die._id,
@@ -78,9 +88,15 @@ describe('File: quoteService.js', () => {
             numberOfColors: chance.integer({ min: 1, max: 12 })
         };
 
-        DieMock.findById.mockResolvedValue(die);
-        FinishMock.findById.mockResolvedValue(finish);
-        BaseProductMock.findById.mockResolvedValue(baseProduct);
+        when(DieMock.findById)
+            .calledWith(die._id)
+            .mockResolvedValue(die);
+        when(FinishMock.findById)
+            .calledWith(finish._id)
+            .mockResolvedValue(finish);
+        when(BaseProductMock.findById)
+            .calledWith(baseProduct._id)
+            .mockResolvedValue(baseProduct);
         when(MaterialMock.findById)
             .calledWith(primaryMaterial._id)
             .mockResolvedValue(primaryMaterial);
@@ -689,29 +705,41 @@ describe('File: quoteService.js', () => {
         });
 
         describe('attribute: totalFinishCost', () => {
-            it('should compute the attribute correctly when overrideFinishCostMsi IS DEFINED', async () => {
-                const overrideFinishCostMsi = chance.d100();
+            it('should compute the attribute correctly when finishOverride IS DEFINED', async () => {
+                const finishOverride = generateFinish();
                 quoteInputAttributes = {
                     ...quoteInputAttributes,
-                    overrideFinishCostMsi: overrideFinishCostMsi
+                    finishOverride
                 };
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalFinishMsi } = quote;
 
-                const expectedValue = overrideFinishCostMsi * totalFinishMsi;
+                const expectedValue = finishOverride.costPerMsi * totalFinishMsi;
 
                 expect(quote.totalFinishCost).not.toBeFalsy();
                 expect(quote.totalFinishCost).toEqual(expectedValue);
             });
 
-            it('should compute the attribute correctly when overrideFinishCostMsi IS UNDEFINED', async () => {
-                delete quoteInputAttributes.overrideFinishCostMsi;
+            it('should compute the attribute correctly when finishOverride IS UNDEFINED but products[x].finish IS DEFINED', async () => {
+                delete quoteInputAttributes.finishOverride;
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalFinishMsi } = quote;
 
-                const expectedValue = totalFinishMsi * finish.quotePrice;
+                const expectedValue = totalFinishMsi * finish.costPerMsi;
 
                 expect(quote.totalFinishCost).not.toBeFalsy();
+                expect(quote.totalFinishCost).toEqual(expectedValue);
+            });
+
+            it('should compute the attribute correctly when finishOverride IS UNDEFINED AND products[x].finish IS UNDEFINED', async () => {
+                delete quoteInputAttributes.finishOverride;
+                when(FinishMock.findById)
+                    .calledWith(finish._id)
+                    .mockResolvedValue(null);
+                const expectedValue = 0;
+                    
+                const quote = await createQuote(quoteInputAttributes);
+
                 expect(quote.totalFinishCost).toEqual(expectedValue);
             });
         });
@@ -894,20 +922,40 @@ describe('File: quoteService.js', () => {
 
         // TODO (11-5-2023): Revist this one after talking with storm. (Why does this formula only involve a single material?)
         describe('attribute: totalStockCost', () => {
-            // it('should be overridable by the user', async () => {
-            //     const overrideMaterialQuotedMsi = chance.d100();
-            //     quoteInputAttributes.overrideMaterialQuotedMsi = overrideMaterialQuotedMsi;
-            //     const quote = await createQuote(quoteInputAttributes);
-            //     const { totalStockMsi } = quote;
+            it('should be calculated using products[x].primaryMaterial and products[x].secondaryMaterial when not overridden by user', async () => {
+                delete quoteInputAttributes.primaryMaterialOverride;
+                delete quoteInputAttributes.secondaryMaterialOverride;
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockMsi } = quote;
 
-            //     const expectedValue = totalStockMsi * overrideMaterialQuotedMsi;
+                const expectedValue = (totalStockMsi * primaryMaterial.quotePrice) + (totalStockMsi * secondaryMaterial.quotePrice);
 
-            //     expect(quote.totalStockCost).not.toBeFalsy();
-            //     expect(quote.totalStockCost).toEqual(expectedValue);
-            // });
+                expect(quote.totalStockCost).not.toBeFalsy();
+                expect(quote.totalStockCost).toEqual(expectedValue);
+            });
 
-            it('should be calculated correctly when overrideMaterialQuotedMsi is not defined', async () => {
-                delete quoteInputAttributes.overrideMaterialQuotedMsi;
+            it('should be overridable by the user', async () => {
+                const primaryMaterialOverride = generateMaterial();
+                const secondaryMaterialOverride = generateMaterial();
+                quoteInputAttributes = {
+                    ...quoteInputAttributes,
+                    primaryMaterialOverride,
+                    secondaryMaterialOverride
+                };
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockMsi } = quote;
+
+                const expectedValue = (totalStockMsi * primaryMaterialOverride.quotePrice) + (totalStockMsi * secondaryMaterialOverride.quotePrice);;
+
+                expect(quote.totalStockCost).not.toBeFalsy();
+                expect(quote.totalStockCost).toEqual(expectedValue);
+            });
+
+            it('should be computed correctly when secondaryMaterial is undefined', async () => {
+                delete quoteInputAttributes.secondaryMaterialOverride;
+                when(MaterialMock.findById)
+                    .calledWith(secondaryMaterial._id)
+                    .mockResolvedValue(null);
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockMsi } = quote;
 
@@ -1050,6 +1098,50 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 
                 expect(quote.totalNumberOfRolls).toEqual(0);
+            });
+        });
+
+        describe('attribute: finishedRollDiameter', () => {
+            it('should be calculated correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const {
+                    initialStockLength, colorCalibrationFeet, proofRunupFeet, dieCutterSetupFeet, 
+                    printCleanerFeet, scalingFeet, newMaterialSetupFeet, dieLineSetupFeet
+                } = quote;
+                const totalStockFeet = initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet 
+                    + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
+                const combinedMaterialThickness = primaryMaterial.thickness + secondaryMaterial.thickness + finish.thickness;
+                const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142;
+                const term2 = Math.pow((3.3 / 2), 2);
+                const expectedRollDiameter = Math.sqrt(term1 + term2) * 2;
+
+                expect(quote.finishedRollDiameter).not.toBeFalsy();
+                expect(quote.finishedRollDiameter).toEqual(expectedRollDiameter);
+            });
+
+            it('should be calculated correctly when secondaryMaterial and finish are undefined', async () => {
+                // Ensure secondaryMaterial and finish are undefined
+                const nullValue = null;
+                when(FinishMock.findById)
+                    .calledWith(finish._id)
+                    .mockResolvedValue(nullValue);
+                when(MaterialMock.findById)
+                    .calledWith(secondaryMaterial._id)
+                    .mockResolvedValue(nullValue);
+                const quote = await createQuote(quoteInputAttributes);
+                const {
+                    initialStockLength, colorCalibrationFeet, proofRunupFeet, dieCutterSetupFeet, 
+                    printCleanerFeet, scalingFeet, newMaterialSetupFeet, dieLineSetupFeet
+                } = quote;
+                const totalStockFeet = initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet 
+                    + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
+                const combinedMaterialThickness = primaryMaterial.thickness;
+                const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142;
+                const term2 = Math.pow((3.3 / 2), 2);
+                const expectedRollDiameter = Math.sqrt(term1 + term2) * 2;
+
+                expect(quote.finishedRollDiameter).not.toBeFalsy();
+                expect(quote.finishedRollDiameter).toEqual(expectedRollDiameter);
             });
         });
     });

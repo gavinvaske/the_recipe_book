@@ -42,13 +42,13 @@ module.exports.createQuote = async (quoteInputs) => {
             ? numberOfColorsOverride : aProduct.numberOfColors,
         die: !isNil(dieOverride)
             ? dieOverride : await getDieFromProduct(aProduct),
-        primaryMaterial: !isNil(primaryMaterialOverride) 
+        primaryMaterial: !isNil(primaryMaterialOverride)
             ? primaryMaterialOverride : await getPrimaryMaterialFromProduct(aProduct),
-        secondaryMaterial: !isNil(secondaryMaterialOverride) 
+        secondaryMaterial: !isNil(secondaryMaterialOverride)
             ? secondaryMaterialOverride : await getSecondaryMaterialFromProduct(aProduct),
-        finish: !isNil(finishOverride) 
+        finish: !isNil(finishOverride)
             ? finishOverride : await getFinishFromProduct(aProduct),
-        labelsPerRoll: !isNil(labelsPerRollOverride) 
+        labelsPerRoll: !isNil(labelsPerRollOverride)
             ? labelsPerRollOverride : aProduct.labelsPerRoll
     };
 
@@ -88,10 +88,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
-
-    // TODO: Investigate why the formula below only uses one of the materials?!
-    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, overridableValues.primaryMaterial); // TODO: Why does this only factor one material?
-    
+    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes);
     quoteAttributes.totalFinishFeet = computeTotalFinishFeet(quoteAttributes);
     quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
@@ -108,7 +105,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
     quoteAttributes.throwAwayCuttingTimePercentage = computeThrowAwayCuttingTimePercentage(quoteAttributes);
-    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, overridableValues.finish);
+    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes);
     quoteAttributes.changeOverTime = computeChangeOverTime(quoteAttributes);
     quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, overridableValues.die);
     quoteAttributes.totalWindingRollTime = computeTotalWindingRollTime(quoteAttributes);
@@ -118,9 +115,19 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalCostOfMachineTime = computeTotalCostOfMachineTime(quoteAttributes);
     quoteAttributes.frameUtilization = computeFrameUtilization(quoteAttributes);
     quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes); // TODO: Update this on Lucid
+    quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
 
     return quoteAttributes;
 };
+
+function computeFinishedRollDiameter(quoteAttributes) {
+    const { totalStockFeet } = quoteAttributes;
+    const combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
+    const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
+    const term2 = Math.pow((3.3 / 2), 2); // eslint-disable-line no-magic-numbers
+
+    return Math.sqrt(term1 + term2) * 2; // eslint-disable-line no-magic-numbers
+}
 
 async function getDieFromProduct(product) {
     const { die: dieId } = product;
@@ -144,6 +151,16 @@ async function getFinishFromProduct(product) {
     const { finish: finishId } = product;
     
     return await FinishModel.findById(finishId);
+}
+
+function computeCombinedMaterialThickness(quoteAttributes) {
+    const { primaryMaterial, secondaryMaterial, finish } = quoteAttributes;
+
+    const primaryMaterialThickness = primaryMaterial.thickness;
+    const secondaryMaterialThickness = secondaryMaterial ? secondaryMaterial.thickness : 0;
+    const finishThickness = finish ? finish.thickness : 0;
+
+    return primaryMaterialThickness + secondaryMaterialThickness + finishThickness;
 }
 
 function computeTotalNumberOfRolls(quoteAttributes) {
@@ -199,7 +216,6 @@ function computeFinishedRollLength(quoteAttributes, die) {
     }
 }
 
-
 function computeTotalWindingRollTime(quoteAttributes) {
     const { totalFinishedRolls, finishedRollLength } = quoteAttributes;
 
@@ -218,22 +234,21 @@ function computeThrowAwayCuttingTimePercentage(quoteAttributes) {
     return 1 - (cuttingStockTime / totalTimeAtCutting);
 }
 
-function computeTotalFinishCost(quoteAttributes, finish) {
-    const { totalFinishMsi, overrideFinishCostMsi } = quoteAttributes;
-
-    const costPerMsi = overrideFinishCostMsi 
-        ? overrideFinishCostMsi : finish.quotePrice;
+function computeTotalFinishCost(quoteAttributes) {
+    const { totalFinishMsi, finish } = quoteAttributes;
+    
+    const costPerMsi = finish ? finish.costPerMsi : 0;
 
     return totalFinishMsi * costPerMsi;
 }
 
-function computeTotalStockCost(quoteAttributes, material) {
-    const { overrideMaterialQuotedMsi, totalStockMsi } = quoteAttributes;
+function computeTotalStockCost(quoteAttributes) {
+    const { primaryMaterial, secondaryMaterial, totalStockMsi } = quoteAttributes;
 
-    const materialQuotedMsi = overrideMaterialQuotedMsi 
-        ? overrideMaterialQuotedMsi : material.quotePrice;
+    const primaryMaterialCost = totalStockMsi * primaryMaterial.quotePrice;
+    const secondarMaterialCost = secondaryMaterial ? (totalStockMsi * secondaryMaterial.quotePrice) : 0;
 
-    return totalStockMsi * materialQuotedMsi;
+    return primaryMaterialCost + secondarMaterialCost;
 }
 
 function computeTotalFrames(quoteAttributes) {

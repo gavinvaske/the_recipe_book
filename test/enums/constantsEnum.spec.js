@@ -289,4 +289,10 @@ describe('constantsEnum', () => {
 
         expect(constantsEnum.DIE_CUTTER_SETUP_FEET).toEqual(expectedValue);
     });
+
+    it('REINSERTION_SETUP_TIME_PER_ROLL : should equal the correct value', () => {
+        const expectedValue = 10;
+
+        expect(constantsEnum.REINSERTION_SETUP_TIME_PER_ROLL).toEqual(expectedValue);
+    })
 });

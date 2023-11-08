@@ -1691,6 +1691,66 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: finishedRollDiameter', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.finishedRollDiameter;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        })
+
+        it('should be a number', () => {
+            const finishedRollDiameter = chance.d100();
+            quoteAttributes.finishedRollDiameter = finishedRollDiameter;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.finishedRollDiameter).toEqual(finishedRollDiameter);
+        });
+
+        it('should round to 3 decimal places of precision', () => {
+            const unroundedValue = 0.5555555555;
+            const roundedValue = 0.556;
+            quoteAttributes.finishedRollDiameter = unroundedValue;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.finishedRollDiameter).toEqual(roundedValue);
+        })
+    });
+
+    describe('attribute: finishedRollDiameterWithoutCore', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.finishedRollDiameterWithoutCore;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        })
+
+        it('should be a number', () => {
+            const finishedRollDiameterWithoutCore = chance.d100();
+            quoteAttributes.finishedRollDiameterWithoutCore = finishedRollDiameterWithoutCore;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.finishedRollDiameterWithoutCore).toEqual(finishedRollDiameterWithoutCore);
+        })
+
+        it('should round to 3 decimal places of precision', () => {
+            const unroundedValue = 0.5555555555;
+            const roundedValue = 0.556;
+            quoteAttributes.finishedRollDiameterWithoutCore = unroundedValue;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.finishedRollDiameterWithoutCore).toEqual(roundedValue);
+        })
+    })
+
     describe('attribute: printingSpeed', () => {
         it('should not be required', () => {
             delete quoteAttributes.printingSpeed;

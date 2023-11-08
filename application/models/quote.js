@@ -12,6 +12,7 @@ const DieModel = require('./die');
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FOUR_DECIMAL_PLACES = 4;
+const THREE_DECIMAL_PLACES = 3;
 const TWO_DECIMAL_PLACES = 2;
 
 function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
@@ -403,10 +404,12 @@ const quoteSchema = new Schema({
         min: 0
     },
     finishedRollDiameter: {
-        type: Number
+        type: Number,
+        set: roundNumberToNthDecimalPlace(THREE_DECIMAL_PLACES)
     },
     finishedRollDiameterWithoutCore: {
-        type: Number
+        type: Number,
+        set: roundNumberToNthDecimalPlace(THREE_DECIMAL_PLACES)
     },
     printingSpeed: {
         type: Number,

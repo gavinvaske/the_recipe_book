@@ -216,13 +216,6 @@ describe('File: quote.js', () => {
         quoteAttributes.initialStockLength = aNumberLessThanTotalStockFeet;
     });
 
-    it('should throw error if unknown attribute(s) are defined', () => {
-        const unknownAttribute = chance.string();
-        quoteAttributes[unknownAttribute] = chance.integer();
-
-        expect(() => new Quote(quoteAttributes)).toThrow();
-    });
-
     it('should have the correct indexes', async () => {
         const indexMetaData = Quote.schema.indexes();
         const expectedIndexes = ['quoteId'];
@@ -1770,46 +1763,6 @@ describe('File: quote.js', () => {
         it('should be an integer', () => {
             const floatingPointValue = 0.55;
             quoteAttributes.totalNumberOfRolls = floatingPointValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: totalBoxes', () => {
-        it('should not be required', () => {
-            delete quoteAttributes.totalBoxes;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            const expectedTotalBoxes = chance.d100();
-            quoteAttributes.totalBoxes = expectedTotalBoxes;
-            
-            const quote = new Quote(quoteAttributes);
-            
-            expect(quote.totalBoxes).toEqual(expectedTotalBoxes);
-        });
-
-        it('should not be negative', () => {
-            const minTotalBoxes = 0;
-            quoteAttributes.totalBoxes = minTotalBoxes - 1;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should be an integer', () => {
-            const floatingPointValue = 0.88;
-            quoteAttributes.totalBoxes = floatingPointValue;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();

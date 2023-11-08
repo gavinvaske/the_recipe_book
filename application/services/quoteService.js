@@ -4,19 +4,19 @@ const DieModel = require('../../application/models/die');
 const MaterialModel = require('../../application/models/material');
 const BaseProductModel = require('../../application/models/baseProduct');
 const FinishModel = require('../../application/models/finish');
+const packagingService = require('../../application/services/packagingService');
+const dieService = require('../../application/services/dieService');
 const isNil = require('lodash.isNil');
+const QuoteModel = require('../../application/models/quote');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
-
 const MINUTES_PER_HOUR = 60;
-
 const DEFAULT_EXTRA_FRAMES = 25;
-// updateQuote(...)
-// createQuote(...)
-// (?) computeQuote(...)
+const ROLL_CORE_DIAMETER = 3.3;
+
 module.exports.createQuote = async (quoteInputs) => {
     const {
         isSheeted,
@@ -77,10 +77,10 @@ module.exports.createQuote = async (quoteInputs) => {
         cuttingStockTime: 0 // TODO: Storm is working on this algorithm. Until he's done, I'm defaulting this to 0. Fix this once he's
     };
 
-    quoteAttributes.printingSpeed = computePrintingSpeed(overridableValues.die, quoteAttributes);
+    quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
     quoteAttributes.frameLength = computeFrameLength(overridableValues.die, quoteAttributes);
-    quoteAttributes.initialStockLength = computeInitialStockLength(overridableValues.die, quoteAttributes);
+    quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
@@ -100,7 +100,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
     quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
     quoteAttributes.totalTimeAtPrinting = computeTotalTimeAtPrinting(quoteAttributes);
-    quoteAttributes.throwAwayStockTimePercentage = computeThrowAwayStockTimePercentage(quoteAttributes);
+    quoteAttributes.ThrowAwayPrintTimePercentage = computeThrowAwayPrintTimePercentage(quoteAttributes);
     quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
@@ -116,15 +116,25 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.frameUtilization = computeFrameUtilization(quoteAttributes);
     quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes); // TODO: Update this on Lucid
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
+    quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
 
-    return quoteAttributes;
+    // TODO (11-6-2023): Test this function
+    quoteAttributes.totalNumberOfBoxes = computeTotalNumberOfBoxes(quoteAttributes);
+
+    return new QuoteModel(quoteAttributes);
 };
+
+function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
+    const { finishedRollDiameter } = quoteAttributes;
+
+    return finishedRollDiameter - ROLL_CORE_DIAMETER;
+}
 
 function computeFinishedRollDiameter(quoteAttributes) {
     const { totalStockFeet } = quoteAttributes;
     const combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
     const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
-    const term2 = Math.pow((3.3 / 2), 2); // eslint-disable-line no-magic-numbers
+    const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2); // eslint-disable-line no-magic-numbers
 
     return Math.sqrt(term1 + term2) * 2; // eslint-disable-line no-magic-numbers
 }
@@ -167,6 +177,20 @@ function computeTotalNumberOfRolls(quoteAttributes) {
     const { labelQty, labelsPerRoll } = quoteAttributes;
 
     return Math.ceil(labelQty / labelsPerRoll);
+}
+
+function computeTotalNumberOfBoxes(quoteAttributes) {
+    const { BOX_WIDTH_INCHES, BOX_HEIGHT_INCHES } = constants;
+    const { finishedRollDiameter, totalNumberOfRolls, die } = quoteAttributes;
+    const finishedRollHeight = dieService.getCoreHeightFromDie(die);
+
+    const numberOfLayers = packagingService.getNumberOfLayers(BOX_HEIGHT_INCHES, finishedRollHeight);
+    const rollsPerLayer = packagingService.getRollsPerLayer(finishedRollDiameter, BOX_WIDTH_INCHES);
+    const rollsPerBox = numberOfLayers * rollsPerLayer;
+
+    const totalBoxes = packagingService.getNumberOfBoxes(rollsPerBox, totalNumberOfRolls);
+
+    return totalBoxes;
 }
 
 function computeFrameUtilization(quoteAttributes) {
@@ -284,17 +308,20 @@ function computeTotalPrintingCost(quoteAttributes) {
 
 function computeTotalTimeAtPrinting(quoteAttributes) {
     const { 
-        stockSpliceTime, colorCalibrationTime, proofPrintingTime, 
+        stockSpliceTime, colorCalibrationTime, proofPrintingTime,
+        // TODO (11-7-2023): Need reinsertionSetupTime,
+        rollChangeOverTime, printingStockTime, 
         reinsertionPrintingTime, printTearDownTime 
     } = quoteAttributes;
 
-    const sum = stockSpliceTime + colorCalibrationTime + proofPrintingTime 
+    const sum = stockSpliceTime + colorCalibrationTime + proofPrintingTime
+        + rollChangeOverTime + printingStockTime
         + reinsertionPrintingTime + printTearDownTime;
 
     return sum;
 }
 
-function computeThrowAwayStockTimePercentage(quoteAttributes) {
+function computeThrowAwayPrintTimePercentage(quoteAttributes) {
     const { printingStockTime, totalTimeAtPrinting } = quoteAttributes;
 
     return 1 - (printingStockTime / totalTimeAtPrinting);
@@ -306,12 +333,9 @@ function computePrintingStockTime(quoteAttributes) {
     return Math.ceil(totalStockFeet * printingSpeed);
 }
 
-function computePrintingSpeed(die, quoteAttributes) {
-    const { numberOfColors, sizeAroundOverride, spaceAroundOverride } = quoteAttributes;
-    const sizeAround = sizeAroundOverride 
-        ? sizeAroundOverride : die.sizeAround;
-    const spaceAround = spaceAroundOverride
-        ? spaceAroundOverride : die.spaceAround;
+function computePrintingSpeed(quoteAttributes) {
+    const { numberOfColors, die } = quoteAttributes;
+    const { sizeAround, spaceAround } = die;
 
     const unroundedPrintingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (sizeAround + spaceAround))); // eslint-disable-line no-magic-numbers
 
@@ -433,14 +457,11 @@ function computeFrameLength(die, quoteAttributes) {
     return (sizeAround + spaceAround) * die.numberAround;
 }
 
-function computeInitialStockLength(die, quoteAttributes) {
-    const { sizeAroundOverride, spaceAroundOverride } = quoteAttributes;
-    const sizeAround = sizeAroundOverride 
-        ? sizeAroundOverride : die.sizeAround;
-    const spaceAround = spaceAroundOverride
-        ? spaceAroundOverride : die.spaceAround;
+function computeInitialStockLength(quoteAttributes) {
+    const { die, labelQty } = quoteAttributes;
+    const { sizeAround, spaceAround, numberAround } = die;
     
-    const initialStockLength = (((sizeAround + spaceAround) * quoteAttributes.labelQty) / die.numberAround) / INCHES_PER_FOOT;
+    const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAround) / INCHES_PER_FOOT;
     
     return initialStockLength;
 }

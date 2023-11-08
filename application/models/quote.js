@@ -8,6 +8,7 @@ const Decimal = require('decimal.js');
 const MaterialModel = require('../models/material');
 const FinishModel = require('../models/finish');
 const DieModel = require('./die');
+//const PackagingDetailsSchema = require('../schemas/packagingDetails');
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FOUR_DECIMAL_PLACES = 4;
@@ -118,6 +119,14 @@ const dieOverrideSchema = new Schema({
     spaceAround: DieModel.schema.obj['spaceAround'],
     spaceAcross: DieModel.schema.obj['spaceAcross'],
 }, { strict: 'throw' });
+
+// const packagingSchema = new Schema({
+//     layersPerBox: {},
+//     rollsPerLayer: {},
+//     rollsPerBox: {},
+//     totalBoxes: {},
+//     layerLayoutImagePath: {}
+// });
 
 const quoteSchema = new Schema({
     quoteId: {
@@ -348,7 +357,7 @@ const quoteSchema = new Schema({
         ...timeDurationAttribute
     },
     throwAwayWindingTimePercentage: {
-        ...timeDurationAttribute
+        ...percentageAttribute
     },
     totalFinishedRolls: {
         ...numberOfRollsAttribute
@@ -393,9 +402,12 @@ const quoteSchema = new Schema({
         type: Number,
         min: 0
     },
-    // finishedRollDiameter: {  // TODO (10-2-2023): Storm marked this as TBD on lucid, revist it later
-    //     type: Number
-    // },
+    finishedRollDiameter: {
+        type: Number
+    },
+    finishedRollDiameterWithoutCore: {
+        type: Number
+    },
     printingSpeed: {
         type: Number,
         min: 0,
@@ -415,17 +427,12 @@ const quoteSchema = new Schema({
             message: '{VALUE} is not an integer'
         }
     },
-    totalBoxes: {
-        type: Number,
-        min: 0,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer'
-        }
-    },
+    // packagingDetails: {
+    //     type: PackagingDetailsSchema,
+    //     required: false
+    // }
 }, { 
-    timestamps: true,
-    strict: 'throw'
+    timestamps: true
 });
 
 const Quote = mongoose.model('Quote', quoteSchema);

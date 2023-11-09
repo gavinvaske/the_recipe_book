@@ -75,7 +75,7 @@ module.exports.createQuote = async (quoteInputs) => {
         packingSlipsTime: constants.PACKING_SLIP_TIME,
         dieCutterSetupFeet: constants.DIE_CUTTER_SETUP_FEET,
         extraFrames: DEFAULT_EXTRA_FRAMES,
-        cuttingStockTime: 0 // TODO: Storm is working on this algorithm. Until he's done, I'm defaulting this to 0. Fix this once he's
+        cuttingStockTime: 0
     };
 
     quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
@@ -122,9 +122,50 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
     quoteAttributes.totalBoxCost = computeTotalBoxCost(quoteAttributes);
     quoteAttributes.totalClicksCost = computeTotalClicksCost(quoteAttributes);
+    quoteAttributes.totalMaterialsCost = computeTotalMaterialsCost(quoteAttributes);
+    quoteAttributes.boxCreationTime = computeBoxCreationTime(quoteAttributes);
+    quoteAttributes.packagingBoxTime = computePackagingBoxTime(quoteAttributes);
+    quoteAttributes.totalShippingTime = computeTotalShippingTime(quoteAttributes);
+    quoteAttributes.totalShippingCost = computeTotalShippingCost(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
+
+function computeTotalShippingCost(quoteAttributes) {
+    const { totalShippingTime } = quoteAttributes;
+
+    const totalShippingCost = (totalShippingTime / MINUTES_PER_HOUR) * constants.SHIPPING_HOURLY_RATE;
+
+    return totalShippingCost;
+}
+
+function computeTotalShippingTime(quoteAttributes) {
+    const { boxCreationTime, packagingBoxTime, packingSlipsTime } = quoteAttributes;
+
+    const sum = boxCreationTime + packagingBoxTime + packingSlipsTime;
+
+    return sum;
+}
+
+function computePackagingBoxTime(quoteAttributes) {
+    const { packagingDetails } = quoteAttributes;
+
+    return packagingDetails.totalBoxes * constants.PACKAGING_PER_BOX_TIME;
+}
+
+function computeBoxCreationTime(quoteAttributes) {
+    const { packagingDetails } = quoteAttributes;
+
+    return packagingDetails.totalBoxes * constants.BOX_CREATION_TIME;
+}
+
+function computeTotalMaterialsCost(quoteAttributes) {
+    const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost } = quoteAttributes;
+
+    const sum = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalBoxCost;
+
+    return sum;
+}
 
 function computeTotalBoxCost(quoteAttributes) {
     const { packagingDetails } = quoteAttributes;

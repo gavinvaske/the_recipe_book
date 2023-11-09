@@ -86,7 +86,7 @@ describe('File: quoteService.js', () => {
             primaryMaterial: primaryMaterial._id,
             secondaryMaterial: secondaryMaterial._id,
             finish: finish._id,
-            labelsPerRoll: chance.integer({ min: 1, max: 100000 }),
+            labelsPerRoll: chance.integer({ min: 1, max: 1000 }),
             numberOfColors: chance.integer({ min: 1, max: 12 })
         };
 
@@ -715,6 +715,32 @@ describe('File: quoteService.js', () => {
             });
         });
 
+        describe('attribute: boxCreationTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const hugeNumberOfLabelsHopefullyRequiringManyBoxes = 100000000000;
+                quoteInputAttributes.labelQty = hugeNumberOfLabelsHopefullyRequiringManyBoxes;
+                const quote = await createQuote(quoteInputAttributes);
+                const { packagingDetails } = quote;
+                const expectedValue = packagingDetails.totalBoxes * constants.BOX_CREATION_TIME;
+
+                expect(quote.boxCreationTime).not.toBeFalsy();
+                expect(quote.boxCreationTime).toBeCloseTo(expectedValue, 1);
+            });
+        });
+
+        describe('attribute: packagingBoxTime', () => {
+            it('should compute the attribute correctly', async () => {
+                const hugeNumberOfLabelsHopefullyRequiringManyBoxes = 100000000000;
+                quoteInputAttributes.labelQty = hugeNumberOfLabelsHopefullyRequiringManyBoxes;
+                const quote = await createQuote(quoteInputAttributes);
+                const { packagingDetails } = quote;
+                const expectedValue = packagingDetails.totalBoxes * constants.PACKAGING_PER_BOX_TIME;
+
+                expect(quote.packagingBoxTime).not.toBeFalsy();
+                expect(quote.packagingBoxTime).toBeCloseTo(expectedValue, 1);
+            });
+        });
+
         describe('attribute: frameUtilization', () => {
             it('should compute the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
@@ -1163,12 +1189,54 @@ describe('File: quoteService.js', () => {
 
         describe('attribute: totalBoxCost', () => {
             it('should be calculated correctly', async () => {
+                const hugeLabelQtyToEnsureManyBoxes = 100000000;
+                quoteInputAttributes.labelQty = hugeLabelQtyToEnsureManyBoxes;
                 const quote = await createQuote(quoteInputAttributes);
                 const { packagingDetails } = quote;
                 const expectedBoxCost = packagingDetails.totalBoxes * constants.BOX_COST;
 
                 expect(quote.totalBoxCost).not.toBeFalsy();
                 expect(quote.totalBoxCost).toBeCloseTo(expectedBoxCost, 1);
+            });
+        });
+
+        describe('attribute: totalMaterialsCost', () => {
+            it('should be calculated correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost } = quote;
+                
+                const expectedValue = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalBoxCost;
+
+                expect(quote.totalMaterialsCost).not.toBeFalsy();
+                expect(quote.totalMaterialsCost).toBeCloseTo(expectedValue, 1);
+            });
+        });
+
+        describe('attribute: totalShippingTime', () => {
+            it('should be calculated correctly', async () => {
+                const hugeLabelQtyToEnsureMoreThanOneRoll = 100000000;
+                quoteInputAttributes.labelQty = hugeLabelQtyToEnsureMoreThanOneRoll;
+                const quote = await createQuote(quoteInputAttributes);
+                const { boxCreationTime, packagingBoxTime, packingSlipsTime } = quote;
+                
+                const expectedValue = boxCreationTime + packagingBoxTime + packingSlipsTime;
+
+                expect(quote.totalShippingTime).not.toBeFalsy();
+                expect(quote.totalShippingTime).toBeCloseTo(expectedValue, 1);
+            });
+        });
+
+        describe('attribute: totalShippingCost', () => {
+            it('should be calculated correctly', async () => {
+                const hugeLabelQtyToEnsureManyBoxesToShip = 100000000;
+                quoteInputAttributes.labelQty = hugeLabelQtyToEnsureManyBoxesToShip;
+                const quote = await createQuote(quoteInputAttributes);
+                const { totalShippingTime } = quote;
+                
+                const expectedValue = (totalShippingTime / MINUTES_PER_HOUR) * constants.SHIPPING_HOURLY_RATE;
+
+                expect(quote.totalShippingCost).not.toBeFalsy();
+                expect(quote.totalShippingCost).toBeCloseTo(expectedValue, 1);
             });
         });
 

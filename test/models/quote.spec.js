@@ -1699,7 +1699,7 @@ describe('File: quote.js', () => {
             const error = quote.validateSync();
             
             expect(error).toBeUndefined();
-        })
+        });
 
         it('should be a number', () => {
             const finishedRollDiameter = chance.d100();
@@ -1718,7 +1718,7 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
 
             expect(quote.finishedRollDiameter).toEqual(roundedValue);
-        })
+        });
     });
 
     describe('attribute: finishedRollDiameterWithoutCore', () => {
@@ -1729,7 +1729,7 @@ describe('File: quote.js', () => {
             const error = quote.validateSync();
             
             expect(error).toBeUndefined();
-        })
+        });
 
         it('should be a number', () => {
             const finishedRollDiameterWithoutCore = chance.d100();
@@ -1738,7 +1738,7 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
             
             expect(quote.finishedRollDiameterWithoutCore).toEqual(finishedRollDiameterWithoutCore);
-        })
+        });
 
         it('should round to 3 decimal places of precision', () => {
             const unroundedValue = 0.5555555555;
@@ -1748,8 +1748,8 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
             
             expect(quote.finishedRollDiameterWithoutCore).toEqual(roundedValue);
-        })
-    })
+        });
+    });
 
     describe('attribute: printingSpeed', () => {
         it('should not be required', () => {

@@ -294,5 +294,5 @@ describe('constantsEnum', () => {
         const expectedValue = 10;
 
         expect(constantsEnum.REINSERTION_SETUP_TIME_PER_ROLL).toEqual(expectedValue);
-    })
+    });
 });

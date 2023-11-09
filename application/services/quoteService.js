@@ -8,6 +8,7 @@ const packagingService = require('../../application/services/packagingService');
 const dieService = require('../../application/services/dieService');
 const isNil = require('lodash.isNil');
 const QuoteModel = require('../../application/models/quote');
+const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -117,9 +118,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes); // TODO: Update this on Lucid
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
     quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
-
-    // TODO (11-6-2023): Test this function
-    quoteAttributes.totalNumberOfBoxes = computeTotalNumberOfBoxes(quoteAttributes);
+    quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
@@ -131,12 +130,12 @@ function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
 }
 
 function computeFinishedRollDiameter(quoteAttributes) {
-    const { totalStockFeet } = quoteAttributes;
-    const combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
-    const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
-    const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2); // eslint-disable-line no-magic-numbers
+    const { finishedRollLength } = quoteAttributes;
+    const combinedMaterialThicknessInMillimeters = computeCombinedMaterialThickness(quoteAttributes);
+    const term1 = ((finishedRollLength * INCHES_PER_FOOT) * (combinedMaterialThicknessInMillimeters / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
+    const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
 
-    return Math.sqrt(term1 + term2) * 2; // eslint-disable-line no-magic-numbers
+    return Math.sqrt(term1 + term2) * 2;
 }
 
 async function getDieFromProduct(product) {
@@ -179,18 +178,24 @@ function computeTotalNumberOfRolls(quoteAttributes) {
     return Math.ceil(labelQty / labelsPerRoll);
 }
 
-function computeTotalNumberOfBoxes(quoteAttributes) {
+function computePackagingDetails(quoteAttributes) {
     const { BOX_WIDTH_INCHES, BOX_HEIGHT_INCHES } = constants;
     const { finishedRollDiameter, totalNumberOfRolls, die } = quoteAttributes;
     const finishedRollHeight = dieService.getCoreHeightFromDie(die);
 
-    const numberOfLayers = packagingService.getNumberOfLayers(BOX_HEIGHT_INCHES, finishedRollHeight);
+    const layersPerBox = packagingService.getNumberOfLayers(BOX_HEIGHT_INCHES, finishedRollHeight);
     const rollsPerLayer = packagingService.getRollsPerLayer(finishedRollDiameter, BOX_WIDTH_INCHES);
-    const rollsPerBox = numberOfLayers * rollsPerLayer;
-
+    const rollsPerBox = layersPerBox * rollsPerLayer;
     const totalBoxes = packagingService.getNumberOfBoxes(rollsPerBox, totalNumberOfRolls);
+    const layerLayoutImagePath = getImageForNCirclesInSquare(rollsPerLayer);
 
-    return totalBoxes;
+    return {
+        rollsPerLayer,
+        layersPerBox,
+        rollsPerBox,
+        totalBoxes,
+        layerLayoutImagePath
+    };
 }
 
 function computeFrameUtilization(quoteAttributes) {

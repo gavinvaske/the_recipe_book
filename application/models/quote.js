@@ -8,7 +8,7 @@ const Decimal = require('decimal.js');
 const MaterialModel = require('../models/material');
 const FinishModel = require('../models/finish');
 const DieModel = require('./die');
-//const PackagingDetailsSchema = require('../schemas/packagingDetails');
+const PackagingDetailsSchema = require('../schemas/packagingDetails');
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FOUR_DECIMAL_PLACES = 4;
@@ -430,10 +430,10 @@ const quoteSchema = new Schema({
             message: '{VALUE} is not an integer'
         }
     },
-    // packagingDetails: {
-    //     type: PackagingDetailsSchema,
-    //     required: false
-    // }
+    packagingDetails: {
+        type: PackagingDetailsSchema,
+        required: false
+    }
 }, { 
     timestamps: true
 });

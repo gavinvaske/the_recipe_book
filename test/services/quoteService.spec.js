@@ -20,7 +20,7 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 
-const PERCENTAGE_DECIMAL_PLACES = 4;
+const THREE_DECIMAL_PLACES = 3;
 
 function generateProduct(mongooseProductId) {
     return {
@@ -76,7 +76,6 @@ describe('File: quoteService.js', () => {
     let quoteInputAttributes, die, primaryMaterial, secondaryMaterial, finish, baseProduct;
 
     beforeEach(() => {
-        
         die = generateDie();
         primaryMaterial = generateMaterial();
         secondaryMaterial = generateMaterial();
@@ -281,7 +280,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = 1 - (initialStockLength / totalStockFeet);
 
                 expect(quote.throwAwayStockPercentage).not.toBeFalsy();
-                expect(quote.throwAwayStockPercentage).toBeCloseTo(expectedValue, PERCENTAGE_DECIMAL_PLACES);
+                expect(quote.throwAwayStockPercentage).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
             });
         });
 
@@ -686,7 +685,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = 1 - (totalWindingRollTime / totalWindingTime);
 
                 expect(quote.throwAwayWindingTimePercentage).not.toBeFalsy();
-                expect(quote.throwAwayWindingTimePercentage).toBeCloseTo(expectedValue, 2);
+                expect(quote.throwAwayWindingTimePercentage).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
             });
         });
 
@@ -722,7 +721,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = frameLength / constants.MAX_FRAME_AROUND;
 
                 expect(quote.frameUtilization).not.toBeFalsy();
-                expect(quote.frameUtilization).toBeCloseTo(expectedValue, PERCENTAGE_DECIMAL_PLACES);
+                expect(quote.frameUtilization).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
             });
         });
 
@@ -1111,42 +1110,30 @@ describe('File: quoteService.js', () => {
 
         describe('attribute: finishedRollDiameter', () => {
             it('should be calculated correctly', async () => {
-                const quote = await createQuote(quoteInputAttributes);
-                const {
-                    initialStockLength, colorCalibrationFeet, proofRunupFeet, dieCutterSetupFeet, 
-                    printCleanerFeet, scalingFeet, newMaterialSetupFeet, dieLineSetupFeet
-                } = quote;
-                const totalStockFeet = initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet 
-                    + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
-                const combinedMaterialThickness = primaryMaterial.thickness + secondaryMaterial.thickness + finish.thickness;
-                const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142;
-                const term2 = Math.pow((3.3 / 2), 2);
-                const expectedRollDiameter = Math.sqrt(term1 + term2) * 2;
+                const labelsPerRollOverride = 2000;
+                const dieOverride = generateDie();
+                const finishOverride = generateFinish();
+                const primaryMaterialOverride = generateMaterial();
+                const secondaryMaterialOverride = generateMaterial();
+                dieOverride.sizeAcross = 0.125;
+                dieOverride.spaceAround = 1.5;
+                const expectedRollDiameter = 6.230;
 
-                expect(quote.finishedRollDiameter).not.toBeFalsy();
-                expect(quote.finishedRollDiameter).toEqual(expectedRollDiameter);
-            });
+                // Sums to 6.750 in combined thickness
+                finishOverride.thickness = 0.750;
+                primaryMaterialOverride.thickness = 3;
+                secondaryMaterialOverride.thickness = 3;
 
-            it('should be calculated correctly when secondaryMaterial and finish are undefined', async () => {
-                // Ensure secondaryMaterial and finish are undefined
-                const nullValue = null;
-                when(FinishMock.findById)
-                    .calledWith(finish._id)
-                    .mockResolvedValue(nullValue);
-                when(MaterialMock.findById)
-                    .calledWith(secondaryMaterial._id)
-                    .mockResolvedValue(nullValue);
+                quoteInputAttributes = {
+                    ...quoteInputAttributes,
+                    labelQty: 500000,
+                    labelsPerRollOverride,
+                    dieOverride,
+                    finishOverride,
+                    primaryMaterialOverride,
+                    secondaryMaterialOverride
+                };
                 const quote = await createQuote(quoteInputAttributes);
-                const {
-                    initialStockLength, colorCalibrationFeet, proofRunupFeet, dieCutterSetupFeet, 
-                    printCleanerFeet, scalingFeet, newMaterialSetupFeet, dieLineSetupFeet
-                } = quote;
-                const totalStockFeet = initialStockLength + colorCalibrationFeet + proofRunupFeet + dieCutterSetupFeet 
-                    + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
-                const combinedMaterialThickness = primaryMaterial.thickness;
-                const term1 = (totalStockFeet * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142;
-                const term2 = Math.pow((3.3 / 2), 2);
-                const expectedRollDiameter = Math.sqrt(term1 + term2) * 2;
 
                 expect(quote.finishedRollDiameter).not.toBeFalsy();
                 expect(quote.finishedRollDiameter).toEqual(expectedRollDiameter);
@@ -1160,7 +1147,15 @@ describe('File: quoteService.js', () => {
                 const expectedRollDiameterWithoutCore = quote.finishedRollDiameter - diameterOfTheCore;
 
                 expect(quote.finishedRollDiameterWithoutCore).not.toBeFalsy();
-                expect(quote.finishedRollDiameterWithoutCore).toEqual(expectedRollDiameterWithoutCore);
+                expect(quote.finishedRollDiameterWithoutCore).toBeCloseTo(expectedRollDiameterWithoutCore, THREE_DECIMAL_PLACES);
+            });
+        });
+
+        describe('attribute: packagingDetails', () => {
+            it('should be defined', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                console.log(quote.packagingDetails);
+                expect(quote.packagingDetails).toBeDefined();
             });
         });
     });

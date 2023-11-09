@@ -1156,8 +1156,22 @@ describe('File: quoteService.js', () => {
         describe('attribute: packagingDetails', () => {
             it('should be defined', async () => {
                 const quote = await createQuote(quoteInputAttributes);
-                console.log(quote.packagingDetails);
+
                 expect(quote.packagingDetails).toBeDefined();
+            });
+        });
+
+        describe('attribute: totalClicksCost', () => {
+            it('should be calculated correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const {
+                    scalingClickCost, proofRunupClickCost,
+                    printCleanerClickCost, totalFrames
+                } = quote;
+                const expectedClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (totalFrames * baseProduct.numberOfColors * 2);
+
+                expect(quote.totalClicksCost).not.toBeFalsy();
+                expect(quote.totalClicksCost).toBeCloseTo(expectedClicksCost, 1);
             });
         });
 

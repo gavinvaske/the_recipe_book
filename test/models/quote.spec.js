@@ -1943,7 +1943,7 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
             
             expect(quote.totalClicksCost).toEqual(totalClicksCost);
-        })
+        });
 
         it('should not be negative', () => {
             quoteAttributes.totalClicksCost = -0.1;
@@ -1952,7 +1952,7 @@ describe('File: quote.js', () => {
             const error = quote.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
     });
 
     describe('database interactions', () => {

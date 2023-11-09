@@ -120,9 +120,21 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
     quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
     quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
+    quoteAttributes.totalClicksCost = computeTotalClicksCost(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
+
+function computeTotalClicksCost(quoteAttributes) {
+    const { 
+        scalingClickCost, proofRunupClickCost, printCleanerClickCost,
+        totalFrames, numberOfColors
+    } = quoteAttributes;
+
+    const totalClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (totalFrames * numberOfColors * 2);
+
+    return totalClicksCost;
+}
 
 function computeReinsertionSetupTime(quoteAttributes) {
     const { totalRollsOfPaper } = quoteAttributes;

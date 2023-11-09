@@ -575,11 +575,13 @@ describe('File: quoteService.js', () => {
                     isSheeted: true
                 };
                 const quote = await createQuote(quoteInputAttributes);
-                const { stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, printTearDownTime, rollChangeOverTime, printingStockTime } = quote;
+                const { 
+                    stockSpliceTime, colorCalibrationTime, proofPrintingTime, reinsertionPrintingTime, 
+                    printTearDownTime, rollChangeOverTime, printingStockTime, reinsertionSetupTime
+                } = quote;
             
                 const expectedValue = stockSpliceTime + colorCalibrationTime + proofPrintingTime
-                    // TODO (11-7-2023): Need to add reinsertionPrintingTime whenever quote.reinsertionPrintingTime is added
-                    + rollChangeOverTime + printingStockTime
+                    + reinsertionSetupTime + rollChangeOverTime + printingStockTime
                     + reinsertionPrintingTime + printTearDownTime;
 
                 expect(quote.totalTimeAtPrinting).not.toBeFalsy();

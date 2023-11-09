@@ -86,6 +86,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
+    quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
@@ -119,7 +120,6 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
     quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
     quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
-    quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
@@ -321,13 +321,12 @@ function computeTotalPrintingCost(quoteAttributes) {
 function computeTotalTimeAtPrinting(quoteAttributes) {
     const { 
         stockSpliceTime, colorCalibrationTime, proofPrintingTime,
-        // TODO (11-7-2023): Need reinsertionSetupTime,
-        rollChangeOverTime, printingStockTime, 
+        reinsertionSetupTime, rollChangeOverTime, printingStockTime, 
         reinsertionPrintingTime, printTearDownTime 
     } = quoteAttributes;
 
     const sum = stockSpliceTime + colorCalibrationTime + proofPrintingTime
-        + rollChangeOverTime + printingStockTime
+        + reinsertionSetupTime + rollChangeOverTime + printingStockTime
         + reinsertionPrintingTime + printTearDownTime;
 
     return sum;

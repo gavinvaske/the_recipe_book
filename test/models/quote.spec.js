@@ -1544,6 +1544,12 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: reinsertionSetupTime', () => {
+        it('should be a time attribute', () => {
+            verifyTimeAttribute(quoteAttributes,'reinsertionSetupTime');
+        });
+    });
+
     describe('attribute: customer', () => {
         it('should not be required', () => {
             delete quoteAttributes.customer;

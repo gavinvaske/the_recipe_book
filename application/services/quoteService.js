@@ -119,9 +119,16 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
     quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
     quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
+    quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
+
+function computeReinsertionSetupTime(quoteAttributes) {
+    const { totalRollsOfPaper } = quoteAttributes;
+
+    return totalRollsOfPaper * constants.REINSERTION_SETUP_TIME_PER_ROLL;
+}
 
 function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
     const { finishedRollDiameter } = quoteAttributes;

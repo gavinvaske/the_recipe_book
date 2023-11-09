@@ -433,6 +433,9 @@ const quoteSchema = new Schema({
     packagingDetails: {
         type: PackagingDetailsSchema,
         required: false
+    },
+    reinsertionSetupTime: {
+        ...timeDurationAttribute
     }
 }, { 
     timestamps: true

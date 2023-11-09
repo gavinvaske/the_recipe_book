@@ -1158,5 +1158,18 @@ describe('File: quoteService.js', () => {
                 expect(quote.packagingDetails).toBeDefined();
             });
         });
+
+        describe('attribute: reinsertionSetupTime', () => {
+            it('should be calculated correctly', async () => {
+                const hugeLabelQtyToEnsureMoreThanOneRoll = 100000000;
+                quoteInputAttributes.labelQty = hugeLabelQtyToEnsureMoreThanOneRoll;
+                const quote = await createQuote(quoteInputAttributes);
+                
+                const expectedReinsertionSetupTime = quote.totalRollsOfPaper * constants.REINSERTION_SETUP_TIME_PER_ROLL;
+                
+                expect(quote.reinsertionSetupTime).not.toBeFalsy();
+                expect(quote.reinsertionSetupTime).toEqual(expectedReinsertionSetupTime);
+            });
+        });
     });
 });

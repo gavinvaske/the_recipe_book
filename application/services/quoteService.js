@@ -120,10 +120,17 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
     quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
     quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
+    quoteAttributes.totalBoxCost = computeTotalBoxCost(quoteAttributes);
     quoteAttributes.totalClicksCost = computeTotalClicksCost(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
+
+function computeTotalBoxCost(quoteAttributes) {
+    const { packagingDetails } = quoteAttributes;
+
+    return packagingDetails.totalBoxes * constants.BOX_COST;
+}
 
 function computeTotalClicksCost(quoteAttributes) {
     const { 

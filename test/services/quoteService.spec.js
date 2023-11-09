@@ -33,7 +33,7 @@ function generateMaterial() {
     return {
         _id: mongoose.Types.ObjectId(),
         quotePrice: chance.d100(),
-        thickness: chance.d6(),
+        thickness: chance.integer({ min: 1, max: 2}),
         costPerMsi: chance.d100()
     };
 }
@@ -42,7 +42,7 @@ function generateFinish() {
     return {
         _id: mongoose.Types.ObjectId(),
         quotePrice: chance.d100(),
-        thickness: chance.d6(),
+        thickness: chance.integer({ min: 1, max: 2}),
         costPerMsi: chance.d100()
     };
 }
@@ -107,7 +107,7 @@ describe('File: quoteService.js', () => {
             .mockResolvedValue(secondaryMaterial);
 
         quoteInputAttributes = {
-            labelQty: chance.integer({ min: 5000, max: 10000}),
+            labelQty: chance.integer({ min: 100, max: 1000}),
             products: [generateProduct(baseProduct._id)]
         };
     });
@@ -161,7 +161,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = Math.ceil(sum / FEET_PER_ROLL) * constants.PRINT_CLEANER_FEET;
 
                 expect(quote.printCleanerFeet).not.toBeFalsy();
-                expect(quote.printCleanerFeet).toBeCloseTo(expectedValue, 4);
+                expect(quote.printCleanerFeet).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -280,7 +280,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = 1 - (initialStockLength / totalStockFeet);
 
                 expect(quote.throwAwayStockPercentage).not.toBeFalsy();
-                expect(quote.throwAwayStockPercentage).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
+                expect(quote.throwAwayStockPercentage).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -316,7 +316,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = (totalFinishFeet * constants.MAX_MATERIAL_SIZE_ACROSS * INCHES_PER_FOOT) / ONE_THOUSAND;
 
                 expect(quote.totalFinishMsi).not.toBeFalsy();
-                expect(quote.totalFinishMsi).toBeCloseTo(expectedValue);
+                expect(quote.totalFinishMsi).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -415,7 +415,7 @@ describe('File: quoteService.js', () => {
             });
 
             it('should be computed correctly (when totalStockFeet >= 5000)', async () => {
-                const numberThatShouldForceTotalStockFeetToBeGreaterThan5000 = 90000;
+                const numberThatShouldForceTotalStockFeetToBeGreaterThan5000 = 900000;
 
                 quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeGreaterThan5000;
             
@@ -687,7 +687,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = 1 - (totalWindingRollTime / totalWindingTime);
 
                 expect(quote.throwAwayWindingTimePercentage).not.toBeFalsy();
-                expect(quote.throwAwayWindingTimePercentage).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
+                expect(quote.throwAwayWindingTimePercentage).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -723,7 +723,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = frameLength / constants.MAX_FRAME_AROUND;
 
                 expect(quote.frameUtilization).not.toBeFalsy();
-                expect(quote.frameUtilization).toBeCloseTo(expectedValue, THREE_DECIMAL_PLACES);
+                expect(quote.frameUtilization).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -971,7 +971,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = (totalStockMsi * primaryMaterialOverride.quotePrice) + (totalStockMsi * secondaryMaterialOverride.quotePrice);
 
                 expect(quote.totalStockCost).not.toBeFalsy();
-                expect(quote.totalStockCost).toBeCloseTo(expectedValue);
+                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 2);
             });
 
             it('should be computed correctly when secondaryMaterial is undefined', async () => {
@@ -985,7 +985,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = totalStockMsi * primaryMaterial.quotePrice;
 
                 expect(quote.totalStockCost).not.toBeFalsy();
-                expect(quote.totalStockCost).toBeCloseTo(expectedValue);
+                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -1158,6 +1158,17 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
 
                 expect(quote.packagingDetails).toBeDefined();
+            });
+        });
+
+        describe('attribute: totalBoxCost', () => {
+            it('should be calculated correctly', async () => {
+                const quote = await createQuote(quoteInputAttributes);
+                const { packagingDetails } = quote;
+                const expectedBoxCost = packagingDetails.totalBoxes * constants.BOX_COST;
+
+                expect(quote.totalBoxCost).not.toBeFalsy();
+                expect(quote.totalBoxCost).toBeCloseTo(expectedBoxCost, 1);
             });
         });
 

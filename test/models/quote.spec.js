@@ -1926,6 +1926,35 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: totalClicksCost', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalClicksCost;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('it should be a number', () => {
+            const totalClicksCost = chance.d100();
+            quoteAttributes.totalClicksCost = totalClicksCost;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalClicksCost).toEqual(totalClicksCost);
+        })
+
+        it('should not be negative', () => {
+            quoteAttributes.totalClicksCost = -0.1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    });
+
     describe('database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();

@@ -121,14 +121,6 @@ const dieOverrideSchema = new Schema({
     spaceAcross: DieModel.schema.obj['spaceAcross'],
 }, { strict: 'throw' });
 
-// const packagingSchema = new Schema({
-//     layersPerBox: {},
-//     rollsPerLayer: {},
-//     rollsPerBox: {},
-//     totalBoxes: {},
-//     layerLayoutImagePath: {}
-// });
-
 const quoteSchema = new Schema({
     quoteId: {
         type: String,
@@ -433,6 +425,10 @@ const quoteSchema = new Schema({
     packagingDetails: {
         type: PackagingDetailsSchema,
         required: false
+    },
+    totalClicksCost: {
+        type: Number,
+        min: 0
     },
     reinsertionSetupTime: {
         ...timeDurationAttribute

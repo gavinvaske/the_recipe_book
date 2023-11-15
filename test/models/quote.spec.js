@@ -1238,7 +1238,7 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
             
             expect(quote.totalStockMsi).toEqual(roundedValue);
-        })
+        });
     });
 
     describe('attribute: totalRollsOfPaper', () => {
@@ -1317,7 +1317,7 @@ describe('File: quote.js', () => {
             const quote = new Quote(quoteAttributes);
             
             expect(quote.totalFinishMsi).toEqual(roundedValue);
-        })
+        });
     });
 
     describe('attribute: totalFinishCost', () => {

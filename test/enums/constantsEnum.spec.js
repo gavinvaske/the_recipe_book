@@ -134,11 +134,6 @@ describe('constantsEnum', () => {
 
         expect(constantsEnum.CORE_GATHERING_MINUTES).toEqual(expectedValue);
     });
-    it('PRINTING_ROLL_CHANGE_OVER_MINUTES : should equal the correct value', () => {
-        const expectedValue = 7;
-
-        expect(constantsEnum.PRINTING_ROLL_CHANGE_OVER_MINUTES).toEqual(expectedValue);
-    });
     it('CUTTING_ROLL_CHANGE_OVER_MINUTES : should equal the correct value', () => {
         const expectedValue = 10;
 
@@ -254,7 +249,7 @@ describe('constantsEnum', () => {
     });
 
     it('PRINTING_PROOF_TIME : should equal the correct value', () => {
-        const expectedValue = 7;
+        const expectedValue = 3;
         
         expect(constantsEnum.PRINTING_PROOF_TIME).toEqual(expectedValue);
     });
@@ -272,7 +267,7 @@ describe('constantsEnum', () => {
     });
 
     it('CUTTING_STOCK_SPLICE_TIME : should equal the correct value', () => {
-        const expectedValue = 10;
+        const expectedValue = 5;
 
         expect(constantsEnum.CUTTING_STOCK_SPLICE_TIME).toEqual(expectedValue);
     });

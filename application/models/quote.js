@@ -66,7 +66,8 @@ const costAttribute = {
 
 const msiAttribute = {
     type: Number,
-    min: 0
+    min: 0,
+    set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
 };
 
 const percentageAttribute = {
@@ -117,8 +118,8 @@ const dieOverrideSchema = new Schema({
     sizeAround: DieModel.schema.obj['sizeAround'],
     cornerRadius: DieModel.schema.obj['cornerRadius'],
     shape: DieModel.schema.obj['shape'],
-    spaceAround: DieModel.schema.obj['spaceAround'],
-    spaceAcross: DieModel.schema.obj['spaceAcross'],
+    spaceAround: DieModel.schema.obj['spaceAround'], // also known as "Row Space"
+    spaceAcross: DieModel.schema.obj['spaceAcross'], // also known as "Col Space"
 }, { strict: 'throw' });
 
 const quoteSchema = new Schema({
@@ -183,7 +184,7 @@ const quoteSchema = new Schema({
         type: Number,
         set: roundNumberToNthDecimalPlace(TWO_DECIMAL_PLACES),
         min: 0,
-        default: 3
+        default: 3.25
     },
     numberOfColorsOverride: {
         type: Number,
@@ -433,7 +434,7 @@ const quoteSchema = new Schema({
     reinsertionSetupTime: {
         ...timeDurationAttribute
     }
-}, { 
+}, {
     timestamps: true
 });
 

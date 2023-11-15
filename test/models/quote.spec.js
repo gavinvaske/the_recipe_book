@@ -1044,12 +1044,13 @@ describe('File: quote.js', () => {
     });
 
     describe('attribute: coreDiameter', () => {
-        it('should default to 3', () => {
+        it('should default to 3.25', () => {
             delete quoteAttributes.coreDiameter;
+            const expectedDefaultValue = 3.25;
             
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.coreDiameter).toEqual(3);
+            expect(quote.coreDiameter).toEqual(expectedDefaultValue);
         });
 
         it('should be a number', () => {
@@ -1228,6 +1229,16 @@ describe('File: quote.js', () => {
 
             expect(quote.totalStockMsi).toEqual(expectedTotalStockMsi);
         });
+
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 1.12345;
+            const roundedValue = 1.1235;
+            quoteAttributes.totalStockMsi = unroundedValue;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalStockMsi).toEqual(roundedValue);
+        })
     });
 
     describe('attribute: totalRollsOfPaper', () => {
@@ -1297,6 +1308,16 @@ describe('File: quote.js', () => {
             
             expect(error).toBeDefined();
         });
+
+        it('should round to the 4th decimal place', () => {
+            const unroundedValue = 1.12342222222;
+            const roundedValue = 1.1234;
+            quoteAttributes.totalFinishMsi = unroundedValue;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalFinishMsi).toEqual(roundedValue);
+        })
     });
 
     describe('attribute: totalFinishCost', () => {

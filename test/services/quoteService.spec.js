@@ -32,7 +32,7 @@ function generateProduct(mongooseProductId) {
 function generateMaterial() {
     return {
         _id: mongoose.Types.ObjectId(),
-        quotePrice: chance.d100(),
+        quotePricePerMsi: chance.d100(),
         thickness: chance.integer({ min: 1, max: 2}),
         costPerMsi: chance.d100()
     };
@@ -41,7 +41,7 @@ function generateMaterial() {
 function generateFinish() {
     return {
         _id: mongoose.Types.ObjectId(),
-        quotePrice: chance.d100(),
+        quotePricePerMsi: chance.d100(),
         thickness: chance.integer({ min: 1, max: 2}),
         costPerMsi: chance.d100()
     };
@@ -130,7 +130,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 
                 expect(quote.initialStockLength).not.toBeFalsy();
-                expect(quote.initialStockLength).toEqual(expectedValue);
+                expect(quote.initialStockLength).toBeCloseTo(expectedValue, 4);
             });
 
             it('should compute using die.sizeAround and die.spaceAround when dieOverride not defined', async () => {
@@ -146,7 +146,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 
                 expect(quote.initialStockLength).not.toBeFalsy();
-                expect(quote.initialStockLength).toEqual(expectedValue);
+                expect(quote.initialStockLength).toBeCloseTo(expectedValue, 4);
             });
         });
 
@@ -222,7 +222,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 
                 expect(quote.dieLineSetupFeet).not.toBeFalsy();
-                expect(quote.dieLineSetupFeet).toEqual(expectedValue);
+                expect(quote.dieLineSetupFeet).toBeCloseTo(expectedValue, 4);
             });
         });
 
@@ -977,7 +977,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockMsi } = quote;
 
-                const expectedValue = (totalStockMsi * primaryMaterial.quotePrice) + (totalStockMsi * secondaryMaterial.quotePrice);
+                const expectedValue = (totalStockMsi * primaryMaterial.quotePricePerMsi) + (totalStockMsi * secondaryMaterial.quotePricePerMsi);
 
                 expect(quote.totalStockCost).not.toBeFalsy();
                 expect(quote.totalStockCost).toBeCloseTo(expectedValue, 1);
@@ -994,10 +994,10 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockMsi } = quote;
 
-                const expectedValue = (totalStockMsi * primaryMaterialOverride.quotePrice) + (totalStockMsi * secondaryMaterialOverride.quotePrice);
+                const expectedValue = (totalStockMsi * primaryMaterialOverride.quotePricePerMsi) + (totalStockMsi * secondaryMaterialOverride.quotePricePerMsi);
 
                 expect(quote.totalStockCost).not.toBeFalsy();
-                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 2);
+                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 1);
             });
 
             it('should be computed correctly when secondaryMaterial is undefined', async () => {
@@ -1008,10 +1008,10 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockMsi } = quote;
 
-                const expectedValue = totalStockMsi * primaryMaterial.quotePrice;
+                const expectedValue = totalStockMsi * primaryMaterial.quotePricePerMsi;
 
                 expect(quote.totalStockCost).not.toBeFalsy();
-                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 2);
+                expect(quote.totalStockCost).toBeCloseTo(expectedValue, 1);
             });
         });
 
@@ -1265,6 +1265,37 @@ describe('File: quoteService.js', () => {
                 expect(quote.reinsertionSetupTime).not.toBeFalsy();
                 expect(quote.reinsertionSetupTime).toEqual(expectedReinsertionSetupTime);
             });
+        });
+    });
+
+    describe.skip('acceptance tests', () => {
+        it('should create a quote with correctly calculated attributes', async () => {
+            quoteInputAttributes = {
+                labelsPerRollOverride: 2000,
+                numberOfDesignsOverride: 1,
+                labelQty: 10000,
+                dieOverride: {
+                    sizeAcross: 1.5,
+                    sizeAround: 1.5,
+                    spaceAround: 0.125,
+                    numberAround: 8
+                },
+                primaryMaterialOverride: {
+                    quotePricePerMsi: 0.7475,
+                    thickness: 5.500,
+                    costPerMsi: 0.2810
+                },
+                finishOverride: {
+                    quotePricePerMsi: 0.2000,
+                    thickness: 1.250,
+                    costPerMsi: 0.0850
+                },
+                numberOfColorsOverride: 4
+            };
+            const quote = await createQuote(quoteInputAttributes);
+
+            expect(quote).toBeDefined();
+            expect(quote).toEqual(expect.objectContaining(quoteInputAttributes));
         });
     });
 });

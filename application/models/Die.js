@@ -137,7 +137,7 @@ const schema = new Schema({
         type: Number,
         required: true
     },
-    spaceAcross: {
+    spaceAcross: { // also known as "Col Space"
         type: Number,
         required: true,
         set: function (spaceAcross) {
@@ -145,8 +145,8 @@ const schema = new Schema({
             return spaceAcross;
         },
         min: 0
-    },
-    spaceAround: {
+    }, 
+    spaceAround: { // also known as "Row Space"
         type: Number,
         required: true,
         set: function (spaceAround) {

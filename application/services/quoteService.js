@@ -9,6 +9,7 @@ const dieService = require('../../application/services/dieService');
 const isNil = require('lodash.isNil');
 const QuoteModel = require('../../application/models/quote');
 const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
+const Decimal = require('decimal.js');
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -77,6 +78,8 @@ module.exports.createQuote = async (quoteInputs) => {
         extraFrames: DEFAULT_EXTRA_FRAMES,
         cuttingStockTime: 0
     };
+
+    // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
 
     quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
@@ -218,6 +221,8 @@ async function getPrimaryMaterialFromProduct(product) {
 }
 
 async function getSecondaryMaterialFromProduct(product) {
+    if (!product) return null;
+
     const { secondaryMaterial: secondaryMaterialId } = product;
 
     return await MaterialModel.findById(secondaryMaterialId);
@@ -341,8 +346,8 @@ function computeTotalFinishCost(quoteAttributes) {
 function computeTotalStockCost(quoteAttributes) {
     const { primaryMaterial, secondaryMaterial, totalStockMsi } = quoteAttributes;
 
-    const primaryMaterialCost = totalStockMsi * primaryMaterial.quotePrice;
-    const secondarMaterialCost = secondaryMaterial ? (totalStockMsi * secondaryMaterial.quotePrice) : 0;
+    const primaryMaterialCost = totalStockMsi * primaryMaterial.quotePricePerMsi;
+    const secondarMaterialCost = secondaryMaterial ? (totalStockMsi * secondaryMaterial.quotePricePerMsi) : 0;
 
     return primaryMaterialCost + secondarMaterialCost;
 }
@@ -350,7 +355,7 @@ function computeTotalStockCost(quoteAttributes) {
 function computeTotalFrames(quoteAttributes) {
     const { totalStockFeet, frameLength } = quoteAttributes;
 
-    return Math.ceil((totalStockFeet / frameLength) * INCHES_PER_FOOT);
+    return Math.ceil(new Decimal(totalStockFeet).dividedBy(frameLength).times(INCHES_PER_FOOT));
 }
 
 function computeTotalCuttingCost(quoteAttributes) {

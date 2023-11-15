@@ -25,7 +25,8 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
 
 const lengthInFeetAttribute = {
     type: Number,
-    min: 0
+    min: 0,
+    set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
 };
 
 const timeDurationAttribute = {

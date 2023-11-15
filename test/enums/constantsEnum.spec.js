@@ -77,6 +77,11 @@ describe('constantsEnum', () => {
 
         expect(constantsEnum.SCALING_FEET).toEqual(expectedValue);
     });
+    it('COLOR_CALIBRATION_FEET : should equal the correct value', () => {
+        const expectedValue = 21;
+
+        expect(constantsEnum.COLOR_CALIBRATION_FEET).toEqual(expectedValue);
+    });
     it('DIE_LINE_SETUP_FEET : should equal the correct value', () => {
         const expectedValue = 6;
 

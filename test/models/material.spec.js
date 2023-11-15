@@ -30,7 +30,7 @@ function verifyWeightPerMsiAttribute(materialAttributes, attributeName) {
     expect(material[attributeName]).toEqual(expectedRoundedDecimal);
 }
 
-describe('validation', () => {
+describe('File: material.js', () => {
     let materialAttributes;
 
     beforeEach(() => {
@@ -259,24 +259,14 @@ describe('validation', () => {
             expect(material.costPerMsi).toEqual(expect.any(Number));
         });
 
-        it('should round floating point values to 2nd decimal places', () => {
-            const priceWithWayTooManyDecimals = '100.11999999999';
+        it('should round floating point values to 4th decimal places', () => {
+            const priceWithWayTooManyDecimals = '0.255588888';
             materialAttributes.costPerMsi = priceWithWayTooManyDecimals;
-            const expectedPrice = 100.12;
+            const expectedPrice = 0.2556;
 
             const material = new MaterialModel(materialAttributes);
 
             expect(material.costPerMsi).toEqual(expectedPrice);
-        });
-
-        it('should remove commas from price', () => {
-            const currencyWithCommas = '1,192,123.83';
-            const currencyWithoutCommas = 1192123.83;
-            materialAttributes.costPerMsi = currencyWithCommas;
-
-            const material = new MaterialModel(materialAttributes);
-
-            expect(material.costPerMsi).toEqual(currencyWithoutCommas);
         });
 
         it('should fail validation if price is a non-number', () => {
@@ -325,24 +315,14 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should round floating point values to 2nd decimal place', () => {
-            const priceWithWayTooManyDecimals = '100.11999999999';
+        it('should round floating point values to 4th decimal place', () => {
+            const priceWithWayTooManyDecimals = '100.1234567890';
             materialAttributes.freightCostPerMsi = priceWithWayTooManyDecimals;
-            const expectedPrice = 100.12;
+            const expectedPrice = 100.1235;
 
             const material = new MaterialModel(materialAttributes);
 
             expect(material.freightCostPerMsi).toEqual(expectedPrice);
-        });
-
-        it('should remove commas from price', () => {
-            const currencyWithCommas = '1,192,123.83';
-            const currencyWithoutCommas = 1192123.83;
-            materialAttributes.freightCostPerMsi = currencyWithCommas;
-
-            const material = new MaterialModel(materialAttributes);
-
-            expect(material.freightCostPerMsi).toEqual(currencyWithoutCommas);
         });
 
         it('should fail validation if price is a non-number', () => {
@@ -468,24 +448,14 @@ describe('validation', () => {
             expect(error).toBeDefined();
         });
 
-        it('should round floating points to 2nd decimal places', () => {
-            const priceWithWayTooManyDecimals = '888.11999999999';
+        it('should round floating points to 4th decimal places', () => {
+            const priceWithWayTooManyDecimals = '888.22224444';
             materialAttributes.quotePricePerMsi = priceWithWayTooManyDecimals;
-            const expectedPrice = 888.12;
+            const expectedPrice = 888.2222;
 
             const material = new MaterialModel(materialAttributes);
 
             expect(material.quotePricePerMsi).toEqual(expectedPrice);
-        });
-
-        it('should remove commas from price', () => {
-            const currencyWithCommas = '7,194,123.83';
-            const currencyWithoutCommas = 7194123.83;
-            materialAttributes.quotePricePerMsi = currencyWithCommas;
-
-            const material = new MaterialModel(materialAttributes);
-
-            expect(material.quotePricePerMsi).toEqual(currencyWithoutCommas);
         });
     });
 
@@ -587,6 +557,16 @@ describe('validation', () => {
             const error = material.validateSync();
             
             expect(error).toBeDefined();
+        });
+
+        it('should round to the fourth decimal place', () => {
+            const unroundedValue = 0.11115;
+            const expectedValue = 0.1112;
+            materialAttributes.facesheetWeightPerMsi = unroundedValue;
+            
+            const material = new MaterialModel(materialAttributes);
+            
+            expect(material.facesheetWeightPerMsi).toEqual(expectedValue);
         });
     });
 

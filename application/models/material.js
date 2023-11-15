@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 const Decimal = require('decimal.js');
 
 mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
@@ -57,16 +56,14 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        get: convertPenniesToDollars,
-        set: convertDollarsToPennies,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
 
     },
     freightCostPerMsi: {
         type: Number,
         required: true,
         min: 0,
-        get: convertPenniesToDollars,
-        set: convertDollarsToPennies,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     width: {
         type: Number,
@@ -89,9 +86,8 @@ const schema = new Schema({
     quotePricePerMsi: {
         type: Number,
         required: true,
-        get: convertPenniesToDollars,
-        set: convertDollarsToPennies,
-        min: 0
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     description: {
         type: String,

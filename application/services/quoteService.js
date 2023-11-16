@@ -57,8 +57,7 @@ module.exports.createQuote = async (quoteInputs) => {
     const quoteAttributes = {
         ...quoteInputs,
         ...overridableValues,
-        numberOfDesigns: (products && products.length) ? products.length : numberOfDesignsOverride,
-        colorCalibrationFeet: constants.COLOR_CALIBRATION_FEET,
+        numberOfDesigns: numberOfDesignsOverride ? numberOfDesignsOverride : products.length,
         proofRunupFeet: constants.PROOF_RUNUP_FEET,
         scalingFeet: constants.SCALING_FEET,
         newMaterialSetupFeet: constants.NEWLY_LOADED_ROLL_WASTE_FEET,
@@ -74,16 +73,16 @@ module.exports.createQuote = async (quoteInputs) => {
         coreGatheringTime: constants.CORE_GATHERING_TIME,
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME,
-        dieCutterSetupFeet: constants.DIE_CUTTER_SETUP_FEET,
         extraFrames: DEFAULT_EXTRA_FRAMES,
         cuttingStockTime: 0
     };
 
     // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
-
+    quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(quoteAttributes);
     quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
-    quoteAttributes.frameLength = computeFrameLength(overridableValues.die, quoteAttributes);
+    quoteAttributes.frameLength = computeFrameLength(quoteAttributes);
+    quoteAttributes.dieCutterSetupFeet = computeDieCutterSetupFeet(quoteAttributes);
     quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
@@ -523,21 +522,18 @@ function computeTotalRollsOfPaper(quoteAttributes) {
     return Math.floor(totalStockFeet / FEET_PER_ROLL) - 1;
 }
 
-function computeFrameLength(die, quoteAttributes) {
-    const { sizeAroundOverride, spaceAroundOverride } = quoteAttributes;
-    const sizeAround = sizeAroundOverride 
-        ? sizeAroundOverride : die.sizeAround;
-    const spaceAround = spaceAroundOverride
-        ? spaceAroundOverride : die.spaceAround;
+function computeFrameLength(quoteAttributes) {
+    const { die } = quoteAttributes;
+    const frameNumberAround = Math.floor(constants.MAX_FRAME_LENGTH_INCHES / (die.sizeAround + die.spaceAround));
 
-    return (sizeAround + spaceAround) * die.numberAround;
+    return (die.sizeAround + die.spaceAround) * frameNumberAround;
 }
 
 function computeInitialStockLength(quoteAttributes) {
     const { die, labelQty } = quoteAttributes;
-    const { sizeAround, spaceAround, numberAround } = die;
+    const { sizeAround, spaceAround, numberAcross } = die;
     
-    const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAround) / INCHES_PER_FOOT;
+    const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAcross) / INCHES_PER_FOOT;
     
     return initialStockLength;
 }
@@ -557,4 +553,18 @@ function computeDieLineSetupFeet(quoteAttributes) {
     const { frameLength } = quoteAttributes;
 
     return (frameLength * 2) / INCHES_PER_FOOT;
+}
+
+function computeDieCutterSetupFeet(quoteAttributes) {
+    const { frameLength, numberOfDesigns, extraFrames } = quoteAttributes;
+
+    const unroundedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesigns;
+
+    return Math.ceil(unroundedValue)
+}
+
+function computeColorCalibrationFeet(quoteAttributes) {
+    const { numberOfDesigns } = quoteAttributes;
+
+    return numberOfDesigns * constants.COLOR_CALIBRATION_FEET;
 }

@@ -53,7 +53,8 @@ function generateDie() {
         sizeAcross: 1,
         sizeAround: chance.d6(),
         spaceAround: chance.d6(),
-        numberAround: chance.d12()
+        numberAround: chance.d12(),
+        numberAcross: chance.d12()
     };
 }
 
@@ -125,7 +126,7 @@ describe('File: quoteService.js', () => {
                     dieOverride
                 };
                 const { labelQty } = quoteInputAttributes;
-                const expectedValue = (((dieOverride.sizeAround + dieOverride.spaceAround) * labelQty) / dieOverride.numberAround) / INCHES_PER_FOOT;
+                const expectedValue = (((dieOverride.sizeAround + dieOverride.spaceAround) * labelQty) / dieOverride.numberAcross) / INCHES_PER_FOOT;
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
@@ -141,7 +142,7 @@ describe('File: quoteService.js', () => {
                 };
                 const { labelQty } = quoteInputAttributes;
                 const { sizeAround, spaceAround } = die;
-                const expectedValue = (((sizeAround + spaceAround) * labelQty) / die.numberAround) / INCHES_PER_FOOT;
+                const expectedValue = (((sizeAround + spaceAround) * labelQty) / die.numberAcross) / INCHES_PER_FOOT;
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
@@ -166,8 +167,22 @@ describe('File: quoteService.js', () => {
         });
 
         describe('attribute: colorCalibrationFeet', () => {
-            it('should set attribute to a constant value', async () => {
-                const expectedValue = constants.COLOR_CALIBRATION_FEET;
+            it('should compute the attribute correctly', async () => {
+                const threeProducts = [quoteInputAttributes.products[0], quoteInputAttributes.products[0], quoteInputAttributes.products[0]]
+                quoteInputAttributes.products = threeProducts;
+                const numberOfDesigns = threeProducts.length;
+                const expectedValue = numberOfDesigns * constants.COLOR_CALIBRATION_FEET;
+                
+                const quote = await createQuote(quoteInputAttributes);
+                
+                expect(quote.colorCalibrationFeet).not.toBeFalsy();
+                expect(quote.colorCalibrationFeet).toEqual(expectedValue);
+            });
+
+            it('should compute the attribute correctly when numberOfDesignsOverride is defined', async () => {
+                const numberOfDesignsOverride = chance.d100();
+                quoteInputAttributes.numberOfDesignsOverride = numberOfDesignsOverride;
+                const expectedValue = numberOfDesignsOverride * constants.COLOR_CALIBRATION_FEET;
                 
                 const quote = await createQuote(quoteInputAttributes);
                 
@@ -937,10 +952,12 @@ describe('File: quoteService.js', () => {
         });
 
         describe('attribute: dieCutterSetupFeet', () => {
-            it('should set attribute to a constant value', async () => {
-                const expectedValue = constants.DIE_CUTTER_SETUP_FEET;
-
+            it('should calculate the value correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
+                const { extraFrames, frameLength } = quote;
+                const numberOfDesigns = quote.products.length; 
+                const expectedUnroundedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesigns;
+                const expectedValue = Math.ceil(expectedUnroundedValue);
 
                 expect(quote.dieCutterSetupFeet).not.toBeFalsy();
                 expect(quote.dieCutterSetupFeet).toEqual(expectedValue);
@@ -969,7 +986,6 @@ describe('File: quoteService.js', () => {
             });
         });
 
-        // TODO (11-5-2023): Revist this one after talking with storm. (Why does this formula only involve a single material?)
         describe('attribute: totalStockCost', () => {
             it('should be calculated using products[x].primaryMaterial and products[x].secondaryMaterial when not overridden by user', async () => {
                 delete quoteInputAttributes.primaryMaterialOverride;
@@ -1268,17 +1284,18 @@ describe('File: quoteService.js', () => {
         });
     });
 
-    describe.skip('acceptance tests', () => {
+    describe('acceptance tests', () => {
         it('should create a quote with correctly calculated attributes', async () => {
             quoteInputAttributes = {
                 labelsPerRollOverride: 2000,
-                numberOfDesignsOverride: 1,
+                numberOfDesignsOverride: 2,
                 labelQty: 10000,
                 dieOverride: {
                     sizeAcross: 1.5,
                     sizeAround: 1.5,
                     spaceAround: 0.125,
-                    numberAround: 8
+                    numberAround: 8,
+                    numberAcross: 7
                 },
                 primaryMaterialOverride: {
                     quotePricePerMsi: 0.7475,
@@ -1295,7 +1312,26 @@ describe('File: quoteService.js', () => {
             const quote = await createQuote(quoteInputAttributes);
 
             expect(quote).toBeDefined();
-            expect(quote).toEqual(expect.objectContaining(quoteInputAttributes));
+            expect(quote).toEqual(expect.objectContaining({
+                //...quoteInputAttributes   // TODO: Uncomment this line
+                initialStockLength: 193.4524,
+                colorCalibrationFeet: 42,
+                proofRunupFeet: 23,
+                printCleanerFeet: 40,
+                //dieCutterSetupFeet: 282,
+                // scalingFeet: 30,
+                // newMaterialSetupFeet: 78,
+                // dieLineSetupFeet: 6.2292,
+                // totalStockFeet: 469.6815,
+                // throwAwayStockPercentage: 0.5881,
+                // totalStockMsi: 71.8613,
+                // totalRollsOfPaper: 0,
+                // extraFrames: 25,
+                //totalFrames: 458,
+
+                // frameLength: 37.375,
+                // dieLineSetupFeet
+            }));
         });
     });
 });

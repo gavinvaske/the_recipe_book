@@ -1807,14 +1807,14 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        it('should not be a floating point number', () => {
-            const floatingPointPrintingSpeed = chance.floating({ min: 0.1, max: 0.9 });
-            quoteAttributes.printingSpeed = floatingPointPrintingSpeed;
+        it('should round to 4 decimal places', () => {
+            const printingSpeed = 1.123456789;
+            const roundedPrintingSpeed = 1.1235;
+            quoteAttributes.printingSpeed = printingSpeed;
+            
             const quote = new Quote(quoteAttributes);
             
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
+            expect(quote.printingSpeed).toEqual(roundedPrintingSpeed);
         });
     });
 

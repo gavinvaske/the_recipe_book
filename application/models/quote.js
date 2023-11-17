@@ -411,7 +411,8 @@ const quoteSchema = new Schema({
         validate: {
             validator: Number.isInteger,
             message: '{VALUE} is not an integer'
-        }
+        },
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     products: {
         type: [productWithQtySchema]

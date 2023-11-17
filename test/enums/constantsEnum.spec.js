@@ -240,6 +240,12 @@ describe('constantsEnum', () => {
         const expectedValue = 200;
 
         expect(constantsEnum.REWIND_SPEED).toEqual(expectedValue);
+    });    
+    
+    it('DIE_CUTTING_SPEED : should equal the correct value', () => {
+        const expectedValue = 65;
+
+        expect(constantsEnum.DIE_CUTTING_SPEED).toEqual(expectedValue);
     });
 
     it('COLOR_CALIBRATION_TIME : should equal the correct value', () => {

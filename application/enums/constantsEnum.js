@@ -50,6 +50,7 @@ module.exports.PACKAGING_PER_BOX_TIME = 3;
 module.exports.CORE_GATHERING_TIME = 3;
 module.exports.LABEL_DROP_OFF_TIME = 3;
 module.exports.REWIND_SPEED = 200;
+module.exports.DIE_CUTTING_SPEED = 65;
 module.exports.COLOR_CALIBRATION_TIME = 7;
 module.exports.PRINTING_PROOF_TIME = 3;
 module.exports.PRINTING_TEAR_DOWN_TIME = 7;

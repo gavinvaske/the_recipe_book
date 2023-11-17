@@ -153,7 +153,7 @@ describe('constantsEnum', () => {
     });
 
     it('CUTTING_TEAR_DOWN_TIME : should equal the correct value', () => {
-        const expectedValue = 5;
+        const expectedValue = 7;
 
         expect(constantsEnum.CUTTING_TEAR_DOWN_TIME).toEqual(expectedValue);
     });

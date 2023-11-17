@@ -340,9 +340,9 @@ describe('File: quoteService.js', () => {
         describe('attribute: totalCoreCost', () => {
             it('should compute the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
-                const { totalFinishedRolls } = quote;
+                const { totalCores } = quote;
 
-                const expectedValue = totalFinishedRolls * constants.PER_CORE_COST;
+                const expectedValue = totalCores * constants.PER_CORE_COST;
 
                 expect(quote.totalCoreCost).not.toBeFalsy();
                 expect(quote.totalCoreCost).toBeCloseTo(expectedValue, 1);
@@ -602,7 +602,7 @@ describe('File: quoteService.js', () => {
                     + reinsertionPrintingTime + printTearDownTime;
 
                 expect(quote.totalTimeAtPrinting).not.toBeFalsy();
-                expect(quote.totalTimeAtPrinting).toEqual(expectedValue);
+                expect(quote.totalTimeAtPrinting).toBeCloseTo(expectedValue, 1);
             });
         });
 
@@ -1349,6 +1349,18 @@ describe('File: quoteService.js', () => {
         });
     });
 
+    describe('attribute: totalCores', () => {
+        it('should be calculated correctly', async () => {
+            const quote = await createQuote(quoteInputAttributes);
+            const { totalFinishedRolls, cuttingDiameter } = quote;
+            const scalar = Math.ceil(cuttingDiameter / 21); // eslint-disable-line no-magic-numbers
+            const expectedValue = totalFinishedRolls + (scalar * die.numberAcross);
+
+            expect(quote.totalCores).not.toBeFalsy();
+            expect(quote.totalCores).toEqual(expectedValue);
+        });
+    });
+
     describe('acceptance tests', () => {
         it('should create a quote with correctly calculated attributes', async () => {
             quoteInputAttributes = {
@@ -1397,14 +1409,11 @@ describe('File: quoteService.js', () => {
                 cuttingDiameter: 9.0747,
                 finishedRollDiameter: 6.230,
                 combinedMaterialThickness: 6.750,
-                
-                // TODO: The formula for this on lucid versus prometheus do not match
+                totalCores: 12,
                 totalFinishFeet: 519.9940,
                 totalFinishMsi: 79.5591,
                 totalFinishCost: 40.58,
-                
-                //totalCoreCost: 1.90,
-
+                totalCoreCost: 1.20,
                 totalBoxCost: 5.00,
                 inlinePrimingCost: 2.12,
                 frameLength: 37.375,

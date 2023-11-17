@@ -435,6 +435,19 @@ const quoteSchema = new Schema({
     },
     reinsertionSetupTime: {
         ...timeDurationAttribute
+    },
+    totalCores: {
+        type: Number,
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer'
+        }
+    },
+    cuttingDiameter: {
+        type: Number,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     }
 }, {
     timestamps: true

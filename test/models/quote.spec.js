@@ -1571,6 +1571,86 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: totalCores', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.totalCores;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedCores = chance.d100();
+            quoteAttributes.totalCores = expectedCores;
+
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.totalCores).toEqual(expectedCores);
+        });
+
+        it('should fail if attribute is not an integer', () => {
+            const floating = 1.123;
+            quoteAttributes.totalCores = floating;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should not be negative', () => {
+            const negativeNumber = -1;
+            quoteAttributes.totalCores = negativeNumber;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: cuttingDiameter', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.cuttingDiameter;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            const expectedDiameter = chance.d100();
+            quoteAttributes.cuttingDiameter = expectedDiameter;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.cuttingDiameter).toEqual(expectedDiameter);
+        });
+
+        it('should round to the 4th decimal place', () => {
+            const unroundedCuttingDiameter = 111.123456789;
+            const expectedCuttingDiameter = 111.1235;
+            quoteAttributes.cuttingDiameter = unroundedCuttingDiameter;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.cuttingDiameter).toEqual(expectedCuttingDiameter);
+        });
+
+        it('should not be negative', () => {
+            const negativeNumber = -1;
+            quoteAttributes.cuttingDiameter = negativeNumber;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    });
+
     describe('attribute: customer', () => {
         it('should not be required', () => {
             delete quoteAttributes.customer;

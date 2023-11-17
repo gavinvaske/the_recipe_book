@@ -59,16 +59,18 @@ function generateDie() {
 }
 
 function computeFrameLength(die) {
-    const { sizeAround, spaceAround, numberAround } = die;
+    const { sizeAround, spaceAround } = die;
 
-    return (sizeAround + spaceAround) * numberAround;
+    const frameNumberAround = Math.floor(constants.MAX_FRAME_LENGTH_INCHES / (sizeAround + spaceAround));
+
+    return (sizeAround + spaceAround) * frameNumberAround;
 }
 
 function getExpectedPrintingSpeed(numberOfColors, die) {
-    const { sizeAround, spaceAround } = die;
-    const unroundedPrintingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (sizeAround + spaceAround))); // eslint-disable-line no-magic-numbers
+    const frameLength = computeFrameLength(die);
+    const printingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (frameLength))); // eslint-disable-line no-magic-numbers
 
-    return Math.round(unroundedPrintingSpeed);
+    return printingSpeed;
 }
 
 const INCHES_PER_FOOT = 12;
@@ -131,7 +133,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 
                 expect(quote.initialStockLength).not.toBeFalsy();
-                expect(quote.initialStockLength).toBeCloseTo(expectedValue, 4);
+                expect(quote.initialStockLength).toBeCloseTo(expectedValue, 3);
             });
 
             it('should compute using die.sizeAround and die.spaceAround when dieOverride not defined', async () => {
@@ -168,7 +170,7 @@ describe('File: quoteService.js', () => {
 
         describe('attribute: colorCalibrationFeet', () => {
             it('should compute the attribute correctly', async () => {
-                const threeProducts = [quoteInputAttributes.products[0], quoteInputAttributes.products[0], quoteInputAttributes.products[0]]
+                const threeProducts = [quoteInputAttributes.products[0], quoteInputAttributes.products[0], quoteInputAttributes.products[0]];
                 quoteInputAttributes.products = threeProducts;
                 const numberOfDesigns = threeProducts.length;
                 const expectedValue = numberOfDesigns * constants.COLOR_CALIBRATION_FEET;
@@ -253,7 +255,7 @@ describe('File: quoteService.js', () => {
                     + printCleanerFeet + scalingFeet + newMaterialSetupFeet + dieLineSetupFeet;
                 
                 expect(quote.totalStockFeet).not.toBeFalsy();
-                expect(quote.totalStockFeet).toEqual(expectedTotalStockFeet);
+                expect(quote.totalStockFeet).toBeCloseTo(expectedTotalStockFeet, 3);
             });
         });
 
@@ -314,12 +316,12 @@ describe('File: quoteService.js', () => {
         describe('attribute: totalFinishFeet', () => {
             it('should compute the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
-                const { dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quote;
+                const { initialStockLength, dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quote;
 
-                const expectedValue = printCleanerFeet + dieCutterSetupFeet + dieLineSetupFeet;
+                const expectedValue = initialStockLength + printCleanerFeet + dieCutterSetupFeet + dieLineSetupFeet;
 
                 expect(quote.totalFinishFeet).not.toBeFalsy();
-                expect(quote.totalFinishFeet).toEqual(expectedValue);
+                expect(quote.totalFinishFeet).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -352,7 +354,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockMsi } = quote;
 
-                const expectedValue = totalStockMsi * constants.INLINE_PRIMING_COST;
+                const expectedValue = totalStockMsi * constants.INLINE_PRIMING_COST_PER_MSI;
 
                 expect(quote.inlinePrimingCost).not.toBeFalsy();
                 expect(quote.inlinePrimingCost).toBeCloseTo(expectedValue, 1);
@@ -565,7 +567,7 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { totalStockFeet, printingSpeed } = quote;
 
-                const expectedValue = Math.ceil(totalStockFeet * printingSpeed);
+                const expectedValue = totalStockFeet / printingSpeed;
 
                 expect(quote.printingStockTime).not.toBeFalsy();
                 expect(quote.printingStockTime).toBeCloseTo(expectedValue, 1);
@@ -956,21 +958,56 @@ describe('File: quoteService.js', () => {
                 const quote = await createQuote(quoteInputAttributes);
                 const { extraFrames, frameLength } = quote;
                 const numberOfDesigns = quote.products.length; 
-                const expectedUnroundedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesigns;
-                const expectedValue = Math.ceil(expectedUnroundedValue);
+                const expectedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesigns;
 
                 expect(quote.dieCutterSetupFeet).not.toBeFalsy();
-                expect(quote.dieCutterSetupFeet).toEqual(expectedValue);
+                expect(quote.dieCutterSetupFeet).toBeCloseTo(expectedValue, 3);
+            });
+
+            it('should calculate the value correctly when numberOfDesignsOverride is defined and greater than 1', async () => {
+                const numberOfDesignsOverride = chance.d12();
+                quoteInputAttributes.numberOfDesignsOverride = numberOfDesignsOverride;
+                const quote = await createQuote(quoteInputAttributes);
+                const { extraFrames, frameLength } = quote;
+                const expectedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesignsOverride;
+
+                expect(quote.dieCutterSetupFeet).not.toBeFalsy();
+                expect(quote.dieCutterSetupFeet).toBeCloseTo(expectedValue, 3);
             });
         });
 
         describe('attribute: extraFrames', () => {
-            it('should default the attribute to equal 25, until we create an algorithm to calculate it dynamically', async () => {
-                const expectedDefaultValue = 25;
+            const { EXTRA_FRAMES_PER_ADDITIONAL_DESIGN, EXTRA_FRAMES_FOR_THE_FIRST_DESIGN } = constants;
+
+            it('should calculate the attribute correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
+                const numberOfDesigns = quote.products.length; 
+                const expectedValue = EXTRA_FRAMES_FOR_THE_FIRST_DESIGN + ((numberOfDesigns - 1) * EXTRA_FRAMES_PER_ADDITIONAL_DESIGN);
                 
                 expect(quote.extraFrames).not.toBeFalsy();
-                expect(quote.extraFrames).toEqual(expectedDefaultValue);
+                expect(quote.extraFrames).toEqual(expectedValue);
+            });
+
+            it('should calculate the value correctly when numberOfDesignsOverride is defined and equal to 1', async () => {
+                const numberOfDesignsOverride = 1;
+                quoteInputAttributes.numberOfDesignsOverride = numberOfDesignsOverride;
+                
+                const quote = await createQuote(quoteInputAttributes);
+                const expectedValue = EXTRA_FRAMES_FOR_THE_FIRST_DESIGN;
+
+                expect(quote.extraFrames).not.toBeFalsy();
+                expect(quote.extraFrames).toEqual(expectedValue);
+            });
+
+            it('should calculate the value correctly when numberOfDesignsOverride is defined and greater than 1', async () => {
+                const numberOfDesignsOverride = 1 + chance.d12();
+                quoteInputAttributes.numberOfDesignsOverride = numberOfDesignsOverride;
+                
+                const quote = await createQuote(quoteInputAttributes);
+                const expectedValue = EXTRA_FRAMES_FOR_THE_FIRST_DESIGN + ((numberOfDesignsOverride - 1) * EXTRA_FRAMES_PER_ADDITIONAL_DESIGN);
+
+                expect(quote.extraFrames).not.toBeFalsy();
+                expect(quote.extraFrames).toEqual(expectedValue);
             });
         });
 
@@ -1044,16 +1081,18 @@ describe('File: quoteService.js', () => {
         describe('attribute: printingSpeed', () => {
             it('should be calculated correctly when dieOverride is defined', async () => {
                 const dieOverride = generateDie();
+                const numberOfColorsOverride = chance.d12();
                 quoteInputAttributes = {
                     ...quoteInputAttributes,
-                    dieOverride
+                    dieOverride,
+                    numberOfColorsOverride
                 };
                 const quote = await createQuote(quoteInputAttributes);
 
-                const expectedValue = getExpectedPrintingSpeed(baseProduct.numberOfColors, dieOverride);
+                const expectedValue = getExpectedPrintingSpeed(numberOfColorsOverride, dieOverride);
                 
                 expect(quote.printingSpeed).not.toBeFalsy();
-                expect(quote.printingSpeed).toEqual(expectedValue);
+                expect(quote.printingSpeed).toBeCloseTo(expectedValue, 3);
             });
 
             it('should be calculated correctly when dieOverride.sizeAround and dieOverride.spaceAround are NOT defined', async () => {
@@ -1064,7 +1103,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = getExpectedPrintingSpeed(baseProduct.numberOfColors, die);
                 
                 expect(quote.printingSpeed).not.toBeFalsy();
-                expect(quote.printingSpeed).toEqual(expectedValue);
+                expect(quote.printingSpeed).toBeCloseTo(expectedValue, 3);
             });
         });
 
@@ -1263,7 +1302,8 @@ describe('File: quoteService.js', () => {
                     scalingClickCost, proofRunupClickCost,
                     printCleanerClickCost, totalFrames
                 } = quote;
-                const expectedClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (totalFrames * baseProduct.numberOfColors * 2);
+                const { COST_PER_COLOR } = constants;
+                const expectedClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (COST_PER_COLOR * (totalFrames * baseProduct.numberOfColors * 2));
 
                 expect(quote.totalClicksCost).not.toBeFalsy();
                 expect(quote.totalClicksCost).toBeCloseTo(expectedClicksCost, 1);
@@ -1298,14 +1338,14 @@ describe('File: quoteService.js', () => {
                     numberAcross: 7
                 },
                 primaryMaterialOverride: {
-                    quotePricePerMsi: 0.7475,
+                    quotePricePerMsi: 0.930,
                     thickness: 5.500,
                     costPerMsi: 0.2810
                 },
                 finishOverride: {
                     quotePricePerMsi: 0.2000,
                     thickness: 1.250,
-                    costPerMsi: 0.0850
+                    costPerMsi: 0.51
                 },
                 numberOfColorsOverride: 4
             };
@@ -1318,19 +1358,41 @@ describe('File: quoteService.js', () => {
                 colorCalibrationFeet: 42,
                 proofRunupFeet: 23,
                 printCleanerFeet: 40,
-                //dieCutterSetupFeet: 282,
-                // scalingFeet: 30,
-                // newMaterialSetupFeet: 78,
-                // dieLineSetupFeet: 6.2292,
-                // totalStockFeet: 469.6815,
-                // throwAwayStockPercentage: 0.5881,
-                // totalStockMsi: 71.8613,
-                // totalRollsOfPaper: 0,
-                // extraFrames: 25,
-                //totalFrames: 458,
+                dieCutterSetupFeet: 280.3125,
+                scalingFeet: 30,
+                newMaterialSetupFeet: 78,
+                dieLineSetupFeet: 6.2292,
+                totalStockFeet: 692.9940,
+                throwAwayStockPercentage: 0.7208,
+                totalStockMsi: 106.0281,
+                totalRollsOfPaper: 0,
+                extraFrames: 45,
+                totalFrames: 446,
+                totalStockCost: 98.61,
+                
+                // TODO: The formula for this on lucid versus prometheus do not match
+                totalFinishFeet: 519.9940,
+                totalFinishMsi: 79.5591,
+                totalFinishCost: 40.58,
+                
+                //totalCoreCost: 1.90,
 
-                // frameLength: 37.375,
-                // dieLineSetupFeet
+                totalBoxCost: 5.00,
+                inlinePrimingCost: 2.12,
+                frameLength: 37.375,
+                scalingClickCost: 5.47,
+                proofRunupClickCost: 0.15,
+                printCleanerClickCost: 0.76,
+                totalClicksCost: 40.28, 
+                //totalMaterialsCost: 185.48,
+                // dieLineSetupFeet,
+                stockSpliceTime: 5,
+                colorCalibrationTime: 7,
+                proofPrintingTime: 6,
+                reinsertionPrintingTime: 0,
+                rollChangeOverTime: 0,
+                printingSpeed: 95.3444
+                //printingStockTime: 8,
             }));
         });
     });

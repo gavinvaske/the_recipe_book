@@ -16,7 +16,6 @@ const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
-const DEFAULT_EXTRA_FRAMES = 25;
 const ROLL_CORE_DIAMETER = 3.3;
 
 module.exports.createQuote = async (quoteInputs) => {
@@ -73,15 +72,15 @@ module.exports.createQuote = async (quoteInputs) => {
         coreGatheringTime: constants.CORE_GATHERING_TIME,
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME,
-        extraFrames: DEFAULT_EXTRA_FRAMES,
         cuttingStockTime: 0
     };
 
     // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
+    quoteAttributes.extraFrames = computeExtraFrames(quoteAttributes);
     quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(quoteAttributes);
-    quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
     quoteAttributes.frameLength = computeFrameLength(quoteAttributes);
+    quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
     quoteAttributes.dieCutterSetupFeet = computeDieCutterSetupFeet(quoteAttributes);
     quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
@@ -180,8 +179,9 @@ function computeTotalClicksCost(quoteAttributes) {
         scalingClickCost, proofRunupClickCost, printCleanerClickCost,
         totalFrames, numberOfColors
     } = quoteAttributes;
+    const { COST_PER_COLOR } = constants;
 
-    const totalClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (totalFrames * numberOfColors * 2);
+    const totalClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (COST_PER_COLOR * (totalFrames * numberOfColors * 2));
 
     return totalClicksCost;
 }
@@ -352,9 +352,11 @@ function computeTotalStockCost(quoteAttributes) {
 }
 
 function computeTotalFrames(quoteAttributes) {
-    const { totalStockFeet, frameLength } = quoteAttributes;
+    const { totalStockFeet, frameLength, numberOfDesigns } = quoteAttributes;
 
-    return Math.ceil(new Decimal(totalStockFeet).dividedBy(frameLength).times(INCHES_PER_FOOT));
+    const totalFramesPerDesign = Math.ceil(new Decimal(totalStockFeet).dividedBy(frameLength).times(INCHES_PER_FOOT));
+
+    return totalFramesPerDesign * numberOfDesigns;
 }
 
 function computeTotalCuttingCost(quoteAttributes) {
@@ -405,16 +407,15 @@ function computeThrowAwayPrintTimePercentage(quoteAttributes) {
 function computePrintingStockTime(quoteAttributes) {
     const { totalStockFeet, printingSpeed } = quoteAttributes;
 
-    return Math.ceil(totalStockFeet * printingSpeed);
+    return totalStockFeet / printingSpeed;
 }
 
 function computePrintingSpeed(quoteAttributes) {
-    const { numberOfColors, die } = quoteAttributes;
-    const { sizeAround, spaceAround } = die;
+    const { numberOfColors, frameLength } = quoteAttributes;
 
-    const unroundedPrintingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (sizeAround + spaceAround))); // eslint-disable-line no-magic-numbers
+    const printingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (frameLength))); // eslint-disable-line no-magic-numbers
 
-    return Math.round(unroundedPrintingSpeed);
+    return printingSpeed;
 }
 
 function computeRollChangeOverTime(quoteAttributes) {
@@ -466,7 +467,7 @@ function computeScalingClickCost(quoteAttributes) {
 function computeInlinePrimingCost(quoteAttributes) {
     const { totalStockMsi } = quoteAttributes;
 
-    return totalStockMsi * constants.INLINE_PRIMING_COST;
+    return totalStockMsi * constants.INLINE_PRIMING_COST_PER_MSI;
 }
 
 function computeTotalCoreCost(quoteAttributes) {
@@ -482,9 +483,9 @@ function computeTotalFinishMsi(quoteAttributes) {
 }
 
 function computeTotalFinishFeet(quoteAttributes) {
-    const { dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quoteAttributes;
+    const { initialStockLength, dieCutterSetupFeet, printCleanerFeet, dieLineSetupFeet } = quoteAttributes;
     
-    const sum = dieCutterSetupFeet + printCleanerFeet + dieLineSetupFeet;
+    const sum = initialStockLength + dieCutterSetupFeet + printCleanerFeet + dieLineSetupFeet;
 
     return sum;
 }
@@ -558,13 +559,20 @@ function computeDieLineSetupFeet(quoteAttributes) {
 function computeDieCutterSetupFeet(quoteAttributes) {
     const { frameLength, numberOfDesigns, extraFrames } = quoteAttributes;
 
-    const unroundedValue = ((extraFrames * frameLength) / INCHES_PER_FOOT) * numberOfDesigns;
+    const dieCutterSetupFeetPerDesign = (extraFrames * frameLength) / INCHES_PER_FOOT;
 
-    return Math.ceil(unroundedValue)
+    return dieCutterSetupFeetPerDesign * numberOfDesigns;
 }
 
 function computeColorCalibrationFeet(quoteAttributes) {
     const { numberOfDesigns } = quoteAttributes;
 
     return numberOfDesigns * constants.COLOR_CALIBRATION_FEET;
+}
+
+function computeExtraFrames(quoteAttributes) {
+    const { numberOfDesigns } = quoteAttributes;
+    const { EXTRA_FRAMES_FOR_THE_FIRST_DESIGN, EXTRA_FRAMES_PER_ADDITIONAL_DESIGN } = constants;
+
+    return EXTRA_FRAMES_FOR_THE_FIRST_DESIGN + ((numberOfDesigns - 1) * EXTRA_FRAMES_PER_ADDITIONAL_DESIGN);
 }

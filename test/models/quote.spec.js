@@ -1648,7 +1648,7 @@ describe('File: quote.js', () => {
             const error = quote.validateSync();
             
             expect(error).toBeDefined();
-        })
+        });
     });
 
     describe('attribute: customer', () => {

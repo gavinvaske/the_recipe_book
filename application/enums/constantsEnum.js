@@ -41,10 +41,10 @@ module.exports.CUTTING_TEAR_DOWN_TIME = 5;
 module.exports.MAX_FRAME_AROUND = 38.58;
 module.exports.MAX_FRAME_ACROSS = 12.50;
 module.exports.MAX_MATERIAL_SIZE_ACROSS = 12.75;
-module.exports.INLINE_PRIMING_COST = 0.20;
+module.exports.INLINE_PRIMING_COST_PER_MSI = 0.02;
 module.exports.SCALING_CLICKS = 72;
 module.exports.COST_PER_COLOR = 0.0095;
-module.exports.NEW_MATERIAL_STOCK_SPLICE = 7;
+module.exports.NEW_MATERIAL_STOCK_SPLICE = 5;
 module.exports.BOX_CREATION_TIME = 0.5;
 module.exports.PACKAGING_PER_BOX_TIME = 3;
 module.exports.CORE_GATHERING_TIME = 3;
@@ -58,6 +58,8 @@ module.exports.CUTTING_STOCK_SPLICE_TIME = 5;
 module.exports.DIE_SETUP = 7;
 module.exports.PACKING_SLIP_TIME = 7;
 module.exports.REINSERTION_SETUP_TIME_PER_ROLL = 10;
+module.exports.EXTRA_FRAMES_FOR_THE_FIRST_DESIGN = 25;
+module.exports.EXTRA_FRAMES_PER_ADDITIONAL_DESIGN = 20;
 
 module.exports.FACTORY_ADDRESS = {
     name: 'The Label Advantage',

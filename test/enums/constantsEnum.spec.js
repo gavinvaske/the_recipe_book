@@ -188,10 +188,10 @@ describe('constantsEnum', () => {
         expect(constantsEnum.MAX_MATERIAL_SIZE_ACROSS).toEqual(expectedValue);
     });
 
-    it('INLINE_PRIMING_COST : should equal the correct value', () => {
-        const expectedValue = 0.20;
+    it('INLINE_PRIMING_COST_PER_MSI : should equal the correct value', () => {
+        const expectedValue = 0.02;
 
-        expect(constantsEnum.INLINE_PRIMING_COST).toEqual(expectedValue);
+        expect(constantsEnum.INLINE_PRIMING_COST_PER_MSI).toEqual(expectedValue);
     });
 
     it('SCALING_CLICKS : should equal the correct value', () => {
@@ -207,7 +207,7 @@ describe('constantsEnum', () => {
     });
 
     it('NEW_MATERIAL_STOCK_SPLICE : should equal the correct value', () => {
-        const expectedValue = 7;
+        const expectedValue = 5;
 
         expect(constantsEnum.NEW_MATERIAL_STOCK_SPLICE).toEqual(expectedValue);
     });
@@ -288,5 +288,17 @@ describe('constantsEnum', () => {
         const expectedValue = 10;
 
         expect(constantsEnum.REINSERTION_SETUP_TIME_PER_ROLL).toEqual(expectedValue);
+    });
+
+    it('EXTRA_FRAMES_FOR_THE_FIRST_DESIGN : should equal the correct value', () => {
+        const expectedValue = 25;
+
+        expect(constantsEnum.EXTRA_FRAMES_FOR_THE_FIRST_DESIGN).toEqual(expectedValue);
+    });
+
+    it('EXTRA_FRAMES_PER_ADDITIONAL_DESIGN : should equal the correct value', () => {
+        const expectedValue = 20;
+
+        expect(constantsEnum.EXTRA_FRAMES_PER_ADDITIONAL_DESIGN).toEqual(expectedValue);
     });
 });

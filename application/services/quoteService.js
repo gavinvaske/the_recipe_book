@@ -16,7 +16,6 @@ const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
-const ROLL_CORE_DIAMETER = 3.3;
 
 module.exports.createQuote = async (quoteInputs) => {
     const {
@@ -28,7 +27,8 @@ module.exports.createQuote = async (quoteInputs) => {
         finishOverride,
         numberOfColorsOverride,
         labelsPerRollOverride,
-        numberOfDesignsOverride
+        numberOfDesignsOverride,
+        coreDiameterOverride,
     } = quoteInputs;
 
     /* 
@@ -50,7 +50,9 @@ module.exports.createQuote = async (quoteInputs) => {
         finish: !isNil(finishOverride)
             ? finishOverride : await getFinishFromProduct(aProduct),
         labelsPerRoll: !isNil(labelsPerRollOverride)
-            ? labelsPerRollOverride : aProduct.labelsPerRoll
+            ? labelsPerRollOverride : aProduct.labelsPerRoll,
+        coreDiameter: !isNil(coreDiameterOverride)
+            ? coreDiameterOverride : aProduct.coreDiameter,
     };
 
     const quoteAttributes = {
@@ -64,7 +66,6 @@ module.exports.createQuote = async (quoteInputs) => {
         colorCalibrationTime: constants.COLOR_CALIBRATION_TIME,
         reinsertionPrintingTime: 0,
         printTearDownTime: constants.PRINTING_TEAR_DOWN_TIME,
-        cuttingStockSpliceTime: constants.CUTTING_STOCK_SPLICE_TIME,
         dieSetupTime: constants.DIE_SETUP,
         sheetedSetupTime: isSheeted ? constants.SHEETED_SETUP_TIME : 0,
         cuttingTearDownTime: constants.CUTTING_TEAR_DOWN_TIME,
@@ -72,7 +73,6 @@ module.exports.createQuote = async (quoteInputs) => {
         coreGatheringTime: constants.CORE_GATHERING_TIME,
         labelDropoffAtShippingTime: constants.LABEL_DROP_OFF_TIME,
         packingSlipsTime: constants.PACKING_SLIP_TIME,
-        cuttingStockTime: 0
     };
 
     // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
@@ -86,10 +86,12 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
+    quoteAttributes.cuttingStockTime = computeCuttingStockTime(quoteAttributes);
     quoteAttributes.combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
     quoteAttributes.cuttingDiameter = computeCuttingDiameter(quoteAttributes);
     quoteAttributes.totalCores = computeTotalCores(quoteAttributes);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
+    quoteAttributes.cuttingStockSpliceTime = computeCuttingStockSpliceTime(quoteAttributes);
     quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
@@ -196,9 +198,9 @@ function computeReinsertionSetupTime(quoteAttributes) {
 }
 
 function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
-    const { finishedRollDiameter } = quoteAttributes;
+    const { finishedRollDiameter, coreDiameter } = quoteAttributes;
 
-    return finishedRollDiameter - ROLL_CORE_DIAMETER;
+    return finishedRollDiameter - coreDiameter;
 }
 
 function computeTotalCores(quoteAttributes) {
@@ -209,24 +211,24 @@ function computeTotalCores(quoteAttributes) {
     return totalFinishedRolls + (scalar * numberAcross);
 }
 
-function computeDiameterUsingMaterialLength(materialLengthInFeet, materialThickness) {
+function computeDiameterUsingMaterialLength(materialLengthInFeet, materialThickness, coreDiameter) {
     const materialLengthInInches = materialLengthInFeet * INCHES_PER_FOOT;
     const term1 = ((materialLengthInInches) * (materialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
-    const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
+    const term2 = Math.pow((coreDiameter / 2), 2);
 
     return Math.sqrt(term1 + term2) * 2;
 }
 
 function computeCuttingDiameter(quoteAttributes) {
-    const { totalStockFeet, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
+    const { totalStockFeet, combinedMaterialThickness : combinedMaterialThicknessInMillimeters, coreDiameter } = quoteAttributes;
 
-    return computeDiameterUsingMaterialLength(totalStockFeet, combinedMaterialThicknessInMillimeters);
+    return computeDiameterUsingMaterialLength(totalStockFeet, combinedMaterialThicknessInMillimeters, coreDiameter);
 }
 
 function computeFinishedRollDiameter(quoteAttributes) {
-    const { finishedRollLength, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
+    const { finishedRollLength, combinedMaterialThickness : combinedMaterialThicknessInMillimeters, coreDiameter } = quoteAttributes;
 
-    return computeDiameterUsingMaterialLength(finishedRollLength, combinedMaterialThicknessInMillimeters);
+    return computeDiameterUsingMaterialLength(finishedRollLength, combinedMaterialThicknessInMillimeters, coreDiameter);
 }
 
 async function getDieFromProduct(product) {
@@ -389,8 +391,8 @@ function computeTotalCuttingCost(quoteAttributes) {
 
 function computeTotalTimeAtCutting(quoteAttributes) {
     const { 
-        cuttingStockSpliceTime, dieSetupTime, sheetedSetupTime, 
-        cuttingStockTime, cuttingTearDownTime, sheetedTearDownTime 
+        cuttingStockSpliceTime, dieSetupTime, sheetedSetupTime,
+        cuttingStockTime, cuttingTearDownTime, sheetedTearDownTime
     } = quoteAttributes;
 
     const sum = 
@@ -524,6 +526,12 @@ function computeThrowAwayStockPercentage(quoteAttributes) {
     return 1 - (initialStockLength / totalStockFeet);
 }
 
+function computeCuttingStockTime(quoteAttributes) {
+    const { totalStockFeet } = quoteAttributes;
+
+    return totalStockFeet / constants.DIE_CUTTING_SPEED;
+}
+
 function computeTotalStockFeet(quoteAttributes) {
     const { 
         initialStockLength, colorCalibrationFeet, proofRunupFeet, dieCutterSetupFeet, 
@@ -543,6 +551,12 @@ function computeTotalRollsOfPaper(quoteAttributes) {
     if (totalStockFeet <= FEET_PER_ROLL) return 0;
 
     return Math.floor(totalStockFeet / FEET_PER_ROLL) - 1;
+}
+
+function computeCuttingStockSpliceTime(quoteAttributes) {
+    const { totalRollsOfPaper } = quoteAttributes;
+
+    return (totalRollsOfPaper + 1) * constants.NEW_MATERIAL_STOCK_SPLICE;
 }
 
 function computeFrameLength(quoteAttributes) {

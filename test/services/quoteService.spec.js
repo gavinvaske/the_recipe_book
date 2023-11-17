@@ -21,7 +21,6 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 const THREE_DECIMAL_PLACES = 3;
-const ROLL_CORE_DIAMETER = 3.3;
 
 function generateProduct(mongooseProductId) {
     return {
@@ -91,7 +90,8 @@ describe('File: quoteService.js', () => {
             secondaryMaterial: secondaryMaterial._id,
             finish: finish._id,
             labelsPerRoll: chance.integer({ min: 1, max: 1000 }),
-            numberOfColors: chance.integer({ min: 1, max: 12 })
+            numberOfColors: chance.integer({ min: 1, max: 12 }),
+            coreDiameter: 3.25 // eslint-disable-line no-magic-numbers
         };
 
         when(DieMock.findById)
@@ -634,7 +634,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = cuttingStockSpliceTime + dieSetupTime + sheetedSetupTime + cuttingStockTime + cuttingTearDownTime + sheetedTearDownTime;
 
                 expect(quote.totalTimeAtCutting).not.toBeFalsy();
-                expect(quote.totalTimeAtCutting).toEqual(expectedValue);
+                expect(quote.totalTimeAtCutting).toBeCloseTo(expectedValue, 1);
             });
         });
 
@@ -658,7 +658,7 @@ describe('File: quoteService.js', () => {
                 const expectedValue = 1 - (cuttingStockTime / totalTimeAtCutting);
 
                 expect(quote.throwAwayCuttingTimePercentage).not.toBeFalsy();
-                expect(quote.throwAwayCuttingTimePercentage).toEqual(expectedValue);
+                expect(quote.throwAwayCuttingTimePercentage).toBeCloseTo(expectedValue, 3);
             });
         });
 
@@ -845,13 +845,16 @@ describe('File: quoteService.js', () => {
         });
 
         describe('attribute: cuttingStockSpliceTime', () => {
-            it('should set attribute to a constant value', async () => {
-                const expectedValue = constants.CUTTING_STOCK_SPLICE_TIME;
-                
+            it('should compute attribute correctly', async () => {
+                const bigInteger = 9950000;
+                const numberThatShouldForceTotalStockFeetToBeGreaterThan5000 = bigInteger;
+                quoteInputAttributes.labelQty = numberThatShouldForceTotalStockFeetToBeGreaterThan5000;
                 const quote = await createQuote(quoteInputAttributes);
+                const { totalRollsOfPaper } = quote;
+                const expectedValue = (totalRollsOfPaper + 1) * constants.CUTTING_STOCK_SPLICE_TIME;
                 
                 expect(quote.cuttingStockSpliceTime).not.toBeFalsy();
-                expect(quote.cuttingStockSpliceTime).toEqual(expectedValue);
+                expect(quote.cuttingStockSpliceTime).toBeCloseTo(expectedValue, 2);
             });
         });
 
@@ -1069,12 +1072,15 @@ describe('File: quoteService.js', () => {
             });
         });
 
-        // TODO (11-7-2023): Test this better!
         describe('attribute: cuttingStockTime', () => {
-            it('should be defined', async () => {
+            it('should be calculated correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
+                const { totalStockFeet } = quote;
+                
+                const expectedValue = totalStockFeet / constants.DIE_CUTTING_SPEED;
 
-                expect(quote.cuttingStockTime).toBeDefined();
+                expect(quote.cuttingStockTime).not.toBeFalsy();
+                expect(quote.cuttingStockTime).toBeCloseTo(expectedValue, 1);
             });
         });
 
@@ -1201,7 +1207,7 @@ describe('File: quoteService.js', () => {
                 const secondaryMaterialOverride = generateMaterial();
                 dieOverride.sizeAcross = 0.125;
                 dieOverride.spaceAround = 1.5;
-                const expectedRollDiameter = 6.230;
+                const expectedRollDiameter = 6.204;
 
                 // Sums to 6.750 in combined thickness
                 finishOverride.thickness = 0.750;
@@ -1225,10 +1231,20 @@ describe('File: quoteService.js', () => {
         });
 
         describe('attribute: finishedRollDiameterWithoutCore', () => {
-            it('should be computed correctly', async () => {
+            it('should be computed correctly using the baseProduct.coreDiameter', async () => {
                 const quote = await createQuote(quoteInputAttributes);
-                const diameterOfTheCore = 3.3;
-                const expectedRollDiameterWithoutCore = quote.finishedRollDiameter - diameterOfTheCore;
+                const expectedRollDiameterWithoutCore = quote.finishedRollDiameter - baseProduct.coreDiameter;
+
+                expect(quote.finishedRollDiameterWithoutCore).not.toBeFalsy();
+                expect(quote.finishedRollDiameterWithoutCore).toBeCloseTo(expectedRollDiameterWithoutCore, THREE_DECIMAL_PLACES);
+            });
+
+            it('should be computed correctly using the coreDiameterOverride', async () => {
+                const coreDiameterOverride = 3;
+                quoteInputAttributes.coreDiameterOverride = coreDiameterOverride;
+                const quote = await createQuote(quoteInputAttributes);
+                
+                const expectedRollDiameterWithoutCore = quote.finishedRollDiameter - coreDiameterOverride;
 
                 expect(quote.finishedRollDiameterWithoutCore).not.toBeFalsy();
                 expect(quote.finishedRollDiameterWithoutCore).toBeCloseTo(expectedRollDiameterWithoutCore, THREE_DECIMAL_PLACES);
@@ -1341,7 +1357,7 @@ describe('File: quoteService.js', () => {
             const { totalStockFeet, combinedMaterialThickness } = quote;
             const materialLengthInInches = totalStockFeet * INCHES_PER_FOOT;
             const term1 = ((materialLengthInInches) * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
-            const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
+            const term2 = Math.pow((baseProduct.coreDiameter / 2), 2);
             
             const expectedCuttingDiameter = Math.sqrt(term1 + term2) * 2;
             
@@ -1368,6 +1384,7 @@ describe('File: quoteService.js', () => {
                 labelsPerRollOverride: 2000,
                 numberOfDesignsOverride: 2,
                 labelQty: 10000,
+                coreDiameterOverride: 3.25,
                 dieOverride: {
                     sizeAcross: 1.5,
                     sizeAround: 1.5,
@@ -1407,8 +1424,8 @@ describe('File: quoteService.js', () => {
                 extraFrames: 45,
                 totalFrames: 446,
                 totalStockCost: 98.61,
-                cuttingDiameter: 9.0747,
-                finishedRollDiameter: 6.230,
+                cuttingDiameter: 9.0567,
+                finishedRollDiameter: 6.204,
                 combinedMaterialThickness: 6.750,
                 totalCores: 12,
                 totalFinishFeet: 519.9940,
@@ -1423,7 +1440,6 @@ describe('File: quoteService.js', () => {
                 printCleanerClickCost: 0.76,
                 totalClicksCost: 40.28, 
                 totalMaterialsCost: 187.78,
-                // dieLineSetupFeet,
                 stockSpliceTime: 5,
                 colorCalibrationTime: 7,
                 proofPrintingTime: 6,
@@ -1438,16 +1454,18 @@ describe('File: quoteService.js', () => {
                 cuttingStockSpliceTime: 5,
                 dieSetupTime: 7,
                 sheetedSetupTime: 0,
-                cuttingStockTime: 0,
+                cuttingStockTime: convertSecondsToMinutes(convertMinutesToSeconds(10.6614)),
                 cuttingTearDownTime: 7,
                 sheetedTearDownTime: 0,
-                //totalTimeAtCutting: convertSecondsToMinutes(convertMinutesToSeconds(35.9999)),
-                // totalCuttingCost: TODO,
+                totalTimeAtCutting: convertSecondsToMinutes(convertMinutesToSeconds(29.6614)),
+                totalCuttingCost: 49.93,
+                throwAwayCuttingTimePercentage: 0.6406,
                 coreGatheringTime: 3,
                 changeOverTime: 2.5,
                 totalWindingRollTime: convertSecondsToMinutes(convertMinutesToSeconds(6.7708)),
                 labelDropoffAtShippingTime: 3,
                 totalWindingTime: convertSecondsToMinutes(convertMinutesToSeconds(15.2708)),
+                totalCostOfMachineTime: 156.93,
                 throwAwayWindingTimePercentage: 0.5566,
                 totalFinishedRolls: 5,
                 totalWindingCost: 24.18,
@@ -1455,11 +1473,11 @@ describe('File: quoteService.js', () => {
                 packagingBoxTime: 3,
                 packingSlipsTime: 7,
                 totalShippingTime: 10.5,
-                //totalShippingCost: 4.03,
+                totalShippingCost: 3.50,
                 reinsertionSetupTime: 0,
                 frameUtilization: 0.9688,
                 finishedRollLength: 270.8333,
-                //finishedRollDiameterWithoutCore: 2.980,
+                finishedRollDiameterWithoutCore: 2.954,
             }));
             expect(quote.packagingDetails).toEqual(expect.objectContaining({
                 totalBoxes: 1

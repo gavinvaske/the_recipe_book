@@ -448,6 +448,11 @@ const quoteSchema = new Schema({
         type: Number,
         min: 0,
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
+    combinedMaterialThickness: {
+        type: Number,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     }
 }, {
     timestamps: true

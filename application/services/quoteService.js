@@ -85,7 +85,10 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
-    quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
+    quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes); // TODO
+    quoteAttributes.combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
+    quoteAttributes.cuttingDiameter = computeCuttingDiameter(quoteAttributes);
+
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
     quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
@@ -198,13 +201,28 @@ function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
     return finishedRollDiameter - ROLL_CORE_DIAMETER;
 }
 
-function computeFinishedRollDiameter(quoteAttributes) {
-    const { finishedRollLength } = quoteAttributes;
-    const combinedMaterialThicknessInMillimeters = computeCombinedMaterialThickness(quoteAttributes);
-    const term1 = ((finishedRollLength * INCHES_PER_FOOT) * (combinedMaterialThicknessInMillimeters / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
+function computeDiameterUsingMaterialLength(materialLengthInFeet, materialThickness) {
+    const materialLengthInInches = materialLengthInFeet * INCHES_PER_FOOT;
+    const term1 = ((materialLengthInInches) * (materialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
     const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
 
     return Math.sqrt(term1 + term2) * 2;
+}
+
+function computeCuttingDiameter(quoteAttributes) {
+    const { totalStockFeet, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
+
+    return computeDiameterUsingMaterialLength(totalStockFeet, combinedMaterialThicknessInMillimeters);
+}
+
+function computeFinishedRollDiameter(quoteAttributes) {
+    const { finishedRollLength, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
+
+    return computeDiameterUsingMaterialLength(finishedRollLength, combinedMaterialThicknessInMillimeters);
+    // const term1 = ((finishedRollLength * INCHES_PER_FOOT) * (combinedMaterialThicknessInMillimeters / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
+    // const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
+
+    // return Math.sqrt(term1 + term2) * 2;
 }
 
 async function getDieFromProduct(product) {

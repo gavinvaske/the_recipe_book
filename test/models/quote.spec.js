@@ -1651,6 +1651,37 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: combinedMaterialThickness', () => {
+        it('should be a number', () => {
+            const expectedThickness = chance.d100();
+            quoteAttributes.combinedMaterialThickness = expectedThickness;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.combinedMaterialThickness).toEqual(expectedThickness);
+        });
+
+        it('should be greater than 0', () => {
+            const minThickness = 0;
+            quoteAttributes.combinedMaterialThickness = minThickness - 1;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should round to the 4th decimal place', () => {
+            const unroundedThickness = 111.123456789;
+            const expectedThickness = 111.1235;
+            quoteAttributes.combinedMaterialThickness = unroundedThickness;
+            
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.combinedMaterialThickness).toEqual(expectedThickness);
+        });
+    });
+
     describe('attribute: customer', () => {
         it('should not be required', () => {
             delete quoteAttributes.customer;

@@ -19,8 +19,8 @@ const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
-
 const THREE_DECIMAL_PLACES = 3;
+const ROLL_CORE_DIAMETER = 3.3;
 
 function generateProduct(mongooseProductId) {
     return {
@@ -1324,6 +1324,31 @@ describe('File: quoteService.js', () => {
         });
     });
 
+    describe('attribute: combinedMaterialThickness', () => {
+        it('should be calculated correctly', async () => {
+            const quote = await createQuote(quoteInputAttributes);
+            const expectedCombinedMaterialThickness = primaryMaterial.thickness + secondaryMaterial.thickness + finish.thickness;
+            
+            expect(quote.combinedMaterialThickness).not.toBeFalsy();
+            expect(quote.combinedMaterialThickness).toEqual(expectedCombinedMaterialThickness);
+        });
+    });
+
+    describe('attribute: cuttingDiameter', () => {
+        it('should be calculated correctly', async () => {
+            const quote = await createQuote(quoteInputAttributes);
+            const { totalStockFeet, combinedMaterialThickness } = quote;
+            const materialLengthInInches = totalStockFeet * INCHES_PER_FOOT;
+            const term1 = ((materialLengthInInches) * (combinedMaterialThickness / ONE_THOUSAND)) / 3.142; // eslint-disable-line no-magic-numbers
+            const term2 = Math.pow((ROLL_CORE_DIAMETER / 2), 2);
+            
+            const expectedCuttingDiameter = Math.sqrt(term1 + term2) * 2;
+            
+            expect(quote.cuttingDiameter).not.toBeFalsy();
+            expect(quote.cuttingDiameter).toBeCloseTo(expectedCuttingDiameter, 3);
+        });
+    });
+
     describe('acceptance tests', () => {
         it('should create a quote with correctly calculated attributes', async () => {
             quoteInputAttributes = {
@@ -1369,6 +1394,9 @@ describe('File: quoteService.js', () => {
                 extraFrames: 45,
                 totalFrames: 446,
                 totalStockCost: 98.61,
+                cuttingDiameter: 9.0747,
+                finishedRollDiameter: 6.230,
+                combinedMaterialThickness: 6.750,
                 
                 // TODO: The formula for this on lucid versus prometheus do not match
                 totalFinishFeet: 519.9940,

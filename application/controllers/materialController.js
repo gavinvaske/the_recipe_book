@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const MaterialModel = require('../models/material');
-const {verifyJwtToken} = require('../middleware/authorize');
+const { verifyJwtToken } = require('../middleware/authorize');
 const VendorModel = require('../models/vendor');
 const MaterialCategoryModel = require('../models/materialCategory');
 

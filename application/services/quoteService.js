@@ -106,7 +106,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
     quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
     quoteAttributes.totalTimeAtPrinting = computeTotalTimeAtPrinting(quoteAttributes);
-    quoteAttributes.ThrowAwayPrintTimePercentage = computeThrowAwayPrintTimePercentage(quoteAttributes);
+    quoteAttributes.throwAwayPrintTimePercentage = computeThrowAwayPrintTimePercentage(quoteAttributes);
     quoteAttributes.totalPrintingCost = computeTotalPrintingCost(quoteAttributes);
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
@@ -164,9 +164,9 @@ function computeBoxCreationTime(quoteAttributes) {
 }
 
 function computeTotalMaterialsCost(quoteAttributes) {
-    const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost } = quoteAttributes;
+    const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost, totalCoreCost } = quoteAttributes;
 
-    const sum = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalBoxCost;
+    const sum = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalCoreCost + totalBoxCost;
 
     return sum;
 }

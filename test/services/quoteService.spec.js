@@ -4,6 +4,7 @@ const { createQuote } = require('../../application/services/quoteService');
 const chance = require('chance').Chance();
 const mongoose = require('mongoose');
 const { when } = require('jest-when');
+const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');
 
 jest.mock('../../application/models/die');
 jest.mock('../../application/models/material');
@@ -509,7 +510,7 @@ describe('File: quoteService.js', () => {
                     const expectedValue = ((dieOverride.sizeAcross + dieOverride.spaceAround) * baseProduct.labelsPerRoll) / INCHES_PER_FOOT;
 
                     expect(quote.finishedRollLength).not.toBeFalsy();
-                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                    expect(quote.finishedRollLength).toBeCloseTo(expectedValue, 3);
                 });
 
                 it('should compute the attribute correctly when dieOverride.sizeAcross and dieOverride.spaceAround ARE NOT defined', async () => {
@@ -519,7 +520,7 @@ describe('File: quoteService.js', () => {
                     const expectedValue = ((die.sizeAcross + die.spaceAround) * baseProduct.labelsPerRoll) / INCHES_PER_FOOT;
                 
                     expect(quote.finishedRollLength).not.toBeFalsy();
-                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                    expect(quote.finishedRollLength).toBeCloseTo(expectedValue, 3);
                 });
             });
 
@@ -546,7 +547,7 @@ describe('File: quoteService.js', () => {
                     const expectedValue = ((dieOverride.sizeAcross + dieOverride.spaceAround) * labelQty) / INCHES_PER_FOOT;
 
                     expect(quote.finishedRollLength).not.toBeFalsy();
-                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                    expect(quote.finishedRollLength).toBeCloseTo(expectedValue, 3);
                 });
 
                 it('should compute the attribute correctly when sizeAcrossOverride and spaceAroundOverride ARE NOT defined', async () => {
@@ -557,7 +558,7 @@ describe('File: quoteService.js', () => {
                     const expectedValue = ((die.sizeAcross + die.spaceAround) * labelQty) / INCHES_PER_FOOT;
 
                     expect(quote.finishedRollLength).not.toBeFalsy();
-                    expect(quote.finishedRollLength).toEqual(expectedValue);
+                    expect(quote.finishedRollLength).toBeCloseTo(expectedValue, 3);
                 });
             });
         });
@@ -1258,9 +1259,9 @@ describe('File: quoteService.js', () => {
         describe('attribute: totalMaterialsCost', () => {
             it('should be calculated correctly', async () => {
                 const quote = await createQuote(quoteInputAttributes);
-                const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost } = quote;
+                const { totalStockCost, totalFinishCost, inlinePrimingCost, totalClicksCost, totalBoxCost, totalCoreCost } = quote;
                 
-                const expectedValue = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalBoxCost;
+                const expectedValue = totalStockCost + totalFinishCost + inlinePrimingCost + totalClicksCost + totalCoreCost + totalBoxCost;
 
                 expect(quote.totalMaterialsCost).not.toBeFalsy();
                 expect(quote.totalMaterialsCost).toBeCloseTo(expectedValue, 1);
@@ -1421,15 +1422,47 @@ describe('File: quoteService.js', () => {
                 proofRunupClickCost: 0.15,
                 printCleanerClickCost: 0.76,
                 totalClicksCost: 40.28, 
-                //totalMaterialsCost: 185.48,
+                totalMaterialsCost: 187.78,
                 // dieLineSetupFeet,
                 stockSpliceTime: 5,
                 colorCalibrationTime: 7,
                 proofPrintingTime: 6,
                 reinsertionPrintingTime: 0,
                 rollChangeOverTime: 0,
-                printingSpeed: 95.3444
-                //printingStockTime: 8,
+                printingSpeed: 95.3444,
+                printingStockTime: convertSecondsToMinutes(convertMinutesToSeconds(7.2683)),
+                printTearDownTime: 7,
+                totalTimeAtPrinting: convertSecondsToMinutes(convertMinutesToSeconds(32.2683)),
+                throwAwayPrintTimePercentage: 0.7748,
+                totalPrintingCost: 82.82,
+                cuttingStockSpliceTime: 5,
+                dieSetupTime: 7,
+                sheetedSetupTime: 0,
+                cuttingStockTime: 0,
+                cuttingTearDownTime: 7,
+                sheetedTearDownTime: 0,
+                //totalTimeAtCutting: convertSecondsToMinutes(convertMinutesToSeconds(35.9999)),
+                // totalCuttingCost: TODO,
+                coreGatheringTime: 3,
+                changeOverTime: 2.5,
+                totalWindingRollTime: convertSecondsToMinutes(convertMinutesToSeconds(6.7708)),
+                labelDropoffAtShippingTime: 3,
+                totalWindingTime: convertSecondsToMinutes(convertMinutesToSeconds(15.2708)),
+                throwAwayWindingTimePercentage: 0.5566,
+                totalFinishedRolls: 5,
+                totalWindingCost: 24.18,
+                boxCreationTime: 0.5,
+                packagingBoxTime: 3,
+                packingSlipsTime: 7,
+                totalShippingTime: 10.5,
+                //totalShippingCost: 4.03,
+                reinsertionSetupTime: 0,
+                frameUtilization: 0.9688,
+                finishedRollLength: 270.8333,
+                //finishedRollDiameterWithoutCore: 2.980,
+            }));
+            expect(quote.packagingDetails).toEqual(expect.objectContaining({
+                totalBoxes: 1
             }));
         });
     });

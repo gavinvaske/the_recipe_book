@@ -395,7 +395,8 @@ const quoteSchema = new Schema({
     },
     finishedRollLength: {
         type: Number,
-        min: 0
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     finishedRollDiameter: {
         type: Number,

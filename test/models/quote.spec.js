@@ -1827,6 +1827,16 @@ describe('File: quote.js', () => {
             
             expect(quote.finishedRollLength).toEqual(expectedFinishRollLength);
         });
+
+        it('should round to 4 decimal places of precision', () => {
+            const unroundedValue = 0.5555555555;
+            const roundedValue = 0.5556;
+            quoteAttributes.finishedRollLength = unroundedValue;
+            
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.finishedRollLength).toEqual(roundedValue);
+        });
     });
 
     describe('attribute: finishedRollDiameter', () => {

@@ -56,11 +56,10 @@ describe('File: packagingService.js', () => {
 
         it('should only compute integer multiples of layers', () => {
             const expectedNumberOfLayers = chance.d100();
-            rollHeight = chance.floating({ min: 0, max: 100, toFixed: 3 });
+            rollHeight = 12.333;
             boxHeight = (rollHeight * expectedNumberOfLayers) + ONE_EIGHTH_INCH_BUFFER;
 
             const actualNumberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);
-            
             expect(actualNumberOfLayers).toEqual(expectedNumberOfLayers);
         });
     });

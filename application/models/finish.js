@@ -2,8 +2,19 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+const Decimal = require('decimal.js');
 
 mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+
+const FOUR_DECIMAL_PLACES = 4;
+
+function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
+    return function (number) {
+        const moreAccurateNumber = new Decimal(number);
+
+        return moreAccurateNumber.toFixed(nthDecimalPlaces);
+    };
+}
 
 const schema = new Schema({
     name: {
@@ -39,15 +50,13 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        get: convertPenniesToDollars,
-        set: convertDollarsToPennies,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     freightCostPerMsi: {
         type: Number,
         required: true,
         min: 0,
-        get: convertPenniesToDollars,
-        set: convertDollarsToPennies,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     width: {
         type: Number,

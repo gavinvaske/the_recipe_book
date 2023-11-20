@@ -221,24 +221,14 @@ describe('validation', () => {
                 expect(error).toBeDefined();
             });
 
-            it('should round to second decimal place', () => {
-                const unroundedDecimal = 123.99999;
-                const roundedDecimal = 124;
+            it('should round to 4th decimal place', () => {
+                const unroundedDecimal = 123.12345;
+                const roundedDecimal = 123.1235;
                 finishAttributes.costPerMsi = unroundedDecimal;
 
                 const finish = new FinishModel(finishAttributes);
                 
                 expect(finish.costPerMsi).toBe(roundedDecimal);
-            });
-
-            it('should handle commas in the cost', () => {
-                const costWithCommas = '199,876.95';
-                const costWithoutCommas = 199876.95;
-                finishAttributes.costPerMsi = costWithCommas;
-                
-                const finish = new FinishModel(finishAttributes);
-                
-                expect(finish.costPerMsi).toBe(costWithoutCommas);
             });
         });
 
@@ -267,6 +257,16 @@ describe('validation', () => {
                 const error = finish.validateSync();
                 
                 expect(error).toBeDefined();
+            });
+
+            it('should round to 4th decimal place', () => {
+                const unroundedDecimal = 123.12345;
+                const roundedDecimal = 123.1235;
+                finishAttributes.freightCostPerMsi = unroundedDecimal;
+
+                const finish = new FinishModel(finishAttributes);
+                
+                expect(finish.freightCostPerMsi).toBe(roundedDecimal);
             });
         });
 

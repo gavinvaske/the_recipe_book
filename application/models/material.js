@@ -57,7 +57,6 @@ const schema = new Schema({
         required: true,
         min: 0,
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
-
     },
     freightCostPerMsi: {
         type: Number,

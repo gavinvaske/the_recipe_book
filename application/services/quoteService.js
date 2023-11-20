@@ -269,7 +269,7 @@ function computeCombinedMaterialThickness(overridableValues) {
 }
 
 function computeTotalNumberOfRolls(quoteAttributes, overridableValues) {
-    const { labelsPerRoll } = overridableValues
+    const { labelsPerRoll } = overridableValues;
     const { labelQty } = quoteAttributes;
 
     return Math.ceil(labelQty / labelsPerRoll);

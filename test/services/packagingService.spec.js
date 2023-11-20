@@ -56,7 +56,7 @@ describe('File: packagingService.js', () => {
 
         it('should only compute integer multiples of layers', () => {
             const expectedNumberOfLayers = chance.d100();
-            rollHeight = 12.333;    // eslint-disable-line no-magic-numbers
+            rollHeight = 12.333; // eslint-disable-line no-magic-numbers
             boxHeight = (rollHeight * expectedNumberOfLayers) + ONE_EIGHTH_INCH_BUFFER;
 
             const actualNumberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);

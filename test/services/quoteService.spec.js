@@ -53,7 +53,6 @@ function generateDie() {
         sizeAcross: 1,
         sizeAround: chance.d6(),
         spaceAround: chance.d6(),
-        numberAround: chance.d12(),
         numberAcross: chance.d12()
     };
 }
@@ -1379,8 +1378,52 @@ describe('File: quoteService.js', () => {
     });
 
     describe('acceptance tests', () => {
+        it('should return quote with the overriden values', async () => {
+            quoteInputAttributes = {
+                profitMargin: 0.30,
+                labelsPerRollOverride: 2000,
+                numberOfDesignsOverride: 2,
+                labelQty: 10000,
+                coreDiameterOverride: 3,
+                dieOverride: {
+                    sizeAcross: 1,
+                    sizeAround: 2,
+                    spaceAround: 1,
+                    numberAcross: 2
+                },
+                primaryMaterialOverride: {
+                    quotePricePerMsi: 3,
+                    thickness: 2,
+                    costPerMsi: 3
+                },
+                secondaryMaterialOverride: {
+                    quotePricePerMsi: 3,
+                    thickness: 2,
+                    costPerMsi: 3
+                },
+                finishOverride: {
+                    quotePricePerMsi: 4,
+                    thickness: 5,
+                    costPerMsi: 1
+                },
+                numberOfColorsOverride: 4,
+            };
+            const quote = await createQuote(quoteInputAttributes);
+
+            expect(quote.labelsPerRollOverride).toEqual(quoteInputAttributes.labelsPerRollOverride);
+            expect(quote.numberOfDesignsOverride).toEqual(quoteInputAttributes.numberOfDesignsOverride);
+            expect(quote.labelQty).toEqual(quoteInputAttributes.labelQty);
+            expect(quote.coreDiameterOverride).toEqual(quoteInputAttributes.coreDiameterOverride);
+            expect(quote.dieOverride).toEqual(expect.objectContaining(quoteInputAttributes.dieOverride));
+            expect(quote.primaryMaterialOverride).toEqual(expect.objectContaining(quoteInputAttributes.primaryMaterialOverride));
+            expect(quote.secondaryMaterialOverride).toEqual(expect.objectContaining(quoteInputAttributes.secondaryMaterialOverride));
+            expect(quote.finishOverride).toEqual(expect.objectContaining(quoteInputAttributes.finishOverride));
+            expect(quote.numberOfColorsOverride).toEqual(quoteInputAttributes.numberOfColorsOverride);
+        });
+
         it('should create a quote with correctly calculated attributes', async () => {
             quoteInputAttributes = {
+                profitMargin: 0.30,
                 labelsPerRollOverride: 2000,
                 numberOfDesignsOverride: 2,
                 labelQty: 10000,
@@ -1389,7 +1432,6 @@ describe('File: quoteService.js', () => {
                     sizeAcross: 1.5,
                     sizeAround: 1.5,
                     spaceAround: 0.125,
-                    numberAround: 8,
                     numberAcross: 7
                 },
                 primaryMaterialOverride: {
@@ -1404,11 +1446,13 @@ describe('File: quoteService.js', () => {
                 },
                 numberOfColorsOverride: 4
             };
-            const quote = await createQuote(quoteInputAttributes);
 
+            const quote = await createQuote(quoteInputAttributes);
+            const error = quote.validateSync();
+
+            expect(error).toBeUndefined();
             expect(quote).toBeDefined();
             expect(quote).toEqual(expect.objectContaining({
-                //...quoteInputAttributes   // TODO: Uncomment this line
                 initialStockLength: 193.4524,
                 colorCalibrationFeet: 42,
                 proofRunupFeet: 23,

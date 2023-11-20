@@ -5,9 +5,6 @@ const { convertDollarsToPennies, convertPenniesToDollars } = require('../service
 const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');
-const MaterialModel = require('../models/material');
-const FinishModel = require('../models/finish');
-const DieModel = require('./die');
 const PackagingDetailsSchema = require('../schemas/packagingDetails');
 
 const DEFAULT_EXTRA_FRAMES = 25;
@@ -96,39 +93,75 @@ const productWithQtySchema = new Schema({
 });
 
 const materialOverrideSchema = new Schema({
-    name: MaterialModel.schema.obj['name'],
-    thickness: MaterialModel.schema.obj['thickness'],
-    costPerMsi: MaterialModel.schema.obj['costPerMsi'],
-    freightCostPerMsi: MaterialModel.schema.obj['freightCostPerMsi'],
-    quotePricePerMsi: MaterialModel.schema.obj['quotePricePerMsi'],
-    facesheetWeightPerMsi: MaterialModel.schema.obj['facesheetWeightPerMsi'],
-    adhesiveWeightPerMsi: MaterialModel.schema.obj['adhesiveWeightPerMsi'],
-    linerWeightPerMsi: MaterialModel.schema.obj['linerWeightPerMsi'],
+    quotePricePerMsi: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
+    thickness: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    costPerMsi: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
 }, { strict: 'throw' });
 
 const finishOverrideSchema = new Schema({
-    name: FinishModel.schema.obj['name'],
-    thickness: FinishModel.schema.obj['thickness'],
-    costPerMsi: FinishModel.schema.obj['costPerMsi'],
-    freightCostPerMsi: FinishModel.schema.obj['freightCostPerMsi'],
-    quotePricePerMsi: FinishModel.schema.obj['quotePricePerMsi'],
+    quotePricePerMsi: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
+    thickness: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    costPerMsi: {
+        type: Number,
+        required: true,
+        min: 0,
+        set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
 }, { strict: 'throw' });
 
 const dieOverrideSchema = new Schema({
-    sizeAcross: DieModel.schema.obj['sizeAcross'],
-    sizeAround: DieModel.schema.obj['sizeAround'],
-    cornerRadius: DieModel.schema.obj['cornerRadius'],
-    shape: DieModel.schema.obj['shape'],
-    spaceAround: DieModel.schema.obj['spaceAround'], // also known as "Row Space"
-    spaceAcross: DieModel.schema.obj['spaceAcross'], // also known as "Col Space"
+    sizeAcross: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    sizeAround: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    spaceAround: { // also known as "Row Space"
+        type: Number,
+        required: true,
+        min: 0
+    },
+    numberAcross: {
+        type: Number,
+        required: true,
+        min: 0
+    },
 }, { strict: 'throw' });
 
 const quoteSchema = new Schema({
-    quoteId: {
-        type: String,
-        required: true,
-        index: true
-    },
+    // TODO: 11-19-2023: Autogenerate this somehow after talking to Storm
+    // quoteId: {
+    //     type: String,
+    //     required: true,
+    //     index: true
+    // },
 
     // * Inputs * //
     profitMargin: {
@@ -181,7 +214,7 @@ const quoteSchema = new Schema({
     finishOverride: {
         type: finishOverrideSchema
     },
-    coreDiameter: {
+    coreDiameterOverride: {
         type: Number,
         set: roundNumberToNthDecimalPlace(TWO_DECIMAL_PLACES),
         min: 0,
@@ -198,11 +231,6 @@ const quoteSchema = new Schema({
     },
 
     // * Outputs * //
-    productQty: { // TODO (10-2-2023): Where does this come from?
-        type: Number,
-        min: 0,
-        required: true
-    },
     initialStockLength: {
         ...lengthInFeetAttribute
     },
@@ -409,10 +437,6 @@ const quoteSchema = new Schema({
     printingSpeed: {
         type: Number,
         min: 0,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer'
-        },
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     },
     products: {

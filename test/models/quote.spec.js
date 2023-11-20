@@ -3,7 +3,6 @@ const Quote = require('../../application/models/quote');
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
-const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const constants = require('../../application/enums/constantsEnum');
 const testDataGenerator = require('../testDataGenerator');
 
@@ -206,7 +205,6 @@ describe('File: quote.js', () => {
         quoteAttributes = {
             profitMargin: generateRandomPercentage(),
             quoteId: chance.string(),
-            productQty: chance.d100(),
             products: generateNProducts(),
             frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
             totalStockFeet: chance.d100(),
@@ -216,21 +214,21 @@ describe('File: quote.js', () => {
         quoteAttributes.initialStockLength = aNumberLessThanTotalStockFeet;
     });
 
-    it('should have the correct indexes', async () => {
-        const indexMetaData = Quote.schema.indexes();
-        const expectedIndexes = ['quoteId'];
+    // it('should have the correct indexes', async () => {
+    //     const indexMetaData = Quote.schema.indexes();
+    //     const expectedIndexes = ['quoteId'];
 
-        console.log('indexMetaData: ', indexMetaData);
+    //     console.log('indexMetaData: ', indexMetaData);
 
-        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
-            return indexMetaData.some((metaData) => {
-                const index = Object.keys(metaData[0])[0];
-                if (index === expectedIndex) return true;
-            });
-        });
+    //     const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+    //         return indexMetaData.some((metaData) => {
+    //             const index = Object.keys(metaData[0])[0];
+    //             if (index === expectedIndex) return true;
+    //         });
+    //     });
 
-        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
-    });
+    //     expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    // });
 
     it('should pass validation if all required attributes are present', () => {
         const quote = new Quote(quoteAttributes);
@@ -240,25 +238,25 @@ describe('File: quote.js', () => {
         expect(error).toBeUndefined();
     });
 
-    describe('attribute: quoteId', () => {
-        it('should be required', () => {
-            delete quoteAttributes.quoteId;
-            const quote = new Quote(quoteAttributes);
+    // describe('attribute: quoteId', () => {
+    //     it('should be required', () => {
+    //         delete quoteAttributes.quoteId;
+    //         const quote = new Quote(quoteAttributes);
 
-            const error = quote.validateSync();
+    //         const error = quote.validateSync();
             
-            expect(error).toBeDefined();
-        });
+    //         expect(error).toBeDefined();
+    //     });
 
-        it('should be a string', () => {
-            const expectedQuoteId = chance.string();
-            quoteAttributes.quoteId = expectedQuoteId;
+    //     it('should be a string', () => {
+    //         const expectedQuoteId = chance.string();
+    //         quoteAttributes.quoteId = expectedQuoteId;
             
-            const quote = new Quote(quoteAttributes);
+    //         const quote = new Quote(quoteAttributes);
             
-            expect(quote.quoteId).toEqual(expectedQuoteId);
-        });
-    });
+    //         expect(quote.quoteId).toEqual(expectedQuoteId);
+    //     });
+    // });
 
     // * Inputs * //
     describe('attribute: profitMargin', () => {
@@ -444,10 +442,8 @@ describe('File: quote.js', () => {
             quoteAttributes.dieOverride = {
                 sizeAcross: die.sizeAcross,
                 sizeAround: die.sizeAround,
-                cornerRadius: die.cornerRadius,
-                shape: die.shape,
                 spaceAround: die.spaceAround,
-                spaceAcross: die.spaceAcross
+                numberAcross: die.numberAcross
             };
         });
 
@@ -538,67 +534,6 @@ describe('File: quote.js', () => {
             });
         });
 
-        describe('attribute: dieOverride.cornerRadius', () => {
-            it('should be required', () => {
-                delete quoteAttributes.dieOverride.cornerRadius;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
-            });
-    
-            it('should be allowed to be 0', () => {
-                const allowedValue = 0;
-                quoteAttributes.dieOverride.cornerRadius = allowedValue;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeUndefined();
-            });
-    
-            it('should not be negative', () => {
-                quoteAttributes.dieOverride.cornerRadius = -1;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
-            });
-        });
-
-        describe('attribute: dieOverride.shape', () => {
-            it('should be required', () => {
-                delete quoteAttributes.dieOverride.shape;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
-            });
-    
-            it('should be a valid enum value', () => {
-                const allowedValue = chance.pickone(dieShapes);
-                quoteAttributes.dieOverride.shape = allowedValue;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeUndefined();
-            });
-    
-            it('should fail if the value is not a valid enum value', () => {
-                const notAllowedValue = chance.string();
-                quoteAttributes.dieOverride.shape = notAllowedValue;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-    
-                expect(error).toBeDefined();
-            });
-        });
-
         describe('attribute: dieOverride.spaceAround', () => {
             it('should be required', () => {
                 delete quoteAttributes.dieOverride.spaceAround;
@@ -628,9 +563,9 @@ describe('File: quote.js', () => {
             });
         });
 
-        describe('attribute: dieOverride.spaceAcross', () => {
+        describe('attribute: dieOverride.numberAcross', () => {
             it('should be required', () => {
-                delete quoteAttributes.dieOverride.spaceAcross;
+                delete quoteAttributes.dieOverride.numberAcross;
                 const quote = new Quote(quoteAttributes);
                 
                 const error = quote.validateSync();
@@ -639,15 +574,15 @@ describe('File: quote.js', () => {
             });
     
             it('should be a number', () => {
-                const expectedSpaceAcross = chance.d100();
-                quoteAttributes.dieOverride.spaceAcross = expectedSpaceAcross;
+                const expectedNumberAcross = chance.d100();
+                quoteAttributes.dieOverride.numberAcross = expectedNumberAcross;
                 const { dieOverride } = new Quote(quoteAttributes);
                 
-                expect(dieOverride.spaceAcross).toEqual(expectedSpaceAcross);
+                expect(dieOverride.numberAcross).toEqual(expectedNumberAcross);
             });
     
             it('should not be negative', () => {
-                quoteAttributes.dieOverride.spaceAcross = -1;
+                quoteAttributes.dieOverride.numberAcross = -1;
                 const quote = new Quote(quoteAttributes);
                 
                 const error = quote.validateSync();
@@ -661,14 +596,9 @@ describe('File: quote.js', () => {
         beforeEach(() => {
             const material = testDataGenerator.mockData.Material();
             quoteAttributes.primaryMaterialOverride = {
-                name: material.name,
+                quotePricePerMsi: material.quotePricePerMsi,
                 thickness: material.thickness,
                 costPerMsi: material.costPerMsi,
-                freightCostPerMsi: material.freightCostPerMsi,
-                quotePricePerMsi: material.quotePricePerMsi,
-                facesheetWeightPerMsi: material.facesheetWeightPerMsi,
-                adhesiveWeightPerMsi: material.adhesiveWeightPerMsi,
-                linerWeightPerMsi: material.linerWeightPerMsi,
             };
         });
 
@@ -700,35 +630,7 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        describe('attribute: name', () => {
-            it('should be required', () => {
-                delete quoteAttributes.primaryMaterialOverride.name;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).not.toBeUndefined();
-            });
-
-            it('should be a string', () => {
-                const quote = new Quote(quoteAttributes);
-                const { primaryMaterialOverride } = quote;
-                
-                expect(primaryMaterialOverride.name).toEqual(expect.any(String));
-            });
-
-            it('should automatically uppercase the name', () => {
-                const lowerCaseString = chance.string().toLowerCase();
-                quoteAttributes.primaryMaterialOverride.name = lowerCaseString;
-                const quote = new Quote(quoteAttributes);
-                
-                const { primaryMaterialOverride } = quote;
-                
-                expect(primaryMaterialOverride.name).toEqual(lowerCaseString.toUpperCase());
-            });
-        });
-
-        describe('attribute: thickness', () => {
+        describe('attribute: primaryMaterialOverride.thickness', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.thickness;
                 const quote = new Quote(quoteAttributes);
@@ -756,7 +658,7 @@ describe('File: quote.js', () => {
             });
         });
 
-        describe('attribute: costPerMsi', () => {
+        describe('attribute: primaryMaterialOverride.costPerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.costPerMsi;
                 const quote = new Quote(quoteAttributes);
@@ -783,37 +685,18 @@ describe('File: quote.js', () => {
                 
                 expect(error).toBeDefined();
             });
-        });
 
-        describe('attribute: freightCostPerMsi', () => {
-            it('should be required', () => {
-                delete quoteAttributes.primaryMaterialOverride.freightCostPerMsi;
+            it('should round to the 4th decimal place', () => {
+                const unroundedValue = 123.12345;
+                const roundedValue = 123.1235;
+                quoteAttributes.primaryMaterialOverride.costPerMsi = unroundedValue;
                 const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).not.toBeUndefined();
-            });
-    
-            it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
-                const { primaryMaterialOverride } = quote;
-                
-                expect(primaryMaterialOverride.freightCostPerMsi).toEqual(expect.any(Number));
-            });
-    
-            it('should be greater than or equal to 0', () => {
-                const minOverrideMaterialTotalCostMsi = 0;
-                quoteAttributes.primaryMaterialOverride.freightCostPerMsi = minOverrideMaterialTotalCostMsi - 1;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
+
+                expect(quote.primaryMaterialOverride.costPerMsi).toEqual(roundedValue);
             });
         });
 
-        describe('attribute: quotePricePerMsi', () => {
+        describe('attribute: primaryMaterialOverride.quotePricePerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.quotePricePerMsi;
                 const quote = new Quote(quoteAttributes);
@@ -839,33 +722,14 @@ describe('File: quote.js', () => {
                 
                 expect(error).toBeDefined();
             });
-        });
 
-        describe('attribute: facesheetWeightPerMsi', () => {
-            it('should be required', () => {
-                delete quoteAttributes.primaryMaterialOverride.facesheetWeightPerMsi;
+            it('should round to the 4th decimal place', () => {
+                const unroundedValue = 0.12345;
+                const roundedValue = 0.1235;
+                quoteAttributes.primaryMaterialOverride.quotePricePerMsi = unroundedValue;
                 const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).not.toBeUndefined();
-            });
 
-            it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
-                const { primaryMaterialOverride } = quote;
-                
-                expect(primaryMaterialOverride.facesheetWeightPerMsi).toEqual(expect.any(Number));
-            });
-
-            it('should not be negative', () => {
-                const negativeFacesheetWeightPerMsi = -1;
-                quoteAttributes.primaryMaterialOverride.facesheetWeightPerMsi = negativeFacesheetWeightPerMsi;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
+                expect(quote.primaryMaterialOverride.quotePricePerMsi).toEqual(roundedValue);
             });
         });
     });
@@ -874,11 +738,9 @@ describe('File: quote.js', () => {
         beforeEach(() => {
             const finish = testDataGenerator.mockData.Finish();
             quoteAttributes.finishOverride = {
-                name: finish.name,
+                quotePricePerMsi: finish.quotePricePerMsi,
                 thickness: finish.thickness,
                 costPerMsi: finish.costPerMsi,
-                freightCostPerMsi: finish.freightCostPerMsi,
-                quotePricePerMsi: finish.quotePricePerMsi,
             };
         });
 
@@ -909,28 +771,7 @@ describe('File: quote.js', () => {
             expect(error).toBeDefined();
         });
 
-        describe('attribute: name', () => {
-            it('should be required', () => {
-                delete quoteAttributes.finishOverride.name;
-                const quote = new Quote(quoteAttributes);
-
-                const error = quote.validateSync();
-                
-                expect(error).not.toBeUndefined();
-            });
-
-            it('should automatically uppercase the name', () => {
-                const lowerCaseString = chance.string().toLowerCase();
-                quoteAttributes.finishOverride.name = lowerCaseString;
-                const quote = new Quote(quoteAttributes);
-                
-                const { finishOverride } = quote;
-                
-                expect(finishOverride.name).toEqual(lowerCaseString.toUpperCase());
-            });
-        });
-
-        describe('attribute: thickness', () => {
+        describe('attribute: finishOverride.thickness', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.thickness;
                 const quote = new Quote(quoteAttributes);
@@ -958,7 +799,7 @@ describe('File: quote.js', () => {
             });
         });
 
-        describe('attribute: costPerMsi', () => {
+        describe('attribute: finishOverride.costPerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.costPerMsi;
                 const quote = new Quote(quoteAttributes);
@@ -984,37 +825,18 @@ describe('File: quote.js', () => {
                 
                 expect(error).toBeDefined();
             });
-        });
 
-        describe('attribute: freightCostPerMsi', () => {
-            it('should be required', () => {
-                delete quoteAttributes.finishOverride.freightCostPerMsi;
+            it('should round to the 4th decimal place', () => {
+                const unroundedValue = 123.12345;
+                const roundedValue = 123.1235;
+                quoteAttributes.finishOverride.costPerMsi = unroundedValue;
                 const quote = new Quote(quoteAttributes);
                 
-                const error = quote.validateSync();
-                
-                expect(error).not.toBeUndefined();
-            });
-
-            it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
-                const { finishOverride } = quote;
-                
-                expect(finishOverride.freightCostPerMsi).toEqual(expect.any(Number));
-            });
-
-            it('should not be negative', () => {
-                const negativeFreightCostPerMsi = -1;
-                quoteAttributes.finishOverride.freightCostPerMsi = negativeFreightCostPerMsi;
-                const quote = new Quote(quoteAttributes);
-                
-                const error = quote.validateSync();
-                
-                expect(error).toBeDefined();
+                expect(quote.finishOverride.costPerMsi).toEqual(roundedValue);
             });
         });
 
-        describe('attribute: quotePricePerMsi', () => {
+        describe('attribute: finishOverride.quotePricePerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.quotePricePerMsi;
                 const quote = new Quote(quoteAttributes);
@@ -1040,31 +862,40 @@ describe('File: quote.js', () => {
                 
                 expect(error).toBeDefined();
             });
+
+            it('should round to the 4th decimal place', () => {
+                const unroundedValue = 0.11115;
+                const roundedValue = 0.1112;
+                quoteAttributes.finishOverride.quotePricePerMsi = unroundedValue;
+                const quote = new Quote(quoteAttributes);
+
+                expect(quote.finishOverride.quotePricePerMsi).toEqual(roundedValue);
+            });
         });
     });
 
-    describe('attribute: coreDiameter', () => {
+    describe('attribute: coreDiameterOverride', () => {
         it('should default to 3.25', () => {
-            delete quoteAttributes.coreDiameter;
+            delete quoteAttributes.coreDiameterOverride;
             const expectedDefaultValue = 3.25;
             
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.coreDiameter).toEqual(expectedDefaultValue);
+            expect(quote.coreDiameterOverride).toEqual(expectedDefaultValue);
         });
 
         it('should be a number', () => {
             const expectedCoreDiameter = chance.d100();
-            quoteAttributes.coreDiameter = expectedCoreDiameter;
+            quoteAttributes.coreDiameterOverride = expectedCoreDiameter;
             
             const quote = new Quote(quoteAttributes);
 
-            expect(quote.coreDiameter).toEqual(expectedCoreDiameter);
+            expect(quote.coreDiameterOverride).toEqual(expectedCoreDiameter);
         });
 
         it('should be greater than or equal to 0', () => {
             const minCoreDiameter = 0;
-            quoteAttributes.coreDiameter = minCoreDiameter - 1;
+            quoteAttributes.coreDiameterOverride = minCoreDiameter - 1;
             const quote = new Quote(quoteAttributes);
             
             const error = quote.validateSync();
@@ -1075,11 +906,11 @@ describe('File: quote.js', () => {
         it('should round to the 2nd decimal place', () => {
             const unroundedValue = 1.123;
             const roundedValue = 1.12;
-            quoteAttributes.coreDiameter = unroundedValue;
+            quoteAttributes.coreDiameterOverride = unroundedValue;
             
             const quote = new Quote(quoteAttributes);
             
-            expect(quote.coreDiameter).toEqual(roundedValue);
+            expect(quote.coreDiameterOverride).toEqual(roundedValue);
         });
     });
 
@@ -1125,31 +956,6 @@ describe('File: quote.js', () => {
     });
 
     // * Outputs * //
-    describe('attribute: productQty', () => {
-        it('should be required', () => {
-            delete quoteAttributes.productQty;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
-        it('should be a number', () => {
-            verifyLengthAttribute(quoteAttributes, 'productQty');
-        });
-
-        it('should be a positive number', () => {
-            const negativeValue = -1;
-            quoteAttributes.productQty = negativeValue;
-            const quote = new Quote(quoteAttributes);
-            
-            const error = quote.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-    });
-
     describe('attribute: initialStockLength', () => {
         it('should be a length attribute', () => {
             verifyLengthAttribute(quoteAttributes, 'initialStockLength');

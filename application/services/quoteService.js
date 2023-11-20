@@ -57,7 +57,6 @@ module.exports.createQuote = async (quoteInputs) => {
 
     const quoteAttributes = {
         ...quoteInputs,
-        ...overridableValues,
         numberOfDesigns: numberOfDesignsOverride ? numberOfDesignsOverride : products.length,
         proofRunupFeet: constants.PROOF_RUNUP_FEET,
         scalingFeet: constants.SCALING_FEET,
@@ -78,31 +77,31 @@ module.exports.createQuote = async (quoteInputs) => {
     // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
     quoteAttributes.extraFrames = computeExtraFrames(quoteAttributes);
     quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(quoteAttributes);
-    quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes);
-    quoteAttributes.frameLength = computeFrameLength(quoteAttributes);
-    quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes);
+    quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes, overridableValues);
+    quoteAttributes.frameLength = computeFrameLength(overridableValues);
+    quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes, overridableValues);
     quoteAttributes.dieCutterSetupFeet = computeDieCutterSetupFeet(quoteAttributes);
-    quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes);
+    quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes, overridableValues);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
     quoteAttributes.totalStockFeet = computeTotalStockFeet(quoteAttributes);
     quoteAttributes.cuttingStockTime = computeCuttingStockTime(quoteAttributes);
-    quoteAttributes.combinedMaterialThickness = computeCombinedMaterialThickness(quoteAttributes);
-    quoteAttributes.cuttingDiameter = computeCuttingDiameter(quoteAttributes);
-    quoteAttributes.totalCores = computeTotalCores(quoteAttributes);
+    quoteAttributes.combinedMaterialThickness = computeCombinedMaterialThickness(overridableValues);
+    quoteAttributes.cuttingDiameter = computeCuttingDiameter(quoteAttributes, overridableValues);
+    quoteAttributes.totalCores = computeTotalCores(quoteAttributes, overridableValues);
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
     quoteAttributes.cuttingStockSpliceTime = computeCuttingStockSpliceTime(quoteAttributes);
     quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
     quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
-    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes);
+    quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, overridableValues);
     quoteAttributes.totalFinishFeet = computeTotalFinishFeet(quoteAttributes);
     quoteAttributes.totalFinishMsi = computeTotalFinishMsi(quoteAttributes);
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
     quoteAttributes.inlinePrimingCost = computeInlinePrimingCost(quoteAttributes);
-    quoteAttributes.scalingClickCost = computeScalingClickCost(quoteAttributes);
-    quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(quoteAttributes);
+    quoteAttributes.scalingClickCost = computeScalingClickCost(overridableValues);
+    quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(quoteAttributes, overridableValues);
     quoteAttributes.printCleanerClickCost = computePrintCleanerClickCost(quoteAttributes);
     quoteAttributes.proofPrintingTime = computeProofPrintingTime(quoteAttributes);
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
@@ -113,21 +112,21 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalTimeAtCutting = computeTotalTimeAtCutting(quoteAttributes);
     quoteAttributes.totalCuttingCost = computeTotalCuttingCost(quoteAttributes);
     quoteAttributes.throwAwayCuttingTimePercentage = computeThrowAwayCuttingTimePercentage(quoteAttributes);
-    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes);
+    quoteAttributes.totalFinishCost = computeTotalFinishCost(quoteAttributes, overridableValues);
     quoteAttributes.changeOverTime = computeChangeOverTime(quoteAttributes);
-    quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, overridableValues.die);
+    quoteAttributes.finishedRollLength = computeFinishedRollLength(quoteAttributes, overridableValues);
     quoteAttributes.totalWindingRollTime = computeTotalWindingRollTime(quoteAttributes);
     quoteAttributes.totalWindingTime = computeTotalWindingTime(quoteAttributes);
     quoteAttributes.throwAwayWindingTimePercentage = computeThrowAwayWindingTimePercentage(quoteAttributes);
     quoteAttributes.totalWindingCost = computeTotalWindingCost(quoteAttributes);
     quoteAttributes.totalCostOfMachineTime = computeTotalCostOfMachineTime(quoteAttributes);
     quoteAttributes.frameUtilization = computeFrameUtilization(quoteAttributes);
-    quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes); // TODO: Update this on Lucid
-    quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes);
-    quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes);
-    quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes);
+    quoteAttributes.totalNumberOfRolls = computeTotalNumberOfRolls(quoteAttributes, overridableValues);
+    quoteAttributes.finishedRollDiameter = computeFinishedRollDiameter(quoteAttributes, overridableValues);
+    quoteAttributes.finishedRollDiameterWithoutCore = computeFinishedRollDiameterWithoutCore(quoteAttributes, overridableValues);
+    quoteAttributes.packagingDetails = computePackagingDetails(quoteAttributes, overridableValues);
     quoteAttributes.totalBoxCost = computeTotalBoxCost(quoteAttributes);
-    quoteAttributes.totalClicksCost = computeTotalClicksCost(quoteAttributes);
+    quoteAttributes.totalClicksCost = computeTotalClicksCost(quoteAttributes, overridableValues);
     quoteAttributes.totalMaterialsCost = computeTotalMaterialsCost(quoteAttributes);
     quoteAttributes.boxCreationTime = computeBoxCreationTime(quoteAttributes);
     quoteAttributes.packagingBoxTime = computePackagingBoxTime(quoteAttributes);
@@ -179,11 +178,9 @@ function computeTotalBoxCost(quoteAttributes) {
     return packagingDetails.totalBoxes * constants.BOX_COST;
 }
 
-function computeTotalClicksCost(quoteAttributes) {
-    const { 
-        scalingClickCost, proofRunupClickCost, printCleanerClickCost,
-        totalFrames, numberOfColors
-    } = quoteAttributes;
+function computeTotalClicksCost(quoteAttributes, overridableValues) {
+    const { numberOfColors } = overridableValues;
+    const { scalingClickCost, proofRunupClickCost, printCleanerClickCost, totalFrames } = quoteAttributes;
     const { COST_PER_COLOR } = constants;
 
     const totalClicksCost = scalingClickCost + proofRunupClickCost + printCleanerClickCost + (COST_PER_COLOR * (totalFrames * numberOfColors * 2));
@@ -197,14 +194,16 @@ function computeReinsertionSetupTime(quoteAttributes) {
     return totalRollsOfPaper * constants.REINSERTION_SETUP_TIME_PER_ROLL;
 }
 
-function computeFinishedRollDiameterWithoutCore(quoteAttributes) {
-    const { finishedRollDiameter, coreDiameter } = quoteAttributes;
+function computeFinishedRollDiameterWithoutCore(quoteAttributes, overridableValues) {
+    const { coreDiameter } = overridableValues;
+    const { finishedRollDiameter } = quoteAttributes;
 
     return finishedRollDiameter - coreDiameter;
 }
 
-function computeTotalCores(quoteAttributes) {
-    const { totalFinishedRolls, cuttingDiameter, die } = quoteAttributes;
+function computeTotalCores(quoteAttributes, overridableValues) {
+    const { die } = overridableValues;
+    const { totalFinishedRolls, cuttingDiameter } = quoteAttributes;
     const { numberAcross } = die;
     const scalar = Math.ceil(cuttingDiameter / 21); // eslint-disable-line no-magic-numbers
 
@@ -219,14 +218,16 @@ function computeDiameterUsingMaterialLength(materialLengthInFeet, materialThickn
     return Math.sqrt(term1 + term2) * 2;
 }
 
-function computeCuttingDiameter(quoteAttributes) {
-    const { totalStockFeet, combinedMaterialThickness : combinedMaterialThicknessInMillimeters, coreDiameter } = quoteAttributes;
+function computeCuttingDiameter(quoteAttributes, overridableValues) {
+    const { coreDiameter } = overridableValues;
+    const { totalStockFeet, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
 
     return computeDiameterUsingMaterialLength(totalStockFeet, combinedMaterialThicknessInMillimeters, coreDiameter);
 }
 
-function computeFinishedRollDiameter(quoteAttributes) {
-    const { finishedRollLength, combinedMaterialThickness : combinedMaterialThicknessInMillimeters, coreDiameter } = quoteAttributes;
+function computeFinishedRollDiameter(quoteAttributes, overridableValues) {
+    const { coreDiameter } = overridableValues;
+    const { finishedRollLength, combinedMaterialThickness : combinedMaterialThicknessInMillimeters } = quoteAttributes;
 
     return computeDiameterUsingMaterialLength(finishedRollLength, combinedMaterialThicknessInMillimeters, coreDiameter);
 }
@@ -257,8 +258,8 @@ async function getFinishFromProduct(product) {
     return await FinishModel.findById(finishId);
 }
 
-function computeCombinedMaterialThickness(quoteAttributes) {
-    const { primaryMaterial, secondaryMaterial, finish } = quoteAttributes;
+function computeCombinedMaterialThickness(overridableValues) {
+    const { primaryMaterial, secondaryMaterial, finish } = overridableValues;
 
     const primaryMaterialThickness = primaryMaterial.thickness;
     const secondaryMaterialThickness = secondaryMaterial ? secondaryMaterial.thickness : 0;
@@ -267,15 +268,17 @@ function computeCombinedMaterialThickness(quoteAttributes) {
     return primaryMaterialThickness + secondaryMaterialThickness + finishThickness;
 }
 
-function computeTotalNumberOfRolls(quoteAttributes) {
-    const { labelQty, labelsPerRoll } = quoteAttributes;
+function computeTotalNumberOfRolls(quoteAttributes, overridableValues) {
+    const { labelsPerRoll } = overridableValues
+    const { labelQty } = quoteAttributes;
 
     return Math.ceil(labelQty / labelsPerRoll);
 }
 
-function computePackagingDetails(quoteAttributes) {
+function computePackagingDetails(quoteAttributes, overridableValues) {
+    const { die } = overridableValues;
     const { BOX_WIDTH_INCHES, BOX_HEIGHT_INCHES } = constants;
-    const { finishedRollDiameter, totalNumberOfRolls, die } = quoteAttributes;
+    const { finishedRollDiameter, totalNumberOfRolls } = quoteAttributes;
     const finishedRollHeight = dieService.getCoreHeightFromDie(die);
 
     const layersPerBox = packagingService.getNumberOfLayers(BOX_HEIGHT_INCHES, finishedRollHeight);
@@ -329,8 +332,9 @@ function computeTotalWindingTime(quoteAttributes) {
     return sum;
 }
 
-function computeFinishedRollLength(quoteAttributes, die) {
-    const { labelQty, labelsPerRoll } = quoteAttributes;
+function computeFinishedRollLength(quoteAttributes, overridableValues) {
+    const { die, labelsPerRoll } = overridableValues;
+    const { labelQty } = quoteAttributes;
     const { sizeAcross, spaceAround } = die;
 
     if (labelQty >= labelsPerRoll) {
@@ -358,16 +362,18 @@ function computeThrowAwayCuttingTimePercentage(quoteAttributes) {
     return 1 - (cuttingStockTime / totalTimeAtCutting);
 }
 
-function computeTotalFinishCost(quoteAttributes) {
-    const { totalFinishMsi, finish } = quoteAttributes;
+function computeTotalFinishCost(quoteAttributes, overridableValues) {
+    const { finish } = overridableValues;
+    const { totalFinishMsi } = quoteAttributes;
     
     const costPerMsi = finish ? finish.costPerMsi : 0;
 
     return totalFinishMsi * costPerMsi;
 }
 
-function computeTotalStockCost(quoteAttributes) {
-    const { primaryMaterial, secondaryMaterial, totalStockMsi } = quoteAttributes;
+function computeTotalStockCost(quoteAttributes, overridableValues) {
+    const { primaryMaterial, secondaryMaterial } = overridableValues;
+    const { totalStockMsi } = quoteAttributes;
 
     const primaryMaterialCost = totalStockMsi * primaryMaterial.quotePricePerMsi;
     const secondarMaterialCost = secondaryMaterial ? (totalStockMsi * secondaryMaterial.quotePricePerMsi) : 0;
@@ -434,8 +440,9 @@ function computePrintingStockTime(quoteAttributes) {
     return totalStockFeet / printingSpeed;
 }
 
-function computePrintingSpeed(quoteAttributes) {
-    const { numberOfColors, frameLength } = quoteAttributes;
+function computePrintingSpeed(quoteAttributes, overridableValues) {
+    const { numberOfColors } = overridableValues;
+    const { frameLength } = quoteAttributes;
 
     const printingSpeed = 60 / ((numberOfColors * 0.49) * (12 / (frameLength))); // eslint-disable-line no-magic-numbers
 
@@ -467,22 +474,24 @@ function computePrintCleanerClickCost(quoteAttributes) {
     return scalar * (PRINT_CLEANER_FRAME * COST_PER_COLOR * FOUR);
 }
 
-function computeProofRunupClickCost(quoteAttributes) {
-    const { numberOfColors, numberOfDesigns } = quoteAttributes;
+function computeProofRunupClickCost(quoteAttributes, overridableValues) {
+    const { numberOfColors } = overridableValues;
+    const { numberOfDesigns } = quoteAttributes;
 
     return constants.COST_PER_COLOR * numberOfColors * 2 * numberOfDesigns;
 }
 
-function computeTotalFinishedRolls(quoteAttributes) {
-    const { labelQty, labelsPerRoll } = quoteAttributes;
+function computeTotalFinishedRolls(quoteAttributes, overridableValues) {
+    const { labelsPerRoll } = overridableValues;
+    const { labelQty } = quoteAttributes;
 
     const numberOfFinishedRolls = labelQty / labelsPerRoll;
 
     return Math.ceil(numberOfFinishedRolls);
 }
 
-function computeScalingClickCost(quoteAttributes) {
-    const { numberOfColors } = quoteAttributes;
+function computeScalingClickCost(overridableValues) {
+    const { numberOfColors } = overridableValues;
     const { SCALING_CLICKS, COST_PER_COLOR } = constants;
 
     return SCALING_CLICKS * numberOfColors * 2 * COST_PER_COLOR;
@@ -566,8 +575,9 @@ function computeFrameLength(quoteAttributes) {
     return (die.sizeAround + die.spaceAround) * frameNumberAround;
 }
 
-function computeInitialStockLength(quoteAttributes) {
-    const { die, labelQty } = quoteAttributes;
+function computeInitialStockLength(quoteAttributes, overridableValues) {
+    const { die } = overridableValues;
+    const { labelQty } = quoteAttributes;
     const { sizeAround, spaceAround, numberAcross } = die;
     
     const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAcross) / INCHES_PER_FOOT;

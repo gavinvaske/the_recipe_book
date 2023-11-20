@@ -53,11 +53,12 @@ module.exports.createQuote = async (quoteInputs) => {
             ? labelsPerRollOverride : aProduct.labelsPerRoll,
         coreDiameter: !isNil(coreDiameterOverride)
             ? coreDiameterOverride : aProduct.coreDiameter,
+        numberOfDesigns: numberOfDesignsOverride 
+            ? numberOfDesignsOverride : products.length,
     };
 
     const quoteAttributes = {
         ...quoteInputs,
-        numberOfDesigns: numberOfDesignsOverride ? numberOfDesignsOverride : products.length,
         proofRunupFeet: constants.PROOF_RUNUP_FEET,
         scalingFeet: constants.SCALING_FEET,
         newMaterialSetupFeet: constants.NEWLY_LOADED_ROLL_WASTE_FEET,
@@ -75,12 +76,12 @@ module.exports.createQuote = async (quoteInputs) => {
     };
 
     // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
-    quoteAttributes.extraFrames = computeExtraFrames(quoteAttributes);
-    quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(quoteAttributes);
+    quoteAttributes.extraFrames = computeExtraFrames(overridableValues);
+    quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(overridableValues);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes, overridableValues);
     quoteAttributes.frameLength = computeFrameLength(overridableValues);
     quoteAttributes.printingSpeed = computePrintingSpeed(quoteAttributes, overridableValues);
-    quoteAttributes.dieCutterSetupFeet = computeDieCutterSetupFeet(quoteAttributes);
+    quoteAttributes.dieCutterSetupFeet = computeDieCutterSetupFeet(quoteAttributes, overridableValues);
     quoteAttributes.initialStockLength = computeInitialStockLength(quoteAttributes, overridableValues);
     quoteAttributes.printCleanerFeet = computePrintCleanerFeet(quoteAttributes);
     quoteAttributes.dieLineSetupFeet = computeDieLineSetupFeet(quoteAttributes);
@@ -92,7 +93,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalRollsOfPaper = computeTotalRollsOfPaper(quoteAttributes);
     quoteAttributes.cuttingStockSpliceTime = computeCuttingStockSpliceTime(quoteAttributes);
     quoteAttributes.reinsertionSetupTime = computeReinsertionSetupTime(quoteAttributes);
-    quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes);
+    quoteAttributes.totalFrames = computeTotalFrames(quoteAttributes, overridableValues);
     quoteAttributes.throwAwayStockPercentage = computeThrowAwayStockPercentage(quoteAttributes);
     quoteAttributes.totalStockMsi = computeTotalStockMsi(quoteAttributes);
     quoteAttributes.totalStockCost = computeTotalStockCost(quoteAttributes, overridableValues);
@@ -101,9 +102,9 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.totalCoreCost = computeTotalCoreCost(quoteAttributes);
     quoteAttributes.inlinePrimingCost = computeInlinePrimingCost(quoteAttributes);
     quoteAttributes.scalingClickCost = computeScalingClickCost(overridableValues);
-    quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(quoteAttributes, overridableValues);
+    quoteAttributes.proofRunupClickCost = computeProofRunupClickCost(overridableValues);
     quoteAttributes.printCleanerClickCost = computePrintCleanerClickCost(quoteAttributes);
-    quoteAttributes.proofPrintingTime = computeProofPrintingTime(quoteAttributes);
+    quoteAttributes.proofPrintingTime = computeProofPrintingTime(overridableValues);
     quoteAttributes.rollChangeOverTime = computeRollChangeOverTime(quoteAttributes);
     quoteAttributes.printingStockTime = computePrintingStockTime(quoteAttributes);
     quoteAttributes.totalTimeAtPrinting = computeTotalTimeAtPrinting(quoteAttributes);
@@ -381,8 +382,9 @@ function computeTotalStockCost(quoteAttributes, overridableValues) {
     return primaryMaterialCost + secondarMaterialCost;
 }
 
-function computeTotalFrames(quoteAttributes) {
-    const { totalStockFeet, frameLength, numberOfDesigns } = quoteAttributes;
+function computeTotalFrames(quoteAttributes, overridableValues) {
+    const { numberOfDesigns } = overridableValues;
+    const { totalStockFeet, frameLength } = quoteAttributes;
 
     const totalFramesPerDesign = Math.ceil(new Decimal(totalStockFeet).dividedBy(frameLength).times(INCHES_PER_FOOT));
 
@@ -455,8 +457,8 @@ function computeRollChangeOverTime(quoteAttributes) {
     return totalRollsOfPaper * constants.PRINTING_ROLL_CHANGE_OVER_TIME;
 }
 
-function computeProofPrintingTime(quoteAttributes) {
-    const { numberOfDesigns } = quoteAttributes;
+function computeProofPrintingTime(overridableValues) {
+    const { numberOfDesigns } = overridableValues;
 
     return numberOfDesigns * constants.PRINTING_PROOF_TIME;
 }
@@ -474,9 +476,8 @@ function computePrintCleanerClickCost(quoteAttributes) {
     return scalar * (PRINT_CLEANER_FRAME * COST_PER_COLOR * FOUR);
 }
 
-function computeProofRunupClickCost(quoteAttributes, overridableValues) {
-    const { numberOfColors } = overridableValues;
-    const { numberOfDesigns } = quoteAttributes;
+function computeProofRunupClickCost(overridableValues) {
+    const { numberOfColors, numberOfDesigns } = overridableValues;
 
     return constants.COST_PER_COLOR * numberOfColors * 2 * numberOfDesigns;
 }
@@ -602,22 +603,23 @@ function computeDieLineSetupFeet(quoteAttributes) {
     return (frameLength * 2) / INCHES_PER_FOOT;
 }
 
-function computeDieCutterSetupFeet(quoteAttributes) {
-    const { frameLength, numberOfDesigns, extraFrames } = quoteAttributes;
+function computeDieCutterSetupFeet(quoteAttributes, overridableValues) {
+    const { numberOfDesigns } = overridableValues;
+    const { frameLength, extraFrames } = quoteAttributes;
 
     const dieCutterSetupFeetPerDesign = (extraFrames * frameLength) / INCHES_PER_FOOT;
 
     return dieCutterSetupFeetPerDesign * numberOfDesigns;
 }
 
-function computeColorCalibrationFeet(quoteAttributes) {
-    const { numberOfDesigns } = quoteAttributes;
+function computeColorCalibrationFeet(overridableValues) {
+    const { numberOfDesigns } = overridableValues;
 
     return numberOfDesigns * constants.COLOR_CALIBRATION_FEET;
 }
 
-function computeExtraFrames(quoteAttributes) {
-    const { numberOfDesigns } = quoteAttributes;
+function computeExtraFrames(overridableValues) {
+    const { numberOfDesigns } = overridableValues;
     const { EXTRA_FRAMES_FOR_THE_FIRST_DESIGN, EXTRA_FRAMES_PER_ADDITIONAL_DESIGN } = constants;
 
     return EXTRA_FRAMES_FOR_THE_FIRST_DESIGN + ((numberOfDesigns - 1) * EXTRA_FRAMES_PER_ADDITIONAL_DESIGN);

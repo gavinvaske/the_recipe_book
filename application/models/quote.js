@@ -12,6 +12,8 @@ const FOUR_DECIMAL_PLACES = 4;
 const THREE_DECIMAL_PLACES = 3;
 const TWO_DECIMAL_PLACES = 2;
 
+const STARTING_QUOTE_NUMBER = 60000;
+
 function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
     return function (number) {
         const moreAccurateNumber = new Decimal(number);
@@ -156,14 +158,13 @@ const dieOverrideSchema = new Schema({
 }, { strict: 'throw' });
 
 const quoteSchema = new Schema({
-    // TODO: 11-19-2023: Autogenerate this somehow after talking to Storm
-    // quoteId: {
-    //     type: String,
-    //     required: true,
-    //     index: true
-    // },
-
     // * Inputs * //
+    quoteNumber: {
+        type: Number,
+        required: true,
+        index: true,
+        min: STARTING_QUOTE_NUMBER
+    },
     profitMargin: {
         ...percentageAttribute,
         required: true,
@@ -480,7 +481,8 @@ const quoteSchema = new Schema({
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    strict: 'throw'
 });
 
 const Quote = mongoose.model('Quote', quoteSchema);

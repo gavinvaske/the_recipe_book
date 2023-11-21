@@ -7,6 +7,7 @@ const constants = require('../../application/enums/constantsEnum');
 const testDataGenerator = require('../testDataGenerator');
 
 const FOUR_DECIMAL_PLACES = 4;
+const STARTING_QUOTE_NUMBER = 60000;
 
 function verifyPercentageAttribute(quoteAttributes, attributeName) {
     let quote, error;
@@ -204,7 +205,7 @@ describe('File: quote.js', () => {
     beforeEach(() => {
         quoteAttributes = {
             profitMargin: generateRandomPercentage(),
-            quoteId: chance.string(),
+            quoteNumber: STARTING_QUOTE_NUMBER,
             products: generateNProducts(),
             frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
             totalStockFeet: chance.d100(),
@@ -214,21 +215,21 @@ describe('File: quote.js', () => {
         quoteAttributes.initialStockLength = aNumberLessThanTotalStockFeet;
     });
 
-    // it('should have the correct indexes', async () => {
-    //     const indexMetaData = Quote.schema.indexes();
-    //     const expectedIndexes = ['quoteId'];
+    it('should have the correct indexes', async () => {
+        const indexMetaData = Quote.schema.indexes();
+        const expectedIndexes = ['quoteNumber'];
 
-    //     console.log('indexMetaData: ', indexMetaData);
+        console.log('indexMetaData: ', indexMetaData);
 
-    //     const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
-    //         return indexMetaData.some((metaData) => {
-    //             const index = Object.keys(metaData[0])[0];
-    //             if (index === expectedIndex) return true;
-    //         });
-    //     });
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
 
-    //     expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
-    // });
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
 
     it('should pass validation if all required attributes are present', () => {
         const quote = new Quote(quoteAttributes);
@@ -238,25 +239,32 @@ describe('File: quote.js', () => {
         expect(error).toBeUndefined();
     });
 
-    // describe('attribute: quoteId', () => {
-    //     it('should be required', () => {
-    //         delete quoteAttributes.quoteId;
-    //         const quote = new Quote(quoteAttributes);
+    it('should fail validation if unknown attribute is defined', () => {
+        const unknownAttribute = chance.string() + chance.string();
+        quoteAttributes[unknownAttribute] = chance.string();
 
-    //         const error = quote.validateSync();
-            
-    //         expect(error).toBeDefined();
-    //     });
+        expect(() => new Quote(quoteAttributes)).toThrow();
+    });
 
-    //     it('should be a string', () => {
-    //         const expectedQuoteId = chance.string();
-    //         quoteAttributes.quoteId = expectedQuoteId;
+    describe('attribute: quoteNumber', () => {
+        it('should be required', () => {
+            delete quoteAttributes.quoteNumber;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
             
-    //         const quote = new Quote(quoteAttributes);
+            expect(error).toBeDefined();
+        });
+
+        it('should be a number', () => {
+            const expectedQuoteNumber = `${STARTING_QUOTE_NUMBER}`;
+            quoteAttributes.quoteNumber = expectedQuoteNumber;
             
-    //         expect(quote.quoteId).toEqual(expectedQuoteId);
-    //     });
-    // });
+            const quote = new Quote(quoteAttributes);
+            
+            expect(quote.quoteNumber).toEqual(expect.any(Number));
+        });
+    });
 
     // * Inputs * //
     describe('attribute: profitMargin', () => {
@@ -1585,17 +1593,6 @@ describe('File: quote.js', () => {
             
             expect(error).toBeDefined();
         });
-
-        // it('should default to the correctly calculated value', () => {
-        //     delete quoteAttributes.frameUtilization;
-        //     const expectedNumberOfDecimals = 4;
-        //     const expectedFrameUtilization = Number((quoteAttributes.frameLength / constants.MAX_FRAME_LENGTH_INCHES).toFixed(expectedNumberOfDecimals));
-
-        //     const quote = new Quote(quoteAttributes);
-            
-        //     expect(quote.frameUtilization).toBeDefined();
-        //     expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
-        // });
 
         it('should store round to 4 decimal places of precision', () => {
             const unroundedValue = 0.5555555555;

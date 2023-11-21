@@ -6,7 +6,7 @@ const CustomerModel = require('../../application/models/customer');
 const MaterialModel = require('../../application/models/material');
 const { defaultUnwindDirection } = require('../../application/enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
-const DieModel = require('../../application/models/die');
+const DieModel = require('../../application/models/Die');
 
 const testDataGenerator = require('../testDataGenerator');
 

@@ -19,8 +19,7 @@ module.exports.mockData = {
     Contact: getContact,
     User: getUser,
     SharedBaseProductAttributes: getSharedBaseProduct,
-    Address: getAddress,
-    EstimatedTicket: getEstimatedTicket
+    Address: getAddress
 };
 
 function getDie() {
@@ -139,8 +138,4 @@ function getAddress() {
         state: chance.state(),
         zipCode: chance.zip()
     };
-}
-
-function getEstimatedTicket() {
-    return {};
 }

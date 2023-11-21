@@ -27,7 +27,7 @@ async function setDefaultOverun() {
 }
 
 const productSchema = new Schema({
-    ...sharedBaseProductMongooseAttributes, // TODO (11-5-2023): Move all attributes from this object into this file after potentially remove 'models/product.js'?
+    ...sharedBaseProductMongooseAttributes,
     die: {
         type: Schema.Types.ObjectId,
         ref: 'Die',

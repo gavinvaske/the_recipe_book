@@ -26,8 +26,8 @@ module.exports.mockData = {
 function getDie() {
     return {
         shape: chance.pickone(dieShapes),
-        sizeAcross: chance.floating({ min: 0, max: 10, fixed: 2 }),
-        sizeAround: chance.floating({ min: 0, max: 10, fixed: 2 }),
+        sizeAcross: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
+        sizeAround: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
         dieNumber: 'DC-1234',
         numberAcross: chance.d10(),
         numberAround: chance.d10(),
@@ -37,9 +37,9 @@ function getDie() {
         cost: chance.floating({ min: 0, fixed: 2 }),
         vendor: chance.pickone(dieVendors),
         magCylinder: chance.pickone(dieMagCylinders),
-        cornerRadius: chance.floating({ min: 0, max: 10, fixed: 2 }),
-        spaceAcross: chance.floating({ min: 0, max: 10, fixed: 2 }),
-        spaceAround: chance.floating({ min: 0, max: 10, fixed: 2 }),
+        cornerRadius: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
+        spaceAcross: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
+        spaceAround: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
         facestock: chance.string(),
         liner: chance.string(),
         specialType: chance.string(),
@@ -67,10 +67,10 @@ function getMaterial() {
         description: chance.string(),
         whenToUse: chance.string(),
         alternativeStock: chance.string(),
-        length: chance.integer({ min: 0 }),
-        facesheetWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
-        adhesiveWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
-        linerWeightPerMsi: chance.floating({ min: 0, fixed: 4 }),
+        length: chance.integer({ min: 0, max: 1000000 }),
+        facesheetWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
+        adhesiveWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
+        linerWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
     };
 }
 

@@ -29,7 +29,7 @@ const schema = new Schema({
 schema.pre('save', async function (next) {
     const isValidIncidentName = await TypeModel.findOne({ incidentName: this.incidentName }).exec();
 
-    if (!isValidIncidentName) next(`Error: The incidentName "${this.incidentName}" must first be created in the ADMIN panel before`);
+    if (!isValidIncidentName) next(`Error: The incidentName "${this.incidentName}" must first be created in the ADMIN panel.`);
     next();
 });
 

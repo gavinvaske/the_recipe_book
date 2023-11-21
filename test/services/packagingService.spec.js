@@ -25,7 +25,7 @@ describe('File: packagingService.js', () => {
         });
 
         it('should return 0 if roll height is greater than box height', () => {
-            const rollHeight = chance.d100();
+            rollHeight = chance.d100();
             const boxHeight = rollHeight - 1;
 
             const actualNumberOfLayers = packagingService.getNumberOfLayers(boxHeight, rollHeight);

@@ -325,9 +325,9 @@ describe('validation', () => {
                 expect(error).toBeDefined();
             });
 
-            it('should round to 2nd decimal place', () => {
-                const unroundedValue = 549835438950.505;
-                const roundedValue = 549835438950.51;
+            it('should round to 4th decimal place', () => {
+                const unroundedValue = 12.00005;
+                const roundedValue = 12.0001;
                 finishAttributes.quotePricePerMsi = unroundedValue;
                 
                 const finish = new FinishModel(finishAttributes);

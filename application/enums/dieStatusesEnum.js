@@ -1,0 +1,9 @@
+module.exports.ORDERED_DIE_STATUS = 'ORDERED';
+module.exports.IN_STOCK_DIE_STATUS = 'IN-STOCK';
+module.exports.REPLACEMENT_ORDERED_DIE_STATUS = 'REPLACEMENT ORDERED';
+
+module.exports.dieStatuses = [
+    this.ORDERED_DIE_STATUS,
+    this.IN_STOCK_DIE_STATUS,
+    this.REPLACEMENT_ORDERED_DIE_STATUS
+];

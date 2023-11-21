@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
-
-const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
-const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
+const { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } = require('../services/chargeService');
+const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
 
 function productNumberMustHaveCorrectSyntax(productNumber) {
     return PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(productNumber);
@@ -12,12 +10,6 @@ function productNumberMustHaveCorrectSyntax(productNumber) {
 
 function numberMustBeGreaterThanZero(number) {
     return number > 0; // eslint-disable-line no-magic-numbers
-}
-
-function convertStringCurrency(numberAsString) {
-    const currencyWithoutCommas = numberAsString.split(',').join('');
-
-    return Number(currencyWithoutCommas * NUMBER_OF_PENNIES_IN_A_DOLLAR);
 }
 
 const chargeSchema = new Schema({
@@ -35,8 +27,8 @@ const chargeSchema = new Schema({
                 message: 'Price cannot be negative'
             }
         ],
-        get: amountInDollars => Number((amountInDollars / NUMBER_OF_PENNIES_IN_A_DOLLAR).toFixed(NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY)),
-        set: convertStringCurrency,
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
         alias: 'PriceM',
         required: true
     }

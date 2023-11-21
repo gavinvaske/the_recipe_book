@@ -1,10 +1,6 @@
 const chance = require('chance').Chance();
 const UserModel = require('../../application/models/user');
-
-const AVAILABLE_USER_TYPES = [
-    'USER',
-    'ADMIN'
-];
+const testDataGenerator = require('../testDataGenerator');
 
 const PASSWORD_MIN_LENGTH = 8;
 
@@ -12,11 +8,7 @@ describe('validation', () => {
     let userAttributes;
 
     beforeEach(() => {
-        userAttributes = {
-            email: chance.email(),
-            password: chance.string({ length: PASSWORD_MIN_LENGTH }),
-            userType: chance.pickone(AVAILABLE_USER_TYPES)
-        };
+        userAttributes = testDataGenerator.mockData.User();
     });
     describe('successful validation', () => {
         it('should succeed when required attributes are defined', () => {

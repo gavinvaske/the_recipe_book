@@ -200,7 +200,7 @@ const productSchema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : 'Label Quantity must be an integer'
+            message: '{VALUE} is not an integer'
         },
         min: 0,
         alias: 'OrderQuantity'
@@ -242,7 +242,7 @@ const productSchema = new Schema({
         type: Number,
         validate : {
             validator : Number.isInteger,
-            message   : 'Number of Colors must be an integer'
+            message: '{VALUE} is not an integer'
         },
         min: 0,
         required: true,
@@ -287,7 +287,7 @@ const productSchema = new Schema({
         validate : [
             {
                 validator : Number.isInteger,
-                message   : 'Tool Number Around must be an integer'
+                message: '{VALUE} is not an integer'
             }
         ],
         min: 0,
@@ -359,7 +359,7 @@ const productSchema = new Schema({
         required: true,
         validate : {
             validator : Number.isInteger,
-            message   : '"NoLabAcrossFin" (aka "Number Across") must be an integer'
+            message: '{VALUE} is not an integer'
         },
         alias: 'NoLabAcrossFin'
     },

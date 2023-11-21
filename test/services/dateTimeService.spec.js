@@ -2,6 +2,8 @@
 const dateTimeService = require('../../application/services/dateTimeService');
 const chance = require('chance').Chance();
 
+const SECONDS_PER_MINUTE = 60;
+
 describe('dateTimeService test suite', () => {
     describe('howManyMillisecondsHavePassedBetweenDateTimes()', () => {
         let time1, time2;
@@ -27,34 +29,36 @@ describe('dateTimeService test suite', () => {
     });
 
     describe('convertMillisecondsToMinutes()', () => {
-        const secondsPerMinute = 60;
         const millisecondsPerSecond = 1000;
 
         it('should convert milliseconds to mintues correctly (v1)', () => {
             const numberOfSeconds = 30;
             const thirtySecondsInMilliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 0.5;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(thirtySecondsInMilliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
 
         it('should convert milliseconds to mintues correctly (v2)', () => {
             const numberOfSeconds = 9993;
             const milliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 166.55;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(milliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
 
         it('should convert zero milliseconds to 0 minutes', () => {
             const numberOfSeconds = 0;
             const milliseconds = numberOfSeconds * millisecondsPerSecond;
+            const expectedMinutes = 0;
 
             const actualMinutes = dateTimeService.convertMillisecondsToMinutes(milliseconds);
 
-            expect(actualMinutes).toBe(numberOfSeconds / secondsPerMinute);
+            expect(actualMinutes).toBe(expectedMinutes);
         });
     });
 
@@ -255,6 +259,95 @@ describe('dateTimeService test suite', () => {
             const actualDate = dateTimeService.getDayNumberAndMonth(undefinedDate);
 
             expect(actualDate).toBe(expectedDate);
+        });
+    });
+
+    describe('Function: convertMinutesToSeconds', () => {
+        it('should return 0 if an undefined value is passed into method', () => {
+            const undefinedValues = [null, undefined];
+            const expectedValue = 0;
+            
+            const actualValue = dateTimeService.convertMinutesToSeconds(chance.pickone(undefinedValues));
+
+            expect(actualValue).toBe(expectedValue);
+        });
+
+        it('should convert minutes to seconds', () => {
+            const minutes = 15.5;
+            const expectedValue = minutes * SECONDS_PER_MINUTE;
+            
+            const actualValue = dateTimeService.convertMinutesToSeconds(minutes);
+            
+            expect(actualValue).toBe(expectedValue);
+        });
+
+        it('should round up to the nearest second according to standard rounding rules', () => {
+            const minutesToRoundUp = 1.51;
+            const expectedNumberOfSeconds = Math.round(minutesToRoundUp * SECONDS_PER_MINUTE);
+            
+            const actualNumberOfSeconds = dateTimeService.convertMinutesToSeconds(minutesToRoundUp);
+            
+            expect(actualNumberOfSeconds).toBe(expectedNumberOfSeconds);
+        });
+
+        it('should round down to the nearest second according to standard rounding rules', () => {
+            const minutesToRoundUp = 69.69;
+            const expectedNumberOfSeconds = Math.round(minutesToRoundUp * SECONDS_PER_MINUTE);
+            
+            const actualNumberOfSeconds = dateTimeService.convertMinutesToSeconds(minutesToRoundUp);
+            
+            expect(actualNumberOfSeconds).toBe(expectedNumberOfSeconds);
+        });
+    });
+
+    describe('Function: convertSecondsToMinutes', () => {
+        it('should return whatever was passed in, if a falsy value is passed in', () => {
+            const falsyValues = [null, undefined, 0];
+            const falsyValue = chance.pickone(falsyValues);
+
+            const actualValue = dateTimeService.convertSecondsToMinutes(falsyValue);
+            
+            expect(actualValue).toBe(falsyValue);
+        });
+
+        it('should convert seconds to minutes and keep the floating point (case 1)', () => {
+            const seconds = 78;
+            const expectedValue = seconds / SECONDS_PER_MINUTE; // 1.30 minutes
+
+            const actualValue = dateTimeService.convertSecondsToMinutes(seconds);
+            
+            expect(actualValue).toBeDefined();
+            expect(actualValue).toBe(expectedValue);
+        });
+
+        it('should convert seconds to minutes and keep the floating point (case 2)', () => {
+            const seconds = 99;
+            const expectedValue = seconds / SECONDS_PER_MINUTE; // 1.65 minutes
+
+            const actualValue = dateTimeService.convertSecondsToMinutes(seconds);
+
+            expect(actualValue).toBeDefined();
+            expect(actualValue).toBe(expectedValue);
+        });
+
+        it('should convert seconds to minutes', () => {
+            const seconds = 60000;
+            const expectedValue = seconds / SECONDS_PER_MINUTE;
+
+            const actualValue = dateTimeService.convertSecondsToMinutes(seconds);
+
+            expect(actualValue).toBeDefined();
+            expect(actualValue).toBe(expectedValue);
+        });
+
+        it('should handle negative values', () => {
+            const seconds = -99;
+            const expectedValue = seconds / SECONDS_PER_MINUTE;
+
+            const actualValue = dateTimeService.convertSecondsToMinutes(seconds);
+
+            expect(actualValue).toBeDefined();
+            expect(actualValue).toBe(expectedValue);
         });
     });
 });

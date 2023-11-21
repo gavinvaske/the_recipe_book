@@ -385,8 +385,7 @@ function getNumberToTheRightOfTheHyphen(productNumber) {
     return Number(productNumber.split('-')[1]);
 }
 
-ticketSchema.pre('updateOne', addRowToWorkflowStepDbTable);
-ticketSchema.pre('findOneAndUpdate', addRowToWorkflowStepDbTable);
+ticketSchema.pre(['updateOne', 'findOneAndUpdate'], addRowToWorkflowStepDbTable);
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

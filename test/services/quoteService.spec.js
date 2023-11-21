@@ -5,6 +5,8 @@ const chance = require('chance').Chance();
 const mongoose = require('mongoose');
 const { when } = require('jest-when');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');
+const testDataGenerator = require('../testDataGenerator');
+const databaseService = require('../../application/services/databaseService');
 
 jest.mock('../../application/models/die');
 jest.mock('../../application/models/material');
@@ -1526,6 +1528,68 @@ describe('File: quoteService.js', () => {
             expect(quote.packagingDetails).toEqual(expect.objectContaining({
                 totalBoxes: 1
             }));
+        });
+
+        describe('verfy quote, finish, primaryMaterial, and secondaryMaterial can be fetched successfully from the database', () => {
+            let baseProductAttributes;
+
+            beforeEach(async () => {
+                await databaseService.connectToTestMongoDatabase();
+            });
+    
+            afterEach(async () => {
+                await databaseService.closeDatabase();
+            });
+
+            it('should generate a quote using the objects queried from the database', async () => {
+                const dieAttributes = testDataGenerator.mockData.Die();
+                const primaryMaterialAttributes = testDataGenerator.mockData.Material();
+                const secondaryMaterialAttributes = testDataGenerator.mockData.Material();
+                const finishAttributes = testDataGenerator.mockData.Finish();
+
+                baseProductAttributes = {
+                    _id: mongoose.Types.ObjectId(),
+                    die: mongoose.Types.ObjectId(),
+                    primaryMaterial: mongoose.Types.ObjectId(),
+                    secondaryMaterial: mongoose.Types.ObjectId(),
+                    finish: mongoose.Types.ObjectId(),
+                    numberOfColors: chance.d10(),
+                    labelsPerRoll: chance.d10(),
+                    coreDiameter: 3.25,
+                };
+
+                when(DieMock.findById)
+                    .calledWith(baseProductAttributes.die)
+                    .mockResolvedValue(dieAttributes);
+                when(FinishMock.findById)
+                    .calledWith(baseProductAttributes.finish)
+                    .mockResolvedValue(finishAttributes);
+                when(BaseProductMock.findById)
+                    .calledWith(expect.anything())
+                    .mockResolvedValue(baseProductAttributes);
+                when(MaterialMock.findById)
+                    .calledWith(baseProductAttributes.primaryMaterial)
+                    .mockResolvedValue(primaryMaterialAttributes);
+                when(MaterialMock.findById)
+                    .calledWith(baseProductAttributes.secondaryMaterial)
+                    .mockResolvedValue(secondaryMaterialAttributes);
+                const products = [
+                    {
+                        productId: baseProductAttributes._id,
+                        labelQty: chance.d100()
+                    }
+                ];
+                quoteInputAttributes = {
+                    labelQty: chance.integer({ min: 100, max: 10000 }),
+                    profitMargin: 0.30,
+                    products
+                };
+                const quote = await createQuote(quoteInputAttributes);
+                const error = quote.validateSync();
+
+                expect(quote).toBeDefined();
+                expect(error).toBeUndefined();
+            });
         });
     });
 });

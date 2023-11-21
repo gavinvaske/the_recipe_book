@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const DieModel = require('../../application/models/die');
+const DieModel = require('../../application/models/Die');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const { toolTypes } = require('../../application/enums/toolTypesEnum');
 const { dieVendors } = require('../../application/enums/dieVendorsEnum');

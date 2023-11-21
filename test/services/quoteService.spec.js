@@ -13,7 +13,7 @@ jest.mock('../../application/models/material');
 jest.mock('../../application/models/finish');
 jest.mock('../../application/models/baseProduct');
 
-const DieMock = require('../../application/models/die');
+const DieMock = require('../../application/models/Die');
 const MaterialMock = require('../../application/models/material');
 const FinishMock = require('../../application/models/finish');
 const BaseProductMock = require('../../application/models/baseProduct');

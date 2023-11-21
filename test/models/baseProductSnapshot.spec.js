@@ -4,7 +4,7 @@ const databaseService = require('../../application/services/databaseService');
 const testDataGenerator = require('../testDataGenerator');
 const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
 
-const DieModel = require('../../application/models/die');
+const DieModel = require('../../application/models/Die');
 const MaterialModel = require('../../application/models/material');
 const FinishModel = require('../../application/models/finish');
 const CustomerModel = require('../../application/models/customer');

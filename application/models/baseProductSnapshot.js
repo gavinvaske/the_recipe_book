@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-const DieModel = require('./Die');
+const DieModel = require('./die');
 const MaterialModel = require('./material');
 const FinishModel = require('./finish');
 const CustomerModel = require('./customer');

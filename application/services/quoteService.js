@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 const constants = require('../enums/constantsEnum');
-const DieModel = require('../models/Die');
+const DieModel = require('../models/die');
 const MaterialModel = require('../../application/models/material');
 const BaseProductModel = require('../../application/models/baseProduct');
 const FinishModel = require('../../application/models/finish');

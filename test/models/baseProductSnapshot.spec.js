@@ -4,7 +4,7 @@ const databaseService = require('../../application/services/databaseService');
 const testDataGenerator = require('../testDataGenerator');
 const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
 
-const DieModel = require('../../application/models/Die');
+const DieModel = require('../../application/models/die');
 const MaterialModel = require('../../application/models/material');
 const FinishModel = require('../../application/models/finish');
 const CustomerModel = require('../../application/models/customer');
@@ -43,11 +43,6 @@ describe('BaseProductSnapshot', () => {
     });
 
     describe('attribute: die', () => {
-
-        it('test', () => {
-            console.log('UserModel.schema: ', UserModel.schema);
-        });
-
         it('should fail if attribute is not defined', () => {
             delete baseProductSnapshotAttributes.die;
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);

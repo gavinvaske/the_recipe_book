@@ -8,7 +8,7 @@ const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../appl
 const testDataGenerator = require('../testDataGenerator');
 const databaseService = require('../../application/services/databaseService');
 
-jest.mock('../../application/models/die');
+jest.mock('../../application/models/Die');
 jest.mock('../../application/models/material');
 jest.mock('../../application/models/finish');
 jest.mock('../../application/models/baseProduct');

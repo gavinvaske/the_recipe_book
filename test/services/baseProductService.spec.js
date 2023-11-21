@@ -12,9 +12,16 @@ describe('File: baseProduct.js', () => {
     let baseProductAttributes, baseProduct, primaryMaterial, secondaryMaterial, finish, customer;
 
     describe('verify database interactions', () => {
+        beforeEach(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.closeDatabase();
+        });
+
         describe('Function: getCombinedMaterialThicknessByBaseProductId()', () => {
             beforeEach(async () => {
-                await databaseService.connectToTestMongoDatabase();
                 const primaryMaterialAttributes = testDataGenerator.mockData.Material();
                 const secondaryMaterialAttributes = testDataGenerator.mockData.Material();
                 const finishAttributes = testDataGenerator.mockData.Finish();
@@ -39,10 +46,6 @@ describe('File: baseProduct.js', () => {
                 baseProduct = new BaseProductModel(baseProductAttributes);
 
                 await baseProduct.save({ validateBeforeSave: false });
-            });
-
-            afterEach(async () => {
-                await databaseService.closeDatabase();
             });
 
             it('should compute the combined material thickness correctly', async () => {

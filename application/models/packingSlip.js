@@ -74,7 +74,6 @@ const packingSlipSchema = new Schema({
     freightAccountNumber: {
         type: String
     },
-    // shipMethod: {},
 }, { timestamps: true });
 
 packingSlipSchema.pre('save', generatePackingSlipNumber);

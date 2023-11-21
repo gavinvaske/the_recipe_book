@@ -23,6 +23,7 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 const THREE_DECIMAL_PLACES = 3;
+const STARTING_QUOTE_NUMBER = 60000;
 
 function generateProduct(mongooseProductId) {
     return {
@@ -112,6 +113,7 @@ describe('File: quoteService.js', () => {
             .mockResolvedValue(secondaryMaterial);
 
         quoteInputAttributes = {
+            quoteNumber: STARTING_QUOTE_NUMBER,
             labelQty: chance.integer({ min: 100, max: 1000}),
             products: [generateProduct(baseProduct._id)]
         };
@@ -527,11 +529,9 @@ describe('File: quoteService.js', () => {
 
             describe('When quote.labelQty < quote.labelsPerRoll', () => {
                 beforeEach(() => {
-                    const labelsPerRoll = baseProduct.labelsPerRoll;
-                    const labelQty = labelsPerRoll - 1;
+                    const labelQty = baseProduct.labelsPerRoll - 1;
                     quoteInputAttributes = {
                         ...quoteInputAttributes,
-                        labelsPerRoll,
                         labelQty
                     };
                 });
@@ -1118,13 +1118,13 @@ describe('File: quoteService.js', () => {
         describe('attribute: totalFinishedRolls', () => {
             it('should be calculated correctly when: labelQty / labelsPerRoll > 1', async () => {
                 const bigNumber = 10000;
-                const smallNumber = chance.d10();
+                const smallNumberOfLabelsPerRoll = chance.d10();
                 quoteInputAttributes.labelQty = bigNumber;
-                quoteInputAttributes.labelsPerRoll = smallNumber;
+                quoteInputAttributes.labelsPerRollOverride = smallNumberOfLabelsPerRoll;
                 const quote = await createQuote(quoteInputAttributes);
                 const { labelQty } = quote;
 
-                const expectedValue = Math.ceil(labelQty / baseProduct.labelsPerRoll);
+                const expectedValue = Math.ceil(labelQty / smallNumberOfLabelsPerRoll);
                 
                 expect(quote.totalFinishedRolls).not.toBeFalsy();
                 expect(quote.totalFinishedRolls).toEqual(expectedValue);
@@ -1382,6 +1382,7 @@ describe('File: quoteService.js', () => {
     describe('acceptance tests', () => {
         it('should return quote with the overriden values', async () => {
             quoteInputAttributes = {
+                quoteNumber: STARTING_QUOTE_NUMBER,
                 profitMargin: 0.30,
                 labelsPerRollOverride: 2000,
                 numberOfDesignsOverride: 2,
@@ -1425,6 +1426,7 @@ describe('File: quoteService.js', () => {
 
         it('should create a quote with correctly calculated attributes', async () => {
             quoteInputAttributes = {
+                quoteNumber: STARTING_QUOTE_NUMBER,
                 profitMargin: 0.30,
                 labelsPerRollOverride: 2000,
                 numberOfDesignsOverride: 2,
@@ -1580,6 +1582,7 @@ describe('File: quoteService.js', () => {
                     }
                 ];
                 quoteInputAttributes = {
+                    quoteNumber: STARTING_QUOTE_NUMBER,
                     labelQty: chance.integer({ min: 100, max: 10000 }),
                     profitMargin: 0.30,
                     products

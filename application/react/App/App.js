@@ -1,7 +1,10 @@
+import { injectReactComponentIntoTheDom } from '../helperMethods'
+
 import Banner from '../Banner/Banner';
-import { createRoot } from 'react-dom/client';
+import QuoteForm from '../QuoteForm/QuoteForm';
 
-const reactBannerHtmlElement = document.getElementById('react-banner');
-const reactBannerRoot = createRoot(reactBannerHtmlElement);
+injectReactComponentIntoTheDom('#react-banner', Banner);
+injectReactComponentIntoTheDom('.react-create-quote', QuoteForm);
 
-reactBannerRoot.render(<Banner/>);
+
+

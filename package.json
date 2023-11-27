@@ -6,7 +6,7 @@
   "targets": {
     "main": false,
     "resources": {
-      "source": "application/public/react/App/App.js",
+      "source": "application/react/App/App.js",
       "distDir": "build",
       "publicUrl": "build"
     }

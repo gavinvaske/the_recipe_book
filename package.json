@@ -1,14 +1,19 @@
 {
   "name": "nodejs_starter_template",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "version": "1.0.0",
   "description": "An application used to get up and running with a new nodejs project with a linter, test library and basic configuration already setup",
-  "main": "app/index.js",
-  "engines": {
-    "npm": "8.11.0",
-    "node": "16.16.0"
+  "targets": {
+    "main": false,
+    "resources": {
+      "source": "application/public/react/App/App.js",
+      "distDir": "build",
+      "publicUrl": "build"
+    }
   },
   "scripts": {
-    "start": "node application/index.js",
+    "build": "parcel build",
+    "start": "npm run build && node application/index.js",
     "test": "jest",
     "cypress:run": "cypress run",
     "acceptance": "start-server-and-test start http://localhost:8080 cypress:run",
@@ -32,6 +37,7 @@
     "jest-extended": "3.2.4",
     "jest-when": "3.5.2",
     "nodemon": "2.0.20",
+    "parcel": "2.10.3",
     "start-server-and-test": "1.15.2"
   },
   "dependencies": {
@@ -54,6 +60,8 @@
     "mongoose": "6.8.0",
     "mongoose-delete": "0.5.4",
     "multer": "1.4.5-lts.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "socket.io": "4.5.4",
     "xml2json": "0.12.0"
   }

@@ -7,6 +7,7 @@ const databaseService = require('./services/databaseService');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
+const fs = require("fs");
 
 databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
@@ -40,6 +41,13 @@ app.use((request, response, next) => {
 });
 
 app.use(express.static(__dirname + '/public'));
+
+const reactBuildFolderPath = './build';
+
+if (!fs.existsSync(reactBuildFolderPath)) {
+    throw new Error('React build folder does not exist. Please run `npm run build` and try again.')
+}
+app.use(express.static(reactBuildFolderPath));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));

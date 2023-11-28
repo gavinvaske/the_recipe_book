@@ -4913,3 +4913,322 @@ background: #000;
 .time-selection {
   width: 200px;
 }
+
+.page-wrapper.create-quote .qty-frame {
+  margin-bottom: 5px;
+}
+
+.page-wrapper.create-quote .pricing-and-qty-frame .form-group,
+.floating-numbers .form-group {
+  width: 144px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.page-wrapper.create-quote .pricing-and-qty-frame .row:first-of-type {
+  border-top: 0;
+}
+.page-wrapper.create-quote .pricing-and-qty-frame .row {
+  border-top:1px solid #E7E7E7;
+  height: 35px;
+}
+.page-wrapper.create-quote .pricing-and-qty-frame .row .form-group:first-of-type {
+  align-items: flex-end;
+}
+.page-wrapper.create-quote .qty-frame label {
+  width: 100%;
+  text-align: center; 
+  display: none;
+}
+.page-wrapper.create-quote .qty-frame input {
+  width: 80%;
+  border-radius: 0;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  padding: 0;
+  border-width: 0 0 1px 0;
+}
+
+.page-wrapper.create-quote .alert-box {
+  margin-top: 0;
+}
+.row-1 {
+  border: none!important;
+}
+.primary-quote-inputs {
+  width: 100%;
+}
+.primary-quote-inputs .col-a {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.primary-quote-inputs .col-b {
+  align-items: flex-end;
+}
+.primary-quote-inputs .col-a {
+  width:70%;
+}
+.primary-quote-inputs .col-b {
+ width: 30%;
+}
+.primary-quote-inputs .col-a .card {
+  width: calc(100% - 15px);
+}
+.card.labels-per-roll,
+.card.number-of-designs {
+  width: calc(33% - 7.5px);
+}
+
+.die-selection-column,
+.primary-material-selection-column,
+.secondary-material-selection-column,
+.finish-selection-column {
+  width: 12.5%;
+  margin-left: -1px;
+}
+.die-selection-column label,
+.primary-material-selection-column label,
+.secondary-material-selection-column label,
+.finish-selection-column label {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+.die-selection-column input,
+.primary-material-selection-column input,
+.secondary-material-selection-column input,
+.finish-selection-column input {
+  border-radius: 0;
+  text-align: center;
+  background-color: #F9F9F9;
+}
+.die-selection-column select,
+.primary-material-selection-column select,
+.secondary-material-selection-column select,
+.finish-selection-column select{
+  padding: 0 1rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #d8d6de;
+  border-radius: 0;
+  width: 100%;
+  height: 43px;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #6e6b7b;
+  text-align: center;
+}
+.die-selection-column select,
+.primary-material-selection-column select,
+.secondary-material-selection-column select,
+.finish-selection-column select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+.card.labels-per-roll input,
+.card.number-of-designs input {
+  border-radius: 0;
+  text-align: center;
+  background-color: #F9F9F9;
+}
+
+.card.labels-per-roll label,
+.card.number-of-designs label,
+.card.reinsertion label,
+.card.sheeted label,
+.card.variable label {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+.primary-material-selection-row .col-one,
+.secondary-material-selection-row .col-one,
+.finish-selection-row .col-one {
+  width: 15%;
+}
+
+.primary-material-selection-row .col-one label,
+.die-selection-row .col-one label,
+.secondary-material-selection-row .col-one label,
+.finish-selection-row .col-one label {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+.card.number-of-colors {
+  width: 100%;
+}
+.card.number-of-colors .color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #D6D6D6;
+  border: 1px solid transparent;
+  margin-right: 3px;
+}
+.color-options-frame {
+  margin-top: 7px;
+}
+.card.number-of-colors .color.cyan {
+  background: #00b7eb;
+}
+.card.number-of-colors .color.magenta {
+  background: #cc338b;
+}
+.card.number-of-colors .color.yellow {
+  background: yellow;
+}
+.card.number-of-colors .color.black {
+  background: black;
+}
+.card.number-of-colors .color.white {
+  background: white;
+  border: 1px solid gray;
+}
+.card.number-of-colors .color.orange {
+  background: orange;
+}
+.card.number-of-colors .color.violet {
+  background: #7F00FF;
+}
+.card.number-of-colors .not-selected {
+  opacity: .3;
+}
+.color-selection-frame,
+.color-total-frame {
+  width: 50%;
+}
+.color-total-frame {
+  text-align: center;
+}
+.color-total-frame span {
+  font-size: 75px;
+}
+.qty-price-breakdown,
+.primary-quote-inputs .card {
+  margin-bottom: 15px;
+}
+
+
+.show-secondary-material-trigger,
+.hide-secondary-material-trigger  {
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+}
+.show-secondary-material-trigger.active {
+  display: none;
+}
+
+.primary-material,
+.secondary-material {
+  position: relative;
+}
+
+.secondary-material {
+  height: auto;
+  padding: 1.5rem;
+  margin-bottom: 15px!important;
+  overflow: auto;
+}
+
+.secondary-material.hidden {
+  height: 0;
+  padding: 0;
+  margin-bottom: 0!important;
+  overflow: hidden;
+}
+
+.card.variable,
+.card.sheeted,
+.card.variable {
+  width: calc(33% - 5px);
+}
+
+.card.unwind-direction {
+  width: 100%;
+}
+
+.card.unwind-direction span {
+  height: 40px;
+  width: 40px;
+  border:1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -1px;
+}
+.card.unwind-direction span.active {
+  background: #7367f0;
+  border-color: #7367f0;
+  color: white;
+  font-weight: bold;
+}
+
+.reinsertion [type="checkbox"],
+.sheeted [type="checkbox"],
+.variable [type="checkbox"] {
+  width: 25px;
+  height: 25px;
+}
+.reinsertion,
+.sheeted,
+.variable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.category {
+  width: 235px!important;
+  align-items: flex-end!important;
+}
+
+#header-2 {
+  position: fixed;
+  background-color: #7367f0;
+  height: 0;
+  bottom:-100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 999;
+  transition: .3s;
+  border: none;
+  /* -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
+  background-color: white;
+  border-radius: 0.428rem; */
+}
+
+#header-2.active {
+  bottom: 0;
+  height: 148px;
+  transition: .3s;
+}
+.floating-numbers {
+  /* padding: 0 2rem 0 2rem; */
+  height: 100%;
+  background-color: #7367f0;
+}
+
+.floating-numbers {
+  color: white!important;
+}
+.floating-numbers input {
+  background: transparent;
+  color: white;
+}

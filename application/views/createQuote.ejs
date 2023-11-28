@@ -1,1 +1,2640 @@
-<h1>TODO: createQuote.ejs</h1>
+<%- include('partials/navbarMain.ejs') %>
+
+<div class="page-wrapper create-quote">
+    <div id="header-2" class="floating-numbers flex-center-center-row">
+        <div class="full-width">
+            <div class='flex-center-center-row qty-frame'>
+                <div class="form-group category">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 1</label>
+                    <input type="text" name="a" value="" class="input-1">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 2</label>
+                    <input type="text" name="a" value="" class="input-2">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 3</label>
+                    <input type="text" name="a" value="" class="input-3">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 4</label>
+                    <input type="text" name="a" value="" class="input-4">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 5</label>
+                    <input type="text" name="a" value="" class="input-5">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 6</label>
+                    <input type="text" name="a" value="" class="input-6">
+                </div>
+                <div class="form-group">
+                    <label for="a" class="text-center">Qty 7</label>
+                    <input type="text" name="a" value="" class="input-7">
+                </div>
+            </div>
+            <div class='flex-center-center-row row row-1'>
+                <div class="form-group text-right category">
+                    Production Cost
+                </div>
+                <div class="form-group">
+                    2
+                </div>
+                <div class="form-group">
+                    3
+                </div>
+                <div class="form-group">
+                    4
+                </div>
+                <div class="form-group">
+                    5
+                </div>
+                <div class="form-group">
+                    6
+                </div>
+                <div class="form-group">
+                    7
+                </div>
+                <div class="form-group">
+                    8
+                </div>
+            </div>
+            <div class='flex-center-center-row row'>
+                <div class="form-group category">
+                    Final Cost
+                </div>
+                <div class="form-group">
+                    2
+                </div>
+                <div class="form-group">
+                    3
+                </div>
+                <div class="form-group">
+                    4
+                </div>
+                <div class="form-group">
+                    5
+                </div>
+                <div class="form-group">
+                    6
+                </div>
+                <div class="form-group">
+                    7
+                </div>
+                <div class="form-group">
+                    8
+                </div>
+            </div>
+            <div class='flex-center-center-row row'>
+                <div class="form-group category">
+                    Price Per Thousand
+                </div>
+                <div class="form-group">
+                    2
+                </div>
+                <div class="form-group">
+                    3
+                </div>
+                <div class="form-group">
+                    4
+                </div>
+                <div class="form-group">
+                    5
+                </div>
+                <div class="form-group">
+                    6
+                </div>
+                <div class="form-group">
+                    7
+                </div>
+                <div class="form-group">
+                    8
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="alert-box">
+            <%- include ("flashMessages") %>
+        </div>
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <form id="create-packaging-estimate-form" action="/packaging/rolls-per-box", method="POST">
+                <div class='flex-center-space-between-row qty-frame'>
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 1</label>
+                        <input type="text" name="a" value="" class="input-1">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 2</label>
+                        <input type="text" name="a" value="" class="input-2">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 3</label>
+                        <input type="text" name="a" value="" class="input-3">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 4</label>
+                        <input type="text" name="a" value="" class="input-4">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 5</label>
+                        <input type="text" name="a" value="" class="input-5">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 6</label>
+                        <input type="text" name="a" value="" class="input-6">
+                    </div>
+                    <div class="form-group">
+                        <label for="a" class="text-center">Qty 7</label>
+                        <input type="text" name="a" value="" class="input-7">
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group text-right">
+                        Production Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group">
+                        Final Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group">
+                        Price Per Thousand
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group">
+                        Profit
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group">
+                        Price Per Unit
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex-top-center-row primary-quote-inputs">
+        <div class="flex-top-center-column col-a">
+            <div class="card">
+                <div class="die-selection-row flex-center-left-row">
+                    <div class="die-selection-column col-one">
+                        <label for="cars">Die Name:</label>
+                        <select name="cars" id="cars">
+                            <option value="dr-299">DR-299</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="die-selection-column col-two">
+                        <label for="cars">Size Across:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-three">
+                        <label for="cars">Size Around:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-four">
+                        <label for="cars">Corner Radius:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-five">
+                        <label for="cars">Shape:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-six">
+                        <label for="cars">Col Space:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-seven">
+                        <label for="cars">Row Space:</label>
+                        <input>
+                    </div>
+                    <div class="die-selection-column col-eight">
+                        <label for="cars">Number Around:</label>
+                        <input>
+                    </div>
+                </div>
+            </div>
+            <div class="card primary-material">
+                <div class="show-secondary-material-trigger">+ Secondary Material</div>
+                <div class="primary-material-selection-row flex-center-left-row">
+                    <div class="primary-material-selection-column col-one">
+                        <label for="cars">Primary Material:</label>
+                        <select name="cars" id="cars">
+                            <option value="9111">9111</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="primary-material-selection-column col-two">
+                        <label for="cars">Initial Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-three">
+                        <label for="cars">Freight MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-four">
+                        <label for="cars">Total Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-five">
+                        <label for="cars">Quoted MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-six">
+                        <label for="cars">Thickness:</label>
+                        <input>
+                    </div>
+                </div>
+            </div>
+            <div class="card secondary-material hidden">
+                <div class="hide-secondary-material-trigger">- Secondary Material</div>
+                <div class="secondary-material-selection-row flex-center-left-row">
+                    <div class="secondary-material-selection-column col-one">
+                        <label for="cars">Secondary Material:</label>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="primary-material-selection-column col-two">
+                        <label for="cars">Initial Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-three">
+                        <label for="cars">Freight MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-four">
+                        <label for="cars">Total Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-five">
+                        <label for="cars">Quoted MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-six">
+                        <label for="cars">Thickness:</label>
+                        <input>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="finish-selection-row flex-center-left-row">
+                    <div class="finish-selection-column col-one">
+                        <label for="cars">Finish:</label>
+                        <select name="cars" id="cars">
+                            <option value="gloss uv">Gloss UV</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="primary-material-selection-column col-two">
+                        <label for="cars">Initial Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-three">
+                        <label for="cars">Freight MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-four">
+                        <label for="cars">Total Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-five">
+                        <label for="cars">Quoted MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-six">
+                        <label for="cars">Thickness:</label>
+                        <input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-top-center-column col-b">
+            <div class="flex-center-space-between-row full-width">
+                <div class="card labels-per-roll">
+                    <label for="cars">Labels/Roll:</label>
+                    <input>
+                </div>
+                <div class="card number-of-designs">
+                    <label for="cars">Designs:</label>
+                    <input>
+                </div>
+                <div class="card number-of-designs">
+                    <label for="cars">Mark Up:</label>
+                    <input>
+                </div>
+            </div>
+            <div class="flex-center-center-row full-width">
+                <div class="card number-of-colors flex-center-center-row">
+                    <div class='color-selection-frame'>
+                        <label for="cars">Numbers of Colors:</label>
+                        <div class="color-options-frame flex-center-left-row flex-wrap">
+                            <div class="color cyan"></div>
+                            <div class="color magenta"></div>
+                            <div class="color yellow"></div>
+                            <div class="color black text-white flex-center-center-row">2</div>
+                        </div>
+                        <div class="color-options-frame flex-center-left-row flex-wrap">
+                            <div class="color white not-selected"></div>
+                            <div class="color orange not-selected"></div>
+                            <div class="color violet not-selected"></div>
+                        </div>
+                    </div>
+                    <div class="color-total-frame">
+                        <span>5</span>
+                        <p>CMYK</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-center-space-between-row full-width">
+                <div class="card reinsertion">
+                    <label for="cars">Reinsertion:</label>
+                    <input type="checkbox">
+                </div>
+                <div class="card sheeted">
+                    <label for="cars">Sheeted:</label>
+                    <input type="checkbox">
+                </div>
+                <div class="card variable">
+                    <label for="cars">Variable:</label>
+                    <input type="checkbox">
+                </div>
+            </div>
+            <div class="flex-center-space-between-row full-width">
+                <div class="card unwind-direction">
+                    <label for="cars">Unwind Direction:</label>
+                    <div class="flex-center-left-row">
+                        <span>1</span>
+                        <span>2</span>
+                        <span class="active">3</span>
+                        <span>4</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Initial Stock Length
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Proof Run Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Color Calibration Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Die Cutter Setup Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Print Cleaner Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Scaling Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        New Material Setup Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Die Line Setup Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Stock Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Throw Away Percentage
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Stock MSI
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Rolls of Paper
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Extra Frames
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Frames
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Stock Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Finish Feet
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Finish MSI
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Finish Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Clicks Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Scaling Click Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Proof Run Up Click Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Print Cleaner Clicks Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Clicks Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        .5" Masking Tape
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        2" Packaging Tape
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Tape Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Cores
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Core Cost Dollars
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Box Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Cost Material
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Stock Splice
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Color Calibration
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Printing Proof Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Reinsertion Setup Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Roll Change Over Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Printing Stock Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Reinsertion Printing Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Print Tear Down
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Time At Printing
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Throw Away Print Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Printing Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Cutting Stock-Splice
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Die Setup
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Sheeted Setup
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Cutting Stock Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Cutting Tear Down
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Sheeted Tear Down
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Time At Cutting
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Cutting Diameter
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Throw Away Cutting Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Cutting Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Core Gathering
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Change Over Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Winding All Rolls Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Label Delivery To Shipping Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Winding Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Throw Away Winding Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Finished Rolls
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Winding Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Cost of Machine Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Box Creation Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Packaging Box Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Packing Slips Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Shipping Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Boxes
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Shipping Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Shipping Time
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card qty-price-breakdown">
+        <div class="flex-center-center-row pricing-and-qty-frame">
+            <div id="create-packaging-estimate-form">
+                <div class='flex-center-space-between-row row row-1'>
+                    <div class="form-group category">
+                        Total Material Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Machine Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Shipping Time Cost
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Total Cost of Job
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Final Quoted Price
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+                <div class='flex-center-space-between-row row'>
+                    <div class="form-group category">
+                        Price Per Unit
+                    </div>
+                    <div class="form-group">
+                        2
+                    </div>
+                    <div class="form-group">
+                        3
+                    </div>
+                    <div class="form-group">
+                        4
+                    </div>
+                    <div class="form-group">
+                        5
+                    </div>
+                    <div class="form-group">
+                        6
+                    </div>
+                    <div class="form-group">
+                        7
+                    </div>
+                    <div class="form-group">
+                        8
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+

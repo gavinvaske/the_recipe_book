@@ -1169,3 +1169,117 @@ $( document ).ready(function() {
         $('text-box').html(getRandomWord()).fadeIn(newDelay);
     });
 });
+
+function updateTextView(_obj){
+    var num = getNumber(_obj.val());
+    if(num==0){
+      _obj.val('');
+    }else{
+      _obj.val(num.toLocaleString());
+    }
+  }
+  function getNumber(_str){
+    var arr = _str.split('');
+    var out = new Array();
+    for(var cnt=0;cnt<arr.length;cnt++){
+      if(isNaN(arr[cnt])==false){
+        out.push(arr[cnt]);
+      }
+    }
+    return Number(out.join(''));
+  }
+//   $(document).ready(function(){
+    
+//   });
+
+$('.show-secondary-material-trigger').click(function(){
+    $(this).addClass('active');
+    $('.secondary-material').removeClass('hidden');
+});
+
+$('.hide-secondary-material-trigger').click(function(){
+    $('.show-secondary-material-trigger').removeClass('active');
+    $('.secondary-material').addClass('hidden');
+});
+
+$('.card.unwind-direction span').click(function(){
+    $('.card.unwind-direction span').removeClass('active');
+    $(this).addClass('active');
+});
+
+
+var topofDiv = $(".qty-price-breakdown").offset().top; //gets offset of header
+var height = $(".qty-price-breakdown").outerHeight() - 78; //gets height of header
+// var height = 20; //gets height of header
+
+$(window).scroll(function(){
+    if($(window).scrollTop() > (topofDiv + height)){
+       $("#header-2").addClass('active');
+    }
+    else{
+       $("#header-2").removeClass('active');
+    }
+});
+
+
+$( ".qty-frame input" ).on( "keyup", function() {
+    updateTextView($(this));
+    let storm = $(this).val();
+    let currentInput = $(this).attr('class');
+
+    if($(this).hasClass('input-1')){
+        $('#header-2 .input-1').val(storm);
+        updateTextView($('.qty-frame .input-1'));
+    } else if ($(this).hasClass('input-2')){
+        $('#header-2 .input-2').val(storm);
+        updateTextView($('.qty-frame .input-2'));
+    } else if ($(this).hasClass('input-3')){
+        $('#header-2 .input-3').val(storm);
+        updateTextView($('.qty-frame .input-3'));
+    } else if ($(this).hasClass('input-4')){
+        $('#header-2 .input-4').val(storm);
+        updateTextView($('.qty-frame .input-4'));
+    } else if ($(this).hasClass('input-5')){
+        $('#header-2 .input-5').val(storm);
+        updateTextView($('.qty-frame .input-5'));
+    } else if ($(this).hasClass('input-6')){
+        $('#header-2 .input-6').val(storm);
+        updateTextView($('.qty-frame .input-6'));
+    } else if ($(this).hasClass('input-7')){
+        $('#header-2 .input-7').val(storm);
+        updateTextView($('.qty-frame .input-7'));
+    } else if ($(this).hasClass('input-8')){
+        $('#header-2 .input-8').val(storm);
+        updateTextView($('.qty-frame .input-8'));
+    } else {
+        alert("Error! See input mirror function in main.js");
+    }
+
+  });
+
+  $( "#header-2 input" ).on( "keyup", function() {
+    updateTextView($(this));
+    let storm = $(this).val();
+    let currentInput = $(this).attr('class');
+
+    if($(this).hasClass('input-1')){
+        $('.qty-frame .input-1').val(storm);
+    } else if ($(this).hasClass('input-2')){
+        $('.qty-frame .input-2').val(storm);
+    } else if ($(this).hasClass('input-3')){
+        $('.qty-frame .input-3').val(storm);
+    } else if ($(this).hasClass('input-4')){
+        $('.qty-frame .input-4').val(storm);
+    } else if ($(this).hasClass('input-5')){
+        $('.qty-frame .input-5').val(storm);
+    } else if ($(this).hasClass('input-6')){
+        $('.qty-frame .input-6').val(storm);
+    } else if ($(this).hasClass('input-7')){
+        $('.qty-frame .input-7').val(storm);
+    } else if ($(this).hasClass('input-8')){
+        $('.qty-frame .input-8').val(storm);
+    } else {
+        alert("Error! See input mirror function in main.js");
+    }
+
+  });

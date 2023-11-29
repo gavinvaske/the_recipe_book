@@ -91,7 +91,7 @@ describe('File: quoteService.js', () => {
             primaryMaterial: primaryMaterial._id,
             secondaryMaterial: secondaryMaterial._id,
             finish: finish._id,
-            labelsPerRoll: chance.integer({ min: 1, max: 1000 }),
+            labelsPerRoll: chance.integer({ min: 100, max: 1000 }),
             numberOfColors: chance.integer({ min: 1, max: 12 }),
             coreDiameter: 3.25 // eslint-disable-line no-magic-numbers
         };

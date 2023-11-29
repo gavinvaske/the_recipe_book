@@ -124,7 +124,7 @@ function getSharedBaseProduct() {
         unwindDirection: chance.pickone(unwindDirections),
         artNotes: chance.string(),
         finishType: chance.pickone(finishTypes),
-        labelsPerRoll: chance.d100(),
+        labelsPerRoll: chance.integer({ min: 100, max: 1000 }),
         numberOfColors: chance.d12()
     };
 }

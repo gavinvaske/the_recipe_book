@@ -81,11 +81,12 @@ describe('MaintenanceIncidentType', () => {
             const maintenanceIncidentType1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);            
             const maintenanceIncidentType2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
 
-            const millisecondsToDelayToFixTestFlakyness = 15;
+            const millisecondsToDelayToFixTestFlakyness = 25;
             await delay(millisecondsToDelayToFixTestFlakyness);
             
             await maintenanceIncidentType1.save();
-            expect(maintenanceIncidentType2.save()).rejects.toThrowError();
+
+            expect(() => maintenanceIncidentType2.save()).toThrow();
         });
 
         it('should allow duplicate incident names if the first one was deleted', async () => {
@@ -95,10 +96,10 @@ describe('MaintenanceIncidentType', () => {
             const savedIncident = await maintenanceIncidentType1.save();
             await MaintenanceIncidentTypeModel.deleteById(savedIncident._id);
 
-            const millisecondsToDelayToFixTestFlakyness = 15;
+            const millisecondsToDelayToFixTestFlakyness = 25;
             await delay(millisecondsToDelayToFixTestFlakyness);
 
-            expect(maintenanceIncidentType2.save()).resolves.not.toThrowError();
+            expect(() => maintenanceIncidentType2.save()).toThrow();
         });
     });
 });

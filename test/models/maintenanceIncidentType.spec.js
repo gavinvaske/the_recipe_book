@@ -2,10 +2,6 @@ const MaintenanceIncidentTypeModel = require('../../application/models/maintenan
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
 
-const delay = (delayInMs) => {
-    return new Promise(resolve => setTimeout(resolve, delayInMs));
-};
-
 describe('MaintenanceIncidentType', () => {
     let maintenanceIncidentTypeAttributes;
 

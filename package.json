@@ -14,6 +14,7 @@
   "scripts": {
     "build": "parcel build",
     "start": "npm run build && node application/index.js",
+    "react": "parcel watch",
     "test": "jest",
     "cypress:run": "cypress run",
     "acceptance": "start-server-and-test start http://localhost:8080 cypress:run",
@@ -39,6 +40,7 @@
     "jest-when": "3.5.2",
     "nodemon": "2.0.20",
     "parcel": "2.10.3",
+    "process": "0.11.10",
     "start-server-and-test": "1.15.2"
   },
   "dependencies": {

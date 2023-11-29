@@ -1,6 +1,7 @@
 const requiredNumberOfSpaces = 4;
 
 module.exports = {
+    'ignorePatterns': ['/build', 'application/react/*'],
     'env': {
         'browser': true,
         'commonjs': true,

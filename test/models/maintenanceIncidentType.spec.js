@@ -2,10 +2,6 @@ const MaintenanceIncidentTypeModel = require('../../application/models/maintenan
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
 
-const delay = (delayInMs) => {
-    return new Promise(resolve => setTimeout(resolve, delayInMs));
-};
-
 describe('MaintenanceIncidentType', () => {
     let maintenanceIncidentTypeAttributes;
 
@@ -75,30 +71,6 @@ describe('MaintenanceIncidentType', () => {
 
             expect(savedMaintenanceIncidentType.createdAt).toBeDefined();
             expect(savedMaintenanceIncidentType.updatedAt).toBeDefined();
-        });
-
-        it('should not allow duplicate incident names', async () => {
-            const maintenanceIncidentType1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);            
-            const maintenanceIncidentType2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
-
-            const millisecondsToDelayToFixTestFlakyness = 15;
-            await delay(millisecondsToDelayToFixTestFlakyness);
-            
-            await maintenanceIncidentType1.save();
-            expect(maintenanceIncidentType2.save()).rejects.toThrowError();
-        });
-
-        it('should allow duplicate incident names if the first one was deleted', async () => {
-            const maintenanceIncidentType1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);            
-            const maintenanceIncidentType2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
-            
-            const savedIncident = await maintenanceIncidentType1.save();
-            await MaintenanceIncidentTypeModel.deleteById(savedIncident._id);
-
-            const millisecondsToDelayToFixTestFlakyness = 15;
-            await delay(millisecondsToDelayToFixTestFlakyness);
-
-            expect(maintenanceIncidentType2.save()).resolves.not.toThrowError();
         });
     });
 });

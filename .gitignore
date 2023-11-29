@@ -7,3 +7,5 @@ env
 cypress/videos
 cypress/screenshots
 .terraform
+.parcel-cache
+dist

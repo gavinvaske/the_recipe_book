@@ -4,7 +4,7 @@ import './DieInput.scss';
 
 export default Die = () => {
   return (
-    <div class='die-input-section'>
+    <div className='die-input-section'>
       <InputField header={'Die Name'}/>
       <InputField header={'Size Across'}/>
       <InputField header={'Size Around'}/>

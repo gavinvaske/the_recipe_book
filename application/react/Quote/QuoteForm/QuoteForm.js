@@ -2,7 +2,6 @@ import React from 'react';
 import CostSummary from '../CostSummary/CostSummary';
 import InputSection from '../InputSection/InputSection';
 import OutputSection from '../OutputSection/OutputSection';
-import { useState } from 'react';
 
 /* Move quotes into useEffect(...) - eventually... */
 const quotes = [
@@ -20,7 +19,7 @@ const QuoteForm = () => {
     <div id='quote-form'>
       <CostSummary quotes={quotes}/>
       <InputSection />
-      <OutputSection />
+      <OutputSection quotes={quotes}/>
     </div>
   );
 };

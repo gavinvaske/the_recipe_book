@@ -6,18 +6,18 @@ import InputField from './InputField/InputField';
 const QuoteInputSection = () => {
   return (
     <div id='quote-input-section'>
-      <div class='left-section'>
+      <div className='left-section'>
         <Die />
         </div>
-      <div class='right-section'>
-        <div class='first-section'>
+      <div className='right-section'>
+        <div className='first-section'>
           <InputField header={'Labels/Roll'} />
           <InputField header={'Designs'} />
           <InputField header={'Markup'} />
         </div>
-        <div class='second-section'></div>
-        <div class='third-section'></div>
-        <div class='fourth-section'></div>
+        <div className='second-section'></div>
+        <div className='third-section'></div>
+        <div className='fourth-section'></div>
       </div>
     </div>
   )

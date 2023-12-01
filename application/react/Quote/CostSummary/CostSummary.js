@@ -1,6 +1,6 @@
 import React from 'react';
 import './CostSummary.scss';
-import TableRow from './TableRow';
+import TableRow from '../TableRow/TableRow';
 
 const TODOGetData = (quotes) => {
   return quotes.map((_, index) => index)

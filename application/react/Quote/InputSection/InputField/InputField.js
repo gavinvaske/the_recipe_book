@@ -5,9 +5,9 @@ export default InputField = (props) => {
   const { header } = props;
 
   return (
-    <div class='quote-input-field'>
-      <div class='input-field-header'>{header}:</div>
-      <div class='input-field-data'>
+    <div className='quote-input-field'>
+      <div className='input-field-header'>{header}:</div>
+      <div className='input-field-data'>
         <input type='text' placeholder='foo' />
       </div>
     </div>

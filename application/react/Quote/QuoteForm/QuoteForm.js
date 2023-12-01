@@ -2,7 +2,9 @@ import React from 'react';
 import CostSummary from '../CostSummary/CostSummary';
 import InputSection from '../InputSection/InputSection';
 import OutputSection from '../OutputSection/OutputSection';
+import { useState } from 'react';
 
+/* Move quotes into useEffect(...) - eventually... */
 const quotes = [
     { quoteNumber: 1},
     { quoteNumber: 2},

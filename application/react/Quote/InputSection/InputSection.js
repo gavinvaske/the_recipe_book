@@ -1,7 +1,10 @@
 import React from 'react';
 import './InputSection.scss';
 import Die from './DieInput/DieInput'
+import Material from './MaterialInput/MaterialInput'
 import InputField from './InputField/InputField';
+import NumberOfColors from './NumberOfColors/NumberOfColors';
+import UnwindDirection from './UnwindDirection/UnwindDirection';
 
 const QuoteInputSection = (props) => {
   const { setQuoteInputs } = props;
@@ -31,20 +34,60 @@ const QuoteInputSection = (props) => {
     })
   }
 
+  const handlePrimaryMaterialInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setQuoteInputs((quoteInputs) => {
+      console.log(quoteInputs);
+      return {
+      ...quoteInputs,
+       primaryMaterialOverride: {
+       ...quoteInputs.primaryMaterialOverride,
+         [name]: value 
+       }
+      }
+    })
+  }
+
+  const handleSecondaryMaterialInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setQuoteInputs((quoteInputs) => {
+      console.log(quoteInputs);
+      return {
+     ...quoteInputs,
+       secondaryMaterialOverride: {
+      ...quoteInputs.secondaryMaterialOverride,
+         [name]: value 
+       }
+      }
+    })
+  };
+
   return (
     <div id='quote-input-section'>
       <div className='left-section'>
         <Die onChange={handleDieInputChange}/>
+        <Material isPrimaryMaterial={true} onChange={handlePrimaryMaterialInputChange}/>
+        <Material isPrimaryMaterial={false} onChange={handleSecondaryMaterialInputChange}/>
       </div>
       <div className='right-section'>
-        <div className='first-section'>
+        <div className='row-one'>
           <InputField accessor={'labelsPerRoll'} header={'Labels/Roll'} onChange={handleInputChange} />
           <InputField accessor={'numberOfDesigns'} header={'Designs'} onChange={handleInputChange} />
           <InputField accessor={'profitMargin'} header={'Markup'} onChange={handleInputChange} />
         </div>
-        <div className='second-section'></div>
-        <div className='third-section'></div>
-        <div className='fourth-section'></div>
+        <div className='row-two'>
+            <NumberOfColors />
+        </div>
+        <div className='row-three'>
+          <InputField accessor={'TODO'} header={'Reinsertion'} onChange={handleInputChange} />
+          <InputField accessor={'TODO'} header={'Sheeted'} onChange={handleInputChange} />
+          <InputField accessor={'TODO'} header={'Variable'} onChange={handleInputChange} />
+        </div>
+        <div className='row-four'>
+          <UnwindDirection />
+        </div>
       </div>
     </div>
   )

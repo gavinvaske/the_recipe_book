@@ -1,5 +1,5 @@
 #quote-input-section {
-    background-color: white;
+    // background-color: white;
     margin: 10px 25px;
     padding: 8px;
     display: flex;
@@ -7,12 +7,23 @@
     justify-content: space-between;
 
     .left-section {
-        background-color: greenyellow;
         width: 70%;
     }
 
     .right-section {
         background-color: orange;
         width: 30%;
+
+        .row-one {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .row-three {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 }

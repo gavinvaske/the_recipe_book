@@ -81,9 +81,9 @@ const QuoteInputSection = (props) => {
             <NumberOfColors />
         </div>
         <div className='row-three'>
-          <InputField accessor={'TODO'} header={'Reinsertion'} onChange={handleInputChange} />
-          <InputField accessor={'TODO'} header={'Sheeted'} onChange={handleInputChange} />
-          <InputField accessor={'TODO'} header={'Variable'} onChange={handleInputChange} />
+          <InputField accessor={'TODO'} header={'Reinsertion'} inputFieldType={'checkbox'} onChange={handleInputChange} />
+          <InputField accessor={'TODO'} header={'Sheeted'} inputFieldType={'checkbox'} onChange={handleInputChange} />
+          <InputField accessor={'TODO'} header={'Variable'} inputFieldType={'checkbox'} onChange={handleInputChange} />
         </div>
         <div className='row-four'>
           <UnwindDirection />

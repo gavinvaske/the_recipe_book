@@ -1,0 +1,12 @@
+.number-of-colors-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}

@@ -2,9 +2,10 @@ import React from 'react';
 import './InputSection.scss';
 import Die from './DieInput/DieInput'
 import Material from './MaterialInput/MaterialInput'
-import InputField from './InputField/InputField';
 import NumberOfColors from './NumberOfColors/NumberOfColors';
 import UnwindDirection from './UnwindDirection/UnwindDirection';
+import CheckboxField from './InputFields/CheckboxField/CheckboxField';
+import TextField from './InputFields/TextField/TextField';
 
 const QuoteInputSection = (props) => {
   const { setQuoteInputs } = props;
@@ -19,6 +20,17 @@ const QuoteInputSection = (props) => {
       }
     })
   };
+
+  const toggleBooleanInput = (event) => {
+    const { name } = event.target;
+    setQuoteInputs((quoteInputs) => {
+      console.log(quoteInputs);
+      return {
+      ...quoteInputs,
+        [name]: !quoteInputs[name]
+      }
+    })
+  }
 
   const handleDieInputChange = (event) => {
     const { name, value } = event.target;
@@ -73,17 +85,17 @@ const QuoteInputSection = (props) => {
       </div>
       <div className='right-section'>
         <div className='row-one'>
-          <InputField accessor={'labelsPerRoll'} header={'Labels/Roll'} onChange={handleInputChange} />
-          <InputField accessor={'numberOfDesigns'} header={'Designs'} onChange={handleInputChange} />
-          <InputField accessor={'profitMargin'} header={'Markup'} onChange={handleInputChange} />
+          <TextField accessor={'labelsPerRollOverride'} header={'Labels/Roll'} onChange={handleInputChange} />
+          <TextField accessor={'numberOfDesignsOverride'} header={'Designs'} onChange={handleInputChange} />
+          <TextField accessor={'profitMargin'} header={'Markup'} onChange={handleInputChange} />
         </div>
         <div className='row-two'>
             <NumberOfColors />
         </div>
         <div className='row-three'>
-          <InputField accessor={'TODO'} header={'Reinsertion'} inputFieldType={'checkbox'} onChange={handleInputChange} />
-          <InputField accessor={'TODO'} header={'Sheeted'} inputFieldType={'checkbox'} onChange={handleInputChange} />
-          <InputField accessor={'TODO'} header={'Variable'} inputFieldType={'checkbox'} onChange={handleInputChange} />
+          <CheckboxField accessor={'reinsertion'} header={'Reinsertion'} onChange={toggleBooleanInput} />
+          <CheckboxField accessor={'isSheeted'} header={'Sheeted'} onChange={toggleBooleanInput} />
+          <CheckboxField accessor={'variableData'} header={'Variable'} onChange={toggleBooleanInput} />
         </div>
         <div className='row-four'>
           <UnwindDirection />

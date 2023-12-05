@@ -25,7 +25,7 @@ const QuoteForm = () => {
   return (
     <div id='quote-form'>
       <CostSummary quotes={quotes} quoteInputs={quoteInputs} setQuoteInputs={setQuoteInputs}/>
-      <InputSection setQuoteInputs={setQuoteInputs}/>
+      <InputSection setQuoteInputs={setQuoteInputs} quoteInputs={quoteInputs}/>
       <OutputSection quotes={quotes}/>
     </div>
   );

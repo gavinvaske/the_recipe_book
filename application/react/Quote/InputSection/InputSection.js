@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './InputSection.scss';
 import Die from './DieInput/DieInput'
 import Material from './MaterialInput/MaterialInput'
@@ -6,9 +6,27 @@ import NumberOfColors from './NumberOfColors/NumberOfColors';
 import UnwindDirection from './UnwindDirection/UnwindDirection';
 import CheckboxField from './InputFields/CheckboxField/CheckboxField';
 import TextField from './InputFields/TextField/TextField';
+import axios from 'axios';
 
 const QuoteInputSection = (props) => {
   const { setQuoteInputs } = props;
+  
+  useEffect(() => {
+    axios.get(`/die/`)
+      .then((dies) => {
+          console.log('responseeee (dies):', dies);
+      })
+      .catch((error) => {
+      console.log('error:', error);
+      });
+    axios.get(`/materials/all`)
+      .then((materials) => {
+          console.log('responseeee (materials):', materials);
+      })
+      .catch((error) => {
+      console.log('error:', error);
+      });
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

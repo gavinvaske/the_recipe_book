@@ -10,7 +10,7 @@ const DEFAULT_LABEL_QUANTITY = 0;
 
 const QuoteForm = () => {
   const [quotes, setQuotes] = useState([]);
-  const [quoteInputs, setQuoteInputs] = useState({ labelQuantities: [0,0,0,0,0,0,0,0] });
+  const [quoteInputs, setQuoteInputs] = useState({ labelQuantities: [0, 0, 0, 0, 0, 0, 0, 0] });
 
   useEffect(() => {
     const labelQuantities = [];

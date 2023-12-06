@@ -2,9 +2,13 @@ import React from 'react';
 import './LabelQtyInputField.scss'
 
 export default LabelQtyInputField = (props) => {
-    const { onChange } = props;
+  const { labelQuantities, index } = props;
 
-    return (
-        <input type='text' placeholder='# of labels' onChange={onChange}></input>
-    );
+  const onChange = (e) => {
+    labelQuantities[index] = e.target.value
+  };
+
+  return (
+    <input type='text' placeholder='# of labels' onChange={onChange}></input>
+  );
 }

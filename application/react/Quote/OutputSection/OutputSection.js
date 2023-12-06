@@ -3,7 +3,7 @@ import './OutputSection.scss';
 import TableRow from '../TableRow/TableRow';
 
 const getAttributeFromQuotes = (quotes, attribute) => {
-  return quotes.map(quote => quote[attribute] || 'N/A')
+  return quotes.map(quote => quote[attribute] || '-')
 }
 
 const QuoteOutputSection = (props) => {

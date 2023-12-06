@@ -8,7 +8,7 @@ export default TextField = (props) => {
     <div className='quote-text-field'>
       <div className='text-field-header'>{header}:</div>
       <div className='text-field-data'>
-        <input name={accessor} type={'text'} placeholder='foo' onChange={onChange} readOnly={isReadOnly} value={value ? value : ''}/>
+        <input name={accessor} type={'text'} placeholder='foo' onChange={onChange} readOnly={isReadOnly} value={value} />
       </div>
     </div>
   )

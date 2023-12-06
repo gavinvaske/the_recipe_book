@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default Die = (props) => {
   const dieOverride = quoteStore.quoteInputs.dieOverride;
-  const [ dies, setDies ] = useState(['TODO11', 'TODO22', 'TODO33']);
+  const [ dies, setDies ] = useState([]);
 
   useEffect(() => {
     axios.get(`/die`)

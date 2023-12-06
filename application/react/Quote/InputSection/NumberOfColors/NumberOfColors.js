@@ -1,5 +1,6 @@
 import React from 'react';
 import './NumberOfColors.scss';
+import quoteStore from '../../../stores/quoteStore'
 
 export default NumberOfColors = () => {
   return (
@@ -21,7 +22,7 @@ export default NumberOfColors = () => {
       </div>
     </div>
     <div>
-      <h1>5</h1>
+      <TextField accessor={'numberOfcolorsOverride'} header={'Number of Colors'} onChange={(e) => quoteStore.quoteInputs.numberOfColorsOverride = e.target.value}></TextField>
       <h3>CMYK</h3>
     </div>
   </div>

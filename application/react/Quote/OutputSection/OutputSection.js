@@ -1,13 +1,14 @@
 import React from 'react';
 import './OutputSection.scss';
 import TableRow from '../TableRow/TableRow';
+import quoteStore from '../../stores/quoteStore'
 
 const getAttributeFromQuotes = (quotes, attribute) => {
   return quotes.map(quote => quote[attribute] || '-')
 }
 
-const QuoteOutputSection = (props) => {
-  const { quotes } = props;
+const QuoteOutputSection = () => {
+  const { quotes } = quoteStore;
 
   return (
     <div id='quote-output-section'>

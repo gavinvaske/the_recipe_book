@@ -15,6 +15,9 @@ export default Die = (props) => {
         const { data } = response;
         setDies(data)
       })
+      .catch((error) => {
+        alert('Error:', error);
+      });
   }, [])
 
   return (

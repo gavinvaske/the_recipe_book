@@ -6,12 +6,13 @@ import quoteStore from '../../../stores/quoteStore';
 export default MaterialInput = (props) => {
   const { isPrimaryMaterial } = props;
   const [materials, setMaterials ] = useState(['TODO111', 'TODO2222', 'TODO3333']);
+  const { quoteInputs } = quoteStore;
 
   const updateMaterial = (e, attributeName) => {
     if (isPrimaryMaterial) {
-      quoteStore.quoteInputs.primaryMaterialOverride[attributeName] = e.target.value;
+      quoteInputs.primaryMaterialOverride[attributeName] = e.target.value;
     } else {
-      quoteStore.quoteInputs.secondaryMaterialOverride[attributeName] = e.target.value;
+      quoteInputs.secondaryMaterialOverride[attributeName] = e.target.value;
     }
   }
 
@@ -22,7 +23,7 @@ export default MaterialInput = (props) => {
         setMaterials(data);
       })
       .catch((error) => {
-        alert('error:', error);
+        alert('Error:', error);
       });
   }, [])
 

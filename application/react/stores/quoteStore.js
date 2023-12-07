@@ -17,7 +17,8 @@ class quoteStore {
         labelQuantities: initializeLabelQuantities(NUMBER_OF_QUOTES),
         dieOverride: {},
         primaryMaterialOverride: {},
-        secondaryMaterialOverride: {}
+        secondaryMaterialOverride: {},
+        finishOverride: {}
     }
     quotes = initializeQuotes(NUMBER_OF_QUOTES);
 }

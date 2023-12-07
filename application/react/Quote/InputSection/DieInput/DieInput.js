@@ -27,9 +27,10 @@ export default Die = (props) => {
       <TextField accessor={'sizeAround'} header={'Size Around'} onChange={(e) => dieOverride.sizeAround = e.target.value}/>
       <TextField accessor={'cornerRadius'} header={'Corner Radius'} onChange={(e) => dieOverride.cornerRadius = e.target.value}/>
       <TextField accessor={'shape'} header={'Shape'} onChange={(e) => dieOverride.shape = e.target.value}/>
-      <TextField accessor={'colSpace'} header={'Col Space'} onChange={(e) => dieOverride.colSpace = e.target.value}/>
-      <TextField accessor={'rowSpace'} header={'Row Space'} onChange={(e) => dieOverride.rowSpace = e.target.value}/>
+      <TextField accessor={'colSpace'} header={'Col Space'} onChange={(e) => dieOverride.spaceAcross = e.target.value}/>
+      <TextField accessor={'rowSpace'} header={'Row Space'} onChange={(e) => dieOverride.spaceAround = e.target.value}/>
       <TextField accessor={'numberAround'} header={'Number Around'} onChange={(e) => dieOverride.numberAround = e.target.value}/>
+      <TextField accessor={'numberAcross'} header={'Number Across'} onChange={(e) => dieOverride.numberAcross = e.target.value}/>
     </div>
   )
 };

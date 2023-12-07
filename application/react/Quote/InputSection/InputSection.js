@@ -7,6 +7,7 @@ import UnwindDirection from './UnwindDirection/UnwindDirection';
 import CheckboxField from './InputFields/CheckboxField/CheckboxField';
 import TextField from './InputFields/TextField/TextField';
 import quoteStore from '../../stores/quoteStore';
+import FinishInput from './FinishInput/FinishInput';
 
 const QuoteInputSection = () => {
   const { quoteInputs } = quoteStore;
@@ -16,12 +17,14 @@ const QuoteInputSection = () => {
         <Die />
         <Material isPrimaryMaterial={true} />
         <Material isPrimaryMaterial={false} />
+        <FinishInput />
       </div>
       <div className='right-section'>
         <div className='row-one'>
           <TextField accessor={'labelsPerRollOverride'} header={'Labels/Roll'} onChange={(e) => quoteInputs.labelsPerRollOverride = e.target.value}/>
           <TextField accessor={'numberOfDesignsOverride'} header={'Designs'} onChange={(e) => quoteInputs.numberOfDesignsOverride = e.target.value}/>
           <TextField accessor={'profitMargin'} header={'Markup'} onChange={(e) => quoteInputs.profitMargin = e.target.value}/>
+          <TextField accessor={'coreDiameterOverride'} header={'Core Diameter'} onChange={(e) => quoteInputs.coreDiameterOverride = e.target.value}/>
         </div>
         <div className='row-two'>
             <NumberOfColors />

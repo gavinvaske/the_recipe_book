@@ -5,7 +5,7 @@ import quoteStore from '../../../stores/quoteStore';
 
 export default MaterialInput = (props) => {
   const { isPrimaryMaterial } = props;
-  const [materials, setMaterials ] = useState([]);
+  const [materials, setMaterials] = useState([]);
   const { quoteInputs } = quoteStore;
 
   const updateMaterial = (e, attributeName) => {

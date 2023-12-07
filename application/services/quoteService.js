@@ -17,6 +17,19 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 
+module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
+    // TODO: I should validate quoteInputs here? or can that be done in the controller? Or in react?
+    const quotePromises = labelQuantities.map((labelQty) => {
+        const quoteInputsWithLabelQty = {
+            ...quoteInputs,
+            labelQty
+        };
+        return this.createQuote(quoteInputsWithLabelQty)
+    });
+
+    return Promise.all(quotePromises);
+};
+
 module.exports.createQuote = async (quoteInputs) => {
     const {
         isSheeted,
@@ -582,7 +595,6 @@ function computeInitialStockLength(quoteAttributes, overridableValues) {
     const { sizeAround, spaceAround, numberAcross } = die;
     
     const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAcross) / INCHES_PER_FOOT;
-    
     return initialStockLength;
 }
 

@@ -28,7 +28,7 @@ const QuoteOutputSection = observer(() => {
         <TableRow header={'Total Rolls of Paper'} data={getAttributeFromQuotes(quotes, 'totalRollsOfPaper')} />
         <TableRow header={'Extra Frames'} data={getAttributeFromQuotes(quotes, 'extraFrames')} />
         <TableRow header={'Total Frames'} data={getAttributeFromQuotes(quotes, 'totalFrames')} />
-        <TableRow header={'Total Stock Cost'} data={getAttributeFromQuotes(quotes, 'totalStockCost')} /> */
+        <TableRow header={'Total Stock Cost'} data={getAttributeFromQuotes(quotes, 'totalStockCost')} />
       </div>
       <div className='output-group'>
         <TableRow header={'Total Finish Feet'} data={getAttributeFromQuotes(quotes, 'totalFinishFeet')} />

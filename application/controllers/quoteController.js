@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
+const quoteService = require('../services/quoteService')
 
 router.use(verifyJwtToken);
 
@@ -8,9 +9,13 @@ router.get('/form', async (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-    console.log(request.body);
+    const labelQuantities = request.body.labelQuantities;
+    delete request.body.labelQuantities;
+    const quoteInputs = request.body;
 
-    return response.send('Response from POST /quote');
+    const quotes = await quoteService.createQuotes(labelQuantities, quoteInputs)
+
+    return response.send(quotes);
 })
 
 module.exports = router;

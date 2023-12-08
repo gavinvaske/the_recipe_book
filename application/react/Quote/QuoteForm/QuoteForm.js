@@ -13,6 +13,9 @@ const QuoteForm = () => {
         const { data } = response;
         quoteStore.quotes = data;
       })
+      .catch((error) => {
+        alert(`Error: ${error.response.data}`);
+      })
   }
   return (
     <div id='quote-form'>

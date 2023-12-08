@@ -41,6 +41,30 @@ Any work done locally, must be added to a branch before being pushed, the steps 
   - `git push`
 4) After pushing to github, you may encounter a **build error**. These build errors can be caused by Failing [Tests](#what-and-where-are-the-tests) OR [linter](#what-is-a-linter) errors. To see a human-readable reason for what went wrong, run the following command locally: `npm run verify`. That command will run the linter and run the tests and tell you if which of those steps failed, and why. In the event that it is linter issues, you can run the command `npm run fix-lint` to automagically resolve many (not always every) linter issue. Then you will need to manually fix the remaining ones and go back through steps (2) and (3).
 
+### How to Run React in this Repository
+This project is a hybrid between two front end stacks.
+  1. HTML/CSS/Javascript
+  2. React/SCSS/Webpack/babel
+
+Originally, this project was created using HTML/CSS/Javascript, but we are now in the process of migrating (at least new UI code) to React
+
+All react code is found in `./application/react`
+
+To Run react locally, open two terminals. 
+
+In the *first terminal*, run `npm run react`, this will start a automatically-hot-reloading react compiler, as you make changes to react components, the react compiler will automatically hot-reload react for you.
+
+In the *second terminal*, run `npm run nodemon`, this will start the express.js server for you. Note, any changes you make to the backend (i.e. controllers, services, models, ect) will trigger the server to reload automatically.
+
+Thats it, happy reacting!
+
+Note: If you ever run into issues where the react code is not automically reloading for you, following the following steps to "Hard Reset".
+  1. Delete `.parcel-cache` in the root directory (if one exists)
+  2. Quick the running processes in ALL open terminals (CTRL + C or the equivalent)
+  3. Close vscode
+  4. Restart your computer
+  5. Start up everything as normal and cross your fingers
+
 ### Descriptions of Useful Git Commands
 
 #### Git Stash

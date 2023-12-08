@@ -24,7 +24,7 @@ module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
             ...quoteInputs,
             labelQty
         };
-        return this.createQuote(quoteInputsWithLabelQty)
+        return this.createQuote(quoteInputsWithLabelQty);
     });
 
     return Promise.all(quotePromises);

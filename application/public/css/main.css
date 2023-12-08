@@ -4921,6 +4921,7 @@ background: #000;
 .page-wrapper.create-quote .pricing-and-qty-frame .form-group,
 .floating-numbers .form-group {
   width: 144px;
+  color: white;
   text-align: center;
   display: flex;
   align-items: center;
@@ -4943,12 +4944,18 @@ background: #000;
 }
 .page-wrapper.create-quote .qty-frame input {
   width: 80%;
-  border-radius: 0;
+  border-radius: 2px;
   height: 30px;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
+  font-weight: bold;
   padding: 0;
   border-width: 0 0 1px 0;
+  background-color: white;
+  color:#7367f0
+}
+.pricing-and-qty-frame .qty-frame input {
+  color:#7367f0;
 }
 
 .page-wrapper.create-quote .alert-box {
@@ -4977,8 +4984,9 @@ background: #000;
   width: calc(100% - 15px);
 }
 .card.labels-per-roll,
-.card.number-of-designs {
-  width: calc(33% - 7.5px);
+.card.number-of-designs,
+.card.mark-up {
+  width: calc(50% - 7.5px);
 }
 
 .die-selection-column,
@@ -5036,17 +5044,20 @@ background: #000;
 }
 
 .card.labels-per-roll input,
-.card.number-of-designs input {
+.card.number-of-designs input,
+.card.mark-up input {
   border-radius: 0;
   text-align: center;
-  background-color: #F9F9F9;
 }
 
 .card.labels-per-roll label,
 .card.number-of-designs label,
 .card.reinsertion label,
 .card.sheeted label,
-.card.variable label {
+.card.variable label,
+.card.mark-up label,
+.card.consecutive label,
+.card.sandwich label {
   display: block;
   text-align: center;
   font-size: 14px;
@@ -5068,45 +5079,118 @@ background: #000;
   margin-bottom: 1px;
 }
 
-.card.number-of-colors {
+.card.number-of-colors,
+.card.labels-per-roll,
+.card.number-of-colors-back {
   width: 100%;
+  height: 167px;
+  position: relative;
+  overflow: hidden;
 }
-.card.number-of-colors .color {
+.card.number-of-colors .color,
+.card.number-of-colors .reset,
+.card.number-of-colors-back .color,
+.card.number-of-colors-back .reset {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background: #D6D6D6;
   border: 1px solid transparent;
   margin-right: 3px;
+  opacity: .3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding-top: 2px;
+}
+.card.number-of-colors .color:hover,
+.card.number-of-colors .reset:hover,
+.card.number-of-colors-back .color,
+.card.number-of-colors-back .reset {
+  cursor: pointer;
+}
+.card.number-of-colors .color:active,
+.card.number-of-colors .reset.active:active,
+.card.number-of-colors-back .color:active,
+.card.number-of-colors-back .reset.active:active,
+.short-cut-qty:active,
+.fa-rotate-right:active {
+  opacity: .9;
+  transform: scale(.85);
+  transition: .3s;
+}
+.card.number-of-colors .color.one-hit,
+.card.number-of-colors .color.two-hits,
+.card.number-of-colors .color.three-hits,
+.card.number-of-colors .color.four-hits,
+.card.number-of-colors .color.five-hits,
+.card.number-of-colors-back .color.one-hit,
+.card.number-of-colors-back .color.two-hits,
+.card.number-of-colors-back .color.three-hits,
+.card.number-of-colors-back .color.four-hits,
+.card.number-of-colors-back .color.five-hits {
+  opacity: 1;
 }
 .color-options-frame {
   margin-top: 7px;
 }
-.card.number-of-colors .color.cyan {
+.card.number-of-colors .color.cyan,
+.card.number-of-colors-back .color.cyan {
   background: #00b7eb;
 }
-.card.number-of-colors .color.magenta {
+.card.number-of-colors .color.magenta,
+.card.number-of-colors-back .color.magenta {
   background: #cc338b;
 }
-.card.number-of-colors .color.yellow {
+.card.number-of-colors .color.yellow,
+.card.number-of-colors-back .color.yellow {
   background: yellow;
+  color: black;
 }
-.card.number-of-colors .color.black {
+.card.number-of-colors .color.black,
+.card.number-of-colors-back .color.black {
   background: black;
 }
+.card.number-of-colors .color.white,
 .card.number-of-colors .color.white {
   background: white;
   border: 1px solid gray;
+  color: black;
 }
-.card.number-of-colors .color.orange {
+.card.number-of-colors .color.orange,
+.card.number-of-colors-back .color.orange {
   background: orange;
 }
-.card.number-of-colors .color.violet {
+.card.number-of-colors .color.violet,
+.card.number-of-colors-back .color.violet {
   background: #7F00FF;
 }
-.card.number-of-colors .not-selected {
-  opacity: .3;
+#cyan-indicator {
+  color: #00b7eb;
 }
+#magenta-indicator {
+  color: #cc338b;
+}
+#yellow-indicator {
+  color: yellow;
+}
+#black-indicator {
+  color: black;
+}
+#white-indicator {
+  color: white;
+  text-shadow: black 1px 0 10px;
+}
+#orange-indicator {
+  color: orange;;
+}
+#violet-indicator {
+  color: #7F00FF;
+}
+/* .card.number-of-colors .not-selected {
+  opacity: .3;
+} */
 .color-selection-frame,
 .color-total-frame {
   width: 50%;
@@ -5116,10 +5200,30 @@ background: #000;
 }
 .color-total-frame span {
   font-size: 75px;
+  line-height: 75px;
 }
 .qty-price-breakdown,
-.primary-quote-inputs .card {
+.primary-quote-inputs .card,
+.advanced-settings.card,
+.quote-breakdown-section.card {
   margin-bottom: 15px;
+}
+.quote-breakdown-section.card {
+  background-color: white;
+}
+.page-wrapper.create-quote .quote-breakdown-section.card .form-group {
+  background-color: white;
+  color: rgb(47, 51, 73);
+}
+.qty-price-breakdown {
+  background-color: #7367f0;
+}
+.color-breakdown span {
+  font-size: 25px;
+  line-height: 25px;
+}
+.color-breakdown span {
+  display: none ;
 }
 
 
@@ -5180,17 +5284,22 @@ background: #000;
 
 .reinsertion [type="checkbox"],
 .sheeted [type="checkbox"],
-.variable [type="checkbox"] {
+.variable [type="checkbox"],
+.consecutive [type="checkbox"],
+.sandwich [type="checkbox"] {
   width: 25px;
   height: 25px;
 }
 .reinsertion,
 .sheeted,
-.variable {
+.variable,
+.consecutive,
+.sandwich {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: calc(33.333% - 15px)
 }
 .category {
   width: 235px!important;
@@ -5205,7 +5314,7 @@ background: #000;
   left: 0;
   width: 100%;
   overflow: hidden;
-  z-index: 999;
+  z-index: 8;
   transition: .3s;
   border: none;
   /* -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
@@ -5231,4 +5340,155 @@ background: #000;
 .floating-numbers input {
   background: transparent;
   color: white;
+}
+
+.color-breakdown {
+  /* height: 26px; */
+}
+.card.number-of-colors .reset.active,
+.card.number-of-colors-back .reset.active {
+  color: red;
+  opacity: 1;
+  background: white;
+  border: 1px solid red;
+  transition: .3s;
+}
+.cheat-pull-down {
+  top: -100%;
+  height: 100%;
+  background: white;
+  width: 30%;
+  left: 1.5rem;
+  position: absolute;
+  transition: .3s;
+  z-index: 7;
+}
+.cheat-pull-down-handle {
+  bottom: -15px;
+  position: absolute;
+  background-color: #7367f0;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  height: 15px;
+  width: 35px;
+  left: calc(50% - 21px);
+}
+
+.cheat-pull-down:hover {
+  top: 0;
+  transition: .3s;
+}
+
+.color-count-shortcut {
+
+}
+.color-count-shortcut:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+.short-cut-qty {
+  width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  height: 30px;
+  margin: 0 5px 5px 0;
+  /* background-color: rgba(0, 207, 232,.2); */
+  /* background-color: #00bfff; */
+  /* background-color: #7367f0; */
+  /* background-color: #56ca00; */
+  background-color: white;
+  border: 1px solid #4D4D4D;
+  color: #4D4D4D;
+  font-weight: bold;
+}
+.short-cut-qty:hover {
+  cursor: pointer;
+}
+
+#labelsPerRollOutput {
+  font-size: 65px;
+  line-height: 65px;
+  text-align: center;
+  border: 0;
+  background-color: white;
+  height: 65px;
+}
+.fa-rotate-right {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.fa-rotate-right:hover {
+  cursor: pointer;
+}
+
+.card.labels-per-roll .left-side {
+  width: 45%;
+}
+.card.labels-per-roll .right-side {
+  width: 55%;
+}
+
+.card.number-of-designs input,
+.card.mark-up input {
+  border: none;
+  font-size: 45px;
+}
+
+#color-selector-bottom {
+  display: none;
+}
+.quote-header .card.customer-name,
+.quote-header .card.quote-title-card {
+  width: calc(50% - 8px);
+  margin: 0 0 15px 0;
+}
+.customer-name-quote-title-frame {
+  width: calc(66.666% - 8px);
+}
+.date-and-links-frame {
+  width: calc(33.3333% - 8px);
+}
+.date-and-links-frame .card {
+  width: calc(50% - 8px);
+}
+.quote-extras i {
+  font-size: 20px;
+  margin:0 7px;
+}
+.quote-extras .frame {
+  height: 100%;
+}
+
+
+.quote-header .card {
+  height: 91px;
+  margin-bottom: 15px;
+}
+
+.tooling-cost-confirmation-modal-window {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(76, 78, 100, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.tooling-cost-confirmation-modal-window.active {
+  left: 0;
+  transition: .3s;
+}
+.tooling-cost-confirmation-modal {
+  width: 500px;
+  height: 300px;
+  background-color: white;
+}
+
+.quote-title-card h1 {
+  margin-bottom: 0;
 }

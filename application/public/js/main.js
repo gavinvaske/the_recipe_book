@@ -1283,3 +1283,247 @@ $( ".qty-frame input" ).on( "keyup", function() {
     }
 
   });
+
+$('.card.number-of-colors .color').click(function(){
+    if($(this).hasClass('one-hit')){
+        $(this).attr('data-id', '2');
+        $(this).text(2);
+        $(this).removeClass('one-hit');
+        $(this).addClass('two-hits');
+    } else if($(this).hasClass('two-hits')) {
+        $(this).attr('data-id', '3');
+        $(this).text(3);
+        $(this).removeClass('two-hits');
+        $(this).addClass('three-hits');
+    } else if($(this).hasClass('three-hits')) {
+        $(this).attr('data-id', '4');
+        $(this).text(4);
+        $(this).removeClass('three-hits');
+        $(this).addClass('four-hits');
+    } else if($(this).hasClass('four-hits')) {
+        $(this).attr('data-id', '5');
+        $(this).text(5);
+        $(this).removeClass('four-hits');
+        $(this).addClass('five-hits');
+    } else if($(this).hasClass('five-hits')) {
+        $(this).empty();
+        $(this).attr('data-id', '0');
+        $(this).removeClass('five-hits four-hits three-hits two-hits active'); 
+    } else {
+        $(this).text(1);
+        $(this).attr('data-id', '1');
+        $(this).addClass('one-hit');
+    }
+
+    // var tableVal = $('.color').map(function(i,v) {
+    //     return $(this).text();
+    // }).toArray();
+    // alert(tableVal);
+
+    let cyanHits = parseFloat($(".color.cyan").attr('data-id'));
+    let magentaHits = parseFloat($(".color.magenta").attr('data-id'));
+    let yellowHits = parseFloat($(".color.yellow").attr('data-id'));
+    let blackHits = parseFloat($(".color.black").attr('data-id'));
+    let whiteHits = parseFloat($(".color.white").attr('data-id'));
+    let orangeHits = parseFloat($(".color.orange").attr('data-id'));
+    let violetHits = parseFloat($(".color.violet").attr('data-id'));
+    let totalColors = magentaHits + cyanHits + yellowHits + blackHits + whiteHits + orangeHits + violetHits;
+
+    $('#totalColorHits').text(totalColors);
+    let clickCount = $(this).attr('data-id');
+    let colorIndicator = $(this).attr("id");
+
+    if(clickCount > 0) {
+        $("#" + colorIndicator + "indicator").show();
+    } else {
+        $("#" + colorIndicator + "indicator").hide();
+    }
+
+    $('#totalColorHits').attr('data-id', totalColors);
+
+    if ($('#totalColorHits').attr('data-id') > 0 ) {
+        $('.card.number-of-colors .reset').addClass('active');
+    } else {
+        $('.card.number-of-colors .reset').removeClass('active');
+    }
+
+});
+
+$('.card.number-of-colors .color').mousedown(function(e) {
+    clearTimeout(this.downTimer);
+    this.downTimer = setTimeout(function() {
+        $(e.target).empty();
+        $(e.target).attr('data-id', '0');
+        $(e.target).removeClass('five-hits four-hits three-hits two-hits active'); 
+    }, 1000);
+}).mouseup(function(e) {
+    clearTimeout(this.downTimer);
+});
+
+$('.card.number-of-colors .reset').click(function(){
+    $('.card.number-of-colors .color').empty();
+    $('.card.number-of-colors .color').attr('data-id', '0');
+    $('.card.number-of-colors .color').removeClass('five-hits four-hits three-hits two-hits one-hit active');
+    $(".color-indicator").hide();
+    $('#totalColorHits').text(0);
+    if ($('.card.number-of-colors .color').attr('data-id') > 0 ) {
+        $('.card.number-of-colors-back .reset').addClass('active');
+    } else {
+        $('.card.number-of-colors-back .reset').removeClass('active');
+    }
+});
+
+$('.color-count-shortcut.four-color').click(function(){
+    $('.card.number-of-colors .color').empty();
+    $('.card.number-of-colors .color').attr('data-id', '0');
+    $('.card.number-of-colors .color').removeClass('five-hits four-hits three-hits two-hits one-hit active');
+    $(".color-indicator").hide();
+    $('#totalColorHits').text(0);
+    $('.card.number-of-colors .color.cyan').attr('data-id', '1');
+    $('.card.number-of-colors .color.cyan').text('1');
+    $('.card.number-of-colors .color.cyan').addClass('one-hit');
+    
+    $('.card.number-of-colors .color.magenta').attr('data-id', '1');
+    $('.card.number-of-colors .color.magenta').text('1');
+    $('.card.number-of-colors .color.magenta').addClass('one-hit');
+
+    $('.card.number-of-colors .color.yellow').attr('data-id', '1');
+    $('.card.number-of-colors .color.yellow').text('1');
+    $('.card.number-of-colors .color.yellow').addClass('one-hit');
+
+    $('.card.number-of-colors .color.black').attr('data-id', '1');
+    $('.card.number-of-colors .color.black').text('1');
+    $('.card.number-of-colors .color.black').addClass('one-hit');
+
+    let cyanHits = parseFloat($(".color.cyan").attr('data-id'));
+    let magentaHits = parseFloat($(".color.magenta").attr('data-id'));
+    let yellowHits = parseFloat($(".color.yellow").attr('data-id'));
+    let blackHits = parseFloat($(".color.black").attr('data-id'));
+    let whiteHits = parseFloat($(".color.white").attr('data-id'));
+    let orangeHits = parseFloat($(".color.orange").attr('data-id'));
+    let violetHits = parseFloat($(".color.violet").attr('data-id'));
+    let totalColors = magentaHits + cyanHits + yellowHits + blackHits + whiteHits + orangeHits + violetHits;
+
+    $('#totalColorHits').text(totalColors);
+    $('#totalColorHits').attr('data-id', totalColors);
+
+    if ($('#totalColorHits').attr('data-id') > 0 ) {
+        $('.reset').addClass('active');
+    } else {
+        $('.reset').removeClass('active');
+    }
+
+    $('#cyan-indicator').show();
+    $('#magenta-indicator').show();
+    $('#yellow-indicator').show();
+    $('#black-indicator').show();
+});
+
+$('.short-cut-qty').click(function(){
+    let clickedQTY = parseFloat($(this).attr('data-id'));
+    let currentQTY = parseFloat($('#labelsPerRollOutput').val());
+
+    $('#labelsPerRollOutput').val(clickedQTY + currentQTY);
+    $('#labelsPerRollOutput').text(clickedQTY + currentQTY);
+});
+
+$('.card .fa-rotate-right').click(function(){
+    $('#labelsPerRollOutput').val(0);
+});
+
+$('.color-count-shortcut.four-color-plus-ov').click(function(){
+    $('.card.number-of-colors .color').empty();
+    $('.card.number-of-colors .color').attr('data-id', '0');
+    $('.card.number-of-colors .color').removeClass('five-hits four-hits three-hits two-hits one-hit active');
+
+    $(".color-indicator").hide();
+    $('#totalColorHits').text(0);
+
+    $('.card.number-of-colors .color.cyan').attr('data-id', '1');
+    $('.card.number-of-colors .color.cyan').text('1');
+    $('.card.number-of-colors .color.cyan').addClass('one-hit');
+    
+    $('.card.number-of-colors .color.magenta').attr('data-id', '1');
+    $('.card.number-of-colors .color.magenta').text('1');
+    $('.card.number-of-colors .color.magenta').addClass('one-hit');
+
+    $('.card.number-of-colors .color.yellow').attr('data-id', '1');
+    $('.card.number-of-colors .color.yellow').text('1');
+    $('.card.number-of-colors .color.yellow').addClass('one-hit');
+
+    $('.card.number-of-colors .color.black').attr('data-id', '1');
+    $('.card.number-of-colors .color.black').text('1');
+    $('.card.number-of-colors .color.black').addClass('one-hit');
+
+    $('.card.number-of-colors .color.orange').attr('data-id', '1');
+    $('.card.number-of-colors .color.orange').text('1');
+    $('.card.number-of-colors .color.orange').addClass('one-hit');
+
+    $('.card.number-of-colors .color.violet').attr('data-id', '1');
+    $('.card.number-of-colors .color.violet').text('1');
+    $('.card.number-of-colors .color.violet').addClass('one-hit');
+
+    let cyanHits = parseFloat($(".color.cyan").attr('data-id'));
+    let magentaHits = parseFloat($(".color.magenta").attr('data-id'));
+    let yellowHits = parseFloat($(".color.yellow").attr('data-id'));
+    let blackHits = parseFloat($(".color.black").attr('data-id'));
+    let whiteHits = parseFloat($(".color.white").attr('data-id'));
+    let orangeHits = parseFloat($(".color.orange").attr('data-id'));
+    let violetHits = parseFloat($(".color.violet").attr('data-id'));
+    let totalColors = magentaHits + cyanHits + yellowHits + blackHits + whiteHits + orangeHits + violetHits;
+
+    $('#totalColorHits').text(totalColors);
+    $('#totalColorHits').attr('data-id', totalColors);
+
+    if ($('#totalColorHits').attr('data-id') > 0 ) {
+        $('.reset').addClass('active');
+    } else {
+        $('.reset').removeClass('active');
+    }
+    $('#cyan-indicator').show();
+    $('#magenta-indicator').show();
+    $('#yellow-indicator').show();
+    $('#black-indicator').show();
+    $('#orange-indicator').show();
+    $('#violet-indicator').show();
+});
+
+$(".card.mark-up input").on('input', function() {
+    $(this).val(function(i, v) {
+     return v.replace('%','') + '%';  });
+});
+
+$(".reinsertion [type='checkbox']").click(function(){
+    if($(this).is(':checked')){
+        $('#color-selector-bottom').show();
+    } else {
+        $('#color-selector-bottom').hide();
+    }
+});
+
+
+$('#die-selection').change(function(){
+    var data = $(this).val();
+ 
+    if(data === "custom"){
+        $('.tooling-cost-confirmation-modal-window').addClass('active');
+        $('html, body').css({
+            overflow: 'hidden'
+        });
+    } else {
+
+    }
+  });
+
+$('.tooling-cost-confirmation-modal-window').click(function(){
+
+    if($(this).hasClass('active')){
+        $('.tooling-cost-confirmation-modal-window').removeClass('active');
+        $('html, body').css({
+            overflow: 'scroll'
+        });
+    } else {
+
+    }
+});
+

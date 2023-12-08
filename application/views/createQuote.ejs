@@ -1,6 +1,29 @@
 <%- include('partials/navbarMain.ejs') %>
 
 <div class="page-wrapper create-quote">
+    <div class="flex-center-space-between-row quote-header">
+        <div class="flex-center-space-between-row customer-name-quote-title-frame">
+            <div class="card customer-name">
+                <input placeholder="Search customers...">
+            </div>
+            <div class="card quote-title-card flex-center-center-row">
+                <h1>#40001</h1>
+            </div>
+        </div>
+        <div class="flex-center-space-between-row date-and-links-frame">
+            <div class="card flex-center-left-column">
+                <span>Created: 1/02/23</span>
+                <span>Last Modified: 1/02/23</span>
+            </div>
+            <div class="card quote-extras">
+                <div class="flex-center-center-row frame">
+                    <i class="fa-regular fa-gear"></i>
+                    <i class="fa-regular fa-gear"></i>
+                    <i class="fa-regular fa-gear"></i>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="header-2" class="floating-numbers flex-center-center-row">
         <div class="full-width">
             <div class='flex-center-center-row qty-frame'>
@@ -8,31 +31,31 @@
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 1</label>
-                    <input type="text" name="a" value="" class="input-1">
+                    <input type="text" name="a" value="0" class="input-1">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 2</label>
-                    <input type="text" name="a" value="" class="input-2">
+                    <input type="text" name="a" value="0" class="input-2">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 3</label>
-                    <input type="text" name="a" value="" class="input-3">
+                    <input type="text" name="a" value="0" class="input-3">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 4</label>
-                    <input type="text" name="a" value="" class="input-4">
+                    <input type="text" name="a" value="0" class="input-4">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 5</label>
-                    <input type="text" name="a" value="" class="input-5">
+                    <input type="text" name="a" value="0" class="input-5">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 6</label>
-                    <input type="text" name="a" value="" class="input-6">
+                    <input type="text" name="a" value="0" class="input-6">
                 </div>
                 <div class="form-group">
                     <label for="a" class="text-center">Qty 7</label>
-                    <input type="text" name="a" value="" class="input-7">
+                    <input type="text" name="a" value="0" class="input-7">
                 </div>
             </div>
             <div class='flex-center-center-row row row-1'>
@@ -126,31 +149,31 @@
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 1</label>
-                        <input type="text" name="a" value="" class="input-1">
+                        <input type="text" name="a" value="0" class="input-1">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 2</label>
-                        <input type="text" name="a" value="" class="input-2">
+                        <input type="text" name="a" value="0" class="input-2">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 3</label>
-                        <input type="text" name="a" value="" class="input-3">
+                        <input type="text" name="a" value="0" class="input-3">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 4</label>
-                        <input type="text" name="a" value="" class="input-4">
+                        <input type="text" name="a" value="0" class="input-4">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 5</label>
-                        <input type="text" name="a" value="" class="input-5">
+                        <input type="text" name="a" value="0" class="input-5">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 6</label>
-                        <input type="text" name="a" value="" class="input-6">
+                        <input type="text" name="a" value="0" class="input-6">
                     </div>
                     <div class="form-group">
                         <label for="a" class="text-center">Qty 7</label>
-                        <input type="text" name="a" value="" class="input-7">
+                        <input type="text" name="a" value="0" class="input-7">
                     </div>
                 </div>
                 <div class='flex-center-space-between-row row row-1'>
@@ -292,12 +315,12 @@
             <div class="card">
                 <div class="die-selection-row flex-center-left-row">
                     <div class="die-selection-column col-one">
-                        <label for="cars">Die Name:</label>
-                        <select name="cars" id="cars">
+                        <label for="die-selection">Die Name:</label>
+                        <select name="die-selection" id="die-selection">
                             <option value="dr-299">DR-299</option>
                             <option value="saab">Saab</option>
                             <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                            <option value="custom">Custom</option>
                         </select>
                     </div>
                     <div class="die-selection-column col-two">
@@ -431,41 +454,166 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="finish-selection-row flex-center-left-row">
+                    <div class="finish-selection-column col-one">
+                        <label for="cars">Add Tooling:</label>
+                        <select name="cars" id="cars">
+                            <option value="gloss uv">Gloss UV</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="primary-material-selection-column col-two">
+                        <label for="cars">Initial Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-three">
+                        <label for="cars">Freight MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-four">
+                        <label for="cars">Total Cost MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-five">
+                        <label for="cars">Quoted MSI:</label>
+                        <input>
+                    </div>
+                    <div class="primary-material-selection-column col-six">
+                        <label for="cars">Thickness:</label>
+                        <input>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="flex-top-center-column col-b">
             <div class="flex-center-space-between-row full-width">
-                <div class="card labels-per-roll">
+                <!-- <div class="card labels-per-roll">
                     <label for="cars">Labels/Roll:</label>
                     <input>
-                </div>
+                </div> -->
                 <div class="card number-of-designs">
                     <label for="cars">Designs:</label>
-                    <input>
+                    <input value="0">
                 </div>
-                <div class="card number-of-designs">
+                <div class="card mark-up">
                     <label for="cars">Mark Up:</label>
-                    <input>
+                    <input value="0">
+                </div>
+            </div>
+            <div class="flex-center-center-row full-width">
+                <div class="card labels-per-roll flex-center-center-row">
+                    <i class="fa-regular fa-rotate-right"></i>
+                    <div class="left-side flex-center-left-row flex-wrap">
+                        <div class="full-width text-left">Labels Per Roll:</div>
+                        <span data-id="100" class="short-cut-qty">100</span>
+                        <span data-id="250" class="short-cut-qty">250</span>
+                        <span data-id="500" class="short-cut-qty">500</span>
+                        <span data-id="1000" class="short-cut-qty">1000</span>
+                        <span data-id="2000" class="short-cut-qty">200</span>
+                        <span data-id="4000" class="short-cut-qty">4000</span>
+                    </div>
+                    <div class="right-side flex-center-center-row">
+                        <input id="labelsPerRollOutput" data-id="0" value="0">
+                    </div>
                 </div>
             </div>
             <div class="flex-center-center-row full-width">
                 <div class="card number-of-colors flex-center-center-row">
+                    <div class="cheat-pull-down flex-center-center-column">
+                        <div class="cheat-pull-down-handle">
+                        </div>
+                        <div class="flex-center-center-column">
+                            <span class="color-count-shortcut four-color">CMYK</span>
+                            <span class="color-count-shortcut four-color-plus-ov">CMYK + OV</span>
+                            <span class="color-count-shortcut">CMYK + O</span>
+                            <span class="color-count-shortcut">CMYK + V</span>
+                        </div>
+                    </div>
                     <div class='color-selection-frame'>
-                        <label for="cars">Numbers of Colors:</label>
+                        <div>Number of Colors:</div>
                         <div class="color-options-frame flex-center-left-row flex-wrap">
-                            <div class="color cyan"></div>
-                            <div class="color magenta"></div>
-                            <div class="color yellow"></div>
-                            <div class="color black text-white flex-center-center-row">2</div>
+                            <div id='cyan-' class="color cyan" data-id="0"></div>
+                            <div id='magenta-' class="color magenta" data-id="0"></div>
+                            <div id='yellow-' class="color yellow" data-id="0"></div>
+                            <div id='black-' class="color black text-white flex-center-center-row" data-id="0"></div>
                         </div>
                         <div class="color-options-frame flex-center-left-row flex-wrap">
-                            <div class="color white not-selected"></div>
-                            <div class="color orange not-selected"></div>
-                            <div class="color violet not-selected"></div>
+                            <div id='white-' class="color white" data-id="0"></div>
+                            <div id='orange-' class="color orange" data-id="0"></div>
+                            <div id='violet-' class="color violet" data-id="0"></div>
+                            <div id='reset-' class="reset" data-id="0">X</div>
                         </div>
                     </div>
                     <div class="color-total-frame">
+                        <span id="totalColorHits">0</span>
+                        <div class='color-breakdown'>
+                            <span id='cyan-indicator' class="color-indicator cyan-profile">C</span>
+                            <span id='magenta-indicator' class="color-indicator magenta-profile">M</span>
+                            <span id='yellow-indicator' class="color-indicator yellow-profile">Y</span>
+                            <span id='black-indicator' class="color-indicator black-profile">K</span>
+                            <span id='white-indicator' class="color-indicator white-profile">W</span>
+                            <span id='orange-indicator' class="color-indicator orange-profile">O</span>
+                            <span id='violet-indicator' class="color-indicator violet-profile">V</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id='color-selector-bottom' class="flex-center-center-row full-width">
+                <div class="card number-of-colors-back flex-center-center-row">
+                    <div class="cheat-pull-down flex-center-center-column">
+                        <div class="cheat-pull-down-handle">
+                        </div>
+                        <div class="flex-center-center-column">
+                            <span class="color-count-shortcut four-color">CMYK</span>
+                            <span class="color-count-shortcut four-color-plus-ov">CMYK + OV</span>
+                            <span class="color-count-shortcut">CMYK + O</span>
+                            <span class="color-count-shortcut">CMYK + V</span>
+                        </div>
+                    </div>
+                    <div class='color-selection-frame'>
+                        <div>Number of Colors (B):</div>
+                        <div class="color-options-frame flex-center-left-row flex-wrap">
+                            <div id='back-cyan-' class="color cyan" data-id="0"></div>
+                            <div id='back-magenta-' class="color magenta" data-id="0"></div>
+                            <div id='back-yellow-' class="color yellow" data-id="0"></div>
+                            <div id='back-black-' class="color black text-white flex-center-center-row" data-id="0"></div>
+                        </div>
+                        <div class="color-options-frame flex-center-left-row flex-wrap">
+                            <div id='back-white-' class="color white" data-id="0"></div>
+                            <div id='back-orange-' class="color orange" data-id="0"></div>
+                            <div id='back-violet-' class="color violet" data-id="0"></div>
+                            <div id='back-reset-' class="reset" data-id="0">X</div>
+                        </div>
+                    </div>
+                    <div class="color-total-frame">
+                        <span id="totalBackColorHits">0</span>
+                        <div class='color-breakdown'>
+                            <span id='back-cyan-indicator' class="color-indicator cyan-profile">C</span>
+                            <span id='back-magenta-indicator' class="color-indicator magenta-profile">M</span>
+                            <span id='back-yellow-indicator' class="color-indicator yellow-profile">Y</span>
+                            <span id='back-black-indicator' class="color-indicator black-profile">K</span>
+                            <span id='back-white-indicator' class="color-indicator white-profile">W</span>
+                            <span id='back-orange-indicator' class="color-indicator orange-profile">O</span>
+                            <span id='back-violet-indicator' class="color-indicator violet-profile">V</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-center-space-between-row full-width">
+                <div class="card unwind-direction">
+                    <label for="cars">Unwind Direction:</label>
+                    <div class="flex-center-left-row">
+                        <span>1</span>
+                        <span>2</span>
+                        <span class="active">3</span>
+                        <span>4</span>
                         <span>5</span>
-                        <p>CMYK</p>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
                     </div>
                 </div>
             </div>
@@ -484,24 +632,40 @@
                 </div>
             </div>
             <div class="flex-center-space-between-row full-width">
-                <div class="card unwind-direction">
-                    <label for="cars">Unwind Direction:</label>
-                    <div class="flex-center-left-row">
-                        <span>1</span>
-                        <span>2</span>
-                        <span class="active">3</span>
-                        <span>4</span>
-                        <span>5</span>
-                        <span>6</span>
-                        <span>7</span>
-                        <span>8</span>
-                    </div>
+                <div class="card consecutive">
+                    <label for="cars">Consecutive:</label>
+                    <input type="checkbox">
+                </div>
+                <div class="card sandwich">
+                    <label for="cars">Sandwich:</label>
+                    <input type="checkbox">
+                </div>
+                <div class="card variable">
+                    <label for="cars">Blank:</label>
+                    <input type="checkbox">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card qty-price-breakdown">
+    <div class="card advanced-settings">
+        <div class="toggle-machine-frame flex-center-center-row">
+            <div class="flex-center-center-column">
+                <label for="cars">Printing:</label>
+                <input type="checkbox">
+            </div>
+            <div class="flex-center-center-column">
+                <label for="cars">Cutting:</label>
+                <input type="checkbox">
+            </div>
+            <div class="flex-center-center-column">
+                <label for="cars">Winding:</label>
+                <input type="checkbox">
+            </div>
+        </div>
+    </div>
+
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -897,7 +1061,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -981,7 +1145,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1013,7 +1177,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1123,7 +1287,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1207,7 +1371,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1265,7 +1429,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1297,7 +1461,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1329,7 +1493,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1439,7 +1603,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1523,7 +1687,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1555,7 +1719,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1587,7 +1751,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1619,7 +1783,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1651,7 +1815,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1735,7 +1899,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1767,7 +1931,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1825,7 +1989,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1857,7 +2021,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1915,7 +2079,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -1947,7 +2111,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2005,7 +2169,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2037,7 +2201,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2069,7 +2233,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2101,7 +2265,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2159,7 +2323,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2191,7 +2355,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2223,7 +2387,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2255,7 +2419,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2287,7 +2451,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2319,7 +2483,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2377,7 +2541,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2409,7 +2573,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2441,7 +2605,7 @@
             </div>
         </div>
     </div>
-    <div class="card qty-price-breakdown">
+    <div class="card quote-breakdown-section">
         <div class="flex-center-center-row pricing-and-qty-frame">
             <div id="create-packaging-estimate-form">
                 <div class='flex-center-space-between-row row row-1'>
@@ -2603,38 +2767,20 @@
             </div>
         </div>
     </div>
+
+    <div class="tooling-cost-confirmation-modal-window flex-center-center-row">
+        <div class="tooling-cost-confirmation-modal card">
+            hello mars
+        </div>
+    </div>
 </div>
+
 <br>
 <br>
 <br>
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 
 

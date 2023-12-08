@@ -1,4 +1,4 @@
-import { makeAutoObservable, autorun } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 const NUMBER_OF_QUOTES = 8;
 const DEFAULT_LABEL_QUANTITY = 0;
@@ -26,7 +26,3 @@ class quoteStore {
 let store = window.store = new quoteStore();
 
 export default makeAutoObservable(store);
-
-autorun(() => {
-    console.log(store.quoteInputs);
-});

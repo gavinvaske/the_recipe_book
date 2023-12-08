@@ -18,7 +18,6 @@ const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 
 module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
-    // TODO: I should validate quoteInputs here? or can that be done in the controller? Or in react?
     const quotePromises = labelQuantities.map((labelQty) => {
         const quoteInputsWithLabelQty = {
             ...quoteInputs,

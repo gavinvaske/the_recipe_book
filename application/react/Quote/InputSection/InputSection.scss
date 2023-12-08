@@ -1,0 +1,28 @@
+#quote-input-section {
+    margin: 10px 25px;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left-section {
+        width: 70%;
+    }
+
+    .right-section {
+        background-color: orange;
+        width: 30%;
+
+        .row-one {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .row-three {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}

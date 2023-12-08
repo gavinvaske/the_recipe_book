@@ -1,0 +1,13 @@
+#quote-cost-summary {
+    background-color: white;
+    margin: 10px 25px;
+    padding: 8px;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+}

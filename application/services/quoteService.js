@@ -17,6 +17,18 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 
+module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
+    const quotePromises = labelQuantities.map((labelQty) => {
+        const quoteInputsWithLabelQty = {
+            ...quoteInputs,
+            labelQty
+        };
+        return this.createQuote(quoteInputsWithLabelQty);
+    });
+
+    return Promise.all(quotePromises);
+};
+
 module.exports.createQuote = async (quoteInputs) => {
     const {
         isSheeted,
@@ -141,13 +153,11 @@ function computeTotalShippingCost(quoteAttributes) {
     const { totalShippingTime } = quoteAttributes;
 
     const totalShippingCost = (totalShippingTime / MINUTES_PER_HOUR) * constants.SHIPPING_HOURLY_RATE;
-
     return totalShippingCost;
 }
 
 function computeTotalShippingTime(quoteAttributes) {
     const { boxCreationTime, packagingBoxTime, packingSlipsTime } = quoteAttributes;
-
     const sum = boxCreationTime + packagingBoxTime + packingSlipsTime;
 
     return sum;
@@ -161,7 +171,6 @@ function computePackagingBoxTime(quoteAttributes) {
 
 function computeBoxCreationTime(quoteAttributes) {
     const { packagingDetails } = quoteAttributes;
-
     return packagingDetails.totalBoxes * constants.BOX_CREATION_TIME;
 }
 
@@ -263,8 +272,8 @@ function computeCombinedMaterialThickness(overridableValues) {
     const { primaryMaterial, secondaryMaterial, finish } = overridableValues;
 
     const primaryMaterialThickness = primaryMaterial.thickness;
-    const secondaryMaterialThickness = secondaryMaterial ? secondaryMaterial.thickness : 0;
-    const finishThickness = finish ? finish.thickness : 0;
+    const secondaryMaterialThickness = (secondaryMaterial && secondaryMaterial.thickness) ? secondaryMaterial.thickness : 0;
+    const finishThickness = (finish && finish.thickness) ? finish.thickness : 0;
 
     return primaryMaterialThickness + secondaryMaterialThickness + finishThickness;
 }
@@ -281,7 +290,6 @@ function computePackagingDetails(quoteAttributes, overridableValues) {
     const { BOX_WIDTH_INCHES, BOX_HEIGHT_INCHES } = constants;
     const { finishedRollDiameter, totalNumberOfRolls } = quoteAttributes;
     const finishedRollHeight = dieService.getCoreHeightFromDie(die);
-
     const layersPerBox = packagingService.getNumberOfLayers(BOX_HEIGHT_INCHES, finishedRollHeight);
     const rollsPerLayer = packagingService.getRollsPerLayer(finishedRollDiameter, BOX_WIDTH_INCHES);
     const rollsPerBox = layersPerBox * rollsPerLayer;
@@ -377,7 +385,7 @@ function computeTotalStockCost(quoteAttributes, overridableValues) {
     const { totalStockMsi } = quoteAttributes;
 
     const primaryMaterialCost = totalStockMsi * primaryMaterial.quotePricePerMsi;
-    const secondarMaterialCost = secondaryMaterial ? (totalStockMsi * secondaryMaterial.quotePricePerMsi) : 0;
+    const secondarMaterialCost = (secondaryMaterial && secondaryMaterial.quotePricePerMsi) ? (totalStockMsi * secondaryMaterial.quotePricePerMsi) : 0;
 
     return primaryMaterialCost + secondarMaterialCost;
 }
@@ -582,7 +590,6 @@ function computeInitialStockLength(quoteAttributes, overridableValues) {
     const { sizeAround, spaceAround, numberAcross } = die;
     
     const initialStockLength = (((sizeAround + spaceAround) * labelQty) / numberAcross) / INCHES_PER_FOOT;
-    
     return initialStockLength;
 }
 

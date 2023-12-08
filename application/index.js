@@ -78,6 +78,7 @@ app.use('/material-categories', require('./controllers/materialCategoryControlle
 app.use('/file-plan', require('./controllers/filePlanController'));
 app.use('/packaging', require('./controllers/packagingController'));
 app.use('/quote', require('./controllers/quoteController'));
+app.use('/die', require('./controllers/dieController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

@@ -5,7 +5,7 @@ export default LabelQtyInputField = (props) => {
   const { labelQuantities, index } = props;
 
   const onChange = (e) => {
-    labelQuantities[index] = e.target.value
+    labelQuantities[index] = Number(e.target.value)
   };
 
   return (

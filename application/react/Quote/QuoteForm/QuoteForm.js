@@ -7,16 +7,16 @@ import './QuoteForm.scss';
 import quoteStore from '../../stores/quoteStore'
 
 const QuoteForm = () => {
-  const submitQuote = () => {
+  const generateQuotes = (e) => {
     axios.post('/quote', quoteStore.quoteInputs)
       .then((response) => {
         const { data } = response;
-        console.log('data from POST /quote:', data);
+        quoteStore.quotes = data;
       })
   }
   return (
     <div id='quote-form'>
-      <button class='btn-primary' style={{width: '100px'}} onClick={submitQuote}>Imma button</button>
+      <button className='btn-primary' onClick={generateQuotes}>Generate Quotes</button>
       <CostSummary/>
       <InputSection/>
       <OutputSection/>

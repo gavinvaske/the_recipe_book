@@ -10,9 +10,9 @@ export default MaterialInput = (props) => {
 
   const updateMaterial = (e, attributeName) => {
     if (isPrimaryMaterial) {
-      quoteInputs.primaryMaterialOverride[attributeName] = e.target.value;
+      quoteInputs.primaryMaterialOverride[attributeName] = Number(e.target.value);
     } else {
-      quoteInputs.secondaryMaterialOverride[attributeName] = e.target.value;
+      quoteInputs.secondaryMaterialOverride[attributeName] = Number(e.target.value);
     }
   }
 

@@ -4,7 +4,7 @@ import TableRow from '../TableRow/TableRow';
 import LabelQtyInputField from './LabelQtyInputField/LabelQtyInputField';
 import quoteStore from '../../stores/quoteStore'
 
-const QuoteCostSummary = (props) => {
+const QuoteCostSummary = () => {
   return (
     <div id='quote-cost-summary'>
       <div className='row'>

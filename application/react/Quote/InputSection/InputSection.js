@@ -21,10 +21,10 @@ const QuoteInputSection = () => {
       </div>
       <div className='right-section'>
         <div className='row-one'>
-          <TextField accessor={'labelsPerRollOverride'} header={'Labels/Roll'} onChange={(e) => quoteInputs.labelsPerRollOverride = e.target.value}/>
-          <TextField accessor={'numberOfDesignsOverride'} header={'Designs'} onChange={(e) => quoteInputs.numberOfDesignsOverride = e.target.value}/>
-          <TextField accessor={'profitMargin'} header={'Markup'} onChange={(e) => quoteInputs.profitMargin = e.target.value}/>
-          <TextField accessor={'coreDiameterOverride'} header={'Core Diameter'} onChange={(e) => quoteInputs.coreDiameterOverride = e.target.value}/>
+          <TextField accessor={'labelsPerRollOverride'} header={'Labels/Roll'} onChange={(e) => quoteInputs.labelsPerRollOverride = Number(e.target.value)}/>
+          <TextField accessor={'numberOfDesignsOverride'} header={'Designs'} onChange={(e) => quoteInputs.numberOfDesignsOverride = Number(e.target.value)}/>
+          <TextField accessor={'profitMargin'} header={'Markup'} onChange={(e) => quoteInputs.profitMargin = Number(e.target.value)}/>
+          <TextField accessor={'coreDiameterOverride'} header={'Core Diameter'} onChange={(e) => quoteInputs.coreDiameterOverride = Number(e.target.value)}/>
         </div>
         <div className='row-two'>
             <NumberOfColors />

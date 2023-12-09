@@ -5,6 +5,7 @@ import OutputSection from '../OutputSection/OutputSection';
 import axios from 'axios';
 import './QuoteForm.scss';
 import quoteStore from '../../stores/quoteStore'
+import Navbar from '../../share-components/Navbar/Navbar';
 
 const QuoteForm = () => {
   const generateQuotes = (e) => {
@@ -20,9 +21,10 @@ const QuoteForm = () => {
   return (
     <div id='quote-form'>
       <button className='btn-primary' onClick={generateQuotes}>Generate Quotes</button>
-      <CostSummary/>
-      <InputSection/>
-      <OutputSection/>
+      <Navbar />
+      <CostSummary />
+      <InputSection />
+      <OutputSection />
     </div>
   );
 };

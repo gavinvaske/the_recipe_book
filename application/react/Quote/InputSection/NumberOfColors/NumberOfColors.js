@@ -44,7 +44,7 @@ export default NumberOfColors = () => {
       <div className='number-of-colors-section'>
         <div className='colors-input-section'>
           {Object.keys(colorToCount).map((color) => (
-            <div onClick={(e) => updateColorCount(color)}>{color} : {colorToCount[color]}</div>)
+            <div className={`color-${color}`} onClick={(e) => updateColorCount(color)}>{colorToCount[color]}</div>)
           )}
         </div>
         <div className='colors-output-section'>

@@ -1,13 +1,24 @@
 #quote-cost-summary {
-    background-color: white;
-    margin: 10px 25px;
-    padding: 8px;
+    background-color: #7367F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     .row {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
+        width: 90%;
+        &:nth-child(1){
+            margin-bottom: 5px;
+        }
+        &:nth-child(2) {
+            border: 0;
+        }
+        .header, .cell {
+            color: white;
+        }
     }
 }

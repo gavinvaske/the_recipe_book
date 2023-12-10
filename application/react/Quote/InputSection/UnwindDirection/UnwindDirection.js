@@ -5,17 +5,17 @@ const UnwindDirectionOption = (props) => {
   const { value } = props;
 
   return (
-    <div>
-      <div>{value}</div>
+    <div className={`unwind-${value} unwind-option`}>
+      <span>{value}</span>
     </div>
   )
 }
 
 export default UnwindDirection = () => {
   return (
-    <div className="unwind-direction-input-section">
+    <div className="unwind-direction-input-section card">
       <div className='unwind-direction-container'>
-        <div className='unwind-direction-label'>Unwind Direction</div>
+        <div className='unwind-direction-label'>Unwind Direction:</div>
         <div className='unwind-direction-options'>
           <UnwindDirectionOption value={1}/>
           <UnwindDirectionOption value={2}/>

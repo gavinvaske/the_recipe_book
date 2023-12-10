@@ -1,11 +1,11 @@
 import React from 'react';
+import QuoteHeader from '../QuoteHeader/QuoteHeader';
 import CostSummary from '../CostSummary/CostSummary';
 import InputSection from '../InputSection/InputSection';
 import OutputSection from '../OutputSection/OutputSection';
 import axios from 'axios';
 import './QuoteForm.scss';
 import quoteStore from '../../stores/quoteStore'
-import Navbar from '../../share-components/Navbar/Navbar';
 
 const QuoteForm = () => {
   const generateQuotes = (e) => {
@@ -20,8 +20,8 @@ const QuoteForm = () => {
   }
   return (
     <div id='quote-form'>
-      <button className='btn-primary' onClick={generateQuotes}>Generate Quotes</button>
-      <Navbar />
+      <button className='btn-primary temp-button-class flex-center-center-row' onClick={generateQuotes}><i className="fa-duotone fa-bullseye"></i></button>
+      <QuoteHeader />
       <CostSummary />
       <InputSection />
       <OutputSection />

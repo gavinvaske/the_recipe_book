@@ -13,7 +13,7 @@ export default FinishInput = () => {
   }, [])
 
   return (
-    <div className='finish-input-section'>
+    <div className='finish-input-section card'>
       <DropdownField header={'Finish'} options={finishes.map((material) => material.name)} />
       <TextField accessor={'costPerMsi'} header={'Initial Cost MSI'} onChange={(e) => quoteInputs.finishOverride.costPerMsi = Number(e.target.value)} />
       <TextField accessor={'freightCostPerMsi'} header={'Freight MSI'} onChange={(e) => quoteInputs.finishOverride.freightCostPerMsi = Number(e.target.value)} />

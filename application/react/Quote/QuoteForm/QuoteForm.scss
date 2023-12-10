@@ -1,0 +1,11 @@
+.temp-button-class {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 30px;
+    bottom: calc(5% + 55px);
+
+    .fa-bullseye {
+        font-size: 30px;
+    }
+}

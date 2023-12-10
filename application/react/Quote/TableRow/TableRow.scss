@@ -2,4 +2,30 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    height: 35px;
+    &:nth-child(n+2) {
+        border-top: 1px solid rgb(231, 231, 231);
+    }
+    
+    .header {
+        width: 143px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        color: rgb(47, 51, 73);
+        font-size: 16px;
+    }
+    .input.qty-input {
+        width: 144px;
+    }
+
+    .cell {
+        width: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(47, 51, 73);
+        font-size: 16px;
+    }
 }

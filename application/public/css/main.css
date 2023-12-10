@@ -4913,3 +4913,46 @@ background: #000;
 .time-selection {
   width: 200px;
 }
+
+
+.die-input-section .column input, .die-input-section .column select,
+.material-input-section .column input,
+.material-input-section .column select {
+  text-align: center;
+  background-color: rgb(249, 249, 249);
+  border-radius: 0px;
+  height: 43px;
+  width: 100%;
+  border: 1px solid #d8d6de;
+}
+.die-input-section .column,
+.material-input-section .column {
+  width: 12.5%;
+  margin-left: -1px;
+}
+.quote-page .card {
+  margin-bottom: 15px;
+}
+
+.material-input-section.card,
+.die-input-section.card,
+.finish-input-section.card {
+  width: calc(100% - 15px);
+}
+.output-group.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.output-group.card .row {
+  width: 90%;
+}
+
+.checkbox-field-header {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+

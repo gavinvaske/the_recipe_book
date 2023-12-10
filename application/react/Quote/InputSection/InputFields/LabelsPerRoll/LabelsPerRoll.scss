@@ -1,0 +1,47 @@
+.labels-per-roll.card {
+    position: relative;
+    .column {
+        width: 50%;
+    }
+    .fa-rotate-right {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+    .left-col {
+
+        .button-frame {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+
+            button {
+                width: 75px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 30px;
+                background-color: white;
+                color: rgb(77, 77, 77);
+                font-weight: bold;
+                border-radius: 3px;
+                margin: 0px 5px 5px 0px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: rgb(77, 77, 77);
+            }
+        }
+    }
+    .right-col {
+        text-align: center;
+        input {
+            font-size: 65px;
+            line-height: 65px;
+            text-align: center;
+            background-color: white;
+            height: 65px;
+            border: none;
+        }
+    }
+}

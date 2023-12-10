@@ -5,8 +5,8 @@ const TableRow = (props) => {
     const { header, data } = props;
     return (
       <div className='row'>
-        <div>{header}</div>
-        {data && data.map((value) => <div>{value}</div>)}
+        <div className='header'>{header}</div>
+        {data && data.map((value) => <div className='cell'>{value}</div>)}
       </div>
     )
 }

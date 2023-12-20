@@ -31,9 +31,6 @@ const QuoteInputSection = () => {
         </div>
         <div className='labels-per-roll card flex-center-center-row'>
           <LabelsPerRoll onChange={(e) => quoteInputs.labelsPerRollOverride = Number(e.target.value)}/>
-        {/* <div className='card'>
-          <TextField accessor={'labelsPerRollOverride'} header={'Labels/Roll'} onChange={(e) => quoteInputs.labelsPerRollOverride = Number(e.target.value)}/>
-        </div> */}
         </div>
         <div className='row-two'>
             <NumberOfColors />

@@ -1903,38 +1903,38 @@ describe('File: quote.js', () => {
     describe('attribute: totalMachineCost', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'totalMachineCost');
-        })
-    })
+        });
+    });
 
     describe('attribute: totalProductionCost', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'totalProductionCost');
-        })
-    })
+        });
+    });
 
     describe('attribute: quotedPrice', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'quotedPrice');
-        })
-    })
+        });
+    });
 
     describe('attribute: pricePerThousand', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'pricePerThousand');
-        })
-    })
+        });
+    });
 
     describe('attribute: pricePerThousand', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'pricePerThousand');
-        })
-    })
+        });
+    });
 
     describe('attribute: profit', () => {
         it('should be a cost attribute', () => {
-            verifyPercentageAttribute(quoteAttributes, 'profit');
-        })
-    })
+            verifyCostAttribute(quoteAttributes, 'profit');
+        });
+    });
 
     describe('attribute: pricePerLabel', () => {
         it('should not be required', () => {
@@ -1973,7 +1973,7 @@ describe('File: quote.js', () => {
 
             expect(quote.pricePerLabel).toEqual(roundedValue);
         });
-    })
+    });
 
     describe('database interactions', () => {
         beforeEach(async () => {

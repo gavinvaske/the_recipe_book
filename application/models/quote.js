@@ -494,7 +494,7 @@ const quoteSchema = new Schema({
         ...costAttribute
     },
     profit: {
-        ...percentageAttribute
+        ...costAttribute
     },
     pricePerLabel: {
         type: Number,

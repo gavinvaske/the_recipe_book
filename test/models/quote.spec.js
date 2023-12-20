@@ -1924,12 +1924,6 @@ describe('File: quote.js', () => {
         });
     });
 
-    describe('attribute: pricePerThousand', () => {
-        it('should be a cost attribute', () => {
-            verifyCostAttribute(quoteAttributes, 'pricePerThousand');
-        });
-    });
-
     describe('attribute: profit', () => {
         it('should be a cost attribute', () => {
             verifyCostAttribute(quoteAttributes, 'profit');

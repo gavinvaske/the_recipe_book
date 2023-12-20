@@ -42,21 +42,21 @@ describe('filePlanService.js', () => {
             const name = '';
             const labelQuantity = chance.d100();
 
-            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrowError('The product\'s \'name\' must be defined');
+            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrow('The product\'s \'name\' must be defined');
         });
 
         it('should throw an error if labelQuantity is less than or equal to 0', () => {
             const name = chance.string();
             const labelQuantity = chance.integer({ max: 0, min: -2 });
 
-            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrowError(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
+            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrow(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
         });
 
         it('should throw an error if labelQuantity is undefined', () => {
             const name = chance.string();
             const labelQuantity = undefined;
 
-            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrowError(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
+            expect(() => filePlanService.buildProduct(name, labelQuantity)).toThrow(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
         });
     });
 

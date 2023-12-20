@@ -74,7 +74,7 @@ describe('ticketService test suite', () => {
         });
 
         it ('should not throw error', async () => {
-            await expect(ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()).resolves.not.toThrowError();
+            await expect(ticketService.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination()).resolves.not.toThrow();
         });
 
         it ('should use the correct query when searching for tickets from database', async () => {
@@ -198,7 +198,7 @@ describe('ticketService test suite', () => {
 
         it('should not throw an error', async () => {
             materialIds = [];
-            await expect(ticketService.getLengthOfEachMaterialUsedByTickets(materialIds)).resolves.not.toThrowError();
+            await expect(ticketService.getLengthOfEachMaterialUsedByTickets(materialIds)).resolves.not.toThrow();
         });
 
         it('should return an empty object if materialIds is empty', async () => {

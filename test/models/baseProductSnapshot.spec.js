@@ -39,7 +39,7 @@ describe('BaseProductSnapshot', () => {
         const unknownAttribute = chance.string();
         baseProductSnapshotAttributes[unknownAttribute] = chance.string();
 
-        expect(() => new BaseProductSnapshotModel(baseProductSnapshotAttributes)).toThrowError();
+        expect(() => new BaseProductSnapshotModel(baseProductSnapshotAttributes)).toThrow();
     });
 
     describe('attribute: die', () => {
@@ -75,7 +75,7 @@ describe('BaseProductSnapshot', () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
             await expect(MaterialModel.validate(baseProductSnapshot.primaryMaterial))
-                .resolves.not.toThrowError();
+                .resolves.not.toThrow();
         });
     });
 
@@ -93,7 +93,7 @@ describe('BaseProductSnapshot', () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
             await expect(MaterialModel.validate(baseProductSnapshot.secondaryMaterial))
-                .resolves.not.toThrowError();
+                .resolves.not.toThrow();
         });
     });
 
@@ -111,7 +111,7 @@ describe('BaseProductSnapshot', () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
             await expect(FinishModel.validate(baseProductSnapshot.finish))
-                .resolves.not.toThrowError();
+                .resolves.not.toThrow();
         });
     });
 
@@ -129,7 +129,7 @@ describe('BaseProductSnapshot', () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
             await expect(CustomerModel.validate(baseProductSnapshot.customer))
-                .resolves.not.toThrowError();
+                .resolves.not.toThrow();
         });
     });
 
@@ -147,7 +147,7 @@ describe('BaseProductSnapshot', () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
             await expect(UserModel.validate(baseProductSnapshot.author))
-                .resolves.not.toThrowError();
+                .resolves.not.toThrow();
         });
     });
 

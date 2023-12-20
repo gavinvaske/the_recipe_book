@@ -37,7 +37,7 @@ describe('Product Model', () => {
        
         productAttributes[unknownAttribute] = chance.string();
 
-        expect(() => new ProductModel(productAttributes)).toThrowError();
+        expect(() => new ProductModel(productAttributes)).toThrow();
     });
 
     describe('attribute: customer', () => {

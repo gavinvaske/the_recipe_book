@@ -1,7 +1,9 @@
 import React from 'react';
 import './LabelsPerRoll.scss';
 
-export default LabelsPerRoll = () => {
+export default LabelsPerRoll = (props) => {
+    const { onChange } = props;
+
     return (
         <>
         <i class="fa-regular fa-rotate-right"></i>
@@ -17,7 +19,7 @@ export default LabelsPerRoll = () => {
             </div>
         </div>
         <div className='right-col column'>
-            <input id='labels-per-roll-output' defaultValue={0}/>
+            <input name='labelsPerRollOverride' id='labels-per-roll-output' defaultValue={0} onChange={onChange}/>
         </div>
         </>
     );

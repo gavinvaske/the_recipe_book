@@ -13,11 +13,11 @@ const QuoteCostSummary = () => {
             <LabelQtyInputField labelQuantities={quoteStore.quoteInputs.labelQuantities} index={index} />
         )}
       </div>
-      <TableRow header={'Production Cost'} data={quoteStore.quotes.map((quote) => quote.productionCost || '-')} />
-      <TableRow header={'Final Cost'} data={quoteStore.quotes.map((quote) => quote.finalCost || '-')} />
+      <TableRow header={'Production Cost'} data={quoteStore.quotes.map((quote) => quote.totalProductionCost || '-')} />
+      <TableRow header={'Quoted Price'} data={quoteStore.quotes.map((quote) => quote.quotedPrice || '-')} />
       <TableRow header={'Price Per Thousand'} data={quoteStore.quotes.map((quote) => quote.pricePerThousand || '-')} />
       <TableRow header={'Profit'} data={quoteStore.quotes.map((quote) => quote.profit || '-')} />
-      <TableRow header={'Price Per Unit'} data={quoteStore.quotes.map((quote) => quote.pricePerUnit || '-')} />
+      <TableRow header={'Price Per Label'} data={quoteStore.quotes.map((quote) => quote.pricePerLabel || '-')} />
     </div>
   )
 };

@@ -5,8 +5,8 @@ export default DropdownField = (props) => {
     const { options, header } = props;
 
   return (
-    <div>
-      <label>{header}:</label>
+    <div className='column'>
+      <div className='text-field-header'>{header}:</div>
       <select>
       <option value="">--Please choose an option--</option>
       {options.map(option => <option key={option} value={option}>{option}</option>)}

@@ -6,9 +6,9 @@ import quoteStore from '../../stores/quoteStore'
 
 const QuoteCostSummary = () => {
   return (
-    <div id='quote-cost-summary'>
+    <div id='quote-cost-summary' className='card'>
       <div className='row'>
-        <div></div> {/* This empty column is used for spacing reasons */}
+        <div className='header'></div> {/* This empty column is used for spacing reasons */}
         {quoteStore.quoteInputs.labelQuantities.map((_, index) =>
             <LabelQtyInputField labelQuantities={quoteStore.quoteInputs.labelQuantities} index={index} />
         )}

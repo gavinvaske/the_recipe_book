@@ -85,7 +85,7 @@ describe('materialInventoryService test suite', () => {
         it('should not throw an error', () => {
             expect(() => {
                 materialInventoryService.buildMaterialInventory({}, [], feetOfMaterialAlreadyUsedByTickets);
-            }).not.toThrowError();
+            }).not.toThrow();
         });
 
         it('should call correct methods', () => {

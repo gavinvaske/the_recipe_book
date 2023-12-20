@@ -3,4 +3,14 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: white;
+    .column{
+        width: 12.5%;
+        margin-left: -1px;
+        .text-field-header {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 1px;
+        }
+    }
 }

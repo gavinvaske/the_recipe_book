@@ -1323,7 +1323,7 @@ describe('validation', () => {
             delete ticketAttributes.products;
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(() => ticket.frameSize).toThrowError();
+            expect(() => ticket.frameSize).toThrow();
         });
 
         it('should return the correctly calculated value when at ticket.products contains at least one item', () => {

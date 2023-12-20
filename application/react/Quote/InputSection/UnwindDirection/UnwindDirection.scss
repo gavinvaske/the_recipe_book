@@ -2,6 +2,18 @@
     .unwind-direction-options {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        .unwind-option {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: -1px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: grey;
+            border-image: initial;
+        }
     }
 }

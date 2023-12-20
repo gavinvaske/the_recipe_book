@@ -39,21 +39,27 @@ export default NumberOfColors = () => {
     quoteInputs.numberOfColorsOverride = undefined;
   }
 
+
+
   return (
     <>
-      <div className='number-of-colors-section'>
-        <div className='colors-input-section'>
-          {Object.keys(colorToCount).map((color) => (
-            <div onClick={(e) => updateColorCount(color)}>{color} : {colorToCount[color]}</div>)
-          )}
+      <div className='number-of-colors-section card'>
+        <div class='left-col half-width flex-center-left-row'>
+          <div className='colors-input-section'>
+            <span>Number of Colors:</span>
+            {Object.keys(colorToCount).map((color) => (
+              <div className={`color-${color} color-indicator`} onClick={(e) => updateColorCount(color)}>{colorToCount[color]}</div>)
+            )}
+            <div id='reset-colors' onClick={(e) => resetNumberOfColors()}>x</div>
+          </div>
         </div>
-        <div className='colors-output-section'>
-        <h1> Sum = {quoteInputs.numberOfColorsOverride} </h1>
-        <h3> Unique Colors: {getUniqueColors()} </h3>
+        <div className='right-col half-width text-center flex-center-center-column'>
+          <span id='totalColorHits'>{quoteInputs.numberOfColorsOverride} </span>
+          <span className='color-letter-indicator'>{getUniqueColors()} </span>
         </div>
       </div>
 
-      <div id='reset-colors' onClick={(e) => resetNumberOfColors()}>Reset NumberOfColors</div>
+      
     </>
   );
 }

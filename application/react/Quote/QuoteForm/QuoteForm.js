@@ -1,4 +1,5 @@
 import React from 'react';
+import QuoteHeader from '../QuoteHeader/QuoteHeader';
 import CostSummary from '../CostSummary/CostSummary';
 import InputSection from '../InputSection/InputSection';
 import OutputSection from '../OutputSection/OutputSection';
@@ -19,10 +20,11 @@ const QuoteForm = () => {
   }
   return (
     <div id='quote-form'>
-      <button className='btn-primary' onClick={generateQuotes}>Generate Quotes</button>
-      <CostSummary/>
-      <InputSection/>
-      <OutputSection/>
+      <button className='btn-primary temp-button-class flex-center-center-row' onClick={generateQuotes}><i className="fa-duotone fa-bullseye"></i></button>
+      <QuoteHeader />
+      <CostSummary />
+      <InputSection />
+      <OutputSection />
     </div>
   );
 };

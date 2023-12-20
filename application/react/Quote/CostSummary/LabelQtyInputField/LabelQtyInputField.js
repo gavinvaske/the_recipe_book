@@ -9,6 +9,8 @@ export default LabelQtyInputField = (props) => {
   };
 
   return (
-    <input type='text' placeholder='# of labels' onChange={onChange}></input>
+    <div className='cell'>
+      <input className='qty-input' type='text'  defaultValue='0' onChange={onChange}></input>
+    </div>
   );
 }

@@ -27,7 +27,7 @@ describe('purchaseOrderService test suite', () => {
         });
 
         it ('should not throw error', async () => {
-            await expect(purchaseOrderService.getPurchaseOrdersForMaterials([])).resolves.not.toThrowError();
+            await expect(purchaseOrderService.getPurchaseOrdersForMaterials([])).resolves.not.toThrow();
         });
 
         it ('should search for materials from database', async () => {

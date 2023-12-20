@@ -21,7 +21,7 @@ describe('holdReasonService test suite', () => {
         });
 
         it ('should not throw error', async () => {
-            await expect(holdReasonService.getDepartmentToHoldReasons()).resolves.not.toThrowError();
+            await expect(holdReasonService.getDepartmentToHoldReasons()).resolves.not.toThrow();
         });
 
         it('should return an object with the same number of keys as all departments (other than the "COMPLETED" department)', async () => {

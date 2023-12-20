@@ -21,16 +21,32 @@ export default Die = (props) => {
   }, [])
 
   return (
-    <div className='die-input-section'>
-      <DropdownField options={dies.map((die) => die.dieNumber)} header='Die Name'/>
-      <TextField accessor={'sizeAcross'} header={'Size Across'} onChange={(e) => dieOverride.sizeAcross = Number(e.target.value)}/>
-      <TextField accessor={'sizeAround'} header={'Size Around'} onChange={(e) => dieOverride.sizeAround = Number(e.target.value)}/>
-      <TextField accessor={'cornerRadius'} header={'Corner Radius'} onChange={(e) => dieOverride.cornerRadius = Number(e.target.value)}/>
-      <TextField accessor={'shape'} header={'Shape'} onChange={(e) => dieOverride.shape = e.target.value}/>
-      <TextField accessor={'colSpace'} header={'Col Space'} onChange={(e) => dieOverride.spaceAcross = Number(e.target.value)}/>
-      <TextField accessor={'rowSpace'} header={'Row Space'} onChange={(e) => dieOverride.spaceAround = Number(e.target.value)}/>
-      <TextField accessor={'numberAround'} header={'Number Around'} onChange={(e) => dieOverride.numberAround = Number(e.target.value)}/>
-      <TextField accessor={'numberAcross'} header={'Number Across'} onChange={(e) => dieOverride.numberAcross = Number(e.target.value)}/>
+    <div className='die-input-section card'>
+        <DropdownField options={dies.map((die) => die.dieNumber)} header='Die Name'/>
+      <div className='column'>
+        <TextField accessor={'sizeAcross'} header={'Size Across'} onChange={(e) => dieOverride.sizeAcross = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'sizeAround'} header={'Size Around'} onChange={(e) => dieOverride.sizeAround = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'cornerRadius'} header={'Corner Radius'} onChange={(e) => dieOverride.cornerRadius = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'shape'} header={'Shape'} onChange={(e) => dieOverride.shape = e.target.value}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'colSpace'} header={'Col Space'} onChange={(e) => dieOverride.spaceAcross = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'rowSpace'} header={'Row Space'} onChange={(e) => dieOverride.spaceAround = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'numberAround'} header={'Number Around'} onChange={(e) => dieOverride.numberAround = Number(e.target.value)}/>
+      </div>
+      <div className='column'>
+        <TextField accessor={'numberAcross'} header={'Number Across'} onChange={(e) => dieOverride.numberAcross = Number(e.target.value)}/>
+      </div>
     </div>
   )
 };

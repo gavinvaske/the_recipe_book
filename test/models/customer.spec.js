@@ -405,7 +405,7 @@ describe('validation', () => {
                 await delay(20); // eslint-disable-line no-magic-numbers
                 await customer1.save(); // eslint-disable-line no-unused-vars
 
-                await expect(customer2.save()).rejects.toThrowError(Error);
+                await expect(customer2.save()).rejects.toThrow(Error);
             });
         });
     });

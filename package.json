@@ -30,21 +30,8 @@
   },
   "author": "Gavin Vaske",
   "license": "ISC",
-  "devDependencies": {
-    "@parcel/transformer-sass": "2.10.3",
-    "buffer": "6.0.3",
-    "chance": "1.1.9",
-    "cypress": "12.1.0",
-    "eslint": "8.29.0",
-    "jest": "29.3.1",
-    "jest-extended": "3.2.4",
-    "jest-when": "3.5.2",
-    "nodemon": "3.0.2",
-    "parcel": "2.10.3",
-    "process": "0.11.10",
-    "start-server-and-test": "1.15.2"
-  },
   "dependencies": {
+    "@parcel/transformer-sass": "2.10.3",
     "aws-sdk": "2.1272.0",
     "axios": "1.6.2",
     "bcryptjs": "2.4.3",
@@ -67,10 +54,23 @@
     "mongoose": "6.8.0",
     "mongoose-delete": "0.5.4",
     "multer": "1.4.5-lts.1",
+    "parcel": "2.10.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "1.69.5",
     "socket.io": "4.5.4",
-    "xml2json": "0.12.0"
+    "xml2json": "0.12.0",
+    "buffer": "6.0.3"
+  },
+  "devDependencies": {
+    "chance": "1.1.9",
+    "cypress": "12.1.0",
+    "eslint": "8.29.0",
+    "jest": "29.3.1",
+    "jest-extended": "3.2.4",
+    "jest-when": "3.5.2",
+    "nodemon": "3.0.2",
+    "process": "0.11.10",
+    "start-server-and-test": "1.15.2"
   }
 }

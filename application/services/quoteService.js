@@ -145,9 +145,55 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.packagingBoxTime = computePackagingBoxTime(quoteAttributes);
     quoteAttributes.totalShippingTime = computeTotalShippingTime(quoteAttributes);
     quoteAttributes.totalShippingCost = computeTotalShippingCost(quoteAttributes);
+    quoteAttributes.totalMachineCost = computeTotalMachineCost(quoteAttributes);
+    quoteAttributes.totalProductionCost = computeTotalProductionCost(quoteAttributes);
+    quoteAttributes.quotedPrice = computeQuotedPrice(quoteAttributes);
+    quoteAttributes.pricePerThousand = computePricePerThousand(quoteAttributes);
+    quoteAttributes.profit = computeProfit(quoteAttributes, overridableValues);
+    quoteAttributes.pricePerLabel = computePricePerLabel(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
 };
+
+function computePricePerLabel(quoteAttributes) {
+    const { quotedPrice, labelQty } = quoteAttributes;
+
+    return quotedPrice / labelQty;
+}
+
+function computeProfit(quoteAttributes) {
+    const { quotedPrice, totalProductionCost } = quoteAttributes;
+
+    return quotedPrice - totalProductionCost;
+}
+
+function computePricePerThousand(quoteAttributes) {
+    const { quotedPrice, labelQty } = quoteAttributes;
+
+    return quotedPrice / (labelQty / 1000); // eslint-disable-line no-magic-numbers
+}
+
+function computeQuotedPrice(quoteAttributes) {
+    const { totalProductionCost, profitMargin } = quoteAttributes;
+
+    return totalProductionCost + (totalProductionCost * profitMargin);
+}
+
+function computeTotalProductionCost(quoteAttributes) {
+    const { totalMachineCost, totalMaterialsCost, totalShippingCost } = quoteAttributes;
+
+    const sum = totalMachineCost + totalMaterialsCost + totalShippingCost;
+
+    return sum;
+}
+
+function computeTotalMachineCost(quoteAttributes) {
+    const { totalPrintingCost, totalCuttingCost, totalWindingCost } = quoteAttributes;
+
+    const sum = totalPrintingCost + totalCuttingCost + totalWindingCost;
+    
+    return sum;
+}
 
 function computeTotalShippingCost(quoteAttributes) {
     const { totalShippingTime } = quoteAttributes;

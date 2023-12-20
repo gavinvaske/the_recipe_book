@@ -1526,6 +1526,12 @@ describe('File: quoteService.js', () => {
                 frameUtilization: 0.9688,
                 finishedRollLength: 270.8333,
                 finishedRollDiameterWithoutCore: 2.954,
+                totalMachineCost: 156.93,
+                totalProductionCost: 348.21,
+                quotedPrice: 452.68,
+                pricePerThousand: 45.27,
+                profit: 104.46,
+                pricePerLabel: 0.04527
             }));
             expect(quote.packagingDetails).toEqual(expect.objectContaining({
                 totalBoxes: 1

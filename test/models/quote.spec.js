@@ -1900,6 +1900,75 @@ describe('File: quote.js', () => {
         });
     });
 
+    describe('attribute: totalMachineCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalMachineCost');
+        });
+    });
+
+    describe('attribute: totalProductionCost', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'totalProductionCost');
+        });
+    });
+
+    describe('attribute: quotedPrice', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'quotedPrice');
+        });
+    });
+
+    describe('attribute: pricePerThousand', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'pricePerThousand');
+        });
+    });
+
+    describe('attribute: profit', () => {
+        it('should be a cost attribute', () => {
+            verifyCostAttribute(quoteAttributes, 'profit');
+        });
+    });
+
+    describe('attribute: pricePerLabel', () => {
+        it('should not be required', () => {
+            delete quoteAttributes.pricePerLabel;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeUndefined();
+        });
+
+        it('should be a number', () => {
+            quoteAttributes.pricePerLabel = chance.d100();
+            const quote = new Quote(quoteAttributes);
+            
+            const { pricePerLabel } = quote;
+            
+            expect(pricePerLabel).toEqual(expect.any(Number));
+        });
+
+        it('should not be negative', () => {
+            const negativeCostPerMsi = -1;
+            quoteAttributes.pricePerLabel = negativeCostPerMsi;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should round to the 5th decimal place', () => {
+            const unroundedValue = 999.123459;
+            const roundedValue = 999.12346;
+            quoteAttributes.pricePerLabel = unroundedValue;
+            const quote = new Quote(quoteAttributes);
+
+            expect(quote.pricePerLabel).toEqual(roundedValue);
+        });
+    });
+
     describe('database interactions', () => {
         beforeEach(async () => {
             await databaseService.connectToTestMongoDatabase();

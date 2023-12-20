@@ -3,10 +3,20 @@ import './OutputSection.scss';
 import TableRow from '../TableRow/TableRow';
 import quoteStore from '../../stores/quoteStore'
 import { observer } from 'mobx-react-lite';
+import isNil from 'lodash.isnil'
 
 const getAttributeFromQuotes = (quotes, attribute) => {
-  return quotes.map(quote => quote[attribute] || '-')
+  return quotes.map(quote => {
+    const value = quote[attribute];
+    return !isNil(value) ? value : '-';
+  })
 }
+
+const getTotalBoxesFromQuotes = (quotes) => {
+    return quotes.map(quote => {
+        return quote.packagingDetails.totalBoxes;
+    })
+};
 
 const QuoteOutputSection = observer(() => {
   const { quotes } = quoteStore;
@@ -134,11 +144,11 @@ const QuoteOutputSection = observer(() => {
         <TableRow header={'Packaging Box Time'} data={getAttributeFromQuotes(quotes, 'packagingBoxTime')} />
       </div>
       <div className='output-group card'>
-        <TableRow header={'Packaging Slips Time'} data={getAttributeFromQuotes(quotes, 'packingSlipsTime')} />
+        <TableRow header={'Packaging Slips  '} data={getAttributeFromQuotes(quotes, 'packingSlipsTime')} />
       </div>
       <div className='output-group card'>
         <TableRow header={'Total Shipping Time'} data={getAttributeFromQuotes(quotes, 'totalShippingTime')} />
-        <TableRow header={'Total Boxes (TODO)'} data={getAttributeFromQuotes(quotes, 'TODO')} />
+        <TableRow header={'Total Boxes'} data={getTotalBoxesFromQuotes(quotes)} />
       </div>
       <div className='output-group card'>
         <TableRow header={'Total Shipping Cost'} data={getAttributeFromQuotes(quotes, 'totalShippingCost')} />
@@ -148,11 +158,11 @@ const QuoteOutputSection = observer(() => {
       </div>
       <div className='output-group card'>
         <TableRow header={'Total Material Cost'} data={getAttributeFromQuotes(quotes, 'totalMaterialsCost')} />
-        <TableRow header={'Total Machine Cost (TODO)'} data={getAttributeFromQuotes(quotes, 'TODO')} />
+        <TableRow header={'Total Machine Cost'} data={getAttributeFromQuotes(quotes, 'totalMachineCost')} />
         <TableRow header={'Total Shipping Time Cost (DUP)'} data={getAttributeFromQuotes(quotes, 'totalShippingCost')} />
-        <TableRow header={'Total Cost of Job (TODO)'} data={getAttributeFromQuotes(quotes, 'TODO')} />
-        <TableRow header={'Final Quoted Price (TODO)'} data={getAttributeFromQuotes(quotes, 'TODO')} />
-        <TableRow header={'Price Per Unit (TODO)'} data={getAttributeFromQuotes(quotes, 'TODO')} />
+        <TableRow header={'Total Production Cost'} data={getAttributeFromQuotes(quotes, 'totalProductionCost')} />
+        <TableRow header={'Quoted Price'} data={getAttributeFromQuotes(quotes, 'quotedPrice')} />
+        <TableRow header={'Price Per Label'} data={getAttributeFromQuotes(quotes, 'pricePerLabel')} />
       </div>
     </div>
   );

@@ -5,10 +5,6 @@ const databaseService = require('../../application/services/databaseService');
 
 const testDataGenerator = require('../testDataGenerator');
 
-const delay = (delayInMs) => {
-    return new Promise(resolve => setTimeout(resolve, delayInMs));
-};
-
 function getAddress() {
     return {
         name: chance.string(),
@@ -402,10 +398,9 @@ describe('validation', () => {
                 customerAttributes.customerId = customerId.toLowerCase();
                 const customer2 = new CustomerModel(customerAttributes);
 
-                await delay(20); // eslint-disable-line no-magic-numbers
-                await customer1.save(); // eslint-disable-line no-unused-vars
-
-                await expect(customer2.save()).rejects.toThrow(Error);
+                await customer1.save().then(async () => {
+                    await expect(customer2.save()).rejects.toThrow(Error);
+                });
             });
         });
     });

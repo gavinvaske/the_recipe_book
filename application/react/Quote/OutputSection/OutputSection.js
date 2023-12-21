@@ -3,7 +3,6 @@ import './OutputSection.scss';
 import TableRow from '../TableRow/TableRow';
 import quoteStore from '../../stores/quoteStore'
 import { observer } from 'mobx-react-lite';
-import isNil from 'lodash.isnil'
 import { 
     secondsFormatter,
     floatingPointFormatter, 

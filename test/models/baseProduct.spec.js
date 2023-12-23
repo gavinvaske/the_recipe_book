@@ -144,7 +144,7 @@ describe('Product Model', () => {
             const product = new ProductModel(productAttributes);
             
             expect(product.unwindDirection).toEqual(expect.any(Number));
-        })
+        });
     });
     
     describe('attribute: ovOrEpm', () => {

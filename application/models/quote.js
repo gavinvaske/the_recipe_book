@@ -6,6 +6,7 @@ const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');
 const PackagingDetailsSchema = require('../schemas/packagingDetails');
+const { unwindDirections } = require('../enums/unwindDirectionsEnum');
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FIVE_DECIMAL_PLACES = 5;
@@ -501,6 +502,11 @@ const quoteSchema = new Schema({
         set: roundNumberToNthDecimalPlace(FIVE_DECIMAL_PLACES),
         min: 0
     },
+    unwindDirection: {
+        type: Number,
+        enum: unwindDirections,
+        required: true
+    }
 }, {
     timestamps: true,
     strict: 'throw'

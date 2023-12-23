@@ -12,11 +12,15 @@ describe('File: baseProduct.js', () => {
     let baseProductAttributes, baseProduct, primaryMaterial, secondaryMaterial, finish, customer;
 
     describe('verify database interactions', () => {
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
         });
 

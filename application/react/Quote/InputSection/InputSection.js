@@ -12,6 +12,7 @@ import LabelsPerRoll from './InputFields/LabelsPerRoll/LabelsPerRoll';
 
 const QuoteInputSection = () => {
   const { quoteInputs } = quoteStore;
+
   return (
     <div id='quote-input-section'>
       <div className='left-section'>
@@ -30,7 +31,7 @@ const QuoteInputSection = () => {
           </div>
         </div>
         <div className='labels-per-roll card flex-center-center-row'>
-          <LabelsPerRoll onChange={(e) => quoteInputs.labelsPerRollOverride = Number(e.target.value)}/>
+          <LabelsPerRoll />
         </div>
         <div className='row-two'>
             <NumberOfColors />

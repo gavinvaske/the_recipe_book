@@ -1420,16 +1420,23 @@ describe('Ticket validation', () => {
     describe('database interaction validations', () => {
         let customerAttributes, savedCustomer;
 
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        beforeEach(async () => {
             customerAttributes = testDataGenerator.mockData.Customer();
             const customer = new Customer(customerAttributes);
             savedCustomer = await customer.save();
             ticketAttributes.customer = savedCustomer._id;
-        });
-
-        afterEach(async () => {
-            await databaseService.closeDatabase();
         });
 
         it('should soft delete items', async () => {

@@ -17,6 +17,7 @@ const DieMock = require('../../application/models/Die');
 const MaterialMock = require('../../application/models/material');
 const FinishMock = require('../../application/models/finish');
 const BaseProductMock = require('../../application/models/baseProduct');
+const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;
@@ -115,7 +116,8 @@ describe('File: quoteService.js', () => {
         quoteInputAttributes = {
             quoteNumber: STARTING_QUOTE_NUMBER,
             labelQty: chance.integer({ min: 100, max: 1000}),
-            products: [generateProduct(baseProduct._id)]
+            products: [generateProduct(baseProduct._id)],
+            unwindDirection: chance.pickone(unwindDirections)
         };
     });
 
@@ -1425,6 +1427,8 @@ describe('File: quoteService.js', () => {
         });
 
         it('should create a quote with correctly calculated attributes', async () => {
+            const unwindDirection = chance.pickone(unwindDirections);
+
             quoteInputAttributes = {
                 quoteNumber: STARTING_QUOTE_NUMBER,
                 profitMargin: 0.30,
@@ -1448,7 +1452,8 @@ describe('File: quoteService.js', () => {
                     thickness: 1.250,
                     costPerMsi: 0.51
                 },
-                numberOfColorsOverride: 4
+                numberOfColorsOverride: 4,
+                unwindDirection: unwindDirection
             };
 
             const quote = await createQuote(quoteInputAttributes);
@@ -1531,7 +1536,8 @@ describe('File: quoteService.js', () => {
                 quotedPrice: 452.68,
                 pricePerThousand: 45.27,
                 profit: 104.46,
-                pricePerLabel: 0.04527
+                pricePerLabel: 0.04527,
+                unwindDirection: unwindDirection
             }));
             expect(quote.packagingDetails).toEqual(expect.objectContaining({
                 totalBoxes: 1
@@ -1541,11 +1547,15 @@ describe('File: quoteService.js', () => {
         describe('verfy quote, finish, primaryMaterial, and secondaryMaterial can be fetched successfully from the database', () => {
             let baseProductAttributes;
 
-            beforeEach(async () => {
+            beforeAll(async () => {
                 await databaseService.connectToTestMongoDatabase();
             });
     
             afterEach(async () => {
+                await databaseService.clearDatabase();
+            });
+    
+            afterAll(async () => {
                 await databaseService.closeDatabase();
             });
 
@@ -1591,7 +1601,8 @@ describe('File: quoteService.js', () => {
                     quoteNumber: STARTING_QUOTE_NUMBER,
                     labelQty: chance.integer({ min: 100, max: 10000 }),
                     profitMargin: 0.30,
-                    products
+                    products,
+                    unwindDirection: chance.pickone(unwindDirections),
                 };
                 const quote = await createQuote(quoteInputAttributes);
                 const error = quote.validateSync();

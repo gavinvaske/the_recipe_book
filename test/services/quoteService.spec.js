@@ -1547,11 +1547,15 @@ describe('File: quoteService.js', () => {
         describe('verfy quote, finish, primaryMaterial, and secondaryMaterial can be fetched successfully from the database', () => {
             let baseProductAttributes;
 
-            beforeEach(async () => {
+            beforeAll(async () => {
                 await databaseService.connectToTestMongoDatabase();
             });
     
             afterEach(async () => {
+                await databaseService.clearDatabase();
+            });
+    
+            afterAll(async () => {
                 await databaseService.closeDatabase();
             });
 

@@ -596,9 +596,11 @@ describe('Product Model', () => {
             savedPrimaryMaterial,
             dieAttributes;
 
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
+        });
 
+        beforeEach(async () => {
             const customerAttributes = testDataGenerator.mockData.Customer();
             const customer = new CustomerModel(customerAttributes);
             savedCustomer = await customer.save();
@@ -618,6 +620,10 @@ describe('Product Model', () => {
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
         });
 

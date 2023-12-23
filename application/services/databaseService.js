@@ -19,9 +19,9 @@ module.exports.connectToTestMongoDatabase = async () => {
     if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the test database can only be connected too from test environments');
     }
-    mongod = await MongoMemoryServer.create();
 
-    await mongoose.connect(mongod.getUri(), {
+    mongod = await MongoMemoryServer.create();
+    mongoose.connect(mongod.getUri(), {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

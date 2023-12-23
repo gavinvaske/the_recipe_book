@@ -5,6 +5,7 @@ const databaseService = require('../../application/services/databaseService');
 const mongoose = require('mongoose');
 const constants = require('../../application/enums/constantsEnum');
 const testDataGenerator = require('../testDataGenerator');
+const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
 
 const FOUR_DECIMAL_PLACES = 4;
 const STARTING_QUOTE_NUMBER = 60000;
@@ -209,6 +210,7 @@ describe('File: quote.js', () => {
             products: generateNProducts(),
             frameLength: chance.floating({ min: 0.1, max: constants.MAX_FRAME_LENGTH_INCHES, fixed: 2 }),
             totalStockFeet: chance.d100(),
+            unwindDirection: chance.pickone(unwindDirections)
         };
 
         const aNumberLessThanTotalStockFeet = quoteAttributes.totalStockFeet - 1;
@@ -1968,6 +1970,35 @@ describe('File: quote.js', () => {
             expect(quote.pricePerLabel).toEqual(roundedValue);
         });
     });
+
+    describe('attribute: unwindDirection', () => {
+        it('should be required', () => {
+            delete quoteAttributes.unwindDirection;
+            const quote = new Quote(quoteAttributes);
+            
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        });
+
+        it('should be a number', () => {
+            const quote = new Quote(quoteAttributes);
+            
+            const { unwindDirection } = quote;
+            
+            expect(unwindDirection).toEqual(expect.any(Number));
+        });
+
+        it('should fail if not one of the unwind directions', () => {
+            const definitelyNotAValidUnwindDirection = 5893245;
+            quoteAttributes.unwindDirection = definitelyNotAValidUnwindDirection;
+            const quote = new Quote(quoteAttributes);
+
+            const error = quote.validateSync();
+            
+            expect(error).toBeDefined();
+        })
+    })
 
     describe('database interactions', () => {
         beforeEach(async () => {

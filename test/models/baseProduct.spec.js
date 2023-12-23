@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const databaseService = require('../../application/services/databaseService');
 const CustomerModel = require('../../application/models/customer');
 const MaterialModel = require('../../application/models/material');
-const { defaultUnwindDirection } = require('../../application/enums/unwindDirectionsEnum');
+const { defaultUnwindDirection, unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
 const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
 const DieModel = require('../../application/models/Die');
 
@@ -118,7 +118,7 @@ describe('Product Model', () => {
         });
     });
 
-    describe('attribute: unwindDirections', () => {
+    describe('attribute: unwindDirection', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.unwindDirection;
             const product = new ProductModel(productAttributes);
@@ -137,6 +137,14 @@ describe('Product Model', () => {
             
             expect(error).toBeDefined();
         });
+
+        it('should be a number', () => {
+            productAttributes.unwindDirection = chance.pickone(unwindDirections);
+            
+            const product = new ProductModel(productAttributes);
+            
+            expect(product.unwindDirection).toEqual(expect.any(Number));
+        })
     });
     
     describe('attribute: ovOrEpm', () => {

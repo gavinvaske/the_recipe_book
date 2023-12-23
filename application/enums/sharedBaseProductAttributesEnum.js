@@ -11,7 +11,7 @@ module.exports.sharedBaseProductMongooseAttributes = {
         required: true
     },
     unwindDirection: {
-        type: String,
+        type: Number,
         enum: unwindDirections,
         default: defaultUnwindDirection,
         required: true

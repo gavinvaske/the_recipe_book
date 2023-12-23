@@ -937,18 +937,6 @@ describe('validation', () => {
     });
 
     describe('attribute: primaryMaterial', () => {
-        // beforeAll(async () => {
-        //     await databaseService.connectToTestMongoDatabase();
-        // });
-
-        // afterEach(async () => {
-        //     await databaseService.clearDatabase();
-        // });
-
-        // afterAll(async () => {
-        //     await databaseService.closeDatabase();
-        // })
-
         it('should contain attribute', () => {
             ticketAttributes.primaryMaterial = chance.word();
             const ticket = new TicketModel(ticketAttributes);

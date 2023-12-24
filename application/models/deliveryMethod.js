@@ -8,7 +8,11 @@ const deliveryMethodSchema = new Schema({
     name: {
         type: String,
         required: true,
-        uppercase: true
+        uppercase: true,
+        // TODO (12-4-2023): TEST the configs below
+        unique: true,
+        trim: true,
+        index: true
     }
 }, { timestamps: true });
 

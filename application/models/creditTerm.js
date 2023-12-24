@@ -6,6 +6,11 @@ const schema = new Schema({
     description: {
         type: String,
         required: true,
+        // TODO (12-24-2023): Test the configs below
+        uppercase: true,
+        unique: true,
+        trim: true,
+        index: true
     },
 }, { timestamps: true });
 

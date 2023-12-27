@@ -1,11 +1,21 @@
 const router = require('express').Router();
 const { verifyJwtToken } = require('../middleware/authorize');
-const CreditTerm = require('../models/creditTerm');
+const CreditTermModel = require('../models/creditTerm');
 
-router.use(verifyJwtToken);
+// router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
-  return response.render('viewCreditTerms');
+  const { responseDataType } = request.query;
+  
+  const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
+
+  if (shouldRenderHtmlPage) {
+    return response.render('viewCreditTerms');
+  }
+
+  const creditTerms = await CreditTermModel.find().exec();
+
+  return response.send(creditTerms);
 })
 
 router.get('/form', async (request, response) => {
@@ -16,7 +26,7 @@ router.post('/', async (request, response) => {
   let savedCreditTerm;
 
   try {
-    savedCreditTerm = await CreditTerm.create(request.body);
+    savedCreditTerm = await CreditTermModel.create(request.body);
   } catch (error) {
     console.log(error);
     return response.status(400).send(error.message);

@@ -7,7 +7,7 @@ ZIP_CODE_REGEX = /(^\d{5}(?:[-\s]\d{4})?$)/;
 function validateZipCode(zipCode) {
     return ZIP_CODE_REGEX.test(zipCode);
 }
-
+// TODO (12-26-2023): Why aren't all of these fields required?
 const addressSchema = new Schema({
     name: {
         type: String,

@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 mongoose.Schema.Types.String.set('trim', true);
+mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
     description: {
         type: String,
         required: true,
-        // TODO (12-24-2023): Test the configs below
         uppercase: true,
         unique: true,
-        trim: true,
         index: true
     },
 }, { timestamps: true });

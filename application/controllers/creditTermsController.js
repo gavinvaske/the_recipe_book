@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { verifyJwtToken } = require('../middleware/authorize');
 const CreditTermModel = require('../models/creditTerm');
 
-// router.use(verifyJwtToken);
+router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
   const { responseDataType } = request.query;

@@ -1,7 +1,7 @@
 import React from 'react'
 import './AddressCard.scss'
 
-export const AddressCard = (props) => {
+const AddressCard = (props) => {
   const { data, onDelete } = props;
   const { name, street, unitOrSuite, city, state, zipCode } = data;
   return (
@@ -17,3 +17,5 @@ export const AddressCard = (props) => {
     </div>
   )
 }
+
+export default AddressCard;

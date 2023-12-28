@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
-import ShippingLocationForm from '../../ShippingLocationForm/ShippingLocationForm';
+import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import AddressForm from '../../Address/AddressForm/AddressForm';
-import { AddressCard } from './AddressCard/AddressCard';
-import { ShippingLocationCard } from './ShippingLocationCard/ShippingLocationCard';
+import AddressCard from '../../Address/AddressCard/AddressCard';
+import ShippingLocationCard from '../../ShippingLocation/ShippingLocationCard/ShippingLocationCard';
 import { removeElementFromArray } from '../../utils/state-service';
 
 const CustomerForm = () => {

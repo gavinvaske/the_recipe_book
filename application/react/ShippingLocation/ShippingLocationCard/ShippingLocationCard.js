@@ -1,7 +1,7 @@
 import React from 'react'
 import './ShippingLocationCard.scss'
 
-export const ShippingLocationCard = (props) => {
+const ShippingLocationCard = (props) => {
   const { data, onDelete } = props;
   const { freightAccountNumber, deliveryMethod, name, street, unitOrSuite, city, state, zipCode } = data;
   return (
@@ -19,3 +19,5 @@ export const ShippingLocationCard = (props) => {
     </div>
   )
 }
+
+export default ShippingLocationCard;

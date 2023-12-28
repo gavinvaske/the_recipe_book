@@ -12,7 +12,7 @@ const DeliveryMethodTable = () => {
          setDeliveryMethods(data);
       })
      .catch((error) => {
-        alert('Error loading Delivery Methods:', error);
+        alert('Error loading Delivery Methods: ' +  JSON.stringify(error));
       })
   }, [])
 

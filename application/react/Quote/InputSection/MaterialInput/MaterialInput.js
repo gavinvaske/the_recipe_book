@@ -34,7 +34,7 @@ export default MaterialInput = observer((props) => {
         setMaterials(data);
       })
       .catch((error) => {
-        alert('Error loading materials:', error);
+        alert('Error loading materials: ' + JSON.stringify(error));
       });
   }, [])
 

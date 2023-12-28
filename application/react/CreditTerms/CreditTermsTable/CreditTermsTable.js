@@ -12,7 +12,7 @@ const CreditTermsTable = () => {
          setCreditTerms(data);
       })
       .catch((error) => {
-        alert('Error loading Credit Terms:', error);
+        alert('Error loading Credit Terms: ' + JSON.stringify(error));
       })
   }, [])
 

@@ -5,7 +5,8 @@ export const FormModal = (props) => {
   const {
     Form,
     onCancel,
-    onSubmit
+    onSubmit,
+    ...additionalProps
   } = props;
 
   return (
@@ -13,7 +14,8 @@ export const FormModal = (props) => {
       <div className='modal-content'>
         <Form 
           onSubmit={onSubmit}
-          onCancel={onCancel} 
+          onCancel={onCancel}
+          {...additionalProps}
         />
       </div>
     </div>

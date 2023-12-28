@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
@@ -8,6 +8,8 @@ import AddressForm from '../../Address/AddressForm/AddressForm';
 import AddressCard from '../../Address/AddressCard/AddressCard';
 import ShippingLocationCard from '../../ShippingLocation/ShippingLocationCard/ShippingLocationCard';
 import { removeElementFromArray } from '../../utils/state-service';
+import ContactForm from '../Contact/ContactForm/ContactForm';
+import ContactCard from '../Contact/ContactCard/ContactCard';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -15,10 +17,21 @@ const CustomerForm = () => {
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
   const [showBusinessLocationForm, setShowBusinessLocationForm] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
 
   const [billingLocations, setBillingLocations] = useState([]);
   const [shippingLocations, setShippingLocations] = useState([]);
   const [businessLocations, setBusinessLocations] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    setLocations([
+      ...billingLocations,
+      ...shippingLocations,
+      ...businessLocations,
+    ])
+  }, [billingLocations, shippingLocations, businessLocations]);
 
   const onCustomerFormSubmit = (data) => {
     alert('you submitted the form:' + data)
@@ -28,6 +41,7 @@ const CustomerForm = () => {
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);
   const hideShippingLocationForm = () => setShowShippingLocationForm(false);
   const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
+  const hideContactForm = () => setShowContactForm(false);
 
   const onBillingLocationFormSubmit = (address) => {
     hideBillingLocationForm();
@@ -46,6 +60,14 @@ const CustomerForm = () => {
     alert('you submitted the business location form: ' + JSON.stringify(businessLocation))
     setBusinessLocations([...businessLocations, businessLocation]);
   };
+
+  const onContactFormSubmit = (contact) => {
+    hideContactForm();
+    alert('you submitted the contact form: '+ JSON.stringify(contact))
+    const locationIndex = contact.location;
+    contact.location = locations[locationIndex];
+    setContacts([...contacts, contact]);
+  }
 
   return (
     <div id='customer-form'>
@@ -73,6 +95,7 @@ const CustomerForm = () => {
         <button type="button" onClick={() => setShowBusinessLocationForm(true)}>Add Business Location</button>
         <button type="button" onClick={() => setShowShippingLocationForm(true)}>Add Shipping Location</button>
         <button type="button" onClick={() => setShowBillingLocationForm(true)}>Add Billing Location</button>
+        <button type="button" onClick={() => setShowContactForm(true)}>Add Contact</button>
       </div>
 
       {/* Code Below Renders a modal if user initiated one to open */}
@@ -100,8 +123,17 @@ const CustomerForm = () => {
           onCancel={hideBusinessLocationForm}
         />
       }
+      {
+        showContactForm &&
+        <FormModal
+          Form={ContactForm}
+          onSubmit={onContactFormSubmit}
+          onCancel={hideContactForm}
+          locations={locations}
+        />
+      }
 
-      Business Locations:
+      <h3>Business Locations:</h3>
       <div id='business-location-cards'>
         {
           businessLocations.map((businessLocation, index) => {
@@ -117,7 +149,7 @@ const CustomerForm = () => {
         }
       </div>
 
-      Shipping Locations:
+      <h3>Shipping Locations:</h3>
       <div id='shipping-location-cards'>
         {
           shippingLocations.map((shippingLocation, index) => {
@@ -133,7 +165,7 @@ const CustomerForm = () => {
         }
       </div>
 
-      Billing Locations:
+      <h3>Billing Locations:</h3>
       <div id='billing-location-cards'>
         {
           billingLocations.map((billingLocation, index) => {
@@ -142,6 +174,22 @@ const CustomerForm = () => {
                 <AddressCard 
                   data={billingLocation} 
                   onDelete={() => removeElementFromArray(index, billingLocations, setBillingLocations)}
+                />
+              </div>
+            )
+          })
+        }
+      </div>
+
+      <h3>Contacts:</h3>
+      <div id='contact-cards'>
+        {
+          contacts.map((contact, index) => {
+            return (
+              <div key={index}>
+                <ContactCard 
+                  data={contact} 
+                  onDelete={() => removeElementFromArray(index, contacts, setContacts)}
                 />
               </div>
             )

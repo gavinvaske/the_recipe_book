@@ -13,29 +13,41 @@ const AddressForm = (props) => {
 
   return (
     <form id='address-form' onSubmit={handleSubmit(onSubmit)}>
-      <label>Name*:</label>
-      <input type="text" {...register('name', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="name" />
+      <div>
+        <label>Name*:</label>
+        <input type="text" {...register('name', { required: "This is required" })} />
+        <ErrorMessage errors={errors} name="name" />
+      </div>
 
-      <label>Street*:</label>
-      <input type="text" {...register('street', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="street" />
+      <div>
+        <label>Street*:</label>
+        <input type="text" {...register('street', { required: "This is required" })} />
+        <ErrorMessage errors={errors} name="street" />
+      </div>
 
-      <label>Unit or Suite #:</label>
-      <input type="text" {...register('unitOrSuite')} />
-      <ErrorMessage errors={errors} name="unitOrSuite" />
+      <div>
+        <label>Unit or Suite #:</label>
+        <input type="text" {...register('unitOrSuite')} />
+        <ErrorMessage errors={errors} name="unitOrSuite" />
+      </div>
 
-      <label>City*:</label>
-      <input type="text" {...register('city', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="city" />
+      <div>
+        <label>City*:</label>
+        <input type="text" {...register('city', { required: "This is required" })} />
+        <ErrorMessage errors={errors} name="city" />
+      </div>
 
-      <label>State*:</label>
-      <input type="text" {...register('state', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="state" />
+      <div>
+        <label>State*:</label>
+        <input type="text" {...register('state', { required: "This is required" })} />
+        <ErrorMessage errors={errors} name="state" />
+      </div>
 
-      <label>Zip*:</label>
-      <input type="text" {...register('zipCode', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="zipCode" />
+      <div>
+        <label>Zip*:</label>
+        <input type="text" {...register('zipCode', { required: "This is required" })} />
+        <ErrorMessage errors={errors} name="zipCode" />
+      </div>
 
       <button type="submit">Submit</button>
       <button type="button" onClick={() => onCancel()}>Close Modal</button>

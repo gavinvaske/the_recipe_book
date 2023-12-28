@@ -11,35 +11,40 @@ import { removeElementFromArray } from '../../utils/state-service';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [showAddressForm, setShowAddressForm] = useState(false);
-  const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
-  const [addresses, setAddresses] = useState([]);
-  const [shippingLocations, setShippingLocations] = useState([]);
 
+  const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
+  const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
+  const [showBusinessLocationForm, setShowBusinessLocationForm] = useState(false);
+
+  const [billingLocations, setBillingLocations] = useState([]);
+  const [shippingLocations, setShippingLocations] = useState([]);
+  const [businessLocations, setBusinessLocations] = useState([]);
 
   const onCustomerFormSubmit = (data) => {
     alert('you submitted the form:' + data)
     console.log(data);
   };
 
-  const hideAddressForm = () => {
-    setShowAddressForm(false);
-  }
-  
-  const hideShippingLocationForm = () => {
-    setShowShippingLocationForm(false);
-  }
+  const hideBillingLocationForm = () => setShowBillingLocationForm(false);
+  const hideShippingLocationForm = () => setShowShippingLocationForm(false);
+  const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
 
-  const onAddressFormSubmit = (data) => {
-    hideAddressForm(false);
-    alert('you submitted the address form: ' + JSON.stringify(data))
-    setAddresses([...addresses, data]);
+  const onBillingLocationFormSubmit = (address) => {
+    hideBillingLocationForm();
+    alert('you submitted the address form: ' + JSON.stringify(address))
+    setBillingLocations([...billingLocations, address]);
   };
 
-  const onShippingLocationFormSubmit = (data) => {
-    hideShippingLocationForm(false);
-    alert('you submitted the shipping location form:'+ JSON.stringify(data))
-    setShippingLocations([...addresses, data]);
+  const onShippingLocationFormSubmit = (shippingLocation) => {
+    hideShippingLocationForm();
+    alert('you submitted the shipping location form: '+ JSON.stringify(shippingLocation))
+    setShippingLocations([...billingLocations, shippingLocation]);
+  };
+
+  const onBusinessLocationFormSubmit = (businessLocation) => {
+    hideBusinessLocationForm();
+    alert('you submitted the business location form: ' + JSON.stringify(businessLocation))
+    setBusinessLocations([...businessLocations, businessLocation]);
   };
 
   return (
@@ -63,36 +68,48 @@ const CustomerForm = () => {
 
         <button type="submit">Submit</button>
       </form>
-      <button type="button" onClick={() => setShowAddressForm(true)}>Add Address</button>
-      <button type="button" onClick={() => setShowShippingLocationForm(true)}>Add Shipping Location</button>
+
       <div>
-        {
-          showAddressForm &&
-          <FormModal
-            Form={AddressForm}
-            onSubmit={onAddressFormSubmit}
-            onCancel={hideAddressForm}
-          />
-        }
-        {
-          showShippingLocationForm &&
-          <FormModal
-            Form={ShippingLocationForm}
-            onSubmit={onShippingLocationFormSubmit}
-            onCancel={hideShippingLocationForm}
-          />
-        }
+        <button type="button" onClick={() => setShowBusinessLocationForm(true)}>Add Business Location</button>
+        <button type="button" onClick={() => setShowShippingLocationForm(true)}>Add Shipping Location</button>
+        <button type="button" onClick={() => setShowBillingLocationForm(true)}>Add Billing Location</button>
       </div>
 
-      Addresses:
-      <div id='address-cards'>
+      {/* Code Below Renders a modal if user initiated one to open */}
+      {
+        showBillingLocationForm &&
+        <FormModal
+          Form={AddressForm}
+          onSubmit={onBillingLocationFormSubmit}
+          onCancel={hideBillingLocationForm}
+        />
+      }
+      {
+        showShippingLocationForm &&
+        <FormModal
+          Form={ShippingLocationForm}
+          onSubmit={onShippingLocationFormSubmit}
+          onCancel={hideShippingLocationForm}
+        />
+      }
+      {
+        showBusinessLocationForm &&
+        <FormModal
+          Form={AddressForm}
+          onSubmit={onBusinessLocationFormSubmit}
+          onCancel={hideBusinessLocationForm}
+        />
+      }
+
+      Business Locations:
+      <div id='business-location-cards'>
         {
-          addresses.map((address, index) => {
+          businessLocations.map((businessLocation, index) => {
             return (
               <div key={index}>
                 <AddressCard 
-                  data={address} 
-                  onDelete={() => removeElementFromArray(index, addresses, setAddresses)}
+                  data={businessLocation} 
+                  onDelete={() => removeElementFromArray(index, businessLocations, setBusinessLocations)}
                 />
               </div>
             )
@@ -109,6 +126,22 @@ const CustomerForm = () => {
                 <ShippingLocationCard 
                   data={shippingLocation} 
                   onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)} 
+                />
+              </div>
+            )
+          })
+        }
+      </div>
+
+      Billing Locations:
+      <div id='billing-location-cards'>
+        {
+          billingLocations.map((billingLocation, index) => {
+            return (
+              <div key={index}>
+                <AddressCard 
+                  data={billingLocation} 
+                  onDelete={() => removeElementFromArray(index, billingLocations, setBillingLocations)}
                 />
               </div>
             )

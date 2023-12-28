@@ -14,7 +14,6 @@ function doesArrayContainElements(value) {
 // To learn more, read about "discriminators" here: https://mongoosejs.com/docs/discriminators.html
 const shippingLocationsSchema = new mongoose.Schema({
     ...addressSchema.obj,
-    // TODO (12-26-2023): Why aren't all of these attributes required
     freightAccountNumber: {
         type: String
     },

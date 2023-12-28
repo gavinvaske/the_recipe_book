@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
@@ -18,6 +19,7 @@ const CustomerForm = () => {
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
   const [showBusinessLocationForm, setShowBusinessLocationForm] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [creditTerms, setCreditTerms] = useState([]);
 
   const [billingLocations, setBillingLocations] = useState([]);
   const [shippingLocations, setShippingLocations] = useState([]);
@@ -33,9 +35,24 @@ const CustomerForm = () => {
     ])
   }, [billingLocations, shippingLocations, businessLocations]);
 
-  const onCustomerFormSubmit = (data) => {
-    alert('you submitted the form:' + data)
-    console.log(data);
+  useEffect(() => {
+    axios.get('/credit-terms?responseDataType=JSON')
+      .then(({data}) => setCreditTerms(data))
+      .catch((error) => alert('Error getting credit terms: ' + error.message));
+  }, []);
+
+  const onCustomerFormSubmit = (customer) => {
+    customer.businessLocations = businessLocations;
+    customer.shippingLocations = shippingLocations;
+    customer.contacts = contacts;
+    alert('you submitted the form:' + JSON.stringify(customer))
+    console.log(customer);
+
+    axios.post('/customers', customer)
+      .then(({data}) => {
+        alert('Customer created successfully: ' + JSON.stringify(data))
+      })
+      .catch(({response}) => alert('Error creating customer: ' + response.data));
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);
@@ -72,21 +89,43 @@ const CustomerForm = () => {
   return (
     <div id='customer-form'>
       <form onSubmit={handleSubmit(onCustomerFormSubmit)}>
-        <label>Customer ID*:</label>
-        <input type="text" {...register('customerId', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="customerId" />
+        <div>
+          <label>Customer ID*:</label>
+          <input type="text" {...register('customerId', { required: "This is required" })} />
+          <ErrorMessage errors={errors} name="customerId" />
+        </div>
 
-        <label>Full Name*:</label>
-        <input type="text" {...register('name', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="name" />
+        <div>
+          <label>Name*:</label>
+          <input type="text" {...register('name', { required: "This is required" })} />
+          <ErrorMessage errors={errors} name="name" />  
+        </div>
 
-        <label>Notes</label>
-        <input type="text" {...register('notes', { })} />
-        <ErrorMessage errors={errors} name="notes" />
+        <div>
+          <label>Notes</label>
+          <input type="text" {...register('notes', { })} />
+          <ErrorMessage errors={errors} name="notes" />
+        </div>
 
-        <label>Overun</label>
-        <input type="text" {...register('overun', { })} />
-        <ErrorMessage errors={errors} name="overun" />
+        <div>
+          <label>Overun</label>
+          <input type="text" {...register('overun', { })} />
+          <ErrorMessage errors={errors} name="overun" />
+        </div>
+
+        <div>
+        <select {...register("creditTerms")} multiple>
+          {
+            creditTerms.map((creditTerm, index) => {
+              return (
+                <option key={creditTerm._id} value={creditTerm._id}>
+                  {creditTerm.description}
+                </option>
+              )
+            })
+          }
+        </select>
+        </div>
 
         <button type="submit">Submit</button>
       </form>

@@ -87,7 +87,6 @@ module.exports.createQuote = async (quoteInputs) => {
         packingSlipsTime: constants.PACKING_SLIP_TIME,
     };
 
-    // TODO (11-14-2023): maybe quote = new QuoteModel(quoteAttributes); here before executing formulas below so stuff is rounded before executing formulas?
     quoteAttributes.extraFrames = computeExtraFrames(overridableValues);
     quoteAttributes.colorCalibrationFeet = computeColorCalibrationFeet(overridableValues);
     quoteAttributes.totalFinishedRolls = computeTotalFinishedRolls(quoteAttributes, overridableValues);

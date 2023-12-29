@@ -53,6 +53,7 @@ const ContactForm = (props) => {
         <label>Location:</label>
         <br></br>
         <select {...register("location")}>
+          <option value="">-- Select --</option>
           {
             locations.map((address, index) => {
               return (

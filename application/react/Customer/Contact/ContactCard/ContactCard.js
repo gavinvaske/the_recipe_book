@@ -9,7 +9,7 @@ const ContactCard = (props) => {
   } = data;
   
   return (
-    <div>
+    <div className='contact-card'>
       <p>Full Name: {fullName}</p>
       <p>Phone Number: {phoneNumber}</p>
       <p>Phone Extension: {phoneExtension}</p>

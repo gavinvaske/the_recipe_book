@@ -38,6 +38,7 @@ const ShippingLocationForm = (props) => {
         <label>Delivery Method*:</label>
         <br></br>
         <select {...register("deliveryMethod")}>
+          <option value="">-- Select --</option>
           {
             deliveryMethods.map((deliveryMethod) => {
               return (

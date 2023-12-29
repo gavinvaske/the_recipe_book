@@ -11,11 +11,13 @@ function validateZipCode(zipCode) {
 const addressSchema = new Schema({
     name: {
         type: String,
-        required: false
+        required: true,
+        uppercase: true
     },
     street: {
         type: String,
-        uppercase: true
+        uppercase: true,
+        required: true
     },
     unitOrSuite: {
         type: String,
@@ -23,15 +25,18 @@ const addressSchema = new Schema({
     },
     city: {
         type: String,
-        uppercase: true
+        uppercase: true,
+        required: true
     },
     state: {
         type: String,
-        uppercase: true
+        uppercase: true,
+        required: true
     },
     zipCode: {
         type: String,
-        validate: [validateZipCode, 'The provided zip code of "{VALUE}" is not a correctly formatted zip code']
+        validate: [validateZipCode, 'The provided zip code of "{VALUE}" is not a correctly formatted zip code'],
+        required: true
     },
 }, { timestamps: true });
 

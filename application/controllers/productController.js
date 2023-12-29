@@ -65,7 +65,7 @@ router.get('/:id', async (request, response) => {
             product
         });
     } catch (error) {
-        console.log(`Error loading product: ${JSON.stringify(error)}`);
+        console.log('Error loading product: ', error);
         request.flash('errors', [`An error occurred while trying to load the product with an id of "${productObjectId}"`]);
         return response.redirect('/tickets');
     }

@@ -79,6 +79,9 @@ app.use('/file-plan', require('./controllers/filePlanController'));
 app.use('/packaging', require('./controllers/packagingController'));
 app.use('/quote', require('./controllers/quoteController'));
 app.use('/die', require('./controllers/dieController'));
+app.use('/customers', require('./controllers/customerController'));
+app.use('/delivery-methods', require('./controllers/deliveryMethodController'));
+app.use('/credit-terms', require('./controllers/creditTermsController'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

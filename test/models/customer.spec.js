@@ -181,11 +181,11 @@ describe('validation', () => {
             expect(shippingLocations).toEqual([]);
         });
 
-        it('should have a freightAccountNumber attribute', () => {
-            const freightAccountNumber = chance.string();
+        it('should have a freightAccountNumber attribute and auto-capitalize it', () => {
+            const lowerCaseFreightAccountNumber = chance.string().toLowerCase();
             const address = {
                 ...getAddress(),
-                freightAccountNumber
+                freightAccountNumber: lowerCaseFreightAccountNumber
             };
             const addresses = [address];
             customerAttributes.shippingLocations = addresses;
@@ -195,7 +195,7 @@ describe('validation', () => {
 
             expect(error).toBeUndefined();
             expect(customer.shippingLocations.length).toEqual(addresses.length);
-            expect(customer.shippingLocations[0].freightAccountNumber).toEqual(freightAccountNumber);
+            expect(customer.shippingLocations[0].freightAccountNumber).toEqual(lowerCaseFreightAccountNumber.toUpperCase());
         });
 
         it('should have a deliveryMethod attribute', () => {

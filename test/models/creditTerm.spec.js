@@ -12,20 +12,20 @@ describe('validation', () => {
     });
 
     it('should have the correct indexes', async () => {
-      const indexMetaData = CreditTermModel.schema.indexes();
-      const expectedIndexes = ['description'];
+        const indexMetaData = CreditTermModel.schema.indexes();
+        const expectedIndexes = ['description'];
 
-      console.log('indexMetaData: ', indexMetaData);
+        console.log('indexMetaData: ', indexMetaData);
 
-      const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
-          return indexMetaData.some((metaData) => {
-              const index = Object.keys(metaData[0])[0];
-              if (index === expectedIndex) return true;
-          });
-      });
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
 
-      expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
-  });
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
 
     it('should not fail validation if all attributes are defined correctly', () => {
         const creditTerm = new CreditTermModel(creditTermAttributes);
@@ -52,13 +52,13 @@ describe('validation', () => {
         });
 
         it('should upper case attribute', () => {
-          const lowerCaseDescription = chance.string().toLowerCase();
-          creditTermAttributes.description = lowerCaseDescription;
+            const lowerCaseDescription = chance.string().toLowerCase();
+            creditTermAttributes.description = lowerCaseDescription;
 
-          const creditTerm = new CreditTermModel(creditTermAttributes);
+            const creditTerm = new CreditTermModel(creditTermAttributes);
 
-          expect(creditTerm.description).toEqual(lowerCaseDescription.toUpperCase());
-        })
+            expect(creditTerm.description).toEqual(lowerCaseDescription.toUpperCase());
+        });
 
         it('should trim attribute', () => {
             const expectedDescription = chance.string().toUpperCase();
@@ -83,17 +83,17 @@ describe('validation', () => {
         });
 
         it('should soft delete items', async () => {
-          const creditTerm = new CreditTermModel(creditTermAttributes);
-          const id = creditTerm._id;
+            const creditTerm = new CreditTermModel(creditTermAttributes);
+            const id = creditTerm._id;
 
-          await creditTerm.save();
-          await CreditTermModel.deleteById(id);
+            await creditTerm.save();
+            await CreditTermModel.deleteById(id);
 
-          const softDeletedAdhesiveCategory = await CreditTermModel.findOneDeleted({_id: id}).exec();
+            const softDeletedAdhesiveCategory = await CreditTermModel.findOneDeleted({_id: id}).exec();
 
-          expect(softDeletedAdhesiveCategory).toBeDefined();
-          expect(softDeletedAdhesiveCategory.deleted).toBe(true);
-      });
+            expect(softDeletedAdhesiveCategory).toBeDefined();
+            expect(softDeletedAdhesiveCategory.deleted).toBe(true);
+        });
 
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {

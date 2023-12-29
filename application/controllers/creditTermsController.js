@@ -4,35 +4,38 @@ const CreditTermModel = require('../models/creditTerm');
 
 router.use(verifyJwtToken);
 
+const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
+const BAD_REQUEST_STATUS_CODE = 400;
+
 router.get('/', async (request, response) => {
-  const { responseDataType } = request.query;
+    const { responseDataType } = request.query;
   
-  const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
+    const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
 
-  if (shouldRenderHtmlPage) {
-    return response.render('viewCreditTerms');
-  }
+    if (shouldRenderHtmlPage) {
+        return response.render('viewCreditTerms');
+    }
 
-  const creditTerms = await CreditTermModel.find().exec();
+    const creditTerms = await CreditTermModel.find().exec();
 
-  return response.send(creditTerms);
-})
+    return response.send(creditTerms);
+});
 
 router.get('/form', async (request, response) => {
     return response.render('createCreditTerms');
 });
 
 router.post('/', async (request, response) => {
-  let savedCreditTerm;
+    let savedCreditTerm;
 
-  try {
-    savedCreditTerm = await CreditTermModel.create(request.body);
-  } catch (error) {
-    console.log(error);
-    return response.status(400).send(error.message);
-  }
+    try {
+        savedCreditTerm = await CreditTermModel.create(request.body);
+    } catch (error) {
+        console.log(error);
+        return response.status(BAD_REQUEST_STATUS_CODE).send(error.message);
+    }
 
-  return response.status(200).send(savedCreditTerm);
+    return response.status(SUCCESSFULLY_CREATED_STATUS_CODE).send(savedCreditTerm);
 });
 
 module.exports = router;

@@ -4,35 +4,37 @@ const DeliveryMethodModel = require('../models/deliveryMethod');
 
 router.use(verifyJwtToken);
 
+const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
+const BAD_REQUEST_STATUS_CODE = 400;
+
 router.get('/', async (request, response) => {
-  const { responseDataType } = request.query;
+    const { responseDataType } = request.query;
   
-  const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
+    const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
 
-  if (shouldRenderHtmlPage) {
-    return response.render('viewDeliveryMethods');
-  }
+    if (shouldRenderHtmlPage) {
+        return response.render('viewDeliveryMethods');
+    }
 
-  const deliveryMethods = await DeliveryMethodModel.find().exec();
+    const deliveryMethods = await DeliveryMethodModel.find().exec();
 
-  return response.send(deliveryMethods);
-})
+    return response.send(deliveryMethods);
+});
 
 router.get('/form', async (request, response) => {
     return response.render('createDeliveryMethod');
 });
 
 router.post('/', async (request, response) => {
-  let savedDeliveryMethod;
+    let savedDeliveryMethod;
 
-  try {
-    savedDeliveryMethod = await DeliveryMethodModel.create(request.body);
-  } catch (error) {
-    console.log(error);
-    return response.status(400).send(error.message);
-  }
-
-  return response.status(200).send(savedDeliveryMethod);
+    try {
+        savedDeliveryMethod = await DeliveryMethodModel.create(request.body);
+        response.status(SUCCESSFULLY_CREATED_STATUS_CODE).send(savedDeliveryMethod);
+    } catch (error) {
+        console.log(error);
+        return response.status(BAD_REQUEST_STATUS_CODE).send(error.message);
+    }
 });
 
 module.exports = router;

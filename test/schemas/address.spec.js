@@ -51,12 +51,12 @@ describe('validation', () => {
         });
 
         it('should convert to uppercase', () => {
-          const lowerCaseName = chance.string().toLowerCase();
-          addressAttributes.name = lowerCaseName;
-          const address = new AddressModel(addressAttributes);
+            const lowerCaseName = chance.string().toLowerCase();
+            addressAttributes.name = lowerCaseName;
+            const address = new AddressModel(addressAttributes);
 
-          expect(address.name).toEqual(lowerCaseName.toUpperCase());
-      });
+            expect(address.name).toEqual(lowerCaseName.toUpperCase());
+        });
     });
 
     describe('attribute: street', () => {

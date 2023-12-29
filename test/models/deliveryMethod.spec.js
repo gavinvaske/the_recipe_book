@@ -12,20 +12,20 @@ describe('File: deliveryMethod.js', () => {
     });
 
     it('should have the correct indexes', async () => {
-      const indexMetaData = DeliveryMethodModel.schema.indexes();
-      const expectedIndexes = ['name'];
+        const indexMetaData = DeliveryMethodModel.schema.indexes();
+        const expectedIndexes = ['name'];
 
-      console.log('indexMetaData: ', indexMetaData);
+        console.log('indexMetaData: ', indexMetaData);
 
-      const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
-          return indexMetaData.some((metaData) => {
-              const index = Object.keys(metaData[0])[0];
-              if (index === expectedIndex) return true;
-          });
-      });
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
 
-      expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
-  });
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
 
     describe('attribute: name', () => {
         it('should be a string', () => {

@@ -45,12 +45,11 @@ const CustomerForm = () => {
     customer.businessLocations = businessLocations;
     customer.shippingLocations = shippingLocations;
     customer.contacts = contacts;
-    alert('you submitted the form:' + JSON.stringify(customer))
     console.log(customer);
 
     axios.post('/customers', customer)
       .then(({data}) => {
-        alert('Customer created successfully: ' + JSON.stringify(data))
+        alert('Customer created successfully!')
       })
       .catch(({response}) => alert('Error creating customer: ' + response.data));
   };
@@ -62,25 +61,21 @@ const CustomerForm = () => {
 
   const onBillingLocationFormSubmit = (address) => {
     hideBillingLocationForm();
-    alert('you submitted the address form: ' + JSON.stringify(address))
     setBillingLocations([...billingLocations, address]);
   };
 
   const onShippingLocationFormSubmit = (shippingLocation) => {
     hideShippingLocationForm();
-    alert('you submitted the shipping location form: '+ JSON.stringify(shippingLocation))
     setShippingLocations([...billingLocations, shippingLocation]);
   };
 
   const onBusinessLocationFormSubmit = (businessLocation) => {
     hideBusinessLocationForm();
-    alert('you submitted the business location form: ' + JSON.stringify(businessLocation))
     setBusinessLocations([...businessLocations, businessLocation]);
   };
 
   const onContactFormSubmit = (contact) => {
     hideContactForm();
-    alert('you submitted the contact form: '+ JSON.stringify(contact))
     const locationIndex = contact.location;
     contact.location = locations[locationIndex];
     setContacts([...contacts, contact]);
@@ -127,7 +122,7 @@ const CustomerForm = () => {
         </select>
         </div>
 
-        <button type="submit">Submit</button>
+        <button className='btn-primary' type="submit">Create Customer</button>
       </form>
 
       <div>

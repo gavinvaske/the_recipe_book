@@ -132,41 +132,6 @@ const CustomerForm = () => {
         <button type="button" onClick={() => setShowContactForm(true)}>Add Contact</button>
       </div>
 
-      {/* Code Below Renders a modal if user initiated one to open */}
-      {
-        showBillingLocationForm &&
-        <FormModal
-          Form={AddressForm}
-          onSubmit={onBillingLocationFormSubmit}
-          onCancel={hideBillingLocationForm}
-        />
-      }
-      {
-        showShippingLocationForm &&
-        <FormModal
-          Form={ShippingLocationForm}
-          onSubmit={onShippingLocationFormSubmit}
-          onCancel={hideShippingLocationForm}
-        />
-      }
-      {
-        showBusinessLocationForm &&
-        <FormModal
-          Form={AddressForm}
-          onSubmit={onBusinessLocationFormSubmit}
-          onCancel={hideBusinessLocationForm}
-        />
-      }
-      {
-        showContactForm &&
-        <FormModal
-          Form={ContactForm}
-          onSubmit={onContactFormSubmit}
-          onCancel={hideContactForm}
-          locations={locations}
-        />
-      }
-
       <h3>Business Locations:</h3>
       <div id='business-location-cards'>
         {
@@ -230,6 +195,41 @@ const CustomerForm = () => {
           })
         }
       </div>
+
+      {/* Code Below Renders a modal IFF user initiated one to open */}
+      {
+        showBillingLocationForm &&
+        <FormModal
+          Form={AddressForm}
+          onSubmit={onBillingLocationFormSubmit}
+          onCancel={hideBillingLocationForm}
+        />
+      }
+      {
+        showShippingLocationForm &&
+        <FormModal
+          Form={ShippingLocationForm}
+          onSubmit={onShippingLocationFormSubmit}
+          onCancel={hideShippingLocationForm}
+        />
+      }
+      {
+        showBusinessLocationForm &&
+        <FormModal
+          Form={AddressForm}
+          onSubmit={onBusinessLocationFormSubmit}
+          onCancel={hideBusinessLocationForm}
+        />
+      }
+      {
+        showContactForm &&
+        <FormModal
+          Form={ContactForm}
+          onSubmit={onContactFormSubmit}
+          onCancel={hideContactForm}
+          locations={locations}
+        />
+      }
     </div>
   );
 }

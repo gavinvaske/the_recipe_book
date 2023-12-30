@@ -7,6 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getFilteredRowModel
 } from '@tanstack/react-table'
 
 const columnHelper = createColumnHelper()
@@ -19,6 +20,7 @@ const columns = [
 
 function DeliveryMethodTable() {
   const [deliveryMethods, setDeliveryMethods] = React.useState([])
+  const [globalFilter, setGlobalFilter] = React.useState("");
 
   React.useEffect(() => {
     axios.get('/delivery-methods?responseDataType=JSON')
@@ -35,10 +37,23 @@ function DeliveryMethodTable() {
     data: deliveryMethods,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(globalFilter),
+    state: {
+      globalFilter: globalFilter
+    },
+    onGlobalFilterChanged: setGlobalFilter
   })
 
   return (
     <div className="p-2">
+      <input 
+        type='text' 
+        value={globalFilter} 
+        onChange={e => setGlobalFilter(e.target.value)}
+      ></input>
+
+      <div className="h-4" />
+
       <div className='table'>
         <div className='table-header'>
           {table.getHeaderGroups().map(headerGroup => (

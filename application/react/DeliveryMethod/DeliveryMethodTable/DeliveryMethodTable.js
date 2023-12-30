@@ -75,9 +75,9 @@ function DeliveryMethodTable() {
           {table.getRowModel().rows.map(row => (
             <div className='row' key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
+                <div className='row-cell' key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+                </div>
               ))}
             </div>
           ))}

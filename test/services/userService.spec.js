@@ -28,7 +28,7 @@ describe('userService', () => {
     afterEach(async () => {
         await databaseService.clearDatabase();
     });
-    
+
     afterAll(async () => {
         await databaseService.closeDatabase();
     });

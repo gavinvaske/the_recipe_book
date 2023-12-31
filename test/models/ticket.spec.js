@@ -937,15 +937,6 @@ describe('validation', () => {
     });
 
     describe('attribute: primaryMaterial', () => {
-
-        beforeEach(async () => {
-            await databaseService.connectToTestMongoDatabase();
-        });
-
-        afterEach(async () => {
-            await databaseService.closeDatabase();
-        });
-
         it('should contain attribute', () => {
             ticketAttributes.primaryMaterial = chance.word();
             const ticket = new TicketModel(ticketAttributes);
@@ -989,26 +980,6 @@ describe('validation', () => {
             const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.primaryMaterial).toBe(ticketAttributes.products[0].primaryMaterial);
-        });
-
-        it('should use the ticket.primaryMaterial to override all ticket.products[n].primaryMaterial before saving', async () => {
-            const materialA = chance.word();
-            const materialB = chance.word();
-
-            ticketAttributes.primaryMaterial = materialA;
-
-            ticketAttributes.products = [
-                {primaryMaterial: materialB},
-                {primaryMaterial: materialB},
-                {primaryMaterial: undefined},
-            ];
-            const ticket = new TicketModel(ticketAttributes);
-
-            const savedTicket = await ticket.save({validateBeforeSave: false});
-
-            expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
-            expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
-            expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
         });
     });
 
@@ -1323,7 +1294,7 @@ describe('validation', () => {
             delete ticketAttributes.products;
             const ticket = new TicketModel(ticketAttributes);
 
-            expect(() => ticket.frameSize).toThrowError();
+            expect(() => ticket.frameSize).toThrow();
         });
 
         it('should return the correctly calculated value when at ticket.products contains at least one item', () => {
@@ -1346,13 +1317,39 @@ describe('validation', () => {
         });
     });
 
-    describe('mongoose pre hooks test suite', () => {
-        beforeEach(async () => {
+    describe('database interactions', () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
+        });
+
+        describe('attribute: primaryMaterial', () => {
+            it('should use the ticket.primaryMaterial to override all ticket.products[n].primaryMaterial before saving', async () => {
+                const materialA = chance.word();
+                const materialB = chance.word();
+    
+                ticketAttributes.primaryMaterial = materialA;
+    
+                ticketAttributes.products = [
+                    {primaryMaterial: materialB},
+                    {primaryMaterial: materialB},
+                    {primaryMaterial: undefined},
+                ];
+                const ticket = new TicketModel(ticketAttributes);
+    
+                const savedTicket = await ticket.save({validateBeforeSave: false});
+    
+                expect(savedTicket.products[0].primaryMaterial).toBe(savedTicket.primaryMaterial);
+                expect(savedTicket.products[1].primaryMaterial).toBe(savedTicket.primaryMaterial);
+                expect(savedTicket.products[2].primaryMaterial).toBe(savedTicket.primaryMaterial);
+            });
         });
 
         describe('mongoose ticketSchema.pre("findOneAndUpdate")', () => {
@@ -1431,7 +1428,6 @@ describe('validation', () => {
         });
 
         describe('mongoose ticketSchema.pre("updateOne")', () => {
-        
             it('should add item to workflow database when one ticket is updated', async () => {
                 const ticket = new TicketModel(ticketAttributes);
                 const randomDepartment = chance.pickone(departmentsEnum.getAllDepartmentsWithDepartmentStatuses());

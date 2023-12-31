@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const DeliveryMethod = require('../../application/models/deliveryMethod');
+const DeliveryMethodModel = require('../../application/models/deliveryMethod');
 const databaseService = require('../../application/services/databaseService');
 
 describe('File: deliveryMethod.js', () => {
@@ -11,15 +11,31 @@ describe('File: deliveryMethod.js', () => {
         };
     });
 
+    it('should have the correct indexes', async () => {
+        const indexMetaData = DeliveryMethodModel.schema.indexes();
+        const expectedIndexes = ['name'];
+
+        console.log('indexMetaData: ', indexMetaData);
+
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
+
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
     describe('attribute: name', () => {
         it('should be a string', () => {
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
 
             expect(deliveryMethod.name).toEqual(expect.any(String));
         });
         it('should be required', () => {
             delete deliveryMethodAttributes.name;
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
 
             const error = deliveryMethod.validateSync();
 
@@ -30,7 +46,7 @@ describe('File: deliveryMethod.js', () => {
             const lowerCaseDeliveryMethod = chance.string().toLowerCase();
             deliveryMethodAttributes.name = lowerCaseDeliveryMethod;
             
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
 
             expect(deliveryMethod.name).toEqual(lowerCaseDeliveryMethod.toUpperCase());
         });
@@ -39,36 +55,40 @@ describe('File: deliveryMethod.js', () => {
             const expectedName = chance.string().toUpperCase();
             deliveryMethodAttributes.name = ` ${expectedName} `;
             
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
             
             expect(deliveryMethod.name).toEqual(expectedName);
         });
     });
 
     describe('database interactions', () => {
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
         });
 
         it('should soft delete items', async () => {
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
             const id = deliveryMethod._id;
 
             await deliveryMethod.save();
-            await DeliveryMethod.deleteById(id);
+            await DeliveryMethodModel.deleteById(id);
 
-            const softDeletedDeliveryMethod = await DeliveryMethod.findOneDeleted({ _id: id }).exec();
+            const softDeletedDeliveryMethod = await DeliveryMethodModel.findOneDeleted({ _id: id }).exec();
 
             expect(softDeletedDeliveryMethod).toBeDefined();
             expect(softDeletedDeliveryMethod.deleted).toBe(true);
         });
 
         it('should have timestamps', async () => {
-            const deliveryMethod = new DeliveryMethod(deliveryMethodAttributes);
+            const deliveryMethod = new DeliveryMethodModel(deliveryMethodAttributes);
             let savedDeliveryMethod = await deliveryMethod.save();
 
             expect(savedDeliveryMethod.createdAt).toBeDefined();

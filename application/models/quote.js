@@ -6,8 +6,10 @@ const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');
 const PackagingDetailsSchema = require('../schemas/packagingDetails');
+const { unwindDirections } = require('../enums/unwindDirectionsEnum');
 
 const DEFAULT_EXTRA_FRAMES = 25;
+const FIVE_DECIMAL_PLACES = 5;
 const FOUR_DECIMAL_PLACES = 4;
 const THREE_DECIMAL_PLACES = 3;
 const TWO_DECIMAL_PLACES = 2;
@@ -479,6 +481,31 @@ const quoteSchema = new Schema({
         type: Number,
         min: 0,
         set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES)
+    },
+    totalMachineCost: {
+        ...costAttribute
+    },
+    totalProductionCost: {
+        ...costAttribute
+    },
+    quotedPrice: {
+        ...costAttribute
+    },
+    pricePerThousand: {
+        ...costAttribute
+    },
+    profit: {
+        ...costAttribute
+    },
+    pricePerLabel: {
+        type: Number,
+        set: roundNumberToNthDecimalPlace(FIVE_DECIMAL_PLACES),
+        min: 0
+    },
+    unwindDirection: {
+        type: Number,
+        enum: unwindDirections,
+        required: true
     }
 }, {
     timestamps: true,

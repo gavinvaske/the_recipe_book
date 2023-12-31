@@ -8,7 +8,9 @@ const deliveryMethodSchema = new Schema({
     name: {
         type: String,
         required: true,
-        uppercase: true
+        uppercase: true,
+        unique: true,
+        index: true
     }
 }, { timestamps: true });
 

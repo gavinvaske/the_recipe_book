@@ -15,7 +15,8 @@ function doesArrayContainElements(value) {
 const shippingLocationsSchema = new mongoose.Schema({
     ...addressSchema.obj,
     freightAccountNumber: {
-        type: String
+        type: String,
+        uppercase: true
     },
     deliveryMethod: {
         type: Schema.Types.ObjectId,

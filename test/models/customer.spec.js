@@ -5,10 +5,6 @@ const databaseService = require('../../application/services/databaseService');
 
 const testDataGenerator = require('../testDataGenerator');
 
-const delay = (delayInMs) => {
-    return new Promise(resolve => setTimeout(resolve, delayInMs));
-};
-
 function getAddress() {
     return {
         name: chance.string(),
@@ -185,11 +181,11 @@ describe('validation', () => {
             expect(shippingLocations).toEqual([]);
         });
 
-        it('should have a freightAccountNumber attribute', () => {
-            const freightAccountNumber = chance.string();
+        it('should have a freightAccountNumber attribute and auto-capitalize it', () => {
+            const lowerCaseFreightAccountNumber = chance.string().toLowerCase();
             const address = {
                 ...getAddress(),
-                freightAccountNumber
+                freightAccountNumber: lowerCaseFreightAccountNumber
             };
             const addresses = [address];
             customerAttributes.shippingLocations = addresses;
@@ -199,7 +195,7 @@ describe('validation', () => {
 
             expect(error).toBeUndefined();
             expect(customer.shippingLocations.length).toEqual(addresses.length);
-            expect(customer.shippingLocations[0].freightAccountNumber).toEqual(freightAccountNumber);
+            expect(customer.shippingLocations[0].freightAccountNumber).toEqual(lowerCaseFreightAccountNumber.toUpperCase());
         });
 
         it('should have a deliveryMethod attribute', () => {
@@ -362,11 +358,15 @@ describe('validation', () => {
     });
 
     describe('verify database interactions', () => {
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
         });
 
@@ -402,10 +402,9 @@ describe('validation', () => {
                 customerAttributes.customerId = customerId.toLowerCase();
                 const customer2 = new CustomerModel(customerAttributes);
 
-                await delay(20); // eslint-disable-line no-magic-numbers
-                await customer1.save(); // eslint-disable-line no-unused-vars
-
-                await expect(customer2.save()).rejects.toThrowError(Error);
+                await customer1.save().then(async () => {
+                    await expect(customer2.save()).rejects.toThrow(Error);
+                });
             });
         });
     });

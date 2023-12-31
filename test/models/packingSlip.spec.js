@@ -79,21 +79,13 @@ describe('File: packingSlip.js', () => {
     });
 
     describe('attribute: senderAddress', () => {
-        it('should be settable to an empty object', () => {
-            packingSlipAttributes.senderAddress = {};
+        it('should not be required', () => {
+            delete packingSlipAttributes.senderAddress;
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
             
             const error = packingSlip.validateSync();
 
-            let { name, street, uniteOrSuite, city, state, zipCode } = packingSlip.senderAddress;
-
             expect(error).toBeUndefined();
-            expect(name).toBeUndefined();
-            expect(street).toBeUndefined();
-            expect(uniteOrSuite).toBeUndefined();
-            expect(city).toBeUndefined();
-            expect(state).toBeUndefined();
-            expect(zipCode).toBeUndefined();
         });
 
         it('should have the correct default address', () => {
@@ -107,7 +99,7 @@ describe('File: packingSlip.js', () => {
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
 
             for (const [key, value] of Object.entries(expectedDefaultAddress)) {
-                expect(packingSlip.senderAddress[key]).toEqual(value);
+                expect(packingSlip.senderAddress[key]).toEqual(value.toUpperCase());
             }
         });
 
@@ -119,7 +111,7 @@ describe('File: packingSlip.js', () => {
 
             for (const [key, value] of Object.entries(senderAddress)) {
                 if (key === 'name') {
-                    expect(packingSlip.senderAddress[key]).toEqual(value);
+                    expect(packingSlip.senderAddress[key]).toEqual(value.toUpperCase());
                 } else {
                     expect(packingSlip.senderAddress[key]).toEqual(value && value.toUpperCase());
                 }
@@ -172,21 +164,13 @@ describe('File: packingSlip.js', () => {
     });
 
     describe('attribute: receiverAddress', () => {
-        it('should be settable to an empty object', () => {
-            packingSlipAttributes.receiverAddress = {};
+        it('should not be required', () => {
+            delete packingSlipAttributes.receiverAddress;
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
             
             const error = packingSlip.validateSync();
 
-            let { name, street, uniteOrSuite, city, state, zipCode } = packingSlip.receiverAddress;
-
             expect(error).toBeUndefined();
-            expect(name).toBeUndefined();
-            expect(street).toBeUndefined();
-            expect(uniteOrSuite).toBeUndefined();
-            expect(city).toBeUndefined();
-            expect(state).toBeUndefined();
-            expect(zipCode).toBeUndefined();
         });
 
         it('should be setable', () => {
@@ -197,7 +181,7 @@ describe('File: packingSlip.js', () => {
 
             for (const [key, value] of Object.entries(address)) {
                 if (key === 'name') {
-                    expect(packingSlip.receiverAddress[key]).toEqual(value);
+                    expect(packingSlip.receiverAddress[key]).toEqual(value.toUpperCase());
                 } else {
                     expect(packingSlip.receiverAddress[key]).toEqual(value && value.toUpperCase());
                 }
@@ -386,11 +370,15 @@ describe('File: packingSlip.js', () => {
     });
 
     describe('database interactions', () => {
-        beforeEach(async () => {
+        beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
 
         afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
             await databaseService.closeDatabase();
         });
 

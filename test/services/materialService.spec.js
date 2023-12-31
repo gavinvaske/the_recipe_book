@@ -40,7 +40,7 @@ describe('materialService test suite', () => {
         });
 
         it ('should not throw error', async () => {
-            await expect(materialService.getAllMaterials()).resolves.not.toThrowError();
+            await expect(materialService.getAllMaterials()).resolves.not.toThrow();
         });
         
         it ('should search for materials from database', async () => {

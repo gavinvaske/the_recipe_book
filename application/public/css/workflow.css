@@ -1,5 +1,5 @@
 .workflow-navigation {
-	margin: 10px 0;
+	margin: 0 0 10px 0; 
 }
 .workflow-order-header ul {
 	width: 100%;
@@ -139,10 +139,22 @@
 	margin-left: -85px;
 }
 
-.dropdown, .on-hold-dropdown {
+.dropdown {
 	position: absolute;
 	box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 	padding: 16px;
+	border-radius: 8px;
+	background-color: white;
+	visibility: hidden;
+	z-index: 0;
+	opacity: 0;
+	top: calc(100% + 10px);
+	max-width: 800px;
+	/* min-width: 600px; */
+}
+.on-hold-dropdown {
+	position: absolute;
+	box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 	border-radius: 8px;
 	background-color: white;
 	visibility: hidden;
@@ -212,6 +224,9 @@
 	visibility: visible;
 	opacity: 1;
 	z-index: 99;
+}
+.on-hold-dropdown.active .card {
+	margin-bottom: 0;
 }
 
 .person-filter-wrapper {
@@ -428,10 +443,14 @@
 .status-section {
 	position: relative;
 	/* margin-bottom: 30px; */
+	padding: 10px 1.5rem 10px 1.5rem;
 }
 .status-section h3 { 
 	margin-bottom: 0;
 	font-size: 22px;
+}
+.status-section .span:first-of-type{
+	background: red;
 }
 
 .expanded-options-btn {
@@ -1066,6 +1085,7 @@ button:hover {
 .btn-split-arrow-dropdown {
 	padding: 9px 10px;
 	font-size: 14px;
+	line-height: 14px;
 }
 
 /*.split-btn-frame.btn-filter .btn-split,
@@ -1096,9 +1116,10 @@ button:hover {
 .btn-sort,
 .search-wrapper {
 	height: 33px;
-	min-width: 100px;
+	min-width: 94px;
 	border-radius: 3px;
-	line-height: 16px;
+	line-height: 14px;
+	font-size: 14px;
 }
 .btn-person-filter,
 .btn-sort,

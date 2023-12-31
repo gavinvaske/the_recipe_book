@@ -5,6 +5,17 @@ import './RowHeader.scss'
 const RowHeader = (props) => {
   const { columnHeaders } = props;
 
+  const getSortIcon = (sortDirection) => {
+    console.log('sortDirection: ', sortDirection)
+    if (sortDirection === 'asc') {
+      return <i class="fa-regular fa-arrow-down"></i>
+    } else if (sortDirection === 'desc') {
+      return <i class="fa-regular fa-arrow-up"></i>
+    } else {
+      return <i class="fa-regular fa-arrow-up-arrow-down"></i>
+    }
+  }
+
   return (
     <div className='row'>
       {
@@ -12,7 +23,7 @@ const RowHeader = (props) => {
           <div className='column' key={header.id} onClick={header.column.getToggleSortingHandler()}>
             <div className='column-icon'>
               {
-                header.column.getCanSort() && <i class="fa-regular fa-arrow-down-arrow-up"></i>
+                header.column.getCanSort() && getSortIcon(header.column.getIsSorted())
               }
             </div>
             <div className='column-name'>

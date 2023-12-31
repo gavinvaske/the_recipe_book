@@ -1,14 +1,15 @@
 import * as React from 'react'
 import axios from 'axios'
 import './DeliveryMethodTable.scss'
-
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
-  getFilteredRowModel
+  getFilteredRowModel,
 } from '@tanstack/react-table'
+import ExpandableRow from './ExpandableRow'
+import RowHeader from './RowHeader'
+import SearchBar from '../../_global/SearchBar/SearchBar'
 
 const columnHelper = createColumnHelper()
 
@@ -16,7 +17,7 @@ const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
   }),
-]
+];
 
 function DeliveryMethodTable() {
   const [deliveryMethods, setDeliveryMethods] = React.useState([])
@@ -41,49 +42,28 @@ function DeliveryMethodTable() {
     state: {
       globalFilter: globalFilter
     },
-    onGlobalFilterChanged: setGlobalFilter
+    getSubRows: row => row.subRows,
+    onGlobalFilterChanged: setGlobalFilter,
+    debugTable: true,
   })
 
   return (
     <div className="p-2">
-      <input 
-        type='text' 
-        value={globalFilter} 
-        onChange={e => setGlobalFilter(e.target.value)}
-      ></input>
-
-      <div className="h-4" />
+      <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
       <div className='table'>
         <div className='table-header'>
-          {table.getHeaderGroups().map(headerGroup => (
-            <div className='row' key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <div className='row-header' key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </div>
-              ))}
-            </div>
-          ))}
+          <RowHeader columnHeaders={table.getAllColumns()} />
         </div>
         <div className='table-body'>
           {table.getRowModel().rows.map(row => (
-            <div className='row' key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <div className='row-cell' key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </div>
-              ))}
-            </div>
+            <ExpandableRow row={row} />
           ))}
         </div>
       </div>
-      <div className="h-4" />
+      <div />
+      <br />
+      <p>Row Count: {table.getRowModel().rows.length}</p>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { flexRender } from '@tanstack/react-table'
+import './Row.scss'
 
 const Row = (props) => {
   const { row } = props;

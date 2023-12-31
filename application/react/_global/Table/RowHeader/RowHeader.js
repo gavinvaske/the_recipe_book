@@ -1,5 +1,6 @@
 import React from 'react'
 import { flexRender } from '@tanstack/react-table'
+import './RowHeader.scss'
 
 const RowHeader = (props) => {
   const { columnHeaders } = props;

@@ -7,9 +7,10 @@ import {
   useReactTable,
   getFilteredRowModel,
 } from '@tanstack/react-table'
-import ExpandableRow from './ExpandableRow'
-import RowHeader from './RowHeader'
+import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
+import RowHeader from '../../_global/Table/RowHeader/RowHeader'
 import SearchBar from '../../_global/SearchBar/SearchBar'
+import ExpandedRowContent from './ExpandedRowContent/ExpandedRowContent'
 
 const columnHelper = createColumnHelper()
 
@@ -42,9 +43,7 @@ function DeliveryMethodTable() {
     state: {
       globalFilter: globalFilter
     },
-    getSubRows: row => row.subRows,
-    onGlobalFilterChanged: setGlobalFilter,
-    debugTable: true,
+    onGlobalFilterChanged: setGlobalFilter
   })
 
   return (
@@ -57,7 +56,7 @@ function DeliveryMethodTable() {
         </div>
         <div className='table-body'>
           {table.getRowModel().rows.map(row => (
-            <ExpandableRow row={row} />
+            <ExpandableRow row={row} key={row.id} ExpandedRowContent={ExpandedRowContent} />
           ))}
         </div>
       </div>

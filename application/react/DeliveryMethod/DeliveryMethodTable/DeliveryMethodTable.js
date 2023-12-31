@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
   getFilteredRowModel,
+  getSortedRowModel,
 } from '@tanstack/react-table'
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
 import RowHeader from '../../_global/Table/RowHeader/RowHeader'
@@ -23,6 +24,7 @@ const columns = [
 function DeliveryMethodTable() {
   const [deliveryMethods, setDeliveryMethods] = React.useState([])
   const [globalFilter, setGlobalFilter] = React.useState("");
+  const [sorting, setSorting] = React.useState([])
 
   React.useEffect(() => {
     axios.get('/delivery-methods?responseDataType=JSON')
@@ -38,12 +40,15 @@ function DeliveryMethodTable() {
   const table = useReactTable({
     data: deliveryMethods,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(globalFilter),
     state: {
-      globalFilter: globalFilter
+      globalFilter: globalFilter,
+      sorting: sorting,
     },
-    onGlobalFilterChanged: setGlobalFilter
+    getFilteredRowModel: getFilteredRowModel(globalFilter),
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    onGlobalFilterChanged: setGlobalFilter,
+    getSortedRowModel: getSortedRowModel(),
   })
 
   return (
@@ -52,7 +57,7 @@ function DeliveryMethodTable() {
 
       <div className='table'>
         <div className='table-header'>
-          <RowHeader columnHeaders={table.getAllColumns()} />
+          <RowHeader columnHeaders={table.getFlatHeaders()} />
         </div>
         <div className='table-body'>
           {table.getRowModel().rows.map(row => (

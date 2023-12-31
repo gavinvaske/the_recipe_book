@@ -9,12 +9,22 @@ const RowHeader = (props) => {
     <div className='row'>
       {
         columnHeaders.map(header => (
-          <div className='row-header' key={header.id}>
-            {
-              header.isPlaceholder
-                ? null
-                : flexRender(header.columnDef.header)
-            }
+          <div className='column' key={header.id} onClick={header.column.getToggleSortingHandler()}>
+            <div className='column-icon'>
+              {
+                header.column.getCanSort() && <i class="fa-regular fa-arrow-down-arrow-up"></i>
+              }
+            </div>
+            <div className='column-name'>
+              {
+                header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )
+              }
+            </div>
           </div>
         ))
       }

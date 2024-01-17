@@ -20,7 +20,7 @@ const RowHeader = (props) => {
     <div className='row'>
       {
         columnHeaders.map(header => (
-          <div className='column' key={header.id} onClick={header.column.getToggleSortingHandler()}>
+          <div className='column' key={header.id} onClick={header.column.getToggleSortingHandler()} style={{cursor: header.column.getCanSort() ? 'pointer' : ''}}>
             <div className='column-icon'>
               {
                 header.column.getCanSort() && getSortIcon(header.column.getIsSorted())

@@ -33,7 +33,7 @@
   "license": "ISC",
   "dependencies": {
     "@parcel/transformer-sass": "2.10.3",
-    "@tanstack/react-table": "8.11.2",
+    "@tanstack/react-table": "8.11.6",
     "aws-sdk": "2.1527.0",
     "axios": "1.6.2",
     "bcryptjs": "2.4.3",

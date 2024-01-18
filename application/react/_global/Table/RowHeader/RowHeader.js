@@ -6,7 +6,6 @@ const RowHeader = (props) => {
   const { columnHeaders } = props;
 
   const getSortIcon = (sortDirection) => {
-    console.log('sortDirection: ', sortDirection)
     if (sortDirection === 'asc') {
       return <i class="fa-regular fa-arrow-down"></i>
     } else if (sortDirection === 'desc') {

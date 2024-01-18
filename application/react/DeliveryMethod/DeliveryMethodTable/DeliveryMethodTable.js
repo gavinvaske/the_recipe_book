@@ -14,6 +14,7 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
+import { RowActions } from '../../_global/Table/RowActions/RowActions'
 
 const columnHelper = createColumnHelper()
 
@@ -24,6 +25,11 @@ const columns = [
   columnHelper.accessor('_id', {
     header: 'ID'
   }),
+  columnHelper.display({
+    id: 'actions',
+    header: 'Actions',
+    cell: props => <RowActions row={props.row} />
+  })
 ];
 
 function DeliveryMethodTable() {
@@ -56,6 +62,8 @@ function DeliveryMethodTable() {
     getSortedRowModel: getSortedRowModel(),
   })
 
+  const rows = table.getRowModel().rows;
+
   return (
     <>
       <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
@@ -64,7 +72,7 @@ function DeliveryMethodTable() {
         <TableHead table={table} />
         
         <TableBody>
-          {table.getRowModel().rows.map(row => (
+          {rows.map(row => (
             <ExpandableRow row={row} key={row.id}>
               <div>@Storm: Click on a row to see this expandable row content</div>
             </ExpandableRow>
@@ -73,7 +81,7 @@ function DeliveryMethodTable() {
       </Table>
 
       <br />
-      <p>Row Count: {table.getRowModel().rows.length}</p>
+      <p>Row Count: {rows.length}</p>
     </>
   )
 }

@@ -11,13 +11,18 @@ import {
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
 import RowHeader from '../../_global/Table/RowHeader/RowHeader'
 import SearchBar from '../../_global/SearchBar/SearchBar'
-import ExpandedRowContent from './ExpandedRowContent/ExpandedRowContent'
+import { TableHead } from '../../_global/Table/TableHead/TableHead'
+import { TableBody } from '../../_global/Table/TableBody/TableBody'
+import { Table } from '../../_global/Table/Table'
 
 const columnHelper = createColumnHelper()
 
 const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
+  }),
+  columnHelper.accessor('_id', {
+    header: 'ID'
   }),
 ];
 
@@ -52,23 +57,24 @@ function DeliveryMethodTable() {
   })
 
   return (
-    <div className="p-2">
+    <>
       <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
-      <div className='table'>
-        <div className='table-header'>
-          <RowHeader columnHeaders={table.getFlatHeaders()} />
-        </div>
-        <div className='table-body'>
+      <Table>
+        <TableHead table={table} />
+        
+        <TableBody>
           {table.getRowModel().rows.map(row => (
-            <ExpandableRow row={row} key={row.id} ExpandedRowContent={ExpandedRowContent} />
+            <ExpandableRow row={row} key={row.id}>
+              <div>@Storm: Click on a row to see this expandable row content</div>
+            </ExpandableRow>
           ))}
-        </div>
-      </div>
-      <div />
+        </TableBody>
+      </Table>
+
       <br />
       <p>Row Count: {table.getRowModel().rows.length}</p>
-    </div>
+    </>
   )
 }
 

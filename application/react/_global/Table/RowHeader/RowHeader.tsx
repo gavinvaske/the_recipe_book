@@ -1,17 +1,17 @@
 import React from 'react'
-import { flexRender } from '@tanstack/react-table'
+import { Header, RowData, flexRender } from '@tanstack/react-table'
 import './RowHeader.scss'
 
 const RowHeader = (props) => {
-  const { columnHeaders } = props;
+  const { columnHeaders }: {columnHeaders: Header<RowData, unknown>[]} = props;
 
   const getSortIcon = (sortDirection) => {
     if (sortDirection === 'asc') {
-      return <i class="fa-regular fa-arrow-down"></i>
+      return <i className="fa-regular fa-arrow-down"></i>
     } else if (sortDirection === 'desc') {
-      return <i class="fa-regular fa-arrow-up"></i>
+      return <i className="fa-regular fa-arrow-up"></i>
     } else {
-      return <i class="fa-regular fa-arrow-up-arrow-down"></i>
+      return <i className="fa-regular fa-arrow-up-arrow-down"></i>
     }
   }
 

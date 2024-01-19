@@ -1,9 +1,9 @@
 import React from 'react'
-import { flexRender } from '@tanstack/react-table'
+import { Row, RowData, flexRender } from '@tanstack/react-table'
 import './Row.scss'
 
 const Row = (props) => {
-  const { row } = props;
+  const { row } : {row: Row<RowData>} = props;
 
   return (
     <div className='row' key={row.id}>

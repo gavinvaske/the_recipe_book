@@ -15,7 +15,14 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { RowActions } from '../../_global/Table/RowActions/RowActions'
 
-const columnHelper = createColumnHelper()
+type DeliveryMethod = {
+  _id: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string
+}
+
+const columnHelper = createColumnHelper<DeliveryMethod>()
 
 const columns = [
   columnHelper.accessor('name', {
@@ -54,10 +61,10 @@ function DeliveryMethodTable() {
       globalFilter: globalFilter,
       sorting: sorting,
     },
-    getFilteredRowModel: getFilteredRowModel(globalFilter),
+    getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
-    onGlobalFilterChanged: setGlobalFilter,
+    onGlobalFilterChange: setGlobalFilter,
     getSortedRowModel: getSortedRowModel(),
   })
 

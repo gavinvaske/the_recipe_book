@@ -4,6 +4,8 @@ export const RowActions = (props) => {
   const [isOpened, setIsOpened] = React.useState(false);
   const { row } = props;
   const mongooseObjectId = row.original._id;
+
+  console.log('Rendering the options for Object Id: ', mongooseObjectId);
   
   const toggleRowActions = () => setIsOpened(!isOpened)
 

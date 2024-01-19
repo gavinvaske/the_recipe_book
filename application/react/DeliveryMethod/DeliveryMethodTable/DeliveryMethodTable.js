@@ -9,7 +9,6 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
-import RowHeader from '../../_global/Table/RowHeader/RowHeader'
 import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
@@ -74,7 +73,7 @@ function DeliveryMethodTable() {
         <TableBody>
           {rows.map(row => (
             <ExpandableRow row={row} key={row.id}>
-              <div>@Storm: Click on a row to see this expandable row content</div>
+              <div>@Storm: Click on a row to see this expandable row content. Delete this div to make the row no-longer expandable</div>
             </ExpandableRow>
           ))}
         </TableBody>

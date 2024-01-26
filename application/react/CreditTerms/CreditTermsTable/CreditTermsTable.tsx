@@ -1,4 +1,3 @@
-// <reference types="react-table" />
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './CreditTermsTable.scss'
@@ -8,13 +7,14 @@ import {
   useReactTable,
   getFilteredRowModel,
   getSortedRowModel,
+  SortingState,
 } from '@tanstack/react-table'
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
 import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { RowActions } from '../../_global/Table/RowActions/RowActions'
+import { CreditTermsRowActions } from './RowActions/RowActions';
 
 type CreditTerm = {
   _id: string,
@@ -35,15 +35,14 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <RowActions row={props.row} />
+    cell: props => <CreditTermsRowActions row={props.row} />
   })
 ];
-
 
 const CreditTermsTable = () => {
   const [creditTerms, setCreditTerms] = useState([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
-  const [sorting, setSorting] = React.useState([])
+  const [sorting, setSorting] = React.useState<SortingState>([])
 
   useEffect(() => {
     axios.get('/credit-terms?responseDataType=JSON')

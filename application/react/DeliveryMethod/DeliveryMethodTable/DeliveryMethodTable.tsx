@@ -7,13 +7,14 @@ import {
   useReactTable,
   getFilteredRowModel,
   getSortedRowModel,
+  SortingState,
 } from '@tanstack/react-table'
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
 import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { RowActions } from '../../_global/Table/RowActions/RowActions'
+import { DeliveryMethodsRowActions } from './RowActions/RowActions'
 
 type DeliveryMethod = {
   _id: string,
@@ -34,14 +35,14 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <RowActions row={props.row} />
+    cell: props => <DeliveryMethodsRowActions row={props.row} />
   })
 ];
 
 function DeliveryMethodTable() {
   const [deliveryMethods, setDeliveryMethods] = React.useState([])
   const [globalFilter, setGlobalFilter] = React.useState("");
-  const [sorting, setSorting] = React.useState([])
+  const [sorting, setSorting] = React.useState<SortingState>([])
 
   React.useEffect(() => {
     axios.get('/delivery-methods?responseDataType=JSON')

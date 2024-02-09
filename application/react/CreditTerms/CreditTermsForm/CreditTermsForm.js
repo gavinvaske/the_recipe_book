@@ -10,7 +10,7 @@ const CreditTermsForm = () => {
   const onSubmit = (formData) => {
     axios.post('/credit-terms', formData)
       .then((response) => {
-        window.location.href = `/credit-terms`;
+        window.location.href = `/react-ui/tables/credit-term`; // TOOD: Create redirect handler to avoid hardcoding base url ("/react-ui/*")
       })
       .catch((error) => {
         alert(`An error occurred while attempting to save:\n\n${error.response.data}`);

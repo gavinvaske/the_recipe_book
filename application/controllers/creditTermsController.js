@@ -8,21 +8,9 @@ const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
 const BAD_REQUEST_STATUS_CODE = 400;
 
 router.get('/', async (request, response) => {
-    const { responseDataType } = request.query;
-  
-    const shouldRenderHtmlPage = !responseDataType || responseDataType.toUpperCase() !== 'JSON';
-
-    if (shouldRenderHtmlPage) {
-        return response.render('viewCreditTerms');
-    }
-
     const creditTerms = await CreditTermModel.find().exec();
 
     return response.send(creditTerms);
-});
-
-router.get('/form', async (request, response) => {
-    return response.render('createCreditTerms');
 });
 
 router.post('/', async (request, response) => {

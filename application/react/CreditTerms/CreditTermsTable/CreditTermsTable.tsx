@@ -45,7 +45,7 @@ const CreditTermsTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   useEffect(() => {
-    axios.get('/credit-terms?responseDataType=JSON')
+    axios.get('/credit-terms')
       .then((response) => {
          const { data } = response;
          setCreditTerms(data);

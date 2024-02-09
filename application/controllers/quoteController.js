@@ -6,10 +6,6 @@ router.use(verifyJwtToken);
 
 const BAD_REQUEST_STATUS = 400;
 
-router.get('/form', async (request, response) => {
-    return response.render('createQuote');
-});
-
 router.post('/', async (request, response) => {
     const labelQuantities = request.body.labelQuantities;
     delete request.body.labelQuantities;

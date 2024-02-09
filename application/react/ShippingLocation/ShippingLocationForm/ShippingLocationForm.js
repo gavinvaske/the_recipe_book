@@ -13,7 +13,7 @@ const ShippingLocationForm = (props) => {
   const [ deliveryMethods, setDeliveryMethods ] = useState([]);
 
   useEffect(() => {
-    axios.get('/delivery-methods?responseDataType=JSON')
+    axios.get('/delivery-methods')
       .then(({data}) => setDeliveryMethods(data))
       .catch((error) => alert('Failed to load delivery methods: ' + error.message));
   }, [])

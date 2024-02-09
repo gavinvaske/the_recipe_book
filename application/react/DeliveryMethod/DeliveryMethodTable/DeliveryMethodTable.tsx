@@ -45,7 +45,7 @@ function DeliveryMethodTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   React.useEffect(() => {
-    axios.get('/delivery-methods?responseDataType=JSON')
+    axios.get('/delivery-methods')
     .then((response) => {
         const { data } = response;
         setDeliveryMethods(data);

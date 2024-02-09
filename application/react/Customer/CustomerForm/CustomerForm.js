@@ -36,7 +36,7 @@ const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   useEffect(() => {
-    axios.get('/credit-terms?responseDataType=JSON')
+    axios.get('/credit-terms')
       .then(({data}) => setCreditTerms(data))
       .catch((error) => alert('Error getting credit terms: ' + error.message));
   }, []);

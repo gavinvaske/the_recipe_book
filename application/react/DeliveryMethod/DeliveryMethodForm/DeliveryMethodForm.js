@@ -10,7 +10,7 @@ const DeliveryMethodForm = () => {
   const onSubmit = (formData) => {
     axios.post('/delivery-methods', formData)
       .then((response) => {
-        window.location.href = `/delivery-methods`;
+        window.location.href = `/react-ui/tables/delivery-method`; // TOOD: Create redirect handler to avoid hardcoding base url ("/react-ui/*")
       })
       .catch((error) => {
         alert(`An error occurred while attempting to save:\n\n${error.response.data}`);

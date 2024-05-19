@@ -86,7 +86,7 @@ app.use('/delivery-methods', require('./controllers/deliveryMethodController'));
 app.use('/credit-terms', require('./controllers/creditTermsController'));
 
 // This route loads the ENTIRE REACT APP
-app.use('/react-ui', (_, response) => response.render('app.ejs'))
+app.use('/react-ui', (_, response) => response.render('app.ejs'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

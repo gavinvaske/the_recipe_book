@@ -69,7 +69,8 @@
             <div class='card'>
                 <div class='ticket-details-wrapper'>
                     <h3 class='ticket-info'><%= ticket.customerName ? ticket.customerName : 'N/A' %></h3>
-                    <div class='highlight-frame-small flex-center-center-row'>
+                    <div class='ticket-priority'><%= ticket.priority %></div>
+                    <div class='highlight-frame-small flex-center-space-between-row'>
                         <div class='col col-1'>
                             <div class='box'>
                                 <span>Created</span>
@@ -88,13 +89,8 @@
                                 <p><%= ageOfTicket %></p>
                             </div>
                         </div>
-                        <div class='col col-4'>
-                            <div class='box'>
-                                <span><%= ticket.priority %></span>
-                            </div>
-                        </div>
                     </div>
-                    <div class='highlight-frame flex-center-center-row'>
+                    <div class='highlight-frame flex-center-space-between-row'>
                         <div class='col col-1'>
                             <div class='box'>
                                 <div class='symbol-frame'>
@@ -452,7 +448,7 @@
         </div>
         <div class='card proof half-width'>
             <div class='proof-placeholder'><div class='flex-center-center-row' style='height: 100%;'><h1 class='text-box'>Random Quote</h1></div></div>
-            <iframe id='proof' src= "/images/1139D-096 Proof.pdf#zoom=100" type="application/pdf"></iframe>
+            <iframe id='proof' src= "/images/1139D-096 Proof.pdf#zoom=50" type="application/pdf"></iframe>
         </div>
     </div>
 </div>

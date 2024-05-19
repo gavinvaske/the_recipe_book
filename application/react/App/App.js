@@ -10,20 +10,22 @@ import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryM
 
 export function App() {
   return (
-    <Routes>
-      <Route path="react-ui/forms">
-        <Route path="delivery-method" element={<DeliveryMethodForm />} />
-        <Route path="credit-term" element={<CreditTermsForm />} />
-        <Route path="quote" element={<QuoteForm />} />
-        <Route path="customer" element={<CustomerForm />} />
-      </Route>
+    <Routes >
+      <Route path="react-ui">
+        <Route path="forms">
+          <Route path="delivery-method" element={<DeliveryMethodForm />} />
+          <Route path="credit-term" element={<CreditTermsForm />} />
+          <Route path="quote" element={<QuoteForm />} />
+          <Route path="customer" element={<CustomerForm />} />
+        </Route>
 
-      <Route path="react-ui/tables">
-        <Route path="credit-term" element={<CreditTermsTable />} />
-        <Route path="delivery-method" element={<DeliveryMethodTable />} />
-      </Route>
+        <Route path="tables">
+          <Route path="credit-term" element={<CreditTermsTable />} />
+          <Route path="delivery-method" element={<DeliveryMethodTable />} />
+        </Route>
 
-      <Route path="*" element={<div>404 Page Not Found</div>} />
+        <Route path="*" element={<div>404 Page Not Found</div>} />
+      </Route>
     </Routes>
   )
 }

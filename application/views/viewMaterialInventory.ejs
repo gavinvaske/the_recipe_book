@@ -5,24 +5,27 @@
 </script>
 <%- include('partials/navbarMain.ejs') %>
 <div class='page-wrapper materials-wrapper flex-center-center-column full-width'>
-    <h2 class="page-title card">Inventory Page</h2>
+    
     <div class='material-header flex-top-space-between-row full-width'>
       <div class='card col col-one'>
+        <h1>Inventory Page</h2>
+      </div>
+      <div class='card col col-two'>
         <span>Feet On Hand</span>
         <h1 class='total-length-of-material-in-inventory'><%= lengthOfAllMaterialsInInventory || 'N/A' %></h1>
       </div>
-      <div class='card col col-two'>
+      <div class='card col col-three'>
         <span>Net Feet</span>
         <h1 class='net-length-of-material-in-inventory'><%= netLengthOfMaterialInInventory || 'N/A' %></h1>
       </div>
-      <div class='card col col-three'>
+      <div class='card col col-four'>
         <span>Feet On Order</span>
         <h1 class='total-length-of-material-ordered'><%= lengthOfAllMaterialsOrdered || 'N/A' %></h1>
       </div>
-      <div class='card col col-four'>
+      <!-- <div class='card col col-five'>
         <span>Total Open POs</span>
         <h1 class='total-purchase-ordered'><%= totalPurchaseOrders || 'N/A' %></h1>
-      </div>
+      </div> -->
     </div>
 
     <div class="workflow-filter flex-center-left-row full-width card">
@@ -62,7 +65,7 @@
         </div>
         <div class="all-wrapper tooltip">
           <span class="tooltiptext">See All</span>
-          <button class="sort btn-sort"><i class="fa-solid fa-layer-group"></i> See All(<span id="material-count">Count</span>)</button>
+          <button class="sort btn-sort see-all"><i class="fa-solid fa-layer-group"></i> See All(<span id="material-count">Count</span>)</button>
         </div>
       </div>
 

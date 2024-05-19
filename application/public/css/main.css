@@ -445,7 +445,7 @@ html {
   color: #39c2dd;
 }
 .page-wrapper {
-  padding: 110px 2rem 0 2rem;
+  padding: 80px 2rem 0 2rem;
 }
 .body p {
     line-height: 1.5rem;
@@ -949,7 +949,8 @@ input:focus + .show-password-frame {
 .card {
   padding: 1.5rem;
   border: none;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
+  margin-bottom: 15px;
   -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
   background-color: white;
@@ -978,6 +979,10 @@ input:focus + .show-password-frame {
   background-color: #fff;
   background-clip: border-box;
   border-radius: 0.428rem;
+}
+.material-orders-table-wrapper {
+  max-width: 100%;
+  overflow-y: scroll;
 }
 
 .btn-primary.create-new-recipe {
@@ -1096,6 +1101,7 @@ input:focus + .show-password-frame {
   padding: 0.72rem 2rem;
   border-top: 1px solid #ebe9f1;
   vertical-align: middle;
+  white-space: nowrap;
 }
 .table.recipes tbody tr td:nth-child(-n+3) {
   cursor: pointer;
@@ -1103,12 +1109,19 @@ input:focus + .show-password-frame {
 .table.recipes tbody tr td:nth-child(5) {
   cursor: pointer;
 }
+.table.recipes tbody tr td:nth-child(1),
+.table.recipes thead tr th:nth-child(1) {
+  text-align: center;
+}
+.table.recipes tbody tr td:nth-child(1) a {
+  color: #157efb;
+}
 .media-box {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
 .media-box .user-face {
   width: 32px;
@@ -1133,19 +1146,20 @@ input:focus + .show-password-frame {
   font-size: 1.87rem;
   margin-left: 15px;
 } */
-.header p {
+/* .header p {
   font-size: 1.5rem;
   font-weight: 200;
   margin-left: 3px;
   color: #6e6b7b;
   /* margin-top: 10px; */
-}
+} */
 .header p b {
   color: #157efb;
   font-weight: 500;
 }
 .table th div {
   font-weight: bold;
+  white-space: nowrap;
 }
 .new-recipe .fa-regular.fa-hat-chef {
   font-size: 50px;
@@ -1202,11 +1216,15 @@ input:focus + .show-password-frame {
 .options-reveal-box:hover {
   cursor: pointer;
 }
-.video-link-box svg {
+.video-link-box svg,
+.page-wrapper.all-recipes .fa-solid.fa-ban {
   margin-right: 8px
 }
 .video-link-box a {
   color: #6e6b7b;
+}
+.table.recipes {
+  table-layout:fixed;
 }
 
 .options-reveal-box {
@@ -1680,6 +1698,10 @@ a.storm {
   justify-content: center;
   align-items: center;
   color: #6e6b7b;
+}
+.pagination-number:hover {
+  background-color: rgba(100, 100, 100, .3);
+  border-radius: 50%;
 }
 .pagination-number-frame:first-of-type,
 .pagination-number-frame:last-of-type {
@@ -2461,14 +2483,14 @@ a.storm {
 } */
 .workflow-order-header.card {
   position: fixed;
-  top: 2rem;
-  width: calc(100% - 125px);
-  right: 30px;
+  top: 15px;
+  width: calc(100% - 95px);
+  right: 15px;
   z-index: 99;
   transition: .3s;
 }
 .workflow-order-header.active {
-  width: calc(100% - 360px);
+  width: calc(100% - 330px);
   transition: .3s;
 }
 
@@ -2673,20 +2695,23 @@ a.storm {
   border-radius: 10px; 
   box-sizing: border-box;
 }
+.material-header .card {
+  height: 108px;
+}
 .material-header .col {
-	width: calc(25% - 15px);
+	width: calc(25% - 12px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 
 }
-.material-header .col.col-two {
+/* .material-header .col.col-two {
   margin: 0 15px 0 30px;
-}
-.material-header .col.col-three {
+} */
+/* .material-header .col.col-three {
   margin: 0 30px 0 15px;
-}
+} */
 
 .material-header .col span {
 	font-weight: 500;
@@ -2717,7 +2742,7 @@ a.storm {
 }
 .material-card-section .card {
 	margin-bottom: 1rem;
-	width: calc(33.333% - 1rem);
+	width: calc(33.333% - 12px);
 	background: purple;
 	display: flex;
 	flex-direction: column;
@@ -3097,7 +3122,8 @@ a.storm {
 
 .department-wrapper {
  position: relative;
- margin-bottom: 30px;
+ /* margin-bottom: 30px; */
+ margin-bottom: 15px;
 }
 .department-wrapper h2 {
   color: #6e6b7b;
@@ -3162,8 +3188,12 @@ a.storm {
   background-color: #0465d9;
 }
 .view-tickets-body .card {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   /* padding-top: 45px; */
+}
+.view-tickets-body .alert-box,
+.view-requests-body .alert-box {
+  margin-top: 0;
 }
 .list-item-user-details { 
   position: relative;
@@ -3598,7 +3628,8 @@ canvas{
   justify-content: flex-end;
   align-items: center;
   /* padding: 210px 30px 0 30px; */
-  padding: 240px 30px 0 30px;
+  /* padding: 240px 30px 0 30px; */
+  padding: 177px 15px 0 15px;
 }
 .sidebar-main {
   position: fixed;
@@ -3740,8 +3771,16 @@ canvas{
 .navigation-container ul li .option .fa-chevron-right {
   position: absolute;
   right: 20px;
-  top: 20px;
   font-size: 16px;
+}
+.sidebar-option .fa-chevron-right {
+  position: absolute;
+  right: 20px;
+  top: 17px;
+  font-size: 16px;
+}
+.account-link .fa-chevron-right {
+  top: 20px;
 }
 .sidebar-sub-options {
   /* padding-left: 12px;
@@ -3900,8 +3939,8 @@ canvas{
   top: 0;
   height: 70px;
   z-index: 98;
-  width: calc(100% - 90px);
-  right: 0px;
+  width: calc(100% - 95px);
+  right: 15px;
   opacity: 1;
 }
 .scroll-curtain.active {
@@ -4655,9 +4694,14 @@ iframe {
   margin: 25px 0;
 }
 
-.highlight-frame-small .col,
+.highlight-frame-small .col {
+  width: calc(33.33% - 8px);
+  display: flex;
+  justify-items: center;
+  align-content: center;
+}
 .highlight-frame .col {
-  width: 33.33%;
+  width: calc(25% - 8px);
   display: flex;
   justify-items: center;
   align-content: center;
@@ -4669,7 +4713,7 @@ iframe {
   border-radius: 0.428rem;
   border: 1px solid rgba(128, 128, 128, .12);
   height: 150px;
-  width: calc(100% - 15px);
+  width: 100%;
 }
 .department-notes {
   width: 100%;
@@ -4730,7 +4774,7 @@ iframe {
   font-weight: 600;
 }
 
-.highlight-frame-small .col:last-of-type .box {
+/* .highlight-frame-small .col:last-of-type .box {
   background-color: #6a68af;
   color: white;
   text-align: center;
@@ -4740,7 +4784,7 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .product-table .col-td:first-of-type {
   font-weight: bold;
@@ -4956,3 +5000,15 @@ background: #000;
   margin-bottom: 1px;
 }
 
+.ticket-priority {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #6a68af;
+  color: white;
+  border-radius: 3px;
+  padding:5px 7px;
+}
+.ticket-details-wrapper {
+  position: relative;
+}

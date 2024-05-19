@@ -1,6 +1,5 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DeliveryMethodForm from '../DeliveryMethod/DeliveryMethodForm/DeliveryMethodForm'
-
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
 import CustomerForm from '../Customer/CustomerForm/CustomerForm';
 import DeliveryMethodForm from '../DeliveryMethod/DeliveryMethodForm/DeliveryMethodForm'

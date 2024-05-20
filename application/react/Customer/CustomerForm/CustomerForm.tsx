@@ -12,20 +12,27 @@ import { removeElementFromArray } from '../../utils/state-service';
 import ContactForm from '../Contact/ContactForm/ContactForm';
 import ContactCard from '../Contact/ContactCard/ContactCard';
 
+import { AddressForm as AddressFormType } from '../../_types/forms/address';
+import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
+import { ContactForm as ContactFormType } from '../../_types/forms/contact';
+import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
+
+import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+
 const CustomerForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
 
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
   const [showBusinessLocationForm, setShowBusinessLocationForm] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [creditTerms, setCreditTerms] = useState([]);
+  const [creditTerms, setCreditTerms] = useState<CreditTerm[]>([])
 
-  const [billingLocations, setBillingLocations] = useState([]);
-  const [shippingLocations, setShippingLocations] = useState([]);
-  const [businessLocations, setBusinessLocations] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [contacts, setContacts] = useState([]);
+  const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormType[]>([])
+  const [billingLocations, setBillingLocations] = useState<AddressFormType[]>([])
+  const [businessLocations, setBusinessLocations] = useState<AddressFormType[]>([])
+  const [locations, setLocations] = useState<(AddressFormType | ShippingLocationFormType)[]>([])
+  const [contacts, setContacts] = useState<ContactFormType[]>([])
 
   useEffect(() => {
     setLocations([
@@ -41,7 +48,7 @@ const CustomerForm = () => {
       .catch((error) => alert('Error getting credit terms: ' + error.message));
   }, []);
 
-  const onCustomerFormSubmit = (customer) => {
+  const onCustomerFormSubmit = (customer: CustomerFormType) => {
     customer.businessLocations = businessLocations;
     customer.shippingLocations = shippingLocations;
     customer.contacts = contacts;
@@ -59,7 +66,7 @@ const CustomerForm = () => {
   const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
   const hideContactForm = () => setShowContactForm(false);
 
-  const onBillingLocationFormSubmit = (address) => {
+  const onBillingLocationFormSubmit = (address: AddressFormType) => {
     hideBillingLocationForm();
     setBillingLocations([...billingLocations, address]);
   };
@@ -69,7 +76,7 @@ const CustomerForm = () => {
     setShippingLocations([...billingLocations, shippingLocation]);
   };
 
-  const onBusinessLocationFormSubmit = (businessLocation) => {
+  const onBusinessLocationFormSubmit = (businessLocation: AddressFormType) => {
     hideBusinessLocationForm();
     setBusinessLocations([...businessLocations, businessLocation]);
   };
@@ -103,23 +110,23 @@ const CustomerForm = () => {
         </div>
 
         <div>
-          <label>Overun</label>
-          <input type="text" {...register('overun', { })} />
+          <label>Overun*</label>
+          <input type="text" {...register('overun', { required: "This is required" })} />
           <ErrorMessage errors={errors} name="overun" />
         </div>
 
         <div>
-        <select {...register("creditTerms")} multiple>
-          {
-            creditTerms.map((creditTerm, index) => {
-              return (
-                <option key={creditTerm._id} value={creditTerm._id}>
-                  {creditTerm.description}
-                </option>
-              )
-            })
-          }
-        </select>
+          <select {...register("creditTerms")} multiple>
+            {
+              creditTerms.map((creditTerm: CreditTerm) => {
+                return (
+                  <option key={creditTerm._id} value={creditTerm._id}>
+                    {creditTerm.description}
+                  </option>
+                )
+              })
+            }
+          </select>
         </div>
 
         <button className='btn-primary' type="submit">Create Customer</button>
@@ -154,7 +161,7 @@ const CustomerForm = () => {
           shippingLocations.map((shippingLocation, index) => {
             return (
               <div key={index}>
-                <ShippingLocationCard 
+                <ShippingLocationCard
                   data={shippingLocation} 
                   onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)} 
                 />

@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import './ShippingLocationForm.scss'
+import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
+
+import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 
 const ShippingLocationForm = (props) => {
   const { 
@@ -10,7 +13,7 @@ const ShippingLocationForm = (props) => {
     onCancel
   } = props;
 
-  const [ deliveryMethods, setDeliveryMethods ] = useState([]);
+  const [ deliveryMethods, setDeliveryMethods ] = useState<DeliveryMethod[]>([]);
 
   useEffect(() => {
     axios.get('/delivery-methods')
@@ -18,7 +21,7 @@ const ShippingLocationForm = (props) => {
       .catch((error) => alert('Failed to load delivery methods: ' + error.message));
   }, [])
   
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormType>();
 
   return (
     <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
@@ -40,7 +43,7 @@ const ShippingLocationForm = (props) => {
         <select {...register("deliveryMethod")}>
           <option value="">-- Select --</option>
           {
-            deliveryMethods.map((deliveryMethod) => {
+            deliveryMethods.map((deliveryMethod: DeliveryMethod) => {
               return (
                 <option key={deliveryMethod._id} value={deliveryMethod._id}>{deliveryMethod.name}</option>
               )

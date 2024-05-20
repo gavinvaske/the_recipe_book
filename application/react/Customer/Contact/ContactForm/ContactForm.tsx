@@ -2,15 +2,22 @@ import React from 'react';
 import { useForm } from'react-hook-form';
 import ErrorMessage from '../../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import './ContactForm.scss'
+import { ContactForm } from '../../../_types/forms/contact';
+import { AddressForm } from '../../../_types/forms/address';
+import { ShippingLocationForm } from '../../../_types/forms/shippingLocation';
 
 const ContactForm = (props) => {
   const { 
     onSubmit,
     onCancel,
     locations
+  }: {
+    onSubmit: any, 
+    onCancel: any, 
+    locations: (AddressForm | ShippingLocationForm)[]
   } = props;
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>();
 
   return (
     <form id='contact-form' onSubmit={handleSubmit(onSubmit)}>
@@ -55,7 +62,7 @@ const ContactForm = (props) => {
         <select {...register("location")}>
           <option value="">-- Select --</option>
           {
-            locations.map((address, index) => {
+            locations.map((address, index: number) => {
               return (
                 <option key={index} value={index}>
                     {address.name}: {address.street}, {address.city}, {address.state}, {address.zipCode}

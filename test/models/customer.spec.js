@@ -199,7 +199,7 @@ describe('validation', () => {
         });
 
         it('should have a deliveryMethod attribute', () => {
-            const deliveryMethod = mongoose.Types.ObjectId();
+            const deliveryMethod = new mongoose.Types.ObjectId();
             const address = {
                 ...getAddress(),
                 deliveryMethod

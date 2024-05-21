@@ -10,7 +10,7 @@ describe('File: ticketTimer.js', () => {
     
     beforeEach(() => {
         ticketTimeLedgerAttributes = {
-            ticketId: mongoose.Types.ObjectId(),
+            ticketId: new mongoose.Types.ObjectId(),
             timerType: chance.pickone(TIMER_TYPES),
             state: chance.pickone(TIMER_STATES)
         };

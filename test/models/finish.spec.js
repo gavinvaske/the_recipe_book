@@ -103,7 +103,7 @@ describe('validation', () => {
             });
 
             it('should be a mongoose ObjectId', () => {
-                finishAttributes.vendor = mongoose.Types.ObjectId();
+                finishAttributes.vendor = new mongoose.Types.ObjectId();
                 
                 const finish = new FinishModel(finishAttributes);
                 
@@ -131,7 +131,7 @@ describe('validation', () => {
             });
 
             it('should be a mongoose ObjectId', () => {
-                finishAttributes.category = mongoose.Types.ObjectId();
+                finishAttributes.category = new mongoose.Types.ObjectId();
                 
                 const finish = new FinishModel(finishAttributes);
                 

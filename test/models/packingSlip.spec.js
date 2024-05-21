@@ -200,7 +200,7 @@ describe('File: packingSlip.js', () => {
         });
 
         it('should be a mongoose object id', () => {
-            packingSlipAttributes.deliveryMethod = mongoose.Types.ObjectId();
+            packingSlipAttributes.deliveryMethod = new mongoose.Types.ObjectId();
             const packingSlip = new PackingSlipModel(packingSlipAttributes);
             
             expect(packingSlip.deliveryMethod).toEqual(expect.any(mongoose.Types.ObjectId));

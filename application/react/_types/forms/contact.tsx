@@ -1,3 +1,6 @@
+import { AddressForm } from "./address"
+import { ShippingLocationForm } from "./shippingLocation"
+
 export type ContactForm = {
   fullName: string,
   phoneNumber: string,
@@ -6,5 +9,5 @@ export type ContactForm = {
   contactStatus: string,
   notes: string,
   position: string,
-  location: number
+  location: AddressForm | ShippingLocationForm 
 }

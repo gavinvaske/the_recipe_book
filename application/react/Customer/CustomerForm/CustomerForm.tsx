@@ -81,11 +81,13 @@ const CustomerForm = () => {
     setBusinessLocations([...businessLocations, businessLocation]);
   };
 
-  const onContactFormSubmit = (contact) => {
+  const onContactFormSubmit = (contact: any) => {
     hideContactForm();
-    const locationIndex = contact.location;
-    contact.location = locations[locationIndex];
-    setContacts([...contacts, contact]);
+    const contactForm: ContactFormType = {
+      ...contact,
+      location: locations[contact.location]
+    }
+    setContacts([...contacts, contactForm]);
   }
 
   return (

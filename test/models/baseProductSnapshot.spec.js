@@ -56,8 +56,6 @@ describe('BaseProductSnapshot', () => {
 
             const error = baseProductSnapshot.validateSync();
 
-            console.log(error);
-
             expect(error).toBeUndefined();
         });
     });

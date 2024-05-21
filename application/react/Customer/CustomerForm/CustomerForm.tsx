@@ -56,7 +56,7 @@ const CustomerForm = () => {
 
     axios.post('/customers', customer)
       .then(({data}) => {
-        alert('Customer created successfully!')
+        alert('Customer created successfully! (TODO: Redirect to customer table)')
       })
       .catch(({response}) => alert('Error creating customer: ' + response.data));
   };

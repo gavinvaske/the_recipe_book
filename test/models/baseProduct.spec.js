@@ -15,11 +15,11 @@ describe('Product Model', () => {
 
     beforeEach(() => {
         productAttributes = {
-            customer: mongoose.Types.ObjectId(),
-            die: mongoose.Types.ObjectId(),
-            primaryMaterial: mongoose.Types.ObjectId(),
-            finish: mongoose.Types.ObjectId(),
-            author: mongoose.Types.ObjectId(),
+            customer: new mongoose.Types.ObjectId(),
+            die: new mongoose.Types.ObjectId(),
+            primaryMaterial: new mongoose.Types.ObjectId(),
+            finish: new mongoose.Types.ObjectId(),
+            author: new mongoose.Types.ObjectId(),
             ...testDataGenerator.mockData.SharedBaseProductAttributes()
         };
     });
@@ -252,7 +252,7 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            productAttributes.secondaryMaterial = mongoose.Types.ObjectId();
+            productAttributes.secondaryMaterial = new mongoose.Types.ObjectId();
             
             const product = new ProductModel(productAttributes);
             

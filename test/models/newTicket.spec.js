@@ -89,7 +89,7 @@ describe('Ticket validation', () => {
 
     beforeEach(() => {
         ticketAttributes = {
-            customer: mongoose.Types.ObjectId(),
+            customer: new mongoose.Types.ObjectId(),
             shipDate: chance.date(),
             totalStockLength: chance.d100(),
             totalFramesRan: chance.d100(),
@@ -1347,8 +1347,8 @@ describe('Ticket validation', () => {
 
         it('should be an array of mongoose object ids', () => {
             const packingSlips = [
-                mongoose.Types.ObjectId(),
-                mongoose.Types.ObjectId()
+                new mongoose.Types.ObjectId(),
+                new mongoose.Types.ObjectId()
             ];
             ticketAttributes.packingSlips = packingSlips;
             const ticket = new Ticket(ticketAttributes);
@@ -1366,9 +1366,9 @@ describe('Ticket validation', () => {
     describe('attribute: products', () => {
         it('should pass validation if attribute is defined correctly', () => {
             const products = [
-                { baseProduct: mongoose.Types.ObjectId() },
-                { baseProduct: mongoose.Types.ObjectId() },
-                { baseProduct: mongoose.Types.ObjectId() },
+                { baseProduct: new mongoose.Types.ObjectId() },
+                { baseProduct: new mongoose.Types.ObjectId() },
+                { baseProduct: new mongoose.Types.ObjectId() },
             ];
             ticketAttributes.products = products;
             const ticket = new Ticket(ticketAttributes);
@@ -1382,7 +1382,7 @@ describe('Ticket validation', () => {
         it('should have the correct fields on each product', () => {
             const products = [
                 { 
-                    baseProduct: mongoose.Types.ObjectId(), 
+                    baseProduct: new mongoose.Types.ObjectId(), 
                     labelQuantity: chance.d100(),
                     numberOfFinishedRolls: chance.d100(), 
                     finishedLabelQuantity: chance.d100() 
@@ -1409,7 +1409,7 @@ describe('Ticket validation', () => {
         });
 
         it('should be set to the correct value', () => {
-            const estimatedTicketObjectId = mongoose.Types.ObjectId();
+            const estimatedTicketObjectId = new mongoose.Types.ObjectId();
             ticketAttributes.estimatedTicket = estimatedTicketObjectId;
             const ticket = new Ticket(ticketAttributes);
             
@@ -1456,7 +1456,7 @@ describe('Ticket validation', () => {
             it('should have timestamps', async () => {
                 ticketAttributes.products = [
                     {
-                        baseProduct: mongoose.Types.ObjectId(),
+                        baseProduct: new mongoose.Types.ObjectId(),
                         labelQuantity: chance.d100(),
                         numberOfFinishedRolls: chance.d100(),
                         finishedLabelQuantity: chance.d100()

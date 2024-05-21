@@ -185,7 +185,7 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
 
 function generateProduct() {
     return {
-        productId: mongoose.Types.ObjectId(),
+        productId: new mongoose.Types.ObjectId(),
         labelQty: chance.d100()
     };
 }
@@ -1508,7 +1508,7 @@ describe('File: quote.js', () => {
             expect(error).toBeUndefined();
         });
 
-        it('should be a mongoose.types.ObjectId', () => {
+        it('should be a new mongoose.Types.ObjectId', () => {
             const expectedCustomer = new mongoose.Types.ObjectId();
             quoteAttributes.customer = expectedCustomer;
             const quote = new Quote(quoteAttributes);
@@ -1789,7 +1789,7 @@ describe('File: quote.js', () => {
 
         beforeEach(() => {
             expectedProduct = {
-                productId: mongoose.Types.ObjectId(),
+                productId: new mongoose.Types.ObjectId(),
                 labelQty: chance.d100()
             };
             quoteAttributes.products = [expectedProduct];
@@ -1830,7 +1830,7 @@ describe('File: quote.js', () => {
                 expect(error).toBeDefined();
             });
 
-            it('should be a mongoose.Types.ObjectId type', () => {
+            it('should be a new mongoose.Types.ObjectId type', () => {
                 const quote = new Quote(quoteAttributes);
                 
                 expect(quote.products[0].productId).toEqual(expect.any(mongoose.Types.ObjectId));

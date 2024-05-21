@@ -77,8 +77,8 @@ function getFinish() {
     return {
         name: chance.string(),
         finishId: chance.string(),
-        vendor: mongoose.Types.ObjectId(),
-        category: mongoose.Types.ObjectId(),
+        vendor: new mongoose.Types.ObjectId(),
+        category: new mongoose.Types.ObjectId(),
         thickness: chance.integer({ min: 1, max: 3 }),
         weight: chance.d100(),
         costPerMsi: chance.floating({ min: 0.001, fixed: 3, max: 3 }),

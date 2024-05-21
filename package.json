@@ -32,7 +32,7 @@
   "author": "Gavin Vaske",
   "license": "ISC",
   "dependencies": {
-    "@parcel/transformer-sass": "2.10.3",
+    "@parcel/transformer-sass": "2.12.0",
     "@tanstack/react-table": "8.11.6",
     "aws-sdk": "2.1527.0",
     "axios": "1.6.2",
@@ -57,7 +57,7 @@
     "mongoose": "6.12.4",
     "mongoose-delete": "0.5.4",
     "multer": "1.4.5-lts.1",
-    "parcel": "2.10.3",
+    "parcel": "2.12.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.49.2",

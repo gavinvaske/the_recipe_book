@@ -66,14 +66,14 @@ const CustomerForm = () => {
   const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
   const hideContactForm = () => setShowContactForm(false);
 
-  const onBillingLocationFormSubmit = (address: AddressFormType) => {
+  const onBillingLocationFormSubmit = (billingLocation: AddressFormType) => {
     hideBillingLocationForm();
-    setBillingLocations([...billingLocations, address]);
+    setBillingLocations([...billingLocations, billingLocation]);
   };
 
-  const onShippingLocationFormSubmit = (shippingLocation) => {
+  const onShippingLocationFormSubmit = (shippingLocation: ShippingLocationFormType) => {
     hideShippingLocationForm();
-    setShippingLocations([...billingLocations, shippingLocation]);
+    setShippingLocations([...shippingLocations, shippingLocation]);
   };
 
   const onBusinessLocationFormSubmit = (businessLocation: AddressFormType) => {

@@ -7,10 +7,6 @@ router.use(verifyJwtToken);
 const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
 const BAD_REQUEST_STATUS_CODE = 400;
 
-router.get('/form', async (request, response) => {
-    return response.render('createCustomer');
-});
-
 router.post('/', async (request, response) => {
     try {
         const customer = await CustomerModel.create(request.body);

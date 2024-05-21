@@ -11,10 +11,7 @@ module.exports.connectToMongoDatabase = async (databaseUrl) => {
         throw new Error('Database URL is not defined');
     }
 
-    await mongoose.connect(databaseUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+    await mongoose.connect(databaseUrl, {});
 };
 
 module.exports.connectToTestMongoDatabase = async () => {
@@ -23,10 +20,7 @@ module.exports.connectToTestMongoDatabase = async () => {
     }
 
     mongod = await MongoMemoryServer.create();
-    mongoose.connect(mongod.getUri(), {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+    mongoose.connect(mongod.getUri(), {});
 };
 
 module.exports.closeDatabase = async () => {

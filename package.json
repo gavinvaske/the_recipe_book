@@ -54,7 +54,7 @@
     "mobx": "6.12.3",
     "mobx-react-lite": "4.0.5",
     "mongodb-memory-server": "9.2.0",
-    "mongoose": "7.6.11",
+    "mongoose": "8.4.0",
     "mongoose-delete": "1.0.2",
     "multer": "1.4.5-lts.1",
     "parcel": "2.12.0",

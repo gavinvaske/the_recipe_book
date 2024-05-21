@@ -23,10 +23,7 @@ it('should attempt to connect to mongo database', () => {
     databaseService.connectToMongoDatabase(databaseUrl);
 
     expect(mongoose.connect).toHaveBeenCalledTimes(1);
-    expect(mongoose.connect).toHaveBeenCalledWith(databaseUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+    expect(mongoose.connect).toHaveBeenCalledWith(databaseUrl, {});
 });
 
 describe('test environment database interactions', () => {

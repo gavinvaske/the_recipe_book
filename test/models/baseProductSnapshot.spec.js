@@ -4,7 +4,6 @@ const databaseService = require('../../application/services/databaseService');
 const testDataGenerator = require('../testDataGenerator');
 const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
 
-const DieModel = require('../../application/models/Die');
 const MaterialModel = require('../../application/models/material');
 const FinishModel = require('../../application/models/finish');
 const CustomerModel = require('../../application/models/customer');
@@ -55,7 +54,7 @@ describe('BaseProductSnapshot', () => {
         it('should be a valid dieModel', async () => {
             const baseProductSnapshot = new BaseProductSnapshotModel(baseProductSnapshotAttributes);
 
-            const error = await DieModel.validate(baseProductSnapshot.die);
+            const error = baseProductSnapshot.validateSync();
 
             expect(error).toBeUndefined();
         });

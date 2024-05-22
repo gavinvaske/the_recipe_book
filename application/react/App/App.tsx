@@ -12,7 +12,7 @@ export function App() {
   return (
     <Routes >
       <Route path="react-ui">
-{/*         <Route path="inventory" element={<Inventory />}></Route> */}
+        <Route path="inventory" element={<Inventory />}></Route>
 
         <Route path="forms">
           <Route path="delivery-method" element={<DeliveryMethodForm />} />

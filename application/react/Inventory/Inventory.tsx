@@ -9,8 +9,8 @@ const Inventory = observer(() => {
   return (
     <div id='inventory-page'>
       <Summary />
-      <Materials />
       <FilterInventory />
+      <Materials />
     </div>
   )
 });

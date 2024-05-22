@@ -1,8 +1,11 @@
 import React from 'react';
 import './Summary.scss'
 import { observer } from 'mobx-react-lite';
+import { MaterialInventorySummary } from '../Inventory';
 
-const Summary = observer(() => {
+const Summary = observer((props: {inventorySummary: MaterialInventorySummary}) => {
+  const {inventorySummary} = props;
+
   return (
     <div className='material-header flex-top-space-between-row full-width'>
       <div className='card col col-one'>
@@ -10,15 +13,15 @@ const Summary = observer(() => {
       </div>
       <div className='card col col-two'>
         <span>Feet On Hand</span>
-        <h1 className='total-length-of-material-in-inventory'>1111</h1>
+        <h1 className='total-length-of-material-in-inventory'>{inventorySummary.lengthOfAllMaterialsInInventory}</h1>
       </div>
       <div className='card col col-three'>
         <span>Net Feet</span>
-        <h1 className='net-length-of-material-in-inventory'>2222</h1>
+        <h1 className='net-length-of-material-in-inventory'>{inventorySummary.netLengthOfMaterialInInventory}</h1>
       </div>
       <div className='card col col-four'>
         <span>Feet On Order</span>
-        <h1 className='total-length-of-material-ordered'>3333</h1>
+        <h1 className='total-length-of-material-ordered'>{inventorySummary.lengthOfAllMaterialsOrdered}</h1>
       </div>
     </div>
   )

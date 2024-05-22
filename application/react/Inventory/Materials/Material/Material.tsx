@@ -1,31 +1,34 @@
 import React from 'react';
 import './Material.scss'
 import { observer } from 'mobx-react-lite';
+import { MaterialInventory } from '../../Inventory';
+import { Material } from '../../../_types/databaseModels/material';
 
-function renderPurchaseOrders(material) {
+function renderPurchaseOrders(material: any) {
   const {purchaseOrdersForMaterial} = material
   
   if (!purchaseOrdersForMaterial) return null;
 
   return (
-    purchaseOrdersForMaterial.map((purchaseOrder) => (
-      <div className='po-row'>
-        <div className='po-col'>{purchaseOrder.purchaseOrderNumber || 'N/A'}</div>
-        <div className='po-col'>{purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'}) || 'N/A'}</div>
-        <div className='po-col'>{(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls) || 'N/A'}</div>
+    purchaseOrdersForMaterial.map((purchaseOrder, index: number) => (
+      <div className='po-row' key={index}>
+        <div className='po-col'>{purchaseOrder.purchaseOrderNumber}</div>
+        <div className='po-col'>{purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'})}</div>
+        <div className='po-col'>{(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls)}</div>
       </div>
     ))
   )
 }
 
-const Material = observer((props: {material: any}) => {
-  const { material } = props;
+const Material = observer((props: {materialInventory: MaterialInventory}) => {
+  const { materialInventory } = props;
+  const {material}: {material: Material} = materialInventory;
 
   return (
     <div className='card' id={material._id}>
     <div className='card-header flex-center-center-row'>
       <div className='col col-left'>
-        <h2 className='material-id'>{material.materialId || 'N/A'}</h2>
+        <h2 className='material-id'>{material.materialId}</h2>
       </div>
       <div className='col col-right'>
         <i className="fa-light fa-calendar"></i>
@@ -57,17 +60,17 @@ const Material = observer((props: {material: any}) => {
       </div>
       <div className='col col-left'>
         <span>Actual</span>
-        <h2 className='material-length-in-stock'>{material.lengthOfMaterialInStock || 'N/A'}</h2>
+        <h2 className='material-length-in-stock'>{materialInventory.lengthOfMaterialInStock}</h2>
       </div>
       <div className='divide-line'></div>
       <div className='col col-right'>
         <span>Ordered</span>
-        <h2 className='material-length-ordered'>{material.lengthOfMaterialOrdered || 'N/A'}</h2>
+        <h2 className='material-length-ordered'>{materialInventory.lengthOfMaterialOrdered}</h2>
       </div>
       <div className='divide-line'></div>
       <div className='col col-right'>
         <span>Net</span>
-        <h2 className='material-length-ordered'>{material.netLengthOfMaterialInStock || 'N/A'}</h2>
+        <h2 className='material-length-ordered'>{materialInventory.netLengthOfMaterialInStock}</h2>
       </div>
     </div>
 

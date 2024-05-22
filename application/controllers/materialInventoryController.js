@@ -36,7 +36,7 @@ router.get('/', async (request, response) => {
 
         const netLengthOfMaterialInInventory = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);
 
-        return response.render('viewMaterialInventory', {
+        return response.send({
             materialInventories,
             lengthOfAllMaterialsInInventory,
             lengthOfAllMaterialsOrdered,

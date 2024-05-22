@@ -7,7 +7,9 @@ describe('UI Test cases', () => {
         expect(true).to.equal(true);
     });
 
-    it('Visits the base URL', () => {
+    it('Unauthenticated user should see the login page', () => {
         cy.visit('/');
+
+        cy.contains('Please sign in to get started.');
     });
 });

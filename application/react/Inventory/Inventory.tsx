@@ -13,7 +13,7 @@ export type MaterialInventory = {
   lengthOfMaterialOrdered: number
   material: Material,
   netLengthOfMaterialInStock: number,
-  purchaseOrdersForMaterial: MaterialOrder
+  purchaseOrdersForMaterial: MaterialOrder[]
   
 }
 

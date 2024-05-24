@@ -27,14 +27,15 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
 
 const Material = observer((props: { materialInventory: MaterialInventory }) => {
   const { materialInventory } = props;
-  const { material }: { material: Material } = materialInventory;
-  const [count, setCount] = React.useState(0);
+  const [material, setMaterial] = React.useState<Material>(materialInventory.material);
 
   socket.on(material._id, (material) => {
     alert("Material has been updated! " + JSON.stringify(material))
     
-    // TODO: Update The Store with this Material, or update the state of this component?
-    // HMMMM, what to do
+    // TODO: Update the MaterialStore
+    // Example #1: MaterialStore.updateMaterial(material)
+    // Example #2: MaterialStore.materials[material._id] = material
+    setMaterial(material)
   });
 
   return (

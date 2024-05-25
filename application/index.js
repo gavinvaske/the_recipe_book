@@ -68,7 +68,6 @@ app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
 app.use('/products', require('./controllers/productController'));
-app.use('/material-inventory', require('./controllers/materialInventoryController'));
 app.use('/hold-reasons', require('./controllers/holdReasonController'));
 app.use('/proofs', require('./controllers/proofController'));
 app.use('/die-lines', require('./controllers/dieLineController'));

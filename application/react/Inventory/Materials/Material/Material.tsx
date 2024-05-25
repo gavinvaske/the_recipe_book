@@ -3,11 +3,6 @@ import './Material.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory';
 import { Material } from '../../../_types/databaseModels/material';
-import { io } from 'socket.io-client';
-
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:4000';
-
-export const socket = io();
 
 function renderPurchaseOrders(materialInventory: MaterialInventory) {
   const { purchaseOrdersForMaterial } = materialInventory
@@ -27,29 +22,29 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
 
 const Material = observer((props: { materialInventory: MaterialInventory }) => {
   const { materialInventory } = props;
-  const [material, setMaterial] = React.useState<Material>(materialInventory.material);
+  const material: Material = materialInventory.material;
 
-  socket.on(material._id, (material) => {
-    // materialInventoryStore.recalculateInventoryForMaterial(material._id)
-    // // TODO #1: Update the MaterialStore
-    // // Example #1: MaterialStore.updateMaterial(material)
-    // // Example #2: MaterialStore.materials[material._id] = material
-    // setMaterial(material)
-    // MaterialStore.updateMaterial(material)
+  // socket.on(material._id, (material) => {
+  //   // materialInventoryStore.recalculateInventoryForMaterial(material._id)
+  //   // // TODO #1: Update the MaterialStore
+  //   // // Example #1: MaterialStore.updateMaterial(material)
+  //   // // Example #2: MaterialStore.materials[material._id] = material
+  //   // setMaterial(material)
+  //   // MaterialStore.updateMaterial(material)
 
-    // console.log('Store AFTER setting state: ', MaterialStore.getMaterials())
+  //   // console.log('Store AFTER setting state: ', MaterialStore.getMaterials())
 
 
-    // TODO: #2?: I need to regenerate the MaterialInventory for this Material
-    // Done in order to trigger the recalculation of: "Actual", "Ordered", and "Net"
-    // I NEED to create an endpoint, such as "GET /material-inventory/:materialId"
-    // Then store the response from this endpoint in the "MaterialInventoryStore"
+  //   // TODO: #2?: I need to regenerate the MaterialInventory for this Material
+  //   // Done in order to trigger the recalculation of: "Actual", "Ordered", and "Net"
+  //   // I NEED to create an endpoint, such as "GET /material-inventory/:materialId"
+  //   // Then store the response from this endpoint in the "MaterialInventoryStore"
 
-    // TODO #3: Trigger a recalculation of the MaterialInventory attributes: 
-    // 1) Feet On Hand
-    // 2) Net Feet
-    // 3) Feet On Order
-  });
+  //   // TODO #3: Trigger a recalculation of the MaterialInventory attributes: 
+  //   // 1) Feet On Hand
+  //   // 2) Net Feet
+  //   // 3) Feet On Order
+  // });
 
   return (
     <div className='card' id={material._id}>

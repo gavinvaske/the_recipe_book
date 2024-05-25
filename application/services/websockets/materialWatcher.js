@@ -2,7 +2,6 @@ const MaterialModel = require('../../models/material');
 
 module.exports.materialWatcher = (socket) => {
     MaterialModel.watch().on('change', async (change) => {
-        console.log('Material changed:', change);
         const mongooseObjectId = change.documentKey._id;
 
         const material = await MaterialModel
@@ -13,5 +12,6 @@ module.exports.materialWatcher = (socket) => {
             .exec();
 
         socket.emit(mongooseObjectId, material, change);
+        socket.emit('MATERIAL:CHANGED', material, change);
     });
 };

@@ -7,6 +7,9 @@ import FilterInventory from './FilterInventory/FilterInventory';
 import { MaterialOrder } from '../_types/databaseModels/MaterialOrder';
 import { Material } from '../_types/databaseModels/material';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
+import { io } from 'socket.io-client';
+
+const socket = io();
 
 export type MaterialInventory = {
   lengthOfMaterialInStock: number
@@ -29,6 +32,14 @@ const Inventory = observer(() => {
   useEffect(() => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   }, []);
+
+  socket.on('MATERIAL:CHANGED', (_: Material) => {
+    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
+  })
+
+  socket.on('MATERIAL_ORDER:CHANGED', (_: MaterialOrder) => {
+    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
+  })
 
   return (
     <div id='inventory-page'>

@@ -22,12 +22,8 @@ class InventorySummaryStore {
     axios.get('/materials/inventory')
       .then((response) => {
         const { data: materialInventorySummary}: {data: MaterialInventorySummary} = response;
-
-        console.log('materialInventorySummary', materialInventorySummary);
         
-        this.inventorySummary = materialInventorySummary;
-
-        return this.inventorySummary;
+        this.setInventorySummary(materialInventorySummary);
       })
       .catch((error) => {
         alert('Error fetching the inventory for materials:'+ error.message);

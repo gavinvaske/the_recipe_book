@@ -3,7 +3,7 @@ import './Summary.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventorySummary } from '../Inventory';
 
-const Summary = observer((props: {inventorySummary: MaterialInventorySummary}) => {
+const Summary = observer((props: {inventorySummary: Partial<MaterialInventorySummary>}) => {
   const {inventorySummary} = props;
 
   return (

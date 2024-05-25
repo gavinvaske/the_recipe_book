@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
 import './Materials.scss'
 import { observer } from 'mobx-react-lite';
 import Material from './Material/Material';
-import { MaterialOrder } from '../../_types/databaseModels/MaterialOrder';
 import { MaterialInventorySummary, MaterialInventory } from '../Inventory';
 
-const Materials = observer((props: {inventorySummary: MaterialInventorySummary}) => {
-  const {inventorySummary} = props;
-  const { materialInventories }: {materialInventories: MaterialInventory[]} = inventorySummary;
+const Materials = observer((props: {inventorySummary: Partial<MaterialInventorySummary>}) => {
+  const { inventorySummary } = props;
+  const materialInventories : MaterialInventory[] = inventorySummary.materialInventories || [];
 
   return (
     <div className='material-card-section full-width'>

@@ -108,7 +108,6 @@ router.get('/delete/:id', async (request, response) => {
 });
 
 router.get('/inventory', async (request, response) => {
-    console.log('hiiii');
     try {
         const allMaterials = await materialService.getAllMaterials();
 

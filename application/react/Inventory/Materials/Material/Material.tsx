@@ -58,7 +58,7 @@ const Material = observer((props: { materialInventory: MaterialInventory }) => {
         </div>
         <div className='col col-right'>
           <i className="fa-light fa-calendar" onClick={() => togglePurchaseOrders()}></i>
-          <a href="/materials/update/<%= material._id %>"><i className="fa-regular fa-pen-to-square"></i></a>
+          <a href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
         </div>
 
       </div>

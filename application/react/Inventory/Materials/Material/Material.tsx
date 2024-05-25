@@ -20,31 +20,35 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
   )
 }
 
+function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
+  return (
+    <div className='po-date-container'>
+      <div className='po-list-header'>
+        <div className='col col-one'>
+          PO #
+        </div>
+        <div className='col col-two'>
+          Arrival Date
+        </div>
+        <div className='col col-three'>
+          Feet
+        </div>
+      </div>
+
+      <div className='po-list-container'>
+        {renderPurchaseOrders(materialInventory)}
+      </div>
+    </div>
+  )
+}
+
+const togglePurchaseOrders = () => {
+  alert("TODO STORM: Make the purchase order section appear (NO JQUERY ALLOWED, only react)")
+}
+
 const Material = observer((props: { materialInventory: MaterialInventory }) => {
   const { materialInventory } = props;
   const material: Material = materialInventory.material;
-
-  // socket.on(material._id, (material) => {
-  //   // materialInventoryStore.recalculateInventoryForMaterial(material._id)
-  //   // // TODO #1: Update the MaterialStore
-  //   // // Example #1: MaterialStore.updateMaterial(material)
-  //   // // Example #2: MaterialStore.materials[material._id] = material
-  //   // setMaterial(material)
-  //   // MaterialStore.updateMaterial(material)
-
-  //   // console.log('Store AFTER setting state: ', MaterialStore.getMaterials())
-
-
-  //   // TODO: #2?: I need to regenerate the MaterialInventory for this Material
-  //   // Done in order to trigger the recalculation of: "Actual", "Ordered", and "Net"
-  //   // I NEED to create an endpoint, such as "GET /material-inventory/:materialId"
-  //   // Then store the response from this endpoint in the "MaterialInventoryStore"
-
-  //   // TODO #3: Trigger a recalculation of the MaterialInventory attributes: 
-  //   // 1) Feet On Hand
-  //   // 2) Net Feet
-  //   // 3) Feet On Order
-  // });
 
   return (
     <div className='card' id={material._id}>
@@ -53,7 +57,7 @@ const Material = observer((props: { materialInventory: MaterialInventory }) => {
           <h2 className='material-id'>{material.materialId}</h2>
         </div>
         <div className='col col-right'>
-          <i className="fa-light fa-calendar"></i>
+          <i className="fa-light fa-calendar" onClick={() => togglePurchaseOrders()}></i>
           <a href="/materials/update/<%= material._id %>"><i className="fa-regular fa-pen-to-square"></i></a>
         </div>
 
@@ -62,24 +66,9 @@ const Material = observer((props: { materialInventory: MaterialInventory }) => {
         <span className='material-name'>{material.name || 'N/A'}</span>
       </div>
       <div className='actual-vs-ordered-container'>
-        <div className='po-date-container'>
-          <div className='po-list-header'>
-            <div className='col col-one'>
-              PO #
-            </div>
-            <div className='col col-two'>
-              Arrival Date
-            </div>
-            <div className='col col-three'>
-              Feet
-            </div>
-          </div>
 
-          <div className='po-list-container'>
-            {renderPurchaseOrders(materialInventory)}
-          </div>
+        {renderPurchaseOrderContainer(materialInventory)}
 
-        </div>
         <div className='col col-left'>
           <span>Actual</span>
           <h2 className='material-length-in-stock'>{materialInventory.lengthOfMaterialInStock}</h2>

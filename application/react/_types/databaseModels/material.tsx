@@ -1,11 +1,14 @@
 import { MongooseId } from '../typeAliases'
 import { MongooseAttributes } from './_sharedMongooseAttributes'
+import { AdhesiveCategory } from './adheisiveCategory'
+import { MaterialCategory } from './materialCategory'
+import { Vendor } from './vendor'
 
 export type Material = MongooseAttributes & {
   name: string,
   materialId: string,
-  vendor: MongooseId,
-  materialCategory: MongooseId,
+  vendor: MongooseId | Vendor,
+  materialCategory: MongooseId | MaterialCategory,
   thickness: number,
   weight: number,
   costPerMsi: number,
@@ -13,7 +16,7 @@ export type Material = MongooseAttributes & {
   width: number,
   faceColor: string,
   adhesive: string,
-  adhesiveCategory: MongooseId,
+  adhesiveCategory: MongooseId | AdhesiveCategory,
   quotePricePerMsi: number,
   description: string,
   whenToUse: string,

@@ -5,9 +5,3 @@ module.exports.getMaterialIds = (materials) => {
         return materialId;
     });
 };
-
-module.exports.getAllMaterials = async () => {
-    return await MaterialModel
-        .find()
-        .exec();
-};

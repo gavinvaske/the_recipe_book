@@ -43,9 +43,9 @@ const Inventory = observer(() => {
 
   return (
     <div id='inventory-page'>
-      {inventorySummary && <Summary inventorySummary={inventorySummary} />}
+      {inventorySummary && <Summary inventorySummaryStore={inventorySummaryStore} />}
       <FilterBar />
-      {inventorySummary && <Materials inventorySummary={inventorySummary} />}
+      {inventorySummary && <Materials inventorySummaryStore={inventorySummaryStore} />}
     </div>
   )
 });

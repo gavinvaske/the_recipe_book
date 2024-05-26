@@ -1,5 +1,5 @@
 import { MongooseAttributes } from './_sharedMongooseAttributes'
 
-export type DeliveryMethod = MongooseAttributes & {
+export type AdhesiveCategory = MongooseAttributes & {
   name: string
 }

@@ -2,11 +2,11 @@ import React from 'react';
 import './Materials.scss'
 import { observer } from 'mobx-react-lite';
 import Material from './Material/Material';
-import { MaterialInventorySummary, MaterialInventory } from '../Inventory';
+import { MaterialInventory } from '../Inventory';
 
-const Materials = observer((props: {inventorySummary: Partial<MaterialInventorySummary>}) => {
-  const { inventorySummary } = props;
-  const materialInventories : MaterialInventory[] = inventorySummary.materialInventories || [];
+const Materials = observer((props: {inventorySummaryStore: any}) => {
+  const { inventorySummaryStore } = props;
+  const materialInventories : MaterialInventory[] = inventorySummaryStore.getMaterialInventories() || [];
 
   return (
     <div className='material-card-section full-width'>

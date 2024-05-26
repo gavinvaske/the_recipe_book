@@ -3,8 +3,9 @@ import './Summary.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventorySummary } from '../Inventory';
 
-const Summary = observer((props: {inventorySummary: Partial<MaterialInventorySummary>}) => {
-  const {inventorySummary} = props;
+const Summary = observer((props: {inventorySummaryStore: any}) => {
+  const { inventorySummaryStore } = props;
+  const inventorySummary: Partial<MaterialInventorySummary> = inventorySummaryStore.getInventorySummary();
 
   return (
     <div className='material-header flex-top-space-between-row full-width'>

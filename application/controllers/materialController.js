@@ -109,7 +109,14 @@ router.get('/delete/:id', async (request, response) => {
 
 router.get('/inventory', async (request, response) => {
     try {
-        const allMaterials = await materialService.getAllMaterials();
+        const allMaterials = await MaterialModel
+          .find()
+          .populate({path: 'materialCategory'})
+          .populate({path: 'vendor'})
+          .populate({path: 'adhesiveCategory'})
+          .exec();
+
+        console.log('allMaterials', allMaterials)
 
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
         const distinctMaterialIds = materialService.getMaterialIds(allMaterials);

@@ -3,11 +3,11 @@ import './Inventory.scss'
 import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
 import Materials from './Materials/Materials';
-import FilterInventory from './FilterInventory/FilterInventory';
 import { MaterialOrder } from '../_types/databaseModels/MaterialOrder';
 import { Material } from '../_types/databaseModels/material';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
+import FilterBar from './FilterBar/FilterBar';
 
 const socket = io();
 
@@ -44,7 +44,7 @@ const Inventory = observer(() => {
   return (
     <div id='inventory-page'>
       {inventorySummary && <Summary inventorySummary={inventorySummary} />}
-      <FilterInventory />
+      <FilterBar />
       {inventorySummary && <Materials inventorySummary={inventorySummary} />}
     </div>
   )

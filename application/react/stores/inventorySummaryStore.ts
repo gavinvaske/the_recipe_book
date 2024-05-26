@@ -5,9 +5,18 @@ import axios from "axios";
 /* Mobx Store dealing with "Material" database objects */
 class InventorySummaryStore {
   inventorySummary: Partial<MaterialInventorySummary> = {};
+  textFilter: string = ''
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setTextFilter(value: string) {
+    this.textFilter = value;
+  }
+
+  getTextFilter(): string {
+    return this.textFilter
   }
 
   setInventorySummary(inventorySummary: MaterialInventorySummary) {

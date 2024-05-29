@@ -6,7 +6,7 @@ import { MaterialInventory } from '../Inventory';
 
 const Materials = observer((props: {inventorySummaryStore: any}) => {
   const { inventorySummaryStore } = props;
-  const materialInventories : MaterialInventory[] = inventorySummaryStore.getMaterialInventories() || [];
+  const materialInventories : MaterialInventory[] = inventorySummaryStore.getFilteredMaterialInventories() || [];
 
   return (
     <div className='material-card-section full-width'>

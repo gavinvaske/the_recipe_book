@@ -1,10 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './FilterBar.scss'
 import SearchBar from '../../_global/SearchBar/SearchBar'
 import inventorySummaryStore from '../../stores/inventorySummaryStore';
 import { observer } from 'mobx-react-lite';
+import { TextQuickFilter } from '../../_global/QuickFilterModal/TextQuickFilter/QuickFilterButton';
+import { v4 as uuidv4 } from 'uuid';
+
+type QuickFilterOption = {
+  uuid: string,
+  value: string
+}
+export type QuickFilter = {
+  description: string,
+  options: QuickFilterOption[],
+}
+
+const allPossibleQuickFilters: QuickFilter[] = [
+  {
+    description: 'materials',
+    options: [
+      {
+        uuid: uuidv4(),
+        value: 'semi-gloss'
+      },
+      {
+        uuid: uuidv4(),
+        value: 'matte'
+      },
+    ]
+  },
+  {
+    description: 'Foo',
+    options: [
+      {
+        uuid: uuidv4(),
+        value: 'bar'
+      },
+    ]
+  }
+]
+
+const renderQuickFilters = (allPossibleQuickFilters: QuickFilter[]) => {
+  return (
+    allPossibleQuickFilters.map((quickFilter: QuickFilter) => {
+      const { description, options } = quickFilter;
+      return (
+        <div className='quick-filters-list'>
+          Description: {description}
+          {options.map((option: QuickFilterOption) => (
+            <TextQuickFilter
+              uuid={option.uuid}
+              filterValue={option.value}
+              onDisabled={(uuid) => inventorySummaryStore.removeQuickFilter(uuid)}
+              onEnabled={(uuid, filterValue) => inventorySummaryStore.setQuickFilter(uuid, filterValue)}
+            />
+          ))}
+        </div>)
+    })
+  )
+}
 
 const FilterBar = observer((props) => {
+  const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
+
+  function toggleQuickFilterMenu() {
+    setIsDropdownDisplayed(!isDropdownDisplayed)
+  }
+
   return (
     <div className="workflow-filter flex-center-left-row full-width card">
       <a className="create bg-blue text-white border-blue btn-create new-po-btn" href="/material-orders/create">PO <i className="fa-regular fa-plus"></i></a>
@@ -20,25 +82,22 @@ const FilterBar = observer((props) => {
 
       <div className="split-btn-frame btn-filter flex-center-center-row tooltip">
         <span className="tooltiptext">Filter by anything</span>
-        <div className="filter-btn-wrapper flex-center-center-row">
-          <button className="btn-split quick-filter flex-center-center-row">
+        <div className={`filter-btn-wrapper flex-center-center-row ${isDropdownDisplayed ? 'active' : ''}`}>
+          <button className="btn-split quick-filter flex-center-center-row" onClick={() => toggleQuickFilterMenu()}>
             <i className="fa-light fa-filter"></i>Filter
           </button>
-          <button className="btn-split-arrow-dropdown btn-advanced-filter"><i className="fa-regular fa-chevron-down"></i></button>
+          <button className="btn-split-arrow-dropdown btn-advanced-filter" onClick={() => toggleQuickFilterMenu()}>
+            <i className="fa-regular fa-chevron-down"></i>
+          </button>
         </div>
-        <div className="quick-filter-dropdown dropdown">
+        <div className={`quick-filter-dropdown dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
           <h5><b>Quick Filter</b></h5>
-          <p>Testing how big the dropdown box can be</p>
-          <a>This was where all materials were</a>
-        </div>
-        <div className="advanced-filter-dropdown dropdown">
-          <h5><b>Advanced Filter</b></h5>
-          <p>Testing how big the dropdown box can be</p>
+          {renderQuickFilters(allPossibleQuickFilters)}
         </div>
       </div>
       <div className="all-wrapper tooltip">
         <span className="tooltiptext">See All</span>
-        <button className="sort btn-sort see-all"><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">Count</span>)</button>
+        <button className="sort btn-sort see-all" onClick={() => inventorySummaryStore.resetAllFilters()}><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">{inventorySummaryStore.getAllMaterialInventories().length}</span>)</button>
       </div>
     </div>
   )

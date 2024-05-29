@@ -7,6 +7,11 @@ import * as JsSearch from 'js-search';
 class InventorySummaryStore {
   inventorySummary: Partial<MaterialInventorySummary> = {};
   textFilter: string = ''
+  quickFilters = {}
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   getTextFilter(): string {
     return this.textFilter
@@ -16,8 +21,17 @@ class InventorySummaryStore {
     this.textFilter = value
   }
 
-  constructor() {
-    makeAutoObservable(this);
+  setQuickFilter(uuid: string, value: string): void {
+    this.quickFilters[uuid] = value
+  }
+
+  removeQuickFilter(uuid: string): void {
+    delete this.quickFilters[uuid];
+  }
+
+  resetAllFilters(): void {
+    this.textFilter = ''
+    this.quickFilters = {};
   }
 
   setInventorySummary(inventorySummary: MaterialInventorySummary) {
@@ -28,8 +42,10 @@ class InventorySummaryStore {
     return this.inventorySummary;
   }
 
-  foobarTextFilter(materialInventories: MaterialInventory[] | undefined) {
-    if (!this.textFilter) return materialInventories;
+  applyFilters(materialInventories: MaterialInventory[] | undefined) {
+    const noFiltersAreApplied = !this.textFilter && Object.keys(this.quickFilters).length === 0
+
+    if (noFiltersAreApplied) return materialInventories;
     if (!materialInventories) return [];
 
     const search = new JsSearch.Search(['material', '_id']);
@@ -44,11 +60,18 @@ class InventorySummaryStore {
     search.addIndex(['material', 'thickness']);
     search.addDocuments(materialInventories);
 
-    return search.search(this.textFilter)
+    const quickFiltersQuery = Object.values(this.quickFilters).join(' ')
+    const searchQuery = `${this.textFilter} ${quickFiltersQuery}`
+
+    return search.search(searchQuery)
   }
 
-  getMaterialInventories() {
-    return this.foobarTextFilter(toJS(this.inventorySummary.materialInventories));
+  getFilteredMaterialInventories(): MaterialInventory[] {
+    return this.applyFilters(toJS(this.inventorySummary.materialInventories)) || [];
+  }
+
+  getAllMaterialInventories(): MaterialInventory[] {
+    return this.inventorySummary.materialInventories || [];
   }
 
   async recalculateInventorySummary() {

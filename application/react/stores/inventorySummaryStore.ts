@@ -65,10 +65,10 @@ class InventorySummaryStore {
     return '';
   }
 
-  applyFilters(materialInventories: MaterialInventory[] | undefined) {
+  applyFilters(materialInventories: MaterialInventory[] | undefined): MaterialInventory[] {
     const noFiltersAreApplied = !this.textFilter && Object.keys(this.textQuickFilters).length === 0 && Object.keys(this.conditionalQuickFilters).length === 0
 
-    if (noFiltersAreApplied) return materialInventories;
+    if (noFiltersAreApplied) return materialInventories || [];
     if (!materialInventories) return [];
 
     const search = new JsSearch.Search(['material', '_id']);
@@ -84,11 +84,8 @@ class InventorySummaryStore {
     search.addDocuments(materialInventories);
 
     const searchQuery: string = this.generateTextSearchQuery()
-    let textSearchResults = search._documents
 
-    if (searchQuery) {
-      textSearchResults = search.search(searchQuery)
-    }
+    const textSearchResults = searchQuery ? search.search(searchQuery) as MaterialInventory[] : materialInventories
 
     const conditionalFilterFunctions = Object.values(this.conditionalQuickFilters)
     
@@ -98,7 +95,7 @@ class InventorySummaryStore {
   }
 
   getFilteredMaterialInventories(): MaterialInventory[] {
-    return this.applyFilters(toJS(this.inventorySummary.materialInventories)) || [];
+    return this.applyFilters(toJS(this.inventorySummary.materialInventories));
   }
 
   getAllMaterialInventories(): MaterialInventory[] {

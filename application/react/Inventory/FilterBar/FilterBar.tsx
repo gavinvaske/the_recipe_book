@@ -9,7 +9,7 @@ import { MaterialInventory } from '../Inventory';
 import { ConditionalQuickFilter } from '../../_global/QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
 
 type TextFilterOption = {
-  uuid: string,
+  readonly uuid: string,
   value: string
 }
 
@@ -19,7 +19,7 @@ export type TextQuickFilter = {
 }
 
 export type ConditionalQuickFilter<T> = {
-  uuid: string,
+  readonly uuid: string,
   textToDisplay: string,
   conditionalFilter: ConditionalFilterFunction<MaterialInventory>
 }
@@ -93,7 +93,7 @@ const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalQu
             conditionalFilterFunction={conditionalFilter}
             textToDisplay={textToDisplay}
             onDisabled={(uuid: string) => inventorySummaryStore.removeConditionalFilter(uuid)}
-            onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<MaterialInventory>) => inventorySummaryStore.setConditionalQuickFilters(uuid, conditionalFilterFunction)}
+            onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<MaterialInventory>) => inventorySummaryStore.setConditionalQuickFilter(uuid, conditionalFilterFunction)}
             key={uuid}
           />
         </div>)
@@ -121,8 +121,8 @@ const FilterBar = observer((props) => {
       <div className="search-wrapper flex-center-left-row">
         <i className="fa-regular fa-magnifying-glass flex-center-center-row"></i>
         <SearchBar
-          value={inventorySummaryStore.getTextFilter()} 
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => inventorySummaryStore.setTextFilter(e.target.value)} 
+          value={inventorySummaryStore.getSearchBarInput()} 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => inventorySummaryStore.setSearchBarInput(e.target.value)} 
         />
       </div>
 

@@ -1,21 +1,42 @@
 import React, { useState } from 'react'
 import './FilterBar.scss'
 import SearchBar from '../../_global/SearchBar/SearchBar'
-import inventorySummaryStore from '../../stores/inventorySummaryStore';
+import inventorySummaryStore, { ConditionalFilterFunction } from '../../stores/inventorySummaryStore';
 import { observer } from 'mobx-react-lite';
 import { TextQuickFilter } from '../../_global/QuickFilterModal/TextQuickFilter/QuickFilterButton';
 import { v4 as uuidv4 } from 'uuid';
+import { MaterialInventory } from '../Inventory';
+import { ConditionalQuickFilter } from '../../_global/QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
 
-type QuickFilterOption = {
+type TextFilterOption = {
   uuid: string,
   value: string
 }
-export type QuickFilter = {
+
+export type TextQuickFilter = {
   description: string,
-  options: QuickFilterOption[],
+  options: TextFilterOption[],
 }
 
-const allPossibleQuickFilters: QuickFilter[] = [
+export type ConditionalQuickFilter<T> = {
+  uuid: string,
+  textToDisplay: string,
+  conditionalFilter: ConditionalFilterFunction<MaterialInventory>
+}
+
+const allConditionalQuickFilters: ConditionalQuickFilter<MaterialInventory>[] = [
+  {
+    uuid: uuidv4(),
+    textToDisplay: 'This text is rendered',
+    conditionalFilter: (objects: Partial<MaterialInventory>[]) => {
+      return objects.filter((object) => {
+        return object?.material?.name === 'Cloth'
+      })
+    }
+  }
+]
+
+const allTextQuickFilters: TextQuickFilter[] = [
   {
     description: 'materials',
     options: [
@@ -40,19 +61,20 @@ const allPossibleQuickFilters: QuickFilter[] = [
   }
 ]
 
-const renderQuickFilters = (allPossibleQuickFilters: QuickFilter[]) => {
+const renderTextQuickFilters = (textQuickFilters: TextQuickFilter[]) => {
   return (
-    allPossibleQuickFilters.map((quickFilter: QuickFilter) => {
+    textQuickFilters.map((quickFilter: TextQuickFilter) => {
       const { description, options } = quickFilter;
       return (
         <div className='quick-filters-list'>
           Description: {description}
-          {options.map((option: QuickFilterOption) => (
+          {options.map((option: TextFilterOption) => (
             <TextQuickFilter
               uuid={option.uuid}
               filterValue={option.value}
-              onDisabled={(uuid) => inventorySummaryStore.removeQuickFilter(uuid)}
-              onEnabled={(uuid, filterValue) => inventorySummaryStore.setQuickFilter(uuid, filterValue)}
+              onDisabled={(uuid) => inventorySummaryStore.removeTextQuickFilter(uuid)}
+              onEnabled={(uuid, filterValue) => inventorySummaryStore.setTextQuickFilter(uuid, filterValue)}
+              key={option.uuid}
             />
           ))}
         </div>)
@@ -60,11 +82,35 @@ const renderQuickFilters = (allPossibleQuickFilters: QuickFilter[]) => {
   )
 }
 
+const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalQuickFilter<MaterialInventory>[]) => {
+  return (
+    conditionalFilterFunctions.map((filterFunction: ConditionalQuickFilter<MaterialInventory>) => {
+      const { uuid, textToDisplay, conditionalFilter } = filterFunction;
+      return (
+        <div className='quick-conditional-filters-list'>
+          <ConditionalQuickFilter 
+            uuid={uuid}
+            conditionalFilterFunction={conditionalFilter}
+            textToDisplay={textToDisplay}
+            onDisabled={(uuid: string) => inventorySummaryStore.removeConditionalFilter(uuid)}
+            onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<MaterialInventory>) => inventorySummaryStore.setConditionalQuickFilters(uuid, conditionalFilterFunction)}
+            key={uuid}
+          />
+        </div>)
+    })
+  )
+}
+
 const FilterBar = observer((props) => {
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
+  const [isAdvancedDropdownDisplayed, setIsAdvancedDropdownDisplayed] = useState(false)
 
   function toggleQuickFilterMenu() {
     setIsDropdownDisplayed(!isDropdownDisplayed)
+  }
+
+  function toggleAdvancedQuickFilterMenu() {
+    setIsAdvancedDropdownDisplayed(!isAdvancedDropdownDisplayed)
   }
 
   return (
@@ -74,7 +120,7 @@ const FilterBar = observer((props) => {
       
       <div className="search-wrapper flex-center-left-row">
         <i className="fa-regular fa-magnifying-glass flex-center-center-row"></i>
-        <SearchBar 
+        <SearchBar
           value={inventorySummaryStore.getTextFilter()} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => inventorySummaryStore.setTextFilter(e.target.value)} 
         />
@@ -86,14 +132,20 @@ const FilterBar = observer((props) => {
           <button className="btn-split quick-filter flex-center-center-row" onClick={() => toggleQuickFilterMenu()}>
             <i className="fa-light fa-filter"></i>Filter
           </button>
-          <button className="btn-split-arrow-dropdown btn-advanced-filter" onClick={() => toggleQuickFilterMenu()}>
+          <button className="btn-split-arrow-dropdown btn-advanced-filter" onClick={() => toggleAdvancedQuickFilterMenu()}>
             <i className="fa-regular fa-chevron-down"></i>
           </button>
         </div>
         <div className={`quick-filter-dropdown dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
           <h5><b>Quick Filter</b></h5>
-          {renderQuickFilters(allPossibleQuickFilters)}
+          {renderTextQuickFilters(allTextQuickFilters)}
         </div>
+
+        <div className={`advanced-filter-dropdown dropdown ${isAdvancedDropdownDisplayed ? 'active' : ''}`}>
+          <h5><b>Advanced Filter</b></h5>
+          {renderConditionalQuickFilters(allConditionalQuickFilters)}
+        </div>
+
       </div>
       <div className="all-wrapper tooltip">
         <span className="tooltiptext">See All</span>

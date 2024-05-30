@@ -3,35 +3,47 @@ import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Invent
 import axios from "axios";
 import * as JsSearch from 'js-search';
 
+export type ConditionalFilterFunction<T> = (objects: Partial<T>[]) => Partial<T>[]
+
 /* Mobx Store */
 class InventorySummaryStore {
   inventorySummary: Partial<MaterialInventorySummary> = {};
   textFilter: string = ''
-  quickFilters = {}
+  textQuickFilters = {}
+  conditionalQuickFilters: {[key: string]: ConditionalFilterFunction<MaterialInventory>} = {}
 
   constructor() {
     makeAutoObservable(this);
   }
 
   getTextFilter(): string {
-    return this.textFilter
+    return this.textFilter.trim()
   }
 
   setTextFilter(value: string): void {
     this.textFilter = value
   }
 
-  setQuickFilter(uuid: string, value: string): void {
-    this.quickFilters[uuid] = value
+  setConditionalQuickFilters(uuid: string, conditionalFilter: ConditionalFilterFunction<MaterialInventory>): void {
+    this.conditionalQuickFilters[uuid] = conditionalFilter
   }
 
-  removeQuickFilter(uuid: string): void {
-    delete this.quickFilters[uuid];
+  removeConditionalFilter(uuid: string): void {
+    delete this.conditionalQuickFilters[uuid]
+  }
+
+  setTextQuickFilter(uuid: string, value: string): void {
+    this.textQuickFilters[uuid] = value
+  }
+
+  removeTextQuickFilter(uuid: string): void {
+    delete this.textQuickFilters[uuid];
   }
 
   resetAllFilters(): void {
     this.textFilter = ''
-    this.quickFilters = {};
+    this.textQuickFilters = {};
+    this.conditionalQuickFilters = {};
   }
 
   setInventorySummary(inventorySummary: MaterialInventorySummary) {
@@ -42,8 +54,19 @@ class InventorySummaryStore {
     return this.inventorySummary;
   }
 
+  generateTextSearchQuery(): string {
+    const quickFiltersQuery = Object.values(this.textQuickFilters).join(' ')
+    const textFilter = this.getTextFilter()
+
+    if (textFilter || quickFiltersQuery) {
+      return `${textFilter} ${quickFiltersQuery}`
+    }
+
+    return '';
+  }
+
   applyFilters(materialInventories: MaterialInventory[] | undefined) {
-    const noFiltersAreApplied = !this.textFilter && Object.keys(this.quickFilters).length === 0
+    const noFiltersAreApplied = !this.textFilter && Object.keys(this.textQuickFilters).length === 0 && Object.keys(this.conditionalQuickFilters).length === 0
 
     if (noFiltersAreApplied) return materialInventories;
     if (!materialInventories) return [];
@@ -60,10 +83,18 @@ class InventorySummaryStore {
     search.addIndex(['material', 'thickness']);
     search.addDocuments(materialInventories);
 
-    const quickFiltersQuery = Object.values(this.quickFilters).join(' ')
-    const searchQuery = `${this.textFilter} ${quickFiltersQuery}`
+    const searchQuery: string = this.generateTextSearchQuery()
+    let textSearchResults = search._documents
 
-    return search.search(searchQuery)
+    if (searchQuery) {
+      textSearchResults = search.search(searchQuery)
+    }
+
+    const conditionalFilterFunctions = Object.values(this.conditionalQuickFilters)
+    
+    return conditionalFilterFunctions.reduce((acc, conditionalFilterFunction: any) => {
+      return conditionalFilterFunction(acc)
+    }, textSearchResults)
   }
 
   getFilteredMaterialInventories(): MaterialInventory[] {

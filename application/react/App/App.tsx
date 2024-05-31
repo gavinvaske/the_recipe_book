@@ -6,11 +6,14 @@ import DeliveryMethodForm from '../DeliveryMethod/DeliveryMethodForm/DeliveryMet
 import CreditTermsForm from '../CreditTerms/CreditTermsForm/CreditTermsForm';
 import CreditTermsTable from '../CreditTerms/CreditTermsTable/CreditTermsTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';
+import Inventory from '../Inventory/Inventory';
 
 export function App() {
   return (
     <Routes >
       <Route path="react-ui">
+        <Route path="inventory" element={<Inventory />}></Route>
+
         <Route path="forms">
           <Route path="delivery-method" element={<DeliveryMethodForm />} />
           <Route path="credit-term" element={<CreditTermsForm />} />

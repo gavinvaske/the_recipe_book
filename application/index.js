@@ -20,8 +20,8 @@ const app = express();
 app.locals.helperMethods = require('../application/services/ejsService');
 
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
-require('./services/socketService')(io); // Initalize sockets listeners/emitters
+const socket = require('socket.io')(http);
+require('./services/websockets/init')(socket); // Initalize sockets listeners/emitters
 
 app.use(expressLayouts);
 app.use(express.json());
@@ -68,7 +68,6 @@ app.use('/vendors', require('./controllers/vendorController'));
 app.use('/material-orders', require('./controllers/materialOrdersController'));
 app.use('/tickets', require('./controllers/ticketController'));
 app.use('/products', require('./controllers/productController'));
-app.use('/material-inventory', require('./controllers/materialInventoryController'));
 app.use('/hold-reasons', require('./controllers/holdReasonController'));
 app.use('/proofs', require('./controllers/proofController'));
 app.use('/die-lines', require('./controllers/dieLineController'));

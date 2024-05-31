@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchBar = (props) => {
+const SearchBar = (props: {value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
   const { value, onChange } = props;
 
   return (

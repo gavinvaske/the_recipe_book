@@ -2,30 +2,7 @@ import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
 import axios from "axios";
 import * as JsSearch from 'js-search';
-
-export type ConditionalFilterFunction<T> = (objects: Partial<T>[]) => Partial<T>[]
-type TextQuickFilters = {[key: string]: string}
-
-interface Filter<T> {
-  searchBarInput: string;
-  textQuickFilters: TextQuickFilters;
-  conditionalQuickFilters: {[key: string]: ConditionalFilterFunction<T>}
-
-  getSearchBarInput(): string
-  setSearchBarInput(value: string): void
-
-  setTextQuickFilter(uuid: string, value: string): void
-  removeTextQuickFilter(uuid: string): void
-
-  setConditionalQuickFilter(uuid: string, conditionalFilter: ConditionalFilterFunction<T>)
-  removeConditionalFilter(uuid: string): void
-
-  resetAllFilters(): void
-
-  generateSearchQuery(searchBarInput: string, textQuickFilters: TextQuickFilters): void
-
-  applyFilters(objects: T[] | undefined): T[]
-}
+import { ConditionalFilterFunction, TextQuickFilters, Filter } from "../_types/Filters";
 
 /* Mobx Store */
 class InventorySummaryStore implements Filter<MaterialInventory> {

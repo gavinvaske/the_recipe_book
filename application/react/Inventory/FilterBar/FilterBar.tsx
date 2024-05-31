@@ -1,30 +1,15 @@
 import React, { useState } from 'react'
 import './FilterBar.scss'
 import SearchBar from '../../_global/SearchBar/SearchBar'
-import inventorySummaryStore, { ConditionalFilterFunction } from '../../stores/inventorySummaryStore';
+import inventorySummaryStore from '../../stores/inventorySummaryStore';
 import { observer } from 'mobx-react-lite';
 import { TextQuickFilter } from '../../_global/QuickFilterModal/TextQuickFilter/QuickFilterButton';
 import { v4 as uuidv4 } from 'uuid';
 import { MaterialInventory } from '../Inventory';
 import { ConditionalQuickFilter } from '../../_global/QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
+import { ConditionalFilterFunction, TextFilterOption, TextFilter, ConditionalFilter } from '../../_types/Filters';
 
-type TextFilterOption = {
-  readonly uuid: string,
-  value: string
-}
-
-export type TextQuickFilter = {
-  description: string,
-  options: TextFilterOption[],
-}
-
-export type ConditionalQuickFilter<T> = {
-  readonly uuid: string,
-  textToDisplay: string,
-  conditionalFilter: ConditionalFilterFunction<MaterialInventory>
-}
-
-const allConditionalQuickFilters: ConditionalQuickFilter<MaterialInventory>[] = [
+const allConditionalQuickFilters: ConditionalFilter<MaterialInventory>[] = [
   {
     uuid: uuidv4(),
     textToDisplay: 'This text is rendered',
@@ -36,7 +21,7 @@ const allConditionalQuickFilters: ConditionalQuickFilter<MaterialInventory>[] = 
   }
 ]
 
-const allTextQuickFilters: TextQuickFilter[] = [
+const allTextQuickFilters: TextFilter[] = [
   {
     description: 'materials',
     options: [
@@ -61,9 +46,9 @@ const allTextQuickFilters: TextQuickFilter[] = [
   }
 ]
 
-const renderTextQuickFilters = (textQuickFilters: TextQuickFilter[]) => {
+const renderTextQuickFilters = (textQuickFilters: TextFilter[]) => {
   return (
-    textQuickFilters.map((quickFilter: TextQuickFilter) => {
+    textQuickFilters.map((quickFilter: TextFilter) => {
       const { description, options } = quickFilter;
       return (
         <div className='quick-filters-list'>
@@ -82,9 +67,9 @@ const renderTextQuickFilters = (textQuickFilters: TextQuickFilter[]) => {
   )
 }
 
-const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalQuickFilter<MaterialInventory>[]) => {
+const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalFilter<MaterialInventory>[]) => {
   return (
-    conditionalFilterFunctions.map((filterFunction: ConditionalQuickFilter<MaterialInventory>) => {
+    conditionalFilterFunctions.map((filterFunction: ConditionalFilter<MaterialInventory>) => {
       const { uuid, textToDisplay, conditionalFilter } = filterFunction;
       return (
         <div className='quick-conditional-filters-list'>

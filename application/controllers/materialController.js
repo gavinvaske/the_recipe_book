@@ -151,8 +151,7 @@ router.get('/inventory', async (request, response) => {
     } catch (error) {
         console.log(`An error occurred while attempting to load /material/inventory: ${error}`);
 
-        request.flash('errors', [`The following error occurred: ${error}`]);
-        return response.redirect('back');
+        return response.status(500).send(error.message)
     }
 });
 

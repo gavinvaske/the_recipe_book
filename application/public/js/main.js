@@ -566,7 +566,7 @@ $( document ).ready(function() {
             $(this).addClass('active');
         });
     
-      /* (marked for deletion) commented out because it interferred with React components */
+        /* (marked for deletion) commented out because it interferred with React components */
         // function closeMenu(){
         //     $('.dropdown, .filter-btn-wrapper, .btn-person-filter, .search-input, .search-wrapper').removeClass('active');
         // }

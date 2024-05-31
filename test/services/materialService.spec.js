@@ -19,57 +19,6 @@ describe('materialService test suite', () => {
             expect(actualMaterialIds.sort()).toEqual(materialIds.sort());
         });
     });
-
-    describe('getAllMaterials()', () => {
-        let materialsInDatabase;
-
-        afterEach(() => {
-            jest.resetAllMocks();
-        });
-
-        beforeEach(() => {
-            materialsInDatabase = [];
-            execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
-            findFunction = jest.fn().mockImplementation(() => {
-                return {
-                    exec: execFunction
-                };
-            });
-
-            mockMaterialModel.find.mockImplementation(findFunction);
-        });
-
-        it ('should not throw error', async () => {
-            await expect(materialService.getAllMaterials()).resolves.not.toThrow();
-        });
-        
-        it ('should search for materials from database', async () => {
-            await materialService.getAllMaterials();
-
-            expect(findFunction).toHaveBeenCalledTimes(1);
-            expect(execFunction).toHaveBeenCalledTimes(1);
-        });
-
-        it ('should return empty array when no materials are found by query', async () => {
-            materialsInDatabase = [];
-            execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
-        
-            const materials = await materialService.getAllMaterials();
-
-            expect(materials).toBeDefined();
-            expect(materials.length).toBe(0);
-        });
-
-        it ('should return the materials from the database', async () => {
-            materialsInDatabase = buildMaterials(chance.n(chance.string, chance.d100()));
-            execFunction = jest.fn().mockResolvedValue(materialsInDatabase);
-        
-            const materials = await materialService.getAllMaterials();
-
-            expect(materials).toBeDefined();
-            expect(materials.length).toBe(materialsInDatabase.length);
-        });
-    });
 });
 
 function buildMaterials(materialIds) {

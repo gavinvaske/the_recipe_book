@@ -67,15 +67,12 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
   }
 
   return (
-    <div className="workflow-filter flex-center-left-row full-width card">
-      <a className="create bg-blue text-white border-blue btn-create new-po-btn" href="/material-orders/create">PO <i className="fa-regular fa-plus"></i></a>
-      <a className="create bg-blue text-white border-blue btn-create new-po-btn" href="/materials/form" role="button">Material <i className="fa-regular fa-plus"></i></a>
-      
+    <>
       <div className="search-wrapper flex-center-left-row">
         <i className="fa-regular fa-magnifying-glass flex-center-center-row"></i>
         <SearchBar
-          value={store.getSearchBarInput()} 
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => store.setSearchBarInput(e.target.value)} 
+          value={store.getSearchBarInput()}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => store.setSearchBarInput(e.target.value)}
         />
       </div>
 
@@ -104,6 +101,6 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
         <span className="tooltiptext">See All</span>
         <button className="sort btn-sort see-all" onClick={() => store.resetAllFilters()}><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">{filterableItemsCount}</span>)</button>
       </div>
-    </div>
+    </>
   );
 })

@@ -1,6 +1,5 @@
 const chance = require('chance').Chance();
 const materialService = require('../../application/services/materialService');
-const mockMaterialModel = require('../../application/models/material');
 
 jest.mock('../../application/models/material');
 

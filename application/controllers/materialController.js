@@ -11,6 +11,7 @@ const ticketService = require('../services/ticketService');
 const mongooseService = require('../services/mongooseService');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
+const SERVER_ERROR_STATUS_CODE = 500;
 
 router.use(verifyJwtToken);
 
@@ -151,7 +152,7 @@ router.get('/inventory', async (request, response) => {
     } catch (error) {
         console.log(`An error occurred while attempting to load /material/inventory: ${error}`);
 
-        return response.status(500).send(error.message)
+        return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
     }
 });
 

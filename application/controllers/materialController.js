@@ -150,7 +150,7 @@ router.get('/inventory', async (request, response) => {
         });
 
     } catch (error) {
-        console.log(`An error occurred while attempting to load /material/inventory: ${error}`);
+        console.log(`Error fetching inventory data: ${error}`);
 
         return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
     }

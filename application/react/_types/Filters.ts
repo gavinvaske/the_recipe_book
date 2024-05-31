@@ -1,10 +1,10 @@
 export type ConditionalFilterFunction<T> = (objects: Partial<T>[]) => Partial<T>[]
 
-export type TextQuickFilters = {[key: string]: string}
+type uuidToTextFilter = {[key: string]: string}
 
 export interface Filter<T> {
   searchBarInput: string;
-  textQuickFilters: TextQuickFilters;
+  textQuickFilters: uuidToTextFilter;
   conditionalQuickFilters: {[key: string]: ConditionalFilterFunction<T>}
 
   getSearchBarInput(): string
@@ -18,7 +18,7 @@ export interface Filter<T> {
 
   resetAllFilters(): void
 
-  generateSearchQuery(searchBarInput: string, textQuickFilters: TextQuickFilters): void
+  generateSearchQuery(searchBarInput: string, textQuickFilters: uuidToTextFilter): void
 
   applyFilters(objects: T[] | undefined): T[]
 }

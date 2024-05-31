@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import './ConditionalQuickFilter.scss'
-import { ConditionalFilterFunction } from '../../../stores/inventorySummaryStore';
+import { ConditionalFilterFunction } from '../../../_types/Filters';
 
 type Props<T> = {
   uuid: string,
   textToDisplay: string,
-  conditionalFilterFunction: (objects: Partial<T>[]) => Partial<T>[], 
+  conditionalFilterFunction: (objects: Partial<T>[]) => Partial<T>[],
   onEnabled: (
-    uuid: string, 
+    uuid: string,
     conditionalFilterFunction: ConditionalFilterFunction<T>
-  ) => void, 
-  onDisabled: (uuid: string) => void 
+  ) => void,
+  onDisabled: (uuid: string) => void
 }
 
 export const ConditionalQuickFilter = observer(<T extends any>(props: Props<T>) => {

@@ -7,7 +7,7 @@ import { MaterialOrder } from '../_types/databaseModels/MaterialOrder';
 import { Material } from '../_types/databaseModels/material';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
-import FilterBar from './FilterBar/FilterBar';
+import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 
 const socket = io();
 
@@ -44,7 +44,7 @@ const Inventory = observer(() => {
   return (
     <div id='inventory-page'>
       {inventorySummary && <Summary inventorySummaryStore={inventorySummaryStore} />}
-      <FilterBar />
+      <InventoryFilterBar />
       {inventorySummary && <Materials inventorySummaryStore={inventorySummaryStore} />}
     </div>
   )

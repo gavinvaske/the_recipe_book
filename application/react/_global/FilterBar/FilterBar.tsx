@@ -1,52 +1,12 @@
-import React, { useState } from 'react'
-import './FilterBar.scss'
-import SearchBar from '../../_global/SearchBar/SearchBar'
-import inventorySummaryStore from '../../stores/inventorySummaryStore';
+import React, { useState } from 'react';
+import './FilterBar.scss';
 import { observer } from 'mobx-react-lite';
-import { TextQuickFilter } from '../../_global/QuickFilterModal/TextQuickFilter/QuickFilterButton';
-import { v4 as uuidv4 } from 'uuid';
-import { MaterialInventory } from '../Inventory';
-import { ConditionalQuickFilter } from '../../_global/QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
-import { ConditionalFilterFunction, TextFilterOption, TextFilter, ConditionalFilter } from '../../_types/Filters';
+import { ConditionalFilter, ConditionalFilterFunction, Filter, TextFilter, TextFilterOption } from '../../_types/Filters';
+import { ConditionalQuickFilter } from '../QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
+import { TextQuickFilter } from '../QuickFilterModal/TextQuickFilter/QuickFilterButton';
+import SearchBar from '../SearchBar/SearchBar';
 
-const allConditionalQuickFilters: ConditionalFilter<MaterialInventory>[] = [
-  {
-    uuid: uuidv4(),
-    textToDisplay: 'This text is rendered',
-    conditionalFilter: (objects: Partial<MaterialInventory>[]) => {
-      return objects.filter((object) => {
-        return object?.material?.name === 'Cloth'
-      })
-    }
-  }
-]
-
-const allTextQuickFilters: TextFilter[] = [
-  {
-    description: 'materials',
-    options: [
-      {
-        uuid: uuidv4(),
-        value: 'semi-gloss'
-      },
-      {
-        uuid: uuidv4(),
-        value: 'matte'
-      },
-    ]
-  },
-  {
-    description: 'Foo',
-    options: [
-      {
-        uuid: uuidv4(),
-        value: 'bar'
-      },
-    ]
-  }
-]
-
-const renderTextQuickFilters = (textQuickFilters: TextFilter[]) => {
+const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], store: Filter<T>) => {
   return (
     textQuickFilters.map((quickFilter: TextFilter) => {
       const { description, options } = quickFilter;
@@ -57,8 +17,8 @@ const renderTextQuickFilters = (textQuickFilters: TextFilter[]) => {
             <TextQuickFilter
               uuid={option.uuid}
               filterValue={option.value}
-              onDisabled={(uuid) => inventorySummaryStore.removeTextQuickFilter(uuid)}
-              onEnabled={(uuid, filterValue) => inventorySummaryStore.setTextQuickFilter(uuid, filterValue)}
+              onDisabled={(uuid) => store.removeTextQuickFilter(uuid)}
+              onEnabled={(uuid, filterValue) => store.setTextQuickFilter(uuid, filterValue)}
               key={option.uuid}
             />
           ))}
@@ -67,18 +27,18 @@ const renderTextQuickFilters = (textQuickFilters: TextFilter[]) => {
   )
 }
 
-const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalFilter<MaterialInventory>[]) => {
+const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions: ConditionalFilter<T>[], store: Filter<T>) => {
   return (
-    conditionalFilterFunctions.map((filterFunction: ConditionalFilter<MaterialInventory>) => {
+    conditionalFilterFunctions.map((filterFunction: ConditionalFilter<T>) => {
       const { uuid, textToDisplay, conditionalFilter } = filterFunction;
       return (
         <div className='quick-conditional-filters-list'>
-          <ConditionalQuickFilter 
+          <ConditionalQuickFilter
             uuid={uuid}
             conditionalFilterFunction={conditionalFilter}
             textToDisplay={textToDisplay}
-            onDisabled={(uuid: string) => inventorySummaryStore.removeConditionalFilter(uuid)}
-            onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<MaterialInventory>) => inventorySummaryStore.setConditionalQuickFilter(uuid, conditionalFilterFunction)}
+            onDisabled={(uuid: string) => store.removeConditionalFilter(uuid)}
+            onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<T>) => store.setConditionalQuickFilter(uuid, conditionalFilterFunction)}
             key={uuid}
           />
         </div>)
@@ -86,7 +46,15 @@ const renderConditionalQuickFilters = (conditionalFilterFunctions: ConditionalFi
   )
 }
 
-const FilterBar = observer((props) => {
+type Props<T> = {
+  conditionalQuickFilters: ConditionalFilter<T>[];
+  textQuickFilters: TextFilter[];
+  store: Filter<T>
+  filterableItemsCount: number
+}
+
+export const FilterBar = observer(<T extends any>(props: Props<T>) => {
+  const { conditionalQuickFilters, textQuickFilters, store, filterableItemsCount } = props
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
   const [isAdvancedDropdownDisplayed, setIsAdvancedDropdownDisplayed] = useState(false)
 
@@ -106,8 +74,8 @@ const FilterBar = observer((props) => {
       <div className="search-wrapper flex-center-left-row">
         <i className="fa-regular fa-magnifying-glass flex-center-center-row"></i>
         <SearchBar
-          value={inventorySummaryStore.getSearchBarInput()} 
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => inventorySummaryStore.setSearchBarInput(e.target.value)} 
+          value={store.getSearchBarInput()} 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => store.setSearchBarInput(e.target.value)} 
         />
       </div>
 
@@ -123,21 +91,19 @@ const FilterBar = observer((props) => {
         </div>
         <div className={`quick-filter-dropdown dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
           <h5><b>Quick Filter</b></h5>
-          {renderTextQuickFilters(allTextQuickFilters)}
+          {renderTextQuickFilters(textQuickFilters, store)}
         </div>
 
         <div className={`advanced-filter-dropdown dropdown ${isAdvancedDropdownDisplayed ? 'active' : ''}`}>
           <h5><b>Advanced Filter</b></h5>
-          {renderConditionalQuickFilters(allConditionalQuickFilters)}
+          {renderConditionalQuickFilters(conditionalQuickFilters, store)}
         </div>
 
       </div>
       <div className="all-wrapper tooltip">
         <span className="tooltiptext">See All</span>
-        <button className="sort btn-sort see-all" onClick={() => inventorySummaryStore.resetAllFilters()}><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">{inventorySummaryStore.getAllMaterialInventories().length}</span>)</button>
+        <button className="sort btn-sort see-all" onClick={() => store.resetAllFilters()}><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">{filterableItemsCount}</span>)</button>
       </div>
     </div>
-  )
+  );
 })
-
-export default FilterBar

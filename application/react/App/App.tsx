@@ -7,6 +7,7 @@ import CreditTermsForm from '../CreditTerms/CreditTermsForm/CreditTermsForm';
 import CreditTermsTable from '../CreditTerms/CreditTermsTable/CreditTermsTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';
 import Inventory from '../Inventory/Inventory';
+import { MaterialDetailsModal } from '../Inventory/MaterialDetailsModal/MaterialDetailsModal';
 
 export function App() {
   return (

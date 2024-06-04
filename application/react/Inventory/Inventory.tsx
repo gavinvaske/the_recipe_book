@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Inventory.scss'
 import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
@@ -8,6 +8,7 @@ import { Material } from '../_types/databaseModels/material';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
+import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
 
 const socket = io();
 
@@ -28,6 +29,7 @@ export type MaterialInventorySummary = {
 
 const Inventory = observer(() => {
   const inventorySummary: Partial<MaterialInventorySummary> = inventorySummaryStore.getInventorySummary()
+  const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
   
   useEffect(() => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
@@ -41,11 +43,35 @@ const Inventory = observer(() => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 
+  function displayMaterialInventoryDetailsModal(materialInventory: MaterialInventory) {
+    setClickedMaterial(materialInventory)
+  }
+
+  function closeMaterialInventoryDetailsModal() {
+    setClickedMaterial(null)
+  }
+
   return (
     <div id='inventory-page'>
-      {inventorySummary && <Summary inventorySummaryStore={inventorySummaryStore} />}
+      {
+        clickedMaterial && 
+        <MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />
+      }
+      
+      {
+        inventorySummary && 
+        <Summary inventorySummaryStore={inventorySummaryStore} />
+      }
+
       <InventoryFilterBar />
-      {inventorySummary && <Materials inventorySummaryStore={inventorySummaryStore} />}
+      
+      {
+        inventorySummary && 
+          <Materials 
+            inventorySummaryStore={inventorySummaryStore}
+            onMaterialClicked={(materialInventory: MaterialInventory) => displayMaterialInventoryDetailsModal(materialInventory)}
+          />
+      }
     </div>
   )
 });

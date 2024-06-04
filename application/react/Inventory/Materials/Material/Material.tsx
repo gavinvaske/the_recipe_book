@@ -46,12 +46,17 @@ const togglePurchaseOrders = () => {
   alert("TODO STORM: Make the purchase order section appear (NO JQUERY ALLOWED, only react)")
 }
 
-const Material = observer((props: { materialInventory: MaterialInventory }) => {
-  const { materialInventory } = props;
+type Props = { 
+  materialInventory: MaterialInventory,
+  onClick: () => void
+}
+
+const Material = observer((props: Props) => {
+  const { materialInventory, onClick } = props;
   const material: Material = materialInventory.material;
 
   return (
-    <div className='card' id={material._id}>
+    <div className='card' id={material._id} onClick={() => onClick()}>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>

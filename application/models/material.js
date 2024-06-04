@@ -121,6 +121,25 @@ const schema = new Schema({
         ...weightPerMsiAttribute,
         required: true
     },
+
+    linerType: {  /* Ask storm if we want to create a whole database table to store these liner types? */
+      type: String,
+      required: true
+    },
+    productNumber: {  /* Ask storm what this is - can this be unique? */
+      type: String,
+      required: true
+    },
+    masterRollSize: {
+      type: Number,
+      required: true,
+      validate : {
+          validator : Number.isInteger,
+          message: '{VALUE} is not an integer'
+      },
+      min: 0
+    },
+    // image: { /* TODO: this should be the S3 url (6-3-2024) */}
 }, {
     timestamps: true,
     strict: 'throw'

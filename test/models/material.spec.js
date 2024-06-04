@@ -600,6 +600,83 @@ describe('File: material.js', () => {
         });
     });
 
+    describe('attribute: linerType', () => {
+      it('should be required', () => {
+        delete materialAttributes.linerType;
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+
+      it('should be a string', () => {
+        const expectedValue = chance.string();
+        materialAttributes.linerType = `  ${expectedValue}  `;
+        
+        const material = new MaterialModel(materialAttributes);
+
+        expect(material.linerType).toEqual(expectedValue);
+      })
+    })
+
+    describe('attribute: productNumber', () => {
+      it('should be required', () => {
+        delete materialAttributes.productNumber;
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+
+      it('should be a string', () => {
+        const expectedValue = chance.string();
+        materialAttributes.productNumber = `  ${expectedValue}  `;
+        
+        const material = new MaterialModel(materialAttributes);
+
+        expect(material.productNumber).toEqual(expectedValue);
+      })
+    })
+
+    describe('attribute: masterRollSize', () => {
+      it('should be required', () => {
+        delete materialAttributes.masterRollSize;
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined();
+      })
+
+      it('should be a Number', () => {
+        const material = new MaterialModel(materialAttributes);
+
+        expect(material.masterRollSize).toEqual(expect.any(Number));
+      });
+
+      it('should not be a floating point number', () => {
+        const floatingPointNumber = 1.123;
+        materialAttributes.masterRollSize = floatingPointNumber
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+
+      it('should not be a negative number', () => {
+        const negativeNumber = -1;
+        materialAttributes.masterRollSize = negativeNumber
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+    })
+
     describe('verify database interactions', () => {
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();

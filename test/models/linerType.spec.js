@@ -25,7 +25,21 @@ describe('linerType validation', () => {
     });
 
     expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
-});
+  });
+
+  it('should throw error when invalid attribute is set', async () => {
+    const unknownAttribute = chance.string();
+    linerTypeAttributes[unknownAttribute] = chance.string();
+    let errorMessage;
+
+    try {
+      new LinerTypeModel(linerTypeAttributes)
+    } catch(error) {
+      errorMessage = error.message
+    }
+
+    expect(errorMessage).toBeDefined()  
+  })
 
   describe('attribute: name', () => {
     it('should be required', () => {

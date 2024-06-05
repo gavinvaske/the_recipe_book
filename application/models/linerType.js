@@ -10,7 +10,10 @@ const LinerTypeSchema = new Schema({
     index: true,
     uppercase: true
   }
-}, { timestamps: true });
+}, { 
+  timestamps: true,
+  strict: 'throw'
+});
 
 LinerTypeSchema.plugin(mongoose_delete, { overrideMethods: true });
 

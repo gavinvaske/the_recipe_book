@@ -600,6 +600,23 @@ describe('File: material.js', () => {
         });
     });
 
+    describe('attribute: location', () => {
+      it('should be required', () => {
+        delete materialAttributes.location
+        const material = new MaterialModel(materialAttributes)
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+
+      it('should be a string', () => {
+        const materail = new MaterialModel(materialAttributes);
+        
+        expect(materail.location).toEqual(expect.any(String));
+      })
+    })
+
     describe('attribute: linerType', () => {
       it('should be required', () => {
         delete materialAttributes.linerType;
@@ -610,14 +627,24 @@ describe('File: material.js', () => {
         expect(error).toBeDefined()
       })
 
-      it('should be a string', () => {
-        const expectedValue = chance.string();
-        materialAttributes.linerType = `  ${expectedValue}  `;
-        
+      it('should fail validation if the datatype is not a mongoose object ID', () => {
+        const invalidLinerType = chance.word();
+        materialAttributes.linerType = invalidLinerType;
         const material = new MaterialModel(materialAttributes);
 
-        expect(material.linerType).toEqual(expectedValue);
-      })
+        const error = material.validateSync();
+
+        expect(error).toBeDefined();
+    });
+
+    it('should pass validation if value is a mongoose object id', () => {
+        materialAttributes.linerType = new mongoose.Types.ObjectId();
+        const material = new MaterialModel(materialAttributes);
+
+        const error = material.validateSync();
+
+        expect(error).toBeUndefined();
+    });
     })
 
     describe('attribute: productNumber', () => {
@@ -631,12 +658,20 @@ describe('File: material.js', () => {
       })
 
       it('should be a string', () => {
-        const expectedValue = chance.string();
+        const expectedValue = chance.string().toUpperCase();
         materialAttributes.productNumber = `  ${expectedValue}  `;
         
         const material = new MaterialModel(materialAttributes);
 
         expect(material.productNumber).toEqual(expectedValue);
+      })
+
+      it('should be trimmed and uppercased', () => {
+        const expectedValue = chance.string().toUpperCase();
+        materialAttributes.productNumber = `  ${expectedValue.toLowerCase()}  `;
+        const material = new MaterialModel(materialAttributes);
+
+        expect(material.productNumber).toBe(expectedValue);
       })
     })
 
@@ -666,9 +701,9 @@ describe('File: material.js', () => {
         expect(error).toBeDefined()
       })
 
-      it('should not be a negative number', () => {
-        const negativeNumber = -1;
-        materialAttributes.masterRollSize = negativeNumber
+      it('should be greater than zero', () => {
+        const negativeNumberOrZero = [-1, 0];
+        materialAttributes.masterRollSize = chance.pickone(negativeNumberOrZero)
         const material = new MaterialModel(materialAttributes);
 
         const error = material.validateSync();
@@ -676,6 +711,33 @@ describe('File: material.js', () => {
         expect(error).toBeDefined()
       })
     })
+
+    describe('attribute: image', () => {
+      it('should be required', () => {
+        delete materialAttributes.image
+        const material = new MaterialModel(materialAttributes)
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+
+      it('should be a string', () => {
+        const material = new MaterialModel(materialAttributes)
+
+        expect(material.image).toEqual(expect.any(String))
+      })
+
+      it('should be a valid url', () => {
+        const invalidUrl = chance.string();
+        materialAttributes.image = invalidUrl
+        const material = new MaterialModel(materialAttributes)
+
+        const error = material.validateSync();
+
+        expect(error).toBeDefined()
+      })
+    });
 
     describe('verify database interactions', () => {
         beforeAll(async () => {

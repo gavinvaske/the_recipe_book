@@ -140,7 +140,7 @@ const schema = new Schema({
     productNumber: {
         type: String,
         required: true,
-        unique: true, // TODO: Test this
+        unique: true,
         uppercase: true
     },
     masterRollSize: {

@@ -774,5 +774,30 @@ describe('File: material.js', () => {
                 expect(savedMaterial.updatedAt).toBeDefined();
             });
         });
+
+        describe('attribute: productNumber', () => {
+          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+            const duplicateProductNumber = chance.string();
+            const material = new MaterialModel({
+              ...testDataGenerator.mockData.Material(),
+              productNumber: duplicateProductNumber
+            });
+            const materialWithDuplicateProductNumber = new MaterialModel({
+              ...testDataGenerator.mockData.Material(),
+              productNumber: duplicateProductNumber
+            });
+            let errorMessage;
+
+            await material.save();
+
+            try {
+              await materialWithDuplicateProductNumber.save();
+            } catch (error) {
+              errorMessage = error.message;
+            }
+
+            expect(errorMessage).toBeDefined();
+          })
+        })
     });
 });

@@ -28,5 +28,5 @@ export type Material = MongooseAttributes & {
   linerType: string,
   productNumber: string,
   masterRollSize: number,
-  // image: string // TODO:
+  image: string
 }

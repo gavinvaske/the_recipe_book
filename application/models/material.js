@@ -129,33 +129,33 @@ const schema = new Schema({
         required: true
     },
     location: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     linerType: {
-      type: Schema.Types.ObjectId,
-      ref: 'LinerType',
-      required: true
+        type: Schema.Types.ObjectId,
+        ref: 'LinerType',
+        required: true
     },
     productNumber: {
-      type: String,
-      required: true,
-      unique: true, // TODO: Test this
-      uppercase: true
+        type: String,
+        required: true,
+        unique: true, // TODO: Test this
+        uppercase: true
     },
     masterRollSize: {
-      type: Number,
-      required: true,
-      validate : {
-          validator : Number.isInteger,
-          message: '{VALUE} is not an integer'
-      },
-      min: 1
+        type: Number,
+        required: true,
+        validate : {
+            validator : Number.isInteger,
+            message: '{VALUE} is not an integer'
+        },
+        min: 1
     },
     image: { 
-      type: String,
-      required: true,
-      validate: [validateUrl, '{VALUE} is not a valid url']
+        type: String,
+        required: true,
+        validate: [validateUrl, '{VALUE} is not a valid url']
     }
 }, {
     timestamps: true,

@@ -601,142 +601,142 @@ describe('File: material.js', () => {
     });
 
     describe('attribute: location', () => {
-      it('should be required', () => {
-        delete materialAttributes.location
-        const material = new MaterialModel(materialAttributes)
+        it('should be required', () => {
+            delete materialAttributes.location;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should be a string', () => {
-        const materail = new MaterialModel(materialAttributes);
+        it('should be a string', () => {
+            const materail = new MaterialModel(materialAttributes);
         
-        expect(materail.location).toEqual(expect.any(String));
-      })
-    })
+            expect(materail.location).toEqual(expect.any(String));
+        });
+    });
 
     describe('attribute: linerType', () => {
-      it('should be required', () => {
-        delete materialAttributes.linerType;
-        const material = new MaterialModel(materialAttributes);
+        it('should be required', () => {
+            delete materialAttributes.linerType;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should fail validation if the datatype is not a mongoose object ID', () => {
-        const invalidLinerType = chance.word();
-        materialAttributes.linerType = invalidLinerType;
-        const material = new MaterialModel(materialAttributes);
+        it('should fail validation if the datatype is not a mongoose object ID', () => {
+            const invalidLinerType = chance.word();
+            materialAttributes.linerType = invalidLinerType;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined();
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if value is a mongoose object id', () => {
+            materialAttributes.linerType = new mongoose.Types.ObjectId();
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+        });
     });
-
-    it('should pass validation if value is a mongoose object id', () => {
-        materialAttributes.linerType = new mongoose.Types.ObjectId();
-        const material = new MaterialModel(materialAttributes);
-
-        const error = material.validateSync();
-
-        expect(error).toBeUndefined();
-    });
-    })
 
     describe('attribute: productNumber', () => {
-      it('should be required', () => {
-        delete materialAttributes.productNumber;
-        const material = new MaterialModel(materialAttributes);
+        it('should be required', () => {
+            delete materialAttributes.productNumber;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should be a string', () => {
-        const expectedValue = chance.string().toUpperCase();
-        materialAttributes.productNumber = `  ${expectedValue}  `;
+        it('should be a string', () => {
+            const expectedValue = chance.string().toUpperCase();
+            materialAttributes.productNumber = `  ${expectedValue}  `;
         
-        const material = new MaterialModel(materialAttributes);
+            const material = new MaterialModel(materialAttributes);
 
-        expect(material.productNumber).toEqual(expectedValue);
-      })
+            expect(material.productNumber).toEqual(expectedValue);
+        });
 
-      it('should be trimmed and uppercased', () => {
-        const expectedValue = chance.string().toUpperCase();
-        materialAttributes.productNumber = `  ${expectedValue.toLowerCase()}  `;
-        const material = new MaterialModel(materialAttributes);
+        it('should be trimmed and uppercased', () => {
+            const expectedValue = chance.string().toUpperCase();
+            materialAttributes.productNumber = `  ${expectedValue.toLowerCase()}  `;
+            const material = new MaterialModel(materialAttributes);
 
-        expect(material.productNumber).toBe(expectedValue);
-      })
-    })
+            expect(material.productNumber).toBe(expectedValue);
+        });
+    });
 
     describe('attribute: masterRollSize', () => {
-      it('should be required', () => {
-        delete materialAttributes.masterRollSize;
-        const material = new MaterialModel(materialAttributes);
+        it('should be required', () => {
+            delete materialAttributes.masterRollSize;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined();
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should be a Number', () => {
-        const material = new MaterialModel(materialAttributes);
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
 
-        expect(material.masterRollSize).toEqual(expect.any(Number));
-      });
+            expect(material.masterRollSize).toEqual(expect.any(Number));
+        });
 
-      it('should not be a floating point number', () => {
-        const floatingPointNumber = 1.123;
-        materialAttributes.masterRollSize = floatingPointNumber
-        const material = new MaterialModel(materialAttributes);
+        it('should not be a floating point number', () => {
+            const floatingPointNumber = 1.123;
+            materialAttributes.masterRollSize = floatingPointNumber;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should be greater than zero', () => {
-        const negativeNumberOrZero = [-1, 0];
-        materialAttributes.masterRollSize = chance.pickone(negativeNumberOrZero)
-        const material = new MaterialModel(materialAttributes);
+        it('should be greater than zero', () => {
+            const negativeNumberOrZero = [-1, 0];
+            materialAttributes.masterRollSize = chance.pickone(negativeNumberOrZero);
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
-    })
+            expect(error).toBeDefined();
+        });
+    });
 
     describe('attribute: image', () => {
-      it('should be required', () => {
-        delete materialAttributes.image
-        const material = new MaterialModel(materialAttributes)
+        it('should be required', () => {
+            delete materialAttributes.image;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should be a string', () => {
-        const material = new MaterialModel(materialAttributes)
+        it('should be a string', () => {
+            const material = new MaterialModel(materialAttributes);
 
-        expect(material.image).toEqual(expect.any(String))
-      })
+            expect(material.image).toEqual(expect.any(String));
+        });
 
-      it('should be a valid url', () => {
-        const invalidUrl = chance.string();
-        materialAttributes.image = invalidUrl
-        const material = new MaterialModel(materialAttributes)
+        it('should be a valid url', () => {
+            const invalidUrl = chance.string();
+            materialAttributes.image = invalidUrl;
+            const material = new MaterialModel(materialAttributes);
 
-        const error = material.validateSync();
+            const error = material.validateSync();
 
-        expect(error).toBeDefined()
-      })
+            expect(error).toBeDefined();
+        });
     });
 
     describe('verify database interactions', () => {

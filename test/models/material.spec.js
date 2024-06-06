@@ -45,19 +45,19 @@ describe('File: material.js', () => {
     });
 
     it('should have the correct indexes', async () => {
-      const indexMetaData = MaterialModel.schema.indexes();
-      const expectedIndexes = ['materialId', 'productNumber'];
+        const indexMetaData = MaterialModel.schema.indexes();
+        const expectedIndexes = ['materialId', 'productNumber'];
 
-      console.log('indexMetaData: ', indexMetaData);
+        console.log('indexMetaData: ', indexMetaData);
 
-      const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
-          return indexMetaData.some((metaData) => {
-              const index = Object.keys(metaData[0])[0];
-              if (index === expectedIndex) return true;
-          });
-      });
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
 
-      expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
     });
 
     it('should validate when required attributes are defined', () => {
@@ -792,53 +792,53 @@ describe('File: material.js', () => {
         });
 
         describe('attribute: productNumber', () => {
-          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
-            const duplicateProductNumber = chance.string();
-            const material = new MaterialModel({
-              ...testDataGenerator.mockData.Material(),
-              productNumber: duplicateProductNumber
+            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+                const duplicateProductNumber = chance.string();
+                const material = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    productNumber: duplicateProductNumber
+                });
+                const materialWithDuplicateProductNumber = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    productNumber: duplicateProductNumber
+                });
+                let errorMessage;
+
+                await material.save();
+
+                try {
+                    await materialWithDuplicateProductNumber.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
+
+                expect(errorMessage).toBeDefined();
             });
-            const materialWithDuplicateProductNumber = new MaterialModel({
-              ...testDataGenerator.mockData.Material(),
-              productNumber: duplicateProductNumber
-            });
-            let errorMessage;
-
-            await material.save();
-
-            try {
-              await materialWithDuplicateProductNumber.save();
-            } catch (error) {
-              errorMessage = error.message;
-            }
-
-            expect(errorMessage).toBeDefined();
-          })
-        })
+        });
 
         describe('attribute: materialId', () => {
-          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
-            const duplicateMaterialId = chance.string();
-            const material = new MaterialModel({
-              ...testDataGenerator.mockData.Material(),
-              materialId: duplicateMaterialId
+            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+                const duplicateMaterialId = chance.string();
+                const material = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    materialId: duplicateMaterialId
+                });
+                const materialWithDuplicateMaterialId = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    materialId: duplicateMaterialId
+                });
+                let errorMessage;
+
+                await material.save();
+
+                try {
+                    await materialWithDuplicateMaterialId.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
+
+                expect(errorMessage).toBeDefined();
             });
-            const materialWithDuplicateMaterialId = new MaterialModel({
-              ...testDataGenerator.mockData.Material(),
-              materialId: duplicateMaterialId
-            });
-            let errorMessage;
-
-            await material.save();
-
-            try {
-              await materialWithDuplicateMaterialId.save();
-            } catch (error) {
-              errorMessage = error.message;
-            }
-
-            expect(errorMessage).toBeDefined();
-          })
-        })
+        });
     });
 });

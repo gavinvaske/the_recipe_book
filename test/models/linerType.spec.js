@@ -109,20 +109,29 @@ describe('linerType validation', () => {
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
         });
 
-        it('should be able to create a new LinerType using the same name as a previously deleted LinerType', async () => {
-            const duplicateName = chance.string();
-            linerTypeAttributes.name = duplicateName;
-            const linerType = new LinerTypeModel(linerTypeAttributes);
-            const id = linerType._id;
+        describe('attribute: materialId', () => {
+          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+              const duplicateName = chance.string();
+              const linerType = new LinerTypeModel({
+                  ...linerTypeAttributes,
+                  name: duplicateName
+              });
+              const linerTypeWithDuplicateMaterialId = new LinerTypeModel({
+                ...linerTypeAttributes,
+                  name: duplicateName
+              });
+              let errorMessage;
 
-            await linerType.save();
-            await LinerTypeModel.deleteById(id);
+              await linerType.save();
 
-            const linerType2 = new LinerTypeModel(linerTypeAttributes);
-            await linerType2.save();
+              try {
+                  await linerTypeWithDuplicateMaterialId.save();
+              } catch (error) {
+                  errorMessage = error.message;
+              }
 
-            // if it made it here without an error, the test passed successfully
-            expect(true).toBe(true);
-        });
+              expect(errorMessage).toBeDefined();
+          });
+      });
     });
 });

@@ -8,7 +8,8 @@ const LinerTypeSchema = new Schema({
         type: String,
         required: true,
         index: true,
-        uppercase: true
+        uppercase: true,
+        unique: true
     }
 }, { 
     timestamps: true,

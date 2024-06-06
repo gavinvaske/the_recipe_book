@@ -109,8 +109,8 @@ describe('linerType validation', () => {
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
         });
 
-        describe('attribute: materialId', () => {
-            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+        describe('attribute: name', () => {
+            it('should throw error if two linerTypes with the same name are saved to the DB', async () => {
                 const duplicateName = chance.string();
                 const linerType = new LinerTypeModel({
                     ...linerTypeAttributes,

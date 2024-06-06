@@ -815,5 +815,30 @@ describe('File: material.js', () => {
             expect(errorMessage).toBeDefined();
           })
         })
+
+        describe('attribute: materialId', () => {
+          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+            const duplicateMaterialId = chance.string();
+            const material = new MaterialModel({
+              ...testDataGenerator.mockData.Material(),
+              materialId: duplicateMaterialId
+            });
+            const materialWithDuplicateMaterialId = new MaterialModel({
+              ...testDataGenerator.mockData.Material(),
+              materialId: duplicateMaterialId
+            });
+            let errorMessage;
+
+            await material.save();
+
+            try {
+              await materialWithDuplicateMaterialId.save();
+            } catch (error) {
+              errorMessage = error.message;
+            }
+
+            expect(errorMessage).toBeDefined();
+          })
+        })
     });
 });

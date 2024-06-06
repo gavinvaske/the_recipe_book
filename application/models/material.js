@@ -38,7 +38,8 @@ const schema = new Schema({
         type: String,
         required: true,
         uppercase: true,
-        index: true
+        index: true,
+        unique: true
     },
     vendor: {
         type: Schema.Types.ObjectId,

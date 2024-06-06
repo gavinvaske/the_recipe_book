@@ -25,9 +25,7 @@
     "parcel:remove-cache": "rm -rf .parcel-cache"
   },
   "config": {
-    "mongodbMemoryServer": {
-      "version": "4.4.1"
-    }
+    "mongodbMemoryServer": {}
   },
   "author": "Gavin Vaske",
   "license": "ISC",

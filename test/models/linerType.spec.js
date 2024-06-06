@@ -110,28 +110,28 @@ describe('linerType validation', () => {
         });
 
         describe('attribute: materialId', () => {
-          it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
-              const duplicateName = chance.string();
-              const linerType = new LinerTypeModel({
-                  ...linerTypeAttributes,
-                  name: duplicateName
-              });
-              const linerTypeWithDuplicateMaterialId = new LinerTypeModel({
-                ...linerTypeAttributes,
-                  name: duplicateName
-              });
-              let errorMessage;
+            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+                const duplicateName = chance.string();
+                const linerType = new LinerTypeModel({
+                    ...linerTypeAttributes,
+                    name: duplicateName
+                });
+                const linerTypeWithDuplicateMaterialId = new LinerTypeModel({
+                    ...linerTypeAttributes,
+                    name: duplicateName
+                });
+                let errorMessage;
 
-              await linerType.save();
+                await linerType.save();
 
-              try {
-                  await linerTypeWithDuplicateMaterialId.save();
-              } catch (error) {
-                  errorMessage = error.message;
-              }
+                try {
+                    await linerTypeWithDuplicateMaterialId.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
 
-              expect(errorMessage).toBeDefined();
-          });
-      });
+                expect(errorMessage).toBeDefined();
+            });
+        });
     });
 });

@@ -141,9 +141,10 @@ const schema = new Schema({
     },
     productNumber: {
         type: String,
+        uppercase: true,
         required: true,
         unique: true,
-        uppercase: true
+        index: true
     },
     masterRollSize: {
         type: Number,

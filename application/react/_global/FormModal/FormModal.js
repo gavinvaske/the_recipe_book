@@ -12,7 +12,7 @@ export const FormModal = (props) => {
   return (
     <div className='modal'>
       <div className='modal-content'>
-        <Form 
+        <Form
           onSubmit={onSubmit}
           onCancel={onCancel}
           {...additionalProps}

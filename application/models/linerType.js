@@ -17,6 +17,6 @@ const LinerTypeSchema = new Schema({
 
 LinerTypeSchema.plugin(mongoose_delete, { overrideMethods: true });
 
-const HoldReason = mongoose.model('HoldReason', LinerTypeSchema);
+const LinerType = mongoose.model('LinerType', LinerTypeSchema);
 
-module.exports = HoldReason
+module.exports = LinerType

@@ -9,11 +9,17 @@ export const LinerType = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LinerTypeForm>();
 
   const onFormSubmit = (linerType: LinerTypeForm) => {
-    // axios.post('/liner-type', linerType)
-    //   .then(({data}) => {
-    //     alert('Customer created successfully! (TODO: Redirect to liner-types table)')
-    //   })
-    //   .catch(({response}) => alert('Error creating customer: ' + response.data));
+    axios.post('/liner-types', linerType)
+      .then(({ data }) => {
+        console.log(data)
+        alert('Liner Type created successfully! (TODO: Redirect to liner-types table)')
+        // TODO: Add success message to the 'yet-to-be-created' "flash-messages" mobx store
+        // TODO: Redirect to liner-types table
+      })
+      .catch(({response}) => {
+        alert('Error creating LinerType: ' + response.data)
+        // TODO: Add success message to the 'yet-to-be-created' "flash-messages" mobx store
+      });
   }
 
   return (

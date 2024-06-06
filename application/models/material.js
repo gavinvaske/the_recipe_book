@@ -37,7 +37,8 @@ const schema = new Schema({
     materialId: {
         type: String,
         required: true,
-        uppercase: true
+        uppercase: true,
+        index: true
     },
     vendor: {
         type: Schema.Types.ObjectId,

@@ -44,6 +44,22 @@ describe('File: material.js', () => {
         expect(() => new MaterialModel(materialAttributes)).toThrow();
     });
 
+    it('should have the correct indexes', async () => {
+      const indexMetaData = MaterialModel.schema.indexes();
+      const expectedIndexes = ['materialId', 'productNumber'];
+
+      console.log('indexMetaData: ', indexMetaData);
+
+      const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+          return indexMetaData.some((metaData) => {
+              const index = Object.keys(metaData[0])[0];
+              if (index === expectedIndex) return true;
+          });
+      });
+
+      expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
     it('should validate when required attributes are defined', () => {
         const finish = new MaterialModel(materialAttributes);
 

@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@types/react": "18.3.2",
+    "@types/uuid": "9.0.8",
     "browserify-zlib": "0.2.0",
     "chance": "1.1.11",
     "crypto-browserify": "3.12.0",

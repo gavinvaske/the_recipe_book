@@ -29,7 +29,7 @@ describe('validation', () => {
             SizeAround: String(chance.floating({min: 0.1})),
             NoAcross: String(chance.floating({min: 0.1})),
             NoAround: String(chance.floating({min: 0.1})),
-            CornerRadius: String(chance.floating({min: 0, max: 0.99})),
+            CornerRadius: String(chance.floating({min: 0, max: 0.99, fixed: 2})),
             FinalUnwind: chance.string(),
             ColSpace: String(chance.floating({min: 0})),
             RowSpace: String(chance.floating({min: 0})),

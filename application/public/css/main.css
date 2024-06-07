@@ -2721,10 +2721,10 @@ a.storm {
 
 .material-header .col h1 {
 	color: #157efb;
+  font-size: 2.3rem;
 	font-weight: 800;
   margin-bottom: 0px;
   line-height: 2.3rem;
-  font-size: 2.3rem;
 }
 
 .material-card-section {

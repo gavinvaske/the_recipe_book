@@ -745,7 +745,7 @@ describe('File: material.js', () => {
         });
 
         it('should be a valid url', () => {
-            const invalidUrl = chance.string();
+            const invalidUrl = chance.word();
             materialAttributes.image = invalidUrl;
             const material = new MaterialModel(materialAttributes);
 

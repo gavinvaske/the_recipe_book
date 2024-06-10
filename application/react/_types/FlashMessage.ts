@@ -1,13 +1,21 @@
-export type ErrorFlashMessage = {
+import { Implements } from "./tsHelpers"
+
+interface IFlashMessage {
   message: string,
   uuid: string,
-  type: 'SUCCESS' | 'ERROR' // TODO (6-6-2024): This isn't right
+  type: 'SUCCESS' | 'ERROR'
 }
 
-export type SuccessFlashMessage = {
+export type ErrorFlashMessage = Implements<IFlashMessage, {
   message: string,
   uuid: string,
-  type: 'SUCCESS' | 'ERROR' // TODO (6-6-2024): This isn't right
-}
+  type: 'SUCCESS'
+}>
+
+export type SuccessFlashMessage = Implements<IFlashMessage, {
+  message: string,
+  uuid: string,
+  type: 'ERROR'
+}>
 
 export type FlashMessage = ErrorFlashMessage | SuccessFlashMessage

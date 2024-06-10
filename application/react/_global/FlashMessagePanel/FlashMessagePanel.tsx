@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './FlashMessagePanel.scss';
 import flashMessageStore from '../../stores/flashMessagesStore';
 import { FlashMessage } from '../../_types/FlashMessage';
@@ -11,12 +11,26 @@ type FlashMessageProps = {
 const FlashMessage = (props : FlashMessageProps) => {
   const { flashMessage } = props;
   const { message, uuid, type } = flashMessage;
+  const [shouldSuccessMessageBeRendered, setShouldSuccessMessageBeRendered] = useState(true);
+
+  useEffect(() => {
+    const sevenSecondDelayInMs = 7000;
+    setTimeout(() => {
+      setShouldSuccessMessageBeRendered(false)  // Success messages are hidden after x-seconds
+    }, sevenSecondDelayInMs)
+  }, [])
+
+  const shouldRender = (type === 'SUCCESS' && shouldSuccessMessageBeRendered) || (type === 'ERROR')
 
   return (
-    <div className={`flash-message ${type === 'SUCCESS' ? 'success-flash-message' : 'error-flash-message'}`}>
-      {message}
-      <i className='fa-regular fa-close' onClick={() => flashMessageStore.removeFlashMessage(uuid)}></i>
-    </div>
+    <>
+      {shouldRender && (
+        <div className={`flash-message ${type === 'SUCCESS' ? 'success-flash-message' : 'error-flash-message'}`}>
+          {message}
+          <i className='fa-regular fa-close' onClick={() => flashMessageStore.removeFlashMessage(uuid)}></i>
+        </div>
+      )}
+    </>
   )
 }
 

@@ -8,6 +8,7 @@ import CreditTermsTable from '../CreditTerms/CreditTermsTable/CreditTermsTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';
 import Inventory from '../Inventory/Inventory';
 import { LinerType } from '../LinerType/LinerTypeForm/LinerTypeForm';
+import { LinerTypeTable } from '../LinerType/LinerTypeTable/LinerTypeTable';
 
 export function App() {
   return (
@@ -26,6 +27,7 @@ export function App() {
         <Route path="tables">
           <Route path="credit-term" element={<CreditTermsTable />} />
           <Route path="delivery-method" element={<DeliveryMethodTable />} />
+          <Route path="liner-type" element={<LinerTypeTable />} />
         </Route>
 
         <Route path="*" element={<div>404 Page Not Found</div>} />

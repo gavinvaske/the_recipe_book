@@ -18,7 +18,6 @@ export const LinerType = () => {
         flashMessageStore.addSuccessMessage('Liner type was created successfully')
       })
       .catch(({ response }) => {
-        alert('Error creating LinerType: ' + response.data)
         flashMessageStore.addErrorMessage(response.data)
       });
   }

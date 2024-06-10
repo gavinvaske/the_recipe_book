@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { ErrorFlashMessage, SuccessFlashMessage } from '../_types/FlashMessage';
+import { ErrorFlashMessage, SuccessFlashMessage, FlashMessage } from '../_types/FlashMessage';
 import { v4 as uuidv4 } from 'uuid';
 
 /* 
@@ -36,7 +36,7 @@ class FlashMessageStore {
   }
 
   getFlashMessages() {
-    const flashMessages = [...this.errorMessages]
+    const flashMessages: FlashMessage[] = [...this.errorMessages]
 
     if (this.successMessage) flashMessages.push(this.successMessage)
 
@@ -72,8 +72,7 @@ class FlashMessageStore {
       uuid: uuidv4(),
       type: 'SUCCESS'
     }
-    // TODO (6-6-2024): Does clearing ALL messages (especially errors) prior to rendering one success message make sense?
-    // TODO (6-6-2024): I don't think having more than one success message makes sense
+
     this.clearAllMessages();
     
     this.successMessage = successMessage

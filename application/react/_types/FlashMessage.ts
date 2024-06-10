@@ -9,13 +9,13 @@ interface IFlashMessage {
 export type ErrorFlashMessage = Implements<IFlashMessage, {
   message: string,
   uuid: string,
-  type: 'SUCCESS'
+  type: 'ERROR'
 }>
 
 export type SuccessFlashMessage = Implements<IFlashMessage, {
   message: string,
   uuid: string,
-  type: 'ERROR'
+  type: 'SUCCESS'
 }>
 
 export type FlashMessage = ErrorFlashMessage | SuccessFlashMessage

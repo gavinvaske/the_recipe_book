@@ -4,17 +4,21 @@ import axios from 'axios';
 import './DeliveryMethodForm.scss'
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
+import { useNavigate } from "react-router-dom";
+import flashMessagesStore from '../../stores/flashMessagesStore';
 
 const DeliveryMethodForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
+  const navigate = useNavigate();
 
   const onSubmit = (formData: DeliveryMethodForm) => {
     axios.post('/delivery-methods', formData)
       .then((_) => {
-        window.location.href = `/react-ui/tables/delivery-method`; // TOOD: Create redirect handler to avoid hardcoding base url ("/react-ui/*")
+        navigate(`/react-ui/tables/delivery-method`);
+        flashMessagesStore.addSuccessMessage('Delivery method was created successfully')
       })
-      .catch((error) => {
-        alert(`An error occurred while attempting to save:\n\n${error.response.data}`);
+      .catch(({ response }) => {
+        flashMessagesStore.addErrorMessage(response.data)
       })
   };
 

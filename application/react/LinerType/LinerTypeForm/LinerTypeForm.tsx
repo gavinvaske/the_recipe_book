@@ -4,21 +4,22 @@ import './LinerTypeForm.scss';
 import { LinerTypeForm } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import { useNavigate } from "react-router-dom";
+import flashMessageStore from '../../stores/flashMessagesStore';
 
 export const LinerType = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LinerTypeForm>();
+  const navigate = useNavigate();
 
   const onFormSubmit = (linerType: LinerTypeForm) => {
     axios.post('/liner-types', linerType)
-      .then(({ data }) => {
-        console.log(data)
-        alert('Liner Type created successfully! (TODO: Redirect to liner-types table)')
-        // TODO: Add success message to the 'yet-to-be-created' "flash-messages" mobx store
-        // TODO: Redirect to liner-types table
+      .then((_) => {
+        navigate('/react-ui/tables/liner-type')
+        flashMessageStore.addSuccessMessage('Liner type was created successfully')
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
         alert('Error creating LinerType: ' + response.data)
-        // TODO: Add success message to the 'yet-to-be-created' "flash-messages" mobx store
+        flashMessageStore.addErrorMessage(response.data)
       });
   }
 

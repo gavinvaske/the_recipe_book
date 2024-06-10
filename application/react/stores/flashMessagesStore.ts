@@ -37,6 +37,7 @@ class FlashMessageStore {
 
   getFlashMessages() {
     const flashMessages = [...this.errorMessages]
+
     if (this.successMessage) flashMessages.push(this.successMessage)
 
     return flashMessages
@@ -61,9 +62,8 @@ class FlashMessageStore {
       uuid: uuidv4(),
       type: 'ERROR'
     }
-    console.log('errorMessage 3213: ', errorMessage)
+
     this.errorMessages = [errorMessage, ...this.errorMessages];
-    console.log('this.errorMessages: ', this.errorMessages)
   }
 
   addSuccessMessage(message: string): void {

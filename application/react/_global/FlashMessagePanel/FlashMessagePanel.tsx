@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './FlashMessagePanel.scss';
-import flashMessageStore from '../../stores/flashMessagesStore';
+import flashMessageStore from '../../stores/flashMessageStore';
 import { FlashMessage } from '../../_types/FlashMessage';
 import { observer } from 'mobx-react-lite';
 
@@ -36,15 +36,19 @@ const FlashMessage = (props : FlashMessageProps) => {
 
 export const FlashMessagePanel = observer(() => {
   const flashMessages = flashMessageStore.getFlashMessages();
-  
+  const shouldRenderFlashMessagePanel = flashMessages.length > 0
+  const shouldRenderClearAllFlashMessagesButton = flashMessages.length > 1;
+
   return (
-    <div className='flash-message-container'>      
-      {flashMessages.map((flashMessage) => <FlashMessage flashMessage={flashMessage} key={flashMessage.uuid}/>)}
-      {(() => {
-        if (flashMessages.length > 1) { // IFF more than one flash message is on the screen, show user a "clear all" button
-          return <button onClick={() => flashMessageStore.clearAllMessages()}>Clear All Messages</button>
+    <>
+    {shouldRenderFlashMessagePanel &&
+      <div className='flash-message-container'>
+        {flashMessages.map((flashMessage) => <FlashMessage flashMessage={flashMessage} key={flashMessage.uuid}/>)}
+        {shouldRenderClearAllFlashMessagesButton &&
+          <button onClick={() => flashMessageStore.clearAllMessages()}>Clear All Messages</button>
         }
-      })()}
-    </div>
+      </div>
+    }
+    </>
   )
 })

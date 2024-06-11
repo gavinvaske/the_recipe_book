@@ -5,7 +5,7 @@ import { LinerTypeForm } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import { useNavigate } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessagesStore';
+import flashMessageStore from '../../stores/flashMessageStore';
 
 export const LinerType = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LinerTypeForm>();

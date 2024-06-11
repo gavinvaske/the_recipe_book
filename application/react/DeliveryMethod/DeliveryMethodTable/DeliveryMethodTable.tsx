@@ -15,6 +15,7 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodsRowActions } from './RowActions/RowActions'
+import FlashMessageStore from '../../stores/flashMessageStore'
 
 type DeliveryMethod = {
   _id: string,
@@ -50,8 +51,8 @@ function DeliveryMethodTable() {
         const { data } = response;
         setDeliveryMethods(data);
      })
-    .catch((error) => {
-       alert('Error loading Delivery Methods: ' +  JSON.stringify(error));
+    .catch(({response}) => {
+      FlashMessageStore.addErrorMessage(response.data)
      })
   }, [])
 

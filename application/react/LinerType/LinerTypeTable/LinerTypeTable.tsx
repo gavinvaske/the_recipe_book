@@ -46,7 +46,6 @@ export const LinerTypeTable = () => {
         setLinerTypes(data);
      })
     .catch(({response}) => {
-      console.log('response: ', response);
       FlashMessageStore.addErrorMessage(response.data)
      })
   }, [])

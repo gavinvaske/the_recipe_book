@@ -5,7 +5,7 @@ import './DeliveryMethodForm.scss'
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
 import { useNavigate } from "react-router-dom";
-import flashMessagesStore from '../../stores/flashMessagesStore';
+import flashMessageStore from '../../stores/flashMessageStore';
 
 const DeliveryMethodForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
@@ -15,10 +15,10 @@ const DeliveryMethodForm = () => {
     axios.post('/delivery-methods', formData)
       .then((_) => {
         navigate(`/react-ui/tables/delivery-method`);
-        flashMessagesStore.addSuccessMessage('Delivery method was created successfully')
+        flashMessageStore.addSuccessMessage('Delivery method was created successfully')
       })
       .catch(({ response }) => {
-        flashMessagesStore.addErrorMessage(response.data)
+        flashMessageStore.addErrorMessage(response.data)
       })
   };
 

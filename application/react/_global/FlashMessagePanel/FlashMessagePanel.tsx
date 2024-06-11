@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './FlashMessagePanel.scss';
-import flashMessageStore from '../../stores/flashMessagesStore';
+import flashMessageStore from '../../stores/flashMessageStore';
 import { FlashMessage } from '../../_types/FlashMessage';
 import { observer } from 'mobx-react-lite';
 

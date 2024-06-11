@@ -5,7 +5,7 @@ import './CreditTermsForm.scss'
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import { CreditTermForm } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessagesStore'
+import flashMessageStore from '../../stores/flashMessageStore'
 
 const CreditTermsForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreditTermForm>();

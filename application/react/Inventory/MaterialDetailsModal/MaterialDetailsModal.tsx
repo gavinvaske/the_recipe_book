@@ -1,6 +1,8 @@
 import React from 'react';
 import './MaterialDetailsModal.scss'
 import { MaterialInventory } from '../Inventory';
+import { FullscreenModal } from '../../_global/FullscreenModal/FullscreenModal';
+import { Material } from '../../_types/databaseModels/material';
 
 type Props = {
   materialInventory: MaterialInventory,
@@ -13,9 +15,7 @@ export const MaterialDetailsModal = (props: Props) => {
   const { material } = materialInventory;
 
   return (
-    <div className='modal material-inventory-modal'>
-      <div onClick={() => onClose()}>Click Here to Close the Modal</div>
-
+    <FullscreenModal onClose={() => onClose()}>
       <h1>Inventory Details for this Material</h1>
       
       <p>lengthOfMaterialInStock: {materialInventory.lengthOfMaterialInStock}</p>
@@ -27,8 +27,8 @@ export const MaterialDetailsModal = (props: Props) => {
 
       <p>Name: {material.name}</p>
       <p>materialId: {material.materialId}</p>
-      <p>vendor: {typeof material.vendor === 'object' && material.vendor.name}</p>
-      <p>materialCategory: {typeof material.materialCategory === 'object' && material.materialCategory.name}</p>
+      <p>vendor: {typeof material.vendor === 'object' && material?.vendor?.name}</p>
+      <p>materialCategory: {typeof material.materialCategory === 'object' && material?.materialCategory?.name}</p>
       <p>thickness: {material.thickness}</p>
       <p>weight: {material.weight}</p>
       <p>costPerMsi: {material.costPerMsi}</p>
@@ -36,7 +36,7 @@ export const MaterialDetailsModal = (props: Props) => {
       <p>width: {material.width}</p>
       <p>faceColor: {material.faceColor}</p>
       <p>adhesive: {material.adhesive}</p>
-      <p>adhesiveCategory: {typeof material.adhesiveCategory === 'object' && material.adhesiveCategory.name}</p>
+      <p>adhesiveCategory: {typeof material.adhesiveCategory === 'object' && material?.adhesiveCategory?.name}</p>
       <p>quotePricePerMsi: {material.quotePricePerMsi}</p>
       <p>description: {material.description}</p>
       <p>whenToUse: {material.whenToUse}</p>
@@ -45,6 +45,6 @@ export const MaterialDetailsModal = (props: Props) => {
       <p>facesheetWeightPerMsi: {material.facesheetWeightPerMsi}</p>
       <p>adhesiveWeightPerMsi: {material.adhesiveWeightPerMsi}</p>
       <p>linerWeightPerMsi: {material.linerWeightPerMsi}</p>
-    </div>
+    </FullscreenModal>
   )
 }

@@ -70,6 +70,11 @@ function getMaterial() {
         facesheetWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
         adhesiveWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
         linerWeightPerMsi: chance.floating({ min: 0.0001, fixed: 4 }),
+        location: chance.word(),
+        linerType: new mongoose.Types.ObjectId(),
+        productNumber: chance.string(),
+        masterRollSize: chance.integer({ min: 1, max: 10 }),
+        image: chance.url()
     };
 }
 

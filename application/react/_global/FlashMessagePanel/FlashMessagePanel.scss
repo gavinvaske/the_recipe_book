@@ -1,0 +1,27 @@
+.flash-message-container {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 999;
+  color: white;
+  background-color: #eef;
+}
+
+.flash-message {
+  border-radius: 5px;
+  width: 380px;
+  height: 70px;
+  background-color: yellow;
+}
+
+.success-flash-message {
+  background-color: #28c76f;
+}
+
+.error-flash-message {
+  background-color: #ea5455;
+}

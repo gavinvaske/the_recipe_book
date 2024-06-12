@@ -24,5 +24,9 @@ export type Material = MongooseAttributes & {
   length: number,
   facesheetWeightPerMsi: number,
   adhesiveWeightPerMsi: number,
-  linerWeightPerMsi: number
+  linerWeightPerMsi: number,
+  linerType: string,
+  productNumber: string,
+  masterRollSize: number,
+  image: string
 }

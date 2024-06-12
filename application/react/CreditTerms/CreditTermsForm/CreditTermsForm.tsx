@@ -4,17 +4,21 @@ import axios from 'axios';
 import './CreditTermsForm.scss'
 import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
 import { CreditTermForm } from '../../_types/forms/creditTerm';
+import { useNavigate } from "react-router-dom";
+import flashMessageStore from '../../stores/flashMessageStore'
 
 const CreditTermsForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreditTermForm>();
+  const navigate = useNavigate();
 
   const onSubmit = (formData: CreditTermForm) => {
     axios.post('/credit-terms', formData)
       .then((_) => {
-        window.location.href = `/react-ui/tables/credit-term`; // TOOD: Create redirect handler to avoid hardcoding base url ("/react-ui/*")
+        navigate(`/react-ui/tables/credit-term`);
+        flashMessageStore.addSuccessMessage('Credit term was created successfully')
       })
-      .catch((error) => {
-        alert(`An error occurred while attempting to save:\n\n${error.response.data}`);
+      .catch(({response}) => {
+        flashMessageStore.addErrorMessage(response.data)
       })
   };
 

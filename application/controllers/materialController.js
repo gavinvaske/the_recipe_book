@@ -117,8 +117,6 @@ router.get('/inventory', async (request, response) => {
             .populate({path: 'adhesiveCategory'})
             .exec();
 
-        console.log('allMaterials', allMaterials);
-
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
         const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 

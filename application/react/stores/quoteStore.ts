@@ -23,6 +23,6 @@ class quoteStore {
     quotes = initializeQuotes(NUMBER_OF_QUOTES);
 }
 
-let store = window.store = new quoteStore();
+let store = new quoteStore();
 
 export default makeAutoObservable(store);

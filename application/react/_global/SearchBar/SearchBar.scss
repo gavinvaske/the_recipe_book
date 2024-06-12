@@ -1,0 +1,20 @@
+#inventory-page {
+    .search-wrapper {
+        padding-right: 15px;
+        height: 34px;
+    }
+    .search-wrapper:focus-within {
+        border:1px solid #0465d9;
+      }
+    .search-wrapper:focus-within:hover {
+        background-color: white;
+    }
+    .search-bar {
+        input:focus {
+            width: 130px;
+        }
+        input:not(:placeholder-shown) {
+            background-color: green;
+        }
+    }
+}

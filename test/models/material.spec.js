@@ -44,6 +44,22 @@ describe('File: material.js', () => {
         expect(() => new MaterialModel(materialAttributes)).toThrow();
     });
 
+    it('should have the correct indexes', async () => {
+        const indexMetaData = MaterialModel.schema.indexes();
+        const expectedIndexes = ['materialId', 'productNumber'];
+
+        console.log('indexMetaData: ', indexMetaData);
+
+        const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+            return indexMetaData.some((metaData) => {
+                const index = Object.keys(metaData[0])[0];
+                if (index === expectedIndex) return true;
+            });
+        });
+
+        expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+    });
+
     it('should validate when required attributes are defined', () => {
         const finish = new MaterialModel(materialAttributes);
 
@@ -600,6 +616,145 @@ describe('File: material.js', () => {
         });
     });
 
+    describe('attribute: location', () => {
+        it('should be required', () => {
+            delete materialAttributes.location;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a string', () => {
+            const materail = new MaterialModel(materialAttributes);
+        
+            expect(materail.location).toEqual(expect.any(String));
+        });
+    });
+
+    describe('attribute: linerType', () => {
+        it('should be required', () => {
+            delete materialAttributes.linerType;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should fail validation if the datatype is not a mongoose object ID', () => {
+            const invalidLinerType = chance.word();
+            materialAttributes.linerType = invalidLinerType;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should pass validation if value is a mongoose object id', () => {
+            materialAttributes.linerType = new mongoose.Types.ObjectId();
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeUndefined();
+        });
+    });
+
+    describe('attribute: productNumber', () => {
+        it('should be required', () => {
+            delete materialAttributes.productNumber;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a string', () => {
+            const expectedValue = chance.string().toUpperCase();
+            materialAttributes.productNumber = `  ${expectedValue}  `;
+        
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.productNumber).toEqual(expectedValue);
+        });
+
+        it('should be trimmed and uppercased', () => {
+            const expectedValue = chance.string().toUpperCase();
+            materialAttributes.productNumber = `  ${expectedValue.toLowerCase()}  `;
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.productNumber).toBe(expectedValue);
+        });
+    });
+
+    describe('attribute: masterRollSize', () => {
+        it('should be required', () => {
+            delete materialAttributes.masterRollSize;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a Number', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.masterRollSize).toEqual(expect.any(Number));
+        });
+
+        it('should not be a floating point number', () => {
+            const floatingPointNumber = 1.123;
+            materialAttributes.masterRollSize = floatingPointNumber;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be greater than zero', () => {
+            const negativeNumberOrZero = [-1, 0];
+            materialAttributes.masterRollSize = chance.pickone(negativeNumberOrZero);
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
+    describe('attribute: image', () => {
+        it('should be required', () => {
+            delete materialAttributes.image;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should be a string', () => {
+            const material = new MaterialModel(materialAttributes);
+
+            expect(material.image).toEqual(expect.any(String));
+        });
+
+        it('should be a valid url', () => {
+            const invalidUrl = chance.word();
+            materialAttributes.image = invalidUrl;
+            const material = new MaterialModel(materialAttributes);
+
+            const error = material.validateSync();
+
+            expect(error).toBeDefined();
+        });
+    });
+
     describe('verify database interactions', () => {
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
@@ -633,6 +788,56 @@ describe('File: material.js', () => {
 
                 expect(savedMaterial.createdAt).toBeDefined();
                 expect(savedMaterial.updatedAt).toBeDefined();
+            });
+        });
+
+        describe('attribute: productNumber', () => {
+            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+                const duplicateProductNumber = chance.string();
+                const material = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    productNumber: duplicateProductNumber
+                });
+                const materialWithDuplicateProductNumber = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    productNumber: duplicateProductNumber
+                });
+                let errorMessage;
+
+                await material.save();
+
+                try {
+                    await materialWithDuplicateProductNumber.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
+
+                expect(errorMessage).toBeDefined();
+            });
+        });
+
+        describe('attribute: materialId', () => {
+            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+                const duplicateMaterialId = chance.string();
+                const material = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    materialId: duplicateMaterialId
+                });
+                const materialWithDuplicateMaterialId = new MaterialModel({
+                    ...testDataGenerator.mockData.Material(),
+                    materialId: duplicateMaterialId
+                });
+                let errorMessage;
+
+                await material.save();
+
+                try {
+                    await materialWithDuplicateMaterialId.save();
+                } catch (error) {
+                    errorMessage = error.message;
+                }
+
+                expect(errorMessage).toBeDefined();
             });
         });
     });

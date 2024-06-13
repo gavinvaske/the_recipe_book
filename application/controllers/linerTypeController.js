@@ -5,6 +5,17 @@ const { verifyJwtToken } = require('../middleware/authorize');
 router.use(verifyJwtToken);
 
 const HTTP_SERVER_ERROR = 500;
+const SUCCESS_HTTP_STATUS = 200;
+
+router.delete('/:mongooseId', async (request, response) => {
+  try {
+    await LinerTypeModel.findByIdAndDelete(request.params.mongooseId).exec();
+
+    return response.status(SUCCESS_HTTP_STATUS);
+} catch (error) {
+    return response.status(HTTP_SERVER_ERROR).send(error.message);
+}
+});
 
 router.get('/', async (_, response) => {
     try {

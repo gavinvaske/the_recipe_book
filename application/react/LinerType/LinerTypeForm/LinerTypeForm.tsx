@@ -17,9 +17,7 @@ export const LinerType = () => {
         navigate('/react-ui/tables/liner-type')
         flashMessageStore.addSuccessMessage('Liner type was created successfully')
       })
-      .catch(({ response }) => {
-        flashMessageStore.addErrorMessage(response.data)
-      });
+      .catch(({ response }) => flashMessageStore.addErrorMessage(response.data));
   }
 
   return (

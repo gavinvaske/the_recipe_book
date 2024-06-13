@@ -47,13 +47,8 @@ function DeliveryMethodTable() {
 
   React.useEffect(() => {
     axios.get('/delivery-methods')
-    .then((response) => {
-        const { data } = response;
-        setDeliveryMethods(data);
-     })
-    .catch(({response}) => {
-      FlashMessageStore.addErrorMessage(response.data)
-     })
+    .then(({ data }) => setDeliveryMethods(data))
+    .catch(({response}) => FlashMessageStore.addErrorMessage(response.data))
   }, [])
 
   const table = useReactTable({

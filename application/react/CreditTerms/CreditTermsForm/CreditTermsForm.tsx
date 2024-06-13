@@ -17,9 +17,7 @@ const CreditTermsForm = () => {
         navigate(`/react-ui/tables/credit-term`);
         flashMessageStore.addSuccessMessage('Credit term was created successfully')
       })
-      .catch(({response}) => {
-        flashMessageStore.addErrorMessage(response.data)
-      })
+      .catch(({response}) => flashMessageStore.addErrorMessage(response.data))
   };
 
   return (

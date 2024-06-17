@@ -9,6 +9,7 @@ import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryM
 import Inventory from '../Inventory/Inventory';
 import { LinerType } from '../LinerType/LinerTypeForm/LinerTypeForm';
 import { LinerTypeTable } from '../LinerType/LinerTypeTable/LinerTypeTable';
+import { MaterialForm } from '../Material/MaterialForm/MaterialForm';
 
 export function App() {
   return (
@@ -22,6 +23,7 @@ export function App() {
           <Route path="quote" element={<QuoteForm />} />
           <Route path="customer" element={<CustomerForm />} />
           <Route path="liner-type" element={<LinerType />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
+          <Route path="material" element={<MaterialForm />} />
         </Route>
 
         <Route path="tables">

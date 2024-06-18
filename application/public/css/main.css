@@ -420,7 +420,8 @@ html {
   */
   body {
   margin: 0;
-  color: #6e6b7b;
+  /* color: #6e6b7b; */
+  color: #323338;
   background: #f8f8f8;
 }
 
@@ -2612,7 +2613,7 @@ a.storm {
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 	opacity: 1;
-	transition-delay:.5s;
+	/* transition-delay:.5s; */
 }
 .tooltip-bottom .tooltiptext {
 	visibility: hidden;
@@ -2681,6 +2682,10 @@ a.storm {
 .btn-filter.active .quick-filter-dropdown {
 	visibility: visible;
 	opacity: 1;
+}
+
+.filter-btn-wrapper.active .btn-advanced-filter {
+  background-color: #aab2d1!important;
 }
 
 

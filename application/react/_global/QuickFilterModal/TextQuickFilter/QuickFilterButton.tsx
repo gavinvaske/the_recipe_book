@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import './QuickFilterButton.scss'
+import './QuickFilterButton.scss';
+import { activeFilter } from '../../../utils/front-end-animations'
 
 export const TextQuickFilter = observer((
   props: {
@@ -12,7 +13,8 @@ export const TextQuickFilter = observer((
   const { uuid, filterValue, onEnabled, onDisabled } = props;
   const [isEnabled, setIsEnabled] = useState(false);
 
-  function onClick() {
+  function onClick(e) {
+    activeFilter(e);
     setIsEnabled(!isEnabled);
 
     const filterBecameEnabled = !isEnabled;
@@ -21,8 +23,9 @@ export const TextQuickFilter = observer((
     else onDisabled(uuid)
   }
 
+
   return (
-    <div className='quick-filter-btn' onClick={() => onClick()}>
+    <div className='quick-filter-btn filter-btn' onClick={(e) => onClick(e)}>
       {filterValue}
     </div>
   )

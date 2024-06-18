@@ -1,6 +1,6 @@
-import * as React from 'react'
-import axios from 'axios'
-import './DeliveryMethodTable.scss'
+import React from 'react';
+import './LinerTypeTable.scss';
+import axios from 'axios';
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -14,17 +14,11 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { DeliveryMethodsRowActions } from './RowActions/RowActions'
+import { LinerTypeRowActions } from './RowActions/RowActions'
+import { LinerType } from '../../_types/databaseModels/linerType';
 import FlashMessageStore from '../../stores/flashMessageStore'
 
-type DeliveryMethod = {
-  _id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string
-}
-
-const columnHelper = createColumnHelper<DeliveryMethod>()
+const columnHelper = createColumnHelper<LinerType>()
 
 const columns = [
   columnHelper.accessor('name', {
@@ -36,28 +30,29 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <DeliveryMethodsRowActions row={props.row} />
+    cell: props => <LinerTypeRowActions row={props.row} />
   })
 ];
 
-function DeliveryMethodTable() {
-  const [deliveryMethods, setDeliveryMethods] = React.useState([])
+export const LinerTypeTable = () => {
+  const [linerTypes, setLinerTypes] = React.useState([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   React.useEffect(() => {
-    axios.get('/delivery-methods')
+    axios.get('/liner-types')
     .then((response) => {
         const { data } = response;
-        setDeliveryMethods(data);
+        setLinerTypes(data);
      })
     .catch(({response}) => {
       FlashMessageStore.addErrorMessage(response.data)
      })
   }, [])
 
+
   const table = useReactTable({
-    data: deliveryMethods,
+    data: linerTypes,
     columns,
     state: {
       globalFilter: globalFilter,
@@ -82,7 +77,7 @@ function DeliveryMethodTable() {
         <TableBody>
           {rows.map(row => (
             <ExpandableRow row={row} key={row.id}>
-              <div>@Storm: Click on a row to see this expandable row content. Delete this div to make the row no-longer expandable</div>
+              <div>@Storm: This div makes a row expandable. If you delete this div, the row will no-longer be "expandable"</div>
             </ExpandableRow>
           ))}
         </TableBody>
@@ -93,5 +88,3 @@ function DeliveryMethodTable() {
     </>
   )
 }
-
-export default DeliveryMethodTable;

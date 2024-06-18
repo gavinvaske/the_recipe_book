@@ -12,7 +12,7 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
       const { description, options } = quickFilter;
       return (
         <div className='quick-filters-list'>
-          Description: {description}
+          <span class='filter-description'>Description: {description}</span>
           {options.map((option: TextFilterOption) => (
             <TextQuickFilter
               uuid={option.uuid}
@@ -26,6 +26,8 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
     })
   )
 }
+
+
 
 const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions: ConditionalFilter<T>[], store: Filter<T>) => {
   return (
@@ -59,12 +61,28 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
   const [isAdvancedDropdownDisplayed, setIsAdvancedDropdownDisplayed] = useState(false)
 
   function toggleQuickFilterMenu() {
+    setIsAdvancedDropdownDisplayed(false);
     setIsDropdownDisplayed(!isDropdownDisplayed)
   }
-
+   // this function closes 
   function toggleAdvancedQuickFilterMenu() {
+    setIsDropdownDisplayed(false);
     setIsAdvancedDropdownDisplayed(!isAdvancedDropdownDisplayed)
   }
+
+  function activeFilter(e) {
+    var elems = document.querySelectorAll(".filter-active");
+    var clickElement = e.target;  // get the dom element clicked.
+    var elementClassName = clickElement.classList.contains("filter-active");  // get the classname of the element clicked
+    if(elementClassName){
+      e.target.classList.remove('filter-active')
+    } else {
+      e.target.classList.add('filter-active')
+    }
+    
+  }
+ 
+
 
   return (
     <>
@@ -78,7 +96,7 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
 
       <div className="split-btn-frame btn-filter flex-center-center-row tooltip">
         <span className="tooltiptext">Filter by anything</span>
-        <div className={`filter-btn-wrapper flex-center-center-row ${isDropdownDisplayed ? 'active' : ''}`}>
+        <div className={`filter-btn-wrapper flex-center-center-row ${isDropdownDisplayed ? 'active' : '' || isAdvancedDropdownDisplayed ? 'active' : ''}`}>
           <button className="btn-split quick-filter flex-center-center-row" onClick={() => toggleQuickFilterMenu()}>
             <i className="fa-light fa-filter"></i>Filter
           </button>
@@ -86,8 +104,8 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
             <i className="fa-regular fa-chevron-down"></i>
           </button>
         </div>
-        <div className={`quick-filter-dropdown dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
-          <h5><b>Quick Filter</b></h5>
+        <div className={`quick-filter-dropdown quick-filter-drpdwn dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
+          <h5><b>Quick filters</b></h5>
           {renderTextQuickFilters(textQuickFilters, store)}
         </div>
 

@@ -41,6 +41,7 @@ const Inventory = observer(() => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 
+
   return (
     <div id='inventory-page'>
       {inventorySummary && <Summary inventorySummaryStore={inventorySummaryStore} />}

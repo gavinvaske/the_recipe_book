@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import './DeliveryMethodForm.scss'
-import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
@@ -26,7 +26,7 @@ const DeliveryMethodForm = () => {
     <form id='delivery-method-form' onSubmit={handleSubmit(onSubmit)}>
       <label>Name*:</label>
       <input type="text" {...register('name', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="name" />
+      <FormErrorMessage errors={errors} name="name" />
 
       <button type="submit">Submit</button>
     </form>

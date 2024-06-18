@@ -1,6 +1,6 @@
 import React from 'react';
 import './Input'
-import ErrorMessage from '../../FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
 import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 type Props<T extends FieldValues> = {
@@ -21,7 +21,7 @@ export const Input = <T extends FieldValues>(props: Props<T>) => {
 
   return (
     <div>
-      <label>{label}:</label>
+      <label>{label}{isRequired ? '*' : ''}:</label>
       <input type="text" 
         placeholder={placeholder}
         value={defaultValue}
@@ -31,7 +31,7 @@ export const Input = <T extends FieldValues>(props: Props<T>) => {
             required: isRequired ? "This is required" : undefined 
           })
         } />
-      <ErrorMessage errors={errors} name={attribute} />
+      <FormErrorMessage errors={errors} name={attribute} />
     </div>
   )
 }

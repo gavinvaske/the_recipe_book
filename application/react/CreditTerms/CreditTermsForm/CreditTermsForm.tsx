@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import './CreditTermsForm.scss'
-import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { CreditTermForm } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore'
@@ -26,7 +26,7 @@ const CreditTermsForm = () => {
     <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)}>
       <label>Description*:</label>
       <input type="text" {...register('description', { required: "This is required" })} />
-      <ErrorMessage errors={errors} name="description" />
+      <FormErrorMessage errors={errors} name="description" />
 
       <button type="submit">Submit</button>
     </form>

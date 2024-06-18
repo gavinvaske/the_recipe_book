@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
-import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import AddressForm from '../../Address/AddressForm/AddressForm';
@@ -96,25 +96,25 @@ const CustomerForm = () => {
         <div>
           <label>Customer ID*:</label>
           <input type="text" {...register('customerId', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="customerId" />
+          <FormErrorMessage errors={errors} name="customerId" />
         </div>
 
         <div>
           <label>Name*:</label>
           <input type="text" {...register('name', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="name" />  
+          <FormErrorMessage errors={errors} name="name" />  
         </div>
 
         <div>
           <label>Notes</label>
           <input type="text" {...register('notes', { })} />
-          <ErrorMessage errors={errors} name="notes" />
+          <FormErrorMessage errors={errors} name="notes" />
         </div>
 
         <div>
           <label>Overun*</label>
           <input type="text" {...register('overun', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="overun" />
+          <FormErrorMessage errors={errors} name="overun" />
         </div>
 
         <div>

@@ -16,6 +16,7 @@ export type MaterialFormAttributes = {
   quotePricePerMsi: number;
   description: string;
   whenToUse: string;
+  alternativeStock?: string;
   length: number;
   facesheetWeightPerMsi: number;
   adhesiveWeightPerMsi: number;

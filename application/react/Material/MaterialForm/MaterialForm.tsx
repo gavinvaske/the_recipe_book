@@ -4,6 +4,9 @@ import { MaterialFormAttributes } from '../../_types/forms/material';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import flashMessageStore from '../../stores/flashMessageStore';
 
 const foobarOptions: SelectOption[] = [
   {
@@ -18,9 +21,17 @@ const foobarOptions: SelectOption[] = [
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<MaterialFormAttributes>();
+  const navigate = useNavigate();
 
   const onSubmit = (formData: MaterialFormAttributes) => {
-    alert('TODO: Handle submit: ' + JSON.stringify(formData));
+    axios.post(`/materials`, formData)
+      .then((_) => {
+        flashMessageStore.addSuccessMessage('Material was created successfully')
+        navigate(`/react-ui/tables/materials`);
+      })
+      .catch(({response}) => {
+        flashMessageStore.addErrorMessage(response.data)
+      })
   };
 
   return (

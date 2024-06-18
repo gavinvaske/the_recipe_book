@@ -49,17 +49,15 @@ router.get('/form', async (request, response) => {
     return response.render('createMaterial', { vendors, materialCategories });
 });
 
-router.post('/form', async (request, response) => {
-    try {
-        await MaterialModel.create(request.body);
-    } catch (error) {
-        request.flash('errors', ['Unable to save the Material, the following error(s) occurred:', error.message]);
+router.post('/', async (request, response) => {
+  try {
+    const material = await MaterialModel.create(request.body);
 
-        return response.redirect('back');
-    }
-    request.flash('alerts', ['Material created successfully']);
-
-    return response.redirect(SHOW_ALL_MATERIALS_ENDPOINT);
+    return response.json(material);
+  } catch (error) {
+      console.log('Error creating material: ', error);
+      return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
+  }
 });
 
 router.get('/update/:id', async (request, response) => {

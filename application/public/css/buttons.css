@@ -188,8 +188,7 @@ button:hover {
 	cursor: pointer;
 	transition: .3s;
 }
-.split-btn-frame.btn-filter:hover .btn-split,
-.split-btn-frame.btn-filter:hover .btn-split-arrow-dropdown {
+.split-btn-frame.btn-filter:hover .btn-split {
 	background-color: #dcdfec;
 	transition: .3s;
 }

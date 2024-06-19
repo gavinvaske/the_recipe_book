@@ -11,14 +11,28 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
 
   return (
     purchaseOrdersForMaterial.map((purchaseOrder, index: number) => (
-      <div className='po-row' key={index}>
-        <div className='po-col'>{purchaseOrder.purchaseOrderNumber}</div>
-        <div className='po-col'>{purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC' })}</div>
-        <div className='po-col'>{(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls)}</div>
+      <div className='tb-row' key={index}>
+        <div className='tb-cell cell-one'>
+          <div class='pulse-indicator'></div>
+          {purchaseOrder.purchaseOrderNumber}
+        </div>
+        <div className='tb-cell cell-two'>
+          <div class='pulse-indicator'></div>
+          {purchaseOrder.orderDate && purchaseOrder.orderDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
+        </div>
+        <div className='tb-cell cell-three'>
+          <div class='pulse-indicator'></div>
+          {purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
+        </div>
+        <div className='tb-cell cell-four'>
+          <div class='pulse-indicator'></div>
+          {(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls)}
+        </div>
       </div>
     ))
   )
 }
+
 
 function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
   return (
@@ -42,9 +56,25 @@ function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
   )
 }
 
-const togglePurchaseOrders = () => {
-  alert("TODO STORM: Make the purchase order section appear (NO JQUERY ALLOWED, only react)")
+const togglePurchaseOrders = (e) => {
+  // Add active class to the current button (highlight it)
+  var elems = document.querySelectorAll("modal-active");
+  var clickElement = e.target;  // get the dom element clicked.
+  var clickElementParent = clickElement.parentElement;
+  var elementClassName = clickElementParent.classList.contains("modal-active");  // get the classname of the clicked element's class name
+  if(elementClassName){
+      clickElementParent.classList.remove('modal-active')
+  } else {
+      clickElementParent.classList.add('modal-active')
+      console.log("hello mars");
+  }
 }
+// When the user clicks on (x), close the modal
+function closeModal() {
+  let activeModal = document.querySelector('.po-container.modal-active');
+  activeModal.classList.remove('modal-active');
+}
+
 
 type Props = { 
   materialInventory: MaterialInventory,
@@ -62,7 +92,43 @@ const Material = observer((props: Props) => {
           <h2 className='material-id'>{material.materialId}</h2>
         </div>
         <div className='col col-right'>
-          <i className="fa-light fa-calendar" onClick={() => togglePurchaseOrders()}></i>
+          <div class='po-container'>
+            <i className="fa-light fa-calendar" onClick={(e) => togglePurchaseOrders(e)}></i>
+            <div class='modal-background'>
+              <div class='modal-box'>
+                <div class='left'>
+                  <div class='title-wrapper'>
+                    <h4>Purchase orders: {material.materialId}</h4>
+                  </div>
+                  <div class='purchase-order-info-wrapper'>
+                    <div class='po-table'>
+                      <div class='tb-header'>
+                        <div class='tb-cell cell-one'>
+                          <div class='pulse-indicator'></div>
+                          PO #
+                        </div>
+                        <div class='tb-cell cell-two'>
+                          Order Date
+                        </div>
+                        <div class='tb-cell cell-three'>
+                          Arrival Date
+                        </div>
+                        <div class='tb-cell cell-four'>
+                          Total Feet
+                        </div>
+                      </div>
+                      {renderPurchaseOrders(materialInventory)}
+                    </div>
+                  </div>
+                </div>
+                <div class='right'>
+                  left panel for storm to do something neat
+                </div>
+                <i class="fa-light fa-xmark" onClick={closeModal}></i>
+
+              </div>
+            </div>
+          </div>
           <a href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
         </div>
 

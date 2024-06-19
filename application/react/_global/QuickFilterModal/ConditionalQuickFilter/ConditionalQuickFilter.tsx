@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import './ConditionalQuickFilter.scss'
 import { ConditionalFilterFunction } from '../../../_types/Filters';
+import { activeFilter } from '../../../utils/front-end-animations'
 
 type Props<T> = {
   uuid: string,
@@ -18,7 +19,8 @@ export const ConditionalQuickFilter = observer(<T extends any>(props: Props<T>) 
   const { uuid, conditionalFilterFunction, textToDisplay, onEnabled, onDisabled } = props;
   const [isEnabled, setIsEnabled] = useState(false);
 
-  function onClick() {
+  function onClick(e) {
+    activeFilter(e);
     setIsEnabled(!isEnabled);
 
     const filterBecameEnabled = !isEnabled;
@@ -27,5 +29,7 @@ export const ConditionalQuickFilter = observer(<T extends any>(props: Props<T>) 
     else onDisabled(uuid)
   }
 
-  return (<div className='conditional-quick-filter-btn' onClick={() => onClick()}>{textToDisplay}</div>)
+ 
+
+  return (<div className='conditional-quick-filter-btn filter-btn' onClick={(e) => onClick(e)}>{textToDisplay}</div>)
 });

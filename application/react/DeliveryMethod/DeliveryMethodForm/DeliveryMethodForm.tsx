@@ -14,12 +14,10 @@ const DeliveryMethodForm = () => {
   const onSubmit = (formData: DeliveryMethodForm) => {
     axios.post('/delivery-methods', formData)
       .then((_) => {
-        navigate(`/react-ui/tables/delivery-method`);
         flashMessageStore.addSuccessMessage('Delivery method was created successfully')
+        navigate(`/react-ui/tables/delivery-method`);
       })
-      .catch(({ response }) => {
-        flashMessageStore.addErrorMessage(response.data)
-      })
+      .catch(({ response }) => flashMessageStore.addErrorMessage(response.data))
   };
 
   return (

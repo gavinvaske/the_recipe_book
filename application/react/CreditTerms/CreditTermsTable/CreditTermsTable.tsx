@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermsTable.scss'
 import {
   createColumnHelper,
@@ -15,6 +15,7 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { CreditTermsRowActions } from './RowActions/RowActions';
+import flashMessageStore from '../../stores/flashMessageStore';
 
 type CreditTerm = {
   _id: string,
@@ -46,13 +47,8 @@ const CreditTermsTable = () => {
 
   useEffect(() => {
     axios.get('/credit-terms')
-      .then((response) => {
-         const { data } = response;
-         setCreditTerms(data);
-      })
-      .catch((error) => {
-        alert('Error loading Credit Terms: ' + JSON.stringify(error));
-      })
+      .then((response : AxiosResponse) => setCreditTerms(response.data))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   }, [])
 
   const table = useReactTable({

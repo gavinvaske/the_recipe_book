@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './LinerTypeForm.scss';
 import { LinerTypeForm } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
@@ -13,13 +13,11 @@ export const LinerType = () => {
 
   const onFormSubmit = (linerType: LinerTypeForm) => {
     axios.post('/liner-types', linerType)
-      .then((_) => {
+      .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/liner-type')
         flashMessageStore.addSuccessMessage('Liner type was created successfully')
       })
-      .catch(({ response }) => {
-        flashMessageStore.addErrorMessage(response.data)
-      });
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   }
 
   return (

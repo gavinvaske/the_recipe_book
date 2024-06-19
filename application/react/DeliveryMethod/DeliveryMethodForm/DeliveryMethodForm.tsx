@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
@@ -13,13 +13,11 @@ const DeliveryMethodForm = () => {
 
   const onSubmit = (formData: DeliveryMethodForm) => {
     axios.post('/delivery-methods', formData)
-      .then((_) => {
+      .then((_: AxiosResponse) => {
         navigate(`/react-ui/tables/delivery-method`);
         flashMessageStore.addSuccessMessage('Delivery method was created successfully')
       })
-      .catch(({ response }) => {
-        flashMessageStore.addErrorMessage(response.data)
-      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   };
 
   return (

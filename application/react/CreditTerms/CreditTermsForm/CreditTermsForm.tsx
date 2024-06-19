@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermsForm.scss'
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { CreditTermForm } from '../../_types/forms/creditTerm';
@@ -13,13 +13,11 @@ const CreditTermsForm = () => {
 
   const onSubmit = (formData: CreditTermForm) => {
     axios.post('/credit-terms', formData)
-      .then((_) => {
+      .then((_: AxiosResponse) => {
         navigate(`/react-ui/tables/credit-term`);
         flashMessageStore.addSuccessMessage('Credit term was created successfully')
       })
-      .catch(({response}) => {
-        flashMessageStore.addErrorMessage(response.data)
-      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
@@ -18,9 +18,12 @@ import { ContactForm as ContactFormType } from '../../_types/forms/contact';
 import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import flashMessageStore from '../../stores/flashMessageStore';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
+  const navigate = useNavigate();
 
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
@@ -44,8 +47,8 @@ const CustomerForm = () => {
 
   useEffect(() => {
     axios.get('/credit-terms')
-      .then(({data}) => setCreditTerms(data))
-      .catch((error) => alert('Error getting credit terms: ' + error.message));
+      .then((response : AxiosResponse) => setCreditTerms(response.data))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormType) => {
@@ -55,10 +58,11 @@ const CustomerForm = () => {
     console.log(customer);
 
     axios.post('/customers', customer)
-      .then(({data}) => {
-        alert('Customer created successfully! (TODO: Redirect to customer table)')
+      .then((_ : AxiosResponse) => {
+        navigate('react-ui/tables/customer')
+        flashMessageStore.addSuccessMessage('Customer was created successfully')
       })
-      .catch(({response}) => alert('Error creating customer: ' + response.data));
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);

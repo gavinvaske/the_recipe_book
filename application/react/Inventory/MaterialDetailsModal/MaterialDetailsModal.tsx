@@ -2,14 +2,12 @@ import React from 'react';
 import './MaterialDetailsModal.scss'
 import { MaterialInventory } from '../Inventory';
 import { FullscreenModal } from '../../_global/FullscreenModal/FullscreenModal';
-import { Material } from '../../_types/databaseModels/material';
 
 type Props = {
   materialInventory: MaterialInventory,
   onClose: () => void
 }
 
-/* TODO: Maybe make this a "FullScreenModal" component. Depending on if Storm wants to reuse this concept across the UI */
 export const MaterialDetailsModal = (props: Props) => {
   const { materialInventory, onClose } = props
   const { material } = materialInventory;

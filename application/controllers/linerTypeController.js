@@ -49,7 +49,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
         return response.json(updatedLinerType);
     } catch (error) {
-        console.log('Failed to update linerType: ', error.message, '\nThe attributes used were: ', JSON.stringify(request.body));
+        console.log('Failed to update linerType: ', error.message);
 
         response.status(HTTP_SERVER_ERROR).send(error.message);
     }

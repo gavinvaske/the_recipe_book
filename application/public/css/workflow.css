@@ -115,7 +115,7 @@
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 	opacity: 1;
-	transition-delay:.5s;
+	/* transition-delay:.5s; */
 }
 
 .btn-filter .tooltiptext {
@@ -1076,10 +1076,12 @@ button:hover {
 	cursor: pointer;
 	transition: .3s;
 }
-.filter-btn-wrapper:hover .btn-split,
-.filter-btn-wrapper:hover .btn-advanced-filter {
+.filter-btn-wrapper:hover .btn-split {
 	background-color: #dcdfec;
 	transition: .3s;
+}
+.split-btn-frame:hover .btn-advanced-filter {
+	background-color: #aab2d1;
 }
 .btn-split,
 .btn-split-arrow-dropdown {
@@ -1165,7 +1167,8 @@ button:hover {
 
 .quick-filter.btn-split.active,
 .filter-btn-wrapper.active .btn-advanced-filter.btn-split-arrow-dropdown,
-.filter-btn-wrapper.active .quick-filter.btn-split {
+.filter-btn-wrapper.active .quick-filter.btn-split,
+.filter-btn-wrapper.active .btn-advanced-filter {
 	background-color: #cce5ff!important;
 }
 
@@ -1179,7 +1182,7 @@ button:hover {
 
 .search-wrapper input {
 	border: none;
-	height: 28px;
+	height: 34px;
 	width: 60px;
 	padding: 0;
 	background-color: unset;

@@ -1,0 +1,186 @@
+.modal-background {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(41,47,76,0.7);
+    z-index: 99;
+    display: none;
+    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .modal-box {
+        width: 850px;
+        height: 500px;
+        background: white;
+        position: relative;
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        flex-direction: row;
+        border-radius: 0.428rem;
+
+        .left, .right {
+            height: 100%;
+            border-radius: 0.428rem;
+            padding: 28px 32px 56px 32px;
+        }
+        .left {
+            width: 570px;
+
+            .title-wrapper {
+                display: flex;
+                justify-items: flex-start;
+                align-items: flex-end;
+                flex-direction: row;
+                h4 {
+                    color: rgb(87, 155, 252);
+                    margin-bottom: 0;
+                    margin-right: 15px;
+                }
+            }
+            .purchase-order-info-wrapper {
+                max-height: 100%;
+                overflow-y: scroll;
+
+                .po-table {
+                    margin-top: 15px;
+
+                    .tb-header, .tb-row {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        flex-direction: row;
+                        border-radius: 5px;
+
+                        .tb-cell {
+                            border: 1px solid #d0d4e4;
+                            margin-right: -1px;
+                            margin-top: -1px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 36px;
+
+                        }
+                        .cell-one {
+                            width: 30%;
+                            position: relative;
+
+                            .pulse-indicator {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 7px;
+                                height: 36px;
+                                background-color: rgb(87, 155, 252);
+                                margin-top: -1px;
+                            }
+                        }
+                        .cell-two {
+                            width: 23.333%;
+                        }
+                        .cell-three {
+                            width: 23.333%;
+                        }
+                        .cell-four {
+                            width: 23.333%;
+                        }
+                    }
+                    .tb-header {
+                        .tb-cell {
+                            &:first-of-type {
+                                border-radius: 5px 0 0 0;
+                            }
+                            &:last-of-type {
+                                border-radius: 0 5px 0 0;
+                            }
+                        }
+                    }
+                    .tb-row:last-of-type {
+                        .tb-cell {
+                            &:first-of-type {
+                                border-radius: 0 0 0 5px;
+                                .pulse-indicator {
+
+                                    border-radius: 0 0 0 5px;
+                                }
+                            }
+                            &:last-of-type {
+                                border-radius: 0 0 5px 0;
+                            }
+                        }
+                    }
+                    .tb-header {
+                        .cell-one {
+                            
+                            border-left: 0;
+                            .pulse-indicator {
+                                position: absolute;
+                                border-radius: 5px 0 0 0;
+                                margin-top: -1px;
+                            }
+                        }
+                    }
+                    .tb-row {
+                        &:hover {
+                            background-color: rgba(0,0,0,.1);
+                        }
+                        .cell-one {
+                            .pulse-indicator {
+                                position: absolute;
+                                margin-left: -1px;
+                            }
+                        }
+                        .tb-row {
+                            &:last-of-type {
+                                .tb-cell:nth-child(1){
+                                    .pulse-indicator {
+                                        position: absolute;
+                                        margin-left: -1px;
+                                        border-radius: 0 5px 0 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .right {
+            width: 280px;
+            background-color: #f5f6f8;
+        }
+
+        .fa-light.fa-xmark {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            right: 15px;
+            top: 10px;
+            height: 28px;
+            width: 32px;
+            border-radius: 0.428rem;
+
+            &:hover {
+                background-color: rgba(103, 104, 121, 0.1);
+                cursor: pointer;
+            }
+        }
+    }
+}
+.po-container {
+    display: flex;
+
+    &.modal-active {
+        .modal-background {
+
+            display: flex;
+
+        }
+    }
+}

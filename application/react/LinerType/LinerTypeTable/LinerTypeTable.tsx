@@ -42,11 +42,8 @@ export const LinerTypeTable = () => {
 
   React.useEffect(() => {
     axios.get('/liner-types')
-    .then((response) => {
-        const { data } = response;
-        setLinerTypes(data);
-     })
-     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .then(({ data }) => setLinerTypes(data))
+      .catch(({response}) => FlashMessageStore.addErrorMessage(response.data))
   }, [])
 
 

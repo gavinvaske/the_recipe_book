@@ -3,9 +3,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import './LinerTypeForm.scss';
 import { LinerTypeForm } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
+import { Input } from '../../_global/FormInputs/Input/Input';
 
 export const LinerType = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LinerTypeForm>();
@@ -21,14 +21,15 @@ export const LinerType = () => {
   }
 
   return (
-    <div id='customer-form'>
+    <div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <div>
-          <label>Name*:</label>
-          <input type="text" {...register('name', { required: "This is required" })} />
-          <FormErrorMessage errors={errors} name="name" />  
-        </div>
-
+        <Input
+          attribute='name'
+          label="Name"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
         <button className='btn-primary' type="submit">Create Liner Type</button>
       </form>
     </div>

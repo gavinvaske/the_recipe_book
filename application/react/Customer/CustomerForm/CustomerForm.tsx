@@ -95,7 +95,7 @@ const CustomerForm = () => {
   }
 
   return (
-    <div id='customer-form'>
+    <div>
       <form onSubmit={handleSubmit(onCustomerFormSubmit)}>
         <div>
           <label>Customer ID*:</label>

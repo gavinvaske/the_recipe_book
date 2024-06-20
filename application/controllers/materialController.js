@@ -50,14 +50,14 @@ router.get('/form', async (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-  try {
-    const material = await MaterialModel.create(request.body);
+    try {
+        const material = await MaterialModel.create(request.body);
 
-    return response.json(material);
-  } catch (error) {
-      console.log('Error creating material: ', error);
-      return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
-  }
+        return response.json(material);
+    } catch (error) {
+        console.log('Error creating material: ', error);
+        return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
+    }
 });
 
 router.get('/update/:id', async (request, response) => {

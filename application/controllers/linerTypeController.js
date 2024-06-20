@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const LinerTypeModel = require('../models/linerType');
 const { verifyJwtToken } = require('../middleware/authorize');
-const { CREATED_SUCCESSFULLY, SERVER_ERROR } = require('../enums/httpStatusCodes')
+const { CREATED_SUCCESSFULLY, SERVER_ERROR } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
 
@@ -13,8 +13,8 @@ router.get('/', async (_, response) => {
     } catch (error) {
         console.error('Error fetching liner types: ', error);
         return response
-          .status(SERVER_ERROR)
-          .send(error.message);
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
@@ -23,13 +23,13 @@ router.post('/', async (request, response) => {
         const linerType = await LinerTypeModel.create(request.body);
 
         return response
-          .status(CREATED_SUCCESSFULLY)
-          .json(linerType);
+            .status(CREATED_SUCCESSFULLY)
+            .json(linerType);
     } catch (error) {
         console.error('Error creating LinerType: ', error);
         return response
-          .status(SERVER_ERROR)
-          .send(error.message);
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

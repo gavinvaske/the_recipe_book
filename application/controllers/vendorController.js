@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
-const { SERVER_ERROR } = require('../enums/httpStatusCodes') 
+const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
 
 router.use(verifyJwtToken);
 
@@ -16,8 +16,8 @@ router.get('/', async (_, response) => {
     } catch (error) {
         console.error('Error fetching vendors: ', error);
         return response
-          .status(SERVER_ERROR)
-          .send(error.message);
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

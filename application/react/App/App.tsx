@@ -7,7 +7,7 @@ import CreditTermsForm from '../CreditTerms/CreditTermsForm/CreditTermsForm';
 import CreditTermsTable from '../CreditTerms/CreditTermsTable/CreditTermsTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';
 import Inventory from '../Inventory/Inventory';
-import { LinerType } from '../LinerType/LinerTypeForm/LinerTypeForm';
+import { LinerTypeForm } from '../LinerType/LinerTypeForm/LinerTypeForm';
 import { LinerTypeTable } from '../LinerType/LinerTypeTable/LinerTypeTable';
 
 export function App() {
@@ -21,7 +21,7 @@ export function App() {
           <Route path="credit-term" element={<CreditTermsForm />} />
           <Route path="quote" element={<QuoteForm />} />
           <Route path="customer" element={<CustomerForm />} />
-          <Route path="liner-type" element={<LinerType />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
+          <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
         </Route>
 
         <Route path="tables">

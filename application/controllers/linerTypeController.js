@@ -9,9 +9,9 @@ router.get('/', async (_, response) => {
     try {
         const linerTypes = await LinerTypeModel.find().exec();
     
-        return response.send(linerTypes);
+        return response.json(linerTypes);
     } catch (error) {
-        console.error('Error fetching liner types: ', error);
+        console.error('Error fetching Liner Types: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);

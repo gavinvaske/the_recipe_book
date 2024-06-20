@@ -12,7 +12,7 @@ router.get('/', async (_, response) => {
     try {
         const vendors = await VendorModel.find().exec();
         
-        return response.send(vendors);
+        return response.json(vendors);
     } catch (error) {
         console.error('Error fetching vendors: ', error);
         return response

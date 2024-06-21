@@ -12,7 +12,6 @@ import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { LinerType } from '../../_types/databaseModels/linerType';
 
-/* TODO (6-17-2024): Populate these dynamically, maybe using useMemo? */
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();

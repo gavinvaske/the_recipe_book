@@ -7,29 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
   Should they have a timer, where they're only displayed on the page for X seconds?
 */
 class FlashMessageStore {
-  errorMessages: ErrorFlashMessage[] = [
-    {
-      message: 'Error #111',
-      uuid: uuidv4(),
-      type: 'ERROR'
-    },
-    {
-      message: 'Error #222',
-      uuid: uuidv4(),
-      type: 'ERROR'
-    },
-    {
-      message: 'Error #333',
-      uuid: uuidv4(),
-      type: 'ERROR'
-    }
-  ]
-  successMessage: SuccessFlashMessage | null = 
-    {
-      message: 'Success #111',
-      uuid: uuidv4(),
-      type: 'SUCCESS'
-    }
+  errorMessages: ErrorFlashMessage[] = [];
+  successMessage: SuccessFlashMessage | null;
 
   constructor() {
     makeAutoObservable(this);
@@ -58,7 +37,7 @@ class FlashMessageStore {
 
   addErrorMessage(message: string): void {
     const errorMessage: ErrorFlashMessage = {
-      message,
+      message: message || 'Undefined Error Message',
       uuid: uuidv4(),
       type: 'ERROR'
     }

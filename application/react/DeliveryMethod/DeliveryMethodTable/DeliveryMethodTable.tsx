@@ -1,5 +1,5 @@
 import * as React from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import './DeliveryMethodTable.scss'
 import {
   createColumnHelper,
@@ -16,6 +16,7 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodsRowActions } from './RowActions/RowActions'
 import FlashMessageStore from '../../stores/flashMessageStore'
+import flashMessageStore from '../../stores/flashMessageStore'
 
 type DeliveryMethod = {
   _id: string,
@@ -47,8 +48,11 @@ function DeliveryMethodTable() {
 
   React.useEffect(() => {
     axios.get('/delivery-methods')
-    .then(({ data }) => setDeliveryMethods(data))
-    .catch(({response}) => FlashMessageStore.addErrorMessage(response.data))
+    .then((response) => {
+        const { data } = response;
+        setDeliveryMethods(data);
+     })
+     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   const table = useReactTable({

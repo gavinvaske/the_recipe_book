@@ -9,28 +9,32 @@ import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryM
 import Inventory from '../Inventory/Inventory';
 import { LinerTypeForm } from '../LinerType/LinerTypeForm/LinerTypeForm';
 import { LinerTypeTable } from '../LinerType/LinerTypeTable/LinerTypeTable';
+import { MaterialForm } from '../Material/MaterialForm/MaterialForm';
+import { AdhesiveCategoryForm } from '../AdhesiveCategory/AdhesiveCategoryForm/AdhesiveCategoryForm';
 
 export function App() {
   return (
     <Routes >
-      <Route path="react-ui">
-        <Route path="inventory" element={<Inventory />}></Route>
+      <Route path='react-ui'>
+        <Route path='inventory' element={<Inventory />}></Route>
 
-        <Route path="forms">
-          <Route path="delivery-method" element={<DeliveryMethodForm />} />
-          <Route path="credit-term" element={<CreditTermsForm />} />
-          <Route path="quote" element={<QuoteForm />} />
-          <Route path="customer" element={<CustomerForm />} />
+        <Route path='forms'>
+          <Route path='delivery-method' element={<DeliveryMethodForm />} />
+          <Route path='credit-term' element={<CreditTermsForm />} />
+          <Route path='quote' element={<QuoteForm />} />
+          <Route path='customer' element={<CustomerForm />} />
           <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
+          <Route path='material' element={<MaterialForm />} />
+          <Route path='adhesive-category' element={<AdhesiveCategoryForm />} />
         </Route>
 
-        <Route path="tables">
-          <Route path="credit-term" element={<CreditTermsTable />} />
-          <Route path="delivery-method" element={<DeliveryMethodTable />} />
-          <Route path="liner-type" element={<LinerTypeTable />} />
+        <Route path='tables'>
+          <Route path='credit-term' element={<CreditTermsTable />} />
+          <Route path='delivery-method' element={<DeliveryMethodTable />} />
+          <Route path='liner-type' element={<LinerTypeTable />} />
         </Route>
 
-        <Route path="*" element={<div>404 Page Not Found</div>} />
+        <Route path='*' element={<div>404 Page Not Found</div>} />
       </Route>
     </Routes>
   )

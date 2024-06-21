@@ -1,6 +1,6 @@
 import { MongooseId } from '../typeAliases'
 import { MongooseAttributes } from './_sharedMongooseAttributes'
-import { AdhesiveCategory } from './adheisiveCategory'
+import { AdhesiveCategory } from './adhesiveCategory'
 import { MaterialCategory } from './materialCategory'
 import { Vendor } from './vendor'
 

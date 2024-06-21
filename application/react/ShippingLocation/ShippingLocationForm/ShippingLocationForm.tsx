@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import './ShippingLocationForm.scss'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 
@@ -28,13 +28,13 @@ const ShippingLocationForm = (props) => {
       <div>
         <label>Name*:</label>
         <input type="text" {...register('name', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="name" />
+        <FormErrorMessage errors={errors} name="name" />
       </div>
 
       <div>
         <label>Freight Account Number*:</label>
         <input type="text" {...register('freightAccountNumber', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="freightAccountNumber" />
+        <FormErrorMessage errors={errors} name="freightAccountNumber" />
       </div>
 
       <div>
@@ -55,31 +55,31 @@ const ShippingLocationForm = (props) => {
       <div>
         <label>Street*:</label>
         <input type="text" {...register('street', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="street" />
+        <FormErrorMessage errors={errors} name="street" />
       </div>
 
       <div>
         <label>Unit or Suite #:</label>
         <input type="text" {...register('unitOrSuite')} />
-        <ErrorMessage errors={errors} name="unitOrSuite" />
+        <FormErrorMessage errors={errors} name="unitOrSuite" />
       </div>
 
       <div>
         <label>City*:</label>
         <input type="text" {...register('city', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="city" />
+        <FormErrorMessage errors={errors} name="city" />
       </div>
 
       <div>
         <label>State*:</label>
         <input type="text" {...register('state', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="state" />
+        <FormErrorMessage errors={errors} name="state" />
       </div>
 
       <div>
         <label>Zip*:</label>
         <input type="text" {...register('zipCode', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="zipCode" />
+        <FormErrorMessage errors={errors} name="zipCode" />
       </div>
 
       <button type="submit">Submit</button>

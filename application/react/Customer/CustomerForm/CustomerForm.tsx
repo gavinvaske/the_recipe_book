@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
-import ErrorMessage from '../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import AddressForm from '../../Address/AddressForm/AddressForm';
@@ -18,9 +18,12 @@ import { ContactForm as ContactFormType } from '../../_types/forms/contact';
 import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import flashMessageStore from '../../stores/flashMessageStore';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
+  const navigate = useNavigate();
 
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
@@ -44,8 +47,8 @@ const CustomerForm = () => {
 
   useEffect(() => {
     axios.get('/credit-terms')
-      .then(({data}) => setCreditTerms(data))
-      .catch((error) => alert('Error getting credit terms: ' + error.message));
+      .then((response : AxiosResponse) => setCreditTerms(response.data))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormType) => {
@@ -55,10 +58,11 @@ const CustomerForm = () => {
     console.log(customer);
 
     axios.post('/customers', customer)
-      .then(({data}) => {
-        alert('Customer created successfully! (TODO: Redirect to customer table)')
+      .then((_ : AxiosResponse) => {
+        navigate('react-ui/tables/customer')
+        flashMessageStore.addSuccessMessage('Customer was created successfully')
       })
-      .catch(({response}) => alert('Error creating customer: ' + response.data));
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);
@@ -91,30 +95,30 @@ const CustomerForm = () => {
   }
 
   return (
-    <div id='customer-form'>
+    <div>
       <form onSubmit={handleSubmit(onCustomerFormSubmit)}>
         <div>
           <label>Customer ID*:</label>
           <input type="text" {...register('customerId', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="customerId" />
+          <FormErrorMessage errors={errors} name="customerId" />
         </div>
 
         <div>
           <label>Name*:</label>
           <input type="text" {...register('name', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="name" />  
+          <FormErrorMessage errors={errors} name="name" />  
         </div>
 
         <div>
           <label>Notes</label>
           <input type="text" {...register('notes', { })} />
-          <ErrorMessage errors={errors} name="notes" />
+          <FormErrorMessage errors={errors} name="notes" />
         </div>
 
         <div>
           <label>Overun*</label>
           <input type="text" {...register('overun', { required: "This is required" })} />
-          <ErrorMessage errors={errors} name="overun" />
+          <FormErrorMessage errors={errors} name="overun" />
         </div>
 
         <div>

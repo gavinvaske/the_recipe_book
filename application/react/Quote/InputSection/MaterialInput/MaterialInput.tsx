@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './MaterialInput.scss';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import quoteStore from '../../../stores/quoteStore';
 import { observer } from 'mobx-react-lite';
+import flashMessageStore from '../../../stores/flashMessageStore';
+import DropdownField from '../InputFields/DropdownField/DropdownField';
+import TextField from '../InputFields/TextField/TextField';
+import { Material } from '../../../_types/databaseModels/material';
 
-export default MaterialInput = observer((props) => {
+type Props = {
+  isPrimaryMaterial: boolean
+}
+
+const MaterialInput = observer((props: Props) => {
   const { isPrimaryMaterial } = props;
-  const [materials, setMaterials] = useState([]);
+  const [materials, setMaterials] = useState<Material[]>([]);
   const { quoteInputs } = quoteStore;
 
   const updateMaterial = (e, attributeName) => {
@@ -28,34 +36,31 @@ export default MaterialInput = observer((props) => {
   }
 
   useEffect(() => {
-    axios.get(`/materials/all`)
-      .then((response) => {
-        const { data } = response;
-        setMaterials(data);
-      })
-      .catch((error) => {
-        alert('Error loading materials: ' + JSON.stringify(error));
-      });
+    axios.get(`/materials`)
+      .then((response: AxiosResponse) => setMaterials(response.data))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   return (
     <div className='material-input-section card'>
         <DropdownField header={isPrimaryMaterial ? 'Primary Material' : 'Secondary Material'} options={materials.map((material) => material.name)}/>
-      <div class='column'>
+      <div className='column'>
         <TextField accessor={'costPerMsi'} header={'Initial Cost MSI'} onChange={(e) => updateMaterial(e, 'costPerMsi')}/>
       </div>
-      <div class='column'>
+      <div className='column'>
         <TextField accessor={'freightCostPerMsi'} header={'Freight MSI'} onChange={(e) => updateMaterial(e, 'freightCostPerMsi')}/>
       </div>
-      <div class='column'>
+      <div className='column'>
         <TextField header={'Total Cost MSI'} value={computeTotalCostMsi(isPrimaryMaterial, quoteStore)} isReadOnly={true}/>
       </div>
-      <div class='column'>
+      <div className='column'>
         <TextField accessor={'quotePricePerMsi'} header={'Quoted MSI'} onChange={(e) => updateMaterial(e, 'quotePricePerMsi')}/>
       </div>
-      <div class='column'>
+      <div className='column'>
         <TextField accessor={'thickness'} header={'Thickness'} onChange={(e) => updateMaterial(e, 'thickness')}/>
       </div>
     </div>
   )
 })
+
+export default MaterialInput

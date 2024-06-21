@@ -8,16 +8,16 @@ router.use(verifyJwtToken);
 const SHOW_ALL_MATERIAL_CATEGORIES_ENDPOINT = '/material-categories';
 
 router.get('/', async (_, response) => {
-  try {
-    const materialCategories = await MaterialCategoryModel.find().exec();
+    try {
+        const materialCategories = await MaterialCategoryModel.find().exec();
     
-    return response.json(materialCategories);
-} catch (error) {
-    console.error('Error fetching Material Categories: ', error.message);
-    return response
-        .status(SERVER_ERROR)
-        .send(error.message);
-}
+        return response.json(materialCategories);
+    } catch (error) {
+        console.error('Error fetching Material Categories: ', error.message);
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
 });
 
 router.get('/form', (_, response) => {

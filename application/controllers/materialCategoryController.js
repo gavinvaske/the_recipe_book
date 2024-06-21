@@ -13,7 +13,7 @@ router.get('/', async (_, response) => {
     
         return response.json(materialCategories);
     } catch (error) {
-        console.error('Error fetching Material Categories: ', error.message);
+        console.error('Error fetching Material Categories: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);

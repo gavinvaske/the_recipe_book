@@ -11,7 +11,7 @@ router.get('/', async (_, response) => {
 
         return response.json(adhesiveCategories);
     } catch (error) {
-        console.error('Error fetching adhesive category: ', error.message);
+        console.error('Error fetching adhesive category: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);
@@ -24,7 +24,7 @@ router.post('/', async (request, response) => {
     try {
         savedAdhesiveCategory = await AdhesiveCategoryModel.create(request.body);
     } catch (error) {
-        console.error('Error creating adhesive category: ', error.message);
+        console.error('Error creating adhesive category: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);

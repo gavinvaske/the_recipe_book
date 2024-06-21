@@ -48,7 +48,7 @@ const CustomerForm = () => {
   useEffect(() => {
     axios.get('/credit-terms')
       .then((response : AxiosResponse) => setCreditTerms(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormType) => {
@@ -62,7 +62,7 @@ const CustomerForm = () => {
         navigate('react-ui/tables/customer')
         flashMessageStore.addSuccessMessage('Customer was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);

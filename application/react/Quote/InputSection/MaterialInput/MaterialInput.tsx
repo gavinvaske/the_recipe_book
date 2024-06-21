@@ -38,7 +38,7 @@ const MaterialInput = observer((props: Props) => {
   useEffect(() => {
     axios.get(`/materials`)
       .then((response: AxiosResponse) => setMaterials(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   return (

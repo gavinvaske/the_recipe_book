@@ -1,21 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MaterialForm'
 import { MaterialFormAttributes } from '../../_types/forms/material';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import flashMessageStore from '../../stores/flashMessageStore';
+import { Vendor } from '../../_types/databaseModels/vendor';
+import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
+import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
+import { LinerType } from '../../_types/databaseModels/linerType';
 
-const vendors: SelectOption[] = []
-const materialCategories: SelectOption[] = []
-const adhesiveCategories: SelectOption[] = []
-const linerTypes: SelectOption[] = []
-
+/* TODO (6-17-2024): Populate these dynamically, maybe using useMemo? */
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();
+
+  const [vendors, setVendors] = useState<SelectOption[]>([])
+  const [materialCategories, setMaterialCategories] = useState<SelectOption[]>([])
+  const [adhesiveCategories, setAdhesiveCategories] = useState<SelectOption[]>([])
+  const [linerTypes, setLinerTypes] = useState<SelectOption[]>([])
+
+  useEffect(() => {
+    axios.get('/vendors')
+      .then((response : AxiosResponse) => {
+        const vendors: Vendor[] = response.data
+        setVendors(vendors.map((vendor: Vendor) => (
+          {
+            displayName: vendor.name,
+            value: vendor._id
+          }
+        )))
+      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+
+    axios.get('/material-categories')
+      .then((response : AxiosResponse) => {
+        const materialCategories: MaterialCategory[] = response.data
+        setMaterialCategories(materialCategories.map((materialCategory: MaterialCategory) => (
+          {
+            displayName: materialCategory.name,
+            value: materialCategory._id
+          }
+        )))
+      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+
+    axios.get('/adhesive-categories')
+      .then((response : AxiosResponse) => {
+        const adhesiveCategories: AdhesiveCategory[] = response.data
+        setAdhesiveCategories(adhesiveCategories.map((adhesiveCategory: AdhesiveCategory) => (
+          {
+            displayName: adhesiveCategory.name,
+            value: adhesiveCategory._id
+          }
+        )))
+      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+
+    axios.get('/liner-types')
+      .then((response : AxiosResponse) => {
+        const linerTypes: LinerType[] = response.data
+        setLinerTypes(linerTypes.map((linerType: LinerType) => (
+          {
+            displayName: linerType.name,
+            value: linerType._id
+          }
+        )))
+      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+  }, [])
 
   const onSubmit = (formData: MaterialFormAttributes) => {
     axios.post(`/materials`, formData)
@@ -23,8 +78,9 @@ export const MaterialForm = () => {
         flashMessageStore.addSuccessMessage('Material was created successfully')
         navigate(`/react-ui/tables/materials`);
       })
-      .catch(({response}) => {
-        flashMessageStore.addErrorMessage(response.data)
+      .catch((error: AxiosError) => {
+        console.log('error', error);
+        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
       })
   };
 
@@ -209,7 +265,6 @@ export const MaterialForm = () => {
         isRequired={true}
         errors={errors}
       />
-
 
       <button type="submit">Submit</button>
     </form>

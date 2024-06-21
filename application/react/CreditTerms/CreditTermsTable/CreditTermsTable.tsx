@@ -48,7 +48,7 @@ const CreditTermsTable = () => {
   useEffect(() => {
     axios.get('/credit-terms')
       .then((response : AxiosResponse) => setCreditTerms(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   const table = useReactTable({

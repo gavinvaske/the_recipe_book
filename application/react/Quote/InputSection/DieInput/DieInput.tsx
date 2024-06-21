@@ -17,7 +17,7 @@ const Die = (props) => {
         const { data } = response;
         setDies(data)
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   return (

@@ -23,7 +23,7 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
 
   return (
     <div>
-      <label>{label}{isRequired ? '*' : ''}:</label>
+      <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <select 
         {...register(attribute,
           { 

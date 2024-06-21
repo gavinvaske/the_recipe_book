@@ -1,12 +1,12 @@
-import React from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import './LinerTypeForm.scss';
 import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
-
+import { LinerType } from '../../_types/databaseModels/linerType';
 
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();

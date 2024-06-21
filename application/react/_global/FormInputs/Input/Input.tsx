@@ -21,12 +21,12 @@ export const Input = <T extends FieldValues>(props: Props<T>) => {
 
   return (
     <div>
-      <label>{label}{isRequired ? '*' : ''}:</label>
+      <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <input type="text" 
         placeholder={placeholder}
         value={defaultValue}
         {...register(
-          attribute, 
+          attribute,
           { 
             required: isRequired ? "This is required" : undefined 
           })

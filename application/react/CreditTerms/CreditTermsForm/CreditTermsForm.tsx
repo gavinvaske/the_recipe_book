@@ -17,7 +17,7 @@ const CreditTermsForm = () => {
         navigate(`/react-ui/tables/credit-term`);
         flashMessageStore.addSuccessMessage('Credit term was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   };
 
   return (

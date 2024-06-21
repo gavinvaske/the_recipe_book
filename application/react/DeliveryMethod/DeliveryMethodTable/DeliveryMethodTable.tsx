@@ -52,7 +52,7 @@ function DeliveryMethodTable() {
         const { data } = response;
         setDeliveryMethods(data);
      })
-     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   const table = useReactTable({

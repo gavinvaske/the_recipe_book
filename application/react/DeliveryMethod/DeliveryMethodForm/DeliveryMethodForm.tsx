@@ -17,7 +17,7 @@ const DeliveryMethodForm = () => {
         navigate(`/react-ui/tables/delivery-method`);
         flashMessageStore.addSuccessMessage('Delivery method was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   };
 
   return (

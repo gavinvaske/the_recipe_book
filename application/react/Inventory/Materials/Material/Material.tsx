@@ -13,19 +13,19 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
     purchaseOrdersForMaterial.map((purchaseOrder, index: number) => (
       <div className='tb-row' key={index}>
         <div className='tb-cell cell-one'>
-          <div class='pulse-indicator'></div>
+          <div className='pulse-indicator'></div>
           {purchaseOrder.purchaseOrderNumber}
         </div>
         <div className='tb-cell cell-two'>
-          <div class='pulse-indicator'></div>
+          <div className='pulse-indicator'></div>
           {purchaseOrder.orderDate && purchaseOrder.orderDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
         </div>
         <div className='tb-cell cell-three'>
-          <div class='pulse-indicator'></div>
+          <div className='pulse-indicator'></div>
           {purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
         </div>
         <div className='tb-cell cell-four'>
-          <div class='pulse-indicator'></div>
+          <div className='pulse-indicator'></div>
           {(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls)}
         </div>
       </div>
@@ -92,28 +92,28 @@ const Material = observer((props: Props) => {
           <h2 className='material-id'>{material.materialId}</h2>
         </div>
         <div className='col col-right'>
-          <div class='po-container'>
+          <div className='po-container'>
             <i className="fa-light fa-calendar" onClick={(e) => togglePurchaseOrders(e)}></i>
-            <div class='modal-background'>
-              <div class='modal-box'>
-                <div class='left'>
-                  <div class='title-wrapper'>
+            <div className='modal-background'>
+              <div className='modal-box'>
+                <div className='left'>
+                  <div className='title-wrapper'>
                     <h4>Purchase orders: {material.materialId}</h4>
                   </div>
-                  <div class='purchase-order-info-wrapper'>
-                    <div class='po-table'>
-                      <div class='tb-header'>
-                        <div class='tb-cell cell-one'>
-                          <div class='pulse-indicator'></div>
+                  <div className='purchase-order-info-wrapper'>
+                    <div className='po-table'>
+                      <div className='tb-header'>
+                        <div className='tb-cell cell-one'>
+                          <div className='pulse-indicator'></div>
                           PO #
                         </div>
-                        <div class='tb-cell cell-two'>
+                        <div className='tb-cell cell-two'>
                           Order Date
                         </div>
-                        <div class='tb-cell cell-three'>
+                        <div className='tb-cell cell-three'>
                           Arrival Date
                         </div>
-                        <div class='tb-cell cell-four'>
+                        <div className='tb-cell cell-four'>
                           Total Feet
                         </div>
                       </div>
@@ -121,10 +121,10 @@ const Material = observer((props: Props) => {
                     </div>
                   </div>
                 </div>
-                <div class='right'>
+                <div className='right'>
                   left panel for storm to do something neat
                 </div>
-                <i class="fa-light fa-xmark" onClick={closeModal}></i>
+                <i className="fa-light fa-xmark" onClick={closeModal}></i>
 
               </div>
             </div>

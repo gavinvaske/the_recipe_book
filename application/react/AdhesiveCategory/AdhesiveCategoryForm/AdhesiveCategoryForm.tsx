@@ -18,7 +18,7 @@ export const AdhesiveCategoryForm = () => {
         navigate('/react-ui/tables/adhesive-category')
         flashMessageStore.addSuccessMessage('Adhesive Category was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string))
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }
 
   return (

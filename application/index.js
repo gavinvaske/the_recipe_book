@@ -79,6 +79,7 @@ app.use('/packaging', require('./controllers/packagingController'));
 app.use('/quote', require('./controllers/quoteController'));
 app.use('/die', require('./controllers/dieController'));
 app.use('/liner-types', require('./controllers/linerTypeController'));
+app.use('/adhesive-categories', require('./controllers/adhesiveCategoryController'));
 
 
 app.use('/customers', require('./controllers/customerController'));

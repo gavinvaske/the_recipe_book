@@ -13,7 +13,7 @@ function clearInput() {
   return (
     <div className='search-bar'>
       <input id='primarySearch' type='text' value={value} onChange={onChange} placeholder="Search" />
-      <i class="fa-light fa-xmark" onClick={clearInput}></i>
+      <i className="fa-light fa-xmark" onClick={clearInput}></i>
     </div>
   )
 }

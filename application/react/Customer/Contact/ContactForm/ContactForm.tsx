@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from'react-hook-form';
-import ErrorMessage from '../../../_global/FormInputErrorMessage/FormInputErrorMessage';
+import FormErrorMessage from '../../../_global/FormErrorMessage/FormErrorMessage';
 import './ContactForm.scss'
 import { ContactForm } from '../../../_types/forms/contact';
 import { AddressForm } from '../../../_types/forms/address';
@@ -24,37 +24,37 @@ const ContactForm = (props) => {
       <div>
         <label>Name*:</label>
         <input type="text" {...register('fullName', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="fullName" />
+        <FormErrorMessage errors={errors} name="fullName" />
       </div>
       <div>
         <label>Phone Number:</label>
         <input type="text" {...register('phoneNumber')} />
-        <ErrorMessage errors={errors} name="phoneNumber" />
+        <FormErrorMessage errors={errors} name="phoneNumber" />
       </div>
       <div>
         <label>Phone Extension:</label>
         <input type="text" {...register('phoneExtension')} />
-        <ErrorMessage errors={errors} name="phoneExtension" />
+        <FormErrorMessage errors={errors} name="phoneExtension" />
       </div>
       <div>
         <label>Email:</label>
         <input type="text" {...register('email')} />
-        <ErrorMessage errors={errors} name="email" />
+        <FormErrorMessage errors={errors} name="email" />
       </div>
       <div>
         <label>Contact Status*:</label>
         <input type="text" {...register('contactStatus', { required: "This is required" })} />
-        <ErrorMessage errors={errors} name="contactStatus" />
+        <FormErrorMessage errors={errors} name="contactStatus" />
       </div>
       <div>
         <label>Notes:</label>
         <input type="text" {...register('notes')} />
-        <ErrorMessage errors={errors} name="notes" />
+        <FormErrorMessage errors={errors} name="notes" />
       </div>
       <div>
         <label>Position:</label>
         <input type="text" {...register('position')} />
-        <ErrorMessage errors={errors} name="position" />
+        <FormErrorMessage errors={errors} name="position" />
       </div>
       <div>
         <label>Location:</label>

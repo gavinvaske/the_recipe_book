@@ -3,11 +3,13 @@ import './DieInput.scss';
 import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import quoteStore from '../../../stores/quoteStore';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import flashMessageStore from '../../../stores/flashMessageStore';
+import { Die } from '../../../_types/databaseModels/die';
 
-export default Die = (props) => {
-  const dieOverride = quoteStore.quoteInputs.dieOverride;
-  const [ dies, setDies ] = useState([]);
+const Die = (props) => {
+  const dieOverride = quoteStore.quoteInputs.dieOverride as Die;
+  const [ dies, setDies ] = useState<Die[]>([]);
 
   useEffect(() => {
     axios.get(`/die`)
@@ -15,9 +17,7 @@ export default Die = (props) => {
         const { data } = response;
         setDies(data)
       })
-      .catch((error) => {
-        alert('Error:', error);
-      });
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   return (
@@ -50,3 +50,5 @@ export default Die = (props) => {
     </div>
   )
 };
+
+export default Die

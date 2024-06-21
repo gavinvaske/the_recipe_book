@@ -155,7 +155,7 @@ const schema = new Schema({
         },
         min: 1
     },
-    image: { 
+    image: {
         type: String,
         required: true,
         validate: [validateUrl, '{VALUE} is not a valid url']

@@ -2,22 +2,22 @@ const express = require('express');
 const router = express.Router();
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
+const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
 
 router.use(verifyJwtToken);
 
 const SHOW_ALL_VENDORS_ENDPOINT = '/vendors';
 
-router.get('/', async (request, response) => {
+router.get('/', async (_, response) => {
     try {
         const vendors = await VendorModel.find().exec();
         
-        return response.render('viewVendors', {
-            vendors: vendors
-        });
-
+        return response.json(vendors);
     } catch (error) {
-        request.flash('errors', ['Unable to load Vendors, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
+        console.error('Error fetching vendors: ', error);
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

@@ -12,7 +12,7 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
       const { description, options } = quickFilter;
       return (
         <div className='quick-filters-list'>
-          <span class='filter-description'>Description: {description}</span>
+          <span className='filter-description'>Description: {description}</span>
           {options.map((option: TextFilterOption) => (
             <TextQuickFilter
               uuid={option.uuid}

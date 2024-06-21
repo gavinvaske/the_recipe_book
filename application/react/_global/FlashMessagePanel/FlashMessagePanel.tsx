@@ -49,7 +49,7 @@ const FlashMessage = (props : FlashMessageProps) => {
             <div className='circle-container'>
               <div className='circle-background'>
                 {type === 'ERROR' && (<i className="fa-solid fa-xmark-large"></i>) } 
-                {type === 'SUCCESS' && (<i class="fa-duotone fa-check"></i>) } 
+                {type === 'SUCCESS' && (<i className="fa-duotone fa-check"></i>) } 
               </div>
             </div>
             <div className='flash-content'>
@@ -62,7 +62,7 @@ const FlashMessage = (props : FlashMessageProps) => {
           </div>
           
           <i className='fa-regular fa-close' onClick={() => flashMessageStore.removeFlashMessage(uuid)}></i>
-          <div class='bottom-bumper'></div>
+          <div className='bottom-bumper'></div>
         </div>
       )}
     </>

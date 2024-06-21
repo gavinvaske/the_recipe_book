@@ -23,16 +23,16 @@ router.post('/', async (request, response) => {
 
     try {
         savedAdhesiveCategory = await AdhesiveCategoryModel.create(request.body);
+
+        return response
+            .status(CREATED_SUCCESSFULLY)
+            .send(savedAdhesiveCategory);
     } catch (error) {
         console.error('Error creating adhesive category: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);
     }
-
-    return response
-        .status(CREATED_SUCCESSFULLY)
-        .send(savedAdhesiveCategory);
 });
 
 

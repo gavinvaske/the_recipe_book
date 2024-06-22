@@ -11,17 +11,15 @@ const ticketService = require('../services/ticketService');
 const mongooseService = require('../services/mongooseService');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
-const SERVER_ERROR_STATUS_CODE = 500;
+const { SERVER_ERROR } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
 
 router.get('/all', async (request, response) => {
     try {
-
         const materials = await MaterialModel.find().exec();
 
         return response.send(materials);
-
     } catch (error) {
         request.flash('errors', ['Unable to search Materials, the following error(s) occurred:', error.message]);
         return response.redirect('back');
@@ -32,13 +30,13 @@ router.get('/', async (request, response) => {
     try {
         const materials = await MaterialModel.find().exec();
 
-        return response.render('viewMaterials', {
-            materials: materials
-        });
-
+        return response.json(materials);
     } catch (error) {
-        request.flash('errors', ['Unable to load Materials, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
+        console.error('Error fetching materials: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
@@ -56,7 +54,7 @@ router.post('/', async (request, response) => {
         return response.json(material);
     } catch (error) {
         console.log('Error creating material: ', error);
-        return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 
@@ -148,7 +146,7 @@ router.get('/inventory', async (request, response) => {
     } catch (error) {
         console.log(`Error fetching inventory data: ${error}`);
 
-        return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 

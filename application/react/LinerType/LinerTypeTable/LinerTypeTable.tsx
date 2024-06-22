@@ -16,7 +16,6 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { LinerTypeRowActions } from './RowActions/RowActions'
 import { LinerType } from '../../_types/databaseModels/linerType';
-import FlashMessageStore from '../../stores/flashMessageStore'
 import flashMessageStore from '../../stores/flashMessageStore';
 
 const columnHelper = createColumnHelper<LinerType>()
@@ -43,7 +42,7 @@ export const LinerTypeTable = () => {
   React.useEffect(() => {
     axios.get('/liner-types')
       .then(({ data }) => setLinerTypes(data))
-      .catch(({response}) => FlashMessageStore.addErrorMessage(response.data))
+      .catch(({response}) => flashMessageStore.addErrorMessage(response.data))
   }, [])
 
 

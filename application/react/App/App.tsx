@@ -11,6 +11,7 @@ import { LinerTypeForm } from '../LinerType/LinerTypeForm/LinerTypeForm';
 import { LinerTypeTable } from '../LinerType/LinerTypeTable/LinerTypeTable';
 import { MaterialForm } from '../Material/MaterialForm/MaterialForm';
 import { AdhesiveCategoryForm } from '../AdhesiveCategory/AdhesiveCategoryForm/AdhesiveCategoryForm';
+import { MaterialTable } from '../Material/MaterialTable/MaterialTable';
 
 export function App() {
   return (
@@ -32,6 +33,7 @@ export function App() {
           <Route path='credit-term' element={<CreditTermsTable />} />
           <Route path='delivery-method' element={<DeliveryMethodTable />} />
           <Route path='liner-type' element={<LinerTypeTable />} />
+          <Route path='material' element={<MaterialTable />} />
         </Route>
 
         <Route path='*' element={<div>404 Page Not Found</div>} />

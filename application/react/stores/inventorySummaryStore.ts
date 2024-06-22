@@ -2,7 +2,8 @@ import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
 import axios from "axios";
 import * as JsSearch from 'js-search';
-import { ConditionalFilterFunction, TextQuickFilters, Filter } from "../_types/Filters";
+import { ConditionalFilterFunction, UuidToTextFilter, Filter } from "../_types/Filters";
+import flashMessageStore from "./flashMessageStore";
 
 /* Mobx Store */
 class InventorySummaryStore implements Filter<MaterialInventory> {
@@ -53,7 +54,7 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     return this.inventorySummary;
   }
 
-  generateSearchQuery(searchBarInput: string, textQuickFilters: TextQuickFilters): string {
+  generateSearchQuery(searchBarInput: string, textQuickFilters: UuidToTextFilter): string {
     const quickFiltersQuery = Object.values(textQuickFilters).join(' ')
     const trimmedSearchBarInput = searchBarInput.trim();
 
@@ -104,13 +105,11 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
   async recalculateInventorySummary() {
     axios.get('/materials/inventory')
       .then((response) => {
-        const { data: materialInventorySummary}: {data: MaterialInventorySummary} = response;
+        const { data: materialInventorySummary}: { data: MaterialInventorySummary } = response;
         
         this.setInventorySummary(materialInventorySummary);
       })
-      .catch((error) => {
-        alert('Error fetching the inventory for materials:'+ error.message);
-      })
+      .catch((error) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }
 }
 

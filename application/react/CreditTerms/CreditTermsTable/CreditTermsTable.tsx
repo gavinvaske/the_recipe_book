@@ -41,7 +41,7 @@ const columns = [
 ];
 
 const CreditTermsTable = () => {
-  const [creditTerms, setCreditTerms] = useState([]);
+  const [creditTerms, setCreditTerms] = useState<CreditTerm[]>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
 

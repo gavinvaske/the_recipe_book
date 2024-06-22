@@ -42,7 +42,7 @@ const columns = [
 ];
 
 function DeliveryMethodTable() {
-  const [deliveryMethods, setDeliveryMethods] = React.useState([])
+  const [deliveryMethods, setDeliveryMethods] = React.useState<DeliveryMethod[]>([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
 

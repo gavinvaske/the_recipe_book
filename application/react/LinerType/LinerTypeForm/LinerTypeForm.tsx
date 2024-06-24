@@ -11,10 +11,12 @@ import { LinerType } from '../../_types/databaseModels/linerType';
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
   const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
   useEffect(() => {
     if (!mongooseId) return;
 
+    // TODO (6-23-2024): Extract this into a shared-custom Hook
     axios.get('/liner-types/' + mongooseId)
       .then(({ data }: {data: LinerType}) => {
         const formValues = {
@@ -24,12 +26,8 @@ export const LinerTypeForm = () => {
       })
       .catch(({response}) => {
         flashMessageStore.addErrorMessage(response.data)
-        navigate(-1);
       })
-
   }, [])
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {
     const isUpdateRequest = Boolean(mongooseId);

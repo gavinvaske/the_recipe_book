@@ -5,21 +5,67 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { Vendor } from '../../_types/databaseModels/vendor';
 import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { LinerType } from '../../_types/databaseModels/linerType';
+import { Material } from '../../_types/databaseModels/material';
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<MaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();
+  const { mongooseId } = useParams();
 
   const [vendors, setVendors] = useState<SelectOption[]>([])
   const [materialCategories, setMaterialCategories] = useState<SelectOption[]>([])
   const [adhesiveCategories, setAdhesiveCategories] = useState<SelectOption[]>([])
   const [linerTypes, setLinerTypes] = useState<SelectOption[]>([])
+
+  useEffect(() => {
+    if (!mongooseId) return;
+
+    // TODO (6-23-2024): Extract this into a shared-custom Hook
+    axios.get('/materials/' + mongooseId)
+      .then(({ data }: {data: Material}) => {
+        // @Gavin TODO (6-23-2024): setup `const formValues : PartialWithoutKeys<Material> = ...`
+        const formValues = {
+          name: data.name,
+          materialId: data.materialId,
+          thickness: data.thickness,
+          weight: data.weight,
+          costPerMsi: data.costPerMsi,
+          freightCostPerMsi: data.freightCostPerMsi,
+          width: data.weight,
+          faceColor: data.faceColor,
+          adhesive: data.adhesive,
+          quotePricePerMsi: data.quotePricePerMsi,
+          description: data.description,
+          whenToUse: data.whenToUse,
+          alternativeStock: data.alternativeStock,
+          length: data.length,
+          facesheetWeightPerMsi: data.facesheetWeightPerMsi,
+          adhesiveWeightPerMsi: data.adhesiveWeightPerMsi,
+          linerWeightPerMsi: data.linerWeightPerMsi,
+          location: data.location,
+          productNumber: data.productNumber,
+          masterRollSize: data.masterRollSize,
+          image: data.image,
+          linerType: data.linerType,
+          adhesiveCategory: data.adhesiveCategory,
+          vendor: data.vendor,
+          materialCategory: data.materialCategory
+        }
+
+        console.log('data: ', data)
+
+        reset(formValues) // pre-populate form with existing values from the DB
+      })
+      .catch((error: AxiosError) => {
+        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+      })
+  }, [])
 
   useEffect(() => {
     axios.get('/vendors')

@@ -25,7 +25,7 @@ export function App() {
           <Route path='quote' element={<QuoteForm />} />
           <Route path='customer' element={<CustomerForm />} />
           <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
-          <Route path='material' element={<MaterialForm />} />
+          <Route path='material/:mongooseId?' element={<MaterialForm />} />
           <Route path='adhesive-category' element={<AdhesiveCategoryForm />} />
         </Route>
 

@@ -47,7 +47,6 @@ export const MaterialTable = () => {
   React.useEffect(() => {
     axios.get('/materials')
       .then(({ data }: { data: Material[] }) => {
-        alert('fetched data, count = ' + data.length)
         setMaterials(data)
       })
       .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))

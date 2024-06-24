@@ -34,7 +34,8 @@ router.get('/:mongooseId', async (request, response) => {
 
         return response.json(linerType);
     } catch (error) {
-        console.log('Error searching for linerType: ', error.message);
+        console.error('Error searching for linerType: ', error);
+
         return response
           .status(SERVER_ERROR)
           .send(error.message);

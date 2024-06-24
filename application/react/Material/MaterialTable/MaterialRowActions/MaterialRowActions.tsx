@@ -17,15 +17,14 @@ export const MaterialRowActions = (props: Props) => {
   const navigate = useNavigate();
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
-    alert('TODO: Add a confirmation modal before deletion?')
+    alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/materials/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => flashMessageStore.addSuccessMessage('Deletion was successfully'))
       .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    alert('TODO: Setup this action')
-    // navigate(`/react-ui/forms/material/${mongooseObjectId}`)
+    navigate(`/react-ui/forms/material/${mongooseObjectId}`)
   }
 
   return (

@@ -29,8 +29,7 @@ export const MaterialForm = () => {
     // TODO (6-23-2024): Extract this into a shared-custom Hook
     axios.get('/materials/' + mongooseId)
       .then(({ data }: {data: Material}) => {
-        // @Gavin TODO (6-23-2024): setup `const formValues : PartialWithoutKeys<Material> = ...`
-        const formValues = {
+        const formValues: MaterialFormAttributes = {
           name: data.name,
           materialId: data.materialId,
           thickness: data.thickness,
@@ -53,9 +52,9 @@ export const MaterialForm = () => {
           masterRollSize: data.masterRollSize,
           image: data.image,
           linerType: data.linerType,
-          adhesiveCategory: data.adhesiveCategory,
-          vendor: data.vendor,
-          materialCategory: data.materialCategory
+          adhesiveCategory: data.adhesiveCategory as string,
+          vendor: data.vendor as string,
+          materialCategory: data.materialCategory as string
         }
 
         console.log('data: ', data)

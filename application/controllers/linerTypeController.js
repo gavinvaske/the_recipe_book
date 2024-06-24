@@ -5,16 +5,13 @@ const { CREATED_SUCCESSFULLY, SERVER_ERROR } = require('../enums/httpStatusCodes
 
 router.use(verifyJwtToken);
 
-const HTTP_SERVER_ERROR = 500;
-const SUCCESS_HTTP_STATUS = 200;
-
 router.delete('/:mongooseId', async (request, response) => {
     try {
         await LinerTypeModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS_HTTP_STATUS);
+        return response.status(CREATED_SUCCESSFULLY);
     } catch (error) {
-        return response.status(HTTP_SERVER_ERROR).send(error.message);
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 
@@ -38,7 +35,9 @@ router.get('/:mongooseId', async (request, response) => {
         return response.json(linerType);
     } catch (error) {
         console.log('Error searching for linerType: ', error.message);
-        return response.status(HTTP_SERVER_ERROR).send(error.message);
+        return response
+          .status(SERVER_ERROR)
+          .send(error.message);
     }
 });
 
@@ -54,9 +53,10 @@ router.patch('/:mongooseId', async (request, response) => {
     } catch (error) {
         console.log('Failed to update linerType: ', error.message);
 
-        response.status(HTTP_SERVER_ERROR).send(error.message);
+        response
+          .status(SERVER_ERROR)
+          .send(error.message);
     }
-
 });
 
 router.post('/', async (request, response) => {

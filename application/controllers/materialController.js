@@ -11,9 +11,21 @@ const ticketService = require('../services/ticketService');
 const mongooseService = require('../services/mongooseService');
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
-const { SERVER_ERROR } = require('../enums/httpStatusCodes');
+const { SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
+
+router.delete('/:mongooseId', async (request, response) => {
+  try { 
+    await MaterialModel.findByIdAndDelete(request.params.mongooseId).exec();
+
+    return response.status(SUCCESS)
+  } catch (error) {
+    console.error('Failed to delete material: ', error)
+
+    return response.status(SERVER_ERROR).send(error.message)
+  }
+})
 
 router.get('/all', async (request, response) => {
     try {
@@ -91,6 +103,7 @@ router.post('/update/:id', async (request, response) => {
     }
 });
 
+/* @Deprecated */
 router.get('/delete/:id', async (request, response) => {
     try {
         await MaterialModel.findByIdAndDelete(request.params.id).exec();

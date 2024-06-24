@@ -27,6 +27,20 @@ router.delete('/:mongooseId', async (request, response) => {
   }
 })
 
+router.get('/:mongooseId', async (request, response) => {
+  try {
+      const material = await MaterialModel.findById(request.params.mongooseId);
+
+      return response.json(material);
+  } catch (error) {
+      console.error('Error searching for material: ', error);
+
+      return response
+        .status(SERVER_ERROR)
+        .send(error.message);
+  }
+});
+
 router.get('/all', async (request, response) => {
     try {
         const materials = await MaterialModel.find().exec();

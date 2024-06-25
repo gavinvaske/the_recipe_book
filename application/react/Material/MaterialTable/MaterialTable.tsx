@@ -3,13 +3,15 @@ import './MaterialTable.scss';
 import { SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Material } from '../../_types/databaseModels/material';
 import { MaterialRowActions } from './MaterialRowActions/MaterialRowActions';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import flashMessageStore from '../../stores/flashMessageStore';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
+import { useQuery } from '@tanstack/react-query';
+import { getMaterials } from '../../_queries/material';
 
 const columnHelper = createColumnHelper<Material>()
 
@@ -40,17 +42,17 @@ const columns = [
 ];
 
 export const MaterialTable = () => {
-  const [materials, setMaterials] = React.useState<Material[]>([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const { isError, data: materials, error } = useQuery({
+    queryKey: ['materials'],
+    queryFn: getMaterials,
+    initialData: []
+  })
 
-  React.useEffect(() => {
-    axios.get('/materials')
-      .then(({ data }: { data: Material[] }) => {
-        setMaterials(data)
-      })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  }, [])
+  if (isError) {
+    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+  }
 
   const table = useReactTable({
     data: materials,

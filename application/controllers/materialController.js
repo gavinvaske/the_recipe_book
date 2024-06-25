@@ -27,6 +27,20 @@ router.delete('/:mongooseId', async (request, response) => {
   }
 })
 
+router.get('/', async (request, response) => {
+  try {
+      const materials = await MaterialModel.find().exec();
+
+      return response.json(materials);
+  } catch (error) {
+      console.error('Error fetching materials: ', error);
+
+      return response
+          .status(SERVER_ERROR)
+          .send(error.message);
+  }
+});
+
 router.get('/:mongooseId', async (request, response) => {
   try {
       const material = await MaterialModel.findById(request.params.mongooseId);
@@ -49,20 +63,6 @@ router.get('/all', async (request, response) => {
     } catch (error) {
         request.flash('errors', ['Unable to search Materials, the following error(s) occurred:', error.message]);
         return response.redirect('back');
-    }
-});
-
-router.get('/', async (request, response) => {
-    try {
-        const materials = await MaterialModel.find().exec();
-
-        return response.json(materials);
-    } catch (error) {
-        console.error('Error fetching materials: ', error);
-
-        return response
-            .status(SERVER_ERROR)
-            .send(error.message);
     }
 });
 

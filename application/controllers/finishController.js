@@ -6,19 +6,6 @@ const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 
 router.use(verifyJwtToken);
 
-router.get('/all', async (request, response) => {
-    try {
-        
-        const finishes = await FinishModel.find().exec();
-        
-        return response.send(finishes);
-
-    } catch (error) {
-        request.flash('errors', ['Unable to search Finishes, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
-    }
-});
-
 router.get('/', async (request, response) => {
     try {
         const finishes = await FinishModel.find().exec();

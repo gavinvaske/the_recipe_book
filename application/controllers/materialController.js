@@ -55,17 +55,6 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-router.get('/all', async (request, response) => {
-    try {
-        const materials = await MaterialModel.find().exec();
-
-        return response.send(materials);
-    } catch (error) {
-        request.flash('errors', ['Unable to search Materials, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
-    }
-});
-
 router.get('/form', async (request, response) => {
     const vendors = await VendorModel.find().exec();
     const materialCategories = await MaterialCategoryModel.find().exec();

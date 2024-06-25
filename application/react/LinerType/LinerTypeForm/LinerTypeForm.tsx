@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import './LinerTypeForm.scss';
 import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
@@ -24,9 +24,7 @@ export const LinerTypeForm = () => {
         }
         reset(formValues)
       })
-      .catch(({response}) => {
-        flashMessageStore.addErrorMessage(response.data)
-      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {

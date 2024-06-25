@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
+import { CreditTerm } from '../_types/databaseModels/creditTerm';
 
 export const getCreditTerms = async () => {
   const response : AxiosResponse = await axios.get('/credit-terms');
-  const materials = response.data;
+  const creditTerms: CreditTerm[] = response.data;
 
-  return materials
+  return creditTerms
 }

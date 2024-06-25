@@ -37,8 +37,8 @@ router.get('/:mongooseId', async (request, response) => {
         console.error('Error searching for linerType: ', error);
 
         return response
-          .status(SERVER_ERROR)
-          .send(error.message);
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
@@ -55,8 +55,8 @@ router.patch('/:mongooseId', async (request, response) => {
         console.log('Failed to update linerType: ', error.message);
 
         response
-          .status(SERVER_ERROR)
-          .send(error.message);
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

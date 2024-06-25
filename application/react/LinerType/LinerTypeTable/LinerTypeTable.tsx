@@ -17,6 +17,8 @@ import { Table } from '../../_global/Table/Table'
 import { LinerTypeRowActions } from './RowActions/RowActions'
 import { LinerType } from '../../_types/databaseModels/linerType';
 import flashMessageStore from '../../stores/flashMessageStore';
+import { useQuery } from '@tanstack/react-query';
+import { getLinerTypes } from '../../_queries/linerType';
 
 const columnHelper = createColumnHelper<LinerType>()
 
@@ -35,15 +37,18 @@ const columns = [
 ];
 
 export const LinerTypeTable = () => {
-  const [linerTypes, setLinerTypes] = React.useState([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  React.useEffect(() => {
-    axios.get('/liner-types')
-      .then(({ data }) => setLinerTypes(data))
-      .catch(({response}) => flashMessageStore.addErrorMessage(response.data))
-  }, [])
+  const { isError, data: linerTypes, error } = useQuery({
+    queryKey: ['liner-types'],
+    queryFn: getLinerTypes,
+    initialData: []
+  })
+
+  if (isError) {
+    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+  }
 
 
   const table = useReactTable({

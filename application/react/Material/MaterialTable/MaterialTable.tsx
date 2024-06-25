@@ -3,7 +3,6 @@ import './MaterialTable.scss';
 import { SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { Material } from '../../_types/databaseModels/material';
 import { MaterialRowActions } from './MaterialRowActions/MaterialRowActions';
-import { AxiosError } from 'axios';
 import flashMessageStore from '../../stores/flashMessageStore';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';

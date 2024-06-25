@@ -16,6 +16,8 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { CreditTermsRowActions } from './RowActions/RowActions';
 import flashMessageStore from '../../stores/flashMessageStore';
+import { useQuery } from '@tanstack/react-query';
+import { getCreditTerms } from '../../_queries/creditTerm';
 
 type CreditTerm = {
   _id: string,
@@ -41,15 +43,18 @@ const columns = [
 ];
 
 const CreditTermsTable = () => {
-  const [creditTerms, setCreditTerms] = useState<CreditTerm[]>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  useEffect(() => {
-    axios.get('/credit-terms')
-      .then((response : AxiosResponse) => setCreditTerms(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  }, [])
+  const { isError, data: creditTerms, error } = useQuery({
+    queryKey: ['credit-terms'],
+    queryFn: getCreditTerms,
+    initialData: []
+  })
+
+  if (isError) {
+    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+  }
 
   const table = useReactTable({
     data: creditTerms,

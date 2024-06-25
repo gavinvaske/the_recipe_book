@@ -15,8 +15,9 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodsRowActions } from './RowActions/RowActions'
-import FlashMessageStore from '../../stores/flashMessageStore'
 import flashMessageStore from '../../stores/flashMessageStore'
+import { getDeliveryMethods } from '../../_queries/deliveryMethod'
+import { useQuery } from '@tanstack/react-query'
 
 type DeliveryMethod = {
   _id: string,
@@ -42,18 +43,18 @@ const columns = [
 ];
 
 function DeliveryMethodTable() {
-  const [deliveryMethods, setDeliveryMethods] = React.useState<DeliveryMethod[]>([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  React.useEffect(() => {
-    axios.get('/delivery-methods')
-    .then((response) => {
-        const { data } = response;
-        setDeliveryMethods(data);
-     })
-     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  }, [])
+  const { isError, data: deliveryMethods, error } = useQuery({
+    queryKey: ['delivery-methods'],
+    queryFn: getDeliveryMethods,
+    initialData: []
+  })
+
+  if (isError) {
+    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+  }
 
   const table = useReactTable({
     data: deliveryMethods,

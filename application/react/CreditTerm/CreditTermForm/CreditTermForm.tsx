@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermForm.scss'
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
-import { CreditTermForm as CreditTermFormAttributes } from '../../_types/forms/creditTerm';
+import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore'
 

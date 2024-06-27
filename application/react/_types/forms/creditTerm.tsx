@@ -1,3 +1,3 @@
-export type CreditTermForm = {
+export type CreditTermFormAttributes = {
   description: string
 }

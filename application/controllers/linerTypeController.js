@@ -62,17 +62,17 @@ router.post('/', async (request, response) => {
 });
 
 router.get('/:mongooseId', async (request, response) => {
-  try {
-      const linerType = await LinerTypeModel.findById(request.params.mongooseId);
+    try {
+        const linerType = await LinerTypeModel.findById(request.params.mongooseId);
 
-      return response.json(linerType);
-  } catch (error) {
-      console.error('Error searching for linerType: ', error);
+        return response.json(linerType);
+    } catch (error) {
+        console.error('Error searching for linerType: ', error);
 
-      return response
-          .status(SERVER_ERROR)
-          .send(error.message);
-  }
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
 });
 
 module.exports = router;

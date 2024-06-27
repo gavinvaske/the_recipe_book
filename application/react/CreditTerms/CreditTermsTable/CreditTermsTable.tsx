@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import React from 'react';
 import './CreditTermsTable.scss'
 import {
   createColumnHelper,
@@ -18,13 +17,8 @@ import { CreditTermsRowActions } from './RowActions/RowActions';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
-
-type CreditTerm = {
-  _id: string,
-  description: string,
-  createdAt: string,
-  updatedAt: string
-}
+import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import { AxiosError } from 'axios';
 
 const columnHelper = createColumnHelper<CreditTerm>()
 
@@ -53,7 +47,8 @@ const CreditTermsTable = () => {
   })
 
   if (isError) {
-    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
   }
 
   const table = useReactTable({

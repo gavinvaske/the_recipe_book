@@ -1,7 +1,7 @@
-import { DeliveryMethod } from 'aws-sdk/clients/amplifybackend';
 import axios, { AxiosResponse } from 'axios';
+import { DeliveryMethod } from '../_types/databaseModels/deliveryMethod';
 
-export const getDeliveryMethods = async () => {
+export const getDeliveryMethods = async (): Promise<DeliveryMethod[]> => {
   const response : AxiosResponse = await axios.get('/delivery-methods');
   const deliveryMethods: DeliveryMethod[] = response.data;
 

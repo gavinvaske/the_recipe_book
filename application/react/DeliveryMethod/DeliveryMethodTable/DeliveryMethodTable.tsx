@@ -1,5 +1,4 @@
 import * as React from 'react'
-import axios, { AxiosError } from 'axios'
 import './DeliveryMethodTable.scss'
 import {
   createColumnHelper,
@@ -18,13 +17,8 @@ import { DeliveryMethodsRowActions } from './RowActions/RowActions'
 import flashMessageStore from '../../stores/flashMessageStore'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
-
-type DeliveryMethod = {
-  _id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string
-}
+import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
+import { AxiosError } from 'axios'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()
 
@@ -53,7 +47,8 @@ function DeliveryMethodTable() {
   })
 
   if (isError) {
-    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
   }
 
   const table = useReactTable({

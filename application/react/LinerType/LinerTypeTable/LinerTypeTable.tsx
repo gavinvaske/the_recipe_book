@@ -1,6 +1,5 @@
 import React from 'react';
 import './LinerTypeTable.scss';
-import axios, { AxiosError } from 'axios';
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -19,6 +18,7 @@ import { LinerType } from '../../_types/databaseModels/linerType';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';
 import { getLinerTypes } from '../../_queries/linerType';
+import { AxiosError } from 'axios';
 
 const columnHelper = createColumnHelper<LinerType>()
 
@@ -47,7 +47,8 @@ export const LinerTypeTable = () => {
   })
 
   if (isError) {
-    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
   }
 
 

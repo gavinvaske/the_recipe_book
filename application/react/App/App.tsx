@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
 import CustomerForm from '../Customer/CustomerForm/CustomerForm';
 import DeliveryMethodForm from '../DeliveryMethod/DeliveryMethodForm/DeliveryMethodForm'
-import CreditTermsForm from '../CreditTerms/CreditTermsForm/CreditTermsForm';
-import CreditTermsTable from '../CreditTerms/CreditTermsTable/CreditTermsTable';
+import { CreditTermForm } from '../CreditTerm/CreditTermForm/CreditTermForm';
+import { CreditTermTable } from '../CreditTerm/CreditTermTable/CreditTermTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';
 import Inventory from '../Inventory/Inventory';
 import { LinerTypeForm } from '../LinerType/LinerTypeForm/LinerTypeForm';
@@ -25,7 +25,7 @@ export function App() {
 
           <Route path='forms'>
             <Route path='delivery-method' element={<DeliveryMethodForm />} />
-            <Route path='credit-term' element={<CreditTermsForm />} />
+            <Route path='credit-term' element={<CreditTermForm />} />
             <Route path='quote' element={<QuoteForm />} />
             <Route path='customer' element={<CustomerForm />} />
             <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
@@ -34,7 +34,7 @@ export function App() {
           </Route>
 
           <Route path='tables'>
-            <Route path='credit-term' element={<CreditTermsTable />} />
+            <Route path='credit-term' element={<CreditTermTable />} />
             <Route path='delivery-method' element={<DeliveryMethodTable />} />
             <Route path='liner-type' element={<LinerTypeTable />} />
             <Route path='material' element={<MaterialTable />} />

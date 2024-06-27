@@ -41,20 +41,6 @@ router.get('/', async (request, response) => {
     }
 });
 
-router.get('/:mongooseId', async (request, response) => {
-    try {
-        const material = await MaterialModel.findById(request.params.mongooseId);
-
-        return response.json(material);
-    } catch (error) {
-        console.error('Error searching for material: ', error);
-
-        return response
-            .status(SERVER_ERROR)
-            .send(error.message);
-    }
-});
-
 router.get('/form', async (request, response) => {
     const vendors = await VendorModel.find().exec();
     const materialCategories = await MaterialCategoryModel.find().exec();
@@ -164,6 +150,20 @@ router.get('/inventory', async (request, response) => {
 
         return response.status(SERVER_ERROR).send(error.message);
     }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+  try {
+      const material = await MaterialModel.findById(request.params.mongooseId);
+
+      return response.json(material);
+  } catch (error) {
+      console.error('Error searching for material: ', error);
+
+      return response
+          .status(SERVER_ERROR)
+          .send(error.message);
+  }
 });
 
 module.exports = router;

@@ -13,7 +13,7 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { DeliveryMethodsRowActions } from './RowActions/RowActions'
+import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
 import flashMessageStore from '../../stores/flashMessageStore'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
@@ -32,7 +32,7 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <DeliveryMethodsRowActions row={props.row} />
+    cell: props => <DeliveryMethodRowActions row={props.row} />
   })
 ];
 

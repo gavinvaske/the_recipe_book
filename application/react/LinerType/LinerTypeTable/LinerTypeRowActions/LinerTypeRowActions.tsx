@@ -1,5 +1,5 @@
 import React from 'react';
-import './RowActions.scss';
+import './LinerTypeRowActions.scss';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import axios from 'axios';
 import flashMessageStore from '../../../stores/flashMessageStore'

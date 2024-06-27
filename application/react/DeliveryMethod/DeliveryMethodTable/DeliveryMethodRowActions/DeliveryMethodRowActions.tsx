@@ -1,8 +1,8 @@
 import React from 'react'
-import './RowActions.scss'
+import './DeliveryMethodsRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 
-export const DeliveryMethodsRowActions = (props) => {
+export const DeliveryMethodRowActions = (props) => {
   const { row }: { row: any } = props;
   const { _id : mongooseObjectId } = row.original as any;
 

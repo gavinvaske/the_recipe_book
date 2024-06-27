@@ -1,9 +1,9 @@
 import React from 'react'
-import './RowActions.scss'
+import './CreditTermRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { Row, RowData } from '@tanstack/react-table';
 
-export const CreditTermsRowActions = (props) => {
+export const CreditTermRowActions = (props) => {
   const { row }: { row: Row<RowData> } = props;
   const { _id : mongooseObjectId } = row.original as any;
 

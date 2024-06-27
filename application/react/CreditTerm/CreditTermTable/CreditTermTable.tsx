@@ -1,5 +1,5 @@
 import React from 'react';
-import './CreditTermsTable.scss'
+import './CreditTermTable.scss'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -13,7 +13,7 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { CreditTermsRowActions } from './RowActions/RowActions';
+import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowActions';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
@@ -32,11 +32,11 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <CreditTermsRowActions row={props.row} />
+    cell: props => <CreditTermRowActions row={props.row} />
   })
 ];
 
-const CreditTermsTable = () => {
+export const CreditTermTable = () => {
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -88,5 +88,3 @@ const CreditTermsTable = () => {
     </>
   )
 };
-
-export default CreditTermsTable;

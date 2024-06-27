@@ -13,7 +13,7 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { LinerTypeRowActions } from './RowActions/RowActions'
+import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
 import { LinerType } from '../../_types/databaseModels/linerType';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';

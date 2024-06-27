@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import './LinerTypeForm.scss';
 import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { LinerType } from '../../_types/databaseModels/linerType';
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
   const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
   useEffect(() => {
     if (!mongooseId) return;
@@ -22,14 +23,8 @@ export const LinerTypeForm = () => {
         }
         reset(formValues)
       })
-      .catch(({response}) => {
-        flashMessageStore.addErrorMessage(response.data)
-        navigate(-1);
-      })
-
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {
     const isUpdateRequest = Boolean(mongooseId);

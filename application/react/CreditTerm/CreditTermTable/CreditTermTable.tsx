@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import './CreditTermsTable.scss'
+import React from 'react';
+import './CreditTermTable.scss'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -14,15 +13,12 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { CreditTermsRowActions } from './RowActions/RowActions';
+import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowActions';
 import flashMessageStore from '../../stores/flashMessageStore';
-
-type CreditTerm = {
-  _id: string,
-  description: string,
-  createdAt: string,
-  updatedAt: string
-}
+import { useQuery } from '@tanstack/react-query';
+import { getCreditTerms } from '../../_queries/creditTerm';
+import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import { AxiosError } from 'axios';
 
 const columnHelper = createColumnHelper<CreditTerm>()
 
@@ -36,20 +32,24 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <CreditTermsRowActions row={props.row} />
+    cell: props => <CreditTermRowActions row={props.row} />
   })
 ];
 
-const CreditTermsTable = () => {
-  const [creditTerms, setCreditTerms] = useState<CreditTerm[]>([]);
+export const CreditTermTable = () => {
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  useEffect(() => {
-    axios.get('/credit-terms')
-      .then((response : AxiosResponse) => setCreditTerms(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  }, [])
+  const { isError, data: creditTerms, error } = useQuery({
+    queryKey: ['credit-terms'],
+    queryFn: getCreditTerms,
+    initialData: []
+  })
+
+  if (isError) {
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
+  }
 
   const table = useReactTable({
     data: creditTerms,
@@ -88,5 +88,3 @@ const CreditTermsTable = () => {
     </>
   )
 };
-
-export default CreditTermsTable;

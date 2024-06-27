@@ -1,17 +1,17 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import './CreditTermsForm.scss'
+import './CreditTermForm.scss'
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
-import { CreditTermForm } from '../../_types/forms/creditTerm';
+import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore'
 
-const CreditTermsForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CreditTermForm>();
+export const CreditTermForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<CreditTermFormAttributes>();
   const navigate = useNavigate();
 
-  const onSubmit = (formData: CreditTermForm) => {
+  const onSubmit = (formData: CreditTermFormAttributes) => {
     axios.post('/credit-terms', formData)
       .then((_: AxiosResponse) => {
         navigate(`/react-ui/tables/credit-term`);
@@ -30,5 +30,3 @@ const CreditTermsForm = () => {
     </form>
   )
 }
-
-export default CreditTermsForm;

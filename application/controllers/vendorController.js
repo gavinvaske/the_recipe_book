@@ -39,19 +39,6 @@ router.post('/create', async (request, response) => {
     return response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
 });
 
-router.get('/all', async (request, response) => {
-    try {
-        
-        const vendors = await VendorModel.find().exec();
-        
-        return response.send(vendors);
-
-    } catch (error) {
-        request.flash('errors', ['Unable to search Vendors, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
-    }
-});
-
 router.get('/update/:id', async (request, response) => {
     try {
         const vendor = await VendorModel.findById(request.params.id).exec();

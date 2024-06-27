@@ -1,5 +1,4 @@
 import * as React from 'react'
-import axios, { AxiosError } from 'axios'
 import './DeliveryMethodTable.scss'
 import {
   createColumnHelper,
@@ -14,16 +13,12 @@ import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
-import { DeliveryMethodsRowActions } from './RowActions/RowActions'
-import FlashMessageStore from '../../stores/flashMessageStore'
+import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
 import flashMessageStore from '../../stores/flashMessageStore'
-
-type DeliveryMethod = {
-  _id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string
-}
+import { getDeliveryMethods } from '../../_queries/deliveryMethod'
+import { useQuery } from '@tanstack/react-query'
+import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
+import { AxiosError } from 'axios'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()
 
@@ -37,23 +32,24 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <DeliveryMethodsRowActions row={props.row} />
+    cell: props => <DeliveryMethodRowActions row={props.row} />
   })
 ];
 
 function DeliveryMethodTable() {
-  const [deliveryMethods, setDeliveryMethods] = React.useState<DeliveryMethod[]>([])
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  React.useEffect(() => {
-    axios.get('/delivery-methods')
-    .then((response) => {
-        const { data } = response;
-        setDeliveryMethods(data);
-     })
-     .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  }, [])
+  const { isError, data: deliveryMethods, error } = useQuery({
+    queryKey: ['delivery-methods'],
+    queryFn: getDeliveryMethods,
+    initialData: []
+  })
+
+  if (isError) {
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
+  }
 
   const table = useReactTable({
     data: deliveryMethods,

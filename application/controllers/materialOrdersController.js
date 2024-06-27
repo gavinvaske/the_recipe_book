@@ -96,25 +96,6 @@ router.get('/create', async (request, response) => {
     });
 });
 
-router.get('/:id', async (request, response) => {
-    try {
-        const materialOrder = await MaterialOrderModel
-            .findById(request.params.id)
-            .populate({path: 'author'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .exec();
-
-        return response.render('viewOneMaterialOrder', {
-            materialOrder
-        });
-    } catch (error) {
-        console.log(error);
-        request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
-        return response.redirect('back');
-    }
-});
-
 router.post('/create', async (request, response) => {
     try {
         await MaterialOrderModel.create(request.body);
@@ -182,6 +163,25 @@ router.get('/delete/:id', async (request, response) => {
         request.flash('errors', error.message);
         return response.redirect('back');
     }
+});
+
+router.get('/:id', async (request, response) => {
+  try {
+      const materialOrder = await MaterialOrderModel
+          .findById(request.params.id)
+          .populate({path: 'author'})
+          .populate({path: 'vendor'})
+          .populate({path: 'material'})
+          .exec();
+
+      return response.render('viewOneMaterialOrder', {
+          materialOrder
+      });
+  } catch (error) {
+      console.log(error);
+      request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
+      return response.redirect('back');
+  }
 });
 
 module.exports = router;

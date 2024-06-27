@@ -1,5 +1,5 @@
 import React from 'react'
-import './DeliveryMethodsRowActions.scss'
+import './DeliveryMethodRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 
 export const DeliveryMethodRowActions = (props) => {

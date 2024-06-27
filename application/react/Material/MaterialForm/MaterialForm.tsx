@@ -26,7 +26,6 @@ export const MaterialForm = () => {
   useEffect(() => {
     if (!mongooseId) return;
 
-    // TODO (6-23-2024): Extract this into a shared-custom Hook
     axios.get('/materials/' + mongooseId)
       .then(({ data }: {data: Material}) => {
         const formValues: MaterialFormAttributes = {

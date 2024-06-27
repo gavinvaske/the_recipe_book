@@ -11,6 +11,7 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../../_queries/material';
+import { AxiosError } from 'axios';
 
 const columnHelper = createColumnHelper<Material>()
 
@@ -50,7 +51,8 @@ export const MaterialTable = () => {
   })
 
   if (isError) {
-    flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
+    else flashMessageStore.addErrorMessage(error.message)
   }
 
   const table = useReactTable({

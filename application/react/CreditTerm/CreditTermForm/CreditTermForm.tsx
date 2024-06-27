@@ -30,5 +30,3 @@ export const CreditTermForm = () => {
     </form>
   )
 }
-
-export default CreditTermForm;

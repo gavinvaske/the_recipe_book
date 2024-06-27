@@ -16,7 +16,6 @@ export const LinerTypeForm = () => {
   useEffect(() => {
     if (!mongooseId) return;
 
-    // TODO (6-23-2024): Extract this into a shared-custom Hook
     axios.get('/liner-types/' + mongooseId)
       .then(({ data }: {data: LinerType}) => {
         const formValues = {

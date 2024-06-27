@@ -57,8 +57,6 @@ export const MaterialForm = () => {
           materialCategory: data.materialCategory as string
         }
 
-        console.log('data: ', data)
-
         reset(formValues) // pre-populate form with existing values from the DB
       })
       .catch((error: AxiosError) => {

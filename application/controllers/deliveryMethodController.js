@@ -1,12 +1,9 @@
 const router = require('express').Router();
 const { verifyJwtToken } = require('../middleware/authorize');
 const DeliveryMethodModel = require('../models/deliveryMethod');
+const { SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
-
-const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
-const BAD_REQUEST_STATUS_CODE = 400;
-const SERVER_ERROR_STATUS_CODE = 500;
 
 router.get('/', async (request, response) => {
     try {
@@ -14,7 +11,7 @@ router.get('/', async (request, response) => {
 
         return response.send(deliveryMethods);
     } catch (error) {
-        return response.status(SERVER_ERROR_STATUS_CODE).send(error.message);
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 
@@ -23,10 +20,24 @@ router.post('/', async (request, response) => {
 
     try {
         savedDeliveryMethod = await DeliveryMethodModel.create(request.body);
-        response.status(SUCCESSFULLY_CREATED_STATUS_CODE).send(savedDeliveryMethod);
+
+        return response.status(CREATED_SUCCESSFULLY).send(savedDeliveryMethod);
     } catch (error) {
-        console.log(error);
-        return response.status(BAD_REQUEST_STATUS_CODE).send(error.message);
+        console.error('Failed to create deliveryMethod', error);
+
+        return response.status(BAD_REQUEST).send(error.message);
+    }
+});
+
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        await DeliveryMethodModel.findByIdAndDelete(request.params.mongooseId).exec();
+
+        return response.status(SUCCESS);
+    } catch (error) {
+        console.error('Failed to delete deliveryMethod: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 

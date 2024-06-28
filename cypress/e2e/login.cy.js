@@ -12,4 +12,10 @@ describe('UI Test cases', () => {
 
         cy.contains('Please sign in to get started.');
     });
+
+    it('User should see their dashboard upon login', () => {
+      cy.login();
+
+      cy.contains('Account Settings');
+  });
 });

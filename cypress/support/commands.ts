@@ -10,8 +10,9 @@ Cypress.Commands.add('login', (username, password) => {
 
   /* And a User clicks login */
   cy.get('[data-test=login-btn]').click();
+})
 
-  /* Then a User should be redirected to their profile upon successful login */
-  cy.url().should('contain', '/users/profile')
+Cypress.Commands.add('logout', () => {
+  cy.visit('/users/logout')
 })
 

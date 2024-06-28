@@ -8,5 +8,6 @@ module.exports = defineConfig({
     env: {
       loginUsername: process.env.TEST_LOGIN_USERNAME,
       loginPassword: process.env.TEST_LOGIN_PASSWORD,
+      reactUiPrefixUrl: '/react-ui'
     }
 });

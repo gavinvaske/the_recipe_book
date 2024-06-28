@@ -16,7 +16,7 @@
     "start": "npm run build && node application/index.js",
     "react": "npm run parcel:remove-cache && parcel watch",
     "test": "jest",
-    "cypress:run": "cypress run",
+    "cypress:run": "cypress run --headed",
     "acceptance": "start-server-and-test start http://localhost:8080 cypress:run",
     "lint": "eslint .",
     "fix-lint": "eslint . --fix",

@@ -10,8 +10,10 @@ export const FullscreenModal = (props: Props) => {
   const { onClose, children } = props;
   return (
     <div className='modal material-inventory-modal'>
-      <div onClick={() => onClose()}>Click Here to Close</div>
-      {children}
+      <div className='modal-box'>
+        <i className='fa-light fa-xmark close-modal' onClick={() => onClose()}></i>
+        {children}
+      </div>
     </div>
   )
 }

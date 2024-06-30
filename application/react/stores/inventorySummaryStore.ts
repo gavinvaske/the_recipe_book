@@ -1,8 +1,9 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
-import { ConditionalFilterFunction, TextQuickFilters, Filter } from "../_types/Filters";
+import { ConditionalFilterFunction, UuidToTextFilter, Filter } from "../_types/Filters";
+import flashMessageStore from "./flashMessageStore";
 
 /* Mobx Store */
 class InventorySummaryStore implements Filter<MaterialInventory> {
@@ -53,7 +54,7 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     return this.inventorySummary;
   }
 
-  generateSearchQuery(searchBarInput: string, textQuickFilters: TextQuickFilters): string {
+  generateSearchQuery(searchBarInput: string, textQuickFilters: UuidToTextFilter): string {
     const quickFiltersQuery = Object.values(textQuickFilters).join(' ')
     const trimmedSearchBarInput = searchBarInput.trim();
 
@@ -70,7 +71,7 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     if (noFiltersAreApplied) return materialInventories || [];
     if (!materialInventories) return [];
 
-    const search = new JsSearch.Search(['material', '_id']);
+    const search : JsSearch.Search = new JsSearch.Search(['material', '_id']);
 
     search.addIndex(['material', 'name']);
     search.addIndex(['material', 'materialId']);
@@ -103,14 +104,12 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
 
   async recalculateInventorySummary() {
     axios.get('/materials/inventory')
-      .then((response) => {
-        const { data: materialInventorySummary}: {data: MaterialInventorySummary} = response;
+      .then((response: AxiosResponse) => {
+        const { data: materialInventorySummary}: { data: MaterialInventorySummary } = response;
         
         this.setInventorySummary(materialInventorySummary);
       })
-      .catch((error) => {
-        alert('Error fetching the inventory for materials:'+ error.message);
-      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }
 }
 

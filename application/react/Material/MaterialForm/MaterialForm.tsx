@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './MaterialForm'
+import './MaterialForm.scss'
 import { MaterialFormAttributes } from '../../_types/forms/material';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
@@ -84,188 +84,201 @@ export const MaterialForm = () => {
   };
 
   return (
-    <form id='material-form' onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        attribute='name'
-        label="Name"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='materialId'
-        label="Material ID"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='thickness'
-        label="Thickness"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='weight'
-        label="Weight"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='costPerMsi'
-        label="Cost (per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='freightCostPerMsi'
-        label="Freight Cost (per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='width'
-        label="Width"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='faceColor'
-        label="Face Color"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='adhesive'
-        label="Adhesive"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='quotePricePerMsi'
-        label="Quote Price (Per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='description'
-        label="Description"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='whenToUse'
-        label="When-to-use"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='alternativeStock'
-        label="Alternative Stock"
-        register={register}
-        isRequired={false}
-        errors={errors}
-      />
-      <Input
-        attribute='length'
-        label="Length"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='facesheetWeightPerMsi'
-        label="Facesheet Weight (Per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='adhesiveWeightPerMsi'
-        label="Adhesive Weight (Per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='linerWeightPerMsi'
-        label="Liner Weight (Per MSI)"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='location'
-        label="Location"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='productNumber'
-        label="Product Number"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='masterRollSize'
-        label="Master Roll Size"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='image'
-        label="Image"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Select
-        attribute='linerType'
-        label="Liner Type"
-        options={linerTypes}
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Select
-        attribute='adhesiveCategory'
-        label="Adhesive Category"
-        options={adhesiveCategories}
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Select
-        attribute='vendor'
-        label="Vendor"
-        options={vendors}
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Select
-        attribute='materialCategory'
-        label="Material Category"
-        options={materialCategories}
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
+    <div className='page-container'>
+      <div className='form-card'>
+        <div className='form-card-header'>
+          <h1>Create New Material</h1>
+        </div>
+        <div className='form-wrapper'>
+          <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)}>
+            <div className='form-elements-wrapper'>
+              <div className='group-field-wrapper'>
+                <Input
+                  attribute='name'
+                  label="Name"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='materialId'
+                  label="Material ID"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='thickness'
+                  label="Thickness"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='weight'
+                  label="Weight"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='costPerMsi'
+                  label="Cost (per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='freightCostPerMsi'
+                  label="Freight Cost (per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='width'
+                  label="Width"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='faceColor'
+                  label="Face Color"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='adhesive'
+                  label="Adhesive"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='quotePricePerMsi'
+                  label="Quote Price (Per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='description'
+                  label="Description"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='whenToUse'
+                  label="When-to-use"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='alternativeStock'
+                  label="Alternative Stock"
+                  register={register}
+                  isRequired={false}
+                  errors={errors}
+                />
+                <Input
+                  attribute='length'
+                  label="Length"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='facesheetWeightPerMsi'
+                  label="Facesheet Weight (Per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='adhesiveWeightPerMsi'
+                  label="Adhesive Weight (Per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='linerWeightPerMsi'
+                  label="Liner Weight (Per MSI)"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='location'
+                  label="Location"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='productNumber'
+                  label="Product Number"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='masterRollSize'
+                  label="Master Roll Size"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='image'
+                  label="Image"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Select
+                  attribute='linerType'
+                  label="Liner Type"
+                  options={linerTypes}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Select
+                  attribute='adhesiveCategory'
+                  label="Adhesive Category"
+                  options={adhesiveCategories}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Select
+                  attribute='vendor'
+                  label="Vendor"
+                  options={vendors}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Select
+                  attribute='materialCategory'
+                  label="Material Category"
+                  options={materialCategories}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+              </div>
 
-      <button type="submit">Submit</button>
-    </form>
+              <button className='create-entry submit-button' type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   )
 }

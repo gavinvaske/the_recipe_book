@@ -20,7 +20,7 @@ export const Input = <T extends FieldValues>(props: Props<T>) => {
   const { placeholder, errors, attribute, defaultValue, label, register, isRequired } = props
 
   return (
-    <div>
+    <div className='input-wrapper'>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <input type="text" 
         placeholder={placeholder}

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Material.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory';
 import { Material } from '../../../_types/databaseModels/material';
+import { Modal } from '../../../_global/Modal/Modal';
 
 function renderPurchaseOrders(materialInventory: MaterialInventory) {
   const { purchaseOrdersForMaterial } = materialInventory
@@ -18,11 +19,11 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
         </div>
         <div className='tb-cell cell-two'>
           <div className='pulse-indicator'></div>
-          {purchaseOrder.orderDate && purchaseOrder.orderDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
+          {purchaseOrder.orderDate && purchaseOrder.orderDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
         </div>
         <div className='tb-cell cell-three'>
           <div className='pulse-indicator'></div>
-          {purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric'})}
+          {purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
         </div>
         <div className='tb-cell cell-four'>
           <div className='pulse-indicator'></div>
@@ -56,27 +57,7 @@ function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
   )
 }
 
-const togglePurchaseOrders = (e) => {
-  // Add active class to the current button (highlight it)
-  var elems = document.querySelectorAll("modal-active");
-  var clickElement = e.target;  // get the dom element clicked.
-  var clickElementParent = clickElement.parentElement;
-  var elementClassName = clickElementParent.classList.contains("modal-active");  // get the classname of the clicked element's class name
-  if(elementClassName){
-      clickElementParent.classList.remove('modal-active')
-  } else {
-      clickElementParent.classList.add('modal-active')
-      console.log("hello mars");
-  }
-}
-// When the user clicks on (x), close the modal
-function closeModal() {
-  let activeModal = document.querySelector('.po-container.modal-active');
-  activeModal.classList.remove('modal-active');
-}
-
-
-type Props = { 
+type Props = {
   materialInventory: MaterialInventory,
   onClick: () => void
 }
@@ -84,6 +65,12 @@ type Props = {
 const Material = observer((props: Props) => {
   const { materialInventory, onClick } = props;
   const material: Material = materialInventory.material;
+  const [shouldShowPoModal, setShouldShowPoModal] = useState(false);
+
+  const showPurchaseOrderModal = (e) => {
+    setShouldShowPoModal(true)
+    e.stopPropagation() // This is required to prevent any parents' onClick from being called
+  }
 
   return (
     <div className='card' id={material._id} onClick={() => onClick()}>
@@ -93,41 +80,13 @@ const Material = observer((props: Props) => {
         </div>
         <div className='col col-right'>
           <div className='po-container'>
-            <i className="fa-light fa-calendar" onClick={(e) => togglePurchaseOrders(e)}></i>
-            <div className='modal-background'>
-              <div className='modal-box'>
-                <div className='left'>
-                  <div className='title-wrapper'>
-                    <h4>Purchase orders: {material.materialId}</h4>
-                  </div>
-                  <div className='purchase-order-info-wrapper'>
-                    <div className='po-table'>
-                      <div className='tb-header'>
-                        <div className='tb-cell cell-one'>
-                          <div className='pulse-indicator'></div>
-                          PO #
-                        </div>
-                        <div className='tb-cell cell-two'>
-                          Order Date
-                        </div>
-                        <div className='tb-cell cell-three'>
-                          Arrival Date
-                        </div>
-                        <div className='tb-cell cell-four'>
-                          Total Feet
-                        </div>
-                      </div>
-                      {renderPurchaseOrders(materialInventory)}
-                    </div>
-                  </div>
-                </div>
-                <div className='right'>
-                  left panel for storm to do something neat
-                </div>
-                <i className="fa-light fa-xmark" onClick={closeModal}></i>
+            <i className="fa-light fa-calendar" onClick={(e) => showPurchaseOrderModal(e)}></i>
 
-              </div>
-            </div>
+            {
+              shouldShowPoModal && 
+              <PurchaseOrderModal material={material} materialInventory={materialInventory} onClose={() => setShouldShowPoModal(!shouldShowPoModal)}/>
+            }
+
           </div>
           <a href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
         </div>
@@ -159,5 +118,48 @@ const Material = observer((props: Props) => {
     </div>
   );
 });
+
+type PurchaseOrderModalProps = {
+  material: Material, 
+  materialInventory: MaterialInventory,
+  onClose: () => void
+}
+
+const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
+  const { material, materialInventory, onClose} = props;
+
+  return (
+    <Modal onClose={() => onClose()}>
+      <div className='left'>
+        <div className='title-wrapper'>
+          <h4>Purchase orders: {material.materialId}</h4>
+        </div>
+        <div className='purchase-order-info-wrapper'>
+          <div className='po-table'>
+            <div className='tb-header'>
+              <div className='tb-cell cell-one'>
+                <div className='pulse-indicator'></div>
+                PO #
+              </div>
+              <div className='tb-cell cell-two'>
+                Order Date
+              </div>
+              <div className='tb-cell cell-three'>
+                Arrival Date
+              </div>
+              <div className='tb-cell cell-four'>
+                Total Feet
+              </div>
+            </div>
+            {renderPurchaseOrders(materialInventory)}
+          </div>
+        </div>
+      </div>
+      <div className='right'>
+        left panel for storm to do something neat
+      </div>
+    </Modal>
+  )
+}
 
 export default Material;

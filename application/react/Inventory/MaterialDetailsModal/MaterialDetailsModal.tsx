@@ -16,7 +16,6 @@ export const MaterialDetailsModal = (props: Props) => {
   return (
     <FullscreenModal onClose={() => onClose()}>
 
-    
         <div className='modal-header'>
           <h1>{material.materialId} <span>{material.name}</span></h1>
         </div>

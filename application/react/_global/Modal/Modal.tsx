@@ -13,7 +13,10 @@ export const Modal = (props) => {
     VERY IMPORTANT! Otherwise clicks on this modal bubble up to an unknown number of parents. 
     If this is removed, bad stuff will happen when modals are clicked...
   */
-  const onClick = (e) => e.stopPropagation();
+  const onClick = (e) => {
+    onClose();
+    e.stopPropagation();  // VERY IMPORTANT: Prevents this click from bubbling up to parents'
+  }
 
   return (
     <div className='modal-background' onClick={(e) => onClick(e)}>

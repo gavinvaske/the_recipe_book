@@ -7,8 +7,6 @@ export const TableHead = (props) => {
   const { table }: {table: Table<RowData>} = props;
 
   return (
-    <div className='table-head'>
       <RowHeader columnHeaders={table.getFlatHeaders()} />
-    </div>
   )
 }

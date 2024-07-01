@@ -8,12 +8,12 @@ for (i = zero; i < l; i++) {
     ll = selElmnt.length;
     /*for each element, create a new DIV that will act as the selected item:*/
     a = document.createElement('DIV');
-    a.setAttribute('class', 'select-selected');
+    a.setAttribute('className', 'select-selected');
     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
     x[i].appendChild(a);
     /*for each element, create a new DIV that will contain the option list:*/
     b = document.createElement('DIV');
-    b.setAttribute('class', 'select-items select-hide');
+    b.setAttribute('className', 'select-items select-hide');
     for (j = 1; j < ll; j++) {
     /*for each option in the original select element,
     create a new DIV that will act as an option item:*/
@@ -33,9 +33,9 @@ for (i = zero; i < l; i++) {
                     y = this.parentNode.getElementsByClassName('same-as-selected');
                     yl = y.length;
                     for (k = zero; k < yl; k++) {
-                        y[k].removeAttribute('class');
+                        y[k].removeAttribute('className');
                     }
-                    this.setAttribute('class', 'same-as-selected');
+                    this.setAttribute('className', 'same-as-selected');
                     break;
                 }
             }

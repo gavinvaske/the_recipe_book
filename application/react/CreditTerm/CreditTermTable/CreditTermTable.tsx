@@ -71,8 +71,8 @@ export const CreditTermTable = () => {
     <>
     <div className='page-wrapper credit-term-table'>
       <div className='card table-card'>
-        <div className="header-description">
-          <h1 className="text-blue">Credit Terms</h1>
+        <div class="header-description">
+          <h1 class="text-blue">Credit Terms</h1>
           <p>All recipes can be found in the departments below.</p>
         </div>
         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />

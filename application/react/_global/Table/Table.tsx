@@ -3,7 +3,7 @@ import React from 'react'
 export const Table = (props) => {
   const { children } = props;
   return (
-    <div className='table'>
+    <div className='pri-tbl'>
       {children}
     </div>
   )

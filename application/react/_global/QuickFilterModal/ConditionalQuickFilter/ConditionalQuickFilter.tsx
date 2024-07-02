@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import './ConditionalQuickFilter.scss'
 import { ConditionalFilterFunction } from '../../../_types/Filters';
-import { activeFilter } from '../../../utils/front-end-animations'
 
 type Props<T> = {
   uuid: string,
@@ -12,24 +11,30 @@ type Props<T> = {
     uuid: string,
     conditionalFilterFunction: ConditionalFilterFunction<T>
   ) => void,
-  onDisabled: (uuid: string) => void
+  onDisabled: (uuid: string) => void,
+  filtersStore: any
 }
 
 export const ConditionalQuickFilter = observer(<T extends any>(props: Props<T>) => {
-  const { uuid, conditionalFilterFunction, textToDisplay, onEnabled, onDisabled } = props;
-  const [isEnabled, setIsEnabled] = useState(false);
+  const { uuid, conditionalFilterFunction, textToDisplay, onEnabled, onDisabled, filtersStore } = props;
 
-  function onClick(e) {
-    activeFilter(e);
-    setIsEnabled(!isEnabled);
+  const enabledConditionalFilters = filtersStore.getConditionalQuickFilters();
 
-    const filterBecameEnabled = !isEnabled;
+  function isEnabled(): boolean {
+    return Boolean(enabledConditionalFilters[uuid])
+  }
+
+  function onClick() {
+    const needsToBecomeEnabled = !isEnabled();
     
-    if (filterBecameEnabled) onEnabled(uuid, conditionalFilterFunction)
+    if (needsToBecomeEnabled) onEnabled(uuid, conditionalFilterFunction)
     else onDisabled(uuid)
   }
 
- 
-
-  return (<div className='conditional-quick-filter-btn filter-btn' onClick={(e) => onClick(e)}>{textToDisplay}</div>)
+  return (
+    <div 
+      className={`conditional-quick-filter-btn filter-btn ${isEnabled() ? 'filter-active' : ''}`} 
+      onClick={(_) => onClick()}>{textToDisplay}
+    </div>
+  )
 });

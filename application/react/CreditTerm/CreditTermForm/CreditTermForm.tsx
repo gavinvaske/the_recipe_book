@@ -21,7 +21,7 @@ export const CreditTermForm = () => {
   };
 
   return (
-    <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)}>
+    <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>
       <label>Description*:</label>
       <input type="text" {...register('description', { required: "This is required" })} />
       <FormErrorMessage errors={errors} name="description" />

@@ -47,7 +47,7 @@ export const LinerTypeForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
+      <form onSubmit={handleSubmit(onFormSubmit)} data-test='liner-type-form'>
         <Input
           attribute='name'
           label="Name"

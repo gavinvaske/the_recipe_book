@@ -72,7 +72,7 @@ export const LinerTypeTable = () => {
     <>
       <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
-      <Table>
+      <Table id='liner-type-table'>
         <TableHead table={table} />
         
         <TableBody>

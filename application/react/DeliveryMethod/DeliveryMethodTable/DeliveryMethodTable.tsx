@@ -71,7 +71,7 @@ function DeliveryMethodTable() {
     <>
       <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
-      <Table>
+      <Table id='delivery-method-table'>
         <TableHead table={table} />
         
         <TableBody>

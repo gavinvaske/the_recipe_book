@@ -14,6 +14,7 @@ import { AdhesiveCategoryForm } from '../AdhesiveCategory/AdhesiveCategoryForm/A
 import { MaterialTable } from '../Material/MaterialTable/MaterialTable';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TopNavbarLayout } from '../_layouts/TopNavbarLayout';
+import { PageNotFound } from '../404/404';
 
 const queryClient = new QueryClient();
 
@@ -43,7 +44,7 @@ export function App() {
             </Route>
           </Route>
 
-          <Route path='*' element={<div>404 Page Not Found</div>} />
+          <Route path='*' element={<PageNotFound />} /> {/* TODO @Storm: Build this page */}
         </Route>
       </Routes>
     </QueryClientProvider>

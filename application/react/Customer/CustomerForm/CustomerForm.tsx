@@ -96,7 +96,7 @@ const CustomerForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onCustomerFormSubmit)}>
+      <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
         <div>
           <label>Customer ID*:</label>
           <input type="text" {...register('customerId', { required: "This is required" })} />

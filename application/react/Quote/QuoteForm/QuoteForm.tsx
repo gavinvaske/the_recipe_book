@@ -19,7 +19,7 @@ const QuoteForm = () => {
       })
   }
   return (
-    <div id='quote-form'>
+    <div id='quote-form' data-test='quote-form'>
       <button className='btn-primary temp-button-class flex-center-center-row' onClick={generateQuotes}><i className="fa-duotone fa-bullseye"></i></button>
       <QuoteHeader />
       <CostSummary />

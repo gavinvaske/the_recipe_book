@@ -66,3 +66,20 @@
         }
     }
 }
+.page-wrapper.credit-term-table {
+    padding: 95px 15px 15px 15px;
+    .pri-tbl {
+        width: 100%;
+        background-color: red;
+        .pri-tbl-hdr {
+            background-color: #f3f2f7;
+            height: 45px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+    }
+}
+

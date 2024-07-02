@@ -10,6 +10,7 @@ import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
 
+
 const socket = io();
 
 export type MaterialInventory = {

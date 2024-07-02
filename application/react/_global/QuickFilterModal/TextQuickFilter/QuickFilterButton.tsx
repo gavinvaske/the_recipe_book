@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import './QuickFilterButton.scss';
-import { activeFilter } from '../../../utils/front-end-animations'
 
-export const TextQuickFilter = observer((
-  props: {
-    uuid: string,
-    filterValue: string, 
-    onEnabled: (uuid: string, filter: string) => void, 
-    onDisabled: (uuid: string) => void 
-  }) => {
-  const { uuid, filterValue, onEnabled, onDisabled } = props;
-  const [isEnabled, setIsEnabled] = useState(false);
+type Props = {
+  uuid: string,
+  filterValue: string, 
+  onEnabled: (uuid: string, filter: string) => void, 
+  onDisabled: (uuid: string) => void,
+  filtersStore: any
+}
 
-  function onClick(e) {
-    activeFilter(e);
-    setIsEnabled(!isEnabled);
+export const TextQuickFilter = observer((props: Props) => {
+  const { uuid, filterValue, onEnabled, onDisabled, filtersStore } = props;
 
-    const filterBecameEnabled = !isEnabled;
+  const enabledQuickFilters = filtersStore.getTextQuickFilters();
+
+  function isEnabled(): boolean {
+    return Boolean(enabledQuickFilters[uuid])
+  }
+
+  function onClick() {
+    const needsToBecomeEnabled = !isEnabled();
     
-    if (filterBecameEnabled) onEnabled(uuid, filterValue)
+    if (needsToBecomeEnabled) onEnabled(uuid, filterValue)
     else onDisabled(uuid)
   }
 
 
   return (
-    <div className='quick-filter-btn filter-btn' onClick={(e) => onClick(e)}>
+    <div className={`quick-filter-btn filter-btn ${isEnabled() ? 'filter-active' : ''}`} onClick={(_) => onClick()}>
       {filterValue}
     </div>
   )

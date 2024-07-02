@@ -4,7 +4,7 @@ export const TableBody = (props) => {
   const { children } = props;
 
   return (
-    <div className='table-body'>
+    <div className='pri-tbl-bdy'>
       {children}
     </div>
   )

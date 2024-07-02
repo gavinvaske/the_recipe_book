@@ -20,14 +20,13 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
               onDisabled={(uuid) => store.removeTextQuickFilter(uuid)}
               onEnabled={(uuid, filterValue) => store.setTextQuickFilter(uuid, filterValue)}
               key={option.uuid}
+              filtersStore={store}
             />
           ))}
         </div>)
     })
   )
 }
-
-
 
 const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions: ConditionalFilter<T>[], store: Filter<T>) => {
   return (
@@ -42,6 +41,7 @@ const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions
             onDisabled={(uuid: string) => store.removeConditionalFilter(uuid)}
             onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<T>) => store.setConditionalQuickFilter(uuid, conditionalFilterFunction)}
             key={uuid}
+            filtersStore={store}
           />
         </div>)
     })
@@ -64,26 +64,12 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
     setIsAdvancedDropdownDisplayed(false);
     setIsDropdownDisplayed(!isDropdownDisplayed)
   }
-   // this function closes 
+
   function toggleAdvancedQuickFilterMenu() {
     setIsDropdownDisplayed(false);
     setIsAdvancedDropdownDisplayed(!isAdvancedDropdownDisplayed)
   }
-
-  function activeFilter(e) {
-    var elems = document.querySelectorAll(".filter-active");
-    var clickElement = e.target;  // get the dom element clicked.
-    var elementClassName = clickElement.classList.contains("filter-active");  // get the classname of the element clicked
-    if(elementClassName){
-      e.target.classList.remove('filter-active')
-    } else {
-      e.target.classList.add('filter-active')
-    }
-    
-  }
  
-
-
   return (
     <>
       <div className="search-wrapper flex-center-left-row">

@@ -1,8 +1,8 @@
 Cypress.Commands.add('login', (username, password) => {
   cy.visit('/')
 
-  if (!Cypress.env('loginUsername')) throw new Error('Missing a required cypress environment variable: "loginUsername"')
-  if (!Cypress.env('loginPassword')) throw new Error('Missing a required cypress environment variable: "loginPassword"')
+  if (!Cypress.env('loginUsername') && !username) throw new Error('Missing a required cypress environment variable: "loginUsername"')
+  if (!Cypress.env('loginPassword') && !password) throw new Error('Missing a required cypress environment variable: "loginPassword"')
 
   /* When username and password input fields are populated */
   cy.get('[data-test=username-input]').type(username ? username : Cypress.env('loginUsername'))

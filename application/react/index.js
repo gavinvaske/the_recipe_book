@@ -11,7 +11,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <FlashMessagePanel />
-      <App />
+      <App onClick={() => alert('foo')}/>
     </BrowserRouter>
   </React.StrictMode>
 );

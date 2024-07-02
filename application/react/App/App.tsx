@@ -17,7 +17,48 @@ import { TopNavbarLayout } from '../_layouts/TopNavbarLayout';
 
 const queryClient = new QueryClient();
 
+function closeModals() {
+
+}
+
 export function App() {
+  // document.addEventListener('click', (event) => {
+  //   const classToUnactivate = ['dropdown, filter-btn-wrapper, btn-person-filter, search-input, search-wrapper']
+
+  //   const shouldIgnoreClick = classToUnactivate.some((classToUnactivate) => {
+  //     console.log('classList: ', event?.target?.classList)
+  //     event?.target?.classList.contains('filter-btn-wrapper')
+  //   })
+
+  //   console.log('shouldIgnoreClick', shouldIgnoreClick)
+
+  //   if (shouldIgnoreClick) {
+  //     return
+  //   }
+
+  //   classToUnactivate.forEach((classToUnactivate) => {
+  //     const elems = document.querySelectorAll(`.${classToUnactivate}`)
+      
+  //     elems && elems.forEach((elem) => {
+  //       const parentIsFoobar = elem.closest('.btn-filter')
+  //       console.log('parentIsFoobar', parentIsFoobar)
+
+  //       elem.classList.remove('active')
+  //     })
+  //   });
+  //   // console.log(event.target?.classList.contains('closable-popup'))
+
+  //   // if (event.target?.classList.contains('dropdown')) {
+  //   //   return;
+  //   // }
+
+  //   // const elems = document.querySelectorAll(".active")
+
+  //   // elems && elems.forEach((elem) => {
+  //   //   elem.classList.remove('active')
+  //   // })
+  // })
+
   return (
     <QueryClientProvider client={queryClient}>
       <Routes >

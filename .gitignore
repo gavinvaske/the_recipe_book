@@ -1,7 +1,8 @@
+# Ignored
 node_modules
 build
 npm-debug.log
-.env
+*.env*
 .DS_Store
 env
 cypress/videos
@@ -9,3 +10,6 @@ cypress/screenshots
 .terraform
 .parcel-cache
 dist
+
+# Allowed
+!.env.example

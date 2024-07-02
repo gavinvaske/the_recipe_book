@@ -33,7 +33,7 @@ export const conditionalQuickFilters: ConditionalFilter<MaterialInventory>[] = [
     textToDisplay: 'This text is rendered',
     conditionalFilter: (objects: Partial<MaterialInventory>[]) => {
       return objects.filter((object) => {
-        return object?.material?.name === 'Cloth'
+        return object?.material?.name?.toLowerCase() === 'foo'
       })
     }
   }

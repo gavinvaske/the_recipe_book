@@ -31,7 +31,7 @@ export const MaterialInventoryEntryForm = () => {
     });
 
   const onFormSubmit = (formData: MaterialInventoryEntryFormAttributes) => {
-    axios.post('/material-inventory-entry', formData)
+    axios.post('/material-inventory-entries', formData)
       .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/TODO')
         flashMessageStore.addSuccessMessage('Material Inventory Entry was created successfully')

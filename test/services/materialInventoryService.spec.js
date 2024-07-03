@@ -2,8 +2,10 @@ const chance = require('chance').Chance();
 const { when } = require('jest-when');
 const materialInventoryService = require('../../application/services/materialInventoryService');
 const mockPurchaseOrderService = require('../../application/services/purchaseOrderService');
+const mockMaterialInventoryEntryService = require('../../application/services/materialInventoryEntryService')
 
 jest.mock('../../application/services/purchaseOrderService');
+jest.mock('../../application/services/materialInventoryEntryService');
 
 describe('materialInventoryService test suite', () => {
     describe('mapMaterialIdToPurchaseOrders()', () => {
@@ -100,6 +102,10 @@ describe('materialInventoryService test suite', () => {
         it('should return a materialInventory object with correctly calculated attributes', () => {
             const lengthOfMaterialOrdered = chance.integer({min: 1});
             const lengthOfMaterialInStock = chance.integer({min: 1});
+            const materialLengthAdjustment = chance.integer();
+            const materialIdToLengthAdjustment = {
+              [material._id]: materialLengthAdjustment
+            }
 
             when(mockPurchaseOrderService.computeLengthOfMaterial)
                 .calledWith(purchaseOrdersThatHaveArrived)
@@ -109,8 +115,12 @@ describe('materialInventoryService test suite', () => {
                 .calledWith(purchaseOrdersThatHaveNotArrived)
                 .mockReturnValue(lengthOfMaterialOrdered);
 
+            when(mockMaterialInventoryEntryService.groupInventoryEntriesByMaterial)
+                .calledWith()
+                .mockReturnValueOnce(materialIdToLengthAdjustment)
+
             feetOfMaterialAlreadyUsedByTickets = chance.integer();
-            const netLengthOfMaterialInStock = lengthOfMaterialInStock - feetOfMaterialAlreadyUsedByTickets;
+            const netLengthOfMaterialInStock = lengthOfMaterialInStock - (feetOfMaterialAlreadyUsedByTickets + materialIdToLengthAdjustment);
             const expectedMaterialInventory = {
                 material,
                 netLengthOfMaterialInStock,
@@ -119,7 +129,7 @@ describe('materialInventoryService test suite', () => {
                 purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
             };
 
-            const materialInventory = materialInventoryService.buildMaterialInventory(material, purchaseOrders, feetOfMaterialAlreadyUsedByTickets);
+            const materialInventory = materialInventoryService.buildMaterialInventory(material, purchaseOrders, feetOfMaterialAlreadyUsedByTickets, materialIdToLengthAdjustment);
         
             expect(materialInventory).toEqual(expectedMaterialInventory);
         });

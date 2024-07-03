@@ -9,6 +9,7 @@ const materialService = require('../services/materialService');
 const purchaseOrderService = require('../services/purchaseOrderService');
 const ticketService = require('../services/ticketService');
 const mongooseService = require('../services/mongooseService');
+const materialInventoryEntryService = require('../services/materialInventoryEntryService')
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 const { SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
@@ -118,6 +119,14 @@ router.get('/inventory', async (request, response) => {
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
         const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
+        const materialIdToLengthAdjustments = await materialInventoryEntryService.groupInventoryEntriesByMaterial();
+
+        // Fetch all Material Inventory Entries
+        // For each inventoryEntry.materialId, sum the inventoryEntry.length property
+        const materialIdToLengthInInventoryEntries = await materialInventoryEntryService.groupInventoryEntriesByMaterial();
+        
+        console.log('materialIdToLengthInInventoryEntries: ', materialIdToLengthInInventoryEntries)
+
         const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialObjectIds);
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialObjectIds, allPurchaseOrders);
 
@@ -132,8 +141,9 @@ router.get('/inventory', async (request, response) => {
         const materialInventories = allMaterials.map((material) => {
             const feetOfMaterialAlreadyUsedByTickets = materialObjectIdToLengthUsedByTickets[material.materialId] || 0;
             const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];
+            const materialLengthAdjustment = materialIdToLengthAdjustments[material._id] || 0
 
-            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets);
+            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialLengthAdjustment);
         });
 
         const netLengthOfMaterialInInventory = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);

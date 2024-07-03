@@ -26,6 +26,6 @@ const schema = new Schema({
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
 
-const MaterialCategory = mongoose.model('MaterialInventoryEntry', schema);
+const MaterialInventoryEntry = mongoose.model('MaterialInventoryEntry', schema);
 
-module.exports = MaterialCategory;
+module.exports = MaterialInventoryEntry;

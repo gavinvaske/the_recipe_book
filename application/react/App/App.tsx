@@ -15,6 +15,7 @@ import { MaterialTable } from '../Material/MaterialTable/MaterialTable';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TopNavbarLayout } from '../_layouts/TopNavbarLayout';
 import { PageNotFound } from '../404/404';
+import { MaterialInventoryEntryForm } from '../MaterialInventoryEntry/MaterialInventoryEntryForm/MaterialInventoryEntryForm';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ export function App() {
             <Route path='inventory' element={<Inventory />}></Route>
 
             <Route path='forms'>
+              <Route path='material-inventory-entry' element={<MaterialInventoryEntryForm />} />
               <Route path='delivery-method' element={<DeliveryMethodForm />} />
               <Route path='credit-term' element={<CreditTermForm />} />
               <Route path='quote' element={<QuoteForm />} />

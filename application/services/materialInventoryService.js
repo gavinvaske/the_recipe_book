@@ -9,13 +9,13 @@ const MaterialLengthAdjustmentModel = require('../models/materialLengthAdjustmen
     A map where the key is the material _id which maps to the net length of that material found in the MaterialLengthAdjustment db table
   
   @Notes:
-    type materialIdWithTotalLength = {
+    type materialIdsWithTotalLengthAdjustments = {
       _id: mongooseId,
       totalLength: number
     }
 */
-module.exports.groupInventoryEntriesByMaterial = async () => {
-    const materialIdsWithTotalLength = await MaterialLengthAdjustmentModel.aggregate([
+module.exports.groupLengthAdjustmentsByMaterial = async () => {
+    const materialIdsWithTotalLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate([
         {
             $group: {
                 _id: '$material',
@@ -28,13 +28,13 @@ module.exports.groupInventoryEntriesByMaterial = async () => {
         }
     ]);
 
-    const materialIdToTotalLength = {};
+    const materialIdToTotalLengthAdjustment = {};
 
-    materialIdsWithTotalLength.forEach(({_id, totalLength}) => {
-        materialIdToTotalLength[_id] = totalLength; 
+    materialIdsWithTotalLengthAdjustments.forEach(({_id, totalLength}) => {
+        materialIdToTotalLengthAdjustment[_id] = totalLength; 
     });
 
-    return materialIdToTotalLength;
+    return materialIdToTotalLengthAdjustment;
 };
 
 module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {

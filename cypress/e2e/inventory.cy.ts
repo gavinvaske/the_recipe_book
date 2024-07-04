@@ -9,6 +9,6 @@ describe('Inventory Views', () => {
       cy.visit(`${inventoryPage}`);
 
       cy.get('[data-test=inventory-page]').should('exist'); /* Should see the page */
-      cy.get('.card').should('have.length.greaterThan', 0)  /* Should have at least 1 material on the page */
+      cy.get('[data-test=material-inventory-card]').should('have.length.greaterThan', 0)  /* Should have at least 1 material on the page */
   });
 });

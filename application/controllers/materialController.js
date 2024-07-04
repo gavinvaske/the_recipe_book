@@ -118,7 +118,7 @@ router.get('/inventory', async (request, response) => {
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
         const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
-        const materialIdToNetLengthAdjustment = await materialInventoryService.groupInventoryEntriesByMaterial();
+        const materialIdToNetLengthAdjustment = await materialInventoryService.groupLengthAdjustmentsByMaterial();
 
         const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialObjectIds);
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialObjectIds, allPurchaseOrders);

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import './MaterialInventoryEntryForm.scss';
+import './MaterialLengthAdjustmentForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { MaterialInventoryEntryFormAttributes } from '../../_types/forms/MaterialInventoryEntry';
+import { MaterialLengthAdjustmentFormFormAttributes } from '../../_types/forms/materialLengthAdjustment';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { MaterialInventoryEntry } from '../../_types/databaseModels/MaterialInventoryEntry';
 import { Material } from '../../_types/databaseModels/material';
 
 
-export const MaterialInventoryEntryForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<MaterialInventoryEntryFormAttributes>();
+export const MaterialLengthAdjustmentForm = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<MaterialLengthAdjustmentFormFormAttributes>();
   const navigate = useNavigate();
   const [materials, setMaterials] = useState<SelectOption[]>([])
 
@@ -30,8 +29,8 @@ export const MaterialInventoryEntryForm = () => {
       .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
     });
 
-  const onFormSubmit = (formData: MaterialInventoryEntryFormAttributes) => {
-    axios.post('/material-inventory-entries', formData)
+  const onFormSubmit = (formData: MaterialLengthAdjustmentFormFormAttributes) => {
+    axios.post('/material-length-adjustments', formData)
       .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/TODO')
         flashMessageStore.addSuccessMessage('Material Inventory Entry was created successfully')
@@ -40,7 +39,7 @@ export const MaterialInventoryEntryForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-inventory-entry-form'>
+    <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
       <Select
         attribute='material'
         label="Material"

@@ -1,4 +1,41 @@
 const purchaseOrderService = require('../services/purchaseOrderService');
+const MaterialLengthAdjustmentModel = require('../models/materialLengthAdjustment');
+
+/* 
+  @See: 
+    https://mongoplayground.net/
+  
+  @Returns: 
+    A map where the key is the material _id which maps to the net length of that material found in the MaterialLengthAdjustment db table
+  
+  @Notes:
+    type materialIdWithTotalLength = {
+      _id: mongooseId,
+      totalLength: number
+    }
+*/
+module.exports.groupInventoryEntriesByMaterial = async () => {
+    const materialIdsWithTotalLength = await MaterialLengthAdjustmentModel.aggregate([
+        {
+            $group: {
+                _id: '$material',
+                totalLength: {
+                    $sum: {
+                        '$toDouble': '$length'
+                    }
+                }
+            }
+        }
+    ]);
+
+    const materialIdToTotalLength = {};
+
+    materialIdsWithTotalLength.forEach(({_id, totalLength}) => {
+        materialIdToTotalLength[_id] = totalLength; 
+    });
+
+    return materialIdToTotalLength;
+};
 
 module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
     const materialIdToPurchaseOrders = {};

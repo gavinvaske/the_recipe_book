@@ -26,6 +26,6 @@ const schema = new Schema({
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
 
-const MaterialInventoryEntry = mongoose.model('MaterialInventoryEntry', schema);
+const MaterialLengthAdjustment = mongoose.model('MaterialLengthAdjustment', schema);
 
-module.exports = MaterialInventoryEntry;
+module.exports = MaterialLengthAdjustment;

@@ -1,6 +1,6 @@
 import { MongooseId } from "../typeAliases"
 
-export type MaterialInventoryEntryFormAttributes = {
+export type MaterialLengthAdjustmentFormFormAttributes = {
   material: MongooseId,
   length: number,
   notes?: string

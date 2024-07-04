@@ -73,7 +73,7 @@ const Material = observer((props: Props) => {
   }
 
   return (
-    <div className='card' id={material._id} onClick={() => onClick()}>
+    <div className='card' id={material._id} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>

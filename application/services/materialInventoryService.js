@@ -1,4 +1,41 @@
 const purchaseOrderService = require('../services/purchaseOrderService');
+const MaterialLengthAdjustmentModel = require('../models/materialLengthAdjustment');
+
+/* 
+  @See: 
+    https://mongoplayground.net/
+  
+  @Returns: 
+    A map where the key is the material _id which maps to the net length of that material found in the MaterialLengthAdjustment db table
+  
+  @Notes:
+    type materialIdsWithTotalLengthAdjustments = {
+      _id: mongooseId,
+      totalLength: number
+    }
+*/
+module.exports.groupLengthAdjustmentsByMaterial = async () => {
+    const materialIdsWithTotalLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate([
+        {
+            $group: {
+                _id: '$material',
+                totalLength: {
+                    $sum: {
+                        '$toDouble': '$length'
+                    }
+                }
+            }
+        }
+    ]);
+
+    const materialIdToTotalLengthAdjustment = {};
+
+    materialIdsWithTotalLengthAdjustments.forEach(({_id, totalLength}) => {
+        materialIdToTotalLengthAdjustment[_id] = totalLength; 
+    });
+
+    return materialIdToTotalLengthAdjustment;
+};
 
 module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
     const materialIdToPurchaseOrders = {};
@@ -16,7 +53,7 @@ module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => 
     return materialIdToPurchaseOrders;
 };
 
-module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets) => {
+module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialLengthAdjustments) => {
     const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
     const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
     const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
@@ -25,7 +62,7 @@ module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial,
         material,
         lengthOfMaterialOrdered: purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived),
         lengthOfMaterialInStock: lengthOfMaterialInStock,
-        netLengthOfMaterialInStock: (lengthOfMaterialInStock - feetOfMaterialAlreadyUsedByTickets),
+        netLengthOfMaterialInStock: (lengthOfMaterialInStock - (feetOfMaterialAlreadyUsedByTickets + materialLengthAdjustments)),
         purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
     };
 };

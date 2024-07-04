@@ -118,6 +118,8 @@ router.get('/inventory', async (request, response) => {
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
         const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
+        const materialIdToNetLengthAdjustment = await materialInventoryService.groupLengthAdjustmentsByMaterial();
+
         const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialObjectIds);
         const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialObjectIds, allPurchaseOrders);
 
@@ -132,8 +134,9 @@ router.get('/inventory', async (request, response) => {
         const materialInventories = allMaterials.map((material) => {
             const feetOfMaterialAlreadyUsedByTickets = materialObjectIdToLengthUsedByTickets[material.materialId] || 0;
             const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];
+            const materialNetLengthAdjustment = materialIdToNetLengthAdjustment[material._id] || 0;
 
-            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets);
+            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialNetLengthAdjustment);
         });
 
         const netLengthOfMaterialInInventory = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);

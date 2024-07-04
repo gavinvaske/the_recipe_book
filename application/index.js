@@ -80,6 +80,7 @@ app.use('/quote', require('./controllers/quoteController'));
 app.use('/die', require('./controllers/dieController'));
 app.use('/liner-types', require('./controllers/linerTypeController'));
 app.use('/adhesive-categories', require('./controllers/adhesiveCategoryController'));
+app.use('/material-length-adjustments', require('./controllers/materialLengthAdjustmentController'));
 
 
 app.use('/customers', require('./controllers/customerController'));

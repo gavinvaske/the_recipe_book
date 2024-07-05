@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import './SearchBar.scss'
 
-const SearchBar = (props: {value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}) => {
-  const { value, onChange } = props;
+type Props = {
+  value: string,
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+const SearchBar = forwardRef((props: Props, ref: any) => {
+  const { value, onChange} = props;
 
 function clearInput() {
   const elem = document.getElementById('primarySearch');
@@ -12,10 +16,10 @@ function clearInput() {
 
   return (
     <div className='search-bar'>
-      <input id='primarySearch' type='text' value={value} onChange={onChange} placeholder="Search" />
+      <input ref={ref} id='primarySearch' type='text' value={value} onChange={onChange} placeholder="Search" />
       <i className="fa-light fa-xmark" onClick={clearInput}></i>
     </div>
   )
-}
+})
 
 export default SearchBar

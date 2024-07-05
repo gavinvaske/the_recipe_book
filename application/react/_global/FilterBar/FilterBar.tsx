@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './FilterBar.scss';
 import { observer } from 'mobx-react-lite';
 import { ConditionalFilter, ConditionalFilterFunction, Filter, TextFilter, TextFilterOption } from '../../_types/Filters';
@@ -59,6 +59,8 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
   const { conditionalQuickFilters, textQuickFilters, store, filterableItemsCount } = props
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
   const [isAdvancedDropdownDisplayed, setIsAdvancedDropdownDisplayed] = useState(false)
+  const [isSearchBarActive, setIsSearchBarActive] = useState(false)
+  const ref = useRef(null);
 
   function toggleQuickFilterMenu() {
     setIsAdvancedDropdownDisplayed(false);
@@ -69,12 +71,21 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
     setIsDropdownDisplayed(false);
     setIsAdvancedDropdownDisplayed(!isAdvancedDropdownDisplayed)
   }
+
+  function toggleSearchActive() {
+    alert('toggle searchbar')
+    setIsSearchBarActive(!isSearchBarActive)
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }
  
   return (
     <>
-      <div className="search-wrapper flex-center-left-row">
+      <div className="search-wrapper flex-center-left-row" onClick={toggleSearchActive}>
         <i className="fa-regular fa-magnifying-glass flex-center-center-row"></i>
         <SearchBar
+          ref={ref}
           value={store.getSearchBarInput()}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => store.setSearchBarInput(e.target.value)}
         />

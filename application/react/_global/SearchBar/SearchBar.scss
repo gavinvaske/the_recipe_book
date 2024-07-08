@@ -1,60 +1,15 @@
 #inventory-page {
 
-    .search-wrapper {
-        padding-right: 15px;
-        height: 34px;
-        // &:focus-within {
-        //     background-color: red;
-        // }
-    }
-    .search-wrapper:focus-within {
-        border:1px solid #0465d9;
-      }
-    .search-wrapper:focus-within:hover {
-        background-color: white;
-    }
+    
+    
+}
+
+.credit-term-table { 
     .search-bar {
-        position: relative;
-        .fa-light.fa-xmark {
-            position: absolute;
-            opacity: 0;
-        }
+        margin: 20px 0;
+        width: 300px;
 
-        input {
-            &:after{
-                content: "\f1f8";
-                position: absolute;
-                transform: translate(0,-50%);
-                right: 0;
-                top: 50%;
-                font-family: "Font Awesome 6 Pro";
-                font: var(--fa-font-light);
-                
-            }
-            &:not(:placeholder-shown){
-
-                + {
-                    .fa-light.fa-xmark {
-                        opacity: 1;
-                        top: 10px;
-                        right: 0px;
-                        text-align: center;
-                        height: 16px;
-                        width: 16px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        &:hover {
-                            background-color: rgba(103, 104, 121, 0.1);
-                        }
-                    }
-                }
-            }
-        }
-
-        input:focus {
-            width: 140px;
-
-        }
     }
 }
+
+

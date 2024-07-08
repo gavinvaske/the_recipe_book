@@ -42,3 +42,48 @@
         font-size: 1.05rem;
     }
 }
+
+.search-wrapper {
+    padding-right: 15px;
+    height: 34px;
+    position: relative;
+    overflow-x:hidden;
+
+    &:focus-within {
+        border:1px solid #0073ea;
+    }
+    .fa-light.fa-xmark {
+        position: absolute;
+        top: 7px;
+        right: 5px;
+        visibility: hidden;
+        border-radius: .428rem;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        font-size: 14px;
+    }
+    
+}
+.search-wrapper.active {
+    &:hover {
+        background-color: white;
+    }
+    input {
+        width: 170px;
+    }
+    .fa-light.fa-xmark {
+        visibility: visible;
+    }
+
+}
+.search-wrapper.has-text {
+    background-color: #cce5ff;
+
+    &:hover {
+        background-color: #cce5ff;
+    }
+}
+

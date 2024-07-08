@@ -56,7 +56,7 @@ const Inventory = observer(() => {
     <div id='inventory-page'>
       {
         clickedMaterial && 
-        <MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />
+        (<MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />)
       }
       
       {

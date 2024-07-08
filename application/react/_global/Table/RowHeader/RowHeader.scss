@@ -1,5 +1,27 @@
-.column {
+.row-header {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-direction: row;
+  .column {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .column-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+  .fa-arrow-down, .fa-arrow-up, .fa-arrow-up-arrow-down {
+    margin-right: 3px;
+    font-size: 12px;
+  }
+  .column-icon {
+    display: flex;
+    justify-content: center;
+  }
 }

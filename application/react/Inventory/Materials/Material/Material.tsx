@@ -72,6 +72,10 @@ const Material = observer((props: Props) => {
     e.stopPropagation() // This is required to prevent any parents' onClick from being called
   }
 
+  function stopPropagation(event) {
+    event.stopPropagation();
+  }
+
   return (
     <div className='card' id={material._id} onClick={() => onClick()}>
       <div className='card-header flex-center-center-row'>
@@ -88,7 +92,7 @@ const Material = observer((props: Props) => {
             }
 
           </div>
-          <a href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
+          <a onClick={stopPropagation} href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
         </div>
 
       </div>

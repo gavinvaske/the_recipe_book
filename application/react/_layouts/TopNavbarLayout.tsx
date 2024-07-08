@@ -8,7 +8,6 @@ export const TopNavbarLayout = () => {
     <>
       <HorizontalNavbar />
       <Outlet />
-      <Footer />
     </>
   )
 };

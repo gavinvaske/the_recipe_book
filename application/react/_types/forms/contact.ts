@@ -1,5 +1,5 @@
-import { AddressForm } from "./address.tsx"
-import { ShippingLocationForm } from "./shippingLocation.tsx"
+import { AddressForm } from "./address.ts"
+import { ShippingLocationForm } from "./shippingLocation.ts"
 
 export type ContactForm = {
   fullName: string,

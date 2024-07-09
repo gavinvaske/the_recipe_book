@@ -1,7 +1,6 @@
 import React from 'react';
 import './AdhesiveCategoryForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useForm } from 'react-hook-form';
@@ -23,7 +22,7 @@ export const AdhesiveCategoryForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
+      <form onSubmit={handleSubmit(onFormSubmit)} data-test='adhesive-category-form'>
         <Input
           attribute='name'
           label="Name"

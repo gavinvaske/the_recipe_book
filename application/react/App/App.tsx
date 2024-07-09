@@ -14,6 +14,8 @@ import { AdhesiveCategoryForm } from '../AdhesiveCategory/AdhesiveCategoryForm/A
 import { MaterialTable } from '../Material/MaterialTable/MaterialTable';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TopNavbarLayout } from '../_layouts/TopNavbarLayout';
+import { PageNotFound } from '../404/404';
+import { MaterialLengthAdjustmentForm } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentForm/MaterialLengthAdjustmentForm';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,7 @@ export function App() {
             <Route path='inventory' element={<Inventory />}></Route>
 
             <Route path='forms'>
+              <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
               <Route path='delivery-method' element={<DeliveryMethodForm />} />
               <Route path='credit-term' element={<CreditTermForm />} />
               <Route path='quote' element={<QuoteForm />} />
@@ -43,7 +46,7 @@ export function App() {
             </Route>
           </Route>
 
-          <Route path='*' element={<div>404 Page Not Found</div>} />
+          <Route path='*' element={<PageNotFound />} /> {/* TODO @Storm: Build this page */}
         </Route>
       </Routes>
     </QueryClientProvider>

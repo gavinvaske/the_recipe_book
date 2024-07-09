@@ -77,7 +77,7 @@ export const CreditTermTable = () => {
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 
-        <Table>
+        <Table id='credit-term-table'>
           <TableHead table={table} />
           
           <TableBody>

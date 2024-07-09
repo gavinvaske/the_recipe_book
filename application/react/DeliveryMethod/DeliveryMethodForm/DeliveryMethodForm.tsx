@@ -27,11 +27,10 @@ const DeliveryMethodForm = () => {
           <h1>Create New Delivery Method</h1>
         </div>
         <div className='form-wrapper'>
-          <form id='delivery-method-form' onSubmit={handleSubmit(onSubmit)}>
+          <form id='delivery-method-form' onSubmit={handleSubmit(onSubmit)} data-test='delivery-method-form'>
             <label>Name*:</label>
             <input type="text" {...register('name', { required: "This is required" })} />
             <FormErrorMessage errors={errors} name="name" />
-
             <button className='create-entry submit-button' type='submit'>Submit</button>
           </form>
         </div>

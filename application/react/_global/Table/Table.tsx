@@ -1,10 +1,16 @@
 import React from 'react'
 import './Table.scss'
+import React, { PropsWithChildren } from 'react'
 
-export const Table = (props) => {
-  const { children } = props;
+type Props = {
+  id?: string
+}
+
+export const Table = (props: PropsWithChildren<Props>) => {
+  const { children, id } = props;
+
   return (
-    <div className='primary-table'>
+    <div className='primary-table' id={id}>
       {children}
     </div>
   )

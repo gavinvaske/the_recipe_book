@@ -102,7 +102,7 @@ const CustomerForm = () => {
           <h1>Create A New Customer</h1>
         </div>
         <div className='form-wrapper'>
-          <form onSubmit={handleSubmit(onCustomerFormSubmit)}>
+          <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
             <div className='form-elements-wrapper'>
               <div className='group-field-wrapper'>
                 <div className='input-wrapper'>

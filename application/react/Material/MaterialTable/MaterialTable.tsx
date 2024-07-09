@@ -75,7 +75,7 @@ export const MaterialTable = () => {
     <>
       <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
-      <Table>
+      <Table id='material-table'>
         <TableHead table={table} />
         
         <TableBody>

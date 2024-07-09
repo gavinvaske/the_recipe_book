@@ -132,7 +132,7 @@ export const MaterialForm = () => {
           <h1>Create New Material</h1>
         </div>
         <div className='form-wrapper'>
-          <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)}>
+          <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)} data-test='material-form'>
             <div className='form-elements-wrapper'>
               <div className='group-field-wrapper'>
                 <Input

@@ -53,22 +53,22 @@ const Inventory = observer(() => {
   }
 
   return (
-    <div id='inventory-page'>
+    <div id='inventory-page' data-test='inventory-page'>
       {
         clickedMaterial && 
         (<MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />)
       }
       
       {
-        inventorySummary && 
+        inventorySummary &&
         <Summary inventorySummaryStore={inventorySummaryStore} />
       }
 
       <InventoryFilterBar />
       
       {
-        inventorySummary && 
-          <Materials 
+        inventorySummary &&
+          <Materials
             inventorySummaryStore={inventorySummaryStore}
             onMaterialClicked={(materialInventory: MaterialInventory) => displayMaterialInventoryDetailsModal(materialInventory)}
           />

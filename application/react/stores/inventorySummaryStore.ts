@@ -2,15 +2,15 @@ import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
-import { ConditionalFilterFunction, UuidToTextFilter, Filter } from "../_types/Filters";
+import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "../_types/Filters";
 import flashMessageStore from "./flashMessageStore";
 
 /* Mobx Store */
 class InventorySummaryStore implements Filter<MaterialInventory> {
   inventorySummary: Partial<MaterialInventorySummary> = {};
   searchBarInput: string = ''
-  textQuickFilters = {}
-  conditionalQuickFilters: {[key: string]: ConditionalFilterFunction<MaterialInventory>} = {}
+  textQuickFilters: UuidToTextFilter = {}
+  conditionalQuickFilters: UuidToConditionalFilter<MaterialInventory> = {}
 
   constructor() {
     makeAutoObservable(this);
@@ -18,6 +18,14 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
 
   getSearchBarInput(): string {
     return this.searchBarInput;
+  }
+
+  getTextQuickFilters(): UuidToTextFilter {
+    return this.textQuickFilters;
+  }
+
+  getConditionalQuickFilters(): UuidToConditionalFilter<MaterialInventory> {
+    return this.conditionalQuickFilters;
   }
 
   setSearchBarInput(value: string): void {

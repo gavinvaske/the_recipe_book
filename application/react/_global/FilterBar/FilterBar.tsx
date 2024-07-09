@@ -20,6 +20,7 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
               onDisabled={(uuid) => store.removeTextQuickFilter(uuid)}
               onEnabled={(uuid, filterValue) => store.setTextQuickFilter(uuid, filterValue)}
               key={option.uuid}
+              filtersStore={store}
             />
           ))}
         </div>)
@@ -40,6 +41,7 @@ const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions
             onDisabled={(uuid: string) => store.removeConditionalFilter(uuid)}
             onEnabled={(uuid: string, conditionalFilterFunction: ConditionalFilterFunction<T>) => store.setConditionalQuickFilter(uuid, conditionalFilterFunction)}
             key={uuid}
+            filtersStore={store}
           />
         </div>)
     })
@@ -64,7 +66,7 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
     setIsAdvancedDropdownDisplayed(false)
     setIsDropdownDisplayed(!isDropdownDisplayed)
   }
-   // this function closes 
+
   function toggleAdvancedQuickFilterMenu() {
     setIsDropdownDisplayed(false)
     setIsAdvancedDropdownDisplayed(!isAdvancedDropdownDisplayed)
@@ -76,7 +78,7 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
       ref.current.focus();
     }
   }
-
+        
   return (
     <>
     <div className={`search-wrapper flex-center-left-row ${store.getSearchBarInput() ? 'has-text ' : ''}${isSearchBarActive ? 'active' : ''}`} onClick={toggleSearchActive}>

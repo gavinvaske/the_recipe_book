@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import './AddressForm.scss'
+import { Input } from '../../_global/FormInputs/Input/Input';
 
 const AddressForm = (props) => {
   const { 
@@ -13,41 +14,48 @@ const AddressForm = (props) => {
 
   return (
     <form id='address-form' onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Name*:</label>
-        <input type="text" {...register('name', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="name" />
-      </div>
-
-      <div>
-        <label>Street*:</label>
-        <input type="text" {...register('street', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="street" />
-      </div>
-
-      <div>
-        <label>Unit or Suite #:</label>
-        <input type="text" {...register('unitOrSuite')} />
-        <FormErrorMessage errors={errors} name="unitOrSuite" />
-      </div>
-
-      <div>
-        <label>City*:</label>
-        <input type="text" {...register('city', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="city" />
-      </div>
-
-      <div>
-        <label>State*:</label>
-        <input type="text" {...register('state', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="state" />
-      </div>
-
-      <div>
-        <label>Zip*:</label>
-        <input type="text" {...register('zipCode', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="zipCode" />
-      </div>
+      <Input
+        attribute='name'
+        label="Name"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='street'
+        label="Street"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='unitOrSuite'
+        label="Unit or Suite #"
+        register={register}
+        isRequired={false}
+        errors={errors}
+      />
+      <Input
+        attribute='city'
+        label="City"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='state'
+        label="State"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='zipCode'
+        label="Zip"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
 
       <button type="submit">Submit</button>
       <button type="button" onClick={() => onCancel()}>Close Modal</button>

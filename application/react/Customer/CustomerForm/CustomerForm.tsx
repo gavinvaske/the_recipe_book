@@ -142,7 +142,6 @@ const CustomerForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
-
                 <Select
                   attribute='creditTerms'
                   label="Liner Type"

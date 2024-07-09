@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import AddressForm from '../../Address/AddressForm/AddressForm';
@@ -20,6 +19,8 @@ import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
 import flashMessageStore from '../../stores/flashMessageStore';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '../../_global/FormInputs/Input/Input';
+import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
@@ -29,7 +30,7 @@ const CustomerForm = () => {
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
   const [showBusinessLocationForm, setShowBusinessLocationForm] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [creditTerms, setCreditTerms] = useState<CreditTerm[]>([])
+  const [creditTerms, setCreditTerms] = useState<SelectOption[]>([])
 
   const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormType[]>([])
   const [billingLocations, setBillingLocations] = useState<AddressFormType[]>([])
@@ -47,7 +48,15 @@ const CustomerForm = () => {
 
   useEffect(() => {
     axios.get('/credit-terms')
-      .then((response : AxiosResponse) => setCreditTerms(response.data))
+      .then((response : AxiosResponse) => {
+        const creditTerms: CreditTerm[] = response.data;
+        setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
+          {
+            displayName: creditTerm.description,
+            value: creditTerm._id
+          }
+        )))
+      })
       .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, []);
 
@@ -105,43 +114,43 @@ const CustomerForm = () => {
           <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
             <div className='form-elements-wrapper'>
               <div className='group-field-wrapper'>
-                <div className='input-wrapper'>
-                  <label>Customer ID*:</label>
-                  <input type="text" {...register('customerId', { required: "This is required" })} />
-                  <FormErrorMessage errors={errors} name="customerId" />
-                </div>
+                <Input
+                    attribute='customerId'
+                    label="Customer ID"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+                <Input
+                  attribute='name'
+                  label="Name"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='notes'
+                  label="Notes"
+                  register={register}
+                  isRequired={false}
+                  errors={errors}
+                />
+                <Input
+                  attribute='overun'
+                  label="Overun"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
 
-                <div className='input-wrapper'>
-                  <label>Name*:</label>
-                  <input type="text" {...register('name', { required: "This is required" })} />
-                  <FormErrorMessage errors={errors} name="name" />  
-                </div>
-
-                <div className='input-wrapper'>
-                  <label>Notes</label>
-                  <input type="text" {...register('notes', { })} />
-                  <FormErrorMessage errors={errors} name="notes" />
-                </div>
-
-                <div className='input-wrapper'>
-                  <label>Overun*</label>
-                  <input type="text" {...register('overun', { required: "This is required" })} />
-                  <FormErrorMessage errors={errors} name="overun" />
-                </div>
-
-                <div className='input-wrapper'>
-                  <select {...register("creditTerms")} multiple>
-                    {
-                      creditTerms.map((creditTerm: CreditTerm) => {
-                        return (
-                          <option key={creditTerm._id} value={creditTerm._id}>
-                            {creditTerm.description}
-                          </option>
-                        )
-                      })
-                    }
-                  </select>
-                </div>
+                <Select
+                  attribute='creditTerms'
+                  label="Liner Typeeee"
+                  options={creditTerms}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
               </div>
             </div>
 

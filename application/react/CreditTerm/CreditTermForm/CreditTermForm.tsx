@@ -6,6 +6,7 @@ import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore'
+import { Input } from '../../_global/FormInputs/Input/Input';
 
 export const CreditTermForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreditTermFormAttributes>();
@@ -28,9 +29,13 @@ export const CreditTermForm = () => {
         </div>
         <div className='form-wrapper'>
           <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>
-            <label>Description*:</label>
-            <input type="text" {...register('description', { required: "This is required" })} />
-            <FormErrorMessage errors={errors} name="description" />
+            <Input 
+              attribute='description'
+              label="Description"
+              register={register}
+              isRequired={true}
+              errors={errors}
+            />
             <button className='create-entry submit-button' type="submit">Submit</button>
           </form>
         </div>

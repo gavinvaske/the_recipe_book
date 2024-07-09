@@ -6,6 +6,7 @@ import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
 import { useNavigate } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
+import { Input } from '../../_global/FormInputs/Input/Input';
 
 const DeliveryMethodForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
@@ -28,9 +29,13 @@ const DeliveryMethodForm = () => {
         </div>
         <div className='form-wrapper'>
           <form id='delivery-method-form' onSubmit={handleSubmit(onSubmit)} data-test='delivery-method-form'>
-            <label>Name*:</label>
-            <input type="text" {...register('name', { required: "This is required" })} />
-            <FormErrorMessage errors={errors} name="name" />
+            <Input
+                attribute='name'
+                label="Name"
+                register={register}
+                isRequired={true}
+                errors={errors}
+            />
             <button className='create-entry submit-button' type='submit'>Submit</button>
           </form>
         </div>

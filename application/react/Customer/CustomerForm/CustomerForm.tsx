@@ -50,6 +50,7 @@ const CustomerForm = () => {
     axios.get('/credit-terms')
       .then((response : AxiosResponse) => {
         const creditTerms: CreditTerm[] = response.data;
+
         setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
           {
             displayName: creditTerm.description,
@@ -147,7 +148,7 @@ const CustomerForm = () => {
                   label="Liner Type"
                   options={creditTerms}
                   register={register}
-                  isRequired={true}
+                  isRequired={false}
                   errors={errors}
                   isMultiSelect={true}
                 />

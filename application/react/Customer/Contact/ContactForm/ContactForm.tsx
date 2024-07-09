@@ -5,6 +5,8 @@ import './ContactForm.scss'
 import { ContactForm } from '../../../_types/forms/contact';
 import { AddressForm } from '../../../_types/forms/address';
 import { ShippingLocationForm } from '../../../_types/forms/shippingLocation';
+import { Input } from '../../../_global/FormInputs/Input/Input';
+import { Select, SelectOption } from '../../../_global/FormInputs/Select/Select';
 
 const ContactForm = (props) => {
   const { 
@@ -17,63 +19,75 @@ const ContactForm = (props) => {
     locations: (AddressForm | ShippingLocationForm)[]
   } = props;
 
+  const selectableLocations: SelectOption[] = locations.map((address: AddressForm | ShippingLocationForm, index: number) => {
+    return {
+      displayName: `${address.name}: ${address.street}, ${address.city}, ${address.state}, ${address.zipCode}`,
+      value: index
+    }
+  });
+
   const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>();
 
   return (
     <form id='contact-form' onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Name*:</label>
-        <input type="text" {...register('fullName', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="fullName" />
-      </div>
-      <div>
-        <label>Phone Number:</label>
-        <input type="text" {...register('phoneNumber')} />
-        <FormErrorMessage errors={errors} name="phoneNumber" />
-      </div>
-      <div>
-        <label>Phone Extension:</label>
-        <input type="text" {...register('phoneExtension')} />
-        <FormErrorMessage errors={errors} name="phoneExtension" />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="text" {...register('email')} />
-        <FormErrorMessage errors={errors} name="email" />
-      </div>
-      <div>
-        <label>Contact Status*:</label>
-        <input type="text" {...register('contactStatus', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="contactStatus" />
-      </div>
-      <div>
-        <label>Notes:</label>
-        <input type="text" {...register('notes')} />
-        <FormErrorMessage errors={errors} name="notes" />
-      </div>
-      <div>
-        <label>Position:</label>
-        <input type="text" {...register('position')} />
-        <FormErrorMessage errors={errors} name="position" />
-      </div>
-      <div>
-        <label>Location:</label>
-        <br></br>
-        <select {...register("location")}>
-          <option value="">-- Select --</option>
-          {
-            locations.map((address, index: number) => {
-              return (
-                <option key={index} value={index}>
-                    {address.name}: {address.street}, {address.city}, {address.state}, {address.zipCode}
-                </option>
-              )
-            })
-          }
-        </select>
-      </div>
-      
-
+      <Input
+          attribute='fullName'
+          label="Name"
+          register={register}
+          isRequired={true}
+          errors={errors}
+      />
+      <Input
+          attribute='phoneNumber'
+          label="Phone Number"
+          register={register}
+          isRequired={false}
+          errors={errors}
+      />
+      <Input
+          attribute='phoneExtension'
+          label="Phone Extension"
+          register={register}
+          isRequired={false}
+          errors={errors}
+      />
+      <Input
+          attribute='email'
+          label="Email"
+          register={register}
+          isRequired={false}
+          errors={errors}
+      />
+      <Input
+          attribute='contactStatus'
+          label="Contact Status"
+          register={register}
+          isRequired={true}
+          errors={errors}
+      />
+      <Input
+          attribute='notes'
+          label="Notes"
+          register={register}
+          isRequired={false}
+          errors={errors}
+      />
+      <Input
+          attribute='position'
+          label="Position"
+          register={register}
+          isRequired={false}
+          errors={errors}
+      />
+      <Select 
+        attribute='location'
+        label="Location"
+        options={selectableLocations}
+        register={register}
+        isRequired={false}
+        errors={errors}
+        isMultiSelect={true}
+      />
     <button type="submit">Submit</button>
     <button type="button" onClick={() => onCancel()}>Close Modal</button>
   </form>

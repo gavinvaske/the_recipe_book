@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import './ShippingLocationForm.scss'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 
 import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
+import { Input } from '../../_global/FormInputs/Input/Input';
+import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
+import flashMessageStore from '../../stores/flashMessageStore';
 
 const ShippingLocationForm = (props) => {
   const { 
@@ -13,74 +16,84 @@ const ShippingLocationForm = (props) => {
     onCancel
   } = props;
 
-  const [ deliveryMethods, setDeliveryMethods ] = useState<DeliveryMethod[]>([]);
+  const [ deliveryMethods, setDeliveryMethods ] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     axios.get('/delivery-methods')
-      .then(({data}) => setDeliveryMethods(data))
-      .catch((error) => alert('Failed to load delivery methods: ' + error.message));
+      .then((response: AxiosResponse) => {
+        const deliveryMethods: DeliveryMethod[] = response.data;
+
+        setDeliveryMethods(deliveryMethods.map((deliveryMethod: DeliveryMethod) => (
+          {
+            displayName: deliveryMethod.name,
+            value: deliveryMethod._id
+          }
+        )))
+      })
+      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
   }, [])
   
   const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormType>();
 
   return (
     <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Name*:</label>
-        <input type="text" {...register('name', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="name" />
-      </div>
-
-      <div>
-        <label>Freight Account Number*:</label>
-        <input type="text" {...register('freightAccountNumber', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="freightAccountNumber" />
-      </div>
-
-      <div>
-        <label>Delivery Method*:</label>
-        <br></br>
-        <select {...register("deliveryMethod")}>
-          <option value="">-- Select --</option>
-          {
-            deliveryMethods.map((deliveryMethod: DeliveryMethod) => {
-              return (
-                <option key={deliveryMethod._id} value={deliveryMethod._id}>{deliveryMethod.name}</option>
-              )
-            })
-          }
-        </select>
-      </div>
-
-      <div>
-        <label>Street*:</label>
-        <input type="text" {...register('street', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="street" />
-      </div>
-
-      <div>
-        <label>Unit or Suite #:</label>
-        <input type="text" {...register('unitOrSuite')} />
-        <FormErrorMessage errors={errors} name="unitOrSuite" />
-      </div>
-
-      <div>
-        <label>City*:</label>
-        <input type="text" {...register('city', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="city" />
-      </div>
-
-      <div>
-        <label>State*:</label>
-        <input type="text" {...register('state', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="state" />
-      </div>
-
-      <div>
-        <label>Zip*:</label>
-        <input type="text" {...register('zipCode', { required: "This is required" })} />
-        <FormErrorMessage errors={errors} name="zipCode" />
-      </div>
+      <Input
+        attribute='name'
+        label="Name"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='freightAccountNumber'
+        label="Freight Account Number"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Select
+        attribute='deliveryMethod'
+        label="Delivery Method"
+        options={deliveryMethods}
+        register={register}
+        isRequired={false}
+        errors={errors}
+      />
+      <Input
+        attribute='street'
+        label="Street"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='unitOrSuite'
+        label="Unit or Suite #"
+        register={register}
+        isRequired={false}
+        errors={errors}
+      />
+      <Input
+        attribute='city'
+        label="City"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='state'
+        label="State"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
+      <Input
+        attribute='zipCode'
+        label="Zip"
+        register={register}
+        isRequired={true}
+        errors={errors}
+      />
 
       <button type="submit">Submit</button>
       <button type="button" onClick={() => onCancel()}>Close Modal</button>

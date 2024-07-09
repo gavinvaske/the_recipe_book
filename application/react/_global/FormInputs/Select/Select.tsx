@@ -5,7 +5,7 @@ import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
 
 export type SelectOption = {
   displayName: string,
-  value: string
+  value: string | number
 }
 
 type Props<T extends FieldValues> = {
@@ -15,25 +15,22 @@ type Props<T extends FieldValues> = {
   register: UseFormRegister<T>,
   errors: FieldErrors,
   defaultValue?: string,
-  isRequired?: boolean
+  isRequired?: boolean,
+  isMultiSelect?: boolean
 }
 
 export const Select = <T extends FieldValues>(props: Props<T>) => {
-  const { attribute, label, errors, options, isRequired, register } = props;
+  const { attribute, label, errors, options, isRequired, register, isMultiSelect } = props;
 
   return (
     <div>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
-      <select 
-        {...register(attribute,
-          { 
-            required: isRequired ? "Please select an option" : undefined 
-          }
-        )}
-      >
-      <option value="">-- Select --</option>
-      {options && options.map((option: SelectOption) => (<option value={option.value}>{option.displayName}</option>))}
+
+      <select {...register(attribute, {required: isRequired ? "Please select an option" : undefined })} multiple={isMultiSelect ? true : false}>
+        <option value="">-- Select --</option>
+        {options && options.map((option: SelectOption) => (<option value={option.value}>{option.displayName}</option>))}
       </select>
+
       <FormErrorMessage errors={errors} name={attribute} />
     </div>
   )

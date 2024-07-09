@@ -21,12 +21,20 @@ export const CreditTermForm = () => {
   };
 
   return (
-    <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>
-      <label>Description*:</label>
-      <input type="text" {...register('description', { required: "This is required" })} />
-      <FormErrorMessage errors={errors} name="description" />
-
-      <button type="submit">Submit</button>
-    </form>
+    <div className='page-container'>
+      <div className='form-card'>
+        <div className='form-card-header'>
+          <h1>Create New Credit Term</h1>
+        </div>
+        <div className='form-wrapper'>
+          <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>
+            <label>Description*:</label>
+            <input type="text" {...register('description', { required: "This is required" })} />
+            <FormErrorMessage errors={errors} name="description" />
+            <button className='create-entry submit-button' type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
   )
 }

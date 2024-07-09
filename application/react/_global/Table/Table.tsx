@@ -1,3 +1,5 @@
+import React from 'react'
+import './Table.scss'
 import React, { PropsWithChildren } from 'react'
 
 type Props = {
@@ -8,7 +10,7 @@ export const Table = (props: PropsWithChildren<Props>) => {
   const { children, id } = props;
 
   return (
-    <div className='pri-tbl' id={id}>
+    <div className='primary-table' id={id}>
       {children}
     </div>
   )

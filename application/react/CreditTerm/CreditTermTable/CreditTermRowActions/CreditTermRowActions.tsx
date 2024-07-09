@@ -27,8 +27,8 @@ export const CreditTermRowActions = (props) => {
 
   return (
     <RowActions>
-      <div onClick={() => onDeleteClicked(mongooseObjectId)}>Edit</div>
-      <div onClick={() => onEditClicked(mongooseObjectId)}>Delete</div>
+      <div className='dropdown-option' onClick={() => onEditClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>Edit</div>
+      <div className='dropdown-option' onClick={() => onDeleteClicked(mongooseObjectId)}><i className="fa-regular fa-trash"></i>Delete</div>
     </RowActions>
   )
 }

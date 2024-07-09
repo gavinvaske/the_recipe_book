@@ -6,7 +6,7 @@ const Row = (props) => {
   const { row } : {row: Row<RowData>} = props;
 
   return (
-    <div className='row' key={row.id}>
+    <div className='row row-body' key={row.id}>
       {row.getVisibleCells().map(cell => (
         <div className='row-cell' key={cell.id}>
           {

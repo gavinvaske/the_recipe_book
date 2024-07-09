@@ -1199,17 +1199,17 @@ button:hover {
     cursor: pointer;
 }
 
-.search-wrapper.active {
+/* .search-wrapper.active {
 	border: 1px solid #157efb;
 }
 .search-wrapper.active:hover {
 	background-color: transparent;
-}
+} */
 
-.search-wrapper input.active {
+/* .search-wrapper input.active {
 	padding-right: 0;
 	width:  190px;
-}
+} */
 
 /* .status-section-f .expanded-options-btn:hover {
 	color: #82868b;

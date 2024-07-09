@@ -8,7 +8,7 @@ import {
   getSortedRowModel,
   SortingState,
 } from '@tanstack/react-table'
-import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow'
+import Row from '../../_global/Table/Row/Row'
 import SearchBar from '../../_global/SearchBar/SearchBar'
 import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
@@ -73,24 +73,19 @@ export const CreditTermTable = () => {
       <div className='card table-card'>
         <div class="header-description">
           <h1 class="text-blue">Credit Terms</h1>
-          <p>All recipes can be found in the departments below.</p>
+          <p>Complete list of all <p className='text-blue'>{rows.length} </p> credit terms.</p>
         </div>
-        <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
+         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 
         <Table id='credit-term-table'>
           <TableHead table={table} />
           
           <TableBody>
             {rows.map(row => (
-              <ExpandableRow row={row} key={row.id}>
-                <div>@Storm: Click on a row to see this expandable row content. Delete this div to make the row no-longer expandable</div>
-              </ExpandableRow>
+              <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
         </Table>
-
-        <br />
-        <p>Row Count: {rows.length}</p>
       </div>
     </div>
     </>

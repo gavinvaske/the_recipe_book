@@ -16,10 +16,11 @@ const RowHeader = (props) => {
   }
 
   return (
-    <div className='row'>
+    <div className='primary-table-header'>
+      <div className='row-header'>
       {
         columnHeaders.map(header => (
-          <div className='column' key={header.id} onClick={header.column.getToggleSortingHandler()} style={{cursor: header.column.getCanSort() ? 'pointer' : ''}}>
+          <div className='column-header' key={header.id} onClick={header.column.getToggleSortingHandler()} style={{cursor: header.column.getCanSort() ? 'pointer' : ''}}>
             <div className='column-icon'>
               {
                 header.column.getCanSort() && getSortIcon(header.column.getIsSorted())
@@ -38,6 +39,7 @@ const RowHeader = (props) => {
           </div>
         ))
       }
+      </div>
     </div>
   )
 }

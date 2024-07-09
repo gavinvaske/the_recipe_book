@@ -96,47 +96,60 @@ const CustomerForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
-        <div>
-          <label>Customer ID*:</label>
-          <input type="text" {...register('customerId', { required: "This is required" })} />
-          <FormErrorMessage errors={errors} name="customerId" />
+    <div className='page-container'>
+      <div className='form-card'>
+        <div className='form-card-header'>
+          <h1>Create A New Customer</h1>
         </div>
+        <div className='form-wrapper'>
+          <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
+            <div className='form-elements-wrapper'>
+              <div className='group-field-wrapper'>
+                <div className='input-wrapper'>
+                  <label>Customer ID*:</label>
+                  <input type="text" {...register('customerId', { required: "This is required" })} />
+                  <FormErrorMessage errors={errors} name="customerId" />
+                </div>
 
-        <div>
-          <label>Name*:</label>
-          <input type="text" {...register('name', { required: "This is required" })} />
-          <FormErrorMessage errors={errors} name="name" />  
+                <div className='input-wrapper'>
+                  <label>Name*:</label>
+                  <input type="text" {...register('name', { required: "This is required" })} />
+                  <FormErrorMessage errors={errors} name="name" />  
+                </div>
+
+                <div className='input-wrapper'>
+                  <label>Notes</label>
+                  <input type="text" {...register('notes', { })} />
+                  <FormErrorMessage errors={errors} name="notes" />
+                </div>
+
+                <div className='input-wrapper'>
+                  <label>Overun*</label>
+                  <input type="text" {...register('overun', { required: "This is required" })} />
+                  <FormErrorMessage errors={errors} name="overun" />
+                </div>
+
+                <div className='input-wrapper'>
+                  <select {...register("creditTerms")} multiple>
+                    {
+                      creditTerms.map((creditTerm: CreditTerm) => {
+                        return (
+                          <option key={creditTerm._id} value={creditTerm._id}>
+                            {creditTerm.description}
+                          </option>
+                        )
+                      })
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button className='btn-primary' type="submit">Create Customer</button>
+          </form>
         </div>
-
-        <div>
-          <label>Notes</label>
-          <input type="text" {...register('notes', { })} />
-          <FormErrorMessage errors={errors} name="notes" />
-        </div>
-
-        <div>
-          <label>Overun*</label>
-          <input type="text" {...register('overun', { required: "This is required" })} />
-          <FormErrorMessage errors={errors} name="overun" />
-        </div>
-
-        <div>
-          <select {...register("creditTerms")} multiple>
-            {
-              creditTerms.map((creditTerm: CreditTerm) => {
-                return (
-                  <option key={creditTerm._id} value={creditTerm._id}>
-                    {creditTerm.description}
-                  </option>
-                )
-              })
-            }
-          </select>
-        </div>
-
-        <button className='btn-primary' type="submit">Create Customer</button>
-      </form>
+      </div>
+    </div>
 
       <div>
         <button type="button" onClick={() => setShowBusinessLocationForm(true)}>Add Business Location</button>

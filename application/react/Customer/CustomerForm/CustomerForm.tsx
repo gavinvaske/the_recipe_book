@@ -145,11 +145,12 @@ const CustomerForm = () => {
 
                 <Select
                   attribute='creditTerms'
-                  label="Liner Typeeee"
+                  label="Liner Type"
                   options={creditTerms}
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  isMultiSelect={true}
                 />
               </div>
             </div>

@@ -21,9 +21,9 @@ export const DeliveryMethodRowActions = (props) => {
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    alert('TODO @Gavin: Enable editing via DeliveryMethodForm: ' + mongooseObjectId)
     navigate(`/react-ui/forms/delivery-method/${mongooseObjectId}`)
   }
+
   return (
     <RowActions>
       <div onClick={() => onEditClicked(mongooseObjectId)}>Edit</div>

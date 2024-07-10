@@ -11,6 +11,8 @@ router.delete('/:mongooseId', async (request, response) => {
 
         return response.status(SUCCESS);
     } catch (error) {
+        console.error('Error deleting Liner Types: ', error);
+
         return response.status(SERVER_ERROR).send(error.message);
     }
 });
@@ -38,7 +40,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
         return response.json(updatedLinerType);
     } catch (error) {
-        console.log('Failed to update linerType: ', error.message);
+        console.log('Failed to update linerType: ', error);
 
         response
             .status(SERVER_ERROR)

@@ -10,6 +10,7 @@ import { getOneDeliveryMethod } from '../../_queries/deliveryMethod';
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
+const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
 const DeliveryMethodForm = () => {
   const { mongooseId } = useParams();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodForm>();
@@ -27,7 +28,7 @@ const DeliveryMethodForm = () => {
       })
       .catch((error: AxiosError) => {
         useErrorMessage(error)
-        navigate('/react-ui/tables/delivery-method')
+        navigate(deliveryMethodTableUrl)
       })
   }, [])
 
@@ -35,19 +36,20 @@ const DeliveryMethodForm = () => {
     const isUpdateRequest = Boolean(mongooseId);
 
     if (isUpdateRequest) {
-      axios.patch(`/delivery-methods/${mongooseId ? mongooseId : ''}`, formData)
-      .then((_) =>
-        
-        navigate('/react-ui/tables/liner')
-      )
-      .catch((error: AxiosError) => useErrorMessage(error));
+      axios.patch(`/delivery-methods/${mongooseId}`, formData)
+        .then((_) => {
+          navigate(deliveryMethodTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/delivery-methods', formData)
+        .then((_: AxiosResponse) => {
+          navigate(deliveryMethodTableUrl);
+          useSuccessMessage('Delivery Method was created successfully')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
     }
-    axios.post('/delivery-methods', formData)
-      .then((_: AxiosResponse) => {
-        navigate(`/react-ui/tables/delivery-method`);
-        useSuccessMessage('Delivery method was created successfully')
-      })
-      .catch((error: AxiosError) => useErrorMessage(error))
   };
 
   return (

@@ -2,11 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 const DeliveryMethodForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
@@ -18,7 +18,7 @@ const DeliveryMethodForm = () => {
         navigate(`/react-ui/tables/delivery-method`);
         flashMessageStore.addSuccessMessage('Delivery method was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   };
 
   return (

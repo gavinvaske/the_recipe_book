@@ -21,6 +21,7 @@ import flashMessageStore from '../../stores/flashMessageStore';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
@@ -58,7 +59,7 @@ const CustomerForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormType) => {
@@ -72,7 +73,7 @@ const CustomerForm = () => {
         navigate('react-ui/tables/customer')
         flashMessageStore.addSuccessMessage('Customer was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);

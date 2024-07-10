@@ -12,6 +12,7 @@ import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { LinerType } from '../../_types/databaseModels/linerType';
 import { Material } from '../../_types/databaseModels/material';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
@@ -59,7 +60,7 @@ export const MaterialForm = () => {
         reset(formValues) // pre-populate form with existing values from the DB
       })
       .catch((error: AxiosError) => {
-        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+        useErrorHandler(error)
       })
   }, [])
 
@@ -74,7 +75,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
 
     axios.get('/material-categories')
       .then((response : AxiosResponse) => {
@@ -86,7 +87,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
 
     axios.get('/adhesive-categories')
       .then((response : AxiosResponse) => {
@@ -98,7 +99,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
 
     axios.get('/liner-types')
       .then((response : AxiosResponse) => {
@@ -110,7 +111,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }, [])
 
   const onSubmit = (formData: MaterialFormAttributes) => {
@@ -119,10 +120,7 @@ export const MaterialForm = () => {
         flashMessageStore.addSuccessMessage('Material was created successfully')
         navigate(`/react-ui/tables/materials`);
       })
-      .catch((error: AxiosError) => {
-        console.log('error', error);
-        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
-      })
+      .catch((error: AxiosError) => useErrorHandler(error))
   };
 
   return (

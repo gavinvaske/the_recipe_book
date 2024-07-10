@@ -1,10 +1,11 @@
 import React from 'react';
 import './LinerTypeRowActions.scss';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import flashMessageStore from '../../../stores/flashMessageStore'
 import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from "react-router-dom";
+import { useErrorHandler } from '../../../_hooks/useErrorHandler';
 
 type Props = {
   row: any
@@ -19,7 +20,7 @@ export const LinerTypeRowActions = (props: Props) => {
     alert('TODO: Add a confirmation modal before deletion?')
     axios.delete(`/liner-types/${mongooseObjectId}`)
       .then(() => flashMessageStore.addSuccessMessage('Deletion was successfully'))
-      .catch(({ response }) => flashMessageStore.addErrorMessage(response.data))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

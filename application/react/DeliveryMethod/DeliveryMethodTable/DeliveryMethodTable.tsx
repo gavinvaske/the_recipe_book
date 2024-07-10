@@ -14,11 +14,10 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
-import flashMessageStore from '../../stores/flashMessageStore'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
-import { AxiosError } from 'axios'
+import { useErrorHandler } from '../../_hooks/useErrorHandler'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()
 
@@ -47,8 +46,7 @@ function DeliveryMethodTable() {
   })
 
   if (isError) {
-    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
-    else flashMessageStore.addErrorMessage(error.message)
+    useErrorHandler(error)
   }
 
   const table = useReactTable({

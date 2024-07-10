@@ -6,6 +6,7 @@ import flashMessageStore from '../../stores/flashMessageStore';
 import { useForm } from 'react-hook-form';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { Input } from '../../_global/FormInputs/Input/Input';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 export const AdhesiveCategoryForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<AdhesiveCategory>();
@@ -17,7 +18,7 @@ export const AdhesiveCategoryForm = () => {
         navigate('/react-ui/tables/adhesive-category')
         flashMessageStore.addSuccessMessage('Adhesive Category was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }
 
   return (

@@ -8,6 +8,7 @@ import { MaterialLengthAdjustmentFormFormAttributes } from '../../_types/forms/m
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { Material } from '../../_types/databaseModels/material';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 
 export const MaterialLengthAdjustmentForm = () => {
@@ -26,7 +27,7 @@ export const MaterialLengthAdjustmentForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
     });
 
   const onFormSubmit = (formData: MaterialLengthAdjustmentFormFormAttributes) => {
@@ -35,7 +36,7 @@ export const MaterialLengthAdjustmentForm = () => {
         navigate('/react-ui/tables/TODO')
         flashMessageStore.addSuccessMessage('Material Inventory Entry was created successfully')
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }
 
   return (

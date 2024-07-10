@@ -5,6 +5,7 @@ import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import flashMessageStore from '../../../stores/flashMessageStore';
+import { useErrorHandler } from '../../../_hooks/useErrorHandler';
 
 export const DeliveryMethodRowActions = (props) => {
   const { row }: { row: any } = props;
@@ -16,7 +17,7 @@ export const DeliveryMethodRowActions = (props) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/delivery-methods/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => flashMessageStore.addSuccessMessage('Deletion was successfully'))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

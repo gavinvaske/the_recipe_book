@@ -4,6 +4,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
 import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "../_types/Filters";
 import flashMessageStore from "./flashMessageStore";
+import { useErrorHandler } from "../_hooks/useErrorHandler";
 
 /* Mobx Store */
 class InventorySummaryStore implements Filter<MaterialInventory> {
@@ -117,7 +118,7 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
         
         this.setInventorySummary(materialInventorySummary);
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorHandler(error))
   }
 }
 

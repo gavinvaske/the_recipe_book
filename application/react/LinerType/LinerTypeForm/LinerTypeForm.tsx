@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { LinerType } from '../../_types/databaseModels/linerType';
+import { getOneLinerType } from '../../_queries/linerType';
+import { useErrorHandler } from '../../_hooks/useErrorHandler';
 
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
@@ -16,14 +18,17 @@ export const LinerTypeForm = () => {
   useEffect(() => {
     if (!mongooseId) return;
 
-    axios.get('/liner-types/' + mongooseId)
-      .then(({ data }: {data: LinerType}) => {
+    getOneLinerType(mongooseId)
+      .then((linerType: LinerType) => {
         const formValues = {
-          name: data.name
+          name: linerType.name
         }
         reset(formValues)
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => {
+        useErrorHandler(error)
+        navigate('/react-ui/tables/liner-type')
+      })
   }, [])
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {
@@ -34,14 +39,14 @@ export const LinerTypeForm = () => {
         .then((_) => {
           navigate('/react-ui/tables/liner')
         })
-        .catch(({ response }) => flashMessageStore.addErrorMessage(response.data));
+        .catch((error: AxiosError) => useErrorHandler(error));
     } else {
       axios.post('/liner-types', linerType)
         .then((_) => {
           navigate('/react-ui/tables/liner-type')
           flashMessageStore.addSuccessMessage('Liner type was created successfully')
         })
-        .catch(({ response }) => flashMessageStore.addErrorMessage(response.data));
+        .catch((error: AxiosError) => useErrorHandler(error));
     }
   }
 

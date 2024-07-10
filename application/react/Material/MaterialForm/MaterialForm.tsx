@@ -6,13 +6,13 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { Vendor } from '../../_types/databaseModels/vendor';
 import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { LinerType } from '../../_types/databaseModels/linerType';
 import { Material } from '../../_types/databaseModels/material';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
@@ -60,7 +60,7 @@ export const MaterialForm = () => {
         reset(formValues) // pre-populate form with existing values from the DB
       })
       .catch((error: AxiosError) => {
-        useErrorHandler(error)
+        useErrorMessage(error)
       })
   }, [])
 
@@ -75,7 +75,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/material-categories')
       .then((response : AxiosResponse) => {
@@ -87,7 +87,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/adhesive-categories')
       .then((response : AxiosResponse) => {
@@ -99,7 +99,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/liner-types')
       .then((response : AxiosResponse) => {
@@ -111,16 +111,16 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   const onSubmit = (formData: MaterialFormAttributes) => {
     axios.post(`/materials`, formData)
       .then((_) => {
-        flashMessageStore.addSuccessMessage('Material was created successfully')
+        useSuccessMessage('Material was created successfully')
         navigate(`/react-ui/tables/materials`);
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   };
 
   return (

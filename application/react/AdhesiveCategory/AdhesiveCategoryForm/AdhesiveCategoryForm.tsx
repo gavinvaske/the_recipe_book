@@ -2,11 +2,11 @@ import React from 'react';
 import './AdhesiveCategoryForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore';
 import { useForm } from 'react-hook-form';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 export const AdhesiveCategoryForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<AdhesiveCategory>();
@@ -16,9 +16,9 @@ export const AdhesiveCategoryForm = () => {
     axios.post('/adhesive-categories', adhesiveCategory)
       .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/adhesive-category')
-        flashMessageStore.addSuccessMessage('Adhesive Category was created successfully')
+        useSuccessMessage('Adhesive Category was created successfully')
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   return (

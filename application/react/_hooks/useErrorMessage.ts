@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import flashMessageStore from "../stores/flashMessageStore";
 
-export const useErrorHandler = (error: AxiosError | Error) => {
+export const useErrorMessage = (error: AxiosError | Error) => {
   if (error instanceof AxiosError) {
     flashMessageStore.addErrorMessage(error.response?.data as string)
   } else if (error instanceof Error) {

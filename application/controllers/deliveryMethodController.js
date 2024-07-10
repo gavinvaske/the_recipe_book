@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { verifyJwtToken } = require('../middleware/authorize');
 const DeliveryMethodModel = require('../models/deliveryMethod');
-const { SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
+const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
 
@@ -39,6 +39,20 @@ router.delete('/:mongooseId', async (request, response) => {
 
         return response.status(SERVER_ERROR).send(error.message);
     }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+  try {
+      const deliveryMethod = await DeliveryMethodModel.findById(request.params.mongooseId);
+
+      return response.json(deliveryMethod);
+  } catch (error) {
+      console.error('Error searching for deliveryMethod: ', error);
+
+      return response
+          .status(SERVER_ERROR)
+          .send(error.message);
+  }
 });
 
 module.exports = router;

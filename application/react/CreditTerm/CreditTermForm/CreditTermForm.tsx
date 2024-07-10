@@ -4,9 +4,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermForm.scss'
 import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
 import { useNavigate } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore'
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 export const CreditTermForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreditTermFormAttributes>();
@@ -16,9 +16,9 @@ export const CreditTermForm = () => {
     axios.post('/credit-terms', formData)
       .then((_: AxiosResponse) => {
         navigate(`/react-ui/tables/credit-term`);
-        flashMessageStore.addSuccessMessage('Credit term was created successfully')
+        useSuccessMessage('Credit term was created successfully')
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   };
 
   return (

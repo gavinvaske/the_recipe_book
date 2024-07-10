@@ -17,11 +17,11 @@ import { ContactForm as ContactFormType } from '../../_types/forms/contact';
 import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
@@ -59,7 +59,7 @@ const CustomerForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormType) => {
@@ -71,9 +71,9 @@ const CustomerForm = () => {
     axios.post('/customers', customer)
       .then((_ : AxiosResponse) => {
         navigate('react-ui/tables/customer')
-        flashMessageStore.addSuccessMessage('Customer was created successfully')
+        useSuccessMessage('Customer was created successfully')
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   };
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);

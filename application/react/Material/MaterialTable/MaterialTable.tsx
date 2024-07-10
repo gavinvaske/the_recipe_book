@@ -10,7 +10,7 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../../_queries/material';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<Material>()
 
@@ -50,7 +50,7 @@ export const MaterialTable = () => {
   })
 
   if (isError) {
-    useErrorHandler(error)
+    useErrorMessage(error)
   }
 
   const table = useReactTable({

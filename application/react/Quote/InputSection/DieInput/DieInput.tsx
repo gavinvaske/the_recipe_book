@@ -5,7 +5,7 @@ import TextField from '../InputFields/TextField/TextField';
 import quoteStore from '../../../stores/quoteStore';
 import axios, { AxiosError } from 'axios';
 import { Die } from '../../../_types/databaseModels/die';
-import { useErrorHandler } from '../../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 const Die = (props) => {
   const dieOverride = quoteStore.quoteInputs.dieOverride as Die;
@@ -17,7 +17,7 @@ const Die = (props) => {
         const { data } = response;
         setDies(data)
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   return (

@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
 import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
 import { useNavigate, useParams } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getOneDeliveryMethod } from '../../_queries/deliveryMethod';
+import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 const DeliveryMethodForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
+  const { mongooseId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodForm>();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!mongooseId) return;
+
+    getOneDeliveryMethod(mongooseId)
+      .then((deliveryMethod: DeliveryMethod) => {
+        const formValues = {
+          name: deliveryMethod.name
+        }
+        reset(formValues)
+      })
+      .catch((error: AxiosError) => {
+        useErrorMessage(error)
+        navigate('/react-ui/tables/delivery-method')
+      })
+  }, [])
+
   const onSubmit = (formData: DeliveryMethodForm) => {
+    const isUpdateRequest = Boolean(mongooseId);
+
+    if (isUpdateRequest) {
+      axios.patch(`/delivery-methods/${mongooseId ? mongooseId : ''}`, formData)
+      .then((_) =>
+        
+        navigate('/react-ui/tables/liner')
+      )
+      .catch((error: AxiosError) => useErrorMessage(error));
+    }
     axios.post('/delivery-methods', formData)
       .then((_: AxiosResponse) => {
         navigate(`/react-ui/tables/delivery-method`);
-        flashMessageStore.addSuccessMessage('Delivery method was created successfully')
+        useSuccessMessage('Delivery method was created successfully')
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   };
 
   return (

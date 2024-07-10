@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import { Material } from '../../../_types/databaseModels/material';
-import { useErrorHandler } from '../../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 type Props = {
   isPrimaryMaterial: boolean
@@ -38,7 +38,7 @@ const MaterialInput = observer((props: Props) => {
   useEffect(() => {
     axios.get(`/materials`)
       .then((response: AxiosResponse) => setMaterials(response.data))
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   return (

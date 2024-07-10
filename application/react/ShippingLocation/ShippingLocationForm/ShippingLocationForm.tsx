@@ -7,7 +7,7 @@ import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const ShippingLocationForm = (props) => {
   const { 
@@ -29,7 +29,7 @@ const ShippingLocationForm = (props) => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
   
   const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormType>();

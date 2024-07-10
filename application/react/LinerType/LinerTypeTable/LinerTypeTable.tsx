@@ -17,7 +17,7 @@ import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
 import { LinerType } from '../../_types/databaseModels/linerType';
 import { useQuery } from '@tanstack/react-query';
 import { getLinerTypes } from '../../_queries/linerType';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<LinerType>()
 
@@ -46,7 +46,7 @@ export const LinerTypeTable = () => {
   })
 
   if (isError) {
-    useErrorHandler(error)
+    useErrorMessage(error)
   }
 
 

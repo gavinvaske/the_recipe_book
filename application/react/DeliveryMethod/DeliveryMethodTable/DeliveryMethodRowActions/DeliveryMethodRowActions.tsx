@@ -4,8 +4,8 @@ import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import flashMessageStore from '../../../stores/flashMessageStore';
-import { useErrorHandler } from '../../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 
 export const DeliveryMethodRowActions = (props) => {
   const { row }: { row: any } = props;
@@ -16,18 +16,18 @@ export const DeliveryMethodRowActions = (props) => {
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/delivery-methods/${mongooseObjectId}`)
-      .then((_ : AxiosResponse) => flashMessageStore.addSuccessMessage('Deletion was successfully'))
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .then((_ : AxiosResponse) => useSuccessMessage('Deletion was successfully'))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    alert('TODO @Gavin: Enable editing via DeliveryMethodForm')
+    alert('TODO @Gavin: Enable editing via DeliveryMethodForm: ' + mongooseObjectId)
     navigate(`/react-ui/forms/delivery-method/${mongooseObjectId}`)
   }
   return (
     <RowActions>
-      <div onClick={() => onDeleteClicked(mongooseObjectId)}>Edit</div>
-      <div onClick={() => onEditClicked(mongooseObjectId)}>Delete</div>
+      <div onClick={() => onEditClicked(mongooseObjectId)}>Edit</div>
+      <div onClick={() => onDeleteClicked(mongooseObjectId)}>Delete</div>
     </RowActions>
   )
 }

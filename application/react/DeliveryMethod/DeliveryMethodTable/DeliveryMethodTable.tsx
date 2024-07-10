@@ -17,7 +17,7 @@ import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMet
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
-import { useErrorHandler } from '../../_hooks/useErrorHandler'
+import { useErrorMessage } from '../../_hooks/useErrorMessage'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()
 
@@ -46,7 +46,7 @@ function DeliveryMethodTable() {
   })
 
   if (isError) {
-    useErrorHandler(error)
+    useErrorMessage(error)
   }
 
   const table = useReactTable({

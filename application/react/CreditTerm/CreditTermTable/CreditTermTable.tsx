@@ -17,7 +17,7 @@ import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowAction
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<CreditTerm>()
 
@@ -46,7 +46,7 @@ export const CreditTermTable = () => {
   })
 
   if (isError) {
-    useErrorHandler(error)
+    useErrorMessage(error)
   }
 
   const table = useReactTable({

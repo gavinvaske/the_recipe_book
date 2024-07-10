@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './MaterialLengthAdjustmentForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { MaterialLengthAdjustmentFormFormAttributes } from '../../_types/forms/materialLengthAdjustment';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { Material } from '../../_types/databaseModels/material';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 
 export const MaterialLengthAdjustmentForm = () => {
@@ -27,16 +27,16 @@ export const MaterialLengthAdjustmentForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
     });
 
   const onFormSubmit = (formData: MaterialLengthAdjustmentFormFormAttributes) => {
     axios.post('/material-length-adjustments', formData)
       .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/TODO')
-        flashMessageStore.addSuccessMessage('Material Inventory Entry was created successfully')
+        useSuccessMessage('Material Length Adjustment was created successfully')
       })
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   return (

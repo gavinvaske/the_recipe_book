@@ -5,8 +5,8 @@ import { Row, RowData } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom'
 import { MongooseId } from '../../../_types/typeAliases';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import flashMessageStore from '../../../stores/flashMessageStore';
-import { useErrorHandler } from '../../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 
 export const CreditTermRowActions = (props) => {
   const { row }: { row: Row<RowData> } = props;
@@ -17,8 +17,8 @@ export const CreditTermRowActions = (props) => {
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/credit-terms/${mongooseObjectId}`)
-      .then((_ : AxiosResponse) => flashMessageStore.addSuccessMessage('Deletion was successfully'))
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .then((_ : AxiosResponse) => useSuccessMessage('Deletion was successfully'))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

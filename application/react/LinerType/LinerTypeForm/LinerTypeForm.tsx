@@ -4,11 +4,11 @@ import './LinerTypeForm.scss';
 import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { LinerType } from '../../_types/databaseModels/linerType';
 import { getOneLinerType } from '../../_queries/linerType';
-import { useErrorHandler } from '../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
@@ -26,7 +26,7 @@ export const LinerTypeForm = () => {
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        useErrorHandler(error)
+        useErrorMessage(error)
         navigate('/react-ui/tables/liner-type')
       })
   }, [])
@@ -39,14 +39,14 @@ export const LinerTypeForm = () => {
         .then((_) => {
           navigate('/react-ui/tables/liner')
         })
-        .catch((error: AxiosError) => useErrorHandler(error));
+        .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/liner-types', linerType)
         .then((_) => {
           navigate('/react-ui/tables/liner-type')
-          flashMessageStore.addSuccessMessage('Liner type was created successfully')
+          useSuccessMessage('Liner type was created successfully')
         })
-        .catch((error: AxiosError) => useErrorHandler(error));
+        .catch((error: AxiosError) => useErrorMessage(error));
     }
   }
 

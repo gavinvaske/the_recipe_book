@@ -3,9 +3,9 @@ import './MaterialRowActions.scss';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { MongooseId } from '../../../_types/typeAliases';
-import flashMessageStore from '../../../stores/flashMessageStore';
 import { useNavigate } from 'react-router-dom';
-import { useErrorHandler } from '../../../_hooks/useErrorHandler';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 
 type Props = {
   row: any  // TODO: Type this
@@ -20,8 +20,8 @@ export const MaterialRowActions = (props: Props) => {
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/materials/${mongooseObjectId}`)
-      .then((_ : AxiosResponse) => flashMessageStore.addSuccessMessage('Deletion was successfully'))
-      .catch((error: AxiosError) => useErrorHandler(error))
+      .then((_ : AxiosResponse) => useSuccessMessage('Deletion was successfully'))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

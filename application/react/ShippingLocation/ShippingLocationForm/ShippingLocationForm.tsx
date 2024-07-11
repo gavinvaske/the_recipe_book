@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 
-import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
+import { ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';

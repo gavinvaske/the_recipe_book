@@ -55,17 +55,17 @@ router.patch('/:mongooseId', async (request, response) => {
 });
 
 router.get('/:mongooseId', async (request, response) => {
-  try {
-      const creditTerm = await CreditTermModel.findById(request.params.mongooseId);
+    try {
+        const creditTerm = await CreditTermModel.findById(request.params.mongooseId);
 
-      return response.json(creditTerm);
-  } catch (error) {
-      console.error('Error searching for creditTerm: ', error);
+        return response.json(creditTerm);
+    } catch (error) {
+        console.error('Error searching for creditTerm: ', error);
 
-      return response
-          .status(SERVER_ERROR)
-          .send(error.message);
-  }
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
 });
 
 module.exports = router;

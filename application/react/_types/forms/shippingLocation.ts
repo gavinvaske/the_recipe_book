@@ -1,7 +1,7 @@
 import { MongooseId } from "../typeAliases";
-import { AddressForm } from "./address";
+import { AddressFormAttributes } from "./address";
 
-export type ShippingLocationForm = AddressForm & {
+export type ShippingLocationFormAttributes = AddressFormAttributes & {
   freightAccountNumber: string,
   deliveryMethod: MongooseId,
 }

@@ -1,4 +1,4 @@
-import { Address } from "../databaseSchemas/Address";
+import { Address } from "../databaseSchemas/address";
 import { MongooseAttributes } from "./_sharedMongooseAttributes";
 
 export type Vendor = MongooseAttributes & {

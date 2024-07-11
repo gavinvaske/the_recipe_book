@@ -1,4 +1,4 @@
-export type AddressForm = {
+export type AddressFormAttributes = {
   name: string,
   street: string,
   city: string,

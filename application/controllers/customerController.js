@@ -1,19 +1,49 @@
 const router = require('express').Router();
+const { SERVER_ERROR, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
 const { verifyJwtToken } = require('../middleware/authorize');
 const CustomerModel = require('../models/customer');
 
 router.use(verifyJwtToken);
 
-const SUCCESSFULLY_CREATED_STATUS_CODE = 201;
-const BAD_REQUEST_STATUS_CODE = 400;
-
 router.post('/', async (request, response) => {
     try {
         const customer = await CustomerModel.create(request.body);
-        return response.status(SUCCESSFULLY_CREATED_STATUS_CODE).json(customer);
+        return response.status(CREATED_SUCCESSFULLY).json(customer);
     } catch (error) {
         console.log('Error creating customer: ', error);
-        return response.status(BAD_REQUEST_STATUS_CODE).send(error.message);
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
+
+router.patch('/:mongooseId', async (request, response) => {
+    try {
+        const updatedCustomer = await CustomerModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
+
+        return response.json(updatedCustomer);
+    } catch (error) {
+        console.error('Failed to update customer: ', error);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+    try {
+        const customer = await CustomerModel.findById(request.params.mongooseId);
+
+        return response.json(customer);
+    } catch (error) {
+        console.error('Error searching for customer: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

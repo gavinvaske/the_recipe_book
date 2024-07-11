@@ -1,14 +1,15 @@
 import { MongooseId } from "../typeAliases"
-import { AddressForm } from "./address"
-import { ContactForm } from "./contact"
-import { ShippingLocationForm } from "./shippingLocation"
+import { AddressFormAttributes } from "./address"
+import { ContactFormAttributes } from "./contact"
+import { ShippingLocationFormAttributes } from "./shippingLocation"
 
-export type CustomerForm = {
+export type CustomerFormAttributes = {
   customerId: string,
   name: string,
-  businessLocations: AddressForm[],
-  shippingLocations: ShippingLocationForm[],
-  contacts: ContactForm[],
+  businessLocations?: AddressFormAttributes[],
+  shippingLocations?: ShippingLocationFormAttributes[],
+  billingLocations?: AddressFormAttributes[],
+  contacts?: ContactFormAttributes[],
   overun: string,
   notes?: string,
   creditTerms?: MongooseId[]

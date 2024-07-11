@@ -123,15 +123,15 @@ export const MaterialForm = () => {
     if (isUpdateRequest) {
       axios.patch(`/materials/${mongooseId}`, formData)
         .then((_) => {
-          useSuccessMessage('Update was successful')
           navigate(materialTableUrl);
+          useSuccessMessage('Update was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     } else {
       axios.post(`/materials`, formData)
         .then((_) => {
-          useSuccessMessage('Material was created successfully')
           navigate(materialTableUrl);
+          useSuccessMessage('Material was created successfully')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

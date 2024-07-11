@@ -78,8 +78,8 @@ const CustomerForm = () => {
         setContacts(customer.contacts as unknown as ContactFormAttributes[])
       })
       .catch((error: AxiosError) => {
-        useErrorMessage(error)
         navigate(customerTableUrl)
+        useErrorMessage(error)
       })
   }, [])
 

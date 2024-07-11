@@ -30,8 +30,8 @@ export const AdhesiveCategoryForm = () => {
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        useErrorMessage(error)
         navigate(adhesiveCategoryTableUrl)
+        useErrorMessage(error)
       })
   }, [])
 

@@ -30,8 +30,8 @@ export const CreditTermForm = () => {
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        useErrorMessage(error)
         navigate(creditTermTableUrl)
+        useErrorMessage(error)
       })
   }, [])
 

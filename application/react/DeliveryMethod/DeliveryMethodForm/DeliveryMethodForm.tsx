@@ -30,8 +30,8 @@ const DeliveryMethodForm = () => {
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        useErrorMessage(error)
         navigate(deliveryMethodTableUrl)
+        useErrorMessage(error)
       })
   }, [])
 

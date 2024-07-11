@@ -30,8 +30,8 @@ export const LinerTypeForm = () => {
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        useErrorMessage(error)
         navigate(linerTypeTableUrl)
+        useErrorMessage(error)
       })
   }, [])
 
@@ -40,6 +40,7 @@ export const LinerTypeForm = () => {
       axios.patch(`/liner-types/${mongooseId ? mongooseId : ''}`, linerType)
         .then((_) => {
           navigate(linerTypeTableUrl)
+          useSuccessMessage('Update was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {

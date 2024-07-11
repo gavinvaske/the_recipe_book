@@ -1,24 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './AdhesiveCategoryForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { getOneAdhesiveCategory } from '../../_queries/adhesiveCategory';
+import { AdhesiveCategoryFormAttributes } from '../../_types/forms/adhesiveCategory';
+
+const adhesiveCategoryTableUrl = '/react-ui/tables/adhesive-category'
 
 export const AdhesiveCategoryForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<AdhesiveCategory>();
+  const { mongooseId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<AdhesiveCategoryFormAttributes>();
   const navigate = useNavigate();
 
-  const onFormSubmit = (adhesiveCategory: AdhesiveCategory) => {
-    axios.post('/adhesive-categories', adhesiveCategory)
-      .then((_: AxiosResponse) => {
-        navigate('/react-ui/tables/adhesive-category')
-        useSuccessMessage('Adhesive Category was created successfully')
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
+
+  useEffect(() => {
+    if (!isUpdateRequest) return;
+
+    getOneAdhesiveCategory(mongooseId)
+      .then((adhesiveCategory: AdhesiveCategory) => {
+        const formValues: AdhesiveCategoryFormAttributes = {
+          name: adhesiveCategory.name
+        }
+        reset(formValues)
       })
-      .catch((error: AxiosError) => useErrorMessage(error))
+      .catch((error: AxiosError) => {
+        useErrorMessage(error)
+        navigate(adhesiveCategoryTableUrl)
+      })
+  }, [])
+
+  const onFormSubmit = (adhesiveCategory: AdhesiveCategoryFormAttributes) => {
+    if (isUpdateRequest) {
+      axios.patch(`/adhesive-categories/${mongooseId}`, adhesiveCategory)
+        .then((_) => {
+          navigate(adhesiveCategoryTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/adhesive-categories', adhesiveCategory)
+        .then((_: AxiosResponse) => {
+          navigate(adhesiveCategoryTableUrl)
+          useSuccessMessage('Adhesive Category was created successfully')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
+
   }
 
   return (
@@ -31,7 +64,7 @@ export const AdhesiveCategoryForm = () => {
           isRequired={true}
           errors={errors}
         />
-        <button className='btn-primary' type="submit">Create Liner Type</button>
+        <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
       </form>
     </div>
   )

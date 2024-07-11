@@ -1,3 +1,3 @@
-export type DeliveryMethodForm = {
+export type DeliveryMethodFormAttributes = {
   name: string
 }

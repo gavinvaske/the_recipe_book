@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
-import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
+import { DeliveryMethodFormAttributes } from '../../_types/forms/deliveryMethod';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
@@ -14,7 +14,7 @@ const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
 
 const DeliveryMethodForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodForm>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodFormAttributes>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -24,7 +24,7 @@ const DeliveryMethodForm = () => {
 
     getOneDeliveryMethod(mongooseId)
       .then((deliveryMethod: DeliveryMethod) => {
-        const formValues = {
+        const formValues: DeliveryMethodFormAttributes = {
           name: deliveryMethod.name
         }
         reset(formValues)
@@ -35,7 +35,7 @@ const DeliveryMethodForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: DeliveryMethodForm) => {
+  const onSubmit = (formData: DeliveryMethodFormAttributes) => {
     if (isUpdateRequest) {
       axios.patch(`/delivery-methods/${mongooseId}`, formData)
         .then((_) => {

@@ -14,7 +14,7 @@ import ContactCard from '../Contact/ContactCard/ContactCard';
 import { AddressFormAttributes } from '../../_types/forms/address';
 import { ShippingLocationFormAttributes, ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 import { ContactFormAttributes } from '../../_types/forms/contact';
-import { CustomerFormAttributes, CustomerFormAttributes as CustomerFormType } from '../../_types/forms/customer';
+import { CustomerFormAttributes } from '../../_types/forms/customer';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,7 +30,7 @@ const customerTableUrl = '/react-ui/tables/customer'
 
 const CustomerForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormType>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormAttributes>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -98,7 +98,7 @@ const CustomerForm = () => {
       .catch((error: AxiosError) => useErrorMessage(error))
   }, []);
 
-  const onCustomerFormSubmit = (customer: CustomerFormType) => {
+  const onCustomerFormSubmit = (customer: CustomerFormAttributes) => {
     customer.businessLocations = businessLocations;
     customer.shippingLocations = shippingLocations;
     customer.contacts = contacts;

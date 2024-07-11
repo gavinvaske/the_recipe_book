@@ -22,7 +22,7 @@ export const LinerTypeForm = () => {
 
     getOneLinerType(mongooseId)
       .then((linerType: LinerType) => {
-        const formValues = {
+        const formValues: LinerTypeFormAttributes = {
           name: linerType.name
         }
         reset(formValues)

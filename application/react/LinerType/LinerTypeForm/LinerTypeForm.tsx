@@ -10,6 +10,8 @@ import { getOneLinerType } from '../../_queries/linerType';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
+const linerTypeTableUrl = '/react-ui/tables/liner-type'
+
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ export const LinerTypeForm = () => {
       })
       .catch((error: AxiosError) => {
         useErrorMessage(error)
-        navigate('/react-ui/tables/liner-type')
+        navigate(linerTypeTableUrl)
       })
   }, [])
 
@@ -37,13 +39,13 @@ export const LinerTypeForm = () => {
     if (isUpdateRequest) {
       axios.patch(`/liner-types/${mongooseId ? mongooseId : ''}`, linerType)
         .then((_) => {
-          navigate('/react-ui/tables/liner')
+          navigate(linerTypeTableUrl)
         })
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/liner-types', linerType)
         .then((_) => {
-          navigate('/react-ui/tables/liner-type')
+          navigate(linerTypeTableUrl)
           useSuccessMessage('Liner type was created successfully')
         })
         .catch((error: AxiosError) => useErrorMessage(error));

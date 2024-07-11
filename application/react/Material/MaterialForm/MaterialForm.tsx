@@ -15,7 +15,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 
-const materialTableUrl = '/react-ui/tables/materials'
+const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
@@ -121,7 +121,7 @@ export const MaterialForm = () => {
 
   const onSubmit = (formData: MaterialFormAttributes) => {
     if (isUpdateRequest) {
-      axios.patch(`/materials`, formData)
+      axios.patch(`/materials/${mongooseId}`, formData)
         .then((_) => {
           useSuccessMessage('Update was successful')
           navigate(materialTableUrl);

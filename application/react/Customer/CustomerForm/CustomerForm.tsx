@@ -68,9 +68,7 @@ const CustomerForm = () => {
           creditTerms: customer.creditTerms as MongooseId[]
         }
 
-        reset(formValues)
-
-        console.log('billingLocations: ', customer.billingLocations)
+        reset(formValues) // Populates the form with loaded values
 
         setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
         setBillingLocations(customer.billingLocations as AddressFormAttributes[])

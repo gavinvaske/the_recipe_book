@@ -15,8 +15,10 @@ export const LinerTypeForm = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
+
   useEffect(() => {
-    if (!mongooseId) return;
+    if (!isUpdateRequest) return;
 
     getOneLinerType(mongooseId)
       .then((linerType: LinerType) => {
@@ -32,8 +34,6 @@ export const LinerTypeForm = () => {
   }, [])
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {
-    const isUpdateRequest = Boolean(mongooseId);
-
     if (isUpdateRequest) {
       axios.patch(`/liner-types/${mongooseId ? mongooseId : ''}`, linerType)
         .then((_) => {
@@ -60,7 +60,7 @@ export const LinerTypeForm = () => {
           isRequired={true}
           errors={errors}
         />
-        <button className='btn-primary' type="submit">Create Liner Type</button>
+        <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
       </form>
     </div>
   )

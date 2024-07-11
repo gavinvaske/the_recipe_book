@@ -17,8 +17,10 @@ export const CreditTermForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<CreditTermFormAttributes>();
   const navigate = useNavigate();
 
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
+
   useEffect(() => {
-    if (!mongooseId) return;
+    if (!isUpdateRequest) return;
 
     getOneCreditTerm(mongooseId)
       .then((creditTerm: CreditTerm) => {
@@ -34,8 +36,6 @@ export const CreditTermForm = () => {
   }, [])
 
   const onSubmit = (formData: CreditTermFormAttributes) => {
-    const isUpdateRequest = Boolean(mongooseId);
-
     if (isUpdateRequest) {
       axios.patch(`/credit-terms/${mongooseId}`, formData)
         .then((_) => {
@@ -62,14 +62,14 @@ export const CreditTermForm = () => {
         </div>
         <div className='form-wrapper'>
           <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>
-            <Input 
+            <Input
               attribute='description'
               label="Description"
               register={register}
               isRequired={true}
               errors={errors}
             />
-            <button className='create-entry submit-button' type="submit">Submit</button>
+            <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
       </div>

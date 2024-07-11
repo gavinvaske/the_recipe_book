@@ -17,8 +17,10 @@ const DeliveryMethodForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodForm>();
   const navigate = useNavigate();
 
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
+
   useEffect(() => {
-    if (!mongooseId) return;
+    if (!isUpdateRequest) return;
 
     getOneDeliveryMethod(mongooseId)
       .then((deliveryMethod: DeliveryMethod) => {
@@ -34,8 +36,6 @@ const DeliveryMethodForm = () => {
   }, [])
 
   const onSubmit = (formData: DeliveryMethodForm) => {
-    const isUpdateRequest = Boolean(mongooseId);
-
     if (isUpdateRequest) {
       axios.patch(`/delivery-methods/${mongooseId}`, formData)
         .then((_) => {
@@ -68,7 +68,7 @@ const DeliveryMethodForm = () => {
                 isRequired={true}
                 errors={errors}
             />
-            <button className='create-entry submit-button' type='submit'>Submit</button>
+            <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
       </div>

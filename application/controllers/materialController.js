@@ -41,6 +41,24 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.patch('/:mongooseId', async (request, response) => {
+    try {
+        const updatedMaterial = await MaterialModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
+
+        return response.json(updatedMaterial);
+    } catch (error) {
+        console.error('Failed to update material: ', error);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
+
 router.get('/form', async (request, response) => {
     const vendors = await VendorModel.find().exec();
     const materialCategories = await MaterialCategoryModel.find().exec();

@@ -46,7 +46,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
         return response.json(updatedCreditTerm);
     } catch (error) {
-        console.error('Failed to update creditTerm: ', error.message);
+        console.error('Failed to update creditTerm: ', error);
 
         response
             .status(SERVER_ERROR)

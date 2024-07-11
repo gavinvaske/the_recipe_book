@@ -33,7 +33,7 @@ const CustomerForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormType>();
   const navigate = useNavigate();
 
-  const isUpdateRequest = Boolean(mongooseId);
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
@@ -56,7 +56,7 @@ const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   useEffect(() => {
-    if (!mongooseId) return;
+    if (!isUpdateRequest) return;
 
     getOneCustomer(mongooseId)
       .then((customer: Customer) => {
@@ -202,7 +202,7 @@ const CustomerForm = () => {
               </div>
             </div>
 
-            <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'} Customer</button>
+            <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
       </div>

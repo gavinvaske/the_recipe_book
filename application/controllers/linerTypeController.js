@@ -11,7 +11,7 @@ router.delete('/:mongooseId', async (request, response) => {
 
         return response.status(SUCCESS);
     } catch (error) {
-        console.error('Error deleting Liner Types: ', error);
+        console.error('Failed to delete LinerType: ', error);
 
         return response.status(SERVER_ERROR).send(error.message);
     }
@@ -23,7 +23,7 @@ router.get('/', async (_, response) => {
     
         return response.json(linerTypes);
     } catch (error) {
-        console.error('Error fetching Liner Types: ', error);
+        console.error('Error fetching LinerTypes: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);
@@ -40,7 +40,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
         return response.json(updatedLinerType);
     } catch (error) {
-        console.log('Failed to update linerType: ', error);
+        console.log('Failed to update LinerType: ', error);
 
         response
             .status(SERVER_ERROR)
@@ -56,7 +56,7 @@ router.post('/', async (request, response) => {
             .status(CREATED_SUCCESSFULLY)
             .json(linerType);
     } catch (error) {
-        console.error('Error creating LinerType: ', error);
+        console.error('Failed to create LinerType: ', error);
         return response
             .status(SERVER_ERROR)
             .send(error.message);

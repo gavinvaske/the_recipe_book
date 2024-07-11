@@ -30,7 +30,7 @@ export function App() {
             <Route path='forms'>
               <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
               <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
-              <Route path='credit-term' element={<CreditTermForm />} />
+              <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
               <Route path='quote' element={<QuoteForm />} />
               <Route path='customer' element={<CustomerForm />} />
               <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}

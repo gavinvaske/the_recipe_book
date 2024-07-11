@@ -11,6 +11,7 @@ import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
+
 const DeliveryMethodForm = () => {
   const { mongooseId } = useParams();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodForm>();

@@ -22,6 +22,7 @@ export const MaterialRowActions = (props: Props) => {
     axios.delete(`/materials/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => useSuccessMessage('Deletion was successfully'))
       .catch((error: AxiosError) => useErrorMessage(error))
+    navigate(0)
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

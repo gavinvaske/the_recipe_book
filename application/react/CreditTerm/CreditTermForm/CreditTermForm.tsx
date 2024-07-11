@@ -1,24 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermForm.scss'
 import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { getOneCreditTerm } from '../../_queries/creditTerm';
+import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+
+const creditTermTableUrl = '/react-ui/tables/credit-term'
 
 export const CreditTermForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CreditTermFormAttributes>();
+  const { mongooseId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreditTermFormAttributes>();
   const navigate = useNavigate();
 
-  const onSubmit = (formData: CreditTermFormAttributes) => {
-    axios.post('/credit-terms', formData)
-      .then((_: AxiosResponse) => {
-        navigate(`/react-ui/tables/credit-term`);
-        useSuccessMessage('Credit term was created successfully')
+  useEffect(() => {
+    if (!mongooseId) return;
+
+    getOneCreditTerm(mongooseId)
+      .then((creditTerm: CreditTerm) => {
+        const formValues: CreditTermFormAttributes = {
+          description: creditTerm.description
+        }
+        reset(formValues)
       })
-      .catch((error: AxiosError) => useErrorMessage(error))
+      .catch((error: AxiosError) => {
+        useErrorMessage(error)
+        navigate(creditTermTableUrl)
+      })
+  }, [])
+
+  const onSubmit = (formData: CreditTermFormAttributes) => {
+    const isUpdateRequest = Boolean(mongooseId);
+
+    if (isUpdateRequest) {
+      axios.patch(`/credit-terms/${mongooseId}`, formData)
+        .then((_) => {
+          navigate(creditTermTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/credit-terms', formData)
+        .then((_: AxiosResponse) => {
+          navigate(creditTermTableUrl);
+          useSuccessMessage('Credit term was created successfully')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
+
   };
 
   return (

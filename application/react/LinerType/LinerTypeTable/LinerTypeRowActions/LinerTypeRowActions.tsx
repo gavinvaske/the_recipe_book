@@ -21,6 +21,7 @@ export const LinerTypeRowActions = (props: Props) => {
     axios.delete(`/liner-types/${mongooseObjectId}`)
       .then(() => useSuccessMessage('Deletion was successfully'))
       .catch((error: AxiosError) => useErrorMessage(error))
+    navigate(0)
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

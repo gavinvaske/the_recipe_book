@@ -40,7 +40,7 @@ export const CreditTermTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: creditTerms, error } = useQuery({
-    queryKey: ['credit-terms'],
+    queryKey: ['get-credit-terms'],
     queryFn: getCreditTerms,
     initialData: []
   })

@@ -7,9 +7,9 @@ router.use(verifyJwtToken);
 
 router.delete('/:mongooseId', async (request, response) => {
     try {
-        await LinerTypeModel.findByIdAndDelete(request.params.mongooseId).exec();
+        const deletedLinerType = await LinerTypeModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS);
+        return response.status(SUCCESS).json(deletedLinerType);
     } catch (error) {
         console.error('Failed to delete LinerType: ', error);
 

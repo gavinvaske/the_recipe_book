@@ -17,9 +17,9 @@ router.use(verifyJwtToken);
 
 router.delete('/:mongooseId', async (request, response) => {
     try { 
-        await MaterialModel.findByIdAndDelete(request.params.mongooseId).exec();
+        const deletedMaterial = await MaterialModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS);
+        return response.status(SUCCESS).json(deletedMaterial);
     } catch (error) {
         console.error('Failed to delete material: ', error);
 

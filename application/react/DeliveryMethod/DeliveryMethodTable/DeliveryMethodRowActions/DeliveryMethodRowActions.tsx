@@ -5,26 +5,30 @@ import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
-import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 import { Row } from '@tanstack/react-table';
 import { DeliveryMethod } from '../../../_types/databaseModels/deliveryMethod';
+import { useQueryClient } from '@tanstack/react-query'
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 
 type Props = {
   row: Row<DeliveryMethod>
 }
 
-export const DeliveryMethodRowActions = (props) => {
+export const DeliveryMethodRowActions = (props: Props) => {
   const { row }: { row: any } = props;
   const { _id : mongooseObjectId } = row.original;
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient()
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
     axios.delete(`/delivery-methods/${mongooseObjectId}`)
-      .then((_ : AxiosResponse) => useSuccessMessage('Deletion was successfully'))
+      .then((_ : AxiosResponse) => {
+        queryClient.invalidateQueries({ queryKey: ['get-delivery-methods']})
+        useSuccessMessage('Deletion was successful')
+      })
       .catch((error: AxiosError) => useErrorMessage(error))
-    navigate(0)
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

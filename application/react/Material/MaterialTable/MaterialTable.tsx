@@ -44,7 +44,7 @@ export const MaterialTable = () => {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
   const { isError, data: materials, error } = useQuery({
-    queryKey: ['materials'],
+    queryKey: ['get-materials'],
     queryFn: getMaterials,
     initialData: []
   })

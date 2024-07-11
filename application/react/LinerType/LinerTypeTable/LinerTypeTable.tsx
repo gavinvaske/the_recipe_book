@@ -40,7 +40,7 @@ export const LinerTypeTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: linerTypes, error } = useQuery({
-    queryKey: ['liner-types'],
+    queryKey: ['get-liner-types'],
     queryFn: getLinerTypes,
     initialData: []
   })

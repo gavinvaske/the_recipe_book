@@ -40,7 +40,7 @@ function DeliveryMethodTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: deliveryMethods, error } = useQuery({
-    queryKey: ['delivery-methods'],
+    queryKey: ['get-delivery-methods'],
     queryFn: getDeliveryMethods,
     initialData: []
   })

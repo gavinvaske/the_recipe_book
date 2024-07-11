@@ -26,9 +26,9 @@ router.post('/', async (request, response) => {
 
 router.delete('/:mongooseId', async (request, response) => {
     try { 
-        await CreditTermModel.findByIdAndDelete(request.params.mongooseId).exec();
+        const deletedCreditTerm = await CreditTermModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS);
+        return response.status(SUCCESS).json(deletedCreditTerm);
     } catch (error) {
         console.error('Failed to delete creditTerm: ', error);
 

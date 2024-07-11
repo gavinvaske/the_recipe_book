@@ -49,9 +49,9 @@ router.post('/', async (request, response) => {
 
 router.delete('/:mongooseId', async (request, response) => {
     try {
-        await DeliveryMethodModel.findByIdAndDelete(request.params.mongooseId).exec();
-
-        return response.status(SUCCESS);
+        const deletedDeliveryMethod = await DeliveryMethodModel.findByIdAndDelete(request.params.mongooseId).exec();
+        
+        return response.status(SUCCESS).json(deletedDeliveryMethod);
     } catch (error) {
         console.error('Failed to delete deliveryMethod: ', error);
 

@@ -1,13 +1,14 @@
 import React from 'react';
 import './LinerTypeRowActions.scss';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from "react-router-dom";
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
-import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 import { Row } from '@tanstack/react-table';
 import { LinerType } from '../../../_types/databaseModels/linerType';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 
 type Props = {
   row: Row<LinerType>
@@ -16,14 +17,18 @@ type Props = {
 export const LinerTypeRowActions = (props: Props) => {
   const { row } = props
   const { _id : mongooseObjectId } = row.original;
+
   const navigate = useNavigate();
+  const queryClient = useQueryClient()
   
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('TODO: Add a confirmation modal before deletion?')
     axios.delete(`/liner-types/${mongooseObjectId}`)
-      .then(() => useSuccessMessage('Deletion was successfully'))
+      .then((_ : AxiosResponse) => {
+        queryClient.invalidateQueries({ queryKey: ['get-liner-types']})
+        useSuccessMessage('Deletion was successful')
+      })
       .catch((error: AxiosError) => useErrorMessage(error))
-    navigate(0)
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {

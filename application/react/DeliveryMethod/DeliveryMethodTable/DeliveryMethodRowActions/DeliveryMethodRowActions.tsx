@@ -6,10 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
+import { Row } from '@tanstack/react-table';
+import { DeliveryMethod } from '../../../_types/databaseModels/deliveryMethod';
+
+type Props = {
+  row: Row<DeliveryMethod>
+}
 
 export const DeliveryMethodRowActions = (props) => {
   const { row }: { row: any } = props;
-  const { _id : mongooseObjectId } = row.original as any;
+  const { _id : mongooseObjectId } = row.original;
 
   const navigate = useNavigate();
 

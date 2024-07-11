@@ -1,16 +1,21 @@
 import React from 'react'
 import './CreditTermRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
-import { Row, RowData } from '@tanstack/react-table';
+import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom'
 import { MongooseId } from '../../../_types/typeAliases';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
+import { CreditTerm } from '../../../_types/databaseModels/creditTerm';
 
-export const CreditTermRowActions = (props) => {
-  const { row }: { row: Row<RowData> } = props;
-  const { _id : mongooseObjectId } = row.original as any;
+type Props = {
+  row: Row<CreditTerm>
+}
+
+export const CreditTermRowActions = (props: Props) => {
+  const { row } = props;
+  const { _id : mongooseObjectId } = row.original;
 
   const navigate = useNavigate();
 

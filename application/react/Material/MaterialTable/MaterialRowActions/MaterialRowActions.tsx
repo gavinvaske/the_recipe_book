@@ -6,14 +6,16 @@ import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
+import { Row } from '@tanstack/react-table';
+import { Material } from '../../../_types/databaseModels/material';
 
 type Props = {
-  row: any  // TODO: Type this
+  row: Row<Material>
 }
 
 export const MaterialRowActions = (props: Props) => {
   const { row } = props
-  const { _id : mongooseObjectId } = row.original as any;
+  const { _id : mongooseObjectId } = row.original;
 
   const navigate = useNavigate();
 

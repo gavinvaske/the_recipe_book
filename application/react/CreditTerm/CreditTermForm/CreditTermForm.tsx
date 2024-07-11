@@ -47,7 +47,7 @@ export const CreditTermForm = () => {
       axios.post('/credit-terms', formData)
         .then((_: AxiosResponse) => {
           navigate(creditTermTableUrl);
-          useSuccessMessage('Credit term was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

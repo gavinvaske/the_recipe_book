@@ -131,7 +131,7 @@ export const MaterialForm = () => {
       axios.post(`/materials`, formData)
         .then((_) => {
           navigate(materialTableUrl);
-          useSuccessMessage('Material was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

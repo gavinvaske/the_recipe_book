@@ -47,7 +47,7 @@ export const AdhesiveCategoryForm = () => {
       axios.post('/adhesive-categories', adhesiveCategory)
         .then((_: AxiosResponse) => {
           navigate(adhesiveCategoryTableUrl)
-          useSuccessMessage('Adhesive Category was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

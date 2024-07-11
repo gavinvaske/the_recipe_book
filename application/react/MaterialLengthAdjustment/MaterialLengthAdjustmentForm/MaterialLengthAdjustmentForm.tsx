@@ -34,7 +34,7 @@ export const MaterialLengthAdjustmentForm = () => {
     axios.post('/material-length-adjustments', formData)
       .then((_: AxiosResponse) => {
         navigate('/react-ui/tables/TODO')
-        useSuccessMessage('Material Length Adjustment was created successfully')
+        useSuccessMessage('Creation was successful')
       })
       .catch((error: AxiosError) => useErrorMessage(error))
   }

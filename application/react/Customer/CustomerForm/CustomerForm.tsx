@@ -115,7 +115,7 @@ const CustomerForm = () => {
       axios.post('/customers', customer)
         .then((_ : AxiosResponse) => {
           navigate(customerTableUrl)
-          useSuccessMessage('Customer was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

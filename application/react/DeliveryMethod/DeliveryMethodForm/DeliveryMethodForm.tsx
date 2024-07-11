@@ -47,7 +47,7 @@ const DeliveryMethodForm = () => {
       axios.post('/delivery-methods', formData)
         .then((_: AxiosResponse) => {
           navigate(deliveryMethodTableUrl);
-          useSuccessMessage('Delivery Method was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }

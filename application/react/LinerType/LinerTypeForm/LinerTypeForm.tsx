@@ -47,7 +47,7 @@ export const LinerTypeForm = () => {
       axios.post('/liner-types', linerType)
         .then((_) => {
           navigate(linerTypeTableUrl)
-          useSuccessMessage('Liner type was created successfully')
+          useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error));
     }

@@ -1,5 +1,4 @@
 import { AddressFormAttributes } from "./address.ts"
-import { ShippingLocationFormAttributes } from "./shippingLocation.ts"
 
 export type ContactFormAttributes = {
   fullName: string,
@@ -9,5 +8,5 @@ export type ContactFormAttributes = {
   contactStatus: string,
   notes: string,
   position: string,
-  location: AddressFormAttributes | ShippingLocationFormAttributes 
+  location: AddressFormAttributes
 }

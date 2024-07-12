@@ -44,7 +44,7 @@ const CustomerForm = () => {
   const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormType[]>([])
   const [billingLocations, setBillingLocations] = useState<AddressFormAttributes[]>([])
   const [businessLocations, setBusinessLocations] = useState<AddressFormAttributes[]>([])
-  const [locations, setLocations] = useState<(AddressFormAttributes | ShippingLocationFormType)[]>([])
+  const [locations, setLocations] = useState<(AddressFormAttributes)[]>([])
   const [contacts, setContacts] = useState<ContactFormAttributes[]>([])
 
   useEffect(() => {

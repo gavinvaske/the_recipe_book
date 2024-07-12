@@ -3,14 +3,13 @@ import Row from '../Row/Row'
 import './ExpandableRow.scss'
 import { RowData, Row as tRow } from '@tanstack/react-table'
 
-const ExpandableRow = (props) => {
-  const { 
-    row, 
-    children 
-  } : {
-    row: tRow<RowData>,
-    children: React.ReactNode
-  } = props;
+type Props = {
+  row: tRow<RowData>,
+  children: React.ReactNode
+}
+
+const ExpandableRow = (props: Props) => {
+  const { row, children } = props;
 
   const [expanded, setExpanded] = React.useState(false)
   const toggleExpanded = () => setExpanded(!expanded);

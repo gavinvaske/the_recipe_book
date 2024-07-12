@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 import './ShippingLocationForm.scss'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 
-import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
+import { ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import flashMessageStore from '../../stores/flashMessageStore';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const ShippingLocationForm = (props) => {
   const { 
@@ -30,7 +29,7 @@ const ShippingLocationForm = (props) => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
   
   const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormType>();

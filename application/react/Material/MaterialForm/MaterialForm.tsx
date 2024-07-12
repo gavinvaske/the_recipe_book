@@ -6,17 +6,23 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { Vendor } from '../../_types/databaseModels/vendor';
 import { MaterialCategory } from '../../_types/databaseModels/materialCategory';
 import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
 import { LinerType } from '../../_types/databaseModels/linerType';
 import { Material } from '../../_types/databaseModels/material';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { MongooseId } from '../../_types/typeAliases';
+
+const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
+
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
   const [vendors, setVendors] = useState<SelectOption[]>([])
   const [materialCategories, setMaterialCategories] = useState<SelectOption[]>([])
@@ -24,7 +30,7 @@ export const MaterialForm = () => {
   const [linerTypes, setLinerTypes] = useState<SelectOption[]>([])
 
   useEffect(() => {
-    if (!mongooseId) return;
+    if (!isUpdateRequest) return;
 
     axios.get('/materials/' + mongooseId)
       .then(({ data }: {data: Material}) => {
@@ -51,15 +57,15 @@ export const MaterialForm = () => {
           masterRollSize: data.masterRollSize,
           image: data.image,
           linerType: data.linerType,
-          adhesiveCategory: data.adhesiveCategory as string,
-          vendor: data.vendor as string,
-          materialCategory: data.materialCategory as string
+          adhesiveCategory: data.adhesiveCategory as MongooseId,
+          vendor: data.vendor as MongooseId,
+          materialCategory: data.materialCategory as MongooseId
         }
 
         reset(formValues) // pre-populate form with existing values from the DB
       })
       .catch((error: AxiosError) => {
-        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
+        useErrorMessage(error)
       })
   }, [])
 
@@ -74,7 +80,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/material-categories')
       .then((response : AxiosResponse) => {
@@ -86,7 +92,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/adhesive-categories')
       .then((response : AxiosResponse) => {
@@ -98,7 +104,7 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
 
     axios.get('/liner-types')
       .then((response : AxiosResponse) => {
@@ -110,19 +116,25 @@ export const MaterialForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   const onSubmit = (formData: MaterialFormAttributes) => {
-    axios.post(`/materials`, formData)
-      .then((_) => {
-        flashMessageStore.addSuccessMessage('Material was created successfully')
-        navigate(`/react-ui/tables/materials`);
-      })
-      .catch((error: AxiosError) => {
-        console.log('error', error);
-        flashMessageStore.addErrorMessage(error.response?.data as string || error.message)
-      })
+    if (isUpdateRequest) {
+      axios.patch(`/materials/${mongooseId}`, formData)
+        .then((_) => {
+          navigate(materialTableUrl);
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    } else {
+      axios.post(`/materials`, formData)
+        .then((_) => {
+          navigate(materialTableUrl);
+          useSuccessMessage('Creation was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
   };
 
   return (
@@ -316,7 +328,7 @@ export const MaterialForm = () => {
                 />
 
               </div>
-              <button className='create-entry submit-button' type="submit">Submit</button>
+              <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
             </div>
           </form>
         </div>

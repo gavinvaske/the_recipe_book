@@ -1,7 +1,6 @@
-import { AddressForm } from "./address.ts"
-import { ShippingLocationForm } from "./shippingLocation.ts"
+import { AddressFormAttributes } from "./address.ts"
 
-export type ContactForm = {
+export type ContactFormAttributes = {
   fullName: string,
   phoneNumber: string,
   phoneExtension: string,
@@ -9,5 +8,5 @@ export type ContactForm = {
   contactStatus: string,
   notes: string,
   position: string,
-  location: AddressForm | ShippingLocationForm 
+  location: AddressFormAttributes
 }

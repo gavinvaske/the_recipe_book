@@ -1,17 +1,35 @@
 const router = require('express').Router();
 const { verifyJwtToken } = require('../middleware/authorize');
 const DeliveryMethodModel = require('../models/deliveryMethod');
-const { SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
+const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);
 
-router.get('/', async (request, response) => {
+router.get('/', async (_, response) => {
     try {
         const deliveryMethods = await DeliveryMethodModel.find().exec();
 
         return response.send(deliveryMethods);
     } catch (error) {
         return response.status(SERVER_ERROR).send(error.message);
+    }
+});
+
+router.patch('/:mongooseId', async (request, response) => {
+    try {
+        const updatedDeliveryMethod = await DeliveryMethodModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
+
+        return response.json(updatedDeliveryMethod);
+    } catch (error) {
+        console.error('Failed to update deliveryMethod: ', error);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
@@ -31,13 +49,27 @@ router.post('/', async (request, response) => {
 
 router.delete('/:mongooseId', async (request, response) => {
     try {
-        await DeliveryMethodModel.findByIdAndDelete(request.params.mongooseId).exec();
-
-        return response.status(SUCCESS);
+        const deletedDeliveryMethod = await DeliveryMethodModel.findByIdAndDelete(request.params.mongooseId).exec();
+        
+        return response.status(SUCCESS).json(deletedDeliveryMethod);
     } catch (error) {
         console.error('Failed to delete deliveryMethod: ', error);
 
         return response.status(SERVER_ERROR).send(error.message);
+    }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+    try {
+        const deliveryMethod = await DeliveryMethodModel.findById(request.params.mongooseId);
+
+        return response.json(deliveryMethod);
+    } catch (error) {
+        console.error('Error searching for deliveryMethod: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

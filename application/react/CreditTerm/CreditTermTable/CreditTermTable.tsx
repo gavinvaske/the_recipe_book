@@ -14,11 +14,10 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowActions';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
-import { AxiosError } from 'axios';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<CreditTerm>()
 
@@ -41,14 +40,13 @@ export const CreditTermTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: creditTerms, error } = useQuery({
-    queryKey: ['credit-terms'],
+    queryKey: ['get-credit-terms'],
     queryFn: getCreditTerms,
     initialData: []
   })
 
   if (isError) {
-    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
-    else flashMessageStore.addErrorMessage(error.message)
+    useErrorMessage(error)
   }
 
   const table = useReactTable({

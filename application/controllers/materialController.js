@@ -17,9 +17,9 @@ router.use(verifyJwtToken);
 
 router.delete('/:mongooseId', async (request, response) => {
     try { 
-        await MaterialModel.findByIdAndDelete(request.params.mongooseId).exec();
+        const deletedMaterial = await MaterialModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS);
+        return response.status(SUCCESS).json(deletedMaterial);
     } catch (error) {
         console.error('Failed to delete material: ', error);
 
@@ -36,6 +36,24 @@ router.get('/', async (request, response) => {
         console.error('Error fetching materials: ', error);
 
         return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
+
+router.patch('/:mongooseId', async (request, response) => {
+    try {
+        const updatedMaterial = await MaterialModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
+
+        return response.json(updatedMaterial);
+    } catch (error) {
+        console.error('Failed to update material: ', error);
+
+        response
             .status(SERVER_ERROR)
             .send(error.message);
     }

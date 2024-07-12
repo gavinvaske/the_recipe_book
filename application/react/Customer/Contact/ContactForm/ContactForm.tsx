@@ -1,10 +1,9 @@
 import React from 'react';
 import { useForm } from'react-hook-form';
-import FormErrorMessage from '../../../_global/FormErrorMessage/FormErrorMessage';
 import './ContactForm.scss'
-import { ContactForm } from '../../../_types/forms/contact';
-import { AddressForm } from '../../../_types/forms/address';
-import { ShippingLocationForm } from '../../../_types/forms/shippingLocation';
+import { ContactFormAttributes } from '../../../_types/forms/contact';
+import { AddressFormAttributes } from '../../../_types/forms/address';
+import { ShippingLocationFormAttributes } from '../../../_types/forms/shippingLocation';
 import { Input } from '../../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../../_global/FormInputs/Select/Select';
 
@@ -16,17 +15,17 @@ const ContactForm = (props) => {
   }: {
     onSubmit: any, 
     onCancel: any, 
-    locations: (AddressForm | ShippingLocationForm)[]
+    locations: (AddressFormAttributes | ShippingLocationFormAttributes)[]
   } = props;
 
-  const selectableLocations: SelectOption[] = locations.map((address: AddressForm | ShippingLocationForm, index: number) => {
+  const selectableLocations: SelectOption[] = locations.map((address: AddressFormAttributes | ShippingLocationFormAttributes, index: number) => {
     return {
       displayName: `${address.name}: ${address.street}, ${address.city}, ${address.state}, ${address.zipCode}`,
       value: index
     }
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormAttributes>();
 
   return (
     <form id='contact-form' onSubmit={handleSubmit(onSubmit)}>

@@ -15,10 +15,9 @@ import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
 import { LinerType } from '../../_types/databaseModels/linerType';
-import flashMessageStore from '../../stores/flashMessageStore';
 import { useQuery } from '@tanstack/react-query';
 import { getLinerTypes } from '../../_queries/linerType';
-import { AxiosError } from 'axios';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<LinerType>()
 
@@ -41,14 +40,13 @@ export const LinerTypeTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: linerTypes, error } = useQuery({
-    queryKey: ['liner-types'],
+    queryKey: ['get-liner-types'],
     queryFn: getLinerTypes,
     initialData: []
   })
 
   if (isError) {
-    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
-    else flashMessageStore.addErrorMessage(error.message)
+    useErrorMessage(error)
   }
 
 

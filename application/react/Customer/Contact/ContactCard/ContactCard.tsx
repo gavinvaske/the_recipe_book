@@ -1,7 +1,13 @@
 import React from 'react';
 import './ContactCard.scss';
+import { ContactFormAttributes } from '../../../_types/forms/contact'
 
-const ContactCard = (props) => {
+type Props = {
+  data: ContactFormAttributes,
+  onDelete: () => void
+}
+
+const ContactCard = (props: Props) => {
   const { data, onDelete } = props;
   const {
     fullName, phoneNumber, phoneExtension, email, 
@@ -19,7 +25,7 @@ const ContactCard = (props) => {
       <p>Position: {position}</p>
       <p>Location: {JSON.stringify(location)}</p>
 
-      <button onClick={() => onDelete(data)}>Click to Delete</button>
+      <button onClick={() => onDelete()}>Click to Delete</button>
     </div>
   )
 }

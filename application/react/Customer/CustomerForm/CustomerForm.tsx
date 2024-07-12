@@ -6,25 +6,34 @@ import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/Sh
 import { FormModal } from '../../_global/FormModal/FormModal';
 import AddressForm from '../../Address/AddressForm/AddressForm';
 import AddressCard from '../../Address/AddressCard/AddressCard';
+import ContactForm from '../Contact/ContactForm/ContactForm';
 import ShippingLocationCard from '../../ShippingLocation/ShippingLocationCard/ShippingLocationCard';
 import { removeElementFromArray } from '../../utils/state-service';
-import ContactForm from '../Contact/ContactForm/ContactForm';
 import ContactCard from '../Contact/ContactCard/ContactCard';
 
-import { AddressForm as AddressFormType } from '../../_types/forms/address';
-import { ShippingLocationForm as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
-import { ContactForm as ContactFormType } from '../../_types/forms/contact';
-import { CustomerForm as CustomerFormType } from '../../_types/forms/customer';
+import { AddressFormAttributes } from '../../_types/forms/address';
+import { ShippingLocationFormAttributes, ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
+import { ContactFormAttributes } from '../../_types/forms/contact';
+import { CustomerFormAttributes } from '../../_types/forms/customer';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
-import flashMessageStore from '../../stores/flashMessageStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { getOneCustomer } from '../../_queries/customer';
+import { Customer } from '../../_types/databaseModels/customer';
+import { MongooseId } from '../../_types/typeAliases';
+
+const customerTableUrl = '/react-ui/tables/customer'
 
 const CustomerForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CustomerFormType>();
+  const { mongooseId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormAttributes>();
   const navigate = useNavigate();
+
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
   const [showBillingLocationForm, setShowBillingLocationForm] = useState(false);
   const [showShippingLocationForm, setShowShippingLocationForm] = useState(false);
@@ -33,10 +42,10 @@ const CustomerForm = () => {
   const [creditTerms, setCreditTerms] = useState<SelectOption[]>([])
 
   const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormType[]>([])
-  const [billingLocations, setBillingLocations] = useState<AddressFormType[]>([])
-  const [businessLocations, setBusinessLocations] = useState<AddressFormType[]>([])
-  const [locations, setLocations] = useState<(AddressFormType | ShippingLocationFormType)[]>([])
-  const [contacts, setContacts] = useState<ContactFormType[]>([])
+  const [billingLocations, setBillingLocations] = useState<AddressFormAttributes[]>([])
+  const [businessLocations, setBusinessLocations] = useState<AddressFormAttributes[]>([])
+  const [locations, setLocations] = useState<(AddressFormAttributes)[]>([])
+  const [contacts, setContacts] = useState<ContactFormAttributes[]>([])
 
   useEffect(() => {
     setLocations([
@@ -47,6 +56,32 @@ const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   useEffect(() => {
+    if (!isUpdateRequest) return;
+
+    getOneCustomer(mongooseId)
+      .then((customer: Customer) => {
+        const formValues: CustomerFormAttributes = {
+          customerId: customer.customerId,
+          name: customer.name,
+          overun: customer.overun ? String(customer.overun) : '',
+          notes: customer.notes,
+          creditTerms: customer.creditTerms as MongooseId[]
+        }
+
+        reset(formValues) // Populates the form with loaded values
+
+        setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
+        setBillingLocations(customer.billingLocations as AddressFormAttributes[])
+        setShippingLocations(customer.shippingLocations as ShippingLocationFormAttributes[])
+        setContacts(customer.contacts as unknown as ContactFormAttributes[])
+      })
+      .catch((error: AxiosError) => {
+        navigate(customerTableUrl)
+        useErrorMessage(error)
+      })
+  }, [])
+
+  useEffect(() => { // TODO 7/10/2024: Convert this to tanstack-query
     axios.get('/credit-terms')
       .then((response : AxiosResponse) => {
         const creditTerms: CreditTerm[] = response.data;
@@ -58,29 +93,39 @@ const CustomerForm = () => {
           }
         )))
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, []);
 
-  const onCustomerFormSubmit = (customer: CustomerFormType) => {
+  const onCustomerFormSubmit = (customer: CustomerFormAttributes) => {
     customer.businessLocations = businessLocations;
     customer.shippingLocations = shippingLocations;
     customer.contacts = contacts;
-    console.log(customer);
+    customer.billingLocations = billingLocations;
 
-    axios.post('/customers', customer)
-      .then((_ : AxiosResponse) => {
-        navigate('react-ui/tables/customer')
-        flashMessageStore.addSuccessMessage('Customer was created successfully')
-      })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
-  };
+    if (isUpdateRequest) {
+      axios.patch(`/customers/${mongooseId}`, customer)
+        .then((_) => {
+          navigate(customerTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/customers', customer)
+        .then((_ : AxiosResponse) => {
+          navigate(customerTableUrl)
+          useSuccessMessage('Creation was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
+  }
+
 
   const hideBillingLocationForm = () => setShowBillingLocationForm(false);
   const hideShippingLocationForm = () => setShowShippingLocationForm(false);
   const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
   const hideContactForm = () => setShowContactForm(false);
 
-  const onBillingLocationFormSubmit = (billingLocation: AddressFormType) => {
+  const onBillingLocationFormSubmit = (billingLocation: AddressFormAttributes) => {
     hideBillingLocationForm();
     setBillingLocations([...billingLocations, billingLocation]);
   };
@@ -90,14 +135,14 @@ const CustomerForm = () => {
     setShippingLocations([...shippingLocations, shippingLocation]);
   };
 
-  const onBusinessLocationFormSubmit = (businessLocation: AddressFormType) => {
+  const onBusinessLocationFormSubmit = (businessLocation: AddressFormAttributes) => {
     hideBusinessLocationForm();
     setBusinessLocations([...businessLocations, businessLocation]);
   };
 
   const onContactFormSubmit = (contact: any) => {
     hideContactForm();
-    const contactForm: ContactFormType = {
+    const contactForm: ContactFormAttributes = {
       ...contact,
       location: locations[contact.location]
     }
@@ -155,7 +200,7 @@ const CustomerForm = () => {
               </div>
             </div>
 
-            <button className='btn-primary' type="submit">Create Customer</button>
+            <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
       </div>

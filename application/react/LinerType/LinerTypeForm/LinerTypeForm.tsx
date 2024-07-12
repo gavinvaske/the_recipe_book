@@ -4,44 +4,52 @@ import './LinerTypeForm.scss';
 import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { LinerType } from '../../_types/databaseModels/linerType';
+import { getOneLinerType } from '../../_queries/linerType';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+
+const linerTypeTableUrl = '/react-ui/tables/liner-type'
 
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>({});
 
-  useEffect(() => {
-    if (!mongooseId) return;
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
-    axios.get('/liner-types/' + mongooseId)
-      .then(({ data }: {data: LinerType}) => {
-        const formValues = {
-          name: data.name
+  useEffect(() => {
+    if (!isUpdateRequest) return;
+
+    getOneLinerType(mongooseId)
+      .then((linerType: LinerType) => {
+        const formValues: LinerTypeFormAttributes = {
+          name: linerType.name
         }
         reset(formValues)
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => {
+        navigate(linerTypeTableUrl)
+        useErrorMessage(error)
+      })
   }, [])
 
   const onFormSubmit = (linerType: LinerTypeFormAttributes) => {
-    const isUpdateRequest = Boolean(mongooseId);
-
     if (isUpdateRequest) {
       axios.patch(`/liner-types/${mongooseId ? mongooseId : ''}`, linerType)
         .then((_) => {
-          navigate('/react-ui/tables/liner')
+          navigate(linerTypeTableUrl)
+          useSuccessMessage('Update was successful')
         })
-        .catch(({ response }) => flashMessageStore.addErrorMessage(response.data));
+        .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/liner-types', linerType)
         .then((_) => {
-          navigate('/react-ui/tables/liner-type')
-          flashMessageStore.addSuccessMessage('Liner type was created successfully')
+          navigate(linerTypeTableUrl)
+          useSuccessMessage('Creation was successful')
         })
-        .catch(({ response }) => flashMessageStore.addErrorMessage(response.data));
+        .catch((error: AxiosError) => useErrorMessage(error));
     }
   }
 
@@ -55,7 +63,7 @@ export const LinerTypeForm = () => {
           isRequired={true}
           errors={errors}
         />
-        <button className='btn-primary' type="submit">Create Liner Type</button>
+        <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
       </form>
     </div>
   )

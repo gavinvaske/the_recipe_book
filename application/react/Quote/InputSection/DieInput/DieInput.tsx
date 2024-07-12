@@ -4,8 +4,8 @@ import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import quoteStore from '../../../stores/quoteStore';
 import axios, { AxiosError } from 'axios';
-import flashMessageStore from '../../../stores/flashMessageStore';
 import { Die } from '../../../_types/databaseModels/die';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 const Die = (props) => {
   const dieOverride = quoteStore.quoteInputs.dieOverride as Die;
@@ -17,7 +17,7 @@ const Die = (props) => {
         const { data } = response;
         setDies(data)
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   return (

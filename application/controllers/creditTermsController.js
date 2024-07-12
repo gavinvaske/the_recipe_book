@@ -26,9 +26,9 @@ router.post('/', async (request, response) => {
 
 router.delete('/:mongooseId', async (request, response) => {
     try { 
-        await CreditTermModel.findByIdAndDelete(request.params.mongooseId).exec();
+        const deletedCreditTerm = await CreditTermModel.findByIdAndDelete(request.params.mongooseId).exec();
 
-        return response.status(SUCCESS);
+        return response.status(SUCCESS).json(deletedCreditTerm);
     } catch (error) {
         console.error('Failed to delete creditTerm: ', error);
 
@@ -46,9 +46,23 @@ router.patch('/:mongooseId', async (request, response) => {
 
         return response.json(updatedCreditTerm);
     } catch (error) {
-        console.error('Failed to update creditTerm: ', error.message);
+        console.error('Failed to update creditTerm: ', error);
 
         response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+    try {
+        const creditTerm = await CreditTermModel.findById(request.params.mongooseId);
+
+        return response.json(creditTerm);
+    } catch (error) {
+        console.error('Error searching for creditTerm: ', error);
+
+        return response
             .status(SERVER_ERROR)
             .send(error.message);
     }

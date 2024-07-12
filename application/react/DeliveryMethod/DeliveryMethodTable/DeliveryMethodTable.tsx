@@ -14,11 +14,10 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
-import flashMessageStore from '../../stores/flashMessageStore'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
-import { AxiosError } from 'axios'
+import { useErrorMessage } from '../../_hooks/useErrorMessage'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()
 
@@ -41,14 +40,13 @@ function DeliveryMethodTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: deliveryMethods, error } = useQuery({
-    queryKey: ['delivery-methods'],
+    queryKey: ['get-delivery-methods'],
     queryFn: getDeliveryMethods,
     initialData: []
   })
 
   if (isError) {
-    if (error instanceof AxiosError) flashMessageStore.addErrorMessage(error.response?.data as string)
-    else flashMessageStore.addErrorMessage(error.message)
+    useErrorMessage(error)
   }
 
   const table = useReactTable({

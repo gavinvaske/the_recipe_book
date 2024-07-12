@@ -1,24 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
-import { DeliveryMethodForm } from '../../_types/forms/deliveryMethod';
-import { useNavigate } from "react-router-dom";
-import flashMessageStore from '../../stores/flashMessageStore';
+import { DeliveryMethodFormAttributes } from '../../_types/forms/deliveryMethod';
+import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getOneDeliveryMethod } from '../../_queries/deliveryMethod';
+import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+
+const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
 
 const DeliveryMethodForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<DeliveryMethodForm>();
+  const { mongooseId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodFormAttributes>();
   const navigate = useNavigate();
 
-  const onSubmit = (formData: DeliveryMethodForm) => {
-    axios.post('/delivery-methods', formData)
-      .then((_: AxiosResponse) => {
-        navigate(`/react-ui/tables/delivery-method`);
-        flashMessageStore.addSuccessMessage('Delivery method was created successfully')
+  const isUpdateRequest = mongooseId && mongooseId.length > 0;
+
+  useEffect(() => {
+    if (!isUpdateRequest) return;
+
+    getOneDeliveryMethod(mongooseId)
+      .then((deliveryMethod: DeliveryMethod) => {
+        const formValues: DeliveryMethodFormAttributes = {
+          name: deliveryMethod.name
+        }
+        reset(formValues)
       })
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => {
+        navigate(deliveryMethodTableUrl)
+        useErrorMessage(error)
+      })
+  }, [])
+
+  const onSubmit = (formData: DeliveryMethodFormAttributes) => {
+    if (isUpdateRequest) {
+      axios.patch(`/delivery-methods/${mongooseId}`, formData)
+        .then((_) => {
+          navigate(deliveryMethodTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/delivery-methods', formData)
+        .then((_: AxiosResponse) => {
+          navigate(deliveryMethodTableUrl);
+          useSuccessMessage('Creation was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
   };
 
   return (
@@ -36,7 +68,7 @@ const DeliveryMethodForm = () => {
                 isRequired={true}
                 errors={errors}
             />
-            <button className='create-entry submit-button' type='submit'>Submit</button>
+            <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
       </div>

@@ -3,10 +3,10 @@ import './MaterialInput.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import quoteStore from '../../../stores/quoteStore';
 import { observer } from 'mobx-react-lite';
-import flashMessageStore from '../../../stores/flashMessageStore';
 import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import { Material } from '../../../_types/databaseModels/material';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 type Props = {
   isPrimaryMaterial: boolean
@@ -38,7 +38,7 @@ const MaterialInput = observer((props: Props) => {
   useEffect(() => {
     axios.get(`/materials`)
       .then((response: AxiosResponse) => setMaterials(response.data))
-      .catch((error: AxiosError) => flashMessageStore.addErrorMessage(error.response?.data as string || error.message))
+      .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
   return (

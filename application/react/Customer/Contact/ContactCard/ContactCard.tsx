@@ -1,6 +1,6 @@
 import React from 'react';
 import './ContactCard.scss';
-import { ContactFormAttributes } from '../../../_types/forms/contact'
+import { ContactFormAttributes } from '../ContactForm/ContactForm';
 
 type Props = {
   data: ContactFormAttributes,

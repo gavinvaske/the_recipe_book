@@ -8,7 +8,6 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneAdhesiveCategory } from '../../_queries/adhesiveCategory';
-import { AdhesiveCategoryFormAttributes } from '../../_types/forms/adhesiveCategory';
 
 const adhesiveCategoryTableUrl = '/react-ui/tables/adhesive-category'
 
@@ -69,3 +68,7 @@ export const AdhesiveCategoryForm = () => {
     </div>
   )
 };
+
+export type AdhesiveCategoryFormAttributes = {
+  name: string; 
+}

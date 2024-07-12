@@ -3,12 +3,12 @@ import './MaterialLengthAdjustmentForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { MaterialLengthAdjustmentFormFormAttributes } from '../../_types/forms/materialLengthAdjustment';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { Material } from '../../_types/databaseModels/material';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { MongooseId } from '../../_types/typeAliases';
 
 
 export const MaterialLengthAdjustmentForm = () => {
@@ -66,4 +66,10 @@ export const MaterialLengthAdjustmentForm = () => {
       <button className='btn-primary' type="submit">Create Material Inventory Entry</button>
     </form>
   )
+}
+
+export type MaterialLengthAdjustmentFormFormAttributes = {
+  material: MongooseId,
+  length: number,
+  notes?: string
 }

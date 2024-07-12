@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
-import ShippingLocationForm from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
+import { ShippingLocationForm, ShippingLocationFormAttributes } from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
-import AddressForm from '../../Address/AddressForm/AddressForm';
+import { AddressForm } from '../../Address/AddressForm/AddressForm';
 import AddressCard from '../../Address/AddressCard/AddressCard';
-import ContactForm from '../Contact/ContactForm/ContactForm';
+import { ContactForm } from '../Contact/ContactForm/ContactForm';
 import ShippingLocationCard from '../../ShippingLocation/ShippingLocationCard/ShippingLocationCard';
 import { removeElementFromArray } from '../../utils/state-service';
 import ContactCard from '../Contact/ContactCard/ContactCard';
 
-import { AddressFormAttributes } from '../../_types/forms/address';
-import { ShippingLocationFormAttributes, ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
-import { ContactFormAttributes } from '../../_types/forms/contact';
-import { CustomerFormAttributes } from '../../_types/forms/customer';
+import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
+import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
 
 import { CreditTerm } from '../../_types/databaseModels/creditTerm';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -28,7 +26,7 @@ import { MongooseId } from '../../_types/typeAliases';
 
 const customerTableUrl = '/react-ui/tables/customer'
 
-const CustomerForm = () => {
+export const CustomerForm = () => {
   const { mongooseId } = useParams();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormAttributes>();
   const navigate = useNavigate();
@@ -41,7 +39,7 @@ const CustomerForm = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [creditTerms, setCreditTerms] = useState<SelectOption[]>([])
 
-  const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormType[]>([])
+  const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormAttributes[]>([])
   const [billingLocations, setBillingLocations] = useState<AddressFormAttributes[]>([])
   const [businessLocations, setBusinessLocations] = useState<AddressFormAttributes[]>([])
   const [locations, setLocations] = useState<(AddressFormAttributes)[]>([])
@@ -130,7 +128,7 @@ const CustomerForm = () => {
     setBillingLocations([...billingLocations, billingLocation]);
   };
 
-  const onShippingLocationFormSubmit = (shippingLocation: ShippingLocationFormType) => {
+  const onShippingLocationFormSubmit = (shippingLocation: ShippingLocationFormAttributes) => {
     hideShippingLocationForm();
     setShippingLocations([...shippingLocations, shippingLocation]);
   };
@@ -315,4 +313,14 @@ const CustomerForm = () => {
   );
 }
 
-export default CustomerForm;
+export type CustomerFormAttributes = {
+  customerId: string,
+  name: string,
+  businessLocations?: AddressFormAttributes[],
+  shippingLocations?: ShippingLocationFormAttributes[],
+  billingLocations?: AddressFormAttributes[],
+  contacts?: ContactFormAttributes[],
+  overun: string,
+  notes?: string,
+  creditTerms?: MongooseId[]
+}

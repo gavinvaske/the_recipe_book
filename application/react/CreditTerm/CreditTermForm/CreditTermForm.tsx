@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CreditTermForm.scss'
-import { CreditTermFormAttributes } from '../../_types/forms/creditTerm';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
@@ -75,4 +74,8 @@ export const CreditTermForm = () => {
       </div>
     </div>
   )
+}
+
+export type CreditTermFormAttributes = {
+  description: string
 }

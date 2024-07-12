@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
 import './LinerTypeForm.scss';
-import { LinerTypeForm as LinerTypeFormAttributes } from '../../_types/forms/linerType';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
@@ -67,4 +66,8 @@ export const LinerTypeForm = () => {
       </form>
     </div>
   )
+}
+
+export type LinerTypeFormAttributes = {
+  name: String
 }

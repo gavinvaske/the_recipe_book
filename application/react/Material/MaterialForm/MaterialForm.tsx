@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './MaterialForm.scss'
-import { MaterialFormAttributes } from '../../_types/forms/material';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
@@ -335,4 +334,32 @@ export const MaterialForm = () => {
       </div>
     </div>
   )
+}
+
+export type MaterialFormAttributes = {
+  name: string;
+  materialId: string;
+  vendor: MongooseId;
+  materialCategory: MongooseId;
+  thickness: number;
+  weight: number;
+  costPerMsi: number;
+  freightCostPerMsi: number;
+  width: number;
+  faceColor: string;
+  adhesive: string;
+  adhesiveCategory: MongooseId;
+  quotePricePerMsi: number;
+  description: string;
+  whenToUse: string;
+  alternativeStock?: string;
+  length: number;
+  facesheetWeightPerMsi: number;
+  adhesiveWeightPerMsi: number;
+  linerWeightPerMsi: number;
+  location: string;
+  linerType: MongooseId;
+  productNumber: string;
+  masterRollSize: number;
+  image: string;
 }

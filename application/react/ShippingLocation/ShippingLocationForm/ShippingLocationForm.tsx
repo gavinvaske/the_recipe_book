@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
 import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
 
-import { ShippingLocationFormAttributes as ShippingLocationFormType } from '../../_types/forms/shippingLocation';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
+import { MongooseId } from '../../_types/typeAliases';
 
-const ShippingLocationForm = (props) => {
+export const ShippingLocationForm = (props) => {
   const { 
     onSubmit,
     onCancel
@@ -32,7 +33,7 @@ const ShippingLocationForm = (props) => {
       .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
   
-  const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormType>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormAttributes>();
 
   return (
     <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
@@ -100,4 +101,7 @@ const ShippingLocationForm = (props) => {
   )
 }
 
-export default ShippingLocationForm;
+export type ShippingLocationFormAttributes = AddressFormAttributes & {
+  freightAccountNumber?: string,
+  deliveryMethod?: MongooseId
+}

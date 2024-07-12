@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import './AddressForm.scss'
 import { Input } from '../../_global/FormInputs/Input/Input';
 
-const AddressForm = (props) => {
+export const AddressForm = (props) => {
   const { 
     onSubmit,
     onCancel
@@ -62,4 +62,11 @@ const AddressForm = (props) => {
   )
 }
 
-export default AddressForm;
+export type AddressFormAttributes = {
+  name: string,
+  street: string,
+  city: string,
+  state: string,
+  zipCode: string,
+  unitOrSuite?: string
+}

@@ -1,13 +1,12 @@
 import React from 'react';
 import { useForm } from'react-hook-form';
 import './ContactForm.scss'
-import { ContactFormAttributes } from '../../../_types/forms/contact';
-import { AddressFormAttributes } from '../../../_types/forms/address';
-import { ShippingLocationFormAttributes } from '../../../_types/forms/shippingLocation';
+import { AddressFormAttributes } from '../../../Address/AddressForm/AddressForm';
 import { Input } from '../../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../../_global/FormInputs/Select/Select';
+import { ShippingLocationFormAttributes } from '../../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 
-const ContactForm = (props) => {
+export const ContactForm = (props) => {
   const { 
     onSubmit,
     onCancel,
@@ -93,4 +92,13 @@ const ContactForm = (props) => {
   )
 }
 
-export default ContactForm;
+export type ContactFormAttributes = {
+  fullName: string,
+  phoneNumber: string,
+  phoneExtension: string,
+  email: string,
+  contactStatus: string,
+  notes: string,
+  position: string,
+  location: AddressFormAttributes
+}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './DeliveryMethodForm.scss'
-import { DeliveryMethodFormAttributes } from '../../_types/forms/deliveryMethod';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
@@ -12,7 +11,7 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 
 const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
 
-const DeliveryMethodForm = () => {
+export const DeliveryMethodForm = () => {
   const { mongooseId } = useParams();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodFormAttributes>();
   const navigate = useNavigate();
@@ -76,4 +75,6 @@ const DeliveryMethodForm = () => {
   )
 }
 
-export default DeliveryMethodForm;
+export type DeliveryMethodFormAttributes = {
+  name: string
+}

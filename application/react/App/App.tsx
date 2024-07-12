@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
-import CustomerForm from '../Customer/CustomerForm/CustomerForm';
-import DeliveryMethodForm from '../DeliveryMethod/DeliveryMethodForm/DeliveryMethodForm'
+import { CustomerForm } from '../Customer/CustomerForm/CustomerForm';
+import { DeliveryMethodForm } from '../DeliveryMethod/DeliveryMethodForm/DeliveryMethodForm'
 import { CreditTermForm } from '../CreditTerm/CreditTermForm/CreditTermForm';
 import { CreditTermTable } from '../CreditTerm/CreditTermTable/CreditTermTable';
 import DeliveryMethodTable from '../DeliveryMethod/DeliveryMethodTable/DeliveryMethodTable';

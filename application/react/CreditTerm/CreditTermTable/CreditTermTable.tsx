@@ -69,8 +69,8 @@ export const CreditTermTable = () => {
     <>
     <div className='page-wrapper credit-term-table'>
       <div className='card table-card'>
-        <div class="header-description">
-          <h1 class="text-blue">Credit Terms</h1>
+        <div className="header-description">
+          <h1 className="text-blue">Credit Terms</h1>
           <p>Complete list of all <p className='text-blue'>{rows.length} </p> credit terms.</p>
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />

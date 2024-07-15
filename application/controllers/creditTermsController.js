@@ -6,15 +6,15 @@ const CreditTermModel = require('../models/creditTerm');
 router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
-  try {
-    const creditTerms = await CreditTermModel.find().exec();
+    try {
+        const creditTerms = await CreditTermModel.find().exec();
 
-    return response.send(creditTerms);
-  } catch (error) {
-    console.error('Error fetching creditTerms: ', error)
+        return response.send(creditTerms);
+    } catch (error) {
+        console.error('Error fetching creditTerms: ', error);
 
-    return response.status(SERVER_ERROR).send(error.message);
-  }
+        return response.status(SERVER_ERROR).send(error.message);
+    }
 });
 
 router.post('/', async (request, response) => {

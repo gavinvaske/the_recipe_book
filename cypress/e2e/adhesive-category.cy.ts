@@ -12,9 +12,10 @@ describe('AdhesiveCategory Views', () => {
       cy.get('[data-test=adhesive-category-form]').should('exist');
   });
 
-  it('Should render the CreditTerm table', () => {
+  it('Should render the CreditTerm table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/adhesive-category`);
 
     cy.get('#adhesive-category-table').should('exist');
+    cy.get('[data-test=searchbar]').should('exist');
   });
 });

@@ -12,9 +12,10 @@ describe('CreditTerm Views', () => {
       cy.get('[data-test=credit-term-form]').should('exist');
   });
 
-  it('Should render the CreditTerm table', () => {
+  it('Should render the CreditTerm table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/credit-term`);
 
     cy.get('#credit-term-table').should('exist');
+    cy.get('[data-test=searchbar]').should('exist');
   });
 });

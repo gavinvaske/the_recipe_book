@@ -12,9 +12,10 @@ describe('LinerType Views', () => {
       cy.get('[data-test=liner-type-form]').should('exist');
   });
 
-  it('Should render the LinerType table', () => {
+  it('Should render the LinerType table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/liner-type`);
 
     cy.get('#liner-type-table').should('exist');
+    cy.get('[data-test=searchbar]').should('exist');
   });
 });

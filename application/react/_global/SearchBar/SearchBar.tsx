@@ -12,7 +12,7 @@ const SearchBar = forwardRef((props: Props, ref: any) => {
 
 
   return (
-    <div className={value ? 'search-bar has-text' : 'search-bar'}>
+    <div className={value ? 'search-bar has-text' : 'search-bar'} data-test='searchbar'>
       <input ref={ref} id='primarySearch' type='text' value={value} onChange={onChange} placeholder="Search" />
     </div>
   )

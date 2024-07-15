@@ -12,9 +12,10 @@ describe('DeliveryMethod Views', () => {
       cy.get('[data-test=delivery-method-form]').should('exist');
   });
 
-  it('Should render the DeliveryMethod table', () => {
+  it('Should render the DeliveryMethod table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/delivery-method`);
 
     cy.get('#delivery-method-table').should('exist');
+    cy.get('[data-test=searchbar]').should('exist');
   });
 });

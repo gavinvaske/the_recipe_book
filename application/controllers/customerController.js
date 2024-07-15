@@ -6,27 +6,27 @@ const CustomerModel = require('../models/customer');
 router.use(verifyJwtToken);
 
 router.get('/', async (_, response) => {
-  try {
-    const customers = await CustomerModel.find().exec();
+    try {
+        const customers = await CustomerModel.find().exec();
 
-    return response.json(customers);
-  } catch (error) {
-      console.error('Error fetching customers: ', error)
+        return response.json(customers);
+    } catch (error) {
+        console.error('Error fetching customers: ', error);
 
-      return response.status(SERVER_ERROR).send(error.message);
-  }
-})
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
 
 router.delete('/:mongooseId', async (request, response) => {
-  try {
-      const customer = await CustomerModel.findByIdAndDelete(request.params.mongooseId).exec();
+    try {
+        const customer = await CustomerModel.findByIdAndDelete(request.params.mongooseId).exec();
       
-      return response.status(SUCCESS).json(customer);
-  } catch (error) {
-      console.error('Failed to delete customer: ', error);
+        return response.status(SUCCESS).json(customer);
+    } catch (error) {
+        console.error('Failed to delete customer: ', error);
 
-      return response.status(SERVER_ERROR).send(error.message);
-  }
+        return response.status(SERVER_ERROR).send(error.message);
+    }
 });
 
 router.post('/', async (request, response) => {

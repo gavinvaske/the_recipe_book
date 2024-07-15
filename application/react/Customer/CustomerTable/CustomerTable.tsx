@@ -67,7 +67,7 @@ export const CustomerTable = () => {
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 
-        <Table id='credit-term-table'>
+        <Table id='customer-table'>
           <TableHead table={table} />
           
           <TableBody>

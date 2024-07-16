@@ -6,15 +6,15 @@ const { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } = require('../enums/httpSt
 router.use(verifyJwtToken);
 
 router.delete('/:mongooseId', async (request, response) => {
-  try {
-      const deletedAdhesiveCategory = await AdhesiveCategoryModel.findByIdAndDelete(request.params.mongooseId).exec();
+    try {
+        const deletedAdhesiveCategory = await AdhesiveCategoryModel.findByIdAndDelete(request.params.mongooseId).exec();
     
-      return response.status(SUCCESS).json(deletedAdhesiveCategory);
-  } catch (error) {
-      console.error('Failed to delete adhesiveCategory: ', error);
+        return response.status(SUCCESS).json(deletedAdhesiveCategory);
+    } catch (error) {
+        console.error('Failed to delete adhesiveCategory: ', error);
 
-      return response.status(SERVER_ERROR).send(error.message);
-  }
+        return response.status(SERVER_ERROR).send(error.message);
+    }
 });
 
 router.get('/', async (_, response) => {

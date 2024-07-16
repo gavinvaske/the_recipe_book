@@ -10,7 +10,7 @@ import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
-import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
+import Row from '../../_global/Table/Row/Row';
 
 const columnHelper = createColumnHelper<AdhesiveCategory>()
 
@@ -59,23 +59,24 @@ export const AdhesiveCategoryTable = () => {
   const rows = table.getRowModel().rows;
 
   return (
-    <>
-      <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
+    <div className='page-wrapper credit-term-table'>
+      <div className='card table-card'>
+        <div className="header-description">
+          <h1 className="text-blue">Adhesive Categories</h1>
+          <p>Complete list of all <p className='text-blue'>{rows.length} </p> Adhesive Categories.</p>
+        </div>
+         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 
-      <Table id='adhesive-category-table'>
-        <TableHead table={table} />
-        
-        <TableBody>
-          {rows.map(row => (
-            <ExpandableRow row={row} key={row.id}>
-              <div>@Storm: Click on a row to see this expandable row content. Delete this div to make the row no-longer expandable</div>
-            </ExpandableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <br />
-      <p>Row Count: {rows.length}</p>
-    </>
+        <Table id='adhesive-category-table'>
+          <TableHead table={table} />
+          
+          <TableBody>
+            {rows.map(row => (
+              <Row row={row} key={row.id}></Row>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   )
 }

@@ -4,6 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory';
 import { Material } from '../../../_types/databaseModels/material';
 import { Modal } from '../../../_global/Modal/Modal';
+import { Link } from 'react-router-dom';
+import { getDayMonthYear } from '../../../_helperFunctions/dateTime';
 
 function renderPurchaseOrders(materialInventory: MaterialInventory) {
   const { purchaseOrdersForMaterial } = materialInventory
@@ -19,11 +21,11 @@ function renderPurchaseOrders(materialInventory: MaterialInventory) {
         </div>
         <div className='tb-cell cell-two'>
           <div className='pulse-indicator'></div>
-          {purchaseOrder.orderDate && purchaseOrder.orderDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+          {getDayMonthYear(purchaseOrder.orderDate)}
         </div>
         <div className='tb-cell cell-three'>
           <div className='pulse-indicator'></div>
-          {purchaseOrder.arrivalDate && purchaseOrder.arrivalDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+          {getDayMonthYear(purchaseOrder.arrivalDate)}
         </div>
         <div className='tb-cell cell-four'>
           <div className='pulse-indicator'></div>
@@ -72,10 +74,6 @@ const Material = observer((props: Props) => {
     e.stopPropagation() // This is required to prevent any parents' onClick from being called
   }
 
-  function stopPropagation(event) {
-    event.stopPropagation();
-  }
-
   return (
     <div className='card' id={material._id} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
@@ -92,7 +90,7 @@ const Material = observer((props: Props) => {
             }
 
           </div>
-          <a onClick={stopPropagation} href={"/materials/update/" + material._id}><i className="fa-regular fa-pen-to-square"></i></a>
+          <Link to={`/react-ui/forms/material/${material._id}`}><i className="fa-regular fa-pen-to-square"></i></Link>
         </div>
 
       </div>

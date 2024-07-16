@@ -803,8 +803,8 @@ describe('File: material.js', () => {
                     productNumber: duplicateProductNumber
                 });
                 const anothaMaterialWithDuplicateProductNumber = new MaterialModel({
-                  ...testDataGenerator.mockData.Material(),
-                  productNumber: duplicateProductNumber
+                    ...testDataGenerator.mockData.Material(),
+                    productNumber: duplicateProductNumber
                 });
                 let errorMessage;
 

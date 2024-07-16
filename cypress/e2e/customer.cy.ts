@@ -12,7 +12,7 @@ describe('Customer Views', () => {
       cy.get('[data-test=customer-form]').should('exist');
   });
 
-  it('Should render the CreditTerm table and searchbar', () => {
+  it('Should render the Customer table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/customer`);
 
     cy.get('#customer-table').should('exist');

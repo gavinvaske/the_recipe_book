@@ -11,7 +11,7 @@ const InventoryFilterBar = observer((_) => {
   return (
     <div id='inventory-filter-bar' className="workflow-filter flex-center-left-row full-width card">
       <Link
-        to='/react-ui/TODO'
+        to='/react-ui/forms/material-order'
         className='create bg-blue text-white border-blue btn-create new-po-btn'
       >PO <i className="fa-regular fa-plus"></i></Link>
       <Link

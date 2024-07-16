@@ -23,6 +23,7 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
 import { Customer } from '../../_types/databaseModels/customer';
 import { MongooseId } from '../../_types/typeAliases';
+import { getCreditTerms } from '../../_queries/creditTerm';
 
 const customerTableUrl = '/react-ui/tables/customer'
 
@@ -79,11 +80,9 @@ export const CustomerForm = () => {
       })
   }, [])
 
-  useEffect(() => { // TODO 7/10/2024: Convert this to tanstack-query
-    axios.get('/credit-terms')
-      .then((response : AxiosResponse) => {
-        const creditTerms: CreditTerm[] = response.data;
-
+  useEffect(() => {
+    getCreditTerms()
+      .then((creditTerms : CreditTerm[]) => {
         setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
           {
             displayName: creditTerm.description,
@@ -188,7 +187,7 @@ export const CustomerForm = () => {
                 />
                 <Select
                   attribute='creditTerms'
-                  label="Liner Type"
+                  label="Credit Term"
                   options={creditTerms}
                   register={register}
                   isRequired={false}

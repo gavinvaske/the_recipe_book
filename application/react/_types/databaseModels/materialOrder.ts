@@ -12,5 +12,5 @@ export type MaterialOrder = MongooseAttributes & {
   vendor: MongooseId,
   hasArrived?: boolean,
   notes?: string,
-  arrivalDate: string
+  arrivalDate: Date
 }

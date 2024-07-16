@@ -4,9 +4,9 @@ import { MongooseId } from "../_types/typeAliases";
 
 export const getAdhesiveCategories = async (): Promise<AdhesiveCategory[]> => {
   const response : AxiosResponse = await axios.get(`/adhesive-categories`);
-  const adhesiveCategory: AdhesiveCategory[] = response.data;
+  const adhesiveCategories: AdhesiveCategory[] = response.data;
 
-  return adhesiveCategory;
+  return adhesiveCategories;
 }
 
 export const getOneAdhesiveCategory = async (mongooseId: MongooseId): Promise<AdhesiveCategory> => {

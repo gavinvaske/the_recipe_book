@@ -152,7 +152,7 @@ export const CustomerForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create A New Customer</h1>
+          <h1>{isUpdateRequest ? 'Update' : 'Create'} Customer</h1>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>

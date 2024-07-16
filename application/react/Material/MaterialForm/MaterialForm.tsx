@@ -140,7 +140,7 @@ export const MaterialForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Material</h1>
+          <h1>{isUpdateRequest ? 'Update' : 'Create'} Material</h1>
         </div>
         <div className='form-wrapper'>
           <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)} data-test='material-form'>

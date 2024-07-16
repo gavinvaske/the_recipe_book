@@ -12,9 +12,10 @@ describe('Material Views', () => {
       cy.get('[data-test=material-form]').should('exist');
   });
 
-  it('Should render the Material table', () => {
+  it('Should render the Material table and searchbar', () => {
     cy.visit(`${tableUrlPrefix}/material`);
 
     cy.get('#material-table').should('exist');
+    cy.get('[data-test=searchbar]').should('exist');
   });
 });

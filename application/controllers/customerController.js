@@ -1,9 +1,33 @@
 const router = require('express').Router();
-const { SERVER_ERROR, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
+const { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS } = require('../enums/httpStatusCodes');
 const { verifyJwtToken } = require('../middleware/authorize');
 const CustomerModel = require('../models/customer');
 
 router.use(verifyJwtToken);
+
+router.get('/', async (_, response) => {
+    try {
+        const customers = await CustomerModel.find().exec();
+
+        return response.json(customers);
+    } catch (error) {
+        console.error('Error fetching customers: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
+
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        const customer = await CustomerModel.findByIdAndDelete(request.params.mongooseId).exec();
+      
+        return response.status(SUCCESS).json(customer);
+    } catch (error) {
+        console.error('Failed to delete customer: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
 
 router.post('/', async (request, response) => {
     try {

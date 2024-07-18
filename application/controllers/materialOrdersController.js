@@ -4,7 +4,7 @@ const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR } = require('../enums/httpStatusCodes');
-const { descending } = require('../enums/mongooseSortMethods')
+const { descending } = require('../enums/mongooseSortMethods');
 
 router.use(verifyJwtToken);
 
@@ -57,15 +57,15 @@ router.patch('/:mongooseId', async (request, response) => {
 });
 
 router.get('/', async (_, response) => {
-  try {
-    const materialOrders = await MaterialOrderModel.find().sort({ createdAt: descending }).exec();
+    try {
+        const materialOrders = await MaterialOrderModel.find().sort({ createdAt: descending }).exec();
 
-    return response.json(materialOrders);
-} catch (error) {
-    console.error('Error loading materialOrders', error)
-    return response.status(SERVER_ERROR).send(error.message);
-}
-})
+        return response.json(materialOrders);
+    } catch (error) {
+        console.error('Error loading materialOrders', error);
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
 
 // @deprecated
 router.get('/create', async (request, response) => {

@@ -54,44 +54,43 @@ export const CustomerForm = () => {
     ])
   }, [billingLocations, shippingLocations, businessLocations]);
 
-  useEffect(() => {
+  const preloadFormData = async () => {
+    const creditTerms = await getCreditTerms();
+
+    setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
+      {
+        displayName: creditTerm.description,
+        value: creditTerm._id
+      }
+    )))
+
     if (!isUpdateRequest) return;
 
-    getOneCustomer(mongooseId)
-      .then((customer: Customer) => {
-        const formValues: CustomerFormAttributes = {
-          customerId: customer.customerId,
-          name: customer.name,
-          overun: customer.overun ? String(customer.overun) : '',
-          notes: customer.notes,
-          creditTerms: customer.creditTerms as MongooseId[]
-        }
+    const customer = await getOneCustomer(mongooseId);
 
-        reset(formValues) // Populates the form with loaded values
+    const formValues: CustomerFormAttributes = {
+      customerId: customer.customerId,
+      name: customer.name,
+      overun: customer.overun ? String(customer.overun) : '',
+      notes: customer.notes,
+      creditTerms: customer.creditTerms as MongooseId[]
+    }
 
-        setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
-        setBillingLocations(customer.billingLocations as AddressFormAttributes[])
-        setShippingLocations(customer.shippingLocations as ShippingLocationFormAttributes[])
-        setContacts(customer.contacts as unknown as ContactFormAttributes[])
-      })
-      .catch((error: AxiosError) => {
+    reset(formValues) // Populates the form with loaded values
+
+    setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
+    setBillingLocations(customer.billingLocations as AddressFormAttributes[])
+    setShippingLocations(customer.shippingLocations as ShippingLocationFormAttributes[])
+    setContacts(customer.contacts as unknown as ContactFormAttributes[])
+  }
+
+  useEffect(() => {
+    preloadFormData()
+      .catch((error) => {
         navigate(customerTableUrl)
         useErrorMessage(error)
       })
   }, [])
-
-  useEffect(() => {
-    getCreditTerms()
-      .then((creditTerms : CreditTerm[]) => {
-        setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
-          {
-            displayName: creditTerm.description,
-            value: creditTerm._id
-          }
-        )))
-      })
-      .catch((error: AxiosError) => useErrorMessage(error))
-  }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormAttributes) => {
     customer.businessLocations = businessLocations;

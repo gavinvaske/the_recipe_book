@@ -120,12 +120,17 @@ describe('linerType validation', () => {
                     ...linerTypeAttributes,
                     name: duplicateName
                 });
+                const anotherLinerTypeWithDuplicateMaterialId = new LinerTypeModel({
+                    ...linerTypeAttributes,
+                    name: duplicateName
+                });
                 let errorMessage;
 
                 await linerType.save();
 
                 try {
                     await linerTypeWithDuplicateMaterialId.save();
+                    await anotherLinerTypeWithDuplicateMaterialId.save();
                 } catch (error) {
                     errorMessage = error.message;
                 }

@@ -3,16 +3,21 @@ const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
-
-const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_RESULTS_PER_PAGE = 2;
-const DEFAULT_SORT_METHOD = 'ascending';
-const MONGOOSE_SORT_METHODS = {
-    'ascending': 1,
-    'descending': -1
-};
+const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
+const { descending } = require('../enums/mongooseSortMethods');
 
 router.use(verifyJwtToken);
+
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        const deletedMaterialOrder = await MaterialOrderModel.findByIdAndDelete(request.params.mongooseId).exec();
+        return response.status(SUCCESS).json(deletedMaterialOrder);
+    } catch (error) {
+        console.error('Failed to delete materialOrder: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
 
 router.post('/query', async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;
@@ -44,47 +49,36 @@ router.post('/query', async (request, response) => {
     }
 });
 
-router.get('/', async (request, response) => {
+router.patch('/:mongooseId', async (request, response) => {
     try {
-        const queryParams = request.query;
-        const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
-        const sortBy = queryParams.sortBy;
-        const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
-        let sortQuery = {};
-    
-        if (sortBy && sortMethod) {
-            sortQuery = {
-                [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
-            };
-        }
+        const updatedMaterialOrder = await MaterialOrderModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
 
-        const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
-        const numberOfRecordsInDatabase = await MaterialOrderModel.countDocuments({});
-        const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
-
-        const materialOrders = await MaterialOrderModel
-            .find()
-            .sort(sortQuery)
-            .populate({path: 'author'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .skip(numberOfResultsToSkip)
-            .limit(DEFAULT_RESULTS_PER_PAGE)
-            .exec();
-
-        return response.render('viewMaterialOrders', {
-            materialOrders,
-            pageNumber,
-            totalNumberOfPages,
-            sortBy,
-            sortMethod
-        });
+        return response.json(updatedMaterialOrder);
     } catch (error) {
-        request.flash('errors', ['Unable to load Material Orders, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
+        console.error('Failed to update materialOrder: ', error);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
+router.get('/', async (_, response) => {
+    try {
+        const materialOrders = await MaterialOrderModel.find().sort({ createdAt: descending }).exec();
+
+        return response.json(materialOrders);
+    } catch (error) {
+        console.error('Error loading materialOrders', error);
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
+
+// @deprecated
 router.get('/create', async (request, response) => {
     const materials = await MaterialModel.find().exec();
     const vendors = await VendorModel.find().exec();
@@ -96,6 +90,21 @@ router.get('/create', async (request, response) => {
     });
 });
 
+router.post('/', async (request, response) => {
+    try {
+        const savedMaterialOrder = await MaterialOrderModel.create(request.body);
+
+        return response
+            .status(CREATED_SUCCESSFULLY)
+            .json(savedMaterialOrder);
+    } catch (error) {
+        console.error('Failed to create materialOrder', error);
+
+        return response.status(BAD_REQUEST).send(error.message);
+    }
+});
+
+// @deprecated
 router.post('/create', async (request, response) => {
     try {
         await MaterialOrderModel.create(request.body);
@@ -165,22 +174,17 @@ router.get('/delete/:id', async (request, response) => {
     }
 });
 
-router.get('/:id', async (request, response) => {
+router.get('/:mongooseId', async (request, response) => {
     try {
-        const materialOrder = await MaterialOrderModel
-            .findById(request.params.id)
-            .populate({path: 'author'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .exec();
-
-        return response.render('viewOneMaterialOrder', {
-            materialOrder
-        });
+        const materialOrder = await MaterialOrderModel.findById(request.params.mongooseId);
+        
+        return response.json(materialOrder);
     } catch (error) {
-        console.log(error);
-        request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
-        return response.redirect('back');
+        console.error('Error searching for materialOrder: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

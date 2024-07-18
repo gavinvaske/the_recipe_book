@@ -18,6 +18,8 @@ import { PageNotFound } from '../404/404';
 import { MaterialLengthAdjustmentForm } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentForm/MaterialLengthAdjustmentForm';
 import { AdhesiveCategoryTable } from '../AdhesiveCategory/AdhesiveCategoryTable/AdhesiveCategoryTable';
 import { CustomerTable } from '../Customer/CustomerTable/CustomerTable';
+import { MaterialOrderForm } from '../MaterialOrder/MaterialOrderForm/MaterialOrderForm';
+import { MaterialOrderTable } from '../MaterialOrder/MaterialOrderTable/MaterialOrderTable';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ export function App() {
               <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
               <Route path='material/:mongooseId?' element={<MaterialForm />} />
               <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
+              <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
             </Route>
 
             <Route path='tables'>
@@ -47,6 +50,7 @@ export function App() {
               <Route path='material' element={<MaterialTable />} />
               <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
               <Route path='customer' element={<CustomerTable />} />
+              <Route path='material-order' element={<MaterialOrderTable />} />
             </Route>
           </Route>
 

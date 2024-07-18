@@ -28,7 +28,7 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
 
       <select {...register(attribute, {required: isRequired ? "Please select an option" : undefined })} multiple={isMultiSelect ? true : false}>
         <option value="">-- Select --</option>
-        {options && options.map((option: SelectOption) => (<option value={option.value}>{option.displayName}</option>))}
+        {options && options.map((option: SelectOption, index: number) => (<option key={index} value={option.value}>{option.displayName}</option>))}
       </select>
 
       <FormErrorMessage errors={errors} name={attribute} />

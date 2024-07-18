@@ -8,3 +8,10 @@ export const getOneMaterialOrder = async (mongooseId: MongooseId): Promise<Mater
 
   return materialOrder
 }
+
+export const getMaterialOrders = async (): Promise<MaterialOrder[]> => {
+  const response : AxiosResponse = await axios.get(`/material-orders`);
+  const materialOrders: MaterialOrder[] = response.data;
+
+  return materialOrders
+}

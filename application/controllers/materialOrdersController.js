@@ -4,14 +4,7 @@ const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
 const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR } = require('../enums/httpStatusCodes');
-
-const DEFAULT_PAGE_NUMBER = 1;
-const DEFAULT_RESULTS_PER_PAGE = 2;
-const DEFAULT_SORT_METHOD = 'ascending';
-const MONGOOSE_SORT_METHODS = {
-    'ascending': 1,
-    'descending': -1
-};
+const { descending } = require('../enums/mongooseSortMethods')
 
 router.use(verifyJwtToken);
 
@@ -63,46 +56,16 @@ router.patch('/:mongooseId', async (request, response) => {
     }
 });
 
-router.get('/', async (request, response) => {
-    try {
-        const queryParams = request.query;
-        const pageNumber = queryParams.pageNumber || DEFAULT_PAGE_NUMBER;
-        const sortBy = queryParams.sortBy;
-        const sortMethod = Object.keys(MONGOOSE_SORT_METHODS).includes(queryParams.sortMethod) ? queryParams.sortMethod : DEFAULT_SORT_METHOD;
-        let sortQuery = {};
-    
-        if (sortBy && sortMethod) {
-            sortQuery = {
-                [sortBy]: MONGOOSE_SORT_METHODS[sortMethod]
-            };
-        }
+router.get('/', async (_, response) => {
+  try {
+    const materialOrders = await MaterialOrderModel.find().sort({ createdAt: descending }).exec();
 
-        const numberOfResultsToSkip = (pageNumber - 1) * DEFAULT_RESULTS_PER_PAGE;
-        const numberOfRecordsInDatabase = await MaterialOrderModel.countDocuments({});
-        const totalNumberOfPages = Math.ceil(numberOfRecordsInDatabase / DEFAULT_RESULTS_PER_PAGE);
-
-        const materialOrders = await MaterialOrderModel
-            .find()
-            .sort(sortQuery)
-            .populate({path: 'author'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .skip(numberOfResultsToSkip)
-            .limit(DEFAULT_RESULTS_PER_PAGE)
-            .exec();
-
-        return response.render('viewMaterialOrders', {
-            materialOrders,
-            pageNumber,
-            totalNumberOfPages,
-            sortBy,
-            sortMethod
-        });
-    } catch (error) {
-        request.flash('errors', ['Unable to load Material Orders, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
-    }
-});
+    return response.json(materialOrders);
+} catch (error) {
+    console.error('Error loading materialOrders', error)
+    return response.status(SERVER_ERROR).send(error.message);
+}
+})
 
 // @deprecated
 router.get('/create', async (request, response) => {

@@ -177,7 +177,7 @@ router.get('/delete/:id', async (request, response) => {
 router.get('/:mongooseId', async (request, response) => {
     try {
         const materialOrder = await MaterialOrderModel.findById(request.params.mongooseId);
-        console.log('this is test: ', typeof materialOrder.createdAt);
+        
         return response.json(materialOrder);
     } catch (error) {
         console.error('Error searching for materialOrder: ', error);

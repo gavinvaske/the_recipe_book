@@ -23,11 +23,5 @@ export const convertDateStringToFormInputDateString = (dateAsString: string): st
   if (!dateAsString) {
     return ''
   }
-
-  const date = new Date(dateAsString)
-  const day = ("0" + date.getDate()).slice(-2);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const year = date.getFullYear()
-
-  return `${year}-${month}-${day}`
+  return new Date(dateAsString).toISOString().substring(0, 10)
 }

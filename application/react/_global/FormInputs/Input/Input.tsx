@@ -12,17 +12,18 @@ type Props<T extends FieldValues> = {
   defaultValue?: string
   isRequired?: boolean
   additionalRegisterOptions?: any
-  onChange?: () => void
+  onChange?: () => void,
+  fieldType?: 'text' | 'checkbox' | 'date'
 }
 
 /* @Gavin More client side validation rules can be configured in react-hook-form. see https://react-hook-form.com/get-started#Applyvalidation */
 export const Input = <T extends FieldValues>(props: Props<T>) => {
-  const { placeholder, errors, attribute, defaultValue, label, register, isRequired } = props
+  const { placeholder, errors, attribute, defaultValue, label, register, isRequired, fieldType } = props
 
   return (
     <div className='input-wrapper'>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
-      <input type="text" 
+      <input type={fieldType ? fieldType : 'text'}
         placeholder={placeholder}
         value={defaultValue}
         {...register(

@@ -3,6 +3,7 @@ const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
+const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR } = require('../enums/httpStatusCodes');
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
@@ -41,6 +42,24 @@ router.post('/query', async (request, response) => {
         return response.json({
             error
         });
+    }
+});
+
+router.patch('/:mongooseId', async (request, response) => {
+    try {
+        const updatedMaterialOrder = await MaterialOrderModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
+
+        return response.json(updatedMaterialOrder);
+    } catch (error) {
+        console.error('Failed to update materialOrder: ', error);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
@@ -85,6 +104,7 @@ router.get('/', async (request, response) => {
     }
 });
 
+// @deprecated
 router.get('/create', async (request, response) => {
     const materials = await MaterialModel.find().exec();
     const vendors = await VendorModel.find().exec();
@@ -96,6 +116,21 @@ router.get('/create', async (request, response) => {
     });
 });
 
+router.post('/', async (request, response) => {
+    try {
+        const savedMaterialOrder = await MaterialOrderModel.create(request.body);
+
+        return response
+            .status(CREATED_SUCCESSFULLY)
+            .json(savedMaterialOrder);
+    } catch (error) {
+        console.error('Failed to create materialOrder', error);
+
+        return response.status(BAD_REQUEST).send(error.message);
+    }
+});
+
+// @deprecated
 router.post('/create', async (request, response) => {
     try {
         await MaterialOrderModel.create(request.body);
@@ -165,22 +200,17 @@ router.get('/delete/:id', async (request, response) => {
     }
 });
 
-router.get('/:id', async (request, response) => {
+router.get('/:mongooseId', async (request, response) => {
     try {
-        const materialOrder = await MaterialOrderModel
-            .findById(request.params.id)
-            .populate({path: 'author'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .exec();
-
-        return response.render('viewOneMaterialOrder', {
-            materialOrder
-        });
+        const materialOrder = await MaterialOrderModel.findById(request.params.mongooseId);
+        console.log('this is test: ', typeof materialOrder.createdAt);
+        return response.json(materialOrder);
     } catch (error) {
-        console.log(error);
-        request.flash('errors', ['An error occurred while attempting to load that Material Order:', error.message]);
-        return response.redirect('back');
+        console.error('Error searching for materialOrder: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 

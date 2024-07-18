@@ -11,3 +11,23 @@ export const getDayMonthYear = (utcDate: Date | undefined): string => {
 
   return new Date(utcDate).toLocaleString('en-US', {year: 'numeric', day: '2-digit', month: 'long', timeZone: 'UTC'});
 }
+
+/**
+ * Converts a given Date object to a formatted string in the format 'YYYY-MM-DD'. 
+ * This was created to solve an issue where HTML date input fields require this string format to populate defualt values
+ *
+ * @param {Date} date - The Date object to be converted to a formatted string.
+ * @returns {string} - A string containing the year, month, and day in the format 'YYYY-MM-DD'.
+ */
+export const convertDateStringToFormInputDateString = (dateAsString: string): string => {
+  if (!dateAsString) {
+    return ''
+  }
+
+  const date = new Date(dateAsString)
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear()
+
+  return `${year}-${month}-${day}`
+}

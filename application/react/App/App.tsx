@@ -40,7 +40,7 @@ export function App() {
               <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
               <Route path='material/:mongooseId?' element={<MaterialForm />} />
               <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
-              <Route path='material-order' element={<MaterialOrderForm />} />
+              <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
             </Route>
 
             <Route path='tables'>

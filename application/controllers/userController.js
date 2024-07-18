@@ -10,6 +10,7 @@ const {upload} = require('../middleware/upload');
 const fs = require('fs');
 const path = require('path');
 const {isUserLoggedIn} = require('../services/userService');
+const { SERVER_ERROR } = require('../enums/httpStatusCodes');
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
@@ -19,6 +20,20 @@ const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
+
+router.get('/', verifyJwtToken, async (_, response) => {
+    try {
+        const users = await UserModel.find().exec();
+
+        return response.json(users);
+    } catch (error) {
+        console.error('Error fetching users: ', error);
+
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
 
 router.get('/logged-in-user-details', verifyJwtToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id, 'email username fullName userType jobRole');

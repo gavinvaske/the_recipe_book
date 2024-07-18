@@ -11,6 +11,9 @@
       "publicUrl": "build"
     }
   },
+  "jest": {
+    "testMatch": ["**/application/**/*.spec.(ts|js)", "**/test/**/*.spec.(ts|js)"]
+  },
   "scripts": {
     "build": "parcel build",
     "start": "npm run build && node application/index.js",

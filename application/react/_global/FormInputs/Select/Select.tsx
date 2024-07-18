@@ -2,7 +2,6 @@ import React from 'react';
 import './Select.scss'
 import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
-import { v4 as uuidv4 } from 'uuid';
 
 export type SelectOption = {
   displayName: string,
@@ -29,7 +28,7 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
 
       <select {...register(attribute, {required: isRequired ? "Please select an option" : undefined })} multiple={isMultiSelect ? true : false}>
         <option value="">-- Select --</option>
-        {options && options.map((option: SelectOption) => (<option key={uuidv4()} value={option.value}>{option.displayName}</option>))}
+        {options && options.map((option: SelectOption, index: number) => (<option key={index} value={option.value}>{option.displayName}</option>))}
       </select>
 
       <FormErrorMessage errors={errors} name={attribute} />

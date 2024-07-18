@@ -3,10 +3,21 @@ const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
 const {verifyJwtToken} = require('../middleware/authorize');
-const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR } = require('../enums/httpStatusCodes');
+const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
 const { descending } = require('../enums/mongooseSortMethods');
 
 router.use(verifyJwtToken);
+
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        const deletedMaterialOrder = await MaterialOrderModel.findByIdAndDelete(request.params.mongooseId).exec();
+        return response.status(SUCCESS).json(deletedMaterialOrder);
+    } catch (error) {
+        console.error('Failed to delete materialOrder: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
+    }
+});
 
 router.post('/query', async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;

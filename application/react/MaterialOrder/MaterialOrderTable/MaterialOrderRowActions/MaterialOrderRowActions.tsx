@@ -23,7 +23,7 @@ export const MaterialOrderRowActions = (props: Props) => {
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
-    axios.delete(`/material-order/${mongooseObjectId}`)
+    axios.delete(`/material-orders/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => {
         queryClient.invalidateQueries({ queryKey: ['get-material-orders']})
         useSuccessMessage('Deletion was successful')

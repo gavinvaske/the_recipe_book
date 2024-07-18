@@ -85,50 +85,12 @@ export const CustomerForm = () => {
   }
 
   useEffect(() => {
-    preloadFormData().catch((error) => {
-      navigate(customerTableUrl)
-      useErrorMessage(error)
-    })
+    preloadFormData()
+      .catch((error) => {
+        navigate(customerTableUrl)
+        useErrorMessage(error)
+      })
   }, [])
-
-  // useEffect(() => {
-  //   if (!isUpdateRequest) return;
-
-  //   getOneCustomer(mongooseId)
-  //     .then((customer: Customer) => {
-  //       const formValues: CustomerFormAttributes = {
-  //         customerId: customer.customerId,
-  //         name: customer.name,
-  //         overun: customer.overun ? String(customer.overun) : '',
-  //         notes: customer.notes,
-  //         creditTerms: customer.creditTerms as MongooseId[]
-  //       }
-
-  //       reset(formValues) // Populates the form with loaded values
-
-  //       setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
-  //       setBillingLocations(customer.billingLocations as AddressFormAttributes[])
-  //       setShippingLocations(customer.shippingLocations as ShippingLocationFormAttributes[])
-  //       setContacts(customer.contacts as unknown as ContactFormAttributes[])
-  //     })
-  //     .catch((error: AxiosError) => {
-  //       navigate(customerTableUrl)
-  //       useErrorMessage(error)
-  //     })
-  // }, [])
-
-  // useEffect(() => {
-  //   getCreditTerms()
-  //     .then((creditTerms : CreditTerm[]) => {
-        // setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
-        //   {
-        //     displayName: creditTerm.description,
-        //     value: creditTerm._id
-        //   }
-        // )))
-  //     })
-  //     .catch((error: AxiosError) => useErrorMessage(error))
-  // }, []);
 
   const onCustomerFormSubmit = (customer: CustomerFormAttributes) => {
     customer.businessLocations = businessLocations;

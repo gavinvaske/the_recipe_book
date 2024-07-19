@@ -11,9 +11,6 @@
       "publicUrl": "build"
     }
   },
-  "jest": {
-    "testMatch": ["**/application/**/*.spec.(ts|js)", "**/test/**/*.spec.(ts|js)"]
-  },
   "scripts": {
     "build": "parcel build",
     "start": "npm run build && node application/index.js",
@@ -73,9 +70,13 @@
     "xml2json": "0.12.0"
   },
   "devDependencies": {
+    "@babel/core": "7.24.9",
+    "@babel/preset-env": "7.24.8",
+    "@babel/preset-typescript": "7.24.7",
     "@types/js-search": "1.4.4",
     "@types/react": "18.3.2",
     "@types/uuid": "9.0.8",
+    "babel-jest": "29.7.0",
     "browserify-zlib": "0.2.0",
     "chance": "1.1.11",
     "crypto-browserify": "3.12.0",
@@ -91,6 +92,7 @@
     "start-server-and-test": "2.0.3",
     "stream-browserify": "3.0.0",
     "stream-http": "3.2.0",
+    "ts-node": "10.9.2",
     "typescript": "5.5.2"
   }
 }

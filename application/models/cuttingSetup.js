@@ -68,4 +68,4 @@ const schema = new Schema({
 
 const cuttingSetup = mongoose.model('cuttingSetups', schema);
 
-module.exports = cuttingSetup;
+export default cuttingSetup;

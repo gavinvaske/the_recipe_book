@@ -30,8 +30,8 @@ import windingSetupEndpoints from './controllers/windingSetupController.js'
 import vendorEndpoints from './controllers/vendorController.js'
 import materialOrderEndpoints from './controllers/materialOrdersController.js'
 import ticketEndpoints from './controllers/ticketController.js'
-// import productEndpoints from './controllers/productController.js'
-// import holdReasonEndpoints from './controllers/holdReasonController.js'
+import productEndpoints from './controllers/productController.js'
+import holdReasonEndpoints from './controllers/holdReasonController.js'
 // import proofEndpoints from './controllers/proofController.js'
 // import dieLineEndpoints from './controllers/dieLineController.js'
 // import spotPlateEndpoints from './controllers/spotPlateController.js'
@@ -110,8 +110,8 @@ app.use('/winding-setups', windingSetupEndpoints);
 app.use('/vendors', vendorEndpoints);
 app.use('/material-orders', materialOrderEndpoints);
 app.use('/tickets', ticketEndpoints);
-// app.use('/products', require('./controllers/productController'));
-// app.use('/hold-reasons', require('./controllers/holdReasonController'));
+app.use('/products', productEndpoints);
+app.use('/hold-reasons', holdReasonEndpoints);
 // app.use('/proofs', require('./controllers/proofController'));
 // app.use('/die-lines', require('./controllers/dieLineController'));
 // app.use('/spot-plates', require('./controllers/spotPlateController'));

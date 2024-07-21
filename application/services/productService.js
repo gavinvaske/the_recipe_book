@@ -1,4 +1,4 @@
-module.exports.selectProductFromTicket = (ticket, productIdToFind) => {
+export function selectProductFromTicket(ticket, productIdToFind) {
     if (!ticket) {
         return;
     }
@@ -7,4 +7,4 @@ module.exports.selectProductFromTicket = (ticket, productIdToFind) => {
         const thisProductId = _id && _id.toString();
         return thisProductId === productIdToFind;
     });
-};
+}

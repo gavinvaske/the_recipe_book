@@ -4,8 +4,8 @@ import { verifyJwtToken } from '../middleware/authorize.js'
 import { upload } from '../middleware/upload.js';
 import TicketModel from '../models/ticket.js'
 
-const s3Service = require('../services/s3Service');
-const productService = require('../services/productService');
+import * as s3Service from '../services/s3Service.js';
+import * as productService from '../services/productService.js';
 import * as fileService from '../services/fileService.js';
 
 const SERVER_ERROR_CODE = 500;
@@ -72,4 +72,4 @@ router.get('/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

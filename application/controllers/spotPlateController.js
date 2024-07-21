@@ -4,7 +4,7 @@ const SpotPlateModel = require('../models/spotPlate');
 import * as mongooseService  from '../services/mongooseService.js'
 import { upload } from '../middleware/upload.js';
 import * as fileService from '../services/fileService.js';
-const s3Service = require('../services/s3Service');
+import * as s3Service from '../services/s3Service.js';
 const spotPlateService = require('../services/spotPlateService');
 import { verifyJwtToken } from '../middleware/authorize.js'
 

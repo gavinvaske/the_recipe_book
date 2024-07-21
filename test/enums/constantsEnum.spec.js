@@ -1,4 +1,4 @@
-const constantsEnum = require('../../application/enums/constantsEnum');
+import * as constantsEnum from '../../application/enums/constantsEnum';
 
 describe('constantsEnum', () => {
     it('MAX_FRAME_LENGTH_INCHES : should equal the correct value', () => {

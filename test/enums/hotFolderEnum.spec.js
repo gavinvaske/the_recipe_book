@@ -1,4 +1,4 @@
-const hotFolderEnum = require('../../application/enums/hotFolderEnum');
+import * as hotFolderEnum from '../../application/enums/hotFolderEnum';
 
 describe('departmentsEnum', () => {
     it('should return the correct number of items', () => {

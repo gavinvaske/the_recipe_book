@@ -1,6 +1,6 @@
-const { howManyCirclesCanFitInThisSquare } = require('../../application/enums/circlesPerSquareEnum');
-
+import { howManyCirclesCanFitInThisSquare } from '../../application/enums/circlesPerSquareEnum';
 import Chance from 'chance'
+
 const chance = Chance();
 
 const SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.111382;

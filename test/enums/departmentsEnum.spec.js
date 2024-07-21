@@ -1,12 +1,13 @@
-const {
+import {
     getAllDepartments, 
     productionDepartmentsAndDepartmentStatuses, 
     isInProgressDepartmentStatus, 
     departmentToStatusesMappingForTicketObjects, 
     removeDepartmentStatusesAUserIsNotAllowedToSelect,
     departmentToNextDepartmentAndStatus
-} = require('../../application/enums/departmentsEnum');
+} from '../../application/enums/departmentsEnum';
 import Chance from 'chance'
+
 const chance = Chance();
 
 describe('departmentsEnum', () => {

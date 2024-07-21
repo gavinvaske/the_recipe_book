@@ -64,4 +64,4 @@ const schema = new Schema({
 
 const printingSetup = mongoose.model('printingSetups', schema);
 
-module.exports = printingSetup;
+export default printingSetup;

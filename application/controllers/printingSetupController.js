@@ -1,10 +1,10 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-import UserModel from '../models/user';
+import UserModel from '../models/user.js';
 import MachineModel from '../models/machine.js'
 import MaterialModel from '../models/material.js'
-const PrintingSetupModel = require('../models/printingSetup');
+import PrintingSetupModel from '../models/printingSetup.js';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
@@ -158,4 +158,4 @@ router.post('/update/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

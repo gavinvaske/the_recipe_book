@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 const CuttingSetupModel = require('../models/cuttingSetup');
-import UserModel from '../models/user';
+import UserModel from '../models/user.js';
 import MachineModel from '../models/machine.js'
 import MaterialModel from '../models/material.js'
 import FinishModel from '../models/finish.js'

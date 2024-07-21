@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const MaterialOrderModel = require('../../application/models/materialOrder');
+import MaterialOrderModel from '../../application/models/materialOrder';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 const TOTAL_ROLLS_MIN = 1;
 const TOTAL_ROLLS_MAX = 100;

@@ -1,8 +1,9 @@
-const SpotPlateModel = require('../../application/models/spotPlate');
+import SpotPlateModel from '../../application/models/spotPlate';
 import Chance from 'chance'
-const chance = Chance();;
 import * as databaseService from '../../application/services/databaseService.js';
-const departmentsEnum = require('../../application/enums/departmentsEnum');
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
+
+const chance = Chance();
 
 describe('validation', () => {
     let spotPlateAttributes;

@@ -1,14 +1,15 @@
 import Chance from 'chance'
-const chance = Chance();;
-const BaseProductSnapshotModel = require('../../application/models/baseProductSnapshot');
+import BaseProductSnapshotModel from '../../application/models/baseProductSnapshot';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';
-const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
+import { MAX_FRAME_LENGTH_INCHES } from '../../application/enums/constantsEnum';
 
-const MaterialModel = require('../../application/models/material');
-const FinishModel = require('../../application/models/finish');
-const CustomerModel = require('../../application/models/customer');
-const UserModel = require('../../application/models/user');
+import MaterialModel from '../../application/models/material';
+import FinishModel from '../../application/models/finish';
+import CustomerModel from '../../application/models/customer';
+import UserModel from '../../application/models/user';
+
+const chance = Chance();
 
 const roundDownToNearestEvenNumber = (value) => Math.floor(value / 2) * 2;
 

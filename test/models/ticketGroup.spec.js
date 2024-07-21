@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const TicketGroupModel = require('../../application/models/ticketGroup');
+import TicketGroupModel from '../../application/models/ticketGroup';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 describe('validation', () => {
     let ticketGroupAttributes;

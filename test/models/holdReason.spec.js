@@ -1,8 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const HoldReason = require('../../application/models/holdReason');
+import HoldReason from '../../application/models/holdReason';
 import * as databaseService from '../../application/services/databaseService.js';
 
+const chance = Chance();
 const DEPARTMENT_NAME = 'PRINTING';
 
 describe('validation', () => {

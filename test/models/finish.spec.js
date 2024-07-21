@@ -1,7 +1,7 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 import mongoose from 'mongoose'
-const FinishModel = require('../../application/models/finish');
+import FinishModel from '../../application/models/finish';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';
 

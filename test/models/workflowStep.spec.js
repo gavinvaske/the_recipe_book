@@ -1,9 +1,9 @@
 import Chance from 'chance'
-const chance = Chance();;
-const WorkflowStep = require('../../application/models/WorkflowStep');
-const {departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
+import WorkflowStep from'../../application/models/WorkflowStep';
+import { departmentToStatusesMappingForTicketObjects } from'../../application/enums/departmentsEnum';
 import mongoose from 'mongoose'
 
+const chance = Chance();
 const DEPARTMENT_WITH_STATUSES = 'PRINTING';
 
 describe('validation', () => {

@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const materialService = require('../../application/services/materialService');
 
 jest.mock('../../application/models/material');

@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const { when } = require('jest-when');
 const materialInventoryService = require('../../application/services/materialInventoryService');
 const mockPurchaseOrderService = require('../../application/services/purchaseOrderService');

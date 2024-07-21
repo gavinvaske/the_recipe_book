@@ -1,8 +1,9 @@
 import Chance from 'chance'
-const chance = Chance();;
-const VendorModel = require('../../application/models/vendor');
+import VendorModel from '../../application/models/vendor';
 import * as databaseService from '../../application/services/databaseService.js';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 describe('validation', () => {
     let vendorAttributes;

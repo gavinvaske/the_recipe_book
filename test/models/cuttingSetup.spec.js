@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const CuttingSetupModel = require('../../application/models/cuttingSetup');
+import CuttingSetupModel from '../../application/models/cuttingSetup';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 describe('validation', () => {
     let cuttingSetupAttributes;

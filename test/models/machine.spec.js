@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const MachineModel = require('../../application/models/machine');
-const departmentEnum = require('../../application/enums/departmentsEnum');
+import MachineModel from '../../application/models/machine';
+import * as departmentEnum from '../../application/enums/departmentsEnum';
+
+const chance = Chance();
 
 describe('validation', () => {
     let machineAttributes;

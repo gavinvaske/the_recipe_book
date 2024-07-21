@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const packagingSchema = require('../../application/schemas/packagingDetails');
 import mongoose from 'mongoose'
 

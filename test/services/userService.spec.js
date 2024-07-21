@@ -3,7 +3,7 @@ import * as databaseService from '../../application/services/databaseService.js'
 const UserModel = require('../../application/models/user');
 const jwt = require('jsonwebtoken');
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 
 jest.mock('jsonwebtoken');
 

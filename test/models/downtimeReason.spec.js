@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const DowntimeReason = require('../../application/models/downtimeReason');
+import DowntimeReason from '../../application/models/downtimeReason';
 import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let downtimeReasonAttributes;

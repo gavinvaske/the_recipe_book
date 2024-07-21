@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const ticketService = require('../../application/services/ticketService');
 const {
     COMPLETE_DEPARTMENT,

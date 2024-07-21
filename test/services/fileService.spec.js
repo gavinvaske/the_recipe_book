@@ -2,7 +2,7 @@ const fileService = require('../../application/services/fileService');
 const pathMock = require('path');
 const fsMock = require('fs');
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 
 jest.mock('path');
 jest.mock('fs');

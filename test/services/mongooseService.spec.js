@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const mongooseService = require('../../application/services/mongooseService');
 
 function getOneMongooseError(errorType) {

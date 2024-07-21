@@ -2,7 +2,7 @@
 import * as constants from '../../application/enums/constantsEnum.js';
 const { createQuote } = require('../../application/services/quoteService');
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 import mongoose from 'mongoose'
 const { when } = require('jest-when');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');

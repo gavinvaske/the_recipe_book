@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const DeliveryMethodModel = require('../../application/models/deliveryMethod');
+import DeliveryMethodModel from '../../application/models/deliveryMethod';
 import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('File: deliveryMethod.js', () => {
     let deliveryMethodAttributes;

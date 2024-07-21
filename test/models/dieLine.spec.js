@@ -1,8 +1,9 @@
-const DieLineModel = require('../../application/models/dieLine');
 import Chance from 'chance'
-const chance = Chance();;
 import * as databaseService from '../../application/services/databaseService.js';
-const departmentsEnum = require('../../application/enums/departmentsEnum');
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
+import DieLineModel from '../../application/models/dieLine';
+
+const chance = Chance();
 
 describe('validation', () => {
     let dieLineAttributes;

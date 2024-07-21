@@ -7,7 +7,7 @@ const {
     departmentToNextDepartmentAndStatus
 } = require('../../application/enums/departmentsEnum');
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 
 describe('departmentsEnum', () => {
     describe('getAllDepartments()', () => {

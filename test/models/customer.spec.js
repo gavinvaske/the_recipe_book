@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import Chance from 'chance'
-const chance = Chance();;
-const CustomerModel = require('../../application/models/customer');
+import CustomerModel from '../../application/models/customer';
 import * as databaseService from '../../application/services/databaseService.js';
-
 import * as testDataGenerator from '../testDataGenerator.js';
+
+const chance = Chance();
 
 function getAddress() {
     return {

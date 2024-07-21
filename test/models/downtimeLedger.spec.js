@@ -1,8 +1,9 @@
 import Chance from 'chance'
-const chance = Chance();;
-const DowntimeReasonLedger = require('../../application/models/downtimeLedger');
+import DowntimeReasonLedger from '../../application/models/downtimeLedger';
 import mongoose from 'mongoose'
 import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let downtimeLedgerAttributes;

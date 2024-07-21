@@ -1,8 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const UserModel = require('../../application/models/user');
+import UserModel from '../../application/models/user';
 import * as testDataGenerator from '../testDataGenerator.js';
 
+const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
 
 describe('validation', () => {

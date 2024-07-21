@@ -1,7 +1,7 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const departmentNotesSchema = require('../../application/schemas/departmentNotes');
-const departmentsEnum = require('../../application/enums/departmentsEnum');
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import mongoose from 'mongoose'
 import * as databaseService from '../../application/services/databaseService.js';
 

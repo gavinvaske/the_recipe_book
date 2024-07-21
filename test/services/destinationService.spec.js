@@ -1,6 +1,6 @@
 const destinationService = require('../../application/services/destinationService');
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 
 describe('destinationService.js', () => {
     describe('groupItemsByDestination()', () => {

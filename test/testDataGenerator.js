@@ -1,5 +1,5 @@
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 import mongoose from 'mongoose'
 
 const { dieShapes } = require('../application/enums/dieShapesEnum');

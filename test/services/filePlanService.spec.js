@@ -1,6 +1,6 @@
 /* eslint no-magic-numbers: 0 */
 import Chance from 'chance'
-const chance = Chance();;
+const chance = Chance();
 const matchers = require('jest-extended');
 const filePlanService = require('../../application/services/filePlanService');
 

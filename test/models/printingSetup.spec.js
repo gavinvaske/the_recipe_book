@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();;
-const PrintingSetupModel = require('../../application/models/printingSetup');
+import PrintingSetupModel from '../../application/models/printingSetup';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 describe('validation', () => {
     let printingSetupAttributes;

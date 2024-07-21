@@ -1,7 +1,7 @@
-const HoldReasonModel = require('../models/holdReason');
-const {getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum.js');
+import HoldReasonModel from '../models/holdReason.js';
+import { getAllDepartmentsWithDepartmentStatuses } from '../enums/departmentsEnum.js';
 
-module.exports.getDepartmentToHoldReasons = async () => {
+export async function getDepartmentToHoldReasons() {
     const allHoldReasons = await HoldReasonModel.find().exec();
     const departments = getAllDepartmentsWithDepartmentStatuses();
     const departmentToHoldReasons = {};
@@ -15,4 +15,4 @@ module.exports.getDepartmentToHoldReasons = async () => {
     });
 
     return departmentToHoldReasons;
-};
+}

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const HoldReasonModel = require('../models/holdReason');
+import HoldReasonModel from '../models/holdReason.js';
 
 router.use(verifyJwtToken);
 

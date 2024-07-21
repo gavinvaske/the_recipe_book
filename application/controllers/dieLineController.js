@@ -2,8 +2,8 @@ import { Router } from 'express'
 const router = Router();
 const DieLineModel = require('../models/dieLine');
 import * as mongooseService  from '../services/mongooseService.js'
-const {upload} = require('../middleware/upload');
-const fileService = require('../services/fileService');
+import { upload } from '../middleware/upload.js';
+import * as fileService from '../services/fileService.js';
 const s3Service = require('../services/s3Service');
 const dieLineService = require('../services/dieLineService');
 import { verifyJwtToken } from '../middleware/authorize.js'

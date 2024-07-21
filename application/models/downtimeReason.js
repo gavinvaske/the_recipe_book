@@ -11,4 +11,4 @@ const downtimeReasonSchema = new Schema({
 
 const DowntimeReason = mongoose.model('downtimeReason', downtimeReasonSchema);
 
-module.exports = DowntimeReason;
+export default DowntimeReason;

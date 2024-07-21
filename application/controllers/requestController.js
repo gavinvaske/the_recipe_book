@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 const SpotPlateModel = require('../models/spotPlate');
 const DieLineModel = require('../models/dieLine');
-const destinationService = require('../services/destinationService');
+import * as destinationService from '../services/destinationService.js';
 import { verifyJwtToken } from '../middleware/authorize.js'
 
 router.use(verifyJwtToken);

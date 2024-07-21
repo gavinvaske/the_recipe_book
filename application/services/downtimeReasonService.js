@@ -1,6 +1,6 @@
-const DowntimeReasonModel = require('../models/downtimeReason');
+import DowntimeReasonModel from '../models/downtimeReason.js';
 
-module.exports.getDowntimeReasons = async () => {
+export async function getDowntimeReasons() {
     const downtimeReasonMongooseObjects = await DowntimeReasonModel
         .find()
         .sort({reason: 1})
@@ -9,4 +9,4 @@ module.exports.getDowntimeReasons = async () => {
     return downtimeReasonMongooseObjects.map(({reason}) => {
         return reason;
     });
-};
+}

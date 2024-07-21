@@ -1,12 +1,12 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const {upload} = require('../middleware/upload');
+import { upload } from '../middleware/upload.js';
 import TicketModel from '../models/ticket.js'
 
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');
-const fileService = require('../services/fileService');
+import * as fileService from '../services/fileService.js';
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_CODE = 400;

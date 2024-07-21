@@ -1,4 +1,4 @@
-module.exports.groupItemsByDestination = (items) => {
+export function groupItemsByDestination(items) {
     const itemsGroupedByDestination = {};
 
     items.forEach((item) => {
@@ -16,4 +16,4 @@ module.exports.groupItemsByDestination = (items) => {
     });
 
     return itemsGroupedByDestination;
-};
+}

@@ -1,21 +1,25 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const {upload} = require('../middleware/upload');
-const parser = require('xml2json');
+import { upload } from '../middleware/upload.js';
+import parser from 'xml2json';
 import * as ticketService from '../services/ticketService.js'
 import TicketModel from '../models/ticket.js'
 import * as mongooseService  from '../services/mongooseService.js'
 import MaterialModel from '../models/material.js'
-const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum.js');
-const workflowStepService = require('../services/workflowStepService');
-const dateTimeService = require('../services/dateTimeService');
-const holdReasonService = require('../services/holdReasonService');
-const fileService = require('../services/fileService');
-const downtimeReasonService = require('../services/downtimeReasonService');
-const destinationService = require('../services/destinationService');
+import {
+  departmentToStatusesMappingForTicketObjects, 
+  isInProgressDepartmentStatus, 
+  removeDepartmentStatusesAUserIsNotAllowedToSelect
+} from '../enums/departmentsEnum.js';
+import * as workflowStepService from '../services/workflowStepService.js';
+import * as dateTimeService from '../services/dateTimeService.js';
+import * as holdReasonService from '../services/holdReasonService.js';
+import * as fileService from '../services/fileService.js';
+import * as downtimeReasonService from '../services/downtimeReasonService.js';
+import * as destinationService from '../services/destinationService.js';
 
-router.use(verifyJwtToken);
+// router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_ERROR_CODE = 400;
@@ -25,6 +29,8 @@ router.get('/', async (request, response) => {
         .find()
         .populate({path: 'destination.assignee'})
         .exec();
+
+    console.log(tickets)
 
     const ticketsGroupedByDestination = destinationService.groupItemsByDestination(tickets);
     const departmentToHoldReasons = await holdReasonService.getDepartmentToHoldReasons();
@@ -272,4 +278,4 @@ router.post('/:ticketId/next-department', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

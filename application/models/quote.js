@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService.js');
 const constants = require('../enums/constantsEnum');
-const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
+const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService.js');
 const Decimal = require('decimal.js');
 const PackagingDetailsSchema = require('../schemas/packagingDetails');
 const { unwindDirections } = require('../enums/unwindDirectionsEnum');

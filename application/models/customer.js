@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import addressSchema  from '../schemas/address.js'
-const contactSchema = require('../schemas/contact');
+import addressSchema from '../schemas/address.js'
+import contactSchema from '../schemas/contact.js';
 
 import mongooseDelete from 'mongoose-delete'
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
@@ -65,4 +65,4 @@ const schema = new Schema({
 
 const Customer = mongoose.model('Customer', schema);
 
-module.exports = Customer;
+export default Customer;

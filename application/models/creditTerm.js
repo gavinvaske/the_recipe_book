@@ -16,4 +16,4 @@ const schema = new Schema({
 
 const CreditTerm = mongoose.model('CreditTerm', schema);
 
-module.exports = CreditTerm;
+export default CreditTerm;

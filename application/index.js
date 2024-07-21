@@ -43,10 +43,10 @@ import quoteEndpoints from './controllers/quoteController.js'
 import dieEndpoints from './controllers/dieController.js'
 import linerTypeEndpoints from './controllers/linerTypeController.js'
 import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController.js'
-//import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js'
-// import customerEndpoints from './controllers/customerController.js'
-// import deliveryMethodEndpoints from './controllers/deliveryMethodController.js'
-// import creditTermEndpoints from './controllers/creditTermsController.js'
+import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js'
+import customerEndpoints from './controllers/customerController.js'
+import deliveryMethodEndpoints from './controllers/deliveryMethodController.js'
+import creditTermEndpoints from './controllers/creditTermsController.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -123,15 +123,14 @@ app.use('/quote', quoteEndpoints);
 app.use('/die', dieEndpoints);
 app.use('/liner-types', linerTypeEndpoints);
 app.use('/adhesive-categories', adhesiveCategoryEndpoints);
-// app.use('/material-length-adjustments', require('./controllers/materialLengthAdjustmentController'));
+app.use('/material-length-adjustments', materialLengthAdjustmentEndpoints);
 
-
-// app.use('/customers', require('./controllers/customerController'));
-// app.use('/delivery-methods', require('./controllers/deliveryMethodController'));
-// app.use('/credit-terms', require('./controllers/creditTermsController'));
+app.use('/customers', customerEndpoints);
+app.use('/delivery-methods', deliveryMethodEndpoints);
+app.use('/credit-terms', creditTermEndpoints);
 
 // This route loads the ENTIRE REACT APP
-// app.use('/react-ui', (_, response) => response.render('app.ejs'));
+app.use('/react-ui', (_, response) => response.render('app.ejs'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

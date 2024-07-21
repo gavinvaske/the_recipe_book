@@ -17,4 +17,4 @@ const deliveryMethodSchema = new Schema({
 
 const deliveryMethodModel = mongoose.model('DeliveryMethod', deliveryMethodSchema);
 
-module.exports = deliveryMethodModel;
+export default deliveryMethodModel;

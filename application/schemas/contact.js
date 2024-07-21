@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
-const addressSchema = require('./address');
+import addressSchema from './address.js';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
 
 const contactSchema = new Schema({
     fullName: {
@@ -38,4 +38,4 @@ const contactSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = contactSchema;
+export default contactSchema;

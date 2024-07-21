@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
-import { verifyJwtToken }from '../middleware/authorize.js'
-const DeliveryMethodModel = require('../models/deliveryMethod');
+import { verifyJwtToken } from '../middleware/authorize.js'
+import DeliveryMethodModel from '../models/deliveryMethod.js';
 import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
@@ -74,4 +74,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

@@ -1,18 +1,18 @@
 import { Router } from 'express'
 const router = Router();
-const MaterialModel = require('../models/material');
+import MaterialModel from '../models/material.js'
 import { verifyJwtToken }from '../middleware/authorize.js'
-const VendorModel = require('../models/vendor');
-const MaterialCategoryModel = require('../models/materialCategory');
+import VendorModel from '../models/vendor.js'
+import MaterialCategoryModel from '../models/materialCategory.js'
 
-const materialInventoryService = require('../services/materialInventoryService');
-const materialService = require('../services/materialService');
-const purchaseOrderService = require('../services/purchaseOrderService');
-const ticketService = require('../services/ticketService');
-const mongooseService = require('../services/mongooseService');
+import * as materialInventoryService from '../services/materialInventoryService.js';
+import * as materialService from '../services/materialService.js';
+import * as purchaseOrderService from '../services/purchaseOrderService.js'
+import * as ticketService from '../services/ticketService.js'
+import * as mongooseService  from '../services/mongooseService.js'
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
-const { SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
+import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
 
@@ -188,4 +188,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

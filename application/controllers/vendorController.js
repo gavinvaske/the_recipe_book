@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const VendorModel = require('../models/vendor');
+import VendorModel from '../models/vendor.js'
 import { verifyJwtToken } from '../middleware/authorize.js'
 const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
 

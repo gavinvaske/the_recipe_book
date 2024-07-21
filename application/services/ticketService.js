@@ -1,6 +1,6 @@
-import { find, aggregate } from '../models/ticket';
-import { COMPLETE_DEPARTMENT, departmentToNextDepartmentAndStatus } from '../enums/departmentsEnum';
-import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService';
+import TicketModel from '../models/ticket.js'
+import { COMPLETE_DEPARTMENT, departmentToNextDepartmentAndStatus } from '../enums/departmentsEnum.js';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService.js';
 
 function isEmptyObject(value) {
     if (!value) {
@@ -55,7 +55,7 @@ export async function findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDes
         ]
     };
 
-    const ticketIds = await find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
+    const ticketIds = await TicketModel.find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
         .distinct('_id')
         .exec();
 
@@ -103,7 +103,7 @@ export function convertedUploadedTicketDataToProperFormat(rawUploadedTicket) {
 }
 
 export async function getLengthOfEachMaterialUsedByTickets(materialIds) {
-    const lengthOfEachMaterialAlreadyUsedByTickets = await aggregate([
+    const lengthOfEachMaterialAlreadyUsedByTickets = await TicketModel.aggregate([
         { $match: { primaryMaterial: { $in: materialIds } } },
         { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
     ]);

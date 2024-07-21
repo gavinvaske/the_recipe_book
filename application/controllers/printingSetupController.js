@@ -3,7 +3,7 @@ const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 import UserModel from '../models/user';
 import MachineModel from '../models/machine.js'
-const MaterialModel = require('../models/material');
+import MaterialModel from '../models/material.js'
 const PrintingSetupModel = require('../models/printingSetup');
 
 const DEFAULT_PAGE_NUMBER = 1;

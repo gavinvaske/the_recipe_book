@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('../schemas/s3File');
-const destinationSchema = require('../schemas/destination');
-const departmentsEnum = require('../enums/departmentsEnum');
+const fileSchema = require('../schemas/s3File.js');
+import destinationSchema from '../schemas/destination.js';
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 function isValidDieLineDestination(destination) {
     const {department, departmentStatus} = destination;

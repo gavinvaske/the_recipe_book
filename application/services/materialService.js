@@ -1,5 +1,5 @@
-module.exports.getMaterialIds = (materials) => {
+export function getMaterialIds(materials) {
     return materials.map(({materialId}) => {
         return materialId;
     });
-};
+}

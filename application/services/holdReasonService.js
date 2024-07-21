@@ -1,5 +1,5 @@
 const HoldReasonModel = require('../models/holdReason');
-const {getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum');
+const {getAllDepartmentsWithDepartmentStatuses} = require('../enums/departmentsEnum.js');
 
 module.exports.getDepartmentToHoldReasons = async () => {
     const allHoldReasons = await HoldReasonModel.find().exec();

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const addressSchema = require('../schemas/address');
+import addressSchema  from '../schemas/address.js'
 const { FACTORY_ADDRESS } = require('../enums/constantsEnum');
 const { validatePhoneNumber } = require('../services/dataValidationService');
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService.js');
 
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 

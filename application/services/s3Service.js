@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 import mongoose from 'mongoose'
-const s3FileSchema = require('../schemas/s3File');
+const s3FileSchema = require('../schemas/s3File.js').default;
 const mime = require('mime');
 
 const s3 = new AWS.S3({

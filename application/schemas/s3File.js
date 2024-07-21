@@ -27,4 +27,4 @@ const s3FileSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = s3FileSchema;
+export default s3FileSchema;

@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 const {upload} = require('../middleware/upload');
-const TicketModel = require('../models/ticket');
+import TicketModel from '../models/ticket.js'
 
 const s3Service = require('../services/s3Service');
 const productService = require('../services/productService');

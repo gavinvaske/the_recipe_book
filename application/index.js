@@ -22,7 +22,7 @@ import recipeEndpoints from './controllers/recipeController.js'
 import adminEndpoints from './controllers/adminController.js'
 import finishEndpoints from './controllers/finishController.js'
 import machineEndpoints from './controllers/machineController.js'
-// import materialEndpoints from './controllers/materialController.js'
+import materialEndpoints from './controllers/materialController.js'
 // import setupEndpoints from './controllers/setupController.js'
 // import printingSetupEndpoints from './controllers/printingSetupController.js'
 // import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
@@ -102,7 +102,7 @@ app.use('/recipes', recipeEndpoints);
 app.use('/admin', adminEndpoints);
 app.use('/finishes', finishEndpoints);
 app.use('/machines', machineEndpoints);
-// app.use('/materials', require('./controllers/materialController'));
+app.use('/materials', materialEndpoints);
 // app.use('/setups', require('./controllers/setupController'));
 // app.use('/printing-setups', require('./controllers/printingSetupController'));
 // app.use('/cutting-setups', require('./controllers/cuttingSetupController'));

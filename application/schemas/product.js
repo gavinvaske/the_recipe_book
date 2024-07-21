@@ -1,15 +1,14 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const MaterialModel = require('../models/material');
-const {hotFolders, getUniqueHotFolders} = require('../enums/hotFolderEnum');
-const {idToColorEnum: numberToColorEnum} = require('../enums/idToColorEnum');
-const {getAllDepartments} = require('../enums/departmentsEnum');
-const s3FileSchema = require('../schemas/s3File');
+import MaterialModel from '../models/material.js'
+import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum.js';
+import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum.js';
+import { getAllDepartments } from '../enums/departmentsEnum.js';
+import s3FileSchema from '../schemas/s3File.js';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
-const URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 const NUMBER_OF_PENNIES_IN_A_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;
@@ -542,4 +541,4 @@ productSchema.virtual('finishes').get(function() {
     return finishes;
 });
 
-module.exports = productSchema;
+export default productSchema;

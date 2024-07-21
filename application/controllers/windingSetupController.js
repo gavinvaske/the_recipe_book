@@ -4,7 +4,7 @@ import { verifyJwtToken } from '../middleware/authorize.js'
 const WindingSetupModel = require('../models/windingSetup');
 import UserModel from '../models/user';
 import MachineModel from '../models/machine.js'
-const MaterialModel = require('../models/material');
+import MaterialModel from '../models/material.js'
 import FinishModel from '../models/finish.js'
 
 router.use(verifyJwtToken);

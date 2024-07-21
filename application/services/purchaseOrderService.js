@@ -1,6 +1,6 @@
-const PurchaseOrderModel = require('../models/materialOrder');
+import PurchaseOrderModel from '../models/materialOrder.js';
 
-module.exports.getPurchaseOrdersForMaterials = async (materialIds) => {
+export async function getPurchaseOrdersForMaterials(materialIds) {
     const searchQuery = {
         material: {$in: materialIds}
     };
@@ -8,21 +8,21 @@ module.exports.getPurchaseOrdersForMaterials = async (materialIds) => {
     return await PurchaseOrderModel
         .find(searchQuery)
         .exec();
-};
+}
 
-module.exports.findPurchaseOrdersThatHaveNotArrived = (purchaseOrders) => {
+export function findPurchaseOrdersThatHaveNotArrived(purchaseOrders) {
     return purchaseOrders.filter((purchaseOrder) => {
         return !purchaseOrder.hasArrived;
     });
-};
+}
 
-module.exports.findPurchaseOrdersThatHaveArrived = (purchaseOrders) => {
+export function findPurchaseOrdersThatHaveArrived(purchaseOrders) {
     return purchaseOrders.filter((purchaseOrder) => {
         return purchaseOrder.hasArrived;
     });
-};
+}
 
-module.exports.computeLengthOfMaterial = (purchaseOrders) => {
+export function computeLengthOfMaterial(purchaseOrders) {
     let lengthOfMaterial = 0;
     
     purchaseOrders.forEach((purchaseOrder) => {
@@ -30,7 +30,7 @@ module.exports.computeLengthOfMaterial = (purchaseOrders) => {
     });
 
     return lengthOfMaterial;
-};
+}
 
 function getMaterialLengthOnPurchaseOrder(purchaseOrder) {
     return purchaseOrder.totalRolls * purchaseOrder.feetPerRoll;

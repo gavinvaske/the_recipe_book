@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 const DieLineModel = require('../models/dieLine');
-const mongooseService = require('../services/mongooseService');
+import * as mongooseService  from '../services/mongooseService.js'
 const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
 const s3Service = require('../services/s3Service');

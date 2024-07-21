@@ -1,10 +1,10 @@
-module.exports.getObjectIds = (objects) => {
+export function getObjectIds(objects) {
     return objects.map(({_id}) => {
         return _id;
     });
-};
+}
 
-module.exports.parseHumanReadableMessages = (error) => {
+export function parseHumanReadableMessages(error) {
     try {
         const aNonMongooseErrorOccurred = !error.errors && error.message;
 
@@ -33,4 +33,4 @@ module.exports.parseHumanReadableMessages = (error) => {
         console.log(`Error: parse error in parseHumanReadableMessages: ${JSON.stringify(error)}`);
         return ['Uh oh, an unknown error occurred, please contact the IT department.'];
     }
-};
+}

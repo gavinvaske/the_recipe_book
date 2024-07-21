@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
-const addressSchema = require('../schemas/address');
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
+import addressSchema  from '../schemas/address.js'
 
 import mongooseDelete from 'mongoose-delete'
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
@@ -55,4 +55,4 @@ const schema = new Schema({
 
 const Vendor = mongoose.model('Vendor', schema);
 
-module.exports = Vendor;
+export default Vendor;

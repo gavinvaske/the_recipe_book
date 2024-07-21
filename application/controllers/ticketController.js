@@ -3,11 +3,11 @@ const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 const {upload} = require('../middleware/upload');
 const parser = require('xml2json');
-const ticketService = require('../services/ticketService');
-const TicketModel = require('../models/ticket');
-const mongooseService = require('../services/mongooseService');
-const MaterialModel = require('../models/material');
-const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum');
+import * as ticketService from '../services/ticketService.js'
+import TicketModel from '../models/ticket.js'
+import * as mongooseService  from '../services/mongooseService.js'
+import MaterialModel from '../models/material.js'
+const {departmentToStatusesMappingForTicketObjects, isInProgressDepartmentStatus, removeDepartmentStatusesAUserIsNotAllowedToSelect} = require('../enums/departmentsEnum.js');
 const workflowStepService = require('../services/workflowStepService');
 const dateTimeService = require('../services/dateTimeService');
 const holdReasonService = require('../services/holdReasonService');

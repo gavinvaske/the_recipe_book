@@ -1,4 +1,4 @@
-const departmentsEnum = require('../enums/departmentsEnum');
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 module.exports.getDepartments = () => {
     return Object.keys(departmentsEnum.departmentToDepartmentStatusesForDieLineRequests);

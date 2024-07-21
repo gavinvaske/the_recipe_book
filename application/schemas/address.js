@@ -40,4 +40,4 @@ const addressSchema = new Schema({
     },
 }, { timestamps: true });
 
-module.exports = addressSchema;
+export default addressSchema;

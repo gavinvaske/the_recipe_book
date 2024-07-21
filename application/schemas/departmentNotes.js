@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const departmentsEnum = require('../enums/departmentsEnum');
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 const departmentNotesSchema = new Schema({
     orderPrep: {
@@ -45,4 +45,4 @@ const departmentNotesSchema = new Schema({
     strict: 'throw'
 });
 
-module.exports = departmentNotesSchema;
+export default departmentNotesSchema;

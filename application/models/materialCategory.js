@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const mongoose_delete = require('mongoose-delete');
+import mongoose_delete from 'mongoose-delete';
+mongoose.plugin(mongoose_delete, { overrideMethods: true });
 
 const schema = new Schema({
     name: {
@@ -11,8 +12,7 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-schema.plugin(mongoose_delete, {overrideMethods: true});
 
 const MaterialCategory = mongoose.model('MaterialCategory', schema);
 
-module.exports = MaterialCategory;
+export default MaterialCategory;

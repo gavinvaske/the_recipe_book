@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const addressSchema = require('../schemas/address');
+import addressSchema  from '../schemas/address.js'
 const contactSchema = require('../schemas/contact');
 
 import mongooseDelete from 'mongoose-delete'

@@ -1,4 +1,4 @@
-module.exports.idToColorEnum = {
+export const idToColorEnum = {
     1: 'Black',
     2: 'Black & White',
     3: 'EPM',

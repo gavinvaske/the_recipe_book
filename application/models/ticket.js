@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const productSchema = require('../schemas/product');
-const chargeSchema = require('../schemas/charge');
-const destinationSchema = require('../schemas/destination');
-const departmentNotesSchema = require('../schemas/departmentNotes');
-const {standardPriority, getAllPriorities} = require('../enums/priorityEnum');
-const MaterialModel = require('../models/material');
-const WorkflowStepModel = require('../models/WorkflowStep');
-const departmentsEnum = require('../enums/departmentsEnum');
+import productSchema from '../schemas/product.js';
+import chargeSchema from '../schemas/charge.js';
+import destinationSchema from '../schemas/destination.js';
+import departmentNotesSchema from '../schemas/departmentNotes.js';
+import { standardPriority, getAllPriorities } from '../enums/priorityEnum.js';
+import MaterialModel from '../models/material.js'
+import WorkflowStepModel from '../models/WorkflowStep.js';
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const TICKET_NUMBER_REGEX = /^\d{1,}$/;
@@ -61,7 +61,7 @@ function validateKeysAreAllValidDepartments(departmentToHoldReason) {
     });
 }
 
-computeTotalMaterialLength = (frameSize, totalFramesRan, attempts) => {
+const computeTotalMaterialLength = (frameSize, totalFramesRan, attempts) => {
     const inchesPerFoot = 12;
     const feetPerAttempt = 50;
 
@@ -389,4 +389,4 @@ ticketSchema.pre(['updateOne', 'findOneAndUpdate'], addRowToWorkflowStepDbTable)
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
-module.exports = Ticket;
+export default Ticket;

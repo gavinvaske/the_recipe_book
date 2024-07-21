@@ -1,8 +1,8 @@
 import { Router } from 'express'
 const router = Router();
-const MaterialOrderModel = require('../models/materialOrder');
-const MaterialModel = require('../models/material');
-const VendorModel = require('../models/vendor');
+const MaterialOrderModel = require('../models/materialOrder.js');
+import MaterialModel from '../models/material.js'
+import VendorModel from '../models/vendor.js'
 import { verifyJwtToken } from '../middleware/authorize.js'
 const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
 const { descending } = require('../enums/mongooseSortMethods');

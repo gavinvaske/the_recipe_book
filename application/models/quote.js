@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService.js');
 const constants = require('../enums/constantsEnum');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService');
 const Decimal = require('decimal.js');

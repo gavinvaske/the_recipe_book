@@ -13,7 +13,7 @@ async function generateUniqueProductNumber() {
     const numberOfDigitsInProductId = 3;
     const nextProductIdWithLeadingZeroes = nextProductId.toString().padStart(numberOfDigitsInProductId, '0');
 
-    productNumber = `${this.customer.customerId}-${nextProductIdWithLeadingZeroes}`;
+    const productNumber = `${this.customer.customerId}-${nextProductIdWithLeadingZeroes}`;
 
     this.productNumber = productNumber;
 }

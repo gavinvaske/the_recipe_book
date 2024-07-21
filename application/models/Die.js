@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { dieShapes } = require('../enums/dieShapesEnum');
-const { toolTypes } = require('../enums/toolTypesEnum');
-const { dieVendors } = require('../enums/dieVendorsEnum');
-const { dieMagCylinders } = require('../enums/dieMagCylindersEnum');
-const { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } = require('../enums/dieStatusesEnum');
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+import { dieShapes } from '../enums/dieShapesEnum';
+import { toolTypes } from '../enums/toolTypesEnum';
+import { dieVendors } from '../enums/dieVendorsEnum';
+import { dieMagCylinders } from '../enums/dieMagCylindersEnum';
+import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
 
 mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
 
@@ -21,7 +21,7 @@ function validateDieNumberFormat(dieNumber) {
         return false;
     }
 
-    [prefix, number] = dieNumberParts;
+    const [prefix, number] = dieNumberParts;
 
     if (!prefix || !number) {
         return false;

@@ -18,36 +18,36 @@ import { fileURLToPath } from 'url';
 import defaultRoute from './controllers/index.js'
 import userEndpoints from './controllers/userController.js'
 import recipeEndpoints from './controllers/recipeController.js'
-// TESTING START
-// import adminEndpoints from './controllers/adminController'
-// import finishEndpoints from './controllers/finishController'
-// import machineEndpoints from './controllers/machineController'
-// import materialEndpoints from './controllers/materialController'
-// import setupEndpoints from './controllers/setupController'
-// import printingSetupEndpoints from './controllers/printingSetupController'
-// import cuttingSetupEndpoints from './controllers/cuttingSetupController'
-// import windingSetupEndpoints from './controllers/windingSetupController'
-// import vendorEndpoints from './controllers/vendorController'
-// import materialOrderEndpoints from './controllers/materialOrdersController'
-// import ticketEndpoints from './controllers/ticketController'
-// import productEndpoints from './controllers/productController'
-// import holdReasonEndpoints from './controllers/holdReasonController'
-// import proofEndpoints from './controllers/proofController'
-// import dieLineEndpoints from './controllers/dieLineController'
-// import spotPlateEndpoints from './controllers/spotPlateController'
-// import requestEndpoints from './controllers/requestController'
-// import materialCategoryEndpoints from './controllers/materialCategoryController'
-// import filePlanEndpoints from './controllers/filePlanController'
-// import packagingEndpoints from './controllers/packagingController'
-// import quoteEndpoints from './controllers/quoteController'
-// import dieEndpoints from './controllers/dieController'
-// import linerTypeEndpoints from './controllers/linerTypeController'
-// import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController'
-// import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController'
-// import customerEndpoints from './controllers/customerController'
-// import deliveryMethodEndpoints from './controllers/deliveryMethodController'
-// import creditTermEndpoints from './controllers/creditTermsController'
-// TESTING END
+
+import adminEndpoints from './controllers/adminController.js'
+// import finishEndpoints from './controllers/finishController.js'
+// import machineEndpoints from './controllers/machineController.js'
+// import materialEndpoints from './controllers/materialController.js'
+// import setupEndpoints from './controllers/setupController.js'
+// import printingSetupEndpoints from './controllers/printingSetupController.js'
+// import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
+// import windingSetupEndpoints from './controllers/windingSetupController.js'
+// import vendorEndpoints from './controllers/vendorController.js'
+// import materialOrderEndpoints from './controllers/materialOrdersController.js'
+// import ticketEndpoints from './controllers/ticketController.js'
+// import productEndpoints from './controllers/productController.js'
+// import holdReasonEndpoints from './controllers/holdReasonController.js'
+// import proofEndpoints from './controllers/proofController.js'
+// import dieLineEndpoints from './controllers/dieLineController.js'
+// import spotPlateEndpoints from './controllers/spotPlateController.js'
+// import requestEndpoints from './controllers/requestController.js'
+// import materialCategoryEndpoints from './controllers/materialCategoryController.js'
+// import filePlanEndpoints from './controllers/filePlanController.js'
+// import packagingEndpoints from './controllers/packagingController.js'
+// import quoteEndpoints from './controllers/quoteController.js'
+// import dieEndpoints from './controllers/dieController.js'
+// import linerTypeEndpoints from './controllers/linerTypeController.js'
+// import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController.js'
+// import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js'
+// import customerEndpoints from './controllers/customerController.js'
+// import deliveryMethodEndpoints from './controllers/deliveryMethodController.js'
+// import creditTermEndpoints from './controllers/creditTermsController.js'
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -99,7 +99,7 @@ app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 app.use('/', defaultRoute);
 app.use('/users', userEndpoints);
 app.use('/recipes', recipeEndpoints);
-// app.use('/admin', require('./controllers/adminController'));
+app.use('/admin', adminEndpoints);
 // app.use('/finishes', require('./controllers/finishController'));
 // app.use('/machines', require('./controllers/machineController'));
 // app.use('/materials', require('./controllers/materialController'));

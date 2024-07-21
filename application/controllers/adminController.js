@@ -1,5 +1,6 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express'
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 router.use(verifyJwtToken);
 
@@ -7,4 +8,5 @@ router.get('/', (request, response) => {
     return response.render('adminPanel');
 
 });
-module.exports = router;
+
+export default router;

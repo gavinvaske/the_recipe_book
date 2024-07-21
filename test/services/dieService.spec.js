@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const dieService = require('../../application/services/dieService');
 
 describe('File: dieService.js', () => {

@@ -1,6 +1,7 @@
 const { howManyCirclesCanFitInThisSquare } = require('../../application/enums/circlesPerSquareEnum');
 
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 
 const SMALLEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.111382;
 const LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE = 0.500000;

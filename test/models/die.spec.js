@@ -1,12 +1,13 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const DieModel = require('../../application/models/Die');
 const { dieShapes } = require('../../application/enums/dieShapesEnum');
 const { toolTypes } = require('../../application/enums/toolTypesEnum');
 const { dieVendors } = require('../../application/enums/dieVendorsEnum');
 const { dieMagCylinders } = require('../../application/enums/dieMagCylindersEnum');
 const { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } = require('../../application/enums/dieStatusesEnum');
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 
 function getRandomCost() {
     return chance.floating({ min: 0, fixed: 2 });

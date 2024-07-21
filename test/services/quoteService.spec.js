@@ -1,12 +1,13 @@
 /* eslint-disable no-magic-numbers */
-const constants = require('../../application/enums/constantsEnum');
+import * as constants from '../../application/enums/constantsEnum.js';
 const { createQuote } = require('../../application/services/quoteService');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 import mongoose from 'mongoose'
 const { when } = require('jest-when');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');
-const testDataGenerator = require('../testDataGenerator');
-const databaseService = require('../../application/services/databaseService');
+import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService.js';
 
 jest.mock('../../application/models/Die');
 jest.mock('../../application/models/material');
@@ -17,7 +18,7 @@ const DieMock = require('../../application/models/Die');
 const MaterialMock = require('../../application/models/material');
 const FinishMock = require('../../application/models/finish');
 const BaseProductMock = require('../../application/models/baseProduct');
-const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
+import { unwindDirections }from '../../application/enums/unwindDirectionsEnum.js';
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;

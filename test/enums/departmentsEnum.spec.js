@@ -6,7 +6,8 @@ const {
     removeDepartmentStatusesAUserIsNotAllowedToSelect,
     departmentToNextDepartmentAndStatus
 } = require('../../application/enums/departmentsEnum');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 
 describe('departmentsEnum', () => {
     describe('getAllDepartments()', () => {

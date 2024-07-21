@@ -1,5 +1,6 @@
-const databaseService = require('../../application/services/databaseService');
-const chance = require('chance').Chance();
+import * as databaseService from '../../application/services/databaseService.js';
+import Chance from 'chance'
+const chance = Chance();;
 import mongoose from 'mongoose'
 
 jest.mock('mongoose');

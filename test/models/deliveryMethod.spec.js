@@ -1,6 +1,7 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const DeliveryMethodModel = require('../../application/models/deliveryMethod');
-const databaseService = require('../../application/services/databaseService');
+import * as databaseService from '../../application/services/databaseService.js';
 
 describe('File: deliveryMethod.js', () => {
     let deliveryMethodAttributes;

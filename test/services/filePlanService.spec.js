@@ -1,5 +1,6 @@
 /* eslint no-magic-numbers: 0 */
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const matchers = require('jest-extended');
 const filePlanService = require('../../application/services/filePlanService');
 

@@ -1,14 +1,15 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const ProductModel = require('../../application/models/baseProduct');
 import mongoose from 'mongoose'
-const databaseService = require('../../application/services/databaseService');
+import * as databaseService from '../../application/services/databaseService.js';
 const CustomerModel = require('../../application/models/customer');
 const MaterialModel = require('../../application/models/material');
-const { defaultUnwindDirection, unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
+import { defaultUnwindDirection, unwindDirections } from '../../application/enums/unwindDirectionsEnum.js';
 const { finishTypes, defaultFinishType } = require('../../application/enums/finishTypesEnum');
 const DieModel = require('../../application/models/Die');
 
-const testDataGenerator = require('../testDataGenerator');
+import * as testDataGenerator from '../testDataGenerator.js';
 
 describe('Product Model', () => {
     let productAttributes;

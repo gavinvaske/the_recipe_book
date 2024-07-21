@@ -1,5 +1,6 @@
 const destinationService = require('../../application/services/destinationService');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 
 describe('destinationService.js', () => {
     describe('groupItemsByDestination()', () => {

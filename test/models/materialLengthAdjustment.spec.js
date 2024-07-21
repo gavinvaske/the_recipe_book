@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const MaterialLengthAdjustmentModel = require('../../application/models/materialLengthAdjustment');
-const databaseService = require('../../application/services/databaseService');
+import * as databaseService from '../../application/services/databaseService.js';
 
 describe('File: materialLengthAdjustment', () => {
     let materialLengthAdjustmentAttributes;

@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const TicketGroupModel = require('../../application/models/ticketGroup');
 import mongoose from 'mongoose'
 

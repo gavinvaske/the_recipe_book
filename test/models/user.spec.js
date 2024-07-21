@@ -1,6 +1,7 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const UserModel = require('../../application/models/user');
-const testDataGenerator = require('../testDataGenerator');
+import * as testDataGenerator from '../testDataGenerator.js';
 
 const PASSWORD_MIN_LENGTH = 8;
 

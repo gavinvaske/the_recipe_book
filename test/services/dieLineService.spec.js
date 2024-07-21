@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const dieLineService = require('../../application/services/dieLineService');
 

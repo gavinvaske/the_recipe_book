@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const downtimeReasonService = require('../../application/services/downtimeReasonService');
 const mockDowntimeReasonModel = require('../../application/models/downtimeReason');
 const { when } = require('jest-when');

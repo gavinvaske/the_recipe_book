@@ -1,9 +1,10 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const MaterialModel = require('../../application/models/material');
 import mongoose from 'mongoose'
-const databaseService = require('../../application/services/databaseService');
+import * as databaseService from '../../application/services/databaseService.js';
 
-const testDataGenerator = require('../testDataGenerator');
+import * as testDataGenerator from '../testDataGenerator.js';
 
 function verifyWeightPerMsiAttribute(materialAttributes, attributeName) {
     let material, error;

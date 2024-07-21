@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const RecipeModel = require('../../application/models/recipe');
 import mongoose from 'mongoose'
 

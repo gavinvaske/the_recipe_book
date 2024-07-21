@@ -1,5 +1,6 @@
 const holdReasonService = require('../../application/services/holdReasonService');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const mockHoldReasonModel = require('../../application/models/holdReason');
 const {getAllDepartmentsWithDepartmentStatuses} = require('../../application/enums/departmentsEnum');
 

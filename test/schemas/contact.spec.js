@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const contactSchema = require('../../application/schemas/contact');
 import mongoose from 'mongoose'
 const addressSchema = require('../../application/schemas/address');

@@ -1,5 +1,6 @@
 const s3FileSchema = require('../../application/schemas/s3File');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 import mongoose from 'mongoose'
 
 describe('validation', () => {

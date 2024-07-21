@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const ticketService = require('../../application/services/ticketService');
 const {
     COMPLETE_DEPARTMENT,

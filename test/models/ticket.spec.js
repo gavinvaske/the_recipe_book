@@ -1,7 +1,8 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const TicketModel = require('../../application/models/ticket');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
-const databaseService = require('../../application/services/databaseService');
+import * as databaseService from '../../application/services/databaseService.js';
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 import mongoose from 'mongoose'

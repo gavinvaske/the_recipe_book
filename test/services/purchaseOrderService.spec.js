@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const purchaseOrderService = require('../../application/services/purchaseOrderService');
 const mockPurchaseOrderModel = require('../../application/models/materialOrder');
 

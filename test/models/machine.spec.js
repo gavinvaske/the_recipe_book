@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const MachineModel = require('../../application/models/machine');
 const departmentEnum = require('../../application/enums/departmentsEnum');
 

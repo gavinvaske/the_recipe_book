@@ -1,6 +1,7 @@
 const MaintenanceIncidentTypeModel = require('../../application/models/maintenanceIncidentType');
-const chance = require('chance').Chance();
-const databaseService = require('../../application/services/databaseService');
+import Chance from 'chance'
+const chance = Chance();;
+import * as databaseService from '../../application/services/databaseService.js';
 
 describe('MaintenanceIncidentType', () => {
     let maintenanceIncidentTypeAttributes;

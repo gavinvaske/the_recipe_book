@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const WorkflowStep = require('../../application/models/WorkflowStep');
 const {departmentToStatusesMappingForTicketObjects} = require('../../application/enums/departmentsEnum');
 import mongoose from 'mongoose'

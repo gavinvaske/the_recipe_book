@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const WindingSetupModel = require('../../application/models/windingSetup');
 import mongoose from 'mongoose'
 

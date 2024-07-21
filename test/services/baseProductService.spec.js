@@ -1,6 +1,6 @@
 const BaseProductModel = require('../../application/models/baseProduct');
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 
 const FinishModel = require('../../application/models/finish');
 const MaterialModel = require('../../application/models/material');

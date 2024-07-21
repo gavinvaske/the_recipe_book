@@ -1,11 +1,14 @@
 /* eslint-disable no-magic-numbers */
-const Quote = require('../../application/models/quote');
-const chance = require('chance').Chance();
-const databaseService = require('../../application/services/databaseService');
+import Quote from '../../application/models/quote.js';
+
+import * as databaseService from '../../application/services/databaseService.js';
 import mongoose from 'mongoose'
-const constants = require('../../application/enums/constantsEnum');
-const testDataGenerator = require('../testDataGenerator');
-const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
+import * as constants from '../../application/enums/constantsEnum.js';
+import * as testDataGenerator from '../testDataGenerator.js';
+import { unwindDirections } from '../../application/enums/unwindDirectionsEnum.js';
+
+import Chance from 'chance'
+const chance = Chance();
 
 const FOUR_DECIMAL_PLACES = 4;
 const STARTING_QUOTE_NUMBER = 60000;

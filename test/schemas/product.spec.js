@@ -1,4 +1,5 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const {hotFolders} = require('../../application/enums/hotFolderEnum');
 const {idToColorEnum} = require('../../application/enums/idToColorEnum');
 import mongoose from 'mongoose'

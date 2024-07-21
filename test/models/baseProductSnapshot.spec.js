@@ -1,7 +1,8 @@
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 const BaseProductSnapshotModel = require('../../application/models/baseProductSnapshot');
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 const { MAX_FRAME_LENGTH_INCHES } = require('../../application/enums/constantsEnum');
 
 const MaterialModel = require('../../application/models/material');

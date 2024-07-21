@@ -1,7 +1,8 @@
 const PackingSlipModel = require('../../application/models/packingSlip');
-const chance = require('chance').Chance();
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import Chance from 'chance'
+const chance = Chance();;
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 import mongoose from 'mongoose'
 
 describe('File: packingSlip.js', () => {

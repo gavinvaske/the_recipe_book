@@ -1,6 +1,7 @@
 /* eslint-disable no-magic-numbers */
 const dateTimeService = require('../../application/services/dateTimeService');
-const chance = require('chance').Chance();
+import Chance from 'chance'
+const chance = Chance();;
 
 const SECONDS_PER_MINUTE = 60;
 

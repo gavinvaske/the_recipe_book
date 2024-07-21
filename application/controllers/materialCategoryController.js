@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 import MaterialCategoryModel from '../models/materialCategory.js'
-const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
+import { SERVER_ERROR } from '../enums/httpStatusCodes.js'; 
 
 router.use(verifyJwtToken);
 

@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 import VendorModel from '../models/vendor.js'
 import { verifyJwtToken } from '../middleware/authorize.js'
-const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
+import { SERVER_ERROR } from '../enums/httpStatusCodes.js'; 
 
 router.use(verifyJwtToken);
 
@@ -77,4 +77,4 @@ router.get('/delete/:id', async (request, response) => {
     return response.redirect('back');
 });
 
-module.exports = router;
+export default router;

@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken }from '../middleware/authorize.js'
 const DeliveryMethodModel = require('../models/deliveryMethod');
-const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
+import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
 

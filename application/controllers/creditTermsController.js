@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
+import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
 import { verifyJwtToken }from '../middleware/authorize.js'
 const CreditTermModel = require('../models/creditTerm');
 

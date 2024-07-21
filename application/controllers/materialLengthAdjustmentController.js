@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const { CREATED_SUCCESSFULLY, SERVER_ERROR } = require('../enums/httpStatusCodes');
+import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.js';
 import { verifyJwtToken }from '../middleware/authorize.js'
 import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment.js';
 

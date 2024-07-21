@@ -2,7 +2,7 @@ import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
 const AdhesiveCategoryModel = require('../models/adhesiveCategory');
-const { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
 

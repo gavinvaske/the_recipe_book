@@ -28,7 +28,7 @@ import printingSetupEndpoints from './controllers/printingSetupController.js'
 import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
 import windingSetupEndpoints from './controllers/windingSetupController.js'
 import vendorEndpoints from './controllers/vendorController.js'
-// import materialOrderEndpoints from './controllers/materialOrdersController.js'
+import materialOrderEndpoints from './controllers/materialOrdersController.js'
 // import ticketEndpoints from './controllers/ticketController.js'
 // import productEndpoints from './controllers/productController.js'
 // import holdReasonEndpoints from './controllers/holdReasonController.js'
@@ -108,7 +108,7 @@ app.use('/printing-setups', printingSetupEndpoints);
 app.use('/cutting-setups', cuttingSetupEndpoints);
 app.use('/winding-setups', windingSetupEndpoints);
 app.use('/vendors', vendorEndpoints);
-// app.use('/material-orders', require('./controllers/materialOrdersController'));
+app.use('/material-orders', materialOrderEndpoints);
 // app.use('/tickets', require('./controllers/ticketController'));
 // app.use('/products', require('./controllers/productController'));
 // app.use('/hold-reasons', require('./controllers/holdReasonController'));

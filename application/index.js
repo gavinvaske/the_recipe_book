@@ -12,6 +12,13 @@ import ejsService from './services/ejsService.js'
 import httpServ from 'http'
 import { Server } from 'socket.io'
 import customWebSockets from './services/websockets/init.js'
+import { fileURLToPath } from 'url';
+
+// Routes
+import defaultRoute from './controllers/index.js'
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
@@ -27,37 +34,37 @@ const httpServer = httpServ.Server(app);
 const socket = new Server(httpServer);
 customWebSockets(socket); // Initalize sockets listeners/emitters
 
-// app.use(expressLayouts);
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: true
-// }));
+app.use(expressLayouts);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
-// app.use(flash());
-// app.use((request, response, next) => {
-//     response.locals.errors = request.flash('errors');
-//     response.locals.alerts = request.flash('alerts');
-//     next();
-// });
+app.use(flash());
+app.use((request, response, next) => {
+    response.locals.errors = request.flash('errors');
+    response.locals.alerts = request.flash('alerts');
+    next();
+});
 
-// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
-// const reactBuildFolderPath = './build';
+const reactBuildFolderPath = './build';
 
-// if (!fs.existsSync(reactBuildFolderPath)) {
-//     throw new Error('React build folder does not exist. Please run `npm run build` and try again.');
-// }
-// app.use(express.static(reactBuildFolderPath));
+if (!fs.existsSync(reactBuildFolderPath)) {
+    throw new Error('React build folder does not exist. Please run `npm run build` and try again.');
+}
+app.use(express.static(reactBuildFolderPath));
 
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, '/views'));
-// app.set('layout', path.join(__dirname, '/views/layout.ejs'));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 
-// app.use('/', require('./controllers/index'));
+app.use('/', defaultRoute);
 // app.use('/users', require('./controllers/userController'));
 // app.use('/recipes', require('./controllers/recipeController'));
 // app.use('/admin', require('./controllers/adminController'));

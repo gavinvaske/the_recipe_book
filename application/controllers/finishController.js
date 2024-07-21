@@ -5,7 +5,7 @@ import { verifyJwtToken }from '../middleware/authorize.js'
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 
-// router.use(verifyJwtToken);
+router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {

@@ -23,7 +23,7 @@ import adminEndpoints from './controllers/adminController.js'
 import finishEndpoints from './controllers/finishController.js'
 import machineEndpoints from './controllers/machineController.js'
 import materialEndpoints from './controllers/materialController.js'
-// import setupEndpoints from './controllers/setupController.js'
+import setupEndpoints from './controllers/setupController.js'
 // import printingSetupEndpoints from './controllers/printingSetupController.js'
 // import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
 // import windingSetupEndpoints from './controllers/windingSetupController.js'
@@ -103,7 +103,7 @@ app.use('/admin', adminEndpoints);
 app.use('/finishes', finishEndpoints);
 app.use('/machines', machineEndpoints);
 app.use('/materials', materialEndpoints);
-// app.use('/setups', require('./controllers/setupController'));
+app.use('/setups', setupEndpoints);
 // app.use('/printing-setups', require('./controllers/printingSetupController'));
 // app.use('/cutting-setups', require('./controllers/cuttingSetupController'));
 // app.use('/winding-setups', require('./controllers/windingSetupController'));

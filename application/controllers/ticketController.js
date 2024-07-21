@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 const {upload} = require('../middleware/upload');
 const parser = require('xml2json');
 const ticketService = require('../services/ticketService');

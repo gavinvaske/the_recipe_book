@@ -1,8 +1,8 @@
 import { Router } from 'express'
 const router = Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 import UserModel from '../models/user';
-const MachineModel = require('../models/machine');
+import MachineModel from '../models/machine.js'
 const MaterialModel = require('../models/material');
 const PrintingSetupModel = require('../models/printingSetup');
 

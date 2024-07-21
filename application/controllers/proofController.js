@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 
 router.use(verifyJwtToken);
 

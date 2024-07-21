@@ -3,7 +3,7 @@ const router = Router();
 const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
 const { descending } = require('../enums/mongooseSortMethods');
 

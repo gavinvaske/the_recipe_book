@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 const MaterialCategoryModel = require('../models/materialCategory');
 const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
 

@@ -6,7 +6,7 @@ const {upload} = require('../middleware/upload');
 const fileService = require('../services/fileService');
 const s3Service = require('../services/s3Service');
 const spotPlateService = require('../services/spotPlateService');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { verifyJwtToken } from '../middleware/authorize.js'
 
 router.use(verifyJwtToken);
 

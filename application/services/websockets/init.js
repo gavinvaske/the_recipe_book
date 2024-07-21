@@ -1,7 +1,7 @@
-const {materialOrderWatcher} = require('./materialOrderWatcher');
-const {materialWatcher} = require('./materialWatcher');
+import { materialOrderWatcher } from './materialOrderWatcher.js';
+import { materialWatcher } from './materialWatcher.js';
 
-module.exports = function(socket){
+export default function(socket){
     console.log('Starting Sockets...');
 
     /* 

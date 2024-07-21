@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const PrintingSetupModel = require('../../application/models/printingSetup');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('validation', () => {
     let printingSetupAttributes;

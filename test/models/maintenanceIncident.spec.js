@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const MaintenanceIncidentModel = require('../../application/models/maintenanceIncident');
 const TypeModel = require('../../application/models/maintenanceIncidentType');
 const databaseService = require('../../application/services/databaseService');

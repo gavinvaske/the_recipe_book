@@ -1,7 +1,7 @@
 const chance = require('chance').Chance();
 const VendorModel = require('../../application/models/vendor');
 const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('validation', () => {
     let vendorAttributes;

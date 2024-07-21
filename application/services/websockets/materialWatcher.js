@@ -1,6 +1,6 @@
-const MaterialModel = require('../../models/material');
+import MaterialModel from '../../models/material.js';
 
-module.exports.materialWatcher = (socket) => {
+export function materialWatcher(socket) {
     MaterialModel.watch().on('change', async (change) => {
         const mongooseObjectId = change.documentKey._id;
 
@@ -14,4 +14,4 @@ module.exports.materialWatcher = (socket) => {
         socket.emit(mongooseObjectId, material, change);
         socket.emit('MATERIAL:CHANGED', material, change);
     });
-};
+}

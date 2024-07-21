@@ -4,7 +4,7 @@ const Customer = require('../../application/models/customer');
 const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
 const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const testDataGenerator = require('../testDataGenerator');
 

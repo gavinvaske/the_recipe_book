@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const packagingSchema = require('../../application/schemas/packagingDetails');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('File: packaging.js', () => {
     let packagingAttributes,

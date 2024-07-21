@@ -2,7 +2,7 @@
 const constants = require('../../application/enums/constantsEnum');
 const { createQuote } = require('../../application/services/quoteService');
 const chance = require('chance').Chance();
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const { when } = require('jest-when');
 const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');
 const testDataGenerator = require('../testDataGenerator');

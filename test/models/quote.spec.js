@@ -2,7 +2,7 @@
 const Quote = require('../../application/models/quote');
 const chance = require('chance').Chance();
 const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const constants = require('../../application/enums/constantsEnum');
 const testDataGenerator = require('../testDataGenerator');
 const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');

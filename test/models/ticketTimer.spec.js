@@ -2,7 +2,7 @@ const TicketTimeLedger = require('../../application/models/ticketTimeLedger');
 const { TIMER_TYPES } = require('../../application/enums/timerTypesEnum');
 const { TIMER_STATES } = require('../../application/enums/timerStatesEnum');
 const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const chance = require('chance').Chance();
 
 describe('File: ticketTimer.js', () => {

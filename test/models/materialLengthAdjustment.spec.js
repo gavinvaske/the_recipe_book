@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const chance = require('chance').Chance();
 const MaterialLengthAdjustmentModel = require('../../application/models/materialLengthAdjustment');
 const databaseService = require('../../application/services/databaseService');

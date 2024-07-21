@@ -1,7 +1,7 @@
 const chance = require('chance').Chance();
 const {hotFolders} = require('../../application/enums/hotFolderEnum');
 const {idToColorEnum} = require('../../application/enums/idToColorEnum');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const productSchema = require('../../application/schemas/product');
 
 function getRandomNumberOfDigits() {

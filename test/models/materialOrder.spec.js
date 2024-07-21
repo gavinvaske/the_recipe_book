@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const MaterialOrderModel = require('../../application/models/materialOrder');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const TOTAL_ROLLS_MIN = 1;
 const TOTAL_ROLLS_MAX = 100;

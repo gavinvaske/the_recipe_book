@@ -1,7 +1,7 @@
 const chance = require('chance').Chance();
 const departmentNotesSchema = require('../../application/schemas/departmentNotes');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const databaseService = require('../../application/services/databaseService');
 
 describe('validation', () => {

@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const destinationSchema = require('../../application/schemas/destination');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('validation', () => {
     let destinationAttributes,

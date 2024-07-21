@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const FinishModel = require('../../application/models/finish');
 const databaseService = require('../../application/services/databaseService');
 const testDataGenerator = require('../testDataGenerator');

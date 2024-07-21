@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const addressSchema = require('./address');
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;

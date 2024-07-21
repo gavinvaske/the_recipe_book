@@ -11,6 +11,7 @@ import fs from 'fs';
 import ejsService from './services/ejsService.js'
 import httpServ from 'http'
 import { Server } from 'socket.io'
+import customWebSockets from './services/websockets/init.js'
 
 connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
@@ -24,7 +25,7 @@ app.locals.helperMethods = ejsService;
 
 const httpServer = httpServ.Server(app);
 const socket = new Server(httpServer);
-// require('./services/websockets/init')(socket); // Initalize sockets listeners/emitters
+customWebSockets(socket); // Initalize sockets listeners/emitters
 
 // app.use(expressLayouts);
 // app.use(express.json());

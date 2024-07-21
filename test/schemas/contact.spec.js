@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const contactSchema = require('../../application/schemas/contact');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const addressSchema = require('../../application/schemas/address');
 
 describe('validation', () => {

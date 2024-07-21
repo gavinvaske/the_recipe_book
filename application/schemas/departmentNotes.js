@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const departmentsEnum = require('../enums/departmentsEnum');

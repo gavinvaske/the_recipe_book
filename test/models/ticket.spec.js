@@ -4,7 +4,7 @@ const WorkflowStepModel = require('../../application/models/WorkflowStep');
 const databaseService = require('../../application/services/databaseService');
 const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
 const departmentsEnum = require('../../application/enums/departmentsEnum');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;

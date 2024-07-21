@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const RecipeModel = require('../../application/models/recipe');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('validation', () => {
     let recipeAttributes;

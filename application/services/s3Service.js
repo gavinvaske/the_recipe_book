@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const s3FileSchema = require('../schemas/s3File');
 const mime = require('mime');
 

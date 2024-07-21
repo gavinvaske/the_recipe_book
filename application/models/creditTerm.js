@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
 const Schema = mongoose.Schema;

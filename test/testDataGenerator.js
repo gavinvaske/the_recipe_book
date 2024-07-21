@@ -1,5 +1,5 @@
 const chance = require('chance').Chance();
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const { dieShapes } = require('../application/enums/dieShapesEnum');
 const { toolTypes } = require('../application/enums/toolTypesEnum');

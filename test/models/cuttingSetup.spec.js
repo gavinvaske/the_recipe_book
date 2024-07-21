@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const CuttingSetupModel = require('../../application/models/cuttingSetup');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 describe('validation', () => {
     let cuttingSetupAttributes;

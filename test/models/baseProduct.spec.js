@@ -1,6 +1,6 @@
 const chance = require('chance').Chance();
 const ProductModel = require('../../application/models/baseProduct');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const databaseService = require('../../application/services/databaseService');
 const CustomerModel = require('../../application/models/customer');
 const MaterialModel = require('../../application/models/material');

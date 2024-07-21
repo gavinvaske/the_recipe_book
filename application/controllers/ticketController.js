@@ -19,7 +19,7 @@ import * as fileService from '../services/fileService.js';
 import * as downtimeReasonService from '../services/downtimeReasonService.js';
 import * as destinationService from '../services/destinationService.js';
 
-// router.use(verifyJwtToken);
+router.use(verifyJwtToken);
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_ERROR_CODE = 400;

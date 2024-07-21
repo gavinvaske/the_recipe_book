@@ -1,8 +1,9 @@
 import Chance from 'chance'
-const chance = Chance();
-const contactSchema = require('../../application/schemas/contact');
+import contactSchema from'../../application/schemas/contact';
 import mongoose from 'mongoose'
-const addressSchema = require('../../application/schemas/address');
+import addressSchema from'../../application/schemas/address';
+
+const chance = Chance();
 
 describe('validation', () => {
     let contactAttributes,

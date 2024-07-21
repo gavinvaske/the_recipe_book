@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
 import Chance from 'chance'
-const chance = Chance();
-const purchasedProductSchema = require('../../application/schemas/purchasedProduct');
+import purchasedProductSchema from '../../application/schemas/purchasedProduct';
 import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('File: purchasedProductSchema.js', () => {
     let purchasedProductAttributes, PurchasedProduct;

@@ -1,7 +1,8 @@
 import Chance from 'chance'
-const chance = Chance();
-const destinationSchema = require('../../application/schemas/destination');
+import destinationSchema from '../../application/schemas/destination';
 import mongoose from 'mongoose'
+
+const chance = Chance();
 
 describe('validation', () => {
     let destinationAttributes,

@@ -1,9 +1,10 @@
 import Chance from 'chance'
-const chance = Chance();
-const departmentNotesSchema = require('../../application/schemas/departmentNotes');
+import departmentNotesSchema from '../../application/schemas/departmentNotes';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import mongoose from 'mongoose'
 import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let departmentNotesAttributes,

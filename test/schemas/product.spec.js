@@ -1,9 +1,10 @@
 import Chance from 'chance'
-const chance = Chance();
-const {hotFolders} = require('../../application/enums/hotFolderEnum');
-const {idToColorEnum} = require('../../application/enums/idToColorEnum');
+import { hotFolders } from '../../application/enums/hotFolderEnum';
+import { idToColorEnum } from '../../application/enums/idToColorEnum';
 import mongoose from 'mongoose'
-const productSchema = require('../../application/schemas/product');
+import productSchema from '../../application/schemas/product';
+
+const chance = Chance();
 
 function getRandomNumberOfDigits() {
     return chance.integer({min: 1});

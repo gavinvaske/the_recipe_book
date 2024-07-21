@@ -26,7 +26,7 @@ module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-lin
         return 'N/A';
     }
 
-    let minutes, hours, days, weeks, months;
+    let minutes, hours, days, weeks, months, years;
     const roundedDurationInMinutes = Math.floor(durationInMinutes);
     const durationIsLessThanOneMinute = roundedDurationInMinutes <= zeroMinutes;
     const durationIslessThanOneHour = roundedDurationInMinutes < MINUTES_PER_HOUR;

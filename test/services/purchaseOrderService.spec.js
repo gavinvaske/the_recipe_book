@@ -57,7 +57,7 @@ describe('purchaseOrderService test suite', () => {
     describe('findPurchaseOrdersThatHaveNotArrived()', () => {
         it('should return an empty array if an empty array is passed in', () => {
             const emptyArray = [];
-            purchaseOrders = [];
+            const purchaseOrders = [];
 
             const foundPurchaseOrders = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(purchaseOrders);
 
@@ -67,7 +67,7 @@ describe('purchaseOrderService test suite', () => {
         it('should only return purchaseOrders that HAVE NOT arrived', () => {
             const purchaseOrdersThatHaveArrived = chance.n(getPurchaseOrderThatHasArrived, chance.integer({min: 1, max: 1000}));
             const purchaseOrdersThatHaveNotArrived = chance.n(getPurchaseOrderThatHasNotArrived, chance.integer({min: 1, max: 1000}));
-            purchaseOrders = [
+           const purchaseOrders = [
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
             ];
@@ -81,7 +81,7 @@ describe('purchaseOrderService test suite', () => {
     describe('findPurchaseOrdersThatHaveArrived()', () => {
         it('should return an empty array if an empty array is passed in', () => {
             const emptyArray = [];
-            purchaseOrders = [];
+            const purchaseOrders = [];
 
             const foundPurchaseOrders = purchaseOrderService.findPurchaseOrdersThatHaveArrived(purchaseOrders);
 
@@ -91,7 +91,7 @@ describe('purchaseOrderService test suite', () => {
         it('should only return purchaseOrders that HAVE arrived', () => {
             const purchaseOrdersThatHaveArrived = chance.n(getPurchaseOrderThatHasArrived, chance.integer({min: 1, max: 1000}));
             const purchaseOrdersThatHaveNotArrived = chance.n(getPurchaseOrderThatHasNotArrived, chance.integer({min: 1, max: 1000}));
-            purchaseOrders = [
+            const purchaseOrders = [
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
             ];
@@ -105,7 +105,7 @@ describe('purchaseOrderService test suite', () => {
     describe('computeLengthOfMaterial()', () => {
         it('should return length of 0 if no purchase orders are passed', () => {
             const expectedLength = 0;
-            purchaseOrders = [];
+            const purchaseOrders = [];
 
             const actualLength = purchaseOrderService.computeLengthOfMaterial(purchaseOrders);
 

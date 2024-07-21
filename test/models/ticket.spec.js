@@ -1413,7 +1413,7 @@ describe('validation', () => {
                     const department = chance.pickone(departments);
                     const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
-                    newTicketDestination = {
+                    const newTicketDestination = {
                         department,
                         departmentStatus
                     };
@@ -1488,7 +1488,7 @@ describe('validation', () => {
                     const department = chance.pickone(departments);
                     const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
-                    newTicketDestination = {
+                    const newTicketDestination = {
                         department,
                         departmentStatus
                     };

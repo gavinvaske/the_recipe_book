@@ -11,7 +11,7 @@ const WorkflowStepModel = require('../models/WorkflowStep');
 const departmentsEnum = require('../enums/departmentsEnum');
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
-TICKET_NUMBER_REGEX = /^\d{1,}$/;
+const TICKET_NUMBER_REGEX = /^\d{1,}$/;
 const EMAIL_VALIDATION_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function isValidTicketDestination(destination) {

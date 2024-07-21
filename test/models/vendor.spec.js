@@ -9,7 +9,7 @@ describe('validation', () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        addressAttributes = {
+        const addressAttributes = {
             name: chance.string(),
             street: chance.string(),
             unitOrSuite: chance.string(),

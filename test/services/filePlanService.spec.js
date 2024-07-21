@@ -116,7 +116,8 @@ describe('filePlanService.js', () => {
         let filePlanRequest,
             labelsAcross,
             labelsAround,
-            products;
+            products,
+            frameSize;
 
         beforeEach(() => {
             products = chance.n(getProductWithRandomAttributes, chance.d100());

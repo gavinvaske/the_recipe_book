@@ -9,17 +9,17 @@ const MINUTES_PER_YEAR = DAYS_PER_YEAR * MINUTES_PER_DAY;
 const MILLISECONDS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
 
-module.exports.howManyMillisecondsHavePassedBetweenDateTimes = (dateTime1, dateTime2) => {
+export function howManyMillisecondsHavePassedBetweenDateTimes(dateTime1, dateTime2) {
     return Math.abs(dateTime2 - dateTime1);
-};
+}
 
-module.exports.convertMillisecondsToMinutes = (numberOfMilliseconds) => {
+export function convertMillisecondsToMinutes(numberOfMilliseconds) {
     const milliSecondsPerMinute = MILLISECONDS_PER_SECOND * SECONDS_PER_MINUTE;
 
     return numberOfMilliseconds / milliSecondsPerMinute;
-};
+}
 
-module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-line complexity
+export function prettifyDuration(durationInMinutes) { // eslint-disable-line complexity
     const zeroMinutes = 0;
 
     if (typeof durationInMinutes !== 'number' || durationInMinutes < zeroMinutes) {
@@ -67,17 +67,17 @@ module.exports.prettifyDuration = (durationInMinutes) => { // eslint-disable-lin
     months = Math.floor((roundedDurationInMinutes % MINUTES_PER_YEAR) / MINUTES_PER_AVERAGE_MONTH);
 
     return `${years}yr ${months}m`;
-};
+}
 
-module.exports.getDate = (utcDate) => {
+export function getDate(utcDate) {
     if (!utcDate) {
         return '';
     }
 
     return new Date(utcDate).toLocaleDateString('en-US');
-};
+}
 
-module.exports.getDayNumberAndMonth = (utcDate) => {
+export function getDayNumberAndMonth(utcDate) {
     if (!utcDate) {
         return '';
     }
@@ -88,16 +88,16 @@ module.exports.getDayNumberAndMonth = (utcDate) => {
     const twoDigitDayOfMonth = dateParts[1];
 
     return `${twoDigitDayOfMonth} ${monthName}`;
-};
+}
 
-module.exports.convertMinutesToSeconds = (minutes) => {
+export function convertMinutesToSeconds(minutes) {
     if (!minutes) return 0;
 
     return Math.round(minutes * SECONDS_PER_MINUTE);
-};
+}
 
-module.exports.convertSecondsToMinutes = (seconds) => {
+export function convertSecondsToMinutes(seconds) {
     if (!seconds) return seconds;
 
     return seconds / SECONDS_PER_MINUTE;
-};
+}

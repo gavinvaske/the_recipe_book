@@ -36,7 +36,7 @@ import proofEndpoints from './controllers/proofController.js'
 import dieLineEndpoints from './controllers/dieLineController.js'
 import spotPlateEndpoints from './controllers/spotPlateController.js'
 import requestEndpoints from './controllers/requestController.js'
-// import materialCategoryEndpoints from './controllers/materialCategoryController.js'
+import materialCategoryEndpoints from './controllers/materialCategoryController.js'
 // import filePlanEndpoints from './controllers/filePlanController.js'
 // import packagingEndpoints from './controllers/packagingController.js'
 // import quoteEndpoints from './controllers/quoteController.js'
@@ -116,7 +116,7 @@ app.use('/proofs', proofEndpoints);
 app.use('/die-lines', dieLineEndpoints);
 app.use('/spot-plates', spotPlateEndpoints);
 app.use('/requests', requestEndpoints);
-// app.use('/material-categories', require('./controllers/materialCategoryController'));
+app.use('/material-categories', materialCategoryEndpoints);
 // app.use('/file-plan', require('./controllers/filePlanController'));
 // app.use('/packaging', require('./controllers/packagingController'));
 // app.use('/quote', require('./controllers/quoteController'));

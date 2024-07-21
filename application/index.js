@@ -35,7 +35,7 @@ import holdReasonEndpoints from './controllers/holdReasonController.js'
 import proofEndpoints from './controllers/proofController.js'
 import dieLineEndpoints from './controllers/dieLineController.js'
 import spotPlateEndpoints from './controllers/spotPlateController.js'
-// import requestEndpoints from './controllers/requestController.js'
+import requestEndpoints from './controllers/requestController.js'
 // import materialCategoryEndpoints from './controllers/materialCategoryController.js'
 // import filePlanEndpoints from './controllers/filePlanController.js'
 // import packagingEndpoints from './controllers/packagingController.js'
@@ -115,7 +115,7 @@ app.use('/hold-reasons', holdReasonEndpoints);
 app.use('/proofs', proofEndpoints);
 app.use('/die-lines', dieLineEndpoints);
 app.use('/spot-plates', spotPlateEndpoints);
-// app.use('/requests', require('./controllers/requestController'));
+app.use('/requests', requestEndpoints);
 // app.use('/material-categories', require('./controllers/materialCategoryController'));
 // app.use('/file-plan', require('./controllers/filePlanController'));
 // app.use('/packaging', require('./controllers/packagingController'));

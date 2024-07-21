@@ -20,7 +20,7 @@ import userEndpoints from './controllers/userController.js'
 import recipeEndpoints from './controllers/recipeController.js'
 
 import adminEndpoints from './controllers/adminController.js'
-// import finishEndpoints from './controllers/finishController.js'
+import finishEndpoints from './controllers/finishController.js'
 // import machineEndpoints from './controllers/machineController.js'
 // import materialEndpoints from './controllers/materialController.js'
 // import setupEndpoints from './controllers/setupController.js'
@@ -100,7 +100,7 @@ app.use('/', defaultRoute);
 app.use('/users', userEndpoints);
 app.use('/recipes', recipeEndpoints);
 app.use('/admin', adminEndpoints);
-// app.use('/finishes', require('./controllers/finishController'));
+app.use('/finishes', finishEndpoints);
 // app.use('/machines', require('./controllers/machineController'));
 // app.use('/materials', require('./controllers/materialController'));
 // app.use('/setups', require('./controllers/setupController'));

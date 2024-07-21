@@ -1,10 +1,11 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const CuttingSetupModel = require('../models/cuttingSetup');
 import UserModel from '../models/user';
 const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
-const FinishModel = require('../models/finish');
+import FinishModel from '../models/finish.js'
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;

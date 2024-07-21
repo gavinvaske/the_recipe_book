@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const MaterialOrderModel = require('../models/materialOrder');
 const MaterialModel = require('../models/material');
 const VendorModel = require('../models/vendor');

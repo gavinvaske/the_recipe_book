@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS } = require('../enums/httpStatusCodes');
-const { verifyJwtToken } = require('../middleware/authorize');
+import { verifyJwtToken }from '../middleware/authorize.js'
 const CustomerModel = require('../models/customer');
 
 router.use(verifyJwtToken);

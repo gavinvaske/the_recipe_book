@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const quoteService = require('../services/quoteService');
 

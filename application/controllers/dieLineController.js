@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const DieLineModel = require('../models/dieLine');
 const mongooseService = require('../services/mongooseService');
 const {upload} = require('../middleware/upload');

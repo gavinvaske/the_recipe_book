@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const addressSchema = require('../schemas/address');
 const contactSchema = require('../schemas/contact');
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete'
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 function doesArrayContainElements(value) {
     return value.length > 0;

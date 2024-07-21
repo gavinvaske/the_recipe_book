@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 import RecipeModel from '../models/recipe.js';
 const {verifyJwtToken} = require('../middleware/authorize');
 

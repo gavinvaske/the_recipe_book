@@ -3,7 +3,8 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete'
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generateUniqueProductNumber() {
     await this.populate('customer');

@@ -1,10 +1,11 @@
-const router = require('express').Router();
-const FinishModel = require('../models/finish');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express'
+const router = Router();
+import FinishModel from '../models/finish.js'
+import { verifyJwtToken }from '../middleware/authorize.js'
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 
-router.use(verifyJwtToken);
+// router.use(verifyJwtToken);
 
 router.get('/', async (request, response) => {
     try {
@@ -74,4 +75,4 @@ router.get('/delete/:id', async (request, response) => {
     return response.redirect('back');
 });
 
-module.exports = router;
+export default router;

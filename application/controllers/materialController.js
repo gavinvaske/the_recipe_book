@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const MaterialModel = require('../models/material');
-const { verifyJwtToken } = require('../middleware/authorize');
+import { verifyJwtToken }from '../middleware/authorize.js'
 const VendorModel = require('../models/vendor');
 const MaterialCategoryModel = require('../models/materialCategory');
 

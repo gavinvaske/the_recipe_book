@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
-const { verifyJwtToken } = require('../middleware/authorize');
+import { verifyJwtToken }from '../middleware/authorize.js'
 const CreditTermModel = require('../models/creditTerm');
 
 router.use(verifyJwtToken);

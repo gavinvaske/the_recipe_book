@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
 const addressSchema = require('../schemas/address');
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete'
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const schema = new Schema({
     name: {

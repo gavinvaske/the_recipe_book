@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const SpotPlateModel = require('../models/spotPlate');
 const DieLineModel = require('../models/dieLine');
 const destinationService = require('../services/destinationService');

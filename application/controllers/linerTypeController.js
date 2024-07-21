@@ -1,6 +1,7 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const LinerTypeModel = require('../models/linerType');
-const { verifyJwtToken } = require('../middleware/authorize');
+import { verifyJwtToken }from '../middleware/authorize.js'
 const { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
 
 router.use(verifyJwtToken);

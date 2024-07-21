@@ -1,4 +1,5 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const packagingService = require('../services/packagingService');
 const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
 

@@ -1,10 +1,11 @@
-const router = require('express').Router();
+import { Router } from 'express'
+const router = Router();
 const {verifyJwtToken} = require('../middleware/authorize');
 const WindingSetupModel = require('../models/windingSetup');
 import UserModel from '../models/user';
 const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
-const FinishModel = require('../models/finish');
+import FinishModel from '../models/finish.js'
 
 router.use(verifyJwtToken);
 

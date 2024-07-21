@@ -15,13 +15,13 @@ function layoutDetailsForNCirclesInSquare(nCircles, radiusPerCircleScaledToFitIn
     };
 }
 
-module.exports.getImageForNCirclesInSquare = (nCirlces) => {
+export function getImageForNCirclesInSquare(nCirlces) {
     const svgFileName = `${nCirlces}_circles_in_a_square.png`;
 
     const pathToSvg = `/images/circlesInSquare/${svgFileName}`;
 
     return pathToSvg;
-};
+}
 
 function computeMaxAllowedCircleDiameter(squareSideLength, circleRadiusScaledToFitIntoUnitSquare) {
     const circleDiameterScaledToFitIntoUnitSquare = circleRadiusScaledToFitIntoUnitSquare * 2;
@@ -34,7 +34,7 @@ function computeMaxAllowedCircleDiameter(squareSideLength, circleRadiusScaledToF
     It provides a subset of solutions to a traveling saleman (NP) related problem in
     the simplest possible way. The NP problem is called "Circle Packing in a Square".
 */
-module.exports.howManyCirclesCanFitInThisSquare = (circleDiameter, squareSideLength) => {
+export function howManyCirclesCanFitInThisSquare(circleDiameter, squareSideLength) {
     let largestNumberOfCirclesThatCanFitIntoSquare;
 
     const maximumCircleDiameter = computeMaxAllowedCircleDiameter(squareSideLength, LARGEST_CIRCLE_RADIUS_SCALED_TO_FIT_IN_UNIT_SQUARE);
@@ -63,7 +63,7 @@ module.exports.howManyCirclesCanFitInThisSquare = (circleDiameter, squareSideLen
 
     return largestNumberOfCirclesThatCanFitIntoSquare;
 
-};
+}
 
 const ONE = 1;
 const TWO = 2;

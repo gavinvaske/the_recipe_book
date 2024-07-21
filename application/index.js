@@ -38,7 +38,7 @@ import spotPlateEndpoints from './controllers/spotPlateController.js'
 import requestEndpoints from './controllers/requestController.js'
 import materialCategoryEndpoints from './controllers/materialCategoryController.js'
 import filePlanEndpoints from './controllers/filePlanController.js'
-// import packagingEndpoints from './controllers/packagingController.js'
+import packagingEndpoints from './controllers/packagingController.js'
 // import quoteEndpoints from './controllers/quoteController.js'
 // import dieEndpoints from './controllers/dieController.js'
 // import linerTypeEndpoints from './controllers/linerTypeController.js'
@@ -118,7 +118,7 @@ app.use('/spot-plates', spotPlateEndpoints);
 app.use('/requests', requestEndpoints);
 app.use('/material-categories', materialCategoryEndpoints);
 app.use('/file-plan', filePlanEndpoints);
-// app.use('/packaging', require('./controllers/packagingController'));
+app.use('/packaging', packagingEndpoints);
 // app.use('/quote', require('./controllers/quoteController'));
 // app.use('/die', require('./controllers/dieController'));
 // app.use('/liner-types', require('./controllers/linerTypeController'));

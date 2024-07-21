@@ -1,4 +1,4 @@
-module.exports.CREATED_SUCCESSFULLY = 201;
-module.exports.SERVER_ERROR = 500;
-module.exports.SUCCESS = 200;
-module.exports.BAD_REQUEST = 400;
+export const CREATED_SUCCESSFULLY = 201;
+export const SERVER_ERROR = 500;
+export const SUCCESS = 200;
+export const BAD_REQUEST = 400;

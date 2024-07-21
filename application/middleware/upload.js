@@ -1,6 +1,6 @@
-var multer = require('multer');
+import multer, { diskStorage } from 'multer';
   
-var storage = multer.diskStorage({
+var storage = diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads');
     },
@@ -9,4 +9,4 @@ var storage = multer.diskStorage({
     }
 });
   
-module.exports.upload = multer({ storage: storage });
+export const upload = multer({ storage: storage });

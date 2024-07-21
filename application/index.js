@@ -16,6 +16,7 @@ import { fileURLToPath } from 'url';
 
 // Routes
 import defaultRoute from './controllers/index.js'
+import userEndpoints from './controllers/userController.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -65,7 +66,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 
 app.use('/', defaultRoute);
-// app.use('/users', require('./controllers/userController'));
+app.use('/users', userEndpoints);
 // app.use('/recipes', require('./controllers/recipeController'));
 // app.use('/admin', require('./controllers/adminController'));
 // app.use('/finishes', require('./controllers/finishController'));

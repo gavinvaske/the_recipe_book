@@ -1,16 +1,16 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const UserModel = require('../models/user');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const {verifyJwtToken} = require('../middleware/authorize');
-const {sendPasswordResetEmail} = require('../services/emailService');
-const {upload} = require('../middleware/upload');
-const fs = require('fs');
-const path = require('path');
-const {isUserLoggedIn} = require('../services/userService');
-const { SERVER_ERROR } = require('../enums/httpStatusCodes');
+import 'dotenv/config'
+import { Router } from 'express';
+const router = Router();
+import bcrypt from 'bcryptjs';
+import UserModel from '../models/user.js';
+import jwt from 'jsonwebtoken';
+import { verifyJwtToken } from '../middleware/authorize.js';
+import { sendPasswordResetEmail } from '../services/emailService.js';
+import { upload } from '../middleware/upload.js';
+import fs from 'fs';
+import path from 'path';
+import { isUserLoggedIn } from '../services/userService.js';
+import { SERVER_ERROR } from '../enums/httpStatusCodes.js';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
@@ -337,4 +337,4 @@ router.post('/register', async (request, response) => {
     return response.redirect('/users/login');
 });
 
-module.exports = router;
+export default router;

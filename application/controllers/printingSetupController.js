@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {verifyJwtToken} = require('../middleware/authorize');
-const UserModel = require('../models/user');
+import UserModel from '../models/user';
 const MachineModel = require('../models/machine');
 const MaterialModel = require('../models/material');
 const PrintingSetupModel = require('../models/printingSetup');

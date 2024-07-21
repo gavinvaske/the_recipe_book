@@ -1,11 +1,11 @@
 import { Router } from 'express'
 const router = Router();
-const SpotPlateModel = require('../models/spotPlate');
+import SpotPlateModel from '../models/spotPlate.js';
 import * as mongooseService  from '../services/mongooseService.js'
 import { upload } from '../middleware/upload.js';
 import * as fileService from '../services/fileService.js';
 import * as s3Service from '../services/s3Service.js';
-const spotPlateService = require('../services/spotPlateService');
+import * as spotPlateService from '../services/spotPlateService.js';
 import { verifyJwtToken } from '../middleware/authorize.js'
 
 router.use(verifyJwtToken);
@@ -62,4 +62,4 @@ router.post('/department-statuses', (request, response) => {
     });
 });
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
+import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
 
 import mongooseDelete from 'mongoose-delete'
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
@@ -79,4 +79,4 @@ productSchema.pre('save', setDefaultOverun);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 
-module.exports = ProductModel;
+export default ProductModel;

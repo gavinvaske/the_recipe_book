@@ -1,9 +1,9 @@
 const SHEETED = 'SHEETED';
 const ROLLS = 'ROLLS';
 
-module.exports.defaultFinishType = ROLLS;
+export const defaultFinishType = ROLLS;
 
-module.exports.finishTypes = [
+export const finishTypes = [
     SHEETED,
     ROLLS
 ];

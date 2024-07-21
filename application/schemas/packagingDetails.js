@@ -44,4 +44,4 @@ const packagingSchema = new Schema({
     }
 }, { strict: 'throw' });
 
-module.exports = packagingSchema;
+export default packagingSchema;

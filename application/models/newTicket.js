@@ -6,7 +6,8 @@ import * as departmentsEnum from '../enums/departmentsEnum.js';
 import WorkflowStepModel from '../models/WorkflowStep.js';
 const purchasedProductSchema = require('../schemas/purchasedProduct');
 
-mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
+import mongooseDelete from 'mongoose-delete'
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generateUniqueTicketNumber() {
     const numberOfTicketsInDatabase = await Ticket.countDocuments({});

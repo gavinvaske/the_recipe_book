@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const DieModel = require('../models/Die');
+import DieModel from '../models/Die.js';
 
 router.use(verifyJwtToken);
 

@@ -1,7 +1,7 @@
-const { unwindDirections, defaultUnwindDirection } = require('../enums/unwindDirectionsEnum');
-const { finishTypes, defaultFinishType } = require('../enums/finishTypesEnum');
+import { unwindDirections, defaultUnwindDirection } from '../enums/unwindDirectionsEnum.js';
+import { finishTypes, defaultFinishType } from '../enums/finishTypesEnum.js';
 
-module.exports.sharedBaseProductMongooseAttributes = {
+export const sharedBaseProductMongooseAttributes = {
     productNumber: {
         type: String,
         unique: true

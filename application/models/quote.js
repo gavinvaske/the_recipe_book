@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService.js');
-const constants = require('../enums/constantsEnum');
-const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../services/dateTimeService.js');
-const Decimal = require('decimal.js');
-const PackagingDetailsSchema = require('../schemas/packagingDetails');
-const { unwindDirections } = require('../enums/unwindDirectionsEnum');
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
+import * as constants from '../enums/constantsEnum.js';
+import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService.js';
+import Decimal from 'decimal.js';
+import PackagingDetailsSchema from '../schemas/packagingDetails.js';
+import { unwindDirections } from '../enums/unwindDirectionsEnum.js';
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FIVE_DECIMAL_PLACES = 5;
@@ -514,4 +514,4 @@ const quoteSchema = new Schema({
 
 const Quote = mongoose.model('Quote', quoteSchema);
 
-module.exports = Quote;
+export default Quote;

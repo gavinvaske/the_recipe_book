@@ -2,11 +2,12 @@ import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import addressSchema  from '../schemas/address.js'
-const { FACTORY_ADDRESS } = require('../enums/constantsEnum');
-const { validatePhoneNumber } = require('../services/dataValidationService');
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService.js');
+import { FACTORY_ADDRESS } from '../enums/constantsEnum';
+import { validatePhoneNumber } from '../services/dataValidationService';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
 
-mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
+import mongooseDelete from 'mongoose-delete'
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generatePackingSlipNumber() {
     const numberOfPackingSlipsInDatabase = await PackingSlip.countDocuments({});
@@ -80,5 +81,5 @@ packingSlipSchema.pre('save', generatePackingSlipNumber);
 
 const PackingSlip = mongoose.model('PackingSlip', packingSlipSchema);
 
-module.exports = PackingSlip;
+export default PackingSlip;
 

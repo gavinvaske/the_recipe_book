@@ -12,7 +12,7 @@ import mongooseDelete from 'mongoose-delete'
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
-const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
+import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
 
 function roundDownToNearestEvenWholeNumber(value) {
     return Math.floor(value / 2) * 2;

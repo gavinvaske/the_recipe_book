@@ -114,7 +114,7 @@ describe('purchaseOrderService test suite', () => {
 
         it('should compute the length of material on purchase orders correctly', () => {
             const numberOfPurchaseOrders = chance.integer({min: 1, max: 100});
-            purchaseOrders = chance.n(buildPurchaseOrder, numberOfPurchaseOrders);
+            const purchaseOrders = chance.n(buildPurchaseOrder, numberOfPurchaseOrders);
             let expectedLength = 0;
 
             for (let i=0; i < numberOfPurchaseOrders; i++) {

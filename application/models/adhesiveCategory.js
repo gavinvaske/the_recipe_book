@@ -13,4 +13,4 @@ const schema = new Schema({
 
 const AdhesiveCategory = mongoose.model('AdhesiveCategory', schema);
 
-module.exports = AdhesiveCategory;
+export default AdhesiveCategory;

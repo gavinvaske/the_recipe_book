@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router();
-const LinerTypeModel = require('../models/linerType');
+import LinerTypeModel from '../models/linerType.js';
 import { verifyJwtToken }from '../middleware/authorize.js'
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
@@ -78,4 +78,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

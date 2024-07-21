@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const AdhesiveCategoryModel = require('../models/adhesiveCategory');
+import AdhesiveCategoryModel from '../models/adhesiveCategory.js';
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
@@ -81,4 +81,4 @@ router.get('/:mongooseId', async (request, response) => {
 });
 
 
-module.exports = router;
+export default router;

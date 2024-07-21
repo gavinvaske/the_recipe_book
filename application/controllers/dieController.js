@@ -11,4 +11,4 @@ router.get('/', async (request, response) => {
     return response.send(dies);
 });
 
-module.exports = router;
+export default router;

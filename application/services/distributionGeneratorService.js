@@ -35,9 +35,13 @@ function getDistribution(elementsPerDistribution, numberOfLanes) {
 }
 
 function removeDuplicatesFromDistributions(distributions) {
-    distributions.forEach((distribution) => distribution.sort());
+  const seen = {};
 
-    return distributions.filter(( t={}, a=> !(t[a]=a in t) ));
+  distributions.forEach((distribution) => distribution.sort());
+
+  return distributions.filter((distribution) => { // credit: https://stackoverflow.com/a/9229821
+    return seen.hasOwnProperty(distribution) ? false : (seen[distribution] = true)
+  })
 }
 
 module.exports.getDistributions = (numberOfLanes) => {

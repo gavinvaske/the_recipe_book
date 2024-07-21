@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('../schemas/s3File.js');
+import fileSchema from '../schemas/s3File.js';
 import destinationSchema from '../schemas/destination.js';
 import * as departmentsEnum from '../enums/departmentsEnum.js';
 

@@ -32,7 +32,7 @@ import materialOrderEndpoints from './controllers/materialOrdersController.js'
 import ticketEndpoints from './controllers/ticketController.js'
 import productEndpoints from './controllers/productController.js'
 import holdReasonEndpoints from './controllers/holdReasonController.js'
-// import proofEndpoints from './controllers/proofController.js'
+import proofEndpoints from './controllers/proofController.js'
 // import dieLineEndpoints from './controllers/dieLineController.js'
 // import spotPlateEndpoints from './controllers/spotPlateController.js'
 // import requestEndpoints from './controllers/requestController.js'
@@ -112,7 +112,7 @@ app.use('/material-orders', materialOrderEndpoints);
 app.use('/tickets', ticketEndpoints);
 app.use('/products', productEndpoints);
 app.use('/hold-reasons', holdReasonEndpoints);
-// app.use('/proofs', require('./controllers/proofController'));
+app.use('/proofs', proofEndpoints);
 // app.use('/die-lines', require('./controllers/dieLineController'));
 // app.use('/spot-plates', require('./controllers/spotPlateController'));
 // app.use('/requests', require('./controllers/requestController'));

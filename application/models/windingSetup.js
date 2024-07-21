@@ -71,4 +71,4 @@ const schema = new Schema({
 
 const windingSetup = mongoose.model('windingSetups', schema);
 
-module.exports = windingSetup;
+export default windingSetup;

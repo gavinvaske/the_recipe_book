@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.js'
-const WindingSetupModel = require('../models/windingSetup');
+import WindingSetupModel from '../models/windingSetup.js';
 import UserModel from '../models/user.js';
 import MachineModel from '../models/machine.js'
 import MaterialModel from '../models/material.js'
@@ -158,4 +158,4 @@ router.post('/update/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

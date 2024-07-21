@@ -26,7 +26,7 @@ import materialEndpoints from './controllers/materialController.js'
 import setupEndpoints from './controllers/setupController.js'
 import printingSetupEndpoints from './controllers/printingSetupController.js'
 import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
-// import windingSetupEndpoints from './controllers/windingSetupController.js'
+import windingSetupEndpoints from './controllers/windingSetupController.js'
 // import vendorEndpoints from './controllers/vendorController.js'
 // import materialOrderEndpoints from './controllers/materialOrdersController.js'
 // import ticketEndpoints from './controllers/ticketController.js'
@@ -106,7 +106,7 @@ app.use('/materials', materialEndpoints);
 app.use('/setups', setupEndpoints);
 app.use('/printing-setups', printingSetupEndpoints);
 app.use('/cutting-setups', cuttingSetupEndpoints);
-// app.use('/winding-setups', require('./controllers/windingSetupController'));
+app.use('/winding-setups', windingSetupEndpoints);
 // app.use('/vendors', require('./controllers/vendorController'));
 // app.use('/material-orders', require('./controllers/materialOrdersController'));
 // app.use('/tickets', require('./controllers/ticketController'));

@@ -1,6 +1,6 @@
-const distributionGeneratorService = require('./distributionGeneratorService');
+import { getDistributions } from './distributionGeneratorService.js';
 
-module.exports.buildProduct = (name, labelQuantity) => {
+export function buildProduct(name, labelQuantity) {
     if (!name) throw Error('The product\'s \'name\' must be defined');
 
     if (!labelQuantity || isNaN(labelQuantity) || labelQuantity <= 0) throw Error(`The 'labelQuantity' attribute must be a positive integer. Received ${labelQuantity}`);
@@ -9,9 +9,9 @@ module.exports.buildProduct = (name, labelQuantity) => {
         name,
         labelQuantity: Number(labelQuantity)
     };
-};
+}
 
-module.exports.buildFilePlanRequest = (products, labelsAcross, labelsAround) => {
+export function buildFilePlanRequest(products, labelsAcross, labelsAround) {
     if (!products || !products.length) throw Error(`Products must be a list with at least one object. Received: ${JSON.stringify(products)}`);
 
     if (labelsAcross <= 0) throw Error(`"labelsAcross" must be a positive integer. Received: ${labelsAcross}`);
@@ -23,7 +23,7 @@ module.exports.buildFilePlanRequest = (products, labelsAcross, labelsAround) => 
         numberOfLanes: labelsAcross,
         labelsPerLane: labelsAround
     };
-};
+}
 
 function scaleProducts(products, productToScaleBy) {
     return products.map((product) => {
@@ -151,7 +151,7 @@ function computeTotalProducts(masterGroups) {
     return masterGroups.reduce((accumulator, masterGroup) => accumulator + masterGroup.products.length, 0);
 }
 
-module.exports.buildFilePlan = (filePlanRequest) => {
+export function buildFilePlan(filePlanRequest) {
     const { numberOfLanes, labelsPerLane } = filePlanRequest;
     let { products } = filePlanRequest;
     const frameSize = numberOfLanes * labelsPerLane;
@@ -160,7 +160,7 @@ module.exports.buildFilePlan = (filePlanRequest) => {
     products.sort(compareProductNames);
 
     let groupSize = products.length < numberOfLanes ? products.length : numberOfLanes;
-    const distributions = distributionGeneratorService.getDistributions(numberOfLanes);
+    const distributions = getDistributions(numberOfLanes);
     const masterGroups = [];
 
     while (products.length !== 0) {
@@ -204,4 +204,4 @@ module.exports.buildFilePlan = (filePlanRequest) => {
         totalProducts: computeTotalProducts(masterGroups),
         originalFrames
     };
-};
+}

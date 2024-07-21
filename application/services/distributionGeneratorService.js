@@ -44,7 +44,7 @@ function removeDuplicatesFromDistributions(distributions) {
   })
 }
 
-module.exports.getDistributions = (numberOfLanes) => {
+export function getDistributions(numberOfLanes) {
     const groupSizeToDistributions = {};
 
     for (let groupSize = 1; groupSize <= numberOfLanes; groupSize++) {
@@ -55,4 +55,4 @@ module.exports.getDistributions = (numberOfLanes) => {
     }
 
     return groupSizeToDistributions;
-};
+}

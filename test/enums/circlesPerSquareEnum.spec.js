@@ -1,5 +1,5 @@
 import { howManyCirclesCanFitInThisSquare } from '../../application/enums/circlesPerSquareEnum';
-import Chance from 'chance'
+import Chance from 'chance';
 
 const chance = Chance();
 

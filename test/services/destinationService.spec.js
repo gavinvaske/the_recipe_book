@@ -1,5 +1,5 @@
-const destinationService = require('../../application/services/destinationService');
-import Chance from 'chance'
+import * as destinationService from '../../application/services/destinationService';
+import Chance from 'chance';
 const chance = Chance();
 
 describe('destinationService.js', () => {

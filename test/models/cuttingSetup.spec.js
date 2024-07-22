@@ -1,6 +1,6 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import CuttingSetupModel from '../../application/models/cuttingSetup';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const chance = Chance();
 

@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';

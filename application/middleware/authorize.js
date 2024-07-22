@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import 'dotenv/config'
+import 'dotenv/config';
 
 const FORBIDDEN_STATUS_CODE = 403;
 

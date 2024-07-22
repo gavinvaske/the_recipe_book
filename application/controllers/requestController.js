@@ -1,9 +1,9 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
 import SpotPlateModel from '../models/spotPlate.js';
 import DieLineModel from '../models/dieLine.js';
 import * as destinationService from '../services/destinationService.js';
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 router.use(verifyJwtToken);
 

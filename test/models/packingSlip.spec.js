@@ -1,10 +1,10 @@
 import PackingSlipModel from '../../application/models/packingSlip';
-import Chance from 'chance'
+import Chance from 'chance';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const chance = Chance
+const chance = Chance();
 
 describe('File: packingSlip.js', () => {
     let packingSlipAttributes;

@@ -1,5 +1,5 @@
 import SpotPlateModel from '../../application/models/spotPlate';
-import Chance from 'chance'
+import Chance from 'chance';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 

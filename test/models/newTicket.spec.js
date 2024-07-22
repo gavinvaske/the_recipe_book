@@ -1,10 +1,10 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import Ticket from '../../application/models/newTicket';
 import Customer from '../../application/models/customer';
 import WorkflowStepModel from '../../application/models/WorkflowStep';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import * as databaseService from '../../application/services/databaseService.js';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 import * as testDataGenerator from '../testDataGenerator.js';
 

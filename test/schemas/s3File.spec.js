@@ -1,6 +1,6 @@
 import s3FileSchema from '../../application/schemas/s3File';
-import Chance from 'chance'
-import mongoose from 'mongoose'
+import Chance from 'chance';
+import mongoose from 'mongoose';
 
 const chance = Chance();
 

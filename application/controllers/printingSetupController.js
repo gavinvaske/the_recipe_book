@@ -1,9 +1,9 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import UserModel from '../models/user.js';
-import MachineModel from '../models/machine.js'
-import MaterialModel from '../models/material.js'
+import MachineModel from '../models/machine.js';
+import MaterialModel from '../models/material.js';
 import PrintingSetupModel from '../models/printingSetup.js';
 
 const DEFAULT_PAGE_NUMBER = 1;

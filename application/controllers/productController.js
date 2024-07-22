@@ -1,8 +1,8 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import { upload } from '../middleware/upload.js';
-import TicketModel from '../models/ticket.js'
+import TicketModel from '../models/ticket.js';
 
 import * as s3Service from '../services/s3Service.js';
 import * as productService from '../services/productService.js';

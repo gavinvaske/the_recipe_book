@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import MaterialCategoryModel from '../../application/models/materialCategory';
 import * as databaseService from '../../application/services/databaseService.js';
 

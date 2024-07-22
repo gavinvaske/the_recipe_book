@@ -1,6 +1,6 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import PrintingSetupModel from '../../application/models/printingSetup';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const chance = Chance();
 

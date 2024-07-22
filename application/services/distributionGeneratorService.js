@@ -35,13 +35,13 @@ function getDistribution(elementsPerDistribution, numberOfLanes) {
 }
 
 function removeDuplicatesFromDistributions(distributions) {
-  const seen = {};
+    const seen = {};
 
-  distributions.forEach((distribution) => distribution.sort());
+    distributions.forEach((distribution) => distribution.sort());
 
-  return distributions.filter((distribution) => { // credit: https://stackoverflow.com/a/9229821
-    return seen.hasOwnProperty(distribution) ? false : (seen[distribution] = true)
-  })
+    return distributions.filter((distribution) => { // credit: https://stackoverflow.com/a/9229821
+        return seen.hasOwnProperty(distribution) ? false : (seen[distribution] = true);
+    });
 }
 
 export function getDistributions(numberOfLanes) {

@@ -1,8 +1,9 @@
-import Chance from 'chance'
+import Chance from 'chance';
+import { when } from 'jest-when';
+import * as materialInventoryService from '../../application/services/materialInventoryService';
+import * as mockPurchaseOrderService from '../../application/services/purchaseOrderService';
+
 const chance = Chance();
-const { when } = require('jest-when');
-const materialInventoryService = require('../../application/services/materialInventoryService');
-const mockPurchaseOrderService = require('../../application/services/purchaseOrderService');
 
 jest.mock('../../application/services/purchaseOrderService');
 

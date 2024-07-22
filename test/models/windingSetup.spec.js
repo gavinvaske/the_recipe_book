@@ -1,6 +1,6 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import WindingSetupModel from '../../application/models/windingSetup';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const chance = Chance();
 

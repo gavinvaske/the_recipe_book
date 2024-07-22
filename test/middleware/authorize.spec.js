@@ -1,6 +1,6 @@
 import { verifyJwtToken } from '../../application/middleware/authorize';
 import jwt from 'jsonwebtoken';
-import Chance from 'chance'
+import Chance from 'chance';
 
 const chance = Chance();
 

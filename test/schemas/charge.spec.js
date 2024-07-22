@@ -1,7 +1,7 @@
 
-import Chance from 'chance'
+import Chance from 'chance';
 import chargeSchema from '../../application/schemas/charge';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const chance = Chance();
 

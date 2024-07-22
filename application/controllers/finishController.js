@@ -1,7 +1,7 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import FinishModel from '../models/finish.js'
-import { verifyJwtToken }from '../middleware/authorize.js'
+import FinishModel from '../models/finish.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 

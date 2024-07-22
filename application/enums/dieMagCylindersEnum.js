@@ -1,1 +1,1 @@
-export const dieMagCylinders = [25, 19]; 
+export const dieMagCylinders = [25, 19]; // eslint-disable-line no-magic-numbers

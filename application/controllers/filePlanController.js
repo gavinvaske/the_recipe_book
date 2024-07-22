@@ -1,9 +1,9 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import * as filePlanService from '../services/filePlanService.js';
 
-// router.use(verifyJwtToken);
+router.use(verifyJwtToken);
 
 const PRODUCTS_PLACEHOLDER = '767D-3989 1000 \nPRODUCT-123 1500 \nPRODUCTXYZ 2500 \nPRODUCT_F 100 \n7111-3989 18000 \nABC 430';
 

@@ -1,4 +1,4 @@
-// /* eslint-disable complexity */
+/* eslint-disable complexity */
 import * as constants from '../enums/constantsEnum.js';
 import DieModel from '../models/Die.js';
 import MaterialModel from '../models/material.js';

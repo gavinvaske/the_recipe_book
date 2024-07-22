@@ -1,5 +1,6 @@
-const helperService = require('../../application/services/helperService');
-import Chance from 'chance'
+import * as helperService from '../../application/services/helperService';
+import Chance from 'chance';
+
 const chance = Chance();
 
 describe('helperService.js', () => {

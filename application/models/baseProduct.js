@@ -1,9 +1,9 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
 
-import mongooseDelete from 'mongoose-delete'
+import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generateUniqueProductNumber() {

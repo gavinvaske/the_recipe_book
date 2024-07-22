@@ -1,6 +1,7 @@
-import Chance from 'chance'
+import Chance from 'chance';
+import * as mongooseService from '../../application/services/mongooseService';
+
 const chance = Chance();
-const mongooseService = require('../../application/services/mongooseService');
 
 function getOneMongooseError(errorType) {
     return {

@@ -1,8 +1,8 @@
-import Chance from 'chance'
-const chance = Chance();
-const packagingService = require('../../application/services/packagingService');
-const { howManyCirclesCanFitInThisSquare : howManyCirclesCanFitInThisSquareMock } = require('../../application/enums/circlesPerSquareEnum');
+import Chance from 'chance';
+import * as packagingService from '../../application/services/packagingService';
+import { howManyCirclesCanFitInThisSquare as howManyCirclesCanFitInThisSquareMock } from '../../application/enums/circlesPerSquareEnum';
 
+const chance = Chance();
 const ONE_EIGHTH_INCH_BUFFER = 0.125;
 
 

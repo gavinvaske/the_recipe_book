@@ -1,6 +1,6 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import HoldReasonModel from '../models/holdReason.js';
 
 router.use(verifyJwtToken);

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Chance from 'chance'
+import mongoose from 'mongoose';
+import Chance from 'chance';
 import MaterialLengthAdjustmentModel from '../../application/models/materialLengthAdjustment';
 import * as databaseService from '../../application/services/databaseService.js';
 

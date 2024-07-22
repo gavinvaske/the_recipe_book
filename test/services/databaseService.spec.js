@@ -1,7 +1,8 @@
 import * as databaseService from '../../application/services/databaseService.js';
-import Chance from 'chance'
+import Chance from 'chance';
+import mongoose from 'mongoose';
+
 const chance = Chance();
-import mongoose from 'mongoose'
 
 jest.mock('mongoose');
 let originalNodeEnv;

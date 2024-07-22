@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import MaintenanceIncidentModel from '../../application/models/maintenanceIncident';
 import TypeModel from '../../application/models/maintenanceIncidentType';
 import * as databaseService from '../../application/services/databaseService.js';
-import Chance from 'chance'
+import Chance from 'chance';
 
 const chance = Chance();
 

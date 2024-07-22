@@ -1,8 +1,8 @@
 /* eslint-disable no-magic-numbers */
-const dateTimeService = require('../../application/services/dateTimeService');
-import Chance from 'chance'
-const chance = Chance();
+import * as dateTimeService from '../../application/services/dateTimeService';
+import Chance from 'chance';
 
+const chance = Chance();
 const SECONDS_PER_MINUTE = 60;
 
 describe('dateTimeService test suite', () => {

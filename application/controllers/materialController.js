@@ -1,15 +1,15 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import MaterialModel from '../models/material.js'
-import { verifyJwtToken }from '../middleware/authorize.js'
-import VendorModel from '../models/vendor.js'
-import MaterialCategoryModel from '../models/materialCategory.js'
+import MaterialModel from '../models/material.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
+import VendorModel from '../models/vendor.js';
+import MaterialCategoryModel from '../models/materialCategory.js';
 
 import * as materialInventoryService from '../services/materialInventoryService.js';
 import * as materialService from '../services/materialService.js';
-import * as purchaseOrderService from '../services/purchaseOrderService.js'
-import * as ticketService from '../services/ticketService.js'
-import * as mongooseService  from '../services/mongooseService.js'
+import * as purchaseOrderService from '../services/purchaseOrderService.js';
+import * as ticketService from '../services/ticketService.js';
+import * as mongooseService from '../services/mongooseService.js';
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';

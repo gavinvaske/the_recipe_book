@@ -1,8 +1,9 @@
-import Chance from 'chance'
+import Chance from 'chance';
+import * as downtimeReasonService from '../../application/services/downtimeReasonService';
+import mockDowntimeReasonModel from '../../application/models/downtimeReason';
+import { when } from 'jest-when';
+
 const chance = Chance();
-const downtimeReasonService = require('../../application/services/downtimeReasonService');
-const mockDowntimeReasonModel = require('../../application/models/downtimeReason');
-const { when } = require('jest-when');
 
 jest.mock('../../application/models/downtimeReason', () => {
     const mockedDowntimeReasonModel = {

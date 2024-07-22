@@ -1,7 +1,8 @@
-import Chance from 'chance'
+import Chance from 'chance';
+import * as purchaseOrderService from '../../application/services/purchaseOrderService';
+import mockPurchaseOrderModel from '../../application/models/materialOrder';
+
 const chance = Chance();
-const purchaseOrderService = require('../../application/services/purchaseOrderService');
-const mockPurchaseOrderModel = require('../../application/models/materialOrder');
 
 jest.mock('../../application/models/materialOrder');
 
@@ -68,7 +69,7 @@ describe('purchaseOrderService test suite', () => {
         it('should only return purchaseOrders that HAVE NOT arrived', () => {
             const purchaseOrdersThatHaveArrived = chance.n(getPurchaseOrderThatHasArrived, chance.integer({min: 1, max: 1000}));
             const purchaseOrdersThatHaveNotArrived = chance.n(getPurchaseOrderThatHasNotArrived, chance.integer({min: 1, max: 1000}));
-           const purchaseOrders = [
+            const purchaseOrders = [
                 ...purchaseOrdersThatHaveArrived,
                 ...purchaseOrdersThatHaveNotArrived
             ];

@@ -6,7 +6,7 @@ import {
     removeDepartmentStatusesAUserIsNotAllowedToSelect,
     departmentToNextDepartmentAndStatus
 } from '../../application/enums/departmentsEnum';
-import Chance from 'chance'
+import Chance from 'chance';
 
 const chance = Chance();
 

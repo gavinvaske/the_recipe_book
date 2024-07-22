@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
@@ -8,7 +8,7 @@ import FinishModel from './finish.js';
 import CustomerModel from './customer.js';
 import UserModel from './user.js';
 
-import mongooseDelete from 'mongoose-delete'
+import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum.js';

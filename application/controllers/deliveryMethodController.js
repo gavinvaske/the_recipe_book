@@ -1,6 +1,6 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import DeliveryMethodModel from '../models/deliveryMethod.js';
 import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
 

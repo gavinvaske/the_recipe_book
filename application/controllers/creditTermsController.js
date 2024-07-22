@@ -1,7 +1,7 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
 import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
-import { verifyJwtToken }from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import CreditTermModel from '../models/creditTerm.js';
 
 router.use(verifyJwtToken);

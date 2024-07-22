@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
 import * as packagingService from '../services/packagingService.js';
 import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.js';

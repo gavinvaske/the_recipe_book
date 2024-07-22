@@ -1,11 +1,11 @@
 /* eslint-disable no-magic-numbers */
 import Quote from '../../application/models/quote.js';
 import * as databaseService from '../../application/services/databaseService.js';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import * as constants from '../../application/enums/constantsEnum.js';
 import * as testDataGenerator from '../testDataGenerator.js';
 import { unwindDirections } from '../../application/enums/unwindDirectionsEnum.js';
-import Chance from 'chance'
+import Chance from 'chance';
 
 const chance = Chance();
 

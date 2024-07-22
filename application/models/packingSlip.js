@@ -1,12 +1,12 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import addressSchema  from '../schemas/address.js'
+import addressSchema from '../schemas/address.js';
 import { FACTORY_ADDRESS } from '../enums/constantsEnum';
 import { validatePhoneNumber } from '../services/dataValidationService';
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
 
-import mongooseDelete from 'mongoose-delete'
+import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generatePackingSlipNumber() {

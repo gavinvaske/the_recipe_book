@@ -1,8 +1,9 @@
-const s3Service = require('../../application/services/s3Service');
-const awsMock = require('aws-sdk');
-import Chance from 'chance'
+import * as s3Service from '../../application/services/s3Service';
+import awsMock from 'aws-sdk';
+import Chance from 'chance';
+import mimeMock from 'mime';
+
 const chance = Chance();
-const mimeMock = require('mime');
 
 jest.mock('mime');
 

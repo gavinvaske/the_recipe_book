@@ -1,7 +1,7 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import MaterialModel from '../models/material.js'
+import MaterialModel from '../models/material.js';
 import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum.js';
 import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum.js';
 import { getAllDepartments } from '../enums/departmentsEnum.js';

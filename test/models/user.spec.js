@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import UserModel from '../../application/models/user';
 import * as testDataGenerator from '../testDataGenerator.js';
 

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import productSchema from '../schemas/product.js';
@@ -6,7 +6,7 @@ import chargeSchema from '../schemas/charge.js';
 import destinationSchema from '../schemas/destination.js';
 import departmentNotesSchema from '../schemas/departmentNotes.js';
 import { standardPriority, getAllPriorities } from '../enums/priorityEnum.js';
-import MaterialModel from '../models/material.js'
+import MaterialModel from '../models/material.js';
 import WorkflowStepModel from '../models/WorkflowStep.js';
 import * as departmentsEnum from '../enums/departmentsEnum.js';
 

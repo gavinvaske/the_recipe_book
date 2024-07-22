@@ -1,5 +1,5 @@
 import MaintenanceIncidentTypeModel from '../../application/models/maintenanceIncidentType';
-import Chance from 'chance'
+import Chance from 'chance';
 import * as databaseService from '../../application/services/databaseService.js';
 
 const chance = Chance();

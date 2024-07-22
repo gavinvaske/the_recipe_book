@@ -1,7 +1,7 @@
-import Chance from 'chance'
-import contactSchema from'../../application/schemas/contact';
-import mongoose from 'mongoose'
-import addressSchema from'../../application/schemas/address';
+import Chance from 'chance';
+import contactSchema from '../../application/schemas/contact';
+import mongoose from 'mongoose';
+import addressSchema from '../../application/schemas/address';
 
 const chance = Chance();
 

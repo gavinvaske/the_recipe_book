@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import HoldReason from '../../application/models/holdReason';
 import * as databaseService from '../../application/services/databaseService.js';
 

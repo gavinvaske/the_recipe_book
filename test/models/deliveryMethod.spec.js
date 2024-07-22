@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import DeliveryMethodModel from '../../application/models/deliveryMethod';
 import * as databaseService from '../../application/services/databaseService.js';
 

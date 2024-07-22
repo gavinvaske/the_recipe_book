@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import LinerTypeModel from '../../application/models/linerType.js';
 import * as databaseService from '../../application/services/databaseService.js';
 

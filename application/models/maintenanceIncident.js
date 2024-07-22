@@ -1,7 +1,7 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 mongoose.Schema.Types.String.set('trim', true);
-import mongooseDelete from 'mongoose-delete'
+import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 const TypeModel = require('./maintenanceIncidentType');
 

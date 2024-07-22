@@ -1,6 +1,6 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import ProductModel from '../../application/models/baseProduct';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import * as databaseService from '../../application/services/databaseService.js';
 import CustomerModel from '../../application/models/customer';
 import MaterialModel from '../../application/models/material';

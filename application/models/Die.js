@@ -8,7 +8,7 @@ import { dieMagCylinders } from '../enums/dieMagCylindersEnum.js';
 import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum.js';
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
 
-import mongooseDelete from 'mongoose-delete'
+import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const DIE_NUMBER_PREFIXES = ['DC', 'DR', 'DRC' , 'DO', 'DS', 'XLDR', 'DSS', 'DB'];

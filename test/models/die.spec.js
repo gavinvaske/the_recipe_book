@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import DieModel from '../../application/models/Die';
 import { dieShapes } from '../../application/enums/dieShapesEnum';
 import { toolTypes } from '../../application/enums/toolTypesEnum';

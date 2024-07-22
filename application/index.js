@@ -2,51 +2,51 @@ import express from 'express';
 import path from 'path';
 import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
-import 'dotenv/config'
+import 'dotenv/config';
 import { connectToMongoDatabase } from './services/databaseService.js';
 import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';
 import session from 'express-session';
 import fs from 'fs';
-import ejsService from './services/ejsService.js'
-import httpServ from 'http'
-import { Server } from 'socket.io'
-import customWebSockets from './services/websockets/init.js'
+import ejsService from './services/ejsService.js';
+import httpServ from 'http';
+import { Server } from 'socket.io';
+import customWebSockets from './services/websockets/init.js';
 import { fileURLToPath } from 'url';
 
 // Routes
-import defaultRoute from './controllers/index.js'
-import userEndpoints from './controllers/userController.js'
-import recipeEndpoints from './controllers/recipeController.js'
+import defaultRoute from './controllers/index.js';
+import userEndpoints from './controllers/userController.js';
+import recipeEndpoints from './controllers/recipeController.js';
 
-import adminEndpoints from './controllers/adminController.js'
-import finishEndpoints from './controllers/finishController.js'
-import machineEndpoints from './controllers/machineController.js'
-import materialEndpoints from './controllers/materialController.js'
-import setupEndpoints from './controllers/setupController.js'
-import printingSetupEndpoints from './controllers/printingSetupController.js'
-import cuttingSetupEndpoints from './controllers/cuttingSetupController.js'
-import windingSetupEndpoints from './controllers/windingSetupController.js'
-import vendorEndpoints from './controllers/vendorController.js'
-import materialOrderEndpoints from './controllers/materialOrdersController.js'
-import ticketEndpoints from './controllers/ticketController.js'
-import productEndpoints from './controllers/productController.js'
-import holdReasonEndpoints from './controllers/holdReasonController.js'
-import proofEndpoints from './controllers/proofController.js'
-import dieLineEndpoints from './controllers/dieLineController.js'
-import spotPlateEndpoints from './controllers/spotPlateController.js'
-import requestEndpoints from './controllers/requestController.js'
-import materialCategoryEndpoints from './controllers/materialCategoryController.js'
-import filePlanEndpoints from './controllers/filePlanController.js'
-import packagingEndpoints from './controllers/packagingController.js'
-import quoteEndpoints from './controllers/quoteController.js'
-import dieEndpoints from './controllers/dieController.js'
-import linerTypeEndpoints from './controllers/linerTypeController.js'
-import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController.js'
-import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js'
-import customerEndpoints from './controllers/customerController.js'
-import deliveryMethodEndpoints from './controllers/deliveryMethodController.js'
-import creditTermEndpoints from './controllers/creditTermsController.js'
+import adminEndpoints from './controllers/adminController.js';
+import finishEndpoints from './controllers/finishController.js';
+import machineEndpoints from './controllers/machineController.js';
+import materialEndpoints from './controllers/materialController.js';
+import setupEndpoints from './controllers/setupController.js';
+import printingSetupEndpoints from './controllers/printingSetupController.js';
+import cuttingSetupEndpoints from './controllers/cuttingSetupController.js';
+import windingSetupEndpoints from './controllers/windingSetupController.js';
+import vendorEndpoints from './controllers/vendorController.js';
+import materialOrderEndpoints from './controllers/materialOrdersController.js';
+import ticketEndpoints from './controllers/ticketController.js';
+import productEndpoints from './controllers/productController.js';
+import holdReasonEndpoints from './controllers/holdReasonController.js';
+import proofEndpoints from './controllers/proofController.js';
+import dieLineEndpoints from './controllers/dieLineController.js';
+import spotPlateEndpoints from './controllers/spotPlateController.js';
+import requestEndpoints from './controllers/requestController.js';
+import materialCategoryEndpoints from './controllers/materialCategoryController.js';
+import filePlanEndpoints from './controllers/filePlanController.js';
+import packagingEndpoints from './controllers/packagingController.js';
+import quoteEndpoints from './controllers/quoteController.js';
+import dieEndpoints from './controllers/dieController.js';
+import linerTypeEndpoints from './controllers/linerTypeController.js';
+import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController.js';
+import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js';
+import customerEndpoints from './controllers/customerController.js';
+import deliveryMethodEndpoints from './controllers/deliveryMethodController.js';
+import creditTermEndpoints from './controllers/creditTermsController.js';
 
 
 const __filename = fileURLToPath(import.meta.url);

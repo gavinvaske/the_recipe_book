@@ -1,16 +1,16 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import { upload } from '../middleware/upload.js';
 import parser from 'xml2json';
-import * as ticketService from '../services/ticketService.js'
-import TicketModel from '../models/ticket.js'
-import * as mongooseService  from '../services/mongooseService.js'
-import MaterialModel from '../models/material.js'
+import * as ticketService from '../services/ticketService.js';
+import TicketModel from '../models/ticket.js';
+import * as mongooseService from '../services/mongooseService.js';
+import MaterialModel from '../models/material.js';
 import {
-  departmentToStatusesMappingForTicketObjects, 
-  isInProgressDepartmentStatus, 
-  removeDepartmentStatusesAUserIsNotAllowedToSelect
+    departmentToStatusesMappingForTicketObjects, 
+    isInProgressDepartmentStatus, 
+    removeDepartmentStatusesAUserIsNotAllowedToSelect
 } from '../enums/departmentsEnum.js';
 import * as workflowStepService from '../services/workflowStepService.js';
 import * as dateTimeService from '../services/dateTimeService.js';
@@ -30,7 +30,7 @@ router.get('/', async (request, response) => {
         .populate({path: 'destination.assignee'})
         .exec();
 
-    console.log(tickets)
+    console.log(tickets);
 
     const ticketsGroupedByDestination = destinationService.groupItemsByDestination(tickets);
     const departmentToHoldReasons = await holdReasonService.getDepartmentToHoldReasons();

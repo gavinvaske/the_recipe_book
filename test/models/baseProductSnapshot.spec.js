@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import BaseProductSnapshotModel from '../../application/models/baseProductSnapshot';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';

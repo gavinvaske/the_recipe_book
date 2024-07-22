@@ -1,10 +1,8 @@
 /* eslint no-magic-numbers: 0 */
-import Chance from 'chance'
-const chance = Chance();
-const matchers = require('jest-extended');
-const filePlanService = require('../../application/services/filePlanService');
+import Chance from 'chance';
+import * as filePlanService from '../../application/services/filePlanService';
 
-expect.extend(matchers);
+const chance = Chance();
 
 function getProductWithRandomAttributes() {
     const productName = chance.string();
@@ -134,7 +132,7 @@ describe('filePlanService.js', () => {
 
             products = [getProductWithRandomAttributes()];
             filePlanRequest = filePlanService.buildFilePlanRequest(products, labelsAcross, labelsAround);
-            const frameSize = labelsAcross * labelsAround;
+            frameSize = labelsAcross * labelsAround;
 
             const expectedFilePlan = {
                 masterGroups: [

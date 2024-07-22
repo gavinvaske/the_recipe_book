@@ -1,10 +1,10 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import TicketModel from '../../application/models/ticket';
 import WorkflowStepModel from '../../application/models/WorkflowStep';
 import * as databaseService from '../../application/services/databaseService.js';
-import { standardPriority, getAllPriorities } from'../../application/enums/priorityEnum';
+import { standardPriority, getAllPriorities } from '../../application/enums/priorityEnum';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const chance = Chance();
 const LENGTH_OF_ONE = 1;

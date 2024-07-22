@@ -1,6 +1,6 @@
-import Chance from 'chance'
+import Chance from 'chance';
 const chance = Chance();
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import FinishModel from '../../application/models/finish';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';

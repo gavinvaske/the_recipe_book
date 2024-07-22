@@ -1,4 +1,4 @@
-import Chance from 'chance'
+import Chance from 'chance';
 import MachineModel from '../../application/models/machine';
 import * as departmentEnum from '../../application/enums/departmentsEnum';
 

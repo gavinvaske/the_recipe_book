@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Chance from 'chance'
+import mongoose from 'mongoose';
+import Chance from 'chance';
 import CustomerModel from '../../application/models/customer';
 import * as databaseService from '../../application/services/databaseService.js';
 import * as testDataGenerator from '../testDataGenerator.js';

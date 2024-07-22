@@ -1,7 +1,7 @@
-import { Router } from 'express'
+import { Router } from 'express';
 const router = Router();
 import { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS } from '../enums/httpStatusCodes.js';
-import { verifyJwtToken }from '../middleware/authorize.js'
+import { verifyJwtToken } from '../middleware/authorize.js';
 import CustomerModel from '../models/customer.js';
 
 router.use(verifyJwtToken);

@@ -1,9 +1,5 @@
-// import { Chance } from 'chance'
-// import * as dateTime from './dateTime'
-const Chance = require('chance');
-const dateTime = require('./dateTime');
-
-const chance = new Chance();
+import * as dateTime from './dateTime'
+import { expect } from '@jest/globals';
 
 describe('File: dateTime', () => {
   describe('Function: getDayMonthYear', () => {
@@ -29,9 +25,5 @@ describe('File: dateTime', () => {
 
       expect(result).toBe('July 21, 2024')
     })
-  })
-
-  describe('Function: convertDateStringToFormInputDateString', () => {
-
   })
 })

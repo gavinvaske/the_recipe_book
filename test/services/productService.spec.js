@@ -1,6 +1,8 @@
-const productService = require('../../application/services/productService');
-const chance = require('chance').Chance();
-var mongoose = require('mongoose');
+import * as productService from '../../application/services/productService';
+import Chance from 'chance';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('productService test suite', () => {
     let products,

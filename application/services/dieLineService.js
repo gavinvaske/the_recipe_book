@@ -1,15 +1,15 @@
-const departmentsEnum = require('../enums/departmentsEnum');
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
-module.exports.getDepartments = () => {
+export function getDepartments() {
     return Object.keys(departmentsEnum.departmentToDepartmentStatusesForDieLineRequests);
-};
+}
 
-module.exports.getStartingDepartment = () => {
+export function getStartingDepartment() {
     const firstDepartment = Object.keys(departmentsEnum.departmentToDepartmentStatusesForDieLineRequests)[0];
 
     return firstDepartment;
-};
+}
 
-module.exports.getDepartmentStatusesForDepartment = (department) => {
+export function getDepartmentStatusesForDepartment(department) {
     return departmentsEnum.departmentToDepartmentStatusesForDieLineRequests[department];
-};
+}

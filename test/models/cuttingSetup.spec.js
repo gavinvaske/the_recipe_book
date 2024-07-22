@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const CuttingSetupModel = require('../../application/models/cuttingSetup');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import CuttingSetupModel from '../../application/models/cuttingSetup';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('validation', () => {
     let cuttingSetupAttributes;

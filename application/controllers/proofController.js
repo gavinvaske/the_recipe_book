@@ -1,5 +1,6 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 router.use(verifyJwtToken);
 
@@ -8,4 +9,4 @@ router.get('/form', (request, response) => {
     return response.render('createProof');
 });
 
-module.exports = router;
+export default router;

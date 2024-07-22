@@ -1,2 +1,2 @@
-module.exports.ascending = 1;
-module.exports.descending = -1;
+export const ascending = 1;
+export const descending = -1;

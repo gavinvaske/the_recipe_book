@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
-const MaintenanceIncidentModel = require('../../application/models/maintenanceIncident');
-const TypeModel = require('../../application/models/maintenanceIncidentType');
-const databaseService = require('../../application/services/databaseService');
-const chance = require('chance').Chance();
+import mongoose from 'mongoose';
+import MaintenanceIncidentModel from '../../application/models/maintenanceIncident';
+import TypeModel from '../../application/models/maintenanceIncidentType';
+import * as databaseService from '../../application/services/databaseService.js';
+import Chance from 'chance';
+
+const chance = Chance();
 
 describe('MaintenanceIncident', () => {
     let maintenanceIncidentAttributes;

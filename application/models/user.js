@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { validatePhoneNumber, validateEmail } = require('../services/dataValidationService');
-const { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } = require('../../application/enums/userTypesEnum');
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
+import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../../application/enums/userTypesEnum.js';
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -66,4 +66,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export default User;

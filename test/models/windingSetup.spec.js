@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const WindingSetupModel = require('../../application/models/windingSetup');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import WindingSetupModel from '../../application/models/windingSetup';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('validation', () => {
     let windingSetupAttributes;

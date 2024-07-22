@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const {isUserLoggedIn} = require('../services/userService');
+import { Router } from 'express';
+const router = Router();
+import { isUserLoggedIn } from '../services/userService.js';
 
 router.get('/', (request, response) => {
     if (isUserLoggedIn(request.cookies.jwtToken, process.env.JWT_SECRET)) {
@@ -10,4 +10,4 @@ router.get('/', (request, response) => {
     return response.render('login');
 });
 
-module.exports = router;
+export default router;

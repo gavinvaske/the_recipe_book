@@ -1,23 +1,25 @@
 /* eslint-disable no-magic-numbers */
-const constants = require('../../application/enums/constantsEnum');
-const { createQuote } = require('../../application/services/quoteService');
-const chance = require('chance').Chance();
-const mongoose = require('mongoose');
-const { when } = require('jest-when');
-const { convertMinutesToSeconds, convertSecondsToMinutes } = require('../../application/services/dateTimeService');
-const testDataGenerator = require('../testDataGenerator');
-const databaseService = require('../../application/services/databaseService');
+import * as constants from '../../application/enums/constantsEnum.js';
+import { createQuote } from '../../application/services/quoteService';
+import Chance from 'chance';
+import mongoose from 'mongoose';
+import { when } from 'jest-when';
+import { convertMinutesToSeconds, convertSecondsToMinutes } from '../../application/services/dateTimeService';
+import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 jest.mock('../../application/models/Die');
 jest.mock('../../application/models/material');
 jest.mock('../../application/models/finish');
 jest.mock('../../application/models/baseProduct');
 
-const DieMock = require('../../application/models/Die');
-const MaterialMock = require('../../application/models/material');
-const FinishMock = require('../../application/models/finish');
-const BaseProductMock = require('../../application/models/baseProduct');
-const { unwindDirections } = require('../../application/enums/unwindDirectionsEnum');
+import DieMock from '../../application/models/Die';
+import MaterialMock from '../../application/models/material';
+import FinishMock from '../../application/models/finish';
+import BaseProductMock from '../../application/models/baseProduct';
+import { unwindDirections } from '../../application/enums/unwindDirectionsEnum.js';
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;

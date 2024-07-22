@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
@@ -82,4 +82,4 @@ const schema = new Schema({
 
 const MaterialOrder = mongoose.model('materialOrders', schema);
 
-module.exports = MaterialOrder;
+export default MaterialOrder;

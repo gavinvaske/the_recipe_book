@@ -1,14 +1,14 @@
-const AWS = require('aws-sdk');
-const mongoose = require('mongoose');
-const s3FileSchema = require('../schemas/s3File');
-const mime = require('mime');
+import AWS from 'aws-sdk';
+import mongoose from 'mongoose';
+import s3FileSchema from '../schemas/s3File.js';
+import mime from 'mime';
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-module.exports.deleteS3Objects = async (s3Files) => {
+export async function deleteS3Objects(s3Files) {
     if (!s3Files || s3Files.length === 0) {
         return;
     }
@@ -29,7 +29,7 @@ module.exports.deleteS3Objects = async (s3Files) => {
     };
 
     return s3.deleteObjects(params).promise();
-};
+}
 
 function sendFileToS3(file) {
     const {fileName, fileContents} = file;
@@ -45,7 +45,7 @@ function sendFileToS3(file) {
     return s3.upload(params).promise();
 };
 
-module.exports.storeFilesInS3 = async (files) => {
+export async function storeFilesInS3(files) {
     if (!files || files.length === 0) {
         return [];
     }
@@ -60,5 +60,5 @@ module.exports.storeFilesInS3 = async (files) => {
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);
     });
-};
+}
 

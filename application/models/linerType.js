@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const mongoose_delete = require('mongoose-delete');
+import mongoose_delete from 'mongoose-delete';
 
 const LinerTypeSchema = new Schema({
     name: {
@@ -20,4 +20,4 @@ LinerTypeSchema.plugin(mongoose_delete, { overrideMethods: true });
 
 const LinerType = mongoose.model('LinerType', LinerTypeSchema);
 
-module.exports = LinerType;
+export default LinerType;

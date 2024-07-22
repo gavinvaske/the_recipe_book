@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete';
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const deliveryMethodSchema = new Schema({
     name: {
@@ -16,4 +17,4 @@ const deliveryMethodSchema = new Schema({
 
 const deliveryMethodModel = mongoose.model('DeliveryMethod', deliveryMethodSchema);
 
-module.exports = deliveryMethodModel;
+export default deliveryMethodModel;

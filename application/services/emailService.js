@@ -1,5 +1,5 @@
-const formData = require('form-data');
-const Mailgun = require('mailgun.js');
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
 
 const mailgun = new Mailgun(formData);
 const client = mailgun.client({
@@ -7,7 +7,7 @@ const client = mailgun.client({
     key: process.env.MAILGUN_API_KEY
 });
 
-module.exports.sendPasswordResetEmail = async (emailAddress, resetLink) => {
+export async function sendPasswordResetEmail(emailAddress, resetLink) {
     if (!emailAddress || !resetLink) {
         throw Error(`emailAddress and reset-link must both be defined: ${emailAddress}, ${resetLink}`);
     }
@@ -24,4 +24,4 @@ module.exports.sendPasswordResetEmail = async (emailAddress, resetLink) => {
     } catch (error) {
         console.log(`Error occurred while trying to send email via MAILGUN: ${error}`);
     }
-};
+}

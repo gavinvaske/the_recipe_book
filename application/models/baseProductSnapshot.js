@@ -1,17 +1,18 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-const DieModel = require('./Die');
-const MaterialModel = require('./material');
-const FinishModel = require('./finish');
-const CustomerModel = require('./customer');
-const UserModel = require('./user');
+import DieModel from './Die.js';
+import MaterialModel from './material.js';
+import FinishModel from './finish.js';
+import CustomerModel from './customer.js';
+import UserModel from './user.js';
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete';
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
-const { MAX_FRAME_LENGTH_INCHES } = require('../enums/constantsEnum');
-const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
+import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum.js';
+import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
 
 function roundDownToNearestEvenWholeNumber(value) {
     return Math.floor(value / 2) * 2;
@@ -147,4 +148,4 @@ const baseProductSnapshotSchema = new Schema({
 
 const ProductModel = mongoose.model('BaseProductSnapshot', baseProductSnapshotSchema);
 
-module.exports = ProductModel;
+export default ProductModel;

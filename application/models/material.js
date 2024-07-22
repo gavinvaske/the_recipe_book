@@ -1,14 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const Decimal = require('decimal.js');
+import Decimal from 'decimal.js';
+import mongooseDelete from 'mongoose-delete';
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+mongoose.plugin(mongooseDelete, {overrideMethods: true});
 
 const FOUR_DECIMAL_PLACES = 4;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
-URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
@@ -167,4 +168,4 @@ const schema = new Schema({
 
 const Material = mongoose.model('Material', schema);
 
-module.exports = Material;
+export default Material;

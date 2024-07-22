@@ -1,5 +1,7 @@
-const helperService = require('../../application/services/helperService');
-const chance = require('chance').Chance();
+import * as helperService from '../../application/services/helperService';
+import Chance from 'chance';
+
+const chance = Chance();
 
 describe('helperService.js', () => {
     describe('getEmptyObjectIfUndefined()', () => {

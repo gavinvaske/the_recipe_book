@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } = require('../enums/httpStatusCodes');
-const { verifyJwtToken } = require('../middleware/authorize');
-const CreditTermModel = require('../models/creditTerm');
+import { Router } from 'express';
+const router = Router();
+import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
+import CreditTermModel from '../models/creditTerm.js';
 
 router.use(verifyJwtToken);
 
@@ -74,4 +75,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

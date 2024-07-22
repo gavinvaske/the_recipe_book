@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
@@ -44,4 +44,4 @@ const packagingSchema = new Schema({
     }
 }, { strict: 'throw' });
 
-module.exports = packagingSchema;
+export default packagingSchema;

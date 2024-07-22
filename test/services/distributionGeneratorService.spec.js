@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: 0 */
-const distributionGeneratorService = require('../../application/services/distributionGeneratorService');
+import * as distributionGeneratorService from '../../application/services/distributionGeneratorService';
 
 describe('distributionGeneratorService.js', () => {
     let groupSize;

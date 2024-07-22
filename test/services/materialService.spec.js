@@ -1,5 +1,7 @@
-const chance = require('chance').Chance();
-const materialService = require('../../application/services/materialService');
+import Chance from 'chance';
+import * as materialService from '../../application/services/materialService';
+
+const chance = Chance();
 
 jest.mock('../../application/models/material');
 

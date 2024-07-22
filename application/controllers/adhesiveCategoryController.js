@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const AdhesiveCategoryModel = require('../models/adhesiveCategory');
-const { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import AdhesiveCategoryModel from '../models/adhesiveCategory.js';
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
 
@@ -80,4 +81,4 @@ router.get('/:mongooseId', async (request, response) => {
 });
 
 
-module.exports = router;
+export default router;

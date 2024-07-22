@@ -1,12 +1,12 @@
-const BaseProductModel = require('../../application/models/baseProduct');
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import BaseProductModel from '../../application/models/baseProduct';
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 
-const FinishModel = require('../../application/models/finish');
-const MaterialModel = require('../../application/models/material');
-const CustomerModel = require('../../application/models/customer');
+import FinishModel from '../../application/models/finish';
+import MaterialModel from '../../application/models/material';
+import CustomerModel from '../../application/models/customer';
 
-const baseProductService = require('../../application/services/baseProductService');
+import * as baseProductService from '../../application/services/baseProductService';
 
 describe('File: baseProduct.js', () => {
     let baseProductAttributes, baseProduct, primaryMaterial, secondaryMaterial, finish, customer;

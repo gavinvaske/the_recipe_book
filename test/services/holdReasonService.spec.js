@@ -1,7 +1,9 @@
-const holdReasonService = require('../../application/services/holdReasonService');
-const chance = require('chance').Chance();
-const mockHoldReasonModel = require('../../application/models/holdReason');
-const {getAllDepartmentsWithDepartmentStatuses} = require('../../application/enums/departmentsEnum');
+import * as holdReasonService from '../../application/services/holdReasonService';
+import Chance from 'chance';
+import mockHoldReasonModel from '../../application/models/holdReason';
+import { getAllDepartmentsWithDepartmentStatuses } from '../../application/enums/departmentsEnum';
+
+const chance = Chance();
 
 jest.mock('../../application/models/holdReason');
 

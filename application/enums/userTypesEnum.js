@@ -1,9 +1,9 @@
 const USER = 'USER';
 const ADMIN = 'ADMIN';
 
-module.exports.AVAILABLE_USER_TYPES = [
+export const AVAILABLE_USER_TYPES = [
     USER,
     ADMIN
 ];
 
-module.exports.DEFAULT_USER_TYPE = USER;
+export const DEFAULT_USER_TYPE = USER;

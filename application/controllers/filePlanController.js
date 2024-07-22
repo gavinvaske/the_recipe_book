@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const filePlanService = require('../services/filePlanService');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import * as filePlanService from '../services/filePlanService.js';
 
 router.use(verifyJwtToken);
 
@@ -35,4 +36,4 @@ router.post('/', (request, response) => {
     response.send(JSON.stringify(filePlan, null, tabSizeInSpaces));
 });
 
-module.exports = router;
+export default router;

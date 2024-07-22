@@ -1,7 +1,9 @@
 
-const chance = require('chance').Chance();
-const chargeSchema = require('../../application/schemas/charge');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import chargeSchema from '../../application/schemas/charge';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('validation', () => {
     let chargeAttributes,

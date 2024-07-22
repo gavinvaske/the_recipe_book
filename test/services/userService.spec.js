@@ -1,8 +1,10 @@
-const userService = require('../../application/services/userService');
-const databaseService = require('../../application/services/databaseService');
-const UserModel = require('../../application/models/user');
-const jwt = require('jsonwebtoken');
-const chance = require('chance').Chance();
+import * as userService from '../../application/services/userService';
+import * as databaseService from '../../application/services/databaseService.js';
+import UserModel from '../../application/models/user';
+import jwt from 'jsonwebtoken';
+import Chance from 'chance';
+
+const chance = Chance();
 
 jest.mock('jsonwebtoken');
 

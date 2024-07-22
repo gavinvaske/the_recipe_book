@@ -1,6 +1,6 @@
-const TicketModel = require('../models/ticket');
-const departmentsEnum = require('../enums/departmentsEnum');
-const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../services/chargeService');
+import TicketModel from '../models/ticket.js';
+import { COMPLETE_DEPARTMENT, departmentToNextDepartmentAndStatus } from '../enums/departmentsEnum.js';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService.js';
 
 function isEmptyObject(value) {
     if (!value) {
@@ -45,25 +45,24 @@ function parseTicketAttributesOffOfProducts(product) {
     };
 }
 
-module.exports.findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination = async () => {
+export async function findDistinctTicketIdsWichAreNotCompletedAndHaveADefinedDestination() {
     const searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets = { 
         $or: [ 
             {'destination': null}, 
             {
-                'destination.department': {$ne: departmentsEnum.COMPLETE_DEPARTMENT}
+                'destination.department': {$ne: COMPLETE_DEPARTMENT}
             } 
         ]
     };
 
-    const ticketIds = await TicketModel
-        .find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
+    const ticketIds = await TicketModel.find(searchQueryThatExcludesTicketsWithoutADestinationAndCompletedTickets)
         .distinct('_id')
         .exec();
 
     return ticketIds;
-};
+}
 
-module.exports.removeEmptyObjectAttributes = (ticketObject) => {
+export function removeEmptyObjectAttributes(ticketObject) {
     const ticketItemKey = 'TicketItem';
 
     if (!Array.isArray(ticketObject[ticketItemKey])) {
@@ -77,9 +76,9 @@ module.exports.removeEmptyObjectAttributes = (ticketObject) => {
             }
         });
     });
-};
+}
 
-module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) => {
+export function convertedUploadedTicketDataToProperFormat(rawUploadedTicket) {
     let ticketAttributesPulledFromProducts;
     let products = [];
     let extraCharges = [];
@@ -101,9 +100,9 @@ module.exports.convertedUploadedTicketDataToProperFormat = (rawUploadedTicket) =
         products,
         extraCharges
     };
-};
+}
 
-module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
+export async function getLengthOfEachMaterialUsedByTickets(materialIds) {
     const lengthOfEachMaterialAlreadyUsedByTickets = await TicketModel.aggregate([
         { $match: { primaryMaterial: { $in: materialIds } } },
         { $group: { _id: '$primaryMaterial', lengthUsed: { $sum: '$totalMaterialLength'}}}
@@ -118,11 +117,11 @@ module.exports.getLengthOfEachMaterialUsedByTickets = async (materialIds) => {
     });
 
     return materialIdToLengthUsedByTickets;
-};
+}
 
 function getNextTicketDestination(ticket) {
     const currentDepartment = ticket.destination.department;
-    const [nextDepartment, nextDepartmentStatus] = departmentsEnum.departmentToNextDepartmentAndStatus[currentDepartment];
+    const [nextDepartment, nextDepartmentStatus] = departmentToNextDepartmentAndStatus[currentDepartment];
 
     return {
         department: nextDepartment,
@@ -130,7 +129,7 @@ function getNextTicketDestination(ticket) {
     };
 }
 
-module.exports.transitionTicketToNextDepartment = (ticket, attributesToUpdate) => {
+export function transitionTicketToNextDepartment(ticket, attributesToUpdate) {
     const {attempts, totalFramesRan, jobComment} = attributesToUpdate;
     const currentDepartment = ticket.destination.department;
 
@@ -141,11 +140,11 @@ module.exports.transitionTicketToNextDepartment = (ticket, attributesToUpdate) =
 
     ticket.destination = getNextTicketDestination(ticket);
     ticket.departmentToJobComment[currentDepartment] = jobComment;
-};
+}
 
-module.exports.computeTotalMaterialLength = (frameSize, totalFramesRan, attempts) => {
+export function computeTotalMaterialLength(frameSize, totalFramesRan, attempts) {
     const inchesPerFoot = 12;
     const feetPerAttempt = 50;
 
     return ((frameSize * totalFramesRan) / inchesPerFoot) + (attempts * feetPerAttempt); 
-};
+}

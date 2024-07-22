@@ -1,10 +1,10 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-require('dotenv').config();
+import 'dotenv/config';
 
 const FORBIDDEN_STATUS_CODE = 403;
 
-module.exports.verifyJwtToken = (request, response, next) => {
+export function verifyJwtToken(request, response, next) {
     const token = request.cookies.jwtToken;
 
     if (!token) {
@@ -18,4 +18,4 @@ module.exports.verifyJwtToken = (request, response, next) => {
         response.clearCookie('jwtToken');
         return response.redirect('/');
     }
-};
+}

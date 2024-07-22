@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const MachineModel = require('../models/machine');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express';
+const router = Router();
+import MachineModel from '../models/machine.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 const SHOW_ALL_MACHINES_ENDPOINT = '/machines';
 
@@ -91,4 +92,4 @@ router.get('/delete/:id', async (request, response) => {
     return response.redirect('back');
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const HoldReasonModel = require('../models/holdReason');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import HoldReasonModel from '../models/holdReason.js';
 
 router.use(verifyJwtToken);
 
@@ -31,4 +32,4 @@ router.delete('/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

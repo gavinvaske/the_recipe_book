@@ -1,11 +1,12 @@
-const router = require('express').Router();
-const DieLineModel = require('../models/dieLine');
-const mongooseService = require('../services/mongooseService');
-const {upload} = require('../middleware/upload');
-const fileService = require('../services/fileService');
-const s3Service = require('../services/s3Service');
-const dieLineService = require('../services/dieLineService');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express';
+const router = Router();
+import DieLineModel from '../models/dieLine.js';
+import * as mongooseService from '../services/mongooseService.js';
+import { upload } from '../middleware/upload.js';
+import * as fileService from '../services/fileService.js';
+import * as s3Service from '../services/s3Service.js';
+import * as dieLineService from '../services/dieLineService.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 router.use(verifyJwtToken);
 
@@ -61,4 +62,4 @@ router.post('/department-statuses', (request, response) => {
     });
 });
 
-module.exports = router;
+export default router;

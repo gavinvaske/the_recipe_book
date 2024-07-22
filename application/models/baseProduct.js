@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { sharedBaseProductMongooseAttributes } = require('../enums/sharedBaseProductAttributesEnum');
+import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete';
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generateUniqueProductNumber() {
     await this.populate('customer');
@@ -13,7 +14,7 @@ async function generateUniqueProductNumber() {
     const numberOfDigitsInProductId = 3;
     const nextProductIdWithLeadingZeroes = nextProductId.toString().padStart(numberOfDigitsInProductId, '0');
 
-    productNumber = `${this.customer.customerId}-${nextProductIdWithLeadingZeroes}`;
+    const productNumber = `${this.customer.customerId}-${nextProductIdWithLeadingZeroes}`;
 
     this.productNumber = productNumber;
 }
@@ -78,4 +79,4 @@ productSchema.pre('save', setDefaultOverun);
 
 const ProductModel = mongoose.model('BaseProduct', productSchema);
 
-module.exports = ProductModel;
+export default ProductModel;

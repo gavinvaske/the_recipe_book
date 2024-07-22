@@ -3,13 +3,13 @@ const RE_RUN = 'ReRun';
 const HOT = 'Hot';
 const STANDARD = 'Standard';
 
-module.exports.standardPriority = STANDARD;
+export const standardPriority = STANDARD;
 
-module.exports.getAllPriorities = () => {
+export function getAllPriorities() {
     return [
         RUSH_FEE,
         RE_RUN,
         HOT,
         STANDARD
     ];
-};
+}

@@ -1,11 +1,12 @@
-const chance = require('chance').Chance();
-const TicketModel = require('../../application/models/ticket');
-const WorkflowStepModel = require('../../application/models/WorkflowStep');
-const databaseService = require('../../application/services/databaseService');
-const {standardPriority, getAllPriorities} = require('../../application/enums/priorityEnum');
-const departmentsEnum = require('../../application/enums/departmentsEnum');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import TicketModel from '../../application/models/ticket';
+import WorkflowStepModel from '../../application/models/WorkflowStep';
+import * as databaseService from '../../application/services/databaseService.js';
+import { standardPriority, getAllPriorities } from '../../application/enums/priorityEnum';
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
+import mongoose from 'mongoose';
 
+const chance = Chance();
 const LENGTH_OF_ONE = 1;
 const EMPTY_LENGTH = 0;
 
@@ -1413,7 +1414,7 @@ describe('validation', () => {
                     const department = chance.pickone(departments);
                     const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
-                    newTicketDestination = {
+                    const newTicketDestination = {
                         department,
                         departmentStatus
                     };
@@ -1488,7 +1489,7 @@ describe('validation', () => {
                     const department = chance.pickone(departments);
                     const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
     
-                    newTicketDestination = {
+                    const newTicketDestination = {
                         department,
                         departmentStatus
                     };

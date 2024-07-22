@@ -1,6 +1,6 @@
-const BaseProductModel = require('../../application/models/baseProduct');
+import BaseProductModel from '../../application/models/baseProduct';
 
-module.exports.getCombinedMaterialThicknessByBaseProductId = async (baseProductId) => {
+export async function getCombinedMaterialThicknessByBaseProductId(baseProductId) {
     const baseProduct = await BaseProductModel
         .findById(baseProductId)
         .populate({path: 'primaryMaterial'})
@@ -15,4 +15,4 @@ module.exports.getCombinedMaterialThicknessByBaseProductId = async (baseProductI
     const combinedThickness = primaryMaterialThickness + secondaryMaterialThickness + finishThickness;
 
     return combinedThickness;
-};
+}

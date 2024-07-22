@@ -1,5 +1,5 @@
-const purchaseOrderService = require('../services/purchaseOrderService');
-const MaterialLengthAdjustmentModel = require('../models/materialLengthAdjustment');
+import * as purchaseOrderService from '../services/purchaseOrderService.js';
+import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment.js';
 
 /* 
   @See: 
@@ -14,7 +14,7 @@ const MaterialLengthAdjustmentModel = require('../models/materialLengthAdjustmen
       totalLength: number
     }
 */
-module.exports.groupLengthAdjustmentsByMaterial = async () => {
+export async function groupLengthAdjustmentsByMaterial() {
     const materialIdsWithTotalLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate([
         {
             $group: {
@@ -35,9 +35,9 @@ module.exports.groupLengthAdjustmentsByMaterial = async () => {
     });
 
     return materialIdToTotalLengthAdjustment;
-};
+}
 
-module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => {
+export function mapMaterialIdToPurchaseOrders(materialIds, purchaseOrders) {
     const materialIdToPurchaseOrders = {};
 
     materialIds.forEach((materialId) => {
@@ -51,9 +51,9 @@ module.exports.mapMaterialIdToPurchaseOrders = (materialIds, purchaseOrders) => 
     });
 
     return materialIdToPurchaseOrders;
-};
+}
 
-module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialLengthAdjustments) => {
+export function buildMaterialInventory(material, allPurchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialLengthAdjustments) {
     const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
     const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
     const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
@@ -65,12 +65,12 @@ module.exports.buildMaterialInventory = (material, allPurchaseOrdersForMaterial,
         netLengthOfMaterialInStock: (lengthOfMaterialInStock - (feetOfMaterialAlreadyUsedByTickets + materialLengthAdjustments)),
         purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
     };
-};
+}
 
-module.exports.computeNetLengthOfMaterialInInventory = (materialInventories) => {
+export function computeNetLengthOfMaterialInInventory(materialInventories) {
     const initialValue = 0;
 
     return materialInventories.reduce((accumulator, currentMaterialInventory) => {
         return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
     }, initialValue);
-};
+}

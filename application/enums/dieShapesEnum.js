@@ -3,7 +3,7 @@ const CIRCLE = 'CIRCLE';
 const OVAL = 'OVAL';
 const SPECIAL_SHAPE = 'SPECIAL SHAPE';
 
-module.exports.dieShapes = [
+export const dieShapes = [
     SQUARE,
     CIRCLE,
     OVAL,

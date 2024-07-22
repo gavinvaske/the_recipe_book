@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const MaterialCategoryModel = require('../../application/models/materialCategory');
-const databaseService = require('../../application/services/databaseService');
+import Chance from 'chance';
+import MaterialCategoryModel from '../../application/models/materialCategory';
+import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let materialCategoryAttributes;

@@ -1,17 +1,17 @@
-const chance = require('chance').Chance();
-const mongoose = require('mongoose');
+import Chance from 'chance';
+const chance = Chance();
+import mongoose from 'mongoose';
 
-const { dieShapes } = require('../application/enums/dieShapesEnum');
-const { toolTypes } = require('../application/enums/toolTypesEnum');
-const { dieVendors } = require('../application/enums/dieVendorsEnum');
-const { dieMagCylinders } = require('../application/enums/dieMagCylindersEnum');
-const { dieStatuses } = require('../application/enums/dieStatusesEnum');
-const { unwindDirections } = require('../application/enums/unwindDirectionsEnum');
-const { finishTypes } = require('../application/enums/finishTypesEnum');
+import { dieShapes } from '../application/enums/dieShapesEnum';
+import { toolTypes } from '../application/enums/toolTypesEnum';
+import { dieVendors } from '../application/enums/dieVendorsEnum';
+import { dieMagCylinders } from '../application/enums/dieMagCylindersEnum';
+import { dieStatuses } from '../application/enums/dieStatusesEnum';
+import { unwindDirections } from '../application/enums/unwindDirectionsEnum';
+import { finishTypes } from '../application/enums/finishTypesEnum';
+import { AVAILABLE_USER_TYPES } from '../application/enums/userTypesEnum';
 
-const { AVAILABLE_USER_TYPES } = require('../application/enums/userTypesEnum');
-
-module.exports.mockData = {
+export const mockData = {
     Die: getDie,
     Material: getMaterial,
     Finish: getFinish,

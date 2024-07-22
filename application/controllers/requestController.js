@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const SpotPlateModel = require('../models/spotPlate');
-const DieLineModel = require('../models/dieLine');
-const destinationService = require('../services/destinationService');
-const {verifyJwtToken} = require('../middleware/authorize');
+import { Router } from 'express';
+const router = Router();
+import SpotPlateModel from '../models/spotPlate.js';
+import DieLineModel from '../models/dieLine.js';
+import * as destinationService from '../services/destinationService.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
 
 router.use(verifyJwtToken);
 
@@ -19,4 +20,4 @@ router.get('/', async (request, response) => {
     });
 });
 
-module.exports = router;
+export default router;

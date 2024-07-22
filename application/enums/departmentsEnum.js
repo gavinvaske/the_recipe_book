@@ -26,80 +26,79 @@ const REQUEST_COMPLETE = 'REQUEST COMPLETE';
 const NEEDS_DIE_LINE = 'NEEDS DIE LINE';
 const NEEDS_PLATE = 'NEEDS PLATE';
 
-// departments
-module.exports.ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
-module.exports.ART_PREP_DEPARTMENT = 'ART-PREP';
-module.exports.PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
-module.exports.PRINTING_DEPARTMENT = 'PRINTING';
-module.exports.CUTTING_DEPARTMENT = 'CUTTING';
-module.exports.WINDING_DEPARTMENT = 'WINDING';
-module.exports.PACKAGING_DEPARTMENT = 'PACKAGING';
-module.exports.SHIPPING_DEPARTMENT = 'SHIPPING';
-module.exports.BILLING_DEPARTMENT = 'BILLING';
-module.exports.COMPLETE_DEPARTMENT = 'COMPLETED';
+export const ORDER_PREP_DEPARTMENT = 'ORDER-PREP';
+export const ART_PREP_DEPARTMENT = 'ART-PREP';
+export const PRE_PRINTING_DEPARTMENT = 'PRE-PRINTING';
+export const PRINTING_DEPARTMENT = 'PRINTING';
+export const CUTTING_DEPARTMENT = 'CUTTING';
+export const WINDING_DEPARTMENT = 'WINDING';
+export const PACKAGING_DEPARTMENT = 'PACKAGING';
+export const SHIPPING_DEPARTMENT = 'SHIPPING';
+export const BILLING_DEPARTMENT = 'BILLING';
+export const COMPLETE_DEPARTMENT = 'COMPLETED';
 
-module.exports.departmentToDepartmentStatusesForDieLineRequests = {
-    [this.ORDER_PREP_DEPARTMENT]: [
+export const departmentToDepartmentStatusesForDieLineRequests = {
+    [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         WAITING_ON_CUSTOMER,
         REQUEST_COMPLETE,
         WAITING_ON_APPROVAL
     ],
-    [this.ART_PREP_DEPARTMENT]: [
+    [ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         NEEDS_DIE_LINE
     ],
-    [this.COMPLETE_DEPARTMENT]: []
+    [COMPLETE_DEPARTMENT]: []
 };
 
-module.exports.departmentToDepartmentStatusesForSpotPlateRequests = {
-    [this.ORDER_PREP_DEPARTMENT]: [
+export const departmentToDepartmentStatusesForSpotPlateRequests = {
+    [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         WAITING_ON_CUSTOMER,
         REQUEST_COMPLETE,
         WAITING_ON_APPROVAL
     ],
-    [this.ART_PREP_DEPARTMENT]: [
+    [ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         NEEDS_PLATE
     ],
-    [this.COMPLETE_DEPARTMENT]: []
+    [COMPLETE_DEPARTMENT]: []
 };
 
-module.exports.departmentToStatusesMappingForTicketObjects = {
-    [this.ORDER_PREP_DEPARTMENT]: [
+export const departmentToStatusesMappingForTicketObjects = {
+    [ORDER_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         PROOFING_COMPLETE,
         WAITING_ON_CUSTOMER,
         WAITING_ON_APPROVAL
     ],
-    [this.ART_PREP_DEPARTMENT]: [
+    [ART_PREP_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         NEEDS_PROOF
     ],
-    [this.PRE_PRINTING_DEPARTMENT]: [
+    [PRE_PRINTING_DEPARTMENT]: [
         NEEDS_ATTENTION,
         ON_HOLD,
         IN_PROGRESS,
         SEND_TO_PRINTING
     ],
-    [this.PRINTING_DEPARTMENT]: [
+    [PRINTING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         PRINTING_READY,
         PRINTER_ONE_SCHEDULE,
         PRINTER_TWO_SCHEDULE
     ],
-    [this.CUTTING_DEPARTMENT]: [
+    [CUTTING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         CUTTING_READY,
@@ -107,66 +106,66 @@ module.exports.departmentToStatusesMappingForTicketObjects = {
         DELTA_TWO_SCHEDULE,
         ROTOFLEX_ONE_SCHEDULE
     ],
-    [this.WINDING_DEPARTMENT]: [
+    [WINDING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         WINDING_READY
     ],
-    [this.PACKAGING_DEPARTMENT]: [
+    [PACKAGING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         PACKAGING_READY
     ],
-    [this.SHIPPING_DEPARTMENT]: [
+    [SHIPPING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         SHIPPING_READY,
         FARMED_OUT_TICKETS
     ],
-    [this.BILLING_DEPARTMENT]: [
+    [BILLING_DEPARTMENT]: [
         ON_HOLD,
         IN_PROGRESS,
         BILLING_READY
     ],
-    [this.COMPLETE_DEPARTMENT]: []
+    [COMPLETE_DEPARTMENT]: []
 };
 
-module.exports.departmentToNextDepartmentAndStatus = {
-    [this.ART_PREP_DEPARTMENT]: [this.PRE_PRINTING_DEPARTMENT, SEND_TO_PRINTING],
-    [this.PRE_PRINTING_DEPARTMENT]: [this.PRINTING_DEPARTMENT, PRINTING_READY],
-    [this.PRINTING_DEPARTMENT]: [this.CUTTING_DEPARTMENT, CUTTING_READY],
-    [this.CUTTING_DEPARTMENT]: [this.WINDING_DEPARTMENT, WINDING_READY],
-    [this.WINDING_DEPARTMENT]: [this.PACKAGING_DEPARTMENT, PACKAGING_READY],
-    [this.PACKAGING_DEPARTMENT]: [this.SHIPPING_DEPARTMENT, SHIPPING_READY],
-    [this.SHIPPING_DEPARTMENT]: [this.BILLING_DEPARTMENT, BILLING_READY],
-    [this.BILLING_DEPARTMENT]: [this.COMPLETE_DEPARTMENT]
+export const departmentToNextDepartmentAndStatus = {
+    [ART_PREP_DEPARTMENT]: [PRE_PRINTING_DEPARTMENT, SEND_TO_PRINTING],
+    [PRE_PRINTING_DEPARTMENT]: [PRINTING_DEPARTMENT, PRINTING_READY],
+    [PRINTING_DEPARTMENT]: [CUTTING_DEPARTMENT, CUTTING_READY],
+    [CUTTING_DEPARTMENT]: [WINDING_DEPARTMENT, WINDING_READY],
+    [WINDING_DEPARTMENT]: [PACKAGING_DEPARTMENT, PACKAGING_READY],
+    [PACKAGING_DEPARTMENT]: [SHIPPING_DEPARTMENT, SHIPPING_READY],
+    [SHIPPING_DEPARTMENT]: [BILLING_DEPARTMENT, BILLING_READY],
+    [BILLING_DEPARTMENT]: [COMPLETE_DEPARTMENT]
 };
 
-module.exports.removeDepartmentStatusesAUserIsNotAllowedToSelect = (departmentStatuses) => {
+export function removeDepartmentStatusesAUserIsNotAllowedToSelect(departmentStatuses) {
     return departmentStatuses.filter((departmentStatus) => {
         const isAllowed = departmentStatus !== IN_PROGRESS;
         return isAllowed;
     });
+}
+
+export const productionDepartmentsAndDepartmentStatuses = {
+    [PRE_PRINTING_DEPARTMENT]: departmentToStatusesMappingForTicketObjects[PRE_PRINTING_DEPARTMENT],
+    [PRINTING_DEPARTMENT]: departmentToStatusesMappingForTicketObjects[PRINTING_DEPARTMENT],
+    [CUTTING_DEPARTMENT]: departmentToStatusesMappingForTicketObjects[CUTTING_DEPARTMENT],
+    [WINDING_DEPARTMENT]: departmentToStatusesMappingForTicketObjects[WINDING_DEPARTMENT],
+    [PACKAGING_DEPARTMENT]: departmentToStatusesMappingForTicketObjects[PACKAGING_DEPARTMENT]
 };
 
-module.exports.productionDepartmentsAndDepartmentStatuses = {
-    [this.PRE_PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PRE_PRINTING_DEPARTMENT],
-    [this.PRINTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PRINTING_DEPARTMENT],
-    [this.CUTTING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.CUTTING_DEPARTMENT],
-    [this.WINDING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.WINDING_DEPARTMENT],
-    [this.PACKAGING_DEPARTMENT]: this.departmentToStatusesMappingForTicketObjects[this.PACKAGING_DEPARTMENT]
-};
+export function getAllDepartments() {
+    return Object.keys(departmentToStatusesMappingForTicketObjects);
+}
 
-module.exports.getAllDepartments = () => {
-    return Object.keys(this.departmentToStatusesMappingForTicketObjects);
-};
-
-module.exports.getAllDepartmentsWithDepartmentStatuses = () => {
+export function getAllDepartmentsWithDepartmentStatuses() {
     let departmentsWithAtLeastOneDepartmentStatus = [];
-    let allDepartments = this.getAllDepartments();
+    let allDepartments = getAllDepartments();
 
     allDepartments.forEach((department) => {
-        const containsAtLeastOneDepartmentStatus = this.departmentToStatusesMappingForTicketObjects[department].length > 0; // eslint-disable-line no-magic-numbers
+        const containsAtLeastOneDepartmentStatus = departmentToStatusesMappingForTicketObjects[department].length > 0; // eslint-disable-line no-magic-numbers
 
         if (containsAtLeastOneDepartmentStatus) {
             departmentsWithAtLeastOneDepartmentStatus.push(department);
@@ -174,8 +173,8 @@ module.exports.getAllDepartmentsWithDepartmentStatuses = () => {
     });
 
     return departmentsWithAtLeastOneDepartmentStatus;
-};
+}
 
-module.exports.isInProgressDepartmentStatus = (departmentStatus) => {
+export function isInProgressDepartmentStatus(departmentStatus) {
     return departmentStatus === IN_PROGRESS;
-};
+}

@@ -1,15 +1,16 @@
-const chance = require('chance').Chance();
-const ticketService = require('../../application/services/ticketService');
-const {
+import Chance from 'chance';
+import * as ticketService from '../../application/services/ticketService';
+import {
     COMPLETE_DEPARTMENT,
     departmentToNextDepartmentAndStatus
-} = require('../../application/enums/departmentsEnum');
-const { when } = require('jest-when');
-
-const mockTicketModel = require('../../application/models/ticket');
-jest.mock('../../application/models/ticket');
+} from '../../application/enums/departmentsEnum';
+import { when } from 'jest-when';
+import mockTicketModel from '../../application/models/ticket';
 
 const TICKET_ITEM_KEY = 'TicketItem';
+
+const chance = Chance();
+jest.mock('../../application/models/ticket');
 
 function getStandardProduct() {
     return {

@@ -1,6 +1,8 @@
-const {verifyJwtToken} = require('../../application/middleware/authorize');
-const jwt = require('jsonwebtoken');
-const chance = require('chance').Chance();
+import { verifyJwtToken } from '../../application/middleware/authorize';
+import jwt from 'jsonwebtoken';
+import Chance from 'chance';
+
+const chance = Chance();
 
 jest.mock('jsonwebtoken');
 

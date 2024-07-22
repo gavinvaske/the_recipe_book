@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const RecipeModel = require('../models/recipe');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import RecipeModel from '../models/recipe.js';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
@@ -150,4 +150,4 @@ router.post('/create', async (request, response) => {
     return response.redirect('/recipes');
 });
 
-module.exports = router;
+export default router;

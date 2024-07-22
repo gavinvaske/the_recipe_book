@@ -1,10 +1,11 @@
 const { TIMER_TYPES } = require('../enums/timerTypesEnum');
 const { TIMER_STATES } = require('../enums/timerStatesEnum');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-mongoose.plugin(require('mongoose-delete'), { overrideMethods: true });
+import mongooseDelete from 'mongoose-delete';
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const ticketTimeLedgerSchema = new Schema({
     ticketId: {

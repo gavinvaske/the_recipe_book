@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const Decimal = require('decimal.js');
+import Decimal from 'decimal.js';
 
-mongoose.plugin(require('mongoose-delete'), {overrideMethods: true});
+import mongooseDelete from 'mongoose-delete';
+mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 const FOUR_DECIMAL_PLACES = 4;
 
@@ -87,4 +88,4 @@ const schema = new Schema({
 
 const Finish = mongoose.model('Finish', schema);
 
-module.exports = Finish;
+export default Finish;

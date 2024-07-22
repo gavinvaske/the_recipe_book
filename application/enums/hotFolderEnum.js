@@ -3,7 +3,7 @@ const WHITE_BOPP = 'WHITE BOPP';
 const SILVER = 'SILVER';
 const CLEAR = 'CLEAR';
 
-module.exports.hotFolders = {
+export const hotFolders = {
     '9111': SEMI_GLOSS,
     '9124': SEMI_GLOSS,
     '9122': SEMI_GLOSS,
@@ -82,7 +82,7 @@ module.exports.hotFolders = {
     '9066': SEMI_GLOSS
 };
 
-module.exports.getUniqueHotFolders = () => {
-    const hotFoldersAsASet = new Set(Object.values(this.hotFolders));
+export function getUniqueHotFolders() {
+    const hotFoldersAsASet = new Set(Object.values(hotFolders));
     return [...hotFoldersAsASet];
-};
+}

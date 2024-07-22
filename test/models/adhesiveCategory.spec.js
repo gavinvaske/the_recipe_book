@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const AdhesiveCategoryModel = require('../../application/models/adhesiveCategory');
-const databaseService = require('../../application/services/databaseService');
+import Chance from 'chance';
+import AdhesiveCategoryModel from '../../application/models/adhesiveCategory';
+import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let adhesiveCategoryAttributes;

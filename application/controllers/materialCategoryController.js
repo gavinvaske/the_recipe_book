@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const MaterialCategoryModel = require('../models/materialCategory');
-const { SERVER_ERROR } = require('../enums/httpStatusCodes'); 
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import MaterialCategoryModel from '../models/materialCategory.js';
+import { SERVER_ERROR } from '../enums/httpStatusCodes.js'; 
 
 router.use(verifyJwtToken);
 
@@ -77,4 +78,4 @@ router.get('/delete/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

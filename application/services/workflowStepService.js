@@ -1,6 +1,6 @@
-const WorkflowStepModel = require('../models/WorkflowStep');
-const dateTimeService = require('../services/dateTimeService');
-const {COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses} = require('../enums/departmentsEnum');
+import WorkflowStepModel from '../models/WorkflowStep.js';
+import * as dateTimeService from '../services/dateTimeService.js';
+import { COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses } from '../enums/departmentsEnum.js';
 
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
@@ -80,7 +80,7 @@ function updateWorkflowStepTimeLedger(workflowStepTimeLedger, workflowStep, time
     workflowStepTimeLedger[ticketId][department][TIME_PER_DEPARTMENT_STATUS][departmentStatus] += timeSpentInThisWorkflowStep;
 }
 
-module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async (ticketIds) => {
+export async function computeTimeTicketsHaveSpentInEachWorkflowStep(ticketIds) {
     const ticketIdToWorkflowSteps = await findWorkflowStepsByTicketIds(ticketIds);
     const workflowStepTimeLedger = {};
 
@@ -103,9 +103,9 @@ module.exports.computeTimeTicketsHaveSpentInEachWorkflowStep = async (ticketIds)
     };
 
     return workflowStepTimeLedger;
-};
+}
 
-module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
+export function getOverallTicketDuration(workflowStepLedgerForTicket) {
     if (!workflowStepLedgerForTicket) {
         return;
     }
@@ -118,9 +118,9 @@ module.exports.getOverallTicketDuration = (workflowStepLedgerForTicket) => {
     });
 
     return totalTimeInMinutes;
-};
+}
 
-module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicket) => {
+export function getHowLongTicketHasBeenInProduction(workflowStepLedgerForTicket) {
     if (!workflowStepLedgerForTicket) {
         return;
     }
@@ -136,20 +136,20 @@ module.exports.getHowLongTicketHasBeenInProduction = (workflowStepLedgerForTicke
     });
 
     return totalTimeInMinutes;
-};
+}
 
-module.exports.getHowLongTicketHasBeenInDepartment = (workflowStepLedgerForTicket, department) => {
+export function getHowLongTicketHasBeenInDepartment(workflowStepLedgerForTicket, department) {
     if (!workflowStepLedgerForTicket) {
         return;
     }
 
     return workflowStepLedgerForTicket[department][TIME_SPENT_IN_DEPARTMENT];
-};
+}
 
-module.exports.getHowLongTicketHasHadADepartmentStatus = (workflowStepLedgerForTicket, department, departmentStatus) => {
+export function getHowLongTicketHasHadADepartmentStatus(workflowStepLedgerForTicket, department, departmentStatus) {
     if (!workflowStepLedgerForTicket) {
         return;
     }
 
     return workflowStepLedgerForTicket[department][TIME_PER_DEPARTMENT_STATUS][departmentStatus];
-};
+}

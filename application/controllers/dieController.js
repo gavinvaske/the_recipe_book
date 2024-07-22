@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const DieModel = require('../models/Die');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import DieModel from '../models/Die.js';
 
 router.use(verifyJwtToken);
 
@@ -10,4 +11,4 @@ router.get('/', async (request, response) => {
     return response.send(dies);
 });
 
-module.exports = router;
+export default router;

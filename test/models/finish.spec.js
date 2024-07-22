@@ -1,8 +1,9 @@
-const chance = require('chance').Chance();
-const mongoose = require('mongoose');
-const FinishModel = require('../../application/models/finish');
-const databaseService = require('../../application/services/databaseService');
-const testDataGenerator = require('../testDataGenerator');
+import Chance from 'chance';
+const chance = Chance();
+import mongoose from 'mongoose';
+import FinishModel from '../../application/models/finish';
+import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator.js';
 
 describe('validation', () => {
     let finishAttributes;

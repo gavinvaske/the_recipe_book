@@ -1,7 +1,9 @@
-const chance = require('chance').Chance();
-const VendorModel = require('../../application/models/vendor');
-const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import VendorModel from '../../application/models/vendor';
+import * as databaseService from '../../application/services/databaseService.js';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('validation', () => {
     let vendorAttributes;
@@ -9,7 +11,7 @@ describe('validation', () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        addressAttributes = {
+        const addressAttributes = {
             name: chance.string(),
             street: chance.string(),
             unitOrSuite: chance.string(),

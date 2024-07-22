@@ -1,5 +1,6 @@
-const chance = require('chance').Chance();
-const dieService = require('../../application/services/dieService');
+import Chance from 'chance';
+const chance = Chance();
+import * as dieService from '../../application/services/dieService';
 
 describe('File: dieService.js', () => {
     describe('Function: getCoreHeightFromDie()', () => {

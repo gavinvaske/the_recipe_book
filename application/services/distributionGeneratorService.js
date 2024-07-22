@@ -35,12 +35,16 @@ function getDistribution(elementsPerDistribution, numberOfLanes) {
 }
 
 function removeDuplicatesFromDistributions(distributions) {
+    const seen = {};
+
     distributions.forEach((distribution) => distribution.sort());
 
-    return distributions.filter(( t={}, a=> !(t[a]=a in t) ));
+    return distributions.filter((distribution) => { // credit: https://stackoverflow.com/a/9229821
+        return seen.hasOwnProperty(distribution) ? false : (seen[distribution] = true);
+    });
 }
 
-module.exports.getDistributions = (numberOfLanes) => {
+export function getDistributions(numberOfLanes) {
     const groupSizeToDistributions = {};
 
     for (let groupSize = 1; groupSize <= numberOfLanes; groupSize++) {
@@ -51,4 +55,4 @@ module.exports.getDistributions = (numberOfLanes) => {
     }
 
     return groupSizeToDistributions;
-};
+}

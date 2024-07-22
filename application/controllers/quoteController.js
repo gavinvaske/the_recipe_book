@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const quoteService = require('../services/quoteService');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import * as quoteService from '../services/quoteService.js';
 
 router.use(verifyJwtToken);
 
@@ -20,4 +21,4 @@ router.post('/', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

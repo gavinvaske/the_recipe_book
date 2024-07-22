@@ -1,13 +1,13 @@
-const UserModel = require('../models/user');
-const jwt = require('jsonwebtoken');
+import UserModel from '../models/user.js';
+import jwt from 'jsonwebtoken';
 
-module.exports.createUser = async (userAttributes) => {
+export async function createUser(userAttributes) {
     const userModel = new UserModel(userAttributes);
 
     return await userModel.save();
-};
+}
 
-module.exports.getProfilePictureUrl = (user) => {
+export function getProfilePictureUrl(user) {
     if (!user || !user.profilePicture) { 
         return '';
     }
@@ -20,9 +20,9 @@ module.exports.getProfilePictureUrl = (user) => {
     };
     
     return `data:image/${contentType};base64,${data.toString('base64')}`;
-};
+}
 
-module.exports.getUserInitials = (user) => {
+export function getUserInitials(user) {
     const emptyString = '';
     const indexOfFirstWordInArray = 0;
     const indexOfLastWordInArray = -1;
@@ -38,9 +38,9 @@ module.exports.getUserInitials = (user) => {
     const lastNameInitial = (names.length > 1) ? names.slice(indexOfLastWordInArray)[indexOfFirstWordInArray][indexOfirstCharacterInWord] : emptyString;
 
     return firstNameInitial + lastNameInitial;
-};
+}
 
-module.exports.isUserLoggedIn = (jwtToken, jwtSecret) => {
+export function isUserLoggedIn(jwtToken, jwtSecret) {
     if (!jwtToken) {
         return false;
     }
@@ -53,4 +53,4 @@ module.exports.isUserLoggedIn = (jwtToken, jwtSecret) => {
     }
 
     return false;
-};
+}

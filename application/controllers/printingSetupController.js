@@ -1,9 +1,10 @@
-const router = require('express').Router();
-const {verifyJwtToken} = require('../middleware/authorize');
-const UserModel = require('../models/user');
-const MachineModel = require('../models/machine');
-const MaterialModel = require('../models/material');
-const PrintingSetupModel = require('../models/printingSetup');
+import { Router } from 'express';
+const router = Router();
+import { verifyJwtToken } from '../middleware/authorize.js';
+import UserModel from '../models/user.js';
+import MachineModel from '../models/machine.js';
+import MaterialModel from '../models/material.js';
+import PrintingSetupModel from '../models/printingSetup.js';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;
@@ -157,4 +158,4 @@ router.post('/update/:id', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

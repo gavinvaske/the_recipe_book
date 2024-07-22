@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const packagingService = require('../services/packagingService');
-const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
+import { Router } from 'express';
+const router = Router();
+import * as packagingService from '../services/packagingService.js';
+import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.js';
 
 const SERVER_ERROR_STATUS = 500;
 
@@ -43,4 +44,4 @@ router.post('/estimate', (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

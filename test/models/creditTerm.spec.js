@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const CreditTermModel = require('../../application/models/creditTerm');
-const databaseService = require('../../application/services/databaseService');
+import Chance from 'chance';
+import CreditTermModel from '../../application/models/creditTerm';
+import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('validation', () => {
     let creditTermAttributes;

@@ -1,15 +1,15 @@
 /* eslint-disable complexity */
-const constants = require('../enums/constantsEnum');
-const DieModel = require('../models/Die');
-const MaterialModel = require('../../application/models/material');
-const BaseProductModel = require('../../application/models/baseProduct');
-const FinishModel = require('../../application/models/finish');
-const dieService = require('../../application/services/dieService');
-const isNil = require('lodash.isnil');
-const packagingService = require('../../application/services/packagingService');
-const QuoteModel = require('../../application/models/quote');
-const { getImageForNCirclesInSquare } = require('../enums/circlesPerSquareEnum');
-const Decimal = require('decimal.js');
+import * as constants from '../enums/constantsEnum.js';
+import DieModel from '../models/Die.js';
+import MaterialModel from '../models/material.js';
+import BaseProductModel from '../models/baseProduct.js';
+import FinishModel from '../models/finish.js';
+import * as dieService from '../services/dieService.js';
+import isNil from 'lodash.isnil';
+import * as packagingService from '../services/packagingService.js';
+import QuoteModel from '../models/quote.js';
+import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.js';
+import Decimal from 'decimal.js';
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;
@@ -17,7 +17,7 @@ const ONE_THOUSAND = 1000;
 const FOUR = 4;
 const MINUTES_PER_HOUR = 60;
 
-module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
+export async function createQuotes(labelQuantities, quoteInputs) {
     const quotePromises = labelQuantities.map((labelQty) => {
         const quoteInputsWithLabelQty = {
             ...quoteInputs,
@@ -27,9 +27,9 @@ module.exports.createQuotes = async (labelQuantities, quoteInputs) => {
     });
 
     return Promise.all(quotePromises);
-};
+}
 
-module.exports.createQuote = async (quoteInputs) => {
+export async function createQuote(quoteInputs) {
     const {
         isSheeted,
         products,
@@ -152,7 +152,7 @@ module.exports.createQuote = async (quoteInputs) => {
     quoteAttributes.pricePerLabel = computePricePerLabel(quoteAttributes);
 
     return new QuoteModel(quoteAttributes);
-};
+}
 
 function computePricePerLabel(quoteAttributes) {
     const { quotedPrice, labelQty } = quoteAttributes;

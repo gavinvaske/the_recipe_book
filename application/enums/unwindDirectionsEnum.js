@@ -7,9 +7,9 @@ const UNWIND_6 = 6;
 const UNWIND_7 = 7;
 const UNWIND_8 = 8;
 
-module.exports.defaultUnwindDirection = UNWIND_3;
+export const defaultUnwindDirection = UNWIND_3;
 
-module.exports.unwindDirections = [ 
+export const unwindDirections = [ 
     UNWIND_1, UNWIND_2, UNWIND_3, UNWIND_4, 
     UNWIND_5, UNWIND_6, UNWIND_7, UNWIND_8 
 ];

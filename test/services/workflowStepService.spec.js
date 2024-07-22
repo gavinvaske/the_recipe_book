@@ -1,7 +1,11 @@
-const workflowStepService = require('../../application/services/workflowStepService');
-const chance = require('chance').Chance();
-const {productionDepartmentsAndDepartmentStatuses, getAllDepartments} = require('../../application/enums/departmentsEnum');
+import * as workflowStepService from '../../application/services/workflowStepService';
+import Chance from 'chance';
+import { 
+    productionDepartmentsAndDepartmentStatuses, 
+    getAllDepartments 
+} from '../../application/enums/departmentsEnum';
 
+const chance = Chance();
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';
 

@@ -1,5 +1,7 @@
-const chance = require('chance').Chance();
-const mongooseService = require('../../application/services/mongooseService');
+import Chance from 'chance';
+import * as mongooseService from '../../application/services/mongooseService';
+
+const chance = Chance();
 
 function getOneMongooseError(errorType) {
     return {

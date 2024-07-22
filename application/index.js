@@ -1,15 +1,58 @@
-const express = require('express');
-const path = require('path');
-const expressLayouts = require('express-ejs-layouts');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const databaseService = require('./services/databaseService');
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
-const session = require('express-session');
-const fs = require('fs');
+import express from 'express';
+import path from 'path';
+import expressLayouts from 'express-ejs-layouts';
+import mongoose from 'mongoose';
+import 'dotenv/config';
+import { connectToMongoDatabase } from './services/databaseService.js';
+import cookieParser from 'cookie-parser';
+import flash from 'connect-flash';
+import session from 'express-session';
+import fs from 'fs';
+import ejsService from './services/ejsService.js';
+import httpServ from 'http';
+import { Server } from 'socket.io';
+import customWebSockets from './services/websockets/init.js';
+import { fileURLToPath } from 'url';
 
-databaseService.connectToMongoDatabase(process.env.MONGO_DB_URL);
+// Routes
+import defaultRoute from './controllers/index.js';
+import userEndpoints from './controllers/userController.js';
+import recipeEndpoints from './controllers/recipeController.js';
+
+import adminEndpoints from './controllers/adminController.js';
+import finishEndpoints from './controllers/finishController.js';
+import machineEndpoints from './controllers/machineController.js';
+import materialEndpoints from './controllers/materialController.js';
+import setupEndpoints from './controllers/setupController.js';
+import printingSetupEndpoints from './controllers/printingSetupController.js';
+import cuttingSetupEndpoints from './controllers/cuttingSetupController.js';
+import windingSetupEndpoints from './controllers/windingSetupController.js';
+import vendorEndpoints from './controllers/vendorController.js';
+import materialOrderEndpoints from './controllers/materialOrdersController.js';
+import ticketEndpoints from './controllers/ticketController.js';
+import productEndpoints from './controllers/productController.js';
+import holdReasonEndpoints from './controllers/holdReasonController.js';
+import proofEndpoints from './controllers/proofController.js';
+import dieLineEndpoints from './controllers/dieLineController.js';
+import spotPlateEndpoints from './controllers/spotPlateController.js';
+import requestEndpoints from './controllers/requestController.js';
+import materialCategoryEndpoints from './controllers/materialCategoryController.js';
+import filePlanEndpoints from './controllers/filePlanController.js';
+import packagingEndpoints from './controllers/packagingController.js';
+import quoteEndpoints from './controllers/quoteController.js';
+import dieEndpoints from './controllers/dieController.js';
+import linerTypeEndpoints from './controllers/linerTypeController.js';
+import adhesiveCategoryEndpoints from './controllers/adhesiveCategoryController.js';
+import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjustmentController.js';
+import customerEndpoints from './controllers/customerController.js';
+import deliveryMethodEndpoints from './controllers/deliveryMethodController.js';
+import creditTermEndpoints from './controllers/creditTermsController.js';
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
 
 const defaultPort = 8080;
@@ -17,11 +60,11 @@ const PORT = process.env.PORT || defaultPort;
 
 const app = express();
 
-app.locals.helperMethods = require('../application/services/ejsService');
+app.locals.helperMethods = ejsService;
 
-const http = require('http').Server(app);
-const socket = require('socket.io')(http);
-require('./services/websockets/init')(socket); // Initalize sockets listeners/emitters
+const httpServer = httpServ.Server(app);
+const socket = new Server(httpServer);
+customWebSockets(socket); // Initalize sockets listeners/emitters
 
 app.use(expressLayouts);
 app.use(express.json());
@@ -53,39 +96,38 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('layout', path.join(__dirname, '/views/layout.ejs'));
 
-app.use('/', require('./controllers/index'));
-app.use('/users', require('./controllers/userController'));
-app.use('/recipes', require('./controllers/recipeController'));
-app.use('/admin', require('./controllers/adminController'));
-app.use('/finishes', require('./controllers/finishController'));
-app.use('/machines', require('./controllers/machineController'));
-app.use('/materials', require('./controllers/materialController'));
-app.use('/setups', require('./controllers/setupController'));
-app.use('/printing-setups', require('./controllers/printingSetupController'));
-app.use('/cutting-setups', require('./controllers/cuttingSetupController'));
-app.use('/winding-setups', require('./controllers/windingSetupController'));
-app.use('/vendors', require('./controllers/vendorController'));
-app.use('/material-orders', require('./controllers/materialOrdersController'));
-app.use('/tickets', require('./controllers/ticketController'));
-app.use('/products', require('./controllers/productController'));
-app.use('/hold-reasons', require('./controllers/holdReasonController'));
-app.use('/proofs', require('./controllers/proofController'));
-app.use('/die-lines', require('./controllers/dieLineController'));
-app.use('/spot-plates', require('./controllers/spotPlateController'));
-app.use('/requests', require('./controllers/requestController'));
-app.use('/material-categories', require('./controllers/materialCategoryController'));
-app.use('/file-plan', require('./controllers/filePlanController'));
-app.use('/packaging', require('./controllers/packagingController'));
-app.use('/quote', require('./controllers/quoteController'));
-app.use('/die', require('./controllers/dieController'));
-app.use('/liner-types', require('./controllers/linerTypeController'));
-app.use('/adhesive-categories', require('./controllers/adhesiveCategoryController'));
-app.use('/material-length-adjustments', require('./controllers/materialLengthAdjustmentController'));
+app.use('/', defaultRoute);
+app.use('/users', userEndpoints);
+app.use('/recipes', recipeEndpoints);
+app.use('/admin', adminEndpoints);
+app.use('/finishes', finishEndpoints);
+app.use('/machines', machineEndpoints);
+app.use('/materials', materialEndpoints);
+app.use('/setups', setupEndpoints);
+app.use('/printing-setups', printingSetupEndpoints);
+app.use('/cutting-setups', cuttingSetupEndpoints);
+app.use('/winding-setups', windingSetupEndpoints);
+app.use('/vendors', vendorEndpoints);
+app.use('/material-orders', materialOrderEndpoints);
+app.use('/tickets', ticketEndpoints);
+app.use('/products', productEndpoints);
+app.use('/hold-reasons', holdReasonEndpoints);
+app.use('/proofs', proofEndpoints);
+app.use('/die-lines', dieLineEndpoints);
+app.use('/spot-plates', spotPlateEndpoints);
+app.use('/requests', requestEndpoints);
+app.use('/material-categories', materialCategoryEndpoints);
+app.use('/file-plan', filePlanEndpoints);
+app.use('/packaging', packagingEndpoints);
+app.use('/quote', quoteEndpoints);
+app.use('/die', dieEndpoints);
+app.use('/liner-types', linerTypeEndpoints);
+app.use('/adhesive-categories', adhesiveCategoryEndpoints);
+app.use('/material-length-adjustments', materialLengthAdjustmentEndpoints);
 
-
-app.use('/customers', require('./controllers/customerController'));
-app.use('/delivery-methods', require('./controllers/deliveryMethodController'));
-app.use('/credit-terms', require('./controllers/creditTermsController'));
+app.use('/customers', customerEndpoints);
+app.use('/delivery-methods', deliveryMethodEndpoints);
+app.use('/credit-terms', creditTermEndpoints);
 
 // This route loads the ENTIRE REACT APP
 app.use('/react-ui', (_, response) => response.render('app.ejs'));
@@ -95,7 +137,7 @@ databaseConnection.on('error', (error) => {
 });
 
 databaseConnection.on('open', () => {
-    http.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         console.log(`Server started listening on PORT ${PORT}. Visit http://localhost:${PORT} in your browser`);
     });
 });

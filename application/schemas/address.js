@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-ZIP_CODE_REGEX = /(^\d{5}(?:[-\s]\d{4})?$)/;
+const ZIP_CODE_REGEX = /(^\d{5}(?:[-\s]\d{4})?$)/;
 
 function validateZipCode(zipCode) {
     return ZIP_CODE_REGEX.test(zipCode);
@@ -40,4 +40,4 @@ const addressSchema = new Schema({
     },
 }, { timestamps: true });
 
-module.exports = addressSchema;
+export default addressSchema;

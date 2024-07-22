@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const {getAllDepartments} = require('../enums/departmentsEnum');
-const mongoose_delete = require('mongoose-delete');
+import { getAllDepartments } from '../enums/departmentsEnum.js';
+import mongoose_delete from 'mongoose-delete';
 
 function isDepartmentValid(department) {
     if (!getAllDepartments().includes(department)) {
@@ -29,4 +29,4 @@ HoldReasonSchema.plugin(mongoose_delete, {overrideMethods: true});
 
 const HoldReason = mongoose.model('HoldReason', HoldReasonSchema);
 
-module.exports = HoldReason; 
+export default HoldReason; 

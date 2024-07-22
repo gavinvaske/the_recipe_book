@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const addressSchema = require('../../application/schemas/address');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import addressSchema from '../../application/schemas/address';
+import mongoose from 'mongoose';
+
+const chance = Chance();
 
 describe('validation', () => {
     let addressAttributes, 

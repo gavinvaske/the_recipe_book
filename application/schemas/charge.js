@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } = require('../services/chargeService');
-const { convertDollarsToPennies, convertPenniesToDollars } = require('../services/currencyService');
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService.js';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
 
 function productNumberMustHaveCorrectSyntax(productNumber) {
     return PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(productNumber);
@@ -34,4 +34,4 @@ const chargeSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = chargeSchema;
+export default chargeSchema;

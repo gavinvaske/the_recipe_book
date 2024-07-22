@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const LinerTypeModel = require('../models/linerType');
-const { verifyJwtToken } = require('../middleware/authorize');
-const { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
+import { Router } from 'express';
+const router = Router();
+import LinerTypeModel from '../models/linerType.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
 
 router.use(verifyJwtToken);
 
@@ -77,4 +78,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

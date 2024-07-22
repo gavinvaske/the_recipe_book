@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const departmentsEnum = require('../../application/enums/departmentsEnum');
-const dieLineService = require('../../application/services/dieLineService');
+import Chance from 'chance';
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
+import * as dieLineService from '../../application/services/dieLineService';
+
+const chance = Chance();
 
 describe('validation', () => {
     let dieLineDepartments;

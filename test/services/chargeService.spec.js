@@ -1,5 +1,7 @@
-const chance = require('chance').Chance();
-const {PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE} = require('../../application/services/chargeService');
+import Chance from 'chance';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../../application/services/chargeService';
+
+const chance = Chance();
 
 describe('chargeService test suite', () => {
     let productNumber;

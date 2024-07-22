@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const {getAllDepartments} = require('../enums/departmentsEnum');
+import { getAllDepartments } from '../enums/departmentsEnum.js';
 
 function isDepartmentValid(department) {
     if (!getAllDepartments().includes(department)) {
@@ -25,4 +25,4 @@ const schema = new Schema({
 
 const Machine = mongoose.model('Machine', schema);
 
-module.exports = Machine;
+export default Machine;

@@ -1,6 +1,8 @@
-const chance = require('chance').Chance();
-const LinerTypeModel = require('../../application/models/linerType');
-const databaseService = require('../../application/services/databaseService');
+import Chance from 'chance';
+import LinerTypeModel from '../../application/models/linerType.js';
+import * as databaseService from '../../application/services/databaseService.js';
+
+const chance = Chance();
 
 describe('linerType validation', () => {
     let linerTypeAttributes;

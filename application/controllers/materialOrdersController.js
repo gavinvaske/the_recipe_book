@@ -1,10 +1,11 @@
-const router = require('express').Router();
-const MaterialOrderModel = require('../models/materialOrder');
-const MaterialModel = require('../models/material');
-const VendorModel = require('../models/vendor');
-const {verifyJwtToken} = require('../middleware/authorize');
-const { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } = require('../enums/httpStatusCodes');
-const { descending } = require('../enums/mongooseSortMethods');
+import { Router } from 'express';
+const router = Router();
+import MaterialOrderModel from '../models/materialOrder.js';
+import MaterialModel from '../models/material.js';
+import VendorModel from '../models/vendor.js';
+import { verifyJwtToken } from '../middleware/authorize.js';
+import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
+import { descending } from '../enums/mongooseSortMethods.js';
 
 router.use(verifyJwtToken);
 
@@ -188,4 +189,4 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
-module.exports = router;
+export default router;

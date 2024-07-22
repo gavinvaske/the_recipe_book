@@ -1,7 +1,7 @@
-const workflowStepService = require('./workflowStepService');
-const userService = require('./userService');
-const dateTimeService = require('./dateTimeService');
-const helperService = require('./helperService');
+import * as workflowStepService from './workflowStepService.js';
+import * as userService from './userService.js';
+import * as dateTimeService from './dateTimeService.js';
+import * as helperService from './helperService.js';
 
 const helperMethods = {
     prettifyDuration: dateTimeService.prettifyDuration,
@@ -17,4 +17,4 @@ const helperMethods = {
     getEmptyArrayIfUndefined: helperService.getEmptyArrayIfUndefined
 };
 
-module.exports = helperMethods;
+export default helperMethods;

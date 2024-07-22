@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-const fileSchema = require('../schemas/s3File');
-const destinationSchema = require('../schemas/destination');
-const departmentsEnum = require('../enums/departmentsEnum');
+import fileSchema from '../schemas/s3File.js';
+import destinationSchema from '../schemas/destination.js';
+import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 function isValidSpotPlateDestination(destination) {
     const {department, departmentStatus} = destination;
@@ -43,4 +43,4 @@ const spotPlateSchema = new Schema({
 
 const SpotPlate = mongoose.model('SpotPlate', spotPlateSchema);
 
-module.exports = SpotPlate;
+export default SpotPlate;

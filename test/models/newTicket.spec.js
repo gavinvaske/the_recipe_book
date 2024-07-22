@@ -1,12 +1,14 @@
-const chance = require('chance').Chance();
-const Ticket = require('../../application/models/newTicket');
-const Customer = require('../../application/models/customer');
-const WorkflowStepModel = require('../../application/models/WorkflowStep');
-const departmentsEnum = require('../../application/enums/departmentsEnum');
-const databaseService = require('../../application/services/databaseService');
-const mongoose = require('mongoose');
+import Chance from 'chance';
+import Ticket from '../../application/models/newTicket';
+import Customer from '../../application/models/customer';
+import WorkflowStepModel from '../../application/models/WorkflowStep';
+import * as departmentsEnum from '../../application/enums/departmentsEnum';
+import * as databaseService from '../../application/services/databaseService.js';
+import mongoose from 'mongoose';
 
-const testDataGenerator = require('../testDataGenerator');
+import * as testDataGenerator from '../testDataGenerator.js';
+
+const chance = Chance();
 
 function createObjectWithValueField(value) {
     return { value };
@@ -1598,7 +1600,7 @@ describe('Ticket validation', () => {
                         const department = chance.pickone(departments);
                         const departmentStatus = chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[department]);
         
-                        newTicketDestination = {
+                        const newTicketDestination = {
                             department,
                             departmentStatus
                         };

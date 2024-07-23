@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import destinationSchema from '../schemas/destination.js';
-import * as departmentsEnum from '../enums/departmentsEnum.js';
-import WorkflowStepModel from './WorkflowStep.js';
+import destinationSchema from '../schemas/destination';
+import * as departmentsEnum from '../enums/departmentsEnum';
+import WorkflowStepModel from './WorkflowStep';
 const purchasedProductSchema = require('../schemas/purchasedProduct');
 
 import mongooseDelete from 'mongoose-delete';

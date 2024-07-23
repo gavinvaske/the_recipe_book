@@ -1,5 +1,5 @@
-import HoldReasonModel from '../models/holdReason.js';
-import { getAllDepartmentsWithDepartmentStatuses } from '../enums/departmentsEnum.js';
+import HoldReasonModel from '../models/holdReason';
+import { getAllDepartmentsWithDepartmentStatuses } from '../enums/departmentsEnum';
 
 export async function getDepartmentToHoldReasons() {
     const allHoldReasons = await HoldReasonModel.find().exec();

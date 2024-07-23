@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import productSchema from '../schemas/product.js';
-import chargeSchema from '../schemas/charge.js';
-import destinationSchema from '../schemas/destination.js';
-import departmentNotesSchema from '../schemas/departmentNotes.js';
-import { standardPriority, getAllPriorities } from '../enums/priorityEnum.js';
-import MaterialModel from './material.js';
-import WorkflowStepModel from './WorkflowStep.js';
-import * as departmentsEnum from '../enums/departmentsEnum.js';
+import productSchema from '../schemas/product';
+import chargeSchema from '../schemas/charge';
+import destinationSchema from '../schemas/destination';
+import departmentNotesSchema from '../schemas/departmentNotes';
+import { standardPriority, getAllPriorities } from '../enums/priorityEnum';
+import MaterialModel from './material';
+import WorkflowStepModel from './WorkflowStep';
+import * as departmentsEnum from '../enums/departmentsEnum';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const TICKET_NUMBER_REGEX = /^\d{1,}$/;

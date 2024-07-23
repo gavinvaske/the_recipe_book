@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import LinerTypeModel from '../../application/models/linerType.js';
+import LinerTypeModel from '../../application/models/linerType';
 import * as databaseService from '../../application/services/databaseService.js';
 
 const chance = Chance();

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import * as departmentsEnum from '../enums/departmentsEnum.js';
+import * as departmentsEnum from '../enums/departmentsEnum';
 
 const departmentNotesSchema = new Schema({
     orderPrep: {

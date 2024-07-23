@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js';
-import * as filePlanService from '../services/filePlanService.js';
+import { verifyJwtToken } from '../middleware/authorize';
+import * as filePlanService from '../services/filePlanService';
 
 router.use(verifyJwtToken);
 

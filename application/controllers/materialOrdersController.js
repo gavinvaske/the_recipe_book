@@ -1,11 +1,11 @@
 import { Router } from 'express';
 const router = Router();
-import MaterialOrderModel from '../models/materialOrder.js';
-import MaterialModel from '../models/material.js';
-import VendorModel from '../models/vendor.js';
-import { verifyJwtToken } from '../middleware/authorize.js';
-import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
-import { descending } from '../enums/mongooseSortMethods.js';
+import MaterialOrderModel from '../models/materialOrder';
+import MaterialModel from '../models/material';
+import VendorModel from '../models/vendor';
+import { verifyJwtToken } from '../middleware/authorize';
+import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes';
+import { descending } from '../enums/mongooseSortMethods';
 
 router.use(verifyJwtToken);
 

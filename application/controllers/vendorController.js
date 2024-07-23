@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import VendorModel from '../models/vendor.js';
-import { verifyJwtToken } from '../middleware/authorize.js';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.js'; 
+import VendorModel from '../models/vendor';
+import { verifyJwtToken } from '../middleware/authorize';
+import { SERVER_ERROR } from '../enums/httpStatusCodes'; 
 
 router.use(verifyJwtToken);
 

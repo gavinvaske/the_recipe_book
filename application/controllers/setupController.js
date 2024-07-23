@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import RecipeModel from '../models/recipe.js';
-import { verifyJwtToken } from '../middleware/authorize.js';
+import RecipeModel from '../models/recipe';
+import { verifyJwtToken } from '../middleware/authorize';
 
 router.use(verifyJwtToken);
 

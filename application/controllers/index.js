@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { isUserLoggedIn } from '../services/userService.js';
+import { isUserLoggedIn } from '../services/userService';
 
 router.get('/', (request, response) => {
     if (isUserLoggedIn(request.cookies.jwtToken, process.env.JWT_SECRET)) {

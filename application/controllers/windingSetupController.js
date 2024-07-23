@@ -1,11 +1,11 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js';
-import WindingSetupModel from '../models/windingSetup.js';
-import UserModel from '../models/user.js';
-import MachineModel from '../models/machine.js';
-import MaterialModel from '../models/material.js';
-import FinishModel from '../models/finish.js';
+import { verifyJwtToken } from '../middleware/authorize';
+import WindingSetupModel from '../models/windingSetup';
+import UserModel from '../models/user';
+import MachineModel from '../models/machine';
+import MaterialModel from '../models/material';
+import FinishModel from '../models/finish';
 
 router.use(verifyJwtToken);
 

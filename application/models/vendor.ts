@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
-import addressSchema from '../schemas/address.js';
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService';
+import addressSchema from '../schemas/address';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.js';
-import { verifyJwtToken } from '../middleware/authorize.js';
-import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment.js';
+import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes';
+import { verifyJwtToken } from '../middleware/authorize';
+import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment';
 
 router.use(verifyJwtToken);
 

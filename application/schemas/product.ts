@@ -1,15 +1,11 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import {MaterialModel, Material} from '../models/material.js';
-import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum.js';
-import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum.js';
-import { getAllDepartments } from '../enums/departmentsEnum.js';
-import s3FileSchema from './s3File.js';
-
-const foo: Material = {
-  TODO: "hello"
-}
+import MaterialModel from '../models/material';
+import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum';
+import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum';
+import { getAllDepartments } from '../enums/departmentsEnum';
+import s3FileSchema from './s3File';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;

@@ -1,12 +1,12 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js';
-import { upload } from '../middleware/upload.js';
-import TicketModel from '../models/ticket.js';
+import { verifyJwtToken } from '../middleware/authorize';
+import { upload } from '../middleware/upload';
+import TicketModel from '../models/ticket';
 
-import * as s3Service from '../services/s3Service.js';
-import * as productService from '../services/productService.js';
-import * as fileService from '../services/fileService.js';
+import * as s3Service from '../services/s3Service';
+import * as productService from '../services/productService';
+import * as fileService from '../services/fileService';
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_CODE = 400;

@@ -1,4 +1,4 @@
-import { Decimal } from 'decimal.js';
+import { Decimal } from "decimal.js";
 
 const PENNIES_PER_DOLLAR = 100;
 const NUMBER_OF_DECIMAL_PLACES_IN_CURRENCY = 2;

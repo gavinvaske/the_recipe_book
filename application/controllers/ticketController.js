@@ -1,23 +1,23 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js';
-import { upload } from '../middleware/upload.js';
+import { verifyJwtToken } from '../middleware/authorize';
+import { upload } from '../middleware/upload';
 import parser from 'xml2json';
-import * as ticketService from '../services/ticketService.js';
-import TicketModel from '../models/ticket.js';
-import * as mongooseService from '../services/mongooseService.js';
-import MaterialModel from '../models/material.js';
+import * as ticketService from '../services/ticketService';
+import TicketModel from '../models/ticket';
+import * as mongooseService from '../services/mongooseService';
+import MaterialModel from '../models/material';
 import {
     departmentToStatusesMappingForTicketObjects, 
     isInProgressDepartmentStatus, 
     removeDepartmentStatusesAUserIsNotAllowedToSelect
-} from '../enums/departmentsEnum.js';
-import * as workflowStepService from '../services/workflowStepService.js';
-import * as dateTimeService from '../services/dateTimeService.js';
-import * as holdReasonService from '../services/holdReasonService.js';
-import * as fileService from '../services/fileService.js';
-import * as downtimeReasonService from '../services/downtimeReasonService.js';
-import * as destinationService from '../services/destinationService.js';
+} from '../enums/departmentsEnum';
+import * as workflowStepService from '../services/workflowStepService';
+import * as dateTimeService from '../services/dateTimeService';
+import * as holdReasonService from '../services/holdReasonService';
+import * as fileService from '../services/fileService';
+import * as downtimeReasonService from '../services/downtimeReasonService';
+import * as destinationService from '../services/destinationService';
 
 router.use(verifyJwtToken);
 

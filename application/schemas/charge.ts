@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService.js';
-import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
 
 function productNumberMustHaveCorrectSyntax(productNumber) {
     return PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE.test(productNumber);

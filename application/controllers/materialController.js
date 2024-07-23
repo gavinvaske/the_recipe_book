@@ -1,18 +1,18 @@
 import { Router } from 'express';
 const router = Router();
-import MaterialModel from '../models/material.js';
-import { verifyJwtToken } from '../middleware/authorize.js';
-import VendorModel from '../models/vendor.js';
-import MaterialCategoryModel from '../models/materialCategory.js';
+import MaterialModel from '../models/material';
+import { verifyJwtToken } from '../middleware/authorize';
+import VendorModel from '../models/vendor';
+import MaterialCategoryModel from '../models/materialCategory';
 
-import * as materialInventoryService from '../services/materialInventoryService.js';
-import * as materialService from '../services/materialService.js';
-import * as purchaseOrderService from '../services/purchaseOrderService.js';
-import * as ticketService from '../services/ticketService.js';
-import * as mongooseService from '../services/mongooseService.js';
+import * as materialInventoryService from '../services/materialInventoryService';
+import * as materialService from '../services/materialService';
+import * as purchaseOrderService from '../services/purchaseOrderService';
+import * as ticketService from '../services/ticketService';
+import * as mongooseService from '../services/mongooseService';
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
-import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.js';
+import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes';
 
 router.use(verifyJwtToken);
 

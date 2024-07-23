@@ -1,16 +1,16 @@
 import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
-import bcrypt from 'bcryptjs';
-import UserModel from '../models/user.js';
+import bcrypt from 'bcryp';
+import UserModel from '../models/user';
 import jwt from 'jsonwebtoken';
-import { verifyJwtToken } from '../middleware/authorize.js';
-import { sendPasswordResetEmail } from '../services/emailService.js';
-import { upload } from '../middleware/upload.js';
+import { verifyJwtToken } from '../middleware/authorize';
+import { sendPasswordResetEmail } from '../services/emailService';
+import { upload } from '../middleware/upload';
 import fs from 'fs';
 import path from 'path';
-import { isUserLoggedIn } from '../services/userService.js';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.js';
+import { isUserLoggedIn } from '../services/userService';
+import { SERVER_ERROR } from '../enums/httpStatusCodes';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;

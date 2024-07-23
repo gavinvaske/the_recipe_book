@@ -1,5 +1,5 @@
-import { unwindDirections, defaultUnwindDirection } from '../enums/unwindDirectionsEnum.js';
-import { finishTypes, defaultFinishType } from '../enums/finishTypesEnum.js';
+import { unwindDirections, defaultUnwindDirection } from '../enums/unwindDirectionsEnum';
+import { finishTypes, defaultFinishType } from '../enums/finishTypesEnum';
 
 export const sharedBaseProductMongooseAttributes = {
     productNumber: {

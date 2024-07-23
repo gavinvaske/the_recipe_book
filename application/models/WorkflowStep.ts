@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-import destinationSchema from '../schemas/destination.js';
+import destinationSchema from '../schemas/destination';
 
 const workflowStepSchema = new Schema({
     ticketId: {

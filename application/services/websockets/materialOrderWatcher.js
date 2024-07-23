@@ -1,4 +1,4 @@
-import MaterialOrder from '../../models/materialOrder.js';
+import MaterialOrder from '../../models/materialOrder';
 
 export function materialOrderWatcher(socket) {
     MaterialOrder.watch().on('change', async (change) => {

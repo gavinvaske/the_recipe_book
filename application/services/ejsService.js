@@ -1,7 +1,7 @@
-import * as workflowStepService from './workflowStepService.js';
-import * as userService from './userService.js';
-import * as dateTimeService from './dateTimeService.js';
-import * as helperService from './helperService.js';
+import * as workflowStepService from './workflowStepService';
+import * as userService from './userService';
+import * as dateTimeService from './dateTimeService';
+import * as helperService from './helperService';
 
 const helperMethods = {
     prettifyDuration: dateTimeService.prettifyDuration,

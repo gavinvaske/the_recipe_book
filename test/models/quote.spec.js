@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import Quote from '../../application/models/quote.js';
+import Quote from '../../application/models/quote';
 import * as databaseService from '../../application/services/databaseService.js';
 import mongoose from 'mongoose';
 import * as constants from '../../application/enums/constantsEnum.js';

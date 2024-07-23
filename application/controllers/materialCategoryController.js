@@ -1,8 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.js';
-import MaterialCategoryModel from '../models/materialCategory.js';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.js'; 
+import { verifyJwtToken } from '../middleware/authorize';
+import MaterialCategoryModel from '../models/materialCategory';
+import { SERVER_ERROR } from '../enums/httpStatusCodes'; 
 
 router.use(verifyJwtToken);
 

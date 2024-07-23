@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
-import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../enums/userTypesEnum.js';
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService';
+import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../enums/userTypesEnum';
 
 const checkForSpaces = function(text) {
     if (!text) {

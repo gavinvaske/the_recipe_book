@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
-import * as constants from '../enums/constantsEnum.js';
-import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService.js';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
+import * as constants from '../enums/constantsEnum';
+import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService';
 import { Decimal } from 'decimal.js';
-import PackagingDetailsSchema from '../schemas/packagingDetails.js';
-import { unwindDirections } from '../enums/unwindDirectionsEnum.js';
+import PackagingDetailsSchema from '../schemas/packagingDetails';
+import { unwindDirections } from '../enums/unwindDirectionsEnum';
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FIVE_DECIMAL_PLACES = 5;

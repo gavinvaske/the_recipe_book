@@ -1,6 +1,6 @@
-import WorkflowStepModel from '../models/WorkflowStep.js';
-import * as dateTimeService from '../services/dateTimeService.js';
-import { COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses } from '../enums/departmentsEnum.js';
+import WorkflowStepModel from '../models/WorkflowStep';
+import * as dateTimeService from '../services/dateTimeService';
+import { COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses } from '../enums/departmentsEnum';
 
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';
 const TIME_PER_DEPARTMENT_STATUS = 'timePerDepartmentStatus';

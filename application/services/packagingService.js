@@ -1,4 +1,4 @@
-import { howManyCirclesCanFitInThisSquare } from '../enums/circlesPerSquareEnum.js';
+import { howManyCirclesCanFitInThisSquare } from '../enums/circlesPerSquareEnum';
 import isNil from 'lodash.isnil';
 import { Decimal } from 'decimal.js';
 

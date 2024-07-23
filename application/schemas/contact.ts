@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import addressSchema from './address.js';
+import addressSchema from './address';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.js';
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService';
 
 const contactSchema = new Schema({
     fullName: {

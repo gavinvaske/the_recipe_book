@@ -2,17 +2,17 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-import DieModel from './Die.js';
-import MaterialModel from './material.js';
-import FinishModel from './finish.js';
-import CustomerModel from './customer.js';
-import UserModel from './user.js';
+import DieModel from './Die';
+import MaterialModel from './material';
+import FinishModel from './finish';
+import CustomerModel from './customer';
+import UserModel from './user';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
-import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum.js';
-import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum.js';
+import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum';
+import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum';
 
 function roundDownToNearestEvenWholeNumber(value) {
     return Math.floor(value / 2) * 2;

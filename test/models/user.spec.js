@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import UserModel from '../../application/models/user';
-import * as testDataGenerator from '../testDataGenerator.js';
+import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;

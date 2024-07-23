@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import DieLineModel from '../../application/models/dieLine';
 

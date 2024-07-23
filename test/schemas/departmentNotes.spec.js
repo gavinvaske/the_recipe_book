@@ -2,7 +2,7 @@ import Chance from 'chance';
 import departmentNotesSchema from '../../application/schemas/departmentNotes';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import mongoose from 'mongoose';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 

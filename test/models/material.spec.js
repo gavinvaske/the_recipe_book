@@ -1,8 +1,8 @@
 import Chance from 'chance';
 import MaterialModel from '../../application/models/material';
 import mongoose from 'mongoose';
-import * as databaseService from '../../application/services/databaseService.js';
-import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService';
+import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
 

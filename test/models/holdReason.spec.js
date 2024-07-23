@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import HoldReason from '../../application/models/holdReason';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 const DEPARTMENT_NAME = 'PRINTING';

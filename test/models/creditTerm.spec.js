@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import CreditTermModel from '../../application/models/creditTerm';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 

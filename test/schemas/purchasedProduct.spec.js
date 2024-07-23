@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
 import purchasedProductSchema from '../../application/schemas/purchasedProduct';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 

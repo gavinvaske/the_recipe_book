@@ -19,9 +19,9 @@
     "target": "es2022",
     "module": "node16",
     "paths": {
-      "~/types/db/*": ["./application/models/*"],
-      "~/types/schema/*": ["./application/schemas/*"],
+      "~/db/*": ["./application/models/*"],
+      "~/schema/*": ["./application/schemas/*"],
     },
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build" ]
 }

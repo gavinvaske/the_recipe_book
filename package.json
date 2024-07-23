@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "parcel build",
-    "start": "npm run build && node application/index.js",
+    "start": "npm run build && npx tsx application/index.ts",
     "react": "npm run parcel:remove-cache && parcel watch",
     "test": "jest",
     "cypress:run": "cypress run",
@@ -95,6 +95,7 @@
     "stream-browserify": "3.0.0",
     "stream-http": "3.2.0",
     "ts-node": "10.9.2",
+    "tsx": "4.16.2",
     "typescript": "5.5.2"
   }
 }

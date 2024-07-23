@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
-import bcrypt from 'bcryp';
+import bcrypt from 'bcryptjs';
 import UserModel from '../models/user';
 import jwt from 'jsonwebtoken';
 import { verifyJwtToken } from '../middleware/authorize';

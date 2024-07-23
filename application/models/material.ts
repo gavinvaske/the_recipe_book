@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 import mongooseDelete from 'mongoose-delete';
 
 mongoose.plugin(mongooseDelete, {overrideMethods: true});
@@ -166,6 +166,8 @@ const schema = new Schema({
     strict: 'throw'
 });
 
-const Material = mongoose.model('Material', schema);
+export const MaterialModel = mongoose.model('Material', schema);
 
-export default Material;
+export type Material = {
+  TODO: string
+}

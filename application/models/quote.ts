@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.js';
 import * as constants from '../enums/constantsEnum.js';
 import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService.js';
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 import PackagingDetailsSchema from '../schemas/packagingDetails.js';
 import { unwindDirections } from '../enums/unwindDirectionsEnum.js';
 

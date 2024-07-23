@@ -6,8 +6,8 @@ import chargeSchema from '../schemas/charge.js';
 import destinationSchema from '../schemas/destination.js';
 import departmentNotesSchema from '../schemas/departmentNotes.js';
 import { standardPriority, getAllPriorities } from '../enums/priorityEnum.js';
-import MaterialModel from '../models/material.js';
-import WorkflowStepModel from '../models/WorkflowStep.js';
+import MaterialModel from './material.js';
+import WorkflowStepModel from './WorkflowStep.js';
 import * as departmentsEnum from '../enums/departmentsEnum.js';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/

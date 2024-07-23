@@ -1,6 +1,6 @@
 import { howManyCirclesCanFitInThisSquare } from '../enums/circlesPerSquareEnum.js';
 import isNil from 'lodash.isnil';
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
 const ONE_EIGHTH_INCH = 0.125;
 

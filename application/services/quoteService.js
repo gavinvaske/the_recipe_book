@@ -9,7 +9,7 @@ import isNil from 'lodash.isnil';
 import * as packagingService from '../services/packagingService.js';
 import QuoteModel from '../models/quote.js';
 import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.js';
-import Decimal from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;

@@ -6,7 +6,7 @@ import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductA
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
-async function generateUniqueProductNumber() {
+async function generateUniqueProductNumber(this: any) {
     await this.populate('customer');
     const howManyProductsDoesThisCustomerHave = await ProductModel.countDocuments({ customer: this.customer._id });
 
@@ -19,7 +19,7 @@ async function generateUniqueProductNumber() {
     this.productNumber = productNumber;
 }
 
-async function setDefaultOverun() {
+async function setDefaultOverun(this: any) {
     if (this.overun !== undefined) return;
     
     await this.populate('customer');

@@ -28,7 +28,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "include": ["**/*/*.d.ts"]
   },
+  "include": ["**/*/*.d.ts"],
   "exclude": ["node_modules", "build"]
 }

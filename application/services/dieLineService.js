@@ -1,4 +1,4 @@
-import * as departmentsEnum from '../enums/departmentsEnum.js';
+import * as departmentsEnum from '../enums/departmentsEnum';
 
 export function getDepartments() {
     return Object.keys(departmentsEnum.departmentToDepartmentStatusesForDieLineRequests);

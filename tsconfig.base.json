@@ -22,6 +22,13 @@
       "~/db/*": ["./application/models/*"],
       "~/schema/*": ["./application/schemas/*"],
     },
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
   },
+  "include": ["**/*/*.d.ts"],
   "exclude": ["node_modules", "build"]
 }

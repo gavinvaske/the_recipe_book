@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
-import * as constants from '../../application/enums/constantsEnum.js';
+import * as constants from '../../application/enums/constantsEnum';
 import { createQuote } from '../../application/services/quoteService';
 import Chance from 'chance';
 import mongoose from 'mongoose';
 import { when } from 'jest-when';
 import { convertMinutesToSeconds, convertSecondsToMinutes } from '../../application/services/dateTimeService';
-import * as testDataGenerator from '../testDataGenerator.js';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as testDataGenerator from '../testDataGenerator';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 
@@ -19,7 +19,7 @@ import DieMock from '../../application/models/Die';
 import MaterialMock from '../../application/models/material';
 import FinishMock from '../../application/models/finish';
 import BaseProductMock from '../../application/models/baseProduct';
-import { unwindDirections } from '../../application/enums/unwindDirectionsEnum.js';
+import { unwindDirections } from '../../application/enums/unwindDirectionsEnum';
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;

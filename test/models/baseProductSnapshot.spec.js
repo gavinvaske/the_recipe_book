@@ -1,7 +1,7 @@
 import Chance from 'chance';
 import BaseProductSnapshotModel from '../../application/models/baseProductSnapshot';
-import * as databaseService from '../../application/services/databaseService.js';
-import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService';
+import * as testDataGenerator from '../testDataGenerator';
 import { MAX_FRAME_LENGTH_INCHES } from '../../application/enums/constantsEnum';
 
 import MaterialModel from '../../application/models/material';

@@ -1,4 +1,4 @@
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 import Chance from 'chance';
 import mongoose from 'mongoose';
 

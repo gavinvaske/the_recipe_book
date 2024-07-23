@@ -1,5 +1,5 @@
 import * as userService from '../../application/services/userService';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 import UserModel from '../../application/models/user';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';

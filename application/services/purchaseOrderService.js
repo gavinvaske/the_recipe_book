@@ -1,4 +1,4 @@
-import PurchaseOrderModel from '../models/materialOrder.js';
+import PurchaseOrderModel from '../models/materialOrder';
 
 export async function getPurchaseOrdersForMaterials(materialIds) {
     const searchQuery = {

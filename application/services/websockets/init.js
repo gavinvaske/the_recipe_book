@@ -1,5 +1,5 @@
-import { materialOrderWatcher } from './materialOrderWatcher.js';
-import { materialWatcher } from './materialWatcher.js';
+import { materialOrderWatcher } from './materialOrderWatcher';
+import { materialWatcher } from './materialWatcher';
 
 export default function(socket){
     console.log('Starting Sockets...');

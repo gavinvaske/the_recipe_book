@@ -1,4 +1,4 @@
-import DowntimeReasonModel from '../models/downtimeReason.js';
+import DowntimeReasonModel from '../models/downtimeReason';
 
 export async function getDowntimeReasons() {
     const downtimeReasonMongooseObjects = await DowntimeReasonModel

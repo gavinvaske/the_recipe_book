@@ -1,15 +1,15 @@
 /* eslint-disable complexity */
-import * as constants from '../enums/constantsEnum.js';
-import DieModel from '../models/Die.js';
-import MaterialModel from '../models/material.js';
-import BaseProductModel from '../models/baseProduct.js';
-import FinishModel from '../models/finish.js';
-import * as dieService from '../services/dieService.js';
+import * as constants from '../enums/constantsEnum';
+import DieModel from '../models/Die';
+import MaterialModel from '../models/material';
+import BaseProductModel from '../models/baseProduct';
+import FinishModel from '../models/finish';
+import * as dieService from '../services/dieService';
 import isNil from 'lodash.isnil';
-import * as packagingService from '../services/packagingService.js';
-import QuoteModel from '../models/quote.js';
-import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.js';
-import Decimal from 'decimal.js';
+import * as packagingService from '../services/packagingService';
+import QuoteModel from '../models/quote';
+import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum';
+import { Decimal } from 'decimal.js';
 
 const INCHES_PER_FOOT = 12;
 const FEET_PER_ROLL = 5000;

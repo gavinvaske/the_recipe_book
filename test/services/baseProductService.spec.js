@@ -1,6 +1,6 @@
 import BaseProductModel from '../../application/models/baseProduct';
-import * as databaseService from '../../application/services/databaseService.js';
-import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService';
+import * as testDataGenerator from '../testDataGenerator';
 
 import FinishModel from '../../application/models/finish';
 import MaterialModel from '../../application/models/material';

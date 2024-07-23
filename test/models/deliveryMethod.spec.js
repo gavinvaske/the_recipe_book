@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import DeliveryMethodModel from '../../application/models/deliveryMethod';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();
 

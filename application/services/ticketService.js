@@ -1,6 +1,6 @@
-import TicketModel from '../models/ticket.js';
-import { COMPLETE_DEPARTMENT, departmentToNextDepartmentAndStatus } from '../enums/departmentsEnum.js';
-import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService.js';
+import TicketModel from '../models/ticket';
+import { COMPLETE_DEPARTMENT, departmentToNextDepartmentAndStatus } from '../enums/departmentsEnum';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../services/chargeService';
 
 function isEmptyObject(value) {
     if (!value) {

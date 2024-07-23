@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "parcel build",
-    "start": "npm run build && node application/index.js",
+    "start": "npm run build && npx tsx application/index.ts",
     "react": "npm run parcel:remove-cache && parcel watch",
     "test": "jest",
     "cypress:run": "cypress run",
@@ -76,6 +76,8 @@
     "@babel/preset-env": "7.24.8",
     "@babel/preset-typescript": "7.24.7",
     "@types/js-search": "1.4.4",
+    "@types/mongoose-delete": "1.0.6",
+    "@types/multer": "1.4.11",
     "@types/react": "18.3.2",
     "@types/uuid": "9.0.8",
     "babel-jest": "29.7.0",
@@ -94,6 +96,7 @@
     "stream-browserify": "3.0.0",
     "stream-http": "3.2.0",
     "ts-node": "10.9.2",
+    "tsx": "4.16.2",
     "typescript": "5.5.2"
   }
 }

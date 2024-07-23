@@ -5,8 +5,8 @@ import { toolTypes } from '../../application/enums/toolTypesEnum';
 import { dieVendors } from '../../application/enums/dieVendorsEnum';
 import { dieMagCylinders } from '../../application/enums/dieMagCylindersEnum';
 import { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } from '../../application/enums/dieStatusesEnum';
-import * as databaseService from '../../application/services/databaseService.js';
-import * as testDataGenerator from '../testDataGenerator.js';
+import * as databaseService from '../../application/services/databaseService';
+import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
 

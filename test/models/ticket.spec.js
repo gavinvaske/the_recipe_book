@@ -1,7 +1,7 @@
 import Chance from 'chance';
 import TicketModel from '../../application/models/ticket';
 import WorkflowStepModel from '../../application/models/WorkflowStep';
-import * as databaseService from '../../application/services/databaseService.js';
+import * as databaseService from '../../application/services/databaseService';
 import { standardPriority, getAllPriorities } from '../../application/enums/priorityEnum';
 import * as departmentsEnum from '../../application/enums/departmentsEnum';
 import mongoose from 'mongoose';

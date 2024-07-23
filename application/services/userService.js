@@ -1,4 +1,4 @@
-import UserModel from '../models/user.js';
+import UserModel from '../models/user';
 import jwt from 'jsonwebtoken';
 
 export async function createUser(userAttributes) {

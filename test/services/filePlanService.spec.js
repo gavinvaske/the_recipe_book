@@ -1,6 +1,6 @@
 /* eslint no-magic-numbers: 0 */
 import Chance from 'chance';
-import * as filePlanService from '../../application/services/filePlanService';
+import * as filePlanService from '../../application/services/filePlanService.ts';
 
 const chance = Chance();
 

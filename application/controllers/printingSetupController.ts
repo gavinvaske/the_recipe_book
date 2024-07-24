@@ -1,10 +1,10 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize';
-import UserModel from '../models/user';
-import MachineModel from '../models/machine';
-import MaterialModel from '../models/material';
-import PrintingSetupModel from '../models/printingSetup';
+import { verifyJwtToken } from '../middleware/authorize.ts';
+import UserModel from '../models/user.ts';
+import MachineModel from '../models/machine.ts';
+import MaterialModel from '../models/material.ts';
+import PrintingSetupModel from '../models/printingSetup.ts';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;

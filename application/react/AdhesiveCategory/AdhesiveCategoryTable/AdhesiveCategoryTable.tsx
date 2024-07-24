@@ -1,7 +1,7 @@
 import React from 'react';
 import './AdhesiveCategoryTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory'
+import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts'
 import { AdhesiveCategoryRowActions } from './AdhesiveCategoryRowActions/AdhesiveCategoryRowActions';
 import { getAdhesiveCategories } from '../../_queries/adhesiveCategory';
 import { useQuery } from '@tanstack/react-query';

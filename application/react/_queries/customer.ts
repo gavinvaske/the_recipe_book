@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Customer } from '../_types/databaseModels/customer';
+import { Customer } from '../_types/databasemodels/customer.ts';
 import { MongooseId } from "../_types/typeAliases";
 
 export const getCustomers = async (): Promise<Customer[]> => {

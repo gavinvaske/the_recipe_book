@@ -1,11 +1,11 @@
-import * as holdReasonService from '../../application/services/holdReasonService';
+import * as holdReasonService from '../../application/services/holdReasonService.ts';
 import Chance from 'chance';
-import mockHoldReasonModel from '../../application/models/holdReason';
-import { getAllDepartmentsWithDepartmentStatuses } from '../../application/enums/departmentsEnum';
+import mockHoldReasonModel from '../../application/models/holdReason.ts';
+import { getAllDepartmentsWithDepartmentStatuses } from '../../application/enums/departmentsEnum.ts';
 
 const chance = Chance();
 
-jest.mock('../../application/models/holdReason');
+jest.mock('../../application/models/holdReason.ts');
 
 describe('holdReasonService test suite', () => {
     describe('getDepartmentToHoldReasons()', () => {

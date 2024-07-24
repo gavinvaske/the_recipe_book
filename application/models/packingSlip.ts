@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import addressSchema from '../schemas/address';
-import { FACTORY_ADDRESS } from '../enums/constantsEnum';
+import { FACTORY_ADDRESS } from '../enums/constantsEnum.ts';
 import { validatePhoneNumber } from '../services/dataValidationService';
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
 

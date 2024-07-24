@@ -14,14 +14,14 @@ import ContactCard from '../Contact/ContactCard/ContactCard';
 import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
 
-import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
-import { Customer } from '../../_types/databaseModels/customer';
+import { Customer } from '../../_types/databasemodels/customer.ts';
 import { MongooseId } from '../../_types/typeAliases';
 import { getCreditTerms } from '../../_queries/creditTerm';
 

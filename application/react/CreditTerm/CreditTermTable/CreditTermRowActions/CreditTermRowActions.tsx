@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { MongooseId } from '../../../_types/typeAliases';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
-import { CreditTerm } from '../../../_types/databaseModels/creditTerm';
+import { CreditTerm } from '../../../_types/databasemodels/creditTerm.ts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 

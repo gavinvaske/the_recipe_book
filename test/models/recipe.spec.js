@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import RecipeModel from '../../application/models/recipe';
+import RecipeModel from '../../application/models/recipe.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { Row } from '@tanstack/react-table';
-import { DeliveryMethod } from '../../../_types/databaseModels/deliveryMethod';
+import { DeliveryMethod } from '../../../_types/databasemodels/deliveryMethod.ts';
 import { useQueryClient } from '@tanstack/react-query'
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 

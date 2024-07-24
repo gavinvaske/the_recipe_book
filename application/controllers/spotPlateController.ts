@@ -1,12 +1,12 @@
 import { Router } from 'express';
 const router = Router();
-import SpotPlateModel from '../models/spotPlate';
-import * as mongooseService from '../services/mongooseService';
-import { upload } from '../middleware/upload';
-import * as fileService from '../services/fileService';
-import * as s3Service from '../services/s3Service';
-import * as spotPlateService from '../services/spotPlateService';
-import { verifyJwtToken } from '../middleware/authorize';
+import SpotPlateModel from '../models/spotPlate.ts';
+import * as mongooseService from '../services/mongooseService.ts';
+import { upload } from '../middleware/upload.ts';
+import * as fileService from '../services/fileService.ts';
+import * as s3Service from '../services/s3Service.ts';
+import * as spotPlateService from '../services/spotPlateService.ts';
+import { verifyJwtToken } from '../middleware/authorize.ts';
 
 router.use(verifyJwtToken);
 

@@ -1,9 +1,9 @@
-import * as workflowStepService from '../../application/services/workflowStepService';
+import * as workflowStepService from '../../application/services/workflowStepService.ts';
 import Chance from 'chance';
 import { 
     productionDepartmentsAndDepartmentStatuses, 
     getAllDepartments 
-} from '../../application/enums/departmentsEnum';
+} from '../../application/enums/departmentsEnum.ts';
 
 const chance = Chance();
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';

@@ -2,12 +2,12 @@ import Chance from 'chance';
 import BaseProductSnapshotModel from '../../application/models/baseProductSnapshot';
 import * as databaseService from '../../application/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
-import { MAX_FRAME_LENGTH_INCHES } from '../../application/enums/constantsEnum';
+import { MAX_FRAME_LENGTH_INCHES } from '../../application/enums/constantsEnum.ts';
 
-import MaterialModel from '../../application/models/material';
-import FinishModel from '../../application/models/finish';
-import CustomerModel from '../../application/models/customer';
-import UserModel from '../../application/models/user';
+import MaterialModel from '../../application/models/material.ts';
+import FinishModel from '../../application/models/finish.ts';
+import CustomerModel from '../../application/models/customer.ts';
+import UserModel from '../../application/models/user.ts';
 
 const chance = Chance();
 

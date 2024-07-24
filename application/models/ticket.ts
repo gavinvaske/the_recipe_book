@@ -8,7 +8,7 @@ import departmentNotesSchema from '../schemas/departmentNotes';
 import { standardPriority, getAllPriorities } from '../enums/priorityEnum';
 import MaterialModel from './material';
 import WorkflowStepModel from './WorkflowStep';
-import * as departmentsEnum from '../enums/departmentsEnum';
+import * as departmentsEnum from '../enums/departmentsEnum.ts';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const TICKET_NUMBER_REGEX = /^\d{1,}$/;

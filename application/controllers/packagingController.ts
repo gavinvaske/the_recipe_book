@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import * as packagingService from '../services/packagingService';
-import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum';
+import * as packagingService from '../services/packagingService.ts';
+import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.ts';
 
 const SERVER_ERROR_STATUS = 500;
 

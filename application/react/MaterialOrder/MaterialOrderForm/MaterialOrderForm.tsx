@@ -6,12 +6,12 @@ import { MaterialOrder } from '../../../react/_types/databaseModels/materialOrde
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { getMaterials } from '../../_queries/material';
-import { Material } from '../../_types/databaseModels/material';
+import { Material } from '../../_types/databasemodels/material.ts';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getUsers } from '../../_queries/users';
-import { User } from '../../_types/databaseModels/user';
+import { User } from '../../_types/databasemodels/user.ts';
 import { getVendors } from '../../_queries/vendors';
-import { Vendor } from '../../_types/databaseModels/vendor';
+import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';

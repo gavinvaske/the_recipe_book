@@ -1,12 +1,12 @@
 import Chance from 'chance';
-import * as packagingService from '../../application/services/packagingService';
-import { howManyCirclesCanFitInThisSquare as howManyCirclesCanFitInThisSquareMock } from '../../application/enums/circlesPerSquareEnum';
+import * as packagingService from '../../application/services/packagingService.ts';
+import { howManyCirclesCanFitInThisSquare as howManyCirclesCanFitInThisSquareMock } from '../../application/enums/circlesPerSquareEnum.ts';
 
 const chance = Chance();
 const ONE_EIGHTH_INCH_BUFFER = 0.125;
 
 
-jest.mock('../../application/enums/circlesPerSquareEnum', () => {
+jest.mock('../../application/enums/circlesPerSquareEnum.ts', () => {
     return {
         howManyCirclesCanFitInThisSquare: jest.fn()
     };

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Vendor } from '../_types/databaseModels/vendor';
+import { Vendor } from '../_types/databasemodels/vendor.ts';
 
 export const getVendors = async (): Promise<Vendor[]> => {
   const response : AxiosResponse = await axios.get('/vendors');

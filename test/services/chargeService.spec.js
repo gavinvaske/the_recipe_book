@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../../application/services/chargeService';
+import { PRODUCT_NUMBER_IS_FOR_AN_EXTRA_CHARGE } from '../../application/services/chargeService.ts';
 
 const chance = Chance();
 

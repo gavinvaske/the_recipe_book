@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import * as departmentsEnum from '../../application/enums/departmentsEnum';
-import * as spotPlateService from '../../application/services/spotPlateService';
+import * as departmentsEnum from '../../application/enums/departmentsEnum.ts';
+import * as spotPlateService from '../../application/services/spotPlateService.ts';
 
 const chance = Chance();
 

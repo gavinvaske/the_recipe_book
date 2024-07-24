@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
 import Materials from './Materials/Materials';
 import { MaterialOrder } from '../_types/databaseModels/MaterialOrder';
-import { Material } from '../_types/databaseModels/material';
+import { Material } from '../_types/databasemodels/material.ts';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';

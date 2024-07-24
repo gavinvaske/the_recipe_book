@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import destinationSchema from '../schemas/destination';
-import * as departmentsEnum from '../enums/departmentsEnum';
+import * as departmentsEnum from '../enums/departmentsEnum.ts';
 import WorkflowStepModel from './WorkflowStep';
 const purchasedProductSchema = require('../schemas/purchasedProduct');
 

@@ -1,8 +1,8 @@
 import Chance from 'chance';
 import Ticket from '../../application/models/newTicket';
-import Customer from '../../application/models/customer';
-import WorkflowStepModel from '../../application/models/WorkflowStep';
-import * as departmentsEnum from '../../application/enums/departmentsEnum';
+import Customer from '../../application/models/customer.ts';
+import WorkflowStepModel from '../../application/models/WorkflowStep.ts';
+import * as departmentsEnum from '../../application/enums/departmentsEnum.ts';
 import * as databaseService from '../../application/services/databaseService';
 import mongoose from 'mongoose';
 

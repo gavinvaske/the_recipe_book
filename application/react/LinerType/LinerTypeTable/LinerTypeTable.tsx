@@ -14,7 +14,7 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
-import { LinerType } from '../../_types/databaseModels/linerType';
+import { LinerType } from '../../_types/databasemodels/linerType.ts';
 import { useQuery } from '@tanstack/react-query';
 import { getLinerTypes } from '../../_queries/linerType';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';

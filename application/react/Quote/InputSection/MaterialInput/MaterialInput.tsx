@@ -5,7 +5,7 @@ import quoteStore from '../../../stores/quoteStore';
 import { observer } from 'mobx-react-lite';
 import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
-import { Material } from '../../../_types/databaseModels/material';
+import { Material } from '../../../_types/databasemodels/material.ts';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 type Props = {

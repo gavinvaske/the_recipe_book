@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import MachineModel from '../../application/models/machine';
-import * as departmentEnum from '../../application/enums/departmentsEnum';
+import MachineModel from '../../application/models/machine.ts';
+import * as departmentEnum from '../../application/enums/departmentsEnum.ts';
 
 const chance = Chance();
 

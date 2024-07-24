@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { DeliveryMethod } from '../_types/databaseModels/deliveryMethod';
+import { DeliveryMethod } from '../_types/databasemodels/deliveryMethod.ts';
 import { MongooseId } from '../_types/typeAliases';
 
 export const getDeliveryMethods = async (): Promise<DeliveryMethod[]> => {

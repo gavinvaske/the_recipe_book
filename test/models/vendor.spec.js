@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import VendorModel from '../../application/models/vendor';
+import VendorModel from '../../application/models/vendor.ts';
 import * as databaseService from '../../application/services/databaseService';
 import mongoose from 'mongoose';
 

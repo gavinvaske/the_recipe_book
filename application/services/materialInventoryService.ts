@@ -1,4 +1,4 @@
-import * as purchaseOrderService from '../services/purchaseOrderService';
+import * as purchaseOrderService from './purchaseOrderService';
 import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment';
 
 /* 

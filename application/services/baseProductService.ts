@@ -1,4 +1,4 @@
-import BaseProductModel from '../../application/models/baseProduct';
+import BaseProductModel from '../models/baseProduct';
 
 export async function getCombinedMaterialThicknessByBaseProductId(baseProductId) {
     const baseProduct = await BaseProductModel

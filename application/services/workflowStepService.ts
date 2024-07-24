@@ -1,5 +1,5 @@
 import WorkflowStepModel from '../models/WorkflowStep';
-import * as dateTimeService from '../services/dateTimeService';
+import * as dateTimeService from './dateTimeService';
 import { COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses } from '../enums/departmentsEnum';
 
 const TIME_SPENT_IN_DEPARTMENT = 'timeSpentInDepartment';

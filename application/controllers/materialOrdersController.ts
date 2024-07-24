@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import MaterialOrderModel from '../models/materialOrder';
+import MaterialOrderModel from '../models/materialOrder.ts';
 import MaterialModel from '../models/material';
 import VendorModel from '../models/vendor';
 import { verifyJwtToken } from '../middleware/authorize';

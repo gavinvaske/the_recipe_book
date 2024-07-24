@@ -7,7 +7,7 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCreditTerm } from '../../_queries/creditTerm';
-import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
 
 const creditTermTableUrl = '/react-ui/tables/credit-term'
 

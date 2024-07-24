@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
-import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod';
+import { DeliveryMethod } from '../../_types/databasemodels/deliveryMethod.ts';
 
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';

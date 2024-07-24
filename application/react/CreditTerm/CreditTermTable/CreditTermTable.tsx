@@ -16,7 +16,7 @@ import { Table } from '../../_global/Table/Table'
 import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
-import { CreditTerm } from '../../_types/databaseModels/creditTerm';
+import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 const columnHelper = createColumnHelper<CreditTerm>()

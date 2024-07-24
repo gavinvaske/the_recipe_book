@@ -1,4 +1,4 @@
-import { getDistributions } from './distributionGeneratorService';
+import { getDistributions } from './distributionGeneratorService.ts';
 
 export function buildProduct(name, labelQuantity) {
     if (!name) throw Error('The product\'s \'name\' must be defined');

@@ -3,7 +3,7 @@ import './AdhesiveCategoryForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import { AdhesiveCategory } from '../../_types/databaseModels/adhesiveCategory';
+import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';

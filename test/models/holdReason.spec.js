@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import HoldReason from '../../application/models/holdReason';
+import HoldReason from '../../application/models/holdReason.ts';
 import * as databaseService from '../../application/services/databaseService';
 
 const chance = Chance();

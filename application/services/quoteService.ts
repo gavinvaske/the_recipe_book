@@ -1,14 +1,14 @@
 /* eslint-disable complexity */
-import * as constants from '../enums/constantsEnum';
-import DieModel from '../models/Die';
-import MaterialModel from '../models/material';
-import BaseProductModel from '../models/baseProduct';
-import FinishModel from '../models/finish';
-import * as dieService from './dieService';
+import * as constants from '../enums/constantsEnum.ts';
+import DieModel from '../models/Die.ts';
+import MaterialModel from '../models/material.ts';
+import BaseProductModel from '../models/baseProduct.ts';
+import FinishModel from '../models/finish.ts';
+import * as dieService from './dieService.ts';
 import isNil from 'lodash.isnil';
-import * as packagingService from './packagingService';
-import QuoteModel from '../models/quote';
-import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum';
+import * as packagingService from './packagingService.ts';
+import QuoteModel from '../models/quote.ts';
+import { getImageForNCirclesInSquare } from '../enums/circlesPerSquareEnum.ts';
 import { Decimal } from 'decimal.js';
 
 const INCHES_PER_FOOT = 12;

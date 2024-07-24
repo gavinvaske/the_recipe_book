@@ -1,4 +1,4 @@
-import * as productService from '../../application/services/productService';
+import * as productService from '../../application/services/productService.ts';
 import Chance from 'chance';
 import mongoose from 'mongoose';
 

@@ -4,7 +4,7 @@ import './LinerTypeForm.scss';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { LinerType } from '../../_types/databaseModels/linerType';
+import { LinerType } from '../../_types/databasemodels/linerType.ts';
 import { getOneLinerType } from '../../_queries/linerType';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';

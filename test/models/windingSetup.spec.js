@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import WindingSetupModel from '../../application/models/windingSetup';
+import WindingSetupModel from '../../application/models/windingSetup.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

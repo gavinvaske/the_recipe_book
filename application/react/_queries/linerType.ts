@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { LinerType } from '../_types/databaseModels/linerType';
+import { LinerType } from '../_types/databasemodels/linerType.ts';
 import { MongooseId } from '../_types/typeAliases';
 
 export const getLinerTypes = async (): Promise<LinerType[]> => {

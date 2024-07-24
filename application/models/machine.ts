@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { getAllDepartments } from '../enums/departmentsEnum';
+import { getAllDepartments } from '../enums/departmentsEnum.ts';
 
 function isDepartmentValid(department) {
     if (!getAllDepartments().includes(department)) {

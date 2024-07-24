@@ -16,7 +16,7 @@ import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
-import { DeliveryMethod } from '../../_types/databaseModels/deliveryMethod'
+import { DeliveryMethod } from '../../_types/databasemodels/deliveryMethod.ts'
 import { useErrorMessage } from '../../_hooks/useErrorMessage'
 
 const columnHelper = createColumnHelper<DeliveryMethod>()

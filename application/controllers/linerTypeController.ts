@@ -1,8 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import LinerTypeModel from '../models/linerType';
-import { verifyJwtToken } from '../middleware/authorize';
-import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes';
+import LinerTypeModel from '../models/linerType.ts';
+import { verifyJwtToken } from '../middleware/authorize.ts';
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 
 router.use(verifyJwtToken);
 

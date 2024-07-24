@@ -11,7 +11,7 @@ import UserModel from './user';
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
-import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum';
+import { MAX_FRAME_LENGTH_INCHES } from '../enums/constantsEnum.ts';
 import { sharedBaseProductMongooseAttributes } from '../enums/sharedBaseProductAttributesEnum';
 
 function roundDownToNearestEvenWholeNumber(value) {

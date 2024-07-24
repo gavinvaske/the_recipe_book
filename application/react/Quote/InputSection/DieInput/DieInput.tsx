@@ -4,7 +4,7 @@ import DropdownField from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import quoteStore from '../../../stores/quoteStore';
 import axios, { AxiosError } from 'axios';
-import { Die } from '../../../_types/databaseModels/die';
+import { Die } from '../../../_types/databasemodels/Die.ts';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 const Die = (props) => {

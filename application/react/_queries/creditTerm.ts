@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { CreditTerm } from '../_types/databaseModels/creditTerm';
+import { CreditTerm } from '../_types/databasemodels/creditTerm.ts';
 import { MongooseId } from '../_types/typeAliases';
 
 export const getCreditTerms = async (): Promise<CreditTerm[]> => {

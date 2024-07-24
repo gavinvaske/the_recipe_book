@@ -1,4 +1,4 @@
-import { howManyCirclesCanFitInThisSquare } from '../../application/enums/circlesPerSquareEnum';
+import { howManyCirclesCanFitInThisSquare } from '../../application/enums/circlesPerSquareEnum.ts';
 import Chance from 'chance';
 
 const chance = Chance();

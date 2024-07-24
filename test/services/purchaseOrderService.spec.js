@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import * as purchaseOrderService from '../../application/services/purchaseOrderService';
+import * as purchaseOrderService from '../../application/services/purchaseOrderService.ts';
 import mockPurchaseOrderModel from '../../application/models/materialOrder.ts';
 
 const chance = Chance();

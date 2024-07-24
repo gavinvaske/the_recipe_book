@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import MaterialModel from '../models/material';
+import MaterialModel from '../models/material.ts';
 import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum';
 import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum';
-import { getAllDepartments } from '../enums/departmentsEnum';
+import { getAllDepartments } from '../enums/departmentsEnum.ts';
 import s3FileSchema from './s3File';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/

@@ -1,5 +1,5 @@
-import * as purchaseOrderService from './purchaseOrderService';
-import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment';
+import * as purchaseOrderService from './purchaseOrderService.ts';
+import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment.ts';
 
 /* 
   @See: 

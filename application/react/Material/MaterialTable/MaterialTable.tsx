@@ -1,7 +1,7 @@
 import React from 'react';
 import './MaterialTable.scss';
 import { SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { Material } from '../../_types/databaseModels/material';
+import { Material } from '../../_types/databasemodels/material.ts';
 import { MaterialRowActions } from './MaterialRowActions/MaterialRowActions';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';

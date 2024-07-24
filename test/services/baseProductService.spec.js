@@ -1,10 +1,10 @@
-import BaseProductModel from '../../application/models/baseProduct';
+import BaseProductModel from '../../application/models/baseProduct.ts';
 import * as databaseService from '../../application/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 
-import FinishModel from '../../application/models/finish';
-import MaterialModel from '../../application/models/material';
-import CustomerModel from '../../application/models/customer';
+import FinishModel from '../../application/models/finish.ts';
+import MaterialModel from '../../application/models/material.ts';
+import CustomerModel from '../../application/models/customer.ts';
 
 import * as baseProductService from '../../application/services/baseProductService';
 

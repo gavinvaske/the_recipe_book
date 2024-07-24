@@ -1,17 +1,17 @@
 import { Router } from 'express';
 const router = Router();
-import DieLineModel from '../models/dieLine';
-import * as mongooseService from '../services/mongooseService';
-import { upload } from '../middleware/upload';
-import * as fileService from '../services/fileService';
-import * as s3Service from '../services/s3Service';
-import * as dieLineService from '../services/dieLineService';
-import { verifyJwtToken } from '../middleware/authorize';
+import DieLineModel from '../models/dieLine.ts';
+import * as mongooseService from '../services/mongooseService.ts';
+import { upload } from '../middleware/upload.ts';
+import * as fileService from '../services/fileService.ts';
+import * as s3Service from '../services/fileService.ts';
+import * as dieLineService from '../services/dieLineService.ts';
+import { verifyJwtToken } from '../middleware/authorize.ts';
 
 router.use(verifyJwtToken);
 
 const MAX_NUMBER_OF_FILES = 100;
-
+   
 router.get('/form', (request, response) => {
     const departments = dieLineService.getDepartments();
     const startingDepartment = dieLineService.getStartingDepartment();

@@ -1,11 +1,11 @@
 import Chance from 'chance';
 import { when } from 'jest-when';
-import * as materialInventoryService from '../../application/services/materialInventoryService';
-import * as mockPurchaseOrderService from '../../application/services/purchaseOrderService';
+import * as materialInventoryService from '../../application/services/materialInventoryService.ts';
+import * as mockPurchaseOrderService from '../../application/services/purchaseOrderService.ts';
 
 const chance = Chance();
 
-jest.mock('../../application/services/purchaseOrderService');
+jest.mock('../../application/services/purchaseOrderService.ts');
 
 describe('materialInventoryService test suite', () => {
     describe('mapMaterialIdToPurchaseOrders()', () => {

@@ -6,7 +6,7 @@ import { MongooseId } from '../../../_types/typeAliases';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { Row } from '@tanstack/react-table';
-import { Material } from '../../../_types/databaseModels/material';
+import { Material } from '../../../_types/databasemodels/material.ts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 

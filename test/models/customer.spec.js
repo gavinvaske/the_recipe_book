@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
-import CustomerModel from '../../application/models/customer';
+import CustomerModel from '../../application/models/customer.ts';
 import * as databaseService from '../../application/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 

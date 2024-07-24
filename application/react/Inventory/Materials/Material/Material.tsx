@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Material.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory';
-import { Material } from '../../../_types/databaseModels/material';
+import { Material } from '../../../_types/databasemodels/material.ts';
 import { Modal } from '../../../_global/Modal/Modal';
 import { Link } from 'react-router-dom';
 import { getDayMonthYear } from '../../../_helperFunctions/dateTime';

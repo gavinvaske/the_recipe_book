@@ -1,7 +1,7 @@
 import React from 'react';
 import './CustomerTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { Customer } from '../../_types/databaseModels/customer';
+import { Customer } from '../../_types/databasemodels/customer.ts';
 import { CustomerRowActions } from './CustomerRowActions/CustomerRowActions'
 import { useQuery } from '@tanstack/react-query';
 import { getCustomers } from '../../_queries/customer';

@@ -6,7 +6,7 @@ import { toolTypes } from '../enums/toolTypesEnum';
 import { dieVendors } from '../enums/dieVendorsEnum';
 import { dieMagCylinders } from '../enums/dieMagCylindersEnum';
 import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum';
-import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

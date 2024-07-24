@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-import DieModel from './Die';
-import MaterialModel from './material';
-import FinishModel from './finish';
-import CustomerModel from './customer';
-import UserModel from './user';
+import DieModel from './Die.ts';
+import MaterialModel from './material.ts';
+import FinishModel from './finish.ts';
+import CustomerModel from './customer.ts';
+import UserModel from './user.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

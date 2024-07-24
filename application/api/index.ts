@@ -83,18 +83,27 @@ app.use((request, response, next) => {
     next();
 });
 
-app.use(express.static(__dirname + '/public'));
+const publicDirectory = 'application/public'
+const ejsViewsDirectory = 'application/views'
+const ejsLayoutFilename = 'layout.ejs'
+
+app.use(express.static(publicDirectory));
+
+if (!fs.existsSync(publicDirectory)) {
+    throw new Error('Public folder does not exist, cannot render any .ejs views and/or css styles for those pages');
+}
+
+app.set('view engine', 'ejs');
+app.set('views', ejsViewsDirectory);
+app.set('layout', ejsLayoutFilename);
 
 const reactBuildFolderPath = './build';
 
 if (!fs.existsSync(reactBuildFolderPath)) {
     throw new Error('React build folder does not exist. Please run `npm run build` and try again.');
 }
-app.use(express.static(reactBuildFolderPath));
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/views'));
-app.set('layout', path.join(__dirname, '/views/layout.ejs'));
+app.use(express.static(reactBuildFolderPath));  // Sets up React
 
 app.use('/', defaultRoute);
 app.use('/users', userEndpoints);
@@ -131,6 +140,7 @@ app.use('/credit-terms', creditTermEndpoints);
 
 // This route loads the ENTIRE REACT APP
 app.use('/react-ui', (_, response) => response.render('app.ejs'));
+app.use('/foo', (_, response) => response.render('adminPanel.ejs'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

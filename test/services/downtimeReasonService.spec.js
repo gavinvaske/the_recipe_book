@@ -1,11 +1,11 @@
 import Chance from 'chance';
-import * as downtimeReasonService from '../../application/services/downtimeReasonService.ts';
-import mockDowntimeReasonModel from '../../application/models/downtimeReason.ts';
+import * as downtimeReasonService from '../../application/api/services/downtimeReasonService.ts';
+import mockDowntimeReasonModel from '../../application/api/models/downtimeReason.ts';
 import { when } from 'jest-when';
 
 const chance = Chance();
 
-jest.mock('../../application/models/downtimeReason.ts', () => {
+jest.mock('../../application/api/models/downtimeReason.ts', () => {
     const mockedDowntimeReasonModel = {
         find: jest.fn().mockReturnThis(),
         sort: jest.fn().mockReturnThis(),

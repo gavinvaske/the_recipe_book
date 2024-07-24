@@ -1,4 +1,4 @@
-import ejsService from '../../application/services/ejsService';
+import ejsService from '../../application/api/services/ejsService';
 
 describe('ejsService test suite', () => {
     it('should have a method named prettifyDuration()', () => {

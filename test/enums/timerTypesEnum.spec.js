@@ -1,4 +1,4 @@
-import { TIMER_TYPES } from '../../application/enums/timerTypesEnum';
+import { TIMER_TYPES } from '../../application/api/enums/timerTypesEnum';
 
 describe('File: timerTypesEnum.js', () => {
     it('should have the correct value for TIMER_TYPES', () => {

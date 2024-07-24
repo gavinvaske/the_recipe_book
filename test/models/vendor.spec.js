@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import VendorModel from '../../application/models/vendor.ts';
-import * as databaseService from '../../application/services/databaseService';
+import VendorModel from '../../application/api/models/vendor.ts';
+import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
 
 const chance = Chance();

@@ -1,16 +1,16 @@
 import Chance from 'chance';
-import * as ticketService from '../../application/services/ticketService.ts';
+import * as ticketService from '../../application/api/services/ticketService.ts';
 import {
     COMPLETE_DEPARTMENT,
     departmentToNextDepartmentAndStatus
-} from '../../application/enums/departmentsEnum.ts';
+} from '../../application/api/enums/departmentsEnum.ts';
 import { when } from 'jest-when';
-import mockTicketModel from '../../application/models/ticket.ts';
+import mockTicketModel from '../../application/api/models/ticket.ts';
 
 const TICKET_ITEM_KEY = 'TicketItem';
 
 const chance = Chance();
-jest.mock('../../application/models/ticket.ts');
+jest.mock('../../application/api/models/ticket.ts');
 
 function getStandardProduct() {
     return {

@@ -1,11 +1,11 @@
 import Chance from 'chance';
-import DieModel from '../../application/models/Die.ts';
-import { dieShapes } from '../../application/enums/dieShapesEnum';
-import { toolTypes } from '../../application/enums/toolTypesEnum';
-import { dieVendors } from '../../application/enums/dieVendorsEnum';
-import { dieMagCylinders } from '../../application/enums/dieMagCylindersEnum';
-import { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } from '../../application/enums/dieStatusesEnum';
-import * as databaseService from '../../application/services/databaseService';
+import DieModel from '../../application/api/models/Die.ts';
+import { dieShapes } from '../../application/api/enums/dieShapesEnum';
+import { toolTypes } from '../../application/api/enums/toolTypesEnum';
+import { dieVendors } from '../../application/api/enums/dieVendorsEnum';
+import { dieMagCylinders } from '../../application/api/enums/dieMagCylindersEnum';
+import { dieStatuses, IN_STOCK_DIE_STATUS, ORDERED_DIE_STATUS } from '../../application/api/enums/dieStatusesEnum';
+import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();

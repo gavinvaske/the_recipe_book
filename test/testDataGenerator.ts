@@ -2,14 +2,14 @@ import Chance from 'chance';
 const chance = Chance();
 import mongoose from 'mongoose';
 
-import { dieShapes } from '../application/enums/dieShapesEnum';
-import { toolTypes } from '../application/enums/toolTypesEnum';
-import { dieVendors } from '../application/enums/dieVendorsEnum';
-import { dieMagCylinders } from '../application/enums/dieMagCylindersEnum';
-import { dieStatuses } from '../application/enums/dieStatusesEnum';
-import { unwindDirections } from '../application/enums/unwindDirectionsEnum';
-import { finishTypes } from '../application/enums/finishTypesEnum';
-import { AVAILABLE_USER_TYPES } from '../application/enums/userTypesEnum';
+import { dieShapes } from '../application/api/enums/dieShapesEnum';
+import { toolTypes } from '../application/api/enums/toolTypesEnum';
+import { dieVendors } from '../application/api/enums/dieVendorsEnum';
+import { dieMagCylinders } from '../application/api/enums/dieMagCylindersEnum';
+import { dieStatuses } from '../application/api/enums/dieStatusesEnum';
+import { unwindDirections } from '../application/api/enums/unwindDirectionsEnum';
+import { finishTypes } from '../application/api/enums/finishTypesEnum';
+import { AVAILABLE_USER_TYPES } from '../application/api/enums/userTypesEnum';
 
 export const mockData = {
     Die: getDie,

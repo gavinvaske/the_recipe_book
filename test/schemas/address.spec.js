@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import addressSchema from '../../application/schemas/address';
+import addressSchema from '../../application/api/schemas/address';
 import mongoose from 'mongoose';
 
 const chance = Chance();

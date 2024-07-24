@@ -1,4 +1,4 @@
-import * as constantsEnum from '../../application/enums/constantsEnum.ts';
+import * as constantsEnum from '../../application/api/enums/constantsEnum.ts';
 
 describe('constantsEnum', () => {
     it('MAX_FRAME_LENGTH_INCHES : should equal the correct value', () => {

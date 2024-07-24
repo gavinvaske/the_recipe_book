@@ -1,8 +1,8 @@
 import Chance from 'chance';
-import departmentNotesSchema from '../../application/schemas/departmentNotes';
-import * as departmentsEnum from '../../application/enums/departmentsEnum.ts';
+import departmentNotesSchema from '../../application/api/schemas/departmentNotes';
+import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
 import mongoose from 'mongoose';
-import * as databaseService from '../../application/services/databaseService';
+import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
 

@@ -1,7 +1,7 @@
-import TicketTimeLedger from '../../application/models/ticketTimeLedger';
-import { TIMER_TYPES } from '../../application/enums/timerTypesEnum';
-import { TIMER_STATES } from '../../application/enums/timerStatesEnum';
-import * as databaseService from '../../application/services/databaseService';
+import TicketTimeLedger from '../../application/api/models/ticketTimeLedger';
+import { TIMER_TYPES } from '../../application/api/enums/timerTypesEnum';
+import { TIMER_STATES } from '../../application/api/enums/timerStatesEnum';
+import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
 import Chance from 'chance';
 

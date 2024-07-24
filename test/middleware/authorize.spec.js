@@ -1,4 +1,4 @@
-import { verifyJwtToken } from '../../application/middleware/authorize.ts';
+import { verifyJwtToken } from '../../application/api/middleware/authorize.ts';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';
 

@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import DowntimeReason from '../../application/models/downtimeReason.ts';
-import * as databaseService from '../../application/services/databaseService';
+import DowntimeReason from '../../application/api/models/downtimeReason.ts';
+import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
 

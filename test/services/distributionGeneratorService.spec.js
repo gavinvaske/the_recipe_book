@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: 0 */
-import * as distributionGeneratorService from '../../application/services/distributionGeneratorService.ts';
+import * as distributionGeneratorService from '../../application/api/services/distributionGeneratorService.ts';
 
 describe('distributionGeneratorService.js', () => {
     let groupSize;

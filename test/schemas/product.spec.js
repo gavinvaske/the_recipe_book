@@ -1,8 +1,8 @@
 import Chance from 'chance';
-import { hotFolders } from '../../application/enums/hotFolderEnum';
-import { idToColorEnum } from '../../application/enums/idToColorEnum';
+import { hotFolders } from '../../application/api/enums/hotFolderEnum';
+import { idToColorEnum } from '../../application/api/enums/idToColorEnum';
 import mongoose from 'mongoose';
-import productSchema from '../../application/schemas/product';
+import productSchema from '../../application/api/schemas/product';
 
 const chance = Chance();
 

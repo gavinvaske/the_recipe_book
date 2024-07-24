@@ -1,10 +1,10 @@
 /* eslint-disable no-magic-numbers */
-import Quote from '../../application/models/quote.ts';
-import * as databaseService from '../../application/services/databaseService';
+import Quote from '../../application/api/models/quote.ts';
+import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
-import * as constants from '../../application/enums/constantsEnum.ts';
+import * as constants from '../../application/api/enums/constantsEnum.ts';
 import * as testDataGenerator from '../testDataGenerator';
-import { unwindDirections } from '../../application/enums/unwindDirectionsEnum';
+import { unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
 import Chance from 'chance';
 
 const chance = Chance();

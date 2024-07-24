@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import UserModel from '../../application/models/user.ts';
+import UserModel from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();

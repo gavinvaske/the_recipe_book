@@ -1,6 +1,6 @@
 
 import Chance from 'chance';
-import chargeSchema from '../../application/schemas/charge';
+import chargeSchema from '../../application/api/schemas/charge';
 import mongoose from 'mongoose';
 
 const chance = Chance();

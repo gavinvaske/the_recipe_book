@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
-import CustomerModel from '../../application/models/customer.ts';
-import * as databaseService from '../../application/services/databaseService';
+import CustomerModel from '../../application/api/models/customer.ts';
+import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();

@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import WorkflowStep from '../../application/models/WorkflowStep.ts';
-import { departmentToStatusesMappingForTicketObjects } from '../../application/enums/departmentsEnum.ts';
+import WorkflowStep from '../../application/api/models/WorkflowStep.ts';
+import { departmentToStatusesMappingForTicketObjects } from '../../application/api/enums/departmentsEnum.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

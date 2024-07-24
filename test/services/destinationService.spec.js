@@ -1,4 +1,4 @@
-import * as destinationService from '../../application/services/destinationService.ts';
+import * as destinationService from '../../application/api/services/destinationService.ts';
 import Chance from 'chance';
 const chance = Chance();
 

@@ -1,4 +1,4 @@
-import * as s3Service from '../../application/services/s3Service.ts';
+import * as s3Service from '../../application/api/services/s3Service.ts';
 import awsMock from 'aws-sdk';
 import Chance from 'chance';
 import mimeMock from 'mime';

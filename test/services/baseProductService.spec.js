@@ -1,12 +1,12 @@
-import BaseProductModel from '../../application/models/baseProduct.ts';
-import * as databaseService from '../../application/services/databaseService';
+import BaseProductModel from '../../application/api/models/baseProduct.ts';
+import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 
-import FinishModel from '../../application/models/finish.ts';
-import MaterialModel from '../../application/models/material.ts';
-import CustomerModel from '../../application/models/customer.ts';
+import FinishModel from '../../application/api/models/finish.ts';
+import MaterialModel from '../../application/api/models/material.ts';
+import CustomerModel from '../../application/api/models/customer.ts';
 
-import * as baseProductService from '../../application/services/baseProductService';
+import * as baseProductService from '../../application/api/services/baseProductService';
 
 describe('File: baseProduct.js', () => {
     let baseProductAttributes, baseProduct, primaryMaterial, secondaryMaterial, finish, customer;

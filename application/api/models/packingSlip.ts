@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import addressSchema from '../schemas/address';
+import addressSchema from '../schemas/address.ts';
 import { FACTORY_ADDRESS } from '../enums/constantsEnum.ts';
-import { validatePhoneNumber } from '../services/dataValidationService';
-import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
+import { validatePhoneNumber } from '../services/dataValidationService.ts';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

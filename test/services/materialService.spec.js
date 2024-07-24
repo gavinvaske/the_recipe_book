@@ -1,9 +1,9 @@
 import Chance from 'chance';
-import * as materialService from '../../application/services/materialService.ts';
+import * as materialService from '../../application/api/services/materialService.ts';
 
 const chance = Chance();
 
-jest.mock('../../application/models/material.ts');
+jest.mock('../../application/api/models/material.ts');
 
 describe('materialService test suite', () => {
     describe('getMaterialIds()', () => {

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService';
+import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.ts';
 import * as constants from '../enums/constantsEnum.ts';
 import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService.ts';
 import { Decimal } from 'decimal.js';
-import PackagingDetailsSchema from '../schemas/packagingDetails';
+import PackagingDetailsSchema from '../schemas/packagingDetails.ts';
 import { unwindDirections } from '../enums/unwindDirectionsEnum';
 
 const DEFAULT_EXTRA_FRAMES = 25;

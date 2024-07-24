@@ -1,4 +1,4 @@
-import * as fileService from '../../application/services/fileService.ts';
+import * as fileService from '../../application/api/services/fileService.ts';
 import pathMock from 'path';
 import fsMock from 'fs';
 import Chance from 'chance';

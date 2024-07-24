@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import fileSchema from '../schemas/s3File.ts';
-import destinationSchema from '../schemas/destination';
+import destinationSchema from '../schemas/destination.ts';
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
 
 function isValidDieLineDestination(destination) {

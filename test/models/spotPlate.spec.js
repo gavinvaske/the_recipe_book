@@ -1,7 +1,7 @@
-import SpotPlateModel from '../../application/models/spotPlate.ts';
+import SpotPlateModel from '../../application/api/models/spotPlate.ts';
 import Chance from 'chance';
-import * as databaseService from '../../application/services/databaseService';
-import * as departmentsEnum from '../../application/enums/departmentsEnum.ts';
+import * as databaseService from '../../application/api/services/databaseService';
+import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
 
 const chance = Chance();
 

@@ -5,7 +5,7 @@ import {
     departmentToStatusesMappingForTicketObjects, 
     removeDepartmentStatusesAUserIsNotAllowedToSelect,
     departmentToNextDepartmentAndStatus
-} from '../../application/enums/departmentsEnum.ts';
+} from '../../application/api/enums/departmentsEnum.ts';
 import Chance from 'chance';
 
 const chance = Chance();

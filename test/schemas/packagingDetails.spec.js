@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import packagingSchema from '../../application/schemas/packagingDetails';
+import packagingSchema from '../../application/api/schemas/packagingDetails';
 import mongoose from 'mongoose';
 
 const chance = Chance();

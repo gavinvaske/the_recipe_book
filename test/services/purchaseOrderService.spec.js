@@ -1,10 +1,10 @@
 import Chance from 'chance';
-import * as purchaseOrderService from '../../application/services/purchaseOrderService.ts';
-import mockPurchaseOrderModel from '../../application/models/materialOrder.ts';
+import * as purchaseOrderService from '../../application/api/services/purchaseOrderService.ts';
+import mockPurchaseOrderModel from '../../application/api/models/materialOrder.ts';
 
 const chance = Chance();
 
-jest.mock('../../application/models/materialOrder.ts');
+jest.mock('../../application/api/models/materialOrder.ts');
 
 describe('purchaseOrderService test suite', () => {
     describe('getPurchaseOrdersForMaterials()', () => {

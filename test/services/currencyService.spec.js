@@ -1,4 +1,4 @@
-import * as currencyService from '../../application/services/currencyService';
+import * as currencyService from '../../application/api/services/currencyService';
 
 describe('File: currencyService.js', () => {
     describe('Function: convertDollarsToPennies', () => {

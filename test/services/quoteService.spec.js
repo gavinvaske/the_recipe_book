@@ -1,25 +1,25 @@
 /* eslint-disable no-magic-numbers */
-import * as constants from '../../application/enums/constantsEnum.ts';
-import { createQuote } from '../../application/services/quoteService';
+import * as constants from '../../application/api/enums/constantsEnum.ts';
+import { createQuote } from '../../application/api/services/quoteService';
 import Chance from 'chance';
 import mongoose from 'mongoose';
 import { when } from 'jest-when';
-import { convertMinutesToSeconds, convertSecondsToMinutes } from '../../application/services/dateTimeService.ts';
+import { convertMinutesToSeconds, convertSecondsToMinutes } from '../../application/api/services/dateTimeService.ts';
 import * as testDataGenerator from '../testDataGenerator';
-import * as databaseService from '../../application/services/databaseService';
+import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
 
-jest.mock('../../application/models/Die.ts');
-jest.mock('../../application/models/material.ts');
-jest.mock('../../application/models/finish.ts');
-jest.mock('../../application/models/baseProduct.ts');
+jest.mock('../../application/api/models/Die.ts');
+jest.mock('../../application/api/models/material.ts');
+jest.mock('../../application/api/models/finish.ts');
+jest.mock('../../application/api/models/baseProduct.ts');
 
-import DieMock from '../../application/models/Die.ts';
-import MaterialMock from '../../application/models/material.ts';
-import FinishMock from '../../application/models/finish.ts';
-import BaseProductMock from '../../application/models/baseProduct.ts';
-import { unwindDirections } from '../../application/enums/unwindDirectionsEnum';
+import DieMock from '../../application/api/models/Die.ts';
+import MaterialMock from '../../application/api/models/material.ts';
+import FinishMock from '../../application/api/models/finish.ts';
+import BaseProductMock from '../../application/api/models/baseProduct.ts';
+import { unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
 
 const FEET_PER_ROLL = 5000;
 const ONE_THOUSAND = 1000;

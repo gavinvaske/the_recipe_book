@@ -1,7 +1,7 @@
 import Chance from 'chance';
-import DowntimeReasonLedger from '../../application/models/downtimeLedger';
+import DowntimeReasonLedger from '../../application/api/models/downtimeLedger';
 import mongoose from 'mongoose';
-import * as databaseService from '../../application/services/databaseService';
+import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
 

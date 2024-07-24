@@ -1,6 +1,6 @@
-import MaintenanceIncidentTypeModel from '../../application/models/maintenanceIncidentType';
+import MaintenanceIncidentTypeModel from '../../application/api/models/maintenanceIncidentType';
 import Chance from 'chance';
-import * as databaseService from '../../application/services/databaseService';
+import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
 

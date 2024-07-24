@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import MaterialOrderModel from '../../application/models/materialOrder.ts';
+import MaterialOrderModel from '../../application/api/models/materialOrder.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

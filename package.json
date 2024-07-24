@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "parcel build",
-    "start": "npm run build && npx tsx application/index.ts",
+    "start": "npm run build && npx tsx application/api/index.ts",
     "react": "npm run parcel:remove-cache && parcel watch",
     "test": "jest",
     "cypress:run": "cypress run",
@@ -22,7 +22,7 @@
     "lint": "eslint .",
     "fix-lint": "eslint . --fix",
     "verify": "npm run test && npm run lint",
-    "nodemon": "nodemon application/index.js",
+    "nodemon": "nodemon application/api/index.js",
     "parcel:remove-cache": "rm -rf .parcel-cache"
   },
   "config": {

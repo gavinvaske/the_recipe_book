@@ -1,13 +1,13 @@
 import Chance from 'chance';
-import BaseProductSnapshotModel from '../../application/models/baseProductSnapshot';
-import * as databaseService from '../../application/services/databaseService';
+import BaseProductSnapshotModel from '../../application/api/models/baseProductSnapshot';
+import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
-import { MAX_FRAME_LENGTH_INCHES } from '../../application/enums/constantsEnum.ts';
+import { MAX_FRAME_LENGTH_INCHES } from '../../application/api/enums/constantsEnum.ts';
 
-import MaterialModel from '../../application/models/material.ts';
-import FinishModel from '../../application/models/finish.ts';
-import CustomerModel from '../../application/models/customer.ts';
-import UserModel from '../../application/models/user.ts';
+import MaterialModel from '../../application/api/models/material.ts';
+import FinishModel from '../../application/api/models/finish.ts';
+import CustomerModel from '../../application/api/models/customer.ts';
+import UserModel from '../../application/api/models/user.ts';
 
 const chance = Chance();
 

@@ -1,4 +1,4 @@
-import * as helperService from '../../application/services/helperService';
+import * as helperService from '../../application/api/services/helperService';
 import Chance from 'chance';
 
 const chance = Chance();

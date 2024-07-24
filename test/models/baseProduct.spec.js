@@ -1,12 +1,12 @@
 import Chance from 'chance';
-import ProductModel from '../../application/models/baseProduct.ts';
+import ProductModel from '../../application/api/models/baseProduct.ts';
 import mongoose from 'mongoose';
-import * as databaseService from '../../application/services/databaseService';
-import CustomerModel from '../../application/models/customer.ts';
-import MaterialModel from '../../application/models/material.ts';
-import { defaultUnwindDirection, unwindDirections } from '../../application/enums/unwindDirectionsEnum';
-import { finishTypes, defaultFinishType } from '../../application/enums/finishTypesEnum';
-import DieModel from '../../application/models/Die.ts';
+import * as databaseService from '../../application/api/services/databaseService';
+import CustomerModel from '../../application/api/models/customer.ts';
+import MaterialModel from '../../application/api/models/material.ts';
+import { defaultUnwindDirection, unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
+import { finishTypes, defaultFinishType } from '../../application/api/enums/finishTypesEnum';
+import DieModel from '../../application/api/models/Die.ts';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();

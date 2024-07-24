@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import PrintingSetupModel from '../../application/models/printingSetup.ts';
+import PrintingSetupModel from '../../application/api/models/printingSetup.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

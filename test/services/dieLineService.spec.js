@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import * as departmentsEnum from '../../application/enums/departmentsEnum.ts';
-import * as dieLineService from '../../application/services/dieLineService.ts';
+import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
+import * as dieLineService from '../../application/api/services/dieLineService.ts';
 
 const chance = Chance();
 

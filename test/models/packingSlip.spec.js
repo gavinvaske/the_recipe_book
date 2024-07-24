@@ -1,6 +1,6 @@
-import PackingSlipModel from '../../application/models/packingSlip';
+import PackingSlipModel from '../../application/api/models/packingSlip';
 import Chance from 'chance';
-import * as databaseService from '../../application/services/databaseService';
+import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 import mongoose from 'mongoose';
 

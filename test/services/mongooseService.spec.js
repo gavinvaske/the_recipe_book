@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import * as mongooseService from '../../application/services/mongooseService.ts';
+import * as mongooseService from '../../application/api/services/mongooseService.ts';
 
 const chance = Chance();
 

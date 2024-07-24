@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import * as dateTimeService from '../../application/services/dateTimeService.ts';
+import * as dateTimeService from '../../application/api/services/dateTimeService.ts';
 import Chance from 'chance';
 
 const chance = Chance();

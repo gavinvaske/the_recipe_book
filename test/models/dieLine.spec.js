@@ -1,7 +1,7 @@
 import Chance from 'chance';
 import * as databaseService from '../../application/api/services/databaseService';
 import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
-import DieLineModel from '../../application/api/models/dieLine.ts';
+import { DieLineModel } from '../../application/api/models/dieLine.ts';
 
 const chance = Chance();
 

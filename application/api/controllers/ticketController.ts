@@ -4,9 +4,9 @@ import { verifyJwtToken } from '../middleware/authorize.ts';
 import { upload } from '../middleware/upload.ts';
 import parser from 'xml2json';
 import * as ticketService from '../services/ticketService.ts';
-import TicketModel from '../models/ticket.ts';
+import { TicketModel } from '../models/ticket.ts';
 import * as mongooseService from '../services/mongooseService.ts';
-import MaterialModel from '../models/material.ts';
+import { MaterialModel } from '../models/material.ts';
 import {
     departmentToStatusesMappingForTicketObjects, 
     isInProgressDepartmentStatus, 

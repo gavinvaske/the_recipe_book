@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import FinishModel from '../models/finish.ts';
+import { FinishModel } from '../models/finish.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';

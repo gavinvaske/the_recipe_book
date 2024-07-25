@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import CuttingSetupModel from '../../application/api/models/cuttingSetup.ts';
+import { CuttingSetupModel } from '../../application/api/models/cuttingSetup.ts';
 import mongoose from 'mongoose';
 
 const chance = Chance();

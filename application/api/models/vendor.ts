@@ -53,6 +53,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const Vendor = mongoose.model('Vendor', schema);
-
-export default Vendor;
+export const VendorModel = mongoose.model('Vendor', schema);

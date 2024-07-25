@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import * as purchaseOrderService from '../../application/api/services/purchaseOrderService.ts';
-import mockPurchaseOrderModel from '../../application/api/models/materialOrder.ts';
+import { MaterialOrderModel } from '../../application/api/models/materialOrder.ts';
 
 const chance = Chance();
 
@@ -25,7 +25,7 @@ describe('purchaseOrderService test suite', () => {
                 };
             });
 
-            mockPurchaseOrderModel.find.mockImplementation(findFunction);
+            MaterialOrderModel.find.mockImplementation(findFunction);
         });
 
         it ('should not throw error', async () => {

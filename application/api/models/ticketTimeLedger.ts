@@ -1,5 +1,5 @@
-const { TIMER_TYPES } = require('../enums/timerTypesEnum');
-const { TIMER_STATES } = require('../enums/timerStatesEnum');
+import { TIMER_TYPES } from '../enums/timerTypesEnum.ts';
+import { TIMER_STATES } from '../enums/timerStatesEnum.ts';
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
@@ -28,6 +28,4 @@ const ticketTimeLedgerSchema = new Schema({
     }
 }, { timestamps: true });
 
-const TicketTimeLedger = mongoose.model('TicketTimeLedger', ticketTimeLedgerSchema);
-
-module.exports = TicketTimeLedger;
+export const TicketTimeLedgerModel = mongoose.model('TicketTimeLedger', ticketTimeLedgerSchema);

@@ -62,6 +62,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const printingSetup = mongoose.model('printingSetups', schema);
-
-export default printingSetup;
+export const PrintingSetupModel = mongoose.model('printingSetups', schema);

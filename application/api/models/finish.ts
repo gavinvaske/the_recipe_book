@@ -86,6 +86,4 @@ const schema = new Schema({
     strict: 'throw'
 });
 
-const Finish = mongoose.model('Finish', schema);
-
-export default Finish;
+export const FinishModel = mongoose.model('Finish', schema);

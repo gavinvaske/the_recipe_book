@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import * as downtimeReasonService from '../../application/api/services/downtimeReasonService.ts';
-import mockDowntimeReasonModel from '../../application/api/models/downtimeReason.ts';
+import { DowntimeReasonModel } from '../../application/api/models/downtimeReason.ts';
 import { when } from 'jest-when';
 
 const chance = Chance();
@@ -11,12 +11,14 @@ jest.mock('../../application/api/models/downtimeReason.ts', () => {
         sort: jest.fn().mockReturnThis(),
         exec: jest.fn(),
     };
-    return mockedDowntimeReasonModel;
+    return {
+      DowntimeReasonModel: mockedDowntimeReasonModel
+    }
 });
 
 describe('downtimeReason test suite', () => {
     beforeEach(() => {
-        when(mockDowntimeReasonModel.exec)
+        when(DowntimeReasonModel.exec)
             .calledWith()
             .mockResolvedValue([]);
     });
@@ -25,19 +27,19 @@ describe('downtimeReason test suite', () => {
         it('should return make a request to mongoDb to fetch all downtime reasons', () => {
             downtimeReasonService.getDowntimeReasons();
 
-            expect(mockDowntimeReasonModel.find).toHaveBeenCalledTimes(1);
-            expect(mockDowntimeReasonModel.find).toHaveBeenCalledWith();
+            expect(DowntimeReasonModel.find).toHaveBeenCalledTimes(1);
+            expect(DowntimeReasonModel.find).toHaveBeenCalledWith();
 
-            expect(mockDowntimeReasonModel.sort).toHaveBeenCalledTimes(1);
-            expect(mockDowntimeReasonModel.sort).toHaveBeenCalledWith({reason: 1});
+            expect(DowntimeReasonModel.sort).toHaveBeenCalledTimes(1);
+            expect(DowntimeReasonModel.sort).toHaveBeenCalledWith({reason: 1});
 
-            expect(mockDowntimeReasonModel.exec).toHaveBeenCalledTimes(1);
-            expect(mockDowntimeReasonModel.exec).toHaveBeenCalledWith();
+            expect(DowntimeReasonModel.exec).toHaveBeenCalledTimes(1);
+            expect(DowntimeReasonModel.exec).toHaveBeenCalledWith();
         });
 
         it('should return an empty array when no items exist in the database', async () => {
             const emptyArray = [];
-            when(mockDowntimeReasonModel.exec)
+            when(DowntimeReasonModel.exec)
                 .calledWith()
                 .mockResolvedValue(emptyArray);
             const expectedDowntimeReasons = [];
@@ -57,7 +59,7 @@ describe('downtimeReason test suite', () => {
                 {_id: chance.string(), reason: reason2},
                 {_id: chance.string(), reason: reason3},
             ];
-            when(mockDowntimeReasonModel.exec)
+            when(DowntimeReasonModel.exec)
                 .calledWith()
                 .mockResolvedValue(downtimeReasonsInDatabase);
             const expectedDowntimeReasons = [reason1, reason2, reason3];

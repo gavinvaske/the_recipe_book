@@ -15,6 +15,5 @@ const deliveryMethodSchema = new Schema({
     }
 }, { timestamps: true });
 
-const deliveryMethodModel = mongoose.model('DeliveryMethod', deliveryMethodSchema);
+export const DeliveryMethodModel = mongoose.model('DeliveryMethod', deliveryMethodSchema);
 
-export default deliveryMethodModel;

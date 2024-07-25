@@ -1,11 +1,11 @@
 import { Router } from 'express';
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.ts';
-import CuttingSetupModel from '../models/cuttingSetup.ts';
-import UserModel from '../models/user.ts';
-import MachineModel from '../models/machine.ts';
-import MaterialModel from '../models/material.ts';
-import FinishModel from '../models/finish.ts';
+import { CuttingSetupModel } from '../models/cuttingSetup.ts';
+import { UserModel } from '../models/user.ts';
+import { MachineModel } from '../models/machine.ts';
+import { MaterialModel } from '../models/material.ts';
+import { FinishModel } from '../models/finish.ts';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;

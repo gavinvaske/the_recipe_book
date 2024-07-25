@@ -5,9 +5,9 @@ import productSchema from '../schemas/product.ts';
 import chargeSchema from '../schemas/charge.ts';
 import destinationSchema from '../schemas/destination.ts';
 import departmentNotesSchema from '../schemas/departmentNotes.ts';
-import { standardPriority, getAllPriorities } from '../enums/priorityEnum';
-import MaterialModel from './material.ts';
-import WorkflowStepModel from './WorkflowStep.ts';
+import { standardPriority, getAllPriorities } from '../enums/priorityEnum.ts';
+import { MaterialModel } from './material.ts';
+import { WorkflowStepModel } from './WorkflowStep.ts';
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
@@ -387,6 +387,6 @@ function getNumberToTheRightOfTheHyphen(productNumber) {
 
 ticketSchema.pre(['updateOne', 'findOneAndUpdate'], addRowToWorkflowStepDbTable);
 
-const Ticket = mongoose.model('Ticket', ticketSchema);
+export const TicketModel = mongoose.model('Ticket', ticketSchema);
 
-export default Ticket;
+

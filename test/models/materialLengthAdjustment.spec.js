@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
-import MaterialLengthAdjustmentModel from '../../application/api/models/materialLengthAdjustment.ts';
+import { MaterialLengthAdjustmentModel } from '../../application/api/models/materialLengthAdjustment.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();

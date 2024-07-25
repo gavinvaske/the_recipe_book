@@ -1,11 +1,11 @@
-import PurchaseOrderModel from '../models/materialOrder.ts';
+import { MaterialOrderModel } from '../models/materialOrder.ts';
 
 export async function getPurchaseOrdersForMaterials(materialIds) {
     const searchQuery = {
         material: {$in: materialIds}
     };
 
-    return await PurchaseOrderModel
+    return await MaterialOrderModel
         .find(searchQuery)
         .exec();
 }

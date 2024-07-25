@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
-import CustomerModel from '../models/customer.ts';
+import { CustomerModel } from '../models/customer.ts';
 
 router.use(verifyJwtToken);
 

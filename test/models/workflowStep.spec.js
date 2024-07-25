@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import WorkflowStep from '../../application/api/models/WorkflowStep.ts';
+import { WorkflowStepModel } from '../../application/api/models/WorkflowStep.ts';
 import { departmentToStatusesMappingForTicketObjects } from '../../application/api/enums/departmentsEnum.ts';
 import mongoose from 'mongoose';
 
@@ -25,7 +25,7 @@ describe('validation', () => {
     });
 
     it('should validate if all attributes are defined successfully', () => {
-        const workflowStep = new WorkflowStep(workFlowStepAttributes);
+        const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
     
         const error = workflowStep.validateSync();
 
@@ -35,7 +35,7 @@ describe('validation', () => {
     describe('attribute: ticketId', () => {
         it('should fail if attribute is not defined', () => {
             delete workFlowStepAttributes.ticketId;
-            const workflowStep = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
 
             const error = workflowStep.validateSync();
 
@@ -43,7 +43,7 @@ describe('validation', () => {
         });
 
         it('should be a mongoose object ID', () => {
-            const workflowStep = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
 
             expect(mongoose.Types.ObjectId.isValid(workflowStep.ticketId)).toBe(true);
         });
@@ -52,7 +52,7 @@ describe('validation', () => {
     describe('attribute: destination', () => {
         it('should fail validation if attribute is not defined', () => {
             delete workFlowStepAttributes.destination;
-            const workflowStep = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
 
             const error = workflowStep.validateSync();
 
@@ -61,7 +61,7 @@ describe('validation', () => {
 
         it('should fail validation if attribute is not the correct type', () => {
             workFlowStepAttributes.destination = chance.word();
-            const workflowStep = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
 
             const error = workflowStep.validateSync();
 
@@ -69,7 +69,7 @@ describe('validation', () => {
         });
 
         it('should be a mongoose object with an _id attribute', () => {
-            const workflowStep = new WorkflowStep(workFlowStepAttributes);
+            const workflowStep = new WorkflowStepModel(workFlowStepAttributes);
 
             expect(workflowStep.destination._id).not.toBe(undefined);
         });

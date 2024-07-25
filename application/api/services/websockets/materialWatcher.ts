@@ -1,4 +1,4 @@
-import MaterialModel from '../../models/material.ts';
+import { MaterialModel } from '../../models/material.ts';
 
 export function materialWatcher(socket) {
     MaterialModel.watch().on('change', async (change) => {

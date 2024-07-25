@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
-import MaterialLengthAdjustmentModel from '../models/materialLengthAdjustment.ts';
+import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 
 router.use(verifyJwtToken);
 

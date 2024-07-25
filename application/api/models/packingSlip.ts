@@ -10,7 +10,7 @@ import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generatePackingSlipNumber() {
-    const numberOfPackingSlipsInDatabase = await PackingSlip.countDocuments({});
+    const numberOfPackingSlipsInDatabase = await PackingSlipModel.countDocuments({});
     const startingPackingSlipNumber = 7000;
 
     this.packingSlipNumber = startingPackingSlipNumber + numberOfPackingSlipsInDatabase;
@@ -79,7 +79,6 @@ const packingSlipSchema = new Schema({
 
 packingSlipSchema.pre('save', generatePackingSlipNumber);
 
-const PackingSlip = mongoose.model('PackingSlip', packingSlipSchema);
+export const PackingSlipModel = mongoose.model('PackingSlip', packingSlipSchema);
 
-export default PackingSlip;
 

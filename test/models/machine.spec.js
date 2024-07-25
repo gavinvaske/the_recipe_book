@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import MachineModel from '../../application/api/models/machine.ts';
+import { MachineModel } from '../../application/api/models/machine.ts';
 import * as departmentEnum from '../../application/api/enums/departmentsEnum.ts';
 
 const chance = Chance();

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 mongoose.Schema.Types.String.set('trim', true);
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
-const TypeModel = require('./maintenanceIncidentType');
+import { MaintenanceIncidentTypeModel } from './maintenanceIncidentType.ts';
 
 const schema = new Schema({
     incidentName: {
@@ -28,12 +28,10 @@ const schema = new Schema({
 }, { timestamps: true });
 
 schema.pre('save', async function (next) {
-    const isValidIncidentName = await TypeModel.findOne({ incidentName: this.incidentName }).exec();
+    const isValidIncidentName = await MaintenanceIncidentTypeModel.findOne({ incidentName: this.incidentName }).exec();
 
     if (!isValidIncidentName) next(`Error: The incidentName "${this.incidentName}" must first be created in the ADMIN panel.`);
     next();
 });
 
-const MaintenanceIncident = mongoose.model('MaintenanceIncident', schema);
-
-module.exports = MaintenanceIncident;
+export const MaintenanceIncidentModel = mongoose.model('MaintenanceIncident', schema);

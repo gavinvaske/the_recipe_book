@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import MachineModel from '../models/machine.ts';
+import { MachineModel } from '../models/machine.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
 
 const SHOW_ALL_MACHINES_ENDPOINT = '/machines';

@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import TicketGroupModel from '../../application/api/models/ticketGroup';
+import { TicketGroupModel } from '../../application/api/models/ticketGroup';
 import mongoose from 'mongoose';
 
 const chance = Chance();

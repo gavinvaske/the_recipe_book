@@ -41,6 +41,4 @@ const dieLineSchema = new Schema({
     }
 }, { timestamps: true });
 
-const DieLine = mongoose.model('DieLine', dieLineSchema);
-
-export default DieLine;
+export const DieLineModel = mongoose.model('DieLine', dieLineSchema);

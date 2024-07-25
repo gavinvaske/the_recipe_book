@@ -13,6 +13,4 @@ const schema = new Schema({
 }, { timestamps: true });
 
 
-const MaterialCategory = mongoose.model('MaterialCategory', schema);
-
-export default MaterialCategory;
+export const MaterialCategoryModel = mongoose.model('MaterialCategory', schema);

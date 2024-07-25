@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import DieLineModel from '../models/dieLine.ts';
+import { DieLineModel } from '../models/dieLine.ts';
 import * as mongooseService from '../services/mongooseService.ts';
 import { upload } from '../middleware/upload.ts';
 import * as fileService from '../services/fileService.ts';

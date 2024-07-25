@@ -5,7 +5,7 @@ import {
     departmentToNextDepartmentAndStatus
 } from '../../application/api/enums/departmentsEnum.ts';
 import { when } from 'jest-when';
-import mockTicketModel from '../../application/api/models/ticket.ts';
+import { TicketModel } from '../../application/api/models/ticket.ts';
 
 const TICKET_ITEM_KEY = 'TicketItem';
 
@@ -71,7 +71,7 @@ describe('ticketService test suite', () => {
                 };
             });
 
-            mockTicketModel.find.mockImplementation(findFunction);
+            TicketModel.find.mockImplementation(findFunction);
         });
 
         it ('should not throw error', async () => {
@@ -192,7 +192,7 @@ describe('ticketService test suite', () => {
         let materialIds;
 
         beforeEach(() => {
-            when(mockTicketModel.aggregate)
+            when(TicketModel.aggregate)
                 .calledWith(expect.any(Array))
                 .mockResolvedValue([]);
         });
@@ -218,8 +218,8 @@ describe('ticketService test suite', () => {
             ];
             await ticketService.getLengthOfEachMaterialUsedByTickets(materialIds);
 
-            expect(mockTicketModel.aggregate).toHaveBeenCalledWith(aggregateParams);
-            expect(mockTicketModel.aggregate).toHaveBeenCalledTimes(1);
+            expect(TicketModel.aggregate).toHaveBeenCalledWith(aggregateParams);
+            expect(TicketModel.aggregate).toHaveBeenCalledTimes(1);
         });
 
         it('should return the a correctly computed object', async () => {
@@ -246,7 +246,7 @@ describe('ticketService test suite', () => {
                 [materialId2]: materialLengthUsed2,
                 [materialId3]: materialLengthUsed3
             };
-            when(mockTicketModel.aggregate)
+            when(TicketModel.aggregate)
                 .calledWith(aggregateParams)
                 .mockResolvedValue(aggregatedMaterialUsage);
 

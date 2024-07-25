@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import DieModel from '../../application/api/models/Die.ts';
+import { DieModel } from '../../application/api/models/Die.ts';
 import { dieShapes } from '../../application/api/enums/dieShapesEnum';
 import { toolTypes } from '../../application/api/enums/toolTypesEnum';
 import { dieVendors } from '../../application/api/enums/dieVendorsEnum';

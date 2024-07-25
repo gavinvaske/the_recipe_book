@@ -1,4 +1,4 @@
-import HoldReasonModel from '../models/holdReason.ts';
+import { HoldReasonModel } from '../models/holdReason.ts';
 import { getAllDepartmentsWithDepartmentStatuses } from '../enums/departmentsEnum.ts';
 
 export async function getDepartmentToHoldReasons() {

@@ -41,6 +41,4 @@ const spotPlateSchema = new Schema({
     }
 }, { timestamps: true });
 
-const SpotPlate = mongoose.model('SpotPlate', spotPlateSchema);
-
-export default SpotPlate;
+export const SpotPlateModel = mongoose.model('SpotPlate', spotPlateSchema);

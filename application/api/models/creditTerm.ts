@@ -14,6 +14,4 @@ const schema = new Schema({
     },
 }, { timestamps: true });
 
-const CreditTerm = mongoose.model('CreditTerm', schema);
-
-export default CreditTerm;
+export const CreditTermModel = mongoose.model('CreditTerm', schema);

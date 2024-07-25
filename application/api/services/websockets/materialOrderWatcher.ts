@@ -1,10 +1,10 @@
-import MaterialOrder from '../../models/materialOrder.ts';
+import { MaterialOrderModel } from '../../models/materialOrder.ts';
 
 export function materialOrderWatcher(socket) {
-    MaterialOrder.watch().on('change', async (change) => {
+  MaterialOrderModel.watch().on('change', async (change) => {
         const mongooseObjectId = change.documentKey._id;
 
-        const materialOrder = await MaterialOrder
+        const materialOrder = await MaterialOrderModel
             .findById(mongooseObjectId)
             .populate({path: 'author'})
             .populate({path: 'material'})

@@ -26,6 +26,4 @@ const schema = new Schema({
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
 
-const MaterialLengthAdjustment = mongoose.model('MaterialLengthAdjustment', schema);
-
-export default MaterialLengthAdjustment;
+export const MaterialLengthAdjustmentModel = mongoose.model('MaterialLengthAdjustment', schema);

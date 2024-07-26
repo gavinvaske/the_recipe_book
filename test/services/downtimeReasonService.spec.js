@@ -12,8 +12,8 @@ jest.mock('../../application/api/models/downtimeReason.ts', () => {
         exec: jest.fn(),
     };
     return {
-      DowntimeReasonModel: mockedDowntimeReasonModel
-    }
+        DowntimeReasonModel: mockedDowntimeReasonModel
+    };
 });
 
 describe('downtimeReason test suite', () => {

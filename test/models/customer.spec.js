@@ -277,7 +277,7 @@ describe('validation', () => {
             expect(contacts[0]._id).toBeDefined();
         });
 
-        it('should be an array with a multiple mongoose object', () => {
+        it('should be an array with a multiple mongoose object', () => {  // TPDP
             customerAttributes.contacts = [getContact(), getContact()];
 
             const { contacts } = new CustomerModel(customerAttributes);

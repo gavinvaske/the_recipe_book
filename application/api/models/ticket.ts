@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import productSchema from '../schemas/product.ts';
-import chargeSchema from '../schemas/charge.ts';
-import destinationSchema from '../schemas/destination.ts';
-import departmentNotesSchema from '../schemas/departmentNotes.ts';
+import { productSchema } from '../schemas/product.ts';
+import { chargeSchema } from '../schemas/charge.ts';
+import { destinationSchema } from '../schemas/destination.ts';
+import { departmentNotesSchema } from '../schemas/departmentNotes.ts';
 import { standardPriority, getAllPriorities } from '../enums/priorityEnum.ts';
 import { MaterialModel } from './material.ts';
 import { WorkflowStepModel } from './WorkflowStep.ts';

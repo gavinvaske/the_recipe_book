@@ -1,4 +1,4 @@
-import s3FileSchema from '../../application/api/schemas/s3File.ts';
+import { s3FileSchema } from '../../application/api/schemas/s3File.ts';
 import Chance from 'chance';
 import mongoose from 'mongoose';
 

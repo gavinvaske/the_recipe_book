@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.ts';
-import RecipeModel from '../models/recipe.ts';
+import { RecipeModel } from '../models/recipe.ts';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_RESULTS_PER_PAGE = 2;

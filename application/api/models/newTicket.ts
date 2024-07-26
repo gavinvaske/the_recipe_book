@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import destinationSchema from '../schemas/destination.ts';
+import { destinationSchema } from '../schemas/destination.ts';
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
 import { WorkflowStepModel } from './WorkflowStep.ts';
-const purchasedProductSchema = require('../schemas/purchasedProduct');
+import { purchasedProductSchema } from '../schemas/purchasedProduct.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

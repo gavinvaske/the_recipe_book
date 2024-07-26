@@ -8,7 +8,7 @@ function validateZipCode(zipCode) {
     return ZIP_CODE_REGEX.test(zipCode);
 }
 
-const addressSchema = new Schema({
+export const addressSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -39,5 +39,3 @@ const addressSchema = new Schema({
         required: true
     },
 }, { timestamps: true });
-
-export default addressSchema;

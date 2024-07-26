@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
-import purchasedProductSchema from '../../application/api/schemas/purchasedProduct';
+import { purchasedProductSchema } from '../../application/api/schemas/purchasedProduct';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();

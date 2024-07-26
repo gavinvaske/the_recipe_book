@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import addressSchema from '../schemas/address.ts';
-import contactSchema from '../schemas/contact.ts';
+import { addressSchema } from '../schemas/address.ts';
+import { contactSchema } from '../schemas/contact.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });

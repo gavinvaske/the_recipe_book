@@ -12,7 +12,7 @@ function numberMustBeGreaterThanZero(number) {
     return number > 0; // eslint-disable-line no-magic-numbers
 }
 
-const chargeSchema = new Schema({
+export const chargeSchema = new Schema({
     productNumber: {
         type: String,
         alias: 'ProductNumber',
@@ -33,5 +33,3 @@ const chargeSchema = new Schema({
         required: true
     }
 }, { timestamps: true });
-
-export default chargeSchema;

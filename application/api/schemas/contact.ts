@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import addressSchema from './address';
+import { addressSchema } from './address.ts';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { validatePhoneNumber, validateEmail } from '../services/dataValidationService';
+import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
 
-const contactSchema = new Schema({
+export const contactSchema = new Schema({
     fullName: {
         type: String,
         uppercase: true,
@@ -37,5 +37,3 @@ const contactSchema = new Schema({
         type: addressSchema
     }
 }, { timestamps: true });
-
-export default contactSchema;

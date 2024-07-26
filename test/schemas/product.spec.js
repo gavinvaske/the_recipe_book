@@ -2,7 +2,7 @@ import Chance from 'chance';
 import { hotFolders } from '../../application/api/enums/hotFolderEnum';
 import { idToColorEnum } from '../../application/api/enums/idToColorEnum';
 import mongoose from 'mongoose';
-import productSchema from '../../application/api/schemas/product';
+import { productSchema } from '../../application/api/schemas/product';
 
 const chance = Chance();
 

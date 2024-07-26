@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { MaterialModel } from '../models/material.ts';
-import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum';
-import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum';
+import { hotFolders, getUniqueHotFolders } from '../enums/hotFolderEnum.ts';
+import { idToColorEnum as numberToColorEnum } from '../enums/idToColorEnum.ts';
 import { getAllDepartments } from '../enums/departmentsEnum.ts';
-import s3FileSchema from './s3File';
+import { s3FileSchema } from './s3File.ts';
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const PRODUCT_DIE_REGEX = /(DR|DO|DC|DSS|XLDR|DB|DD|DRC|DCC)-(.{1,})/;
@@ -101,7 +101,7 @@ const alertSchema = new Schema({
     }
 }, { timestamps: true });
 
-const productSchema = new Schema({
+export const productSchema = new Schema({
     proof: {
         type: s3FileSchema,
         required: false

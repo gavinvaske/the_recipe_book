@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import SpotPlateModel from '../models/spotPlate.ts';
+import { SpotPlateModel } from '../models/spotPlate.ts';
 import * as mongooseService from '../services/mongooseService.ts';
 import { upload } from '../middleware/upload.ts';
 import * as fileService from '../services/fileService.ts';

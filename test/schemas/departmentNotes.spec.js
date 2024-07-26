@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import departmentNotesSchema from '../../application/api/schemas/departmentNotes';
+import { departmentNotesSchema } from '../../application/api/schemas/departmentNotes';
 import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
 import mongoose from 'mongoose';
 import * as databaseService from '../../application/api/services/databaseService';

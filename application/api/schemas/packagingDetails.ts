@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-const packagingSchema = new Schema({
+export const packagingDetailSchema = new Schema({
     rollsPerLayer: {
         type: Number,
         min: 0,
@@ -43,5 +43,3 @@ const packagingSchema = new Schema({
         type: String
     }
 }, { strict: 'throw' });
-
-export default packagingSchema;

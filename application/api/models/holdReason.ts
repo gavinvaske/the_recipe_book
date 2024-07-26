@@ -27,6 +27,4 @@ const HoldReasonSchema = new Schema({
 
 HoldReasonSchema.plugin(mongoose_delete, {overrideMethods: true});
 
-const HoldReason = mongoose.model('HoldReason', HoldReasonSchema);
-
-export default HoldReason; 
+export const HoldReasonModel = mongoose.model('HoldReason', HoldReasonSchema);

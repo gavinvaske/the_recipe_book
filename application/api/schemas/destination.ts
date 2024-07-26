@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-const destinationSchema = new Schema({
+export const destinationSchema = new Schema({
     department: {
         type: String,
         required: true
@@ -22,5 +22,3 @@ const destinationSchema = new Schema({
         required: false
     }
 }, { timestamps: true });
-
-export default destinationSchema;

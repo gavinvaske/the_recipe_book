@@ -13,6 +13,4 @@ const schema = new Schema({
     },
 }, { timestamps: true });
 
-const MaintenanceIncidentType = mongoose.model('MaintenanceIncidentType', schema);
-
-module.exports = MaintenanceIncidentType;
+export const MaintenanceIncidentTypeModel = mongoose.model('MaintenanceIncidentType', schema);

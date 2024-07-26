@@ -5,8 +5,8 @@ import { convertDollarsToPennies, convertPenniesToDollars } from '../services/cu
 import * as constants from '../enums/constantsEnum.ts';
 import { convertMinutesToSeconds, convertSecondsToMinutes } from '../services/dateTimeService.ts';
 import { Decimal } from 'decimal.js';
-import PackagingDetailsSchema from '../schemas/packagingDetails.ts';
-import { unwindDirections } from '../enums/unwindDirectionsEnum';
+import { packagingDetailSchema } from '../schemas/packagingDetails.ts';
+import { unwindDirections } from '../enums/unwindDirectionsEnum.ts';
 
 const DEFAULT_EXTRA_FRAMES = 25;
 const FIVE_DECIMAL_PLACES = 5;
@@ -454,7 +454,7 @@ const quoteSchema = new Schema({
         }
     },
     packagingDetails: {
-        type: PackagingDetailsSchema,
+        type: packagingDetailSchema,
         required: false
     },
     totalClicksCost: {
@@ -512,6 +512,4 @@ const quoteSchema = new Schema({
     strict: 'throw'
 });
 
-const Quote = mongoose.model('Quote', quoteSchema);
-
-export default Quote;
+export const QuoteModel = mongoose.model('Quote', quoteSchema);

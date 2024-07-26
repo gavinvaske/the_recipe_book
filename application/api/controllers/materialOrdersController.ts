@@ -1,8 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import MaterialOrderModel from '../models/materialOrder.ts';
-import MaterialModel from '../models/material.ts';
-import VendorModel from '../models/vendor.ts';
+import { MaterialOrderModel } from '../models/materialOrder.ts';
+import { MaterialModel } from '../models/material.ts';
+import { VendorModel } from '../models/vendor.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { descending } from '../enums/mongooseSortMethods.ts';

@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import DowntimeReason from '../../application/api/models/downtimeReason.ts';
+import { DowntimeReasonModel } from '../../application/api/models/downtimeReason.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
@@ -14,7 +14,7 @@ describe('validation', () => {
     });
 
     it('should not fail validation if all attributes are defined correctly', () => {
-        const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
+        const downtimeReason = new DowntimeReasonModel(downtimeReasonAttributes);
 
         const error = downtimeReason.validateSync();
 
@@ -24,7 +24,7 @@ describe('validation', () => {
     describe('attribute: reason', () => {
         it('should fail validation if attribute is not defined', () => {
             delete downtimeReasonAttributes.reason;
-            const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
+            const downtimeReason = new DowntimeReasonModel(downtimeReasonAttributes);
 
             const error = downtimeReason.validateSync();
 
@@ -32,7 +32,7 @@ describe('validation', () => {
         });
 
         it('should be of type String', () => {
-            const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
+            const downtimeReason = new DowntimeReasonModel(downtimeReasonAttributes);
 
             expect(downtimeReason.reason).toEqual(expect.any(String));
         });
@@ -40,7 +40,7 @@ describe('validation', () => {
         it('should trim attribute', () => {
             const expectedReason = chance.string();
             downtimeReasonAttributes.reason = '   ' + expectedReason + '  ';
-            const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
+            const downtimeReason = new DowntimeReasonModel(downtimeReasonAttributes);
 
             expect(downtimeReason.reason).toEqual(expectedReason);
         });
@@ -61,7 +61,7 @@ describe('validation', () => {
 
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
-                const downtimeReason = new DowntimeReason(downtimeReasonAttributes);
+                const downtimeReason = new DowntimeReasonModel(downtimeReasonAttributes);
                 let savedDowntimeReason = await downtimeReason.save({validateBeforeSave: false});
     
                 expect(savedDowntimeReason.createdAt).toBeDefined();

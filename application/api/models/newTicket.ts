@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import destinationSchema from '../schemas/destination.ts';
+import { destinationSchema } from '../schemas/destination.ts';
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
-import WorkflowStepModel from './WorkflowStep.ts';
-const purchasedProductSchema = require('../schemas/purchasedProduct');
+import { WorkflowStepModel } from './WorkflowStep.ts';
+import { purchasedProductSchema } from '../schemas/purchasedProduct.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 async function generateUniqueTicketNumber() {
-    const numberOfTicketsInDatabase = await Ticket.countDocuments({});
+    const numberOfTicketsInDatabase = await TicketModel.countDocuments({});
     const startingTicketNumber = 60000;
 
     this.ticketNumber = startingTicketNumber + numberOfTicketsInDatabase;
@@ -314,6 +314,4 @@ schema.pre('save', async function(next) {
     await addRowToWorkflowStepDbTable(next, destination, ticketId);
 });
 
-const Ticket = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model
-
-module.exports = Ticket;
+export const TicketModel = mongoose.model('NewTicket', schema); // TODO (8-21-2023): Gavin rename this to "Ticket" after deprecating the old Ticket.js model

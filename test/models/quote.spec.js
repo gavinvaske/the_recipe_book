@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import Quote from '../../application/api/models/quote.ts';
+import { QuoteModel } from '../../application/api/models/quote.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
 import * as constants from '../../application/api/enums/constantsEnum.ts';
@@ -18,7 +18,7 @@ function verifyPercentageAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedPercentage = chance.floating({ min: 0.1, max: 0.9, fixed: FOUR_DECIMAL_PLACES });
     quoteAttributes[attributeName] = expectedPercentage;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedPercentage);
@@ -26,7 +26,7 @@ function verifyPercentageAttribute(quoteAttributes, attributeName) {
     // (2) Should not be less than 0
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     error = quote.validateSync();
 
@@ -35,7 +35,7 @@ function verifyPercentageAttribute(quoteAttributes, attributeName) {
     // (3) Should not be greater than 1
     const greaterThanOneValue = 1.01;
     quoteAttributes[attributeName] = greaterThanOneValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     error = quote.validateSync();
     
@@ -45,7 +45,7 @@ function verifyPercentageAttribute(quoteAttributes, attributeName) {
     const decimalToRound = 0.5555555555555555;
     const expectedDecimalValue = 0.5556;
     quoteAttributes[attributeName] = decimalToRound;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     expect(quote[attributeName]).toEqual(expectedDecimalValue);
 }
@@ -56,7 +56,7 @@ function verifyLengthAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedLength = chance.d100();
     quoteAttributes[attributeName] = expectedLength;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedLength);
@@ -64,7 +64,7 @@ function verifyLengthAttribute(quoteAttributes, attributeName) {
     // (2) should be a positive value
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     const error = quote.validateSync();
 
@@ -77,7 +77,7 @@ function verifyNumberOfFramesAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedNumberOfRolls = chance.d100();
     quoteAttributes[attributeName] = expectedNumberOfRolls;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
@@ -85,7 +85,7 @@ function verifyNumberOfFramesAttribute(quoteAttributes, attributeName) {
     // (2) should be a positive value
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     const error = quote.validateSync();
 
@@ -98,7 +98,7 @@ function verifyTimeAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedTimeInSeconds = chance.d100();
     quoteAttributes[attributeName] = expectedTimeInSeconds;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedTimeInSeconds);
@@ -106,7 +106,7 @@ function verifyTimeAttribute(quoteAttributes, attributeName) {
     // (2) should be a positive value
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     const error = quote.validateSync();
 
@@ -119,7 +119,7 @@ function verifyNumberOfRollsAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedNumberOfRolls = chance.d100();
     quoteAttributes[attributeName] = expectedNumberOfRolls;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
@@ -127,7 +127,7 @@ function verifyNumberOfRollsAttribute(quoteAttributes, attributeName) {
     // (2) should be a positive value
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     let error = quote.validateSync();
 
@@ -136,7 +136,7 @@ function verifyNumberOfRollsAttribute(quoteAttributes, attributeName) {
     // (3) should be an integer
     const floatingPointValue = chance.floating({ min: 0.1, max: 0.9 });
     quoteAttributes[attributeName] = floatingPointValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     error = quote.validateSync();
 
@@ -149,7 +149,7 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
     // (1) should be a number
     const expectedNumberOfRolls = chance.d100();
     quoteAttributes[attributeName] = expectedNumberOfRolls;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expect.any(Number));
     expect(quote[attributeName]).toEqual(expectedNumberOfRolls);
@@ -159,14 +159,14 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
     const decimalToIgnore = 0.004;
     quoteAttributes[attributeName] = expectedValue + decimalToIgnore;
 
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     expect(quote[attributeName]).toEqual(expectedValue);
 
     // (3) should be a positive value
     const negativeValue = -1;
     quoteAttributes[attributeName] = negativeValue;
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
     
     const error = quote.validateSync();
     
@@ -178,7 +178,7 @@ function verifyCostAttribute(quoteAttributes, attributeName) {
     quoteAttributes[attributeName] = floatingPointWithTwoDecimals;
     const penniesPerDollar = 100;
     
-    quote = new Quote(quoteAttributes);
+    quote = new QuoteModel(quoteAttributes);
 
     // values is converted to pennies below to prevent floating point rounding errors
     expect(Math.floor(quote[attributeName] * penniesPerDollar))
@@ -220,7 +220,7 @@ describe('File: quote.js', () => {
     });
 
     it('should have the correct indexes', async () => {
-        const indexMetaData = Quote.schema.indexes();
+        const indexMetaData = QuoteModel.schema.indexes();
         const expectedIndexes = ['quoteNumber'];
 
         console.log('indexMetaData: ', indexMetaData);
@@ -236,7 +236,7 @@ describe('File: quote.js', () => {
     });
 
     it('should pass validation if all required attributes are present', () => {
-        const quote = new Quote(quoteAttributes);
+        const quote = new QuoteModel(quoteAttributes);
         
         const error = quote.validateSync();
         
@@ -247,13 +247,13 @@ describe('File: quote.js', () => {
         const unknownAttribute = chance.string() + chance.string();
         quoteAttributes[unknownAttribute] = chance.string();
 
-        expect(() => new Quote(quoteAttributes)).toThrow();
+        expect(() => new QuoteModel(quoteAttributes)).toThrow();
     });
 
     describe('attribute: quoteNumber', () => {
         it('should be required', () => {
             delete quoteAttributes.quoteNumber;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
             
@@ -264,7 +264,7 @@ describe('File: quote.js', () => {
             const expectedQuoteNumber = `${STARTING_QUOTE_NUMBER}`;
             quoteAttributes.quoteNumber = expectedQuoteNumber;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.quoteNumber).toEqual(expect.any(Number));
         });
@@ -274,7 +274,7 @@ describe('File: quote.js', () => {
     describe('attribute: profitMargin', () => {
         it('should be required', () => {
             delete quoteAttributes.profitMargin;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -289,7 +289,7 @@ describe('File: quote.js', () => {
     describe('attribute: labelsPerRollOverride', () => {
         it('should not be required', () => {
             delete quoteAttributes.labelsPerRollOverride;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -299,7 +299,7 @@ describe('File: quote.js', () => {
         it('should be a number', () => {
             const expectedLabelsPerRoll = chance.d100();
             quoteAttributes.labelsPerRollOverride = expectedLabelsPerRoll;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.labelsPerRollOverride).toEqual(expectedLabelsPerRoll);
         });
@@ -307,7 +307,7 @@ describe('File: quote.js', () => {
         it('should be greater than or equal to 1', () => {
             const minLabelsPerRoll = 1;
             quoteAttributes.labelsPerRollOverride = minLabelsPerRoll - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -317,7 +317,7 @@ describe('File: quote.js', () => {
         it('should be less than or equal to 1,000,000', () => {
             const maxLabelsPerRoll = 1000000;
             quoteAttributes.labelsPerRollOverride = maxLabelsPerRoll + 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -327,7 +327,7 @@ describe('File: quote.js', () => {
         it('should be an integer', () => {
             const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
             quoteAttributes.labelsPerRollOverride = floatingPointValue;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -339,7 +339,7 @@ describe('File: quote.js', () => {
         it('should be a number', () => {
             const expectedNumberOfDesigns = chance.d100();
             quoteAttributes.numberOfDesignsOverride = expectedNumberOfDesigns;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.numberOfDesignsOverride).toEqual(expectedNumberOfDesigns);
         });
@@ -347,7 +347,7 @@ describe('File: quote.js', () => {
         it('should be greater than or equal to 1', () => {
             const minNumberOfDesigns = 1;
             quoteAttributes.numberOfDesignsOverride = minNumberOfDesigns - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -357,7 +357,7 @@ describe('File: quote.js', () => {
         it('should be an integer', () => {
             const floatingPointValue = chance.floating({ min: 0, max: 0.9 });
             quoteAttributes.numberOfDesignsOverride = floatingPointValue;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
             
@@ -369,7 +369,7 @@ describe('File: quote.js', () => {
         it('should be a boolean', () => {
             const expectedReinsertion = chance.bool();
             quoteAttributes.reinsertion = expectedReinsertion;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.reinsertion).toEqual(expectedReinsertion);
         });
@@ -377,7 +377,7 @@ describe('File: quote.js', () => {
         it('should default to false', () => {
             delete quoteAttributes.reinsertion;
             const defaultReinsertion = false;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -390,7 +390,7 @@ describe('File: quote.js', () => {
         it('should be a boolean', () => {
             const expectedVariableData = chance.bool();
             quoteAttributes.variableData = expectedVariableData;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.variableData).toEqual(expectedVariableData);
         });
@@ -398,7 +398,7 @@ describe('File: quote.js', () => {
         it('should default to false', () => {
             delete quoteAttributes.variableData;
             const defaultVariableData = false;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -411,7 +411,7 @@ describe('File: quote.js', () => {
         it('should be a boolean', () => {
             const expectedIsSheeted = chance.bool();
             quoteAttributes.isSheeted = expectedIsSheeted;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.isSheeted).toEqual(expectedIsSheeted);
         });
@@ -419,7 +419,7 @@ describe('File: quote.js', () => {
         it('should default to false', () => {
             delete quoteAttributes.isSheeted;
             const defaultIsSheeted = false;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -432,7 +432,7 @@ describe('File: quote.js', () => {
         it('should be a number', () => {
             const expectedLabelQty = chance.d100();
             quoteAttributes.labelQty = expectedLabelQty;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.labelQty).toEqual(expectedLabelQty);
         });
@@ -440,7 +440,7 @@ describe('File: quote.js', () => {
         it('should be greater than or equal to 0', () => {
             const minLabelQty = 0;
             quoteAttributes.labelQty = minLabelQty - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -460,7 +460,7 @@ describe('File: quote.js', () => {
         });
 
         it('should pass validation when all required attributes are provided', () => {
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -470,7 +470,7 @@ describe('File: quote.js', () => {
         it('should fail validation if unknown attribute is provided', () => {
             const unknownAttribute = chance.string();
             quoteAttributes.dieOverride[unknownAttribute] = chance.string();
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -479,7 +479,7 @@ describe('File: quote.js', () => {
 
         it('should not be required', () => {
             delete quoteAttributes.dieOverride;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -489,7 +489,7 @@ describe('File: quote.js', () => {
         describe('attribute: dieOverride.sizeAcross', () => {
             it('should be required', () => {
                 delete quoteAttributes.dieOverride.sizeAcross;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -499,7 +499,7 @@ describe('File: quote.js', () => {
             it('should be greater than or equal to 0', () => {
                 const minSizeAcross = 0;
                 quoteAttributes.dieOverride.sizeAcross = minSizeAcross - 1;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -509,7 +509,7 @@ describe('File: quote.js', () => {
             it('should allow floating point values with 4 decimal places', () => {
                 const floatingPointValueWith5DecimalPlaces = 2.0002;
                 quoteAttributes.dieOverride.sizeAcross = floatingPointValueWith5DecimalPlaces;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -519,7 +519,7 @@ describe('File: quote.js', () => {
             it('should allow integers', () => {
                 const integerValue = chance.d100();
                 quoteAttributes.dieOverride.sizeAcross = integerValue;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -529,7 +529,7 @@ describe('File: quote.js', () => {
         describe('attribute: dieOverride.sizeAround', () => {
             it('should be required', () => {
                 delete quoteAttributes.dieOverride.sizeAround;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -538,7 +538,7 @@ describe('File: quote.js', () => {
     
             it('should not be negative', () => {
                 quoteAttributes.dieOverride.sizeAround = -1;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -549,7 +549,7 @@ describe('File: quote.js', () => {
         describe('attribute: dieOverride.spaceAround', () => {
             it('should be required', () => {
                 delete quoteAttributes.dieOverride.spaceAround;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -560,14 +560,14 @@ describe('File: quote.js', () => {
                 const expectedSpaceAround = chance.d100();
                 quoteAttributes.dieOverride.spaceAround = expectedSpaceAround;
                 
-                const { dieOverride } = new Quote(quoteAttributes);
+                const { dieOverride } = new QuoteModel(quoteAttributes);
                 
                 expect(dieOverride.spaceAround).toEqual(expectedSpaceAround);
             });
     
             it('should not be negative', () => {
                 quoteAttributes.dieOverride.spaceAround = -1;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -578,7 +578,7 @@ describe('File: quote.js', () => {
         describe('attribute: dieOverride.numberAcross', () => {
             it('should be required', () => {
                 delete quoteAttributes.dieOverride.numberAcross;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -588,14 +588,14 @@ describe('File: quote.js', () => {
             it('should be a number', () => {
                 const expectedNumberAcross = chance.d100();
                 quoteAttributes.dieOverride.numberAcross = expectedNumberAcross;
-                const { dieOverride } = new Quote(quoteAttributes);
+                const { dieOverride } = new QuoteModel(quoteAttributes);
                 
                 expect(dieOverride.numberAcross).toEqual(expectedNumberAcross);
             });
     
             it('should not be negative', () => {
                 quoteAttributes.dieOverride.numberAcross = -1;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -616,7 +616,7 @@ describe('File: quote.js', () => {
 
         it('should not be required', () => {
             delete quoteAttributes.primaryMaterialOverride;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -626,7 +626,7 @@ describe('File: quote.js', () => {
         it('should share the same validation rules with secondaryMaterialOverride', () => {
             quoteAttributes.secondaryMaterialOverride = quoteAttributes.primaryMaterialOverride;
 
-            let quote = new Quote(quoteAttributes);
+            let quote = new QuoteModel(quoteAttributes);
             
             let error = quote.validateSync();
             
@@ -635,7 +635,7 @@ describe('File: quote.js', () => {
             // This next part of this test "ensures" that the above code doesn't result in a false positive
             const unknownAttribute = chance.word();
             quoteAttributes.secondaryMaterialOverride[unknownAttribute] = chance.word();
-            quote = new Quote(quoteAttributes);
+            quote = new QuoteModel(quoteAttributes);
 
             error = quote.validateSync();
 
@@ -645,7 +645,7 @@ describe('File: quote.js', () => {
         describe('attribute: primaryMaterialOverride.thickness', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.thickness;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -653,7 +653,7 @@ describe('File: quote.js', () => {
             });
             
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 const { primaryMaterialOverride } = quote;
                 
                 expect(primaryMaterialOverride.thickness).toEqual(expect.any(Number));
@@ -662,7 +662,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeThickness = -1;
                 quoteAttributes.primaryMaterialOverride.thickness = negativeThickness;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -673,7 +673,7 @@ describe('File: quote.js', () => {
         describe('attribute: primaryMaterialOverride.costPerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.costPerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -681,7 +681,7 @@ describe('File: quote.js', () => {
             });
 
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const { primaryMaterialOverride } = quote;
                 
@@ -691,7 +691,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeCostPerMsi = -1;
                 quoteAttributes.primaryMaterialOverride.costPerMsi = negativeCostPerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -702,7 +702,7 @@ describe('File: quote.js', () => {
                 const unroundedValue = 123.12345;
                 const roundedValue = 123.1235;
                 quoteAttributes.primaryMaterialOverride.costPerMsi = unroundedValue;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
 
                 expect(quote.primaryMaterialOverride.costPerMsi).toEqual(roundedValue);
             });
@@ -711,7 +711,7 @@ describe('File: quote.js', () => {
         describe('attribute: primaryMaterialOverride.quotePricePerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.primaryMaterialOverride.quotePricePerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -719,7 +719,7 @@ describe('File: quote.js', () => {
             });
 
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 const { primaryMaterialOverride } = quote;
                 
                 expect(primaryMaterialOverride.quotePricePerMsi).toEqual(expect.any(Number));
@@ -728,7 +728,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeQuotePricePerMsi = -1;
                 quoteAttributes.primaryMaterialOverride.quotePricePerMsi = negativeQuotePricePerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -739,7 +739,7 @@ describe('File: quote.js', () => {
                 const unroundedValue = 0.12345;
                 const roundedValue = 0.1235;
                 quoteAttributes.primaryMaterialOverride.quotePricePerMsi = unroundedValue;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
 
                 expect(quote.primaryMaterialOverride.quotePricePerMsi).toEqual(roundedValue);
             });
@@ -758,7 +758,7 @@ describe('File: quote.js', () => {
 
         it('should not be required', () => {
             delete quoteAttributes.finishOverride;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -766,7 +766,7 @@ describe('File: quote.js', () => {
         });
 
         it('should validate successfully when all required attributes are defined', () => {
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -776,7 +776,7 @@ describe('File: quote.js', () => {
         it('should fail validation if unknown attribute is defined', () => {
             const unknownAttribute = chance.string();
             quoteAttributes.finishOverride[unknownAttribute] = chance.word();
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -786,7 +786,7 @@ describe('File: quote.js', () => {
         describe('attribute: finishOverride.thickness', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.thickness;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -794,7 +794,7 @@ describe('File: quote.js', () => {
             });
             
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 const { finishOverride } = quote;
                 
                 expect(finishOverride.thickness).toEqual(expect.any(Number));
@@ -803,7 +803,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeThickness = -1;
                 quoteAttributes.finishOverride.thickness = negativeThickness;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -814,7 +814,7 @@ describe('File: quote.js', () => {
         describe('attribute: finishOverride.costPerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.costPerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -822,7 +822,7 @@ describe('File: quote.js', () => {
             });
 
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 const { finishOverride } = quote;
                 
                 expect(finishOverride.costPerMsi).toEqual(expect.any(Number));
@@ -831,7 +831,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeCostPerMsi = -1;
                 quoteAttributes.finishOverride.costPerMsi = negativeCostPerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -842,7 +842,7 @@ describe('File: quote.js', () => {
                 const unroundedValue = 123.12345;
                 const roundedValue = 123.1235;
                 quoteAttributes.finishOverride.costPerMsi = unroundedValue;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 expect(quote.finishOverride.costPerMsi).toEqual(roundedValue);
             });
@@ -851,7 +851,7 @@ describe('File: quote.js', () => {
         describe('attribute: finishOverride.quotePricePerMsi', () => {
             it('should be required', () => {
                 delete quoteAttributes.finishOverride.quotePricePerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -859,7 +859,7 @@ describe('File: quote.js', () => {
             });
 
             it('should be a number', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 const { finishOverride } = quote;
                 
                 expect(finishOverride.quotePricePerMsi).toEqual(expect.any(Number));
@@ -868,7 +868,7 @@ describe('File: quote.js', () => {
             it('should not be negative', () => {
                 const negativeQuotePricePerMsi = -1;
                 quoteAttributes.finishOverride.quotePricePerMsi = negativeQuotePricePerMsi;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -879,7 +879,7 @@ describe('File: quote.js', () => {
                 const unroundedValue = 0.11115;
                 const roundedValue = 0.1112;
                 quoteAttributes.finishOverride.quotePricePerMsi = unroundedValue;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
 
                 expect(quote.finishOverride.quotePricePerMsi).toEqual(roundedValue);
             });
@@ -891,7 +891,7 @@ describe('File: quote.js', () => {
             delete quoteAttributes.coreDiameterOverride;
             const expectedDefaultValue = 3.25;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.coreDiameterOverride).toEqual(expectedDefaultValue);
         });
@@ -900,7 +900,7 @@ describe('File: quote.js', () => {
             const expectedCoreDiameter = chance.d100();
             quoteAttributes.coreDiameterOverride = expectedCoreDiameter;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.coreDiameterOverride).toEqual(expectedCoreDiameter);
         });
@@ -908,7 +908,7 @@ describe('File: quote.js', () => {
         it('should be greater than or equal to 0', () => {
             const minCoreDiameter = 0;
             quoteAttributes.coreDiameterOverride = minCoreDiameter - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -920,7 +920,7 @@ describe('File: quote.js', () => {
             const roundedValue = 1.12;
             quoteAttributes.coreDiameterOverride = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.coreDiameterOverride).toEqual(roundedValue);
         });
@@ -929,7 +929,7 @@ describe('File: quote.js', () => {
     describe('attribute: numberOfColorsOverride', () => {
         it('should not be required', () => {
             delete quoteAttributes.numberOfColorsOverride;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -939,7 +939,7 @@ describe('File: quote.js', () => {
         it('should not be less than 1', () => {
             const minNumberOfColors = 1;
             quoteAttributes.numberOfColorsOverride = minNumberOfColors - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -949,7 +949,7 @@ describe('File: quote.js', () => {
         it('should not be greater than 12', () => {
             const maxNumberOfColors = 12;
             quoteAttributes.numberOfColorsOverride = maxNumberOfColors + 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
 
@@ -959,7 +959,7 @@ describe('File: quote.js', () => {
         it('should be an integer', () => {
             const expectedNumberOfColors = 1.15;
             quoteAttributes.numberOfColorsOverride = expectedNumberOfColors;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
             
@@ -1033,7 +1033,7 @@ describe('File: quote.js', () => {
         it('should not be required', () => {
             delete quoteAttributes.totalStockFeet;
             delete quoteAttributes.totalStockMsi;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1043,7 +1043,7 @@ describe('File: quote.js', () => {
         it('should be a number', () => {
             const expectedTotalStockMsi = chance.d100();
             quoteAttributes.totalStockMsi = expectedTotalStockMsi;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.totalStockMsi).toEqual(expectedTotalStockMsi);
         });
@@ -1053,7 +1053,7 @@ describe('File: quote.js', () => {
             const roundedValue = 1.1235;
             quoteAttributes.totalStockMsi = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalStockMsi).toEqual(roundedValue);
         });
@@ -1074,7 +1074,7 @@ describe('File: quote.js', () => {
             const expectedDefaultExtraFrames = 25;
             delete quoteAttributes.extraFrames;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.extraFrames).toEqual(expectedDefaultExtraFrames);
         });
@@ -1101,7 +1101,7 @@ describe('File: quote.js', () => {
     describe('attribute: totalFinishMsi', () => {
         it('should not be required', () => {
             delete quoteAttributes.totalFinishMsi;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1112,7 +1112,7 @@ describe('File: quote.js', () => {
             const expectedTotalFinishMsi = chance.d100();
             quoteAttributes.totalFinishMsi = expectedTotalFinishMsi;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalFinishMsi).toEqual(expectedTotalFinishMsi);
         });
@@ -1120,7 +1120,7 @@ describe('File: quote.js', () => {
         it('should be greater than or equal to 0', () => {
             const minTotalFinishMsi = 0;
             quoteAttributes.totalFinishMsi = minTotalFinishMsi - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1132,7 +1132,7 @@ describe('File: quote.js', () => {
             const roundedValue = 1.1234;
             quoteAttributes.totalFinishMsi = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalFinishMsi).toEqual(roundedValue);
         });
@@ -1392,7 +1392,7 @@ describe('File: quote.js', () => {
     describe('attribute: totalCores', () => {
         it('should not be required', () => {
             delete quoteAttributes.totalCores;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1403,7 +1403,7 @@ describe('File: quote.js', () => {
             const expectedCores = chance.d100();
             quoteAttributes.totalCores = expectedCores;
 
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalCores).toEqual(expectedCores);
         });
@@ -1411,7 +1411,7 @@ describe('File: quote.js', () => {
         it('should fail if attribute is not an integer', () => {
             const floating = 1.123;
             quoteAttributes.totalCores = floating;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1421,7 +1421,7 @@ describe('File: quote.js', () => {
         it('should not be negative', () => {
             const negativeNumber = -1;
             quoteAttributes.totalCores = negativeNumber;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1432,7 +1432,7 @@ describe('File: quote.js', () => {
     describe('attribute: cuttingDiameter', () => {
         it('should not be required', () => {
             delete quoteAttributes.cuttingDiameter;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1443,7 +1443,7 @@ describe('File: quote.js', () => {
             const expectedDiameter = chance.d100();
             quoteAttributes.cuttingDiameter = expectedDiameter;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.cuttingDiameter).toEqual(expectedDiameter);
         });
@@ -1453,7 +1453,7 @@ describe('File: quote.js', () => {
             const expectedCuttingDiameter = 111.1235;
             quoteAttributes.cuttingDiameter = unroundedCuttingDiameter;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.cuttingDiameter).toEqual(expectedCuttingDiameter);
         });
@@ -1461,7 +1461,7 @@ describe('File: quote.js', () => {
         it('should not be negative', () => {
             const negativeNumber = -1;
             quoteAttributes.cuttingDiameter = negativeNumber;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1474,7 +1474,7 @@ describe('File: quote.js', () => {
             const expectedThickness = chance.d100();
             quoteAttributes.combinedMaterialThickness = expectedThickness;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.combinedMaterialThickness).toEqual(expectedThickness);
         });
@@ -1482,7 +1482,7 @@ describe('File: quote.js', () => {
         it('should be greater than 0', () => {
             const minThickness = 0;
             quoteAttributes.combinedMaterialThickness = minThickness - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1494,7 +1494,7 @@ describe('File: quote.js', () => {
             const expectedThickness = 111.1235;
             quoteAttributes.combinedMaterialThickness = unroundedThickness;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.combinedMaterialThickness).toEqual(expectedThickness);
         });
@@ -1503,7 +1503,7 @@ describe('File: quote.js', () => {
     describe('attribute: customer', () => {
         it('should not be required', () => {
             delete quoteAttributes.customer;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
 
@@ -1513,7 +1513,7 @@ describe('File: quote.js', () => {
         it('should be a new mongoose.Types.ObjectId', () => {
             const expectedCustomer = new mongoose.Types.ObjectId();
             quoteAttributes.customer = expectedCustomer;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.customer).toEqual(expectedCustomer);
             expect(quote.customer).toEqual(expect.any(mongoose.Types.ObjectId));
@@ -1523,7 +1523,7 @@ describe('File: quote.js', () => {
     describe('attribute: frameLength', () => {
         it('should not be required', () => {
             delete quoteAttributes.frameLength;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1534,7 +1534,7 @@ describe('File: quote.js', () => {
             const expectedFrameLength = 1;
             quoteAttributes.frameLength = expectedFrameLength;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.frameLength).toEqual(expectedFrameLength);
         });
@@ -1542,7 +1542,7 @@ describe('File: quote.js', () => {
         it('should not be less than 0', () => {
             const minFrameLength = 0;
             quoteAttributes.frameLength = minFrameLength - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1551,7 +1551,7 @@ describe('File: quote.js', () => {
 
         it('should not be greater than MAX_FRAME_LENGTH_INCHES', () => {
             quoteAttributes.frameLength = constants.MAX_FRAME_LENGTH_INCHES + 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1562,7 +1562,7 @@ describe('File: quote.js', () => {
     describe('attribute: frameUtilization', () => {
         it('should not be required', () => {
             delete quoteAttributes.frameUtilization;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
             
@@ -1573,7 +1573,7 @@ describe('File: quote.js', () => {
             const expectedFrameUtilization = 1;
             quoteAttributes.frameUtilization = expectedFrameUtilization;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.frameUtilization).toEqual(expectedFrameUtilization);
         });
@@ -1581,7 +1581,7 @@ describe('File: quote.js', () => {
         it('should not be less than 0', () => {
             const minFrameUtilization = 0;
             quoteAttributes.frameUtilization = minFrameUtilization - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1591,7 +1591,7 @@ describe('File: quote.js', () => {
         it('should not be greater than 1', () => {
             const maxFrameUtilization = 1;
             quoteAttributes.frameUtilization = maxFrameUtilization + 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1603,14 +1603,14 @@ describe('File: quote.js', () => {
             const roundedValue = 0.5556;
             quoteAttributes.frameUtilization = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.frameUtilization).toEqual(roundedValue);
         });
 
         it('should be undefined if frameLength is not defined', () => {
             delete quoteAttributes.frameLength;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.frameUtilization).toBeUndefined();
         });
@@ -1619,7 +1619,7 @@ describe('File: quote.js', () => {
     describe('attribute: finishedRollLength', () => {
         it('should not be required', () => {
             delete quoteAttributes.finishedRollLength;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1630,7 +1630,7 @@ describe('File: quote.js', () => {
             const expectedFinishRollLength = chance.d100();
             quoteAttributes.finishedRollLength = expectedFinishRollLength;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.finishedRollLength).toEqual(expectedFinishRollLength);
         });
@@ -1640,7 +1640,7 @@ describe('File: quote.js', () => {
             const roundedValue = 0.5556;
             quoteAttributes.finishedRollLength = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.finishedRollLength).toEqual(roundedValue);
         });
@@ -1649,7 +1649,7 @@ describe('File: quote.js', () => {
     describe('attribute: finishedRollDiameter', () => {
         it('should not be required', () => {
             delete quoteAttributes.finishedRollDiameter;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1660,7 +1660,7 @@ describe('File: quote.js', () => {
             const finishedRollDiameter = chance.d100();
             quoteAttributes.finishedRollDiameter = finishedRollDiameter;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.finishedRollDiameter).toEqual(finishedRollDiameter);
         });
@@ -1670,7 +1670,7 @@ describe('File: quote.js', () => {
             const roundedValue = 0.556;
             quoteAttributes.finishedRollDiameter = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.finishedRollDiameter).toEqual(roundedValue);
         });
@@ -1679,7 +1679,7 @@ describe('File: quote.js', () => {
     describe('attribute: finishedRollDiameterWithoutCore', () => {
         it('should not be required', () => {
             delete quoteAttributes.finishedRollDiameterWithoutCore;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1690,7 +1690,7 @@ describe('File: quote.js', () => {
             const finishedRollDiameterWithoutCore = chance.d100();
             quoteAttributes.finishedRollDiameterWithoutCore = finishedRollDiameterWithoutCore;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.finishedRollDiameterWithoutCore).toEqual(finishedRollDiameterWithoutCore);
         });
@@ -1700,7 +1700,7 @@ describe('File: quote.js', () => {
             const roundedValue = 0.556;
             quoteAttributes.finishedRollDiameterWithoutCore = unroundedValue;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.finishedRollDiameterWithoutCore).toEqual(roundedValue);
         });
@@ -1709,7 +1709,7 @@ describe('File: quote.js', () => {
     describe('attribute: printingSpeed', () => {
         it('should not be required', () => {
             delete quoteAttributes.printingSpeed;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1720,7 +1720,7 @@ describe('File: quote.js', () => {
             const expectedPrintingSpeed = chance.d100();
             quoteAttributes.printingSpeed = expectedPrintingSpeed;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.printingSpeed).toEqual(expectedPrintingSpeed);
         });
@@ -1728,7 +1728,7 @@ describe('File: quote.js', () => {
         it('should not be less than 0', () => {
             const minPrintingSpeed = 0;
             quoteAttributes.printingSpeed = minPrintingSpeed - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1740,7 +1740,7 @@ describe('File: quote.js', () => {
             const roundedPrintingSpeed = 1.1235;
             quoteAttributes.printingSpeed = printingSpeed;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.printingSpeed).toEqual(roundedPrintingSpeed);
         });
@@ -1749,7 +1749,7 @@ describe('File: quote.js', () => {
     describe('attribute: totalNumberOfRolls', () => {
         it('should not be required', () => {
             delete quoteAttributes.totalNumberOfRolls;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1760,7 +1760,7 @@ describe('File: quote.js', () => {
             const expectedTotalNumberOfRolls = chance.d100();
             quoteAttributes.totalNumberOfRolls = expectedTotalNumberOfRolls;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalNumberOfRolls).toEqual(expectedTotalNumberOfRolls);
         });
@@ -1768,7 +1768,7 @@ describe('File: quote.js', () => {
         it('should not be negative', () => {
             const minTotalNumberOfRolls = 0;
             quoteAttributes.totalNumberOfRolls = minTotalNumberOfRolls - 1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1778,7 +1778,7 @@ describe('File: quote.js', () => {
         it('should be an integer', () => {
             const floatingPointValue = 0.55;
             quoteAttributes.totalNumberOfRolls = floatingPointValue;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1799,7 +1799,7 @@ describe('File: quote.js', () => {
 
         it('should not be a required attribute', () => {
             delete quoteAttributes.products;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1809,13 +1809,13 @@ describe('File: quote.js', () => {
         it('should default to an empty array', () => {
             delete quoteAttributes.products;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.products).toEqual([]);
         });
 
         it('should be an array containing objects with the correct attributes', () => {
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.products[0]._id).toBeDefined();
             expect(quote.products[0].productId).toEqual(expectedProduct.productId);
@@ -1825,7 +1825,7 @@ describe('File: quote.js', () => {
         describe('attribute: products[n].productId', () => {
             it('should fail validation if attribute does not exist', () => {
                 delete quoteAttributes.products[0].productId;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -1833,7 +1833,7 @@ describe('File: quote.js', () => {
             });
 
             it('should be a new mongoose.Types.ObjectId type', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 expect(quote.products[0].productId).toEqual(expect.any(mongoose.Types.ObjectId));
             });
@@ -1842,7 +1842,7 @@ describe('File: quote.js', () => {
         describe('attribute: products[n].labelQty', () => {
             it('should fail validation if attribute IS NOT defined', () => {
                 delete quoteAttributes.products[0].labelQty;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -1850,14 +1850,14 @@ describe('File: quote.js', () => {
             });
 
             it('should be a number type', () => {
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 expect(quote.products[0].labelQty).toEqual(expect.any(Number));
             });
 
             it('should not be less than 0', () => {
                 quoteAttributes.products[0].labelQty = -1;
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
 
@@ -1866,7 +1866,7 @@ describe('File: quote.js', () => {
 
             it('should fail validation if attribute is a floating point number', () => {
                 quoteAttributes.products[0].labelQty = chance.floating({ min: 0.1, max: 0.9 });
-                const quote = new Quote(quoteAttributes);
+                const quote = new QuoteModel(quoteAttributes);
                 
                 const error = quote.validateSync();
                 
@@ -1878,7 +1878,7 @@ describe('File: quote.js', () => {
     describe('attribute: totalClicksCost', () => {
         it('should not be required', () => {
             delete quoteAttributes.totalClicksCost;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1889,14 +1889,14 @@ describe('File: quote.js', () => {
             const totalClicksCost = chance.d100();
             quoteAttributes.totalClicksCost = totalClicksCost;
             
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             expect(quote.totalClicksCost).toEqual(totalClicksCost);
         });
 
         it('should not be negative', () => {
             quoteAttributes.totalClicksCost = -0.1;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1937,7 +1937,7 @@ describe('File: quote.js', () => {
     describe('attribute: pricePerLabel', () => {
         it('should not be required', () => {
             delete quoteAttributes.pricePerLabel;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1946,7 +1946,7 @@ describe('File: quote.js', () => {
 
         it('should be a number', () => {
             quoteAttributes.pricePerLabel = chance.d100();
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const { pricePerLabel } = quote;
             
@@ -1956,7 +1956,7 @@ describe('File: quote.js', () => {
         it('should not be negative', () => {
             const negativeCostPerMsi = -1;
             quoteAttributes.pricePerLabel = negativeCostPerMsi;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1967,7 +1967,7 @@ describe('File: quote.js', () => {
             const unroundedValue = 999.123459;
             const roundedValue = 999.12346;
             quoteAttributes.pricePerLabel = unroundedValue;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             expect(quote.pricePerLabel).toEqual(roundedValue);
         });
@@ -1976,7 +1976,7 @@ describe('File: quote.js', () => {
     describe('attribute: unwindDirection', () => {
         it('should be required', () => {
             delete quoteAttributes.unwindDirection;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const error = quote.validateSync();
             
@@ -1984,7 +1984,7 @@ describe('File: quote.js', () => {
         });
 
         it('should be a number', () => {
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             
             const { unwindDirection } = quote;
             
@@ -1994,7 +1994,7 @@ describe('File: quote.js', () => {
         it('should fail if not one of the unwind directions', () => {
             const definitelyNotAValidUnwindDirection = 5893245;
             quoteAttributes.unwindDirection = definitelyNotAValidUnwindDirection;
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
 
             const error = quote.validateSync();
             
@@ -2016,7 +2016,7 @@ describe('File: quote.js', () => {
         });
 
         it('should have timestamps', async () => {
-            const quote = new Quote(quoteAttributes);
+            const quote = new QuoteModel(quoteAttributes);
             let savedquote = await quote.save();
 
             expect(savedquote.createdAt).toBeDefined();

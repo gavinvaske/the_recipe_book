@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
-import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../enums/userTypesEnum';
+import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../enums/userTypesEnum.ts';
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -64,6 +64,5 @@ const userSchema = new Schema({
     }
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+export const UserModel = mongoose.model('User', userSchema);
 
-export default User;

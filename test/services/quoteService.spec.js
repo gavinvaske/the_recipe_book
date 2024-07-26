@@ -15,10 +15,10 @@ jest.mock('../../application/api/models/material.ts');
 jest.mock('../../application/api/models/finish.ts');
 jest.mock('../../application/api/models/baseProduct.ts');
 
-import DieMock from '../../application/api/models/Die.ts';
-import MaterialMock from '../../application/api/models/material.ts';
-import FinishMock from '../../application/api/models/finish.ts';
-import BaseProductMock from '../../application/api/models/baseProduct.ts';
+import { DieModel } from '../../application/api/models/Die.ts';
+import { MaterialModel } from '../../application/api/models/material.ts';
+import { FinishModel } from '../../application/api/models/finish.ts';
+import { BaseProductModel } from '../../application/api/models/baseProduct.ts';
 import { unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
 
 const FEET_PER_ROLL = 5000;
@@ -99,19 +99,19 @@ describe('File: quoteService.js', () => {
             coreDiameter: 3.25 // eslint-disable-line no-magic-numbers
         };
 
-        when(DieMock.findById)
+        when(DieModel.findById)
             .calledWith(die._id)
             .mockResolvedValue(die);
-        when(FinishMock.findById)
+        when(FinishModel.findById)
             .calledWith(finish._id)
             .mockResolvedValue(finish);
-        when(BaseProductMock.findById)
+        when(BaseProductModel.findById)
             .calledWith(baseProduct._id)
             .mockResolvedValue(baseProduct);
-        when(MaterialMock.findById)
+        when(MaterialModel.findById)
             .calledWith(primaryMaterial._id)
             .mockResolvedValue(primaryMaterial);
-        when(MaterialMock.findById)
+        when(MaterialModel.findById)
             .calledWith(secondaryMaterial._id)
             .mockResolvedValue(secondaryMaterial);
 
@@ -805,7 +805,7 @@ describe('File: quoteService.js', () => {
 
             it('should compute the attribute correctly when finishOverride IS UNDEFINED AND products[x].finish IS UNDEFINED', async () => {
                 delete quoteInputAttributes.finishOverride;
-                when(FinishMock.findById)
+                when(FinishModel.findById)
                     .calledWith(finish._id)
                     .mockResolvedValue(null);
                 const expectedValue = 0;
@@ -1064,7 +1064,7 @@ describe('File: quoteService.js', () => {
 
             it('should be computed correctly when secondaryMaterial is undefined', async () => {
                 delete quoteInputAttributes.secondaryMaterialOverride;
-                when(MaterialMock.findById)
+                when(MaterialModel.findById)
                     .calledWith(secondaryMaterial._id)
                     .mockResolvedValue(null);
                 const quote = await createQuote(quoteInputAttributes);
@@ -1578,19 +1578,19 @@ describe('File: quoteService.js', () => {
                     coreDiameter: 3.25,
                 };
 
-                when(DieMock.findById)
+                when(DieModel.findById)
                     .calledWith(baseProductAttributes.die)
                     .mockResolvedValue(dieAttributes);
-                when(FinishMock.findById)
+                when(FinishModel.findById)
                     .calledWith(baseProductAttributes.finish)
                     .mockResolvedValue(finishAttributes);
-                when(BaseProductMock.findById)
+                when(BaseProductModel.findById)
                     .calledWith(expect.anything())
                     .mockResolvedValue(baseProductAttributes);
-                when(MaterialMock.findById)
+                when(MaterialModel.findById)
                     .calledWith(baseProductAttributes.primaryMaterial)
                     .mockResolvedValue(primaryMaterialAttributes);
-                when(MaterialMock.findById)
+                when(MaterialModel.findById)
                     .calledWith(baseProductAttributes.secondaryMaterial)
                     .mockResolvedValue(secondaryMaterialAttributes);
                 const products = [

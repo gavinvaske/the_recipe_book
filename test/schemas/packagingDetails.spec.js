@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import packagingSchema from '../../application/api/schemas/packagingDetails';
+import { packagingDetailSchema } from '../../application/api/schemas/packagingDetails';
 import mongoose from 'mongoose';
 
 const chance = Chance();
@@ -16,7 +16,7 @@ describe('File: packaging.js', () => {
             totalBoxes: chance.d100(),
             layerLayoutImagePath: chance.word()
         };
-        PackagingModel = mongoose.model('Packaging', packagingSchema);
+        PackagingModel = mongoose.model('Packaging', packagingDetailSchema);
     });
 
     it('should validate if all attributes are defined successfully', async () => {

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-import destinationSchema from '../schemas/destination.ts';
+import { destinationSchema } from '../schemas/destination.ts';
 
 const workflowStepSchema = new Schema({
     ticketId: {
@@ -14,6 +14,4 @@ const workflowStepSchema = new Schema({
     }
 }, { timestamps: true });
 
-const WorkflowStep = mongoose.model('WorkflowStep', workflowStepSchema);
-
-export default WorkflowStep;
+export const WorkflowStepModel = mongoose.model('WorkflowStep', workflowStepSchema);

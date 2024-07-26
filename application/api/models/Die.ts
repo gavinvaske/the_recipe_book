@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { dieShapes } from '../enums/dieShapesEnum';
-import { toolTypes } from '../enums/toolTypesEnum';
-import { dieVendors } from '../enums/dieVendorsEnum';
-import { dieMagCylinders } from '../enums/dieMagCylindersEnum';
-import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum';
+import { dieShapes } from '../enums/dieShapesEnum.ts';
+import { toolTypes } from '../enums/toolTypesEnum.ts';
+import { dieVendors } from '../enums/dieVendorsEnum.ts';
+import { dieMagCylinders } from '../enums/dieMagCylindersEnum.ts';
+import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum.ts';
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.ts';
 
 import mongooseDelete from 'mongoose-delete';
@@ -198,6 +198,4 @@ const schema = new Schema({
     },
 }, { timestamps: true });
 
-const Die = mongoose.model('Die', schema);
-
-export default Die;
+export const DieModel = mongoose.model('Die', schema);

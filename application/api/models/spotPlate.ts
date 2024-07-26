@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import fileSchema from '../schemas/s3File.ts';
-import destinationSchema from '../schemas/destination.ts';
+import { s3FileSchema } from '../schemas/s3File.ts';
+import { destinationSchema } from '../schemas/destination.ts';
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
 
 function isValidSpotPlateDestination(destination) {
@@ -31,7 +31,7 @@ const spotPlateSchema = new Schema({
         required: false
     },
     fileUploads: {
-        type: [fileSchema],
+        type: [s3FileSchema],
         required: false
     },
     destination: {
@@ -41,6 +41,4 @@ const spotPlateSchema = new Schema({
     }
 }, { timestamps: true });
 
-const SpotPlate = mongoose.model('SpotPlate', spotPlateSchema);
-
-export default SpotPlate;
+export const SpotPlateModel = mongoose.model('SpotPlate', spotPlateSchema);

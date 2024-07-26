@@ -3,7 +3,7 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import * as departmentsEnum from '../enums/departmentsEnum.ts';
 
-const departmentNotesSchema = new Schema({
+export const departmentNotesSchema = new Schema({
     orderPrep: {
         type: String,
         alias: departmentsEnum.ORDER_PREP_DEPARTMENT
@@ -44,5 +44,3 @@ const departmentNotesSchema = new Schema({
     timestamps: true,
     strict: 'throw'
 });
-
-export default departmentNotesSchema;

@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import MaterialModel from '../../application/api/models/material.ts';
+import { MaterialModel } from '../../application/api/models/material.ts';
 import mongoose from 'mongoose';
 import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';

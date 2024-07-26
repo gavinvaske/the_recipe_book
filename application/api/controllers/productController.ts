@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.ts';
 import { upload } from '../middleware/upload.ts';
-import TicketModel from '../models/ticket.ts';
+import { TicketModel } from '../models/ticket.ts';
 
 import * as s3Service from '../services/s3Service.ts';
 import * as productService from '../services/productService.ts';

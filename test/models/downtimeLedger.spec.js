@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import DowntimeReasonLedger from '../../application/api/models/downtimeLedger';
+import { DowntimeLedgerModel } from '../../application/api/models/downtimeLedger';
 import mongoose from 'mongoose';
 import * as databaseService from '../../application/api/services/databaseService';
 
@@ -17,7 +17,7 @@ describe('validation', () => {
     });
 
     it('should not fail validation if all attributes are defined correctly', () => {
-        const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+        const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
         const error = downtimeLedgerRecord.validateSync();
 
@@ -27,7 +27,7 @@ describe('validation', () => {
     describe('attribute: ticketId', () => {
         it('should fail validation if attribute is not defined', () => {
             delete downtimeLedgerAttributes.ticketId;
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             const error = downtimeLedgerRecord.validateSync();
 
@@ -35,7 +35,7 @@ describe('validation', () => {
         });
 
         it('should be of type mongoose.ObjectId', () => {
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             expect(downtimeLedgerRecord.ticketId).toEqual(expect.any(mongoose.Types.ObjectId));
         });
@@ -44,7 +44,7 @@ describe('validation', () => {
     describe('attribute: reason', () => {
         it('should fail validation if attribute is not defined', () => {
             delete downtimeLedgerAttributes.reason;
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             const error = downtimeLedgerRecord.validateSync();
 
@@ -52,7 +52,7 @@ describe('validation', () => {
         });
 
         it('should be of type String', () => {
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             expect(downtimeLedgerRecord.reason).toEqual(expect.any(String));
         });
@@ -60,7 +60,7 @@ describe('validation', () => {
         it('should trim attribute', () => {
             const expectedReason = chance.string();
             downtimeLedgerAttributes.reason = '   ' + expectedReason + '  ';
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             expect(downtimeLedgerRecord.reason).toEqual(expectedReason);
         });
@@ -69,7 +69,7 @@ describe('validation', () => {
     describe('attribute: delayDurationInMinutes', () => {
         it('should fail validation if attribute is not defined', () => {
             delete downtimeLedgerAttributes.delayDurationInMinutes;
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             const error = downtimeLedgerRecord.validateSync();
 
@@ -77,7 +77,7 @@ describe('validation', () => {
         });
 
         it('should be of type Number', () => {
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             expect(downtimeLedgerRecord.delayDurationInMinutes).toEqual(expect.any(Number));
         });
@@ -85,7 +85,7 @@ describe('validation', () => {
         it('should fail validation if attribute is less than 1', () => {
             const invalidDuration = chance.integer({max: 0});
             downtimeLedgerAttributes.delayDurationInMinutes = invalidDuration;
-            const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+            const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
 
             const error = downtimeLedgerRecord.validateSync();
 
@@ -108,7 +108,7 @@ describe('validation', () => {
 
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
-                const downtimeLedgerRecord = new DowntimeReasonLedger(downtimeLedgerAttributes);
+                const downtimeLedgerRecord = new DowntimeLedgerModel(downtimeLedgerAttributes);
                 let savedDowntimeLedger = await downtimeLedgerRecord.save({validateBeforeSave: false});
     
                 expect(savedDowntimeLedger.createdAt).toBeDefined();

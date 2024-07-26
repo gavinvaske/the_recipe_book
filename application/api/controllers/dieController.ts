@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import { verifyJwtToken } from '../middleware/authorize.ts';
-import DieModel from '../models/Die.ts';
+import { DieModel } from '../models/Die.ts';
 
 router.use(verifyJwtToken);
 

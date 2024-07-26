@@ -1,6 +1,6 @@
 import Chance from 'chance';
-import TicketModel from '../../application/api/models/ticket.ts';
-import WorkflowStepModel from '../../application/api/models/WorkflowStep.ts';
+import { TicketModel } from '../../application/api/models/ticket.ts';
+import { WorkflowStepModel } from '../../application/api/models/WorkflowStep.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 import { standardPriority, getAllPriorities } from '../../application/api/enums/priorityEnum';
 import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';

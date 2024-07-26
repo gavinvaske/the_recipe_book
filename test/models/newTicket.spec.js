@@ -1,7 +1,7 @@
 import Chance from 'chance';
-import Ticket from '../../application/api/models/newTicket';
-import Customer from '../../application/api/models/customer.ts';
-import WorkflowStepModel from '../../application/api/models/WorkflowStep.ts';
+import { TicketModel } from '../../application/api/models/newTicket';
+import { CustomerModel } from '../../application/api/models/customer.ts';
+import { WorkflowStepModel } from '../../application/api/models/WorkflowStep.ts';
 import * as departmentsEnum from '../../application/api/enums/departmentsEnum.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
@@ -18,24 +18,24 @@ function verifyTimeFieldInSeconds(ticketAttributes, fieldName) {
     let ticket, error;
     
     ticketAttributes[fieldName] = chance.d100();
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
     // Should be a number
     expect(ticket[fieldName]).toEqual(expect.any(Number));
 
     ticketAttributes[fieldName] = -1;
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
     error = ticket.validateSync();
     // should not allow negative numbers
     expect(error).toBeDefined();
 
     ticketAttributes[fieldName] = 99.99;
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
     error = ticket.validateSync();
     // should not allow floating point numbers
     expect(error).toBeDefined();
 
     delete ticketAttributes[fieldName];
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
     // should defualt to 0
     expect(ticket[fieldName]).toEqual(0);
 }
@@ -46,7 +46,7 @@ function verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketA
 
     // (1) should have a value field
     ticketAttributes[attributeName] = [ createObjectWithValueField(chance.d100()) ];
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
 
     [ objectValueField ] = ticket[attributeName];
 
@@ -56,7 +56,7 @@ function verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketA
     // (2) should default value field to 0 when attribute is given an empty object in its array
     const emptyObject = {};
     ticketAttributes[attributeName] = [ emptyObject ];
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
 
     [ objectValueField ] = ticket[attributeName];
 
@@ -67,7 +67,7 @@ function verifyArrayContainsObjectsWhoseValueAttributeIsAPositiveInteger(ticketA
     const floatingPointNumber = 1.5;
     const invalidValue = chance.pickone([negativeNumber, floatingPointNumber]);
     ticketAttributes[attributeName] = [ createObjectWithValueField(invalidValue) ];
-    ticket = new Ticket(ticketAttributes);
+    ticket = new TicketModel(ticketAttributes);
 
     const error = ticket.validateSync();
 
@@ -100,14 +100,14 @@ describe('Ticket validation', () => {
     });
 
     it('should pass validation when all attributes are valid', () => {
-        const ticket = new Ticket(ticketAttributes);
+        const ticket = new TicketModel(ticketAttributes);
         const error = ticket.validateSync();
 
         expect(error).toBe(undefined);
     });
 
     it('should have the correct indexes', async () => {
-        const indexMetaData = Ticket.schema.indexes();
+        const indexMetaData = TicketModel.schema.indexes();
         const expectedIndexes = ['ticketNumber'];
 
         console.log('indexMetaData: ', indexMetaData);
@@ -125,7 +125,7 @@ describe('Ticket validation', () => {
     describe('attribute: customer', () => {
         it('should be required', () => {
             delete ticketAttributes.customer;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -133,7 +133,7 @@ describe('Ticket validation', () => {
         });
 
         it('should be a mongoose ObjectId', () => {
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.customer).toEqual(expect.any(mongoose.Types.ObjectId));
         });
@@ -142,7 +142,7 @@ describe('Ticket validation', () => {
     describe('attribute: ticketNumber', () => {
         it('should be a number', () => {
             ticketAttributes.ticketNumber = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.ticketNumber).toEqual(expect.any(Number));
         });
@@ -151,14 +151,14 @@ describe('Ticket validation', () => {
     describe('attribute: shipDate', () => {
         it('should be a date', () => {
             ticketAttributes.shipDate = chance.date();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.shipDate).toEqual(expect.any(Date));
         });
 
         it('should be required', () => {
             delete ticketAttributes.shipDate;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
             
@@ -169,14 +169,14 @@ describe('Ticket validation', () => {
     describe('attribute: customerPo', () => {
         it('should be a string', () => {
             ticketAttributes.customerPo = chance.string();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.customerPo).toEqual(expect.any(String));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.customerPo;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -187,14 +187,14 @@ describe('Ticket validation', () => {
     describe('attribute: startingImpressions', () => {
         it('should be a number', () => {
             ticketAttributes.startingImpressions = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.startingImpressions).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.startingImpressions;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -203,7 +203,7 @@ describe('Ticket validation', () => {
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.startingImpressions = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -214,14 +214,14 @@ describe('Ticket validation', () => {
     describe('attribute: totalStockLength', () => {
         it('should be a number', () => {
             ticketAttributes.totalStockLength = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.totalStockLength).toEqual(expect.any(Number));
         });
 
         it('should be required', () => {
             delete ticketAttributes.totalStockLength;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
             
@@ -230,7 +230,7 @@ describe('Ticket validation', () => {
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.totalStockLength = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -241,14 +241,14 @@ describe('Ticket validation', () => {
     describe('attribute: totalFramesRan', () => {
         it('should be a number', () => {
             ticketAttributes.totalFramesRan = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.totalFramesRan).toEqual(expect.any(Number));
         });
 
         it('should be required', () => {
             delete ticketAttributes.totalFramesRan;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -257,7 +257,7 @@ describe('Ticket validation', () => {
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.totalFramesRan = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -268,14 +268,14 @@ describe('Ticket validation', () => {
     describe('attribute: endingImpressions', () => {
         it('should be a number', () => {
             ticketAttributes.endingImpressions = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.endingImpressions).toEqual(expect.any(Number));
         });
 
         it('should be required', () => {
             delete ticketAttributes.endingImpressions;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -284,7 +284,7 @@ describe('Ticket validation', () => {
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.endingImpressions = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -295,14 +295,14 @@ describe('Ticket validation', () => {
     describe('attribute: printingOutsideRollWaste', () => {
         it('should be a number', () => {
             ticketAttributes.printingOutsideRollWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingOutsideRollWaste).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.printingOutsideRollWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
             
@@ -311,14 +311,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.printingOutsideRollWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.printingOutsideRollWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.printingOutsideRollWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -329,14 +329,14 @@ describe('Ticket validation', () => {
     describe('attribute: printingStockDefectWaste', () => {
         it('should be a number', () => {
             ticketAttributes.printingStockDefectWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingStockDefectWaste).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.printingStockDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -345,14 +345,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.printingStockDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingStockDefectWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.printingStockDefectWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -363,14 +363,14 @@ describe('Ticket validation', () => {
     describe('attribute: printingDefectWaste', () => {
         it('should be a number', () => {
             ticketAttributes.printingDefectWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingDefectWaste).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.printingDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -379,14 +379,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.printingDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingDefectWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.printingDefectWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -397,14 +397,14 @@ describe('Ticket validation', () => {
     describe('attribute: printingOperatorErrorStockWaste', () => {
         it('should be a number', () => {
             ticketAttributes.printingOperatorErrorStockWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.printingOperatorErrorStockWaste).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.printingOperatorErrorStockWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -413,14 +413,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.printingOperatorErrorStockWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingOperatorErrorStockWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.printingOperatorErrorStockWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
             
@@ -431,7 +431,7 @@ describe('Ticket validation', () => {
     describe('attribute: colorCalibrations', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.colorCalibrations;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.colorCalibrations).toEqual([]);
         });
@@ -444,7 +444,7 @@ describe('Ticket validation', () => {
     describe('attribute: scalings', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.scalings;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.scalings).toEqual([]);
         });
@@ -457,7 +457,7 @@ describe('Ticket validation', () => {
     describe('attribute: printCleaners', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.printCleaners;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printCleaners).toEqual([]);
         });
@@ -470,14 +470,14 @@ describe('Ticket validation', () => {
     describe('attribute: bcsCleaners', () => {
         it('should be a number', () => {
             ticketAttributes.bcsCleaners = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.bcsCleaners).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.bcsCleaners;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -486,14 +486,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.bcsCleaners;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.bcsCleaners).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.bcsCleaners = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -502,7 +502,7 @@ describe('Ticket validation', () => {
 
         it('should be a whole number', () => {
             ticketAttributes.bcsCleaners = chance.floating({ min: 0, max: 100 });
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -513,7 +513,7 @@ describe('Ticket validation', () => {
     describe('attribute: proofRunups', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.proofRunups;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.proofRunups).toEqual([]);
         });
@@ -526,7 +526,7 @@ describe('Ticket validation', () => {
     describe('attribute: dieLineFrames', () => {
         it('should be a number', () => {
             ticketAttributes.dieLineFrames = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -535,7 +535,7 @@ describe('Ticket validation', () => {
 
         it('should not be required', () => {
             delete ticketAttributes.dieLineFrames;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
             
@@ -544,14 +544,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.dieLineFrames;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.dieLineFrames).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.dieLineFrames = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -560,7 +560,7 @@ describe('Ticket validation', () => {
 
         it('should be a whole number', () => {
             ticketAttributes.dieLineFrames = chance.floating({ min: 0, max: 100 });
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -571,14 +571,14 @@ describe('Ticket validation', () => {
     describe('attribute: extraDieCuttingFrames', () => {
         it('should be a number', () => {
             ticketAttributes.extraDieCuttingFrames = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.extraDieCuttingFrames).toEqual(expect.any(Number));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.extraDieCuttingFrames;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -587,14 +587,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.extraDieCuttingFrames;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.extraDieCuttingFrames).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.extraDieCuttingFrames = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -603,7 +603,7 @@ describe('Ticket validation', () => {
 
         it('should be a whole number', () => {
             ticketAttributes.extraDieCuttingFrames = chance.floating({ min: 0, max: 100 });
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -614,7 +614,7 @@ describe('Ticket validation', () => {
     describe('attribute: newMaterialSplices', () => {
         it('should not be required', () => {
             delete ticketAttributes.newMaterialSplices;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -629,7 +629,7 @@ describe('Ticket validation', () => {
     describe('attribute: existingMaterialSplices', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.existingMaterialSplices;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.existingMaterialSplices).toEqual([]);
         });
@@ -642,7 +642,7 @@ describe('Ticket validation', () => {
     describe('attribute: materialWrapUps', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.materialWrapUps;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.materialWrapUps).toEqual([]);
         });
@@ -655,7 +655,7 @@ describe('Ticket validation', () => {
     describe('attribute: webBreaks', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.webBreaks;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.webBreaks).toEqual([]);
         });
@@ -668,7 +668,7 @@ describe('Ticket validation', () => {
     describe('attribute: newInkBuilds', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.newInkBuilds;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.newInkBuilds).toEqual([]);
         });
@@ -681,7 +681,7 @@ describe('Ticket validation', () => {
     describe('attribute: imagePlacements', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.imagePlacements;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.imagePlacements).toEqual([]);
         });
@@ -694,7 +694,7 @@ describe('Ticket validation', () => {
     describe('attribute: colorSeperations', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.colorSeperations;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.colorSeperations).toEqual([]);
         });
@@ -707,7 +707,7 @@ describe('Ticket validation', () => {
     describe('attribute: trailingEdges', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.trailingEdges;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.trailingEdges).toEqual([]);
         });
@@ -720,7 +720,7 @@ describe('Ticket validation', () => {
     describe('attribute: leadingEdges', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.leadingEdges;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.leadingEdges).toEqual([]);
         });
@@ -733,14 +733,14 @@ describe('Ticket validation', () => {
     describe('attribute: printingJobComments', () => {
         it('should be a string', () => {
             ticketAttributes.printingJobComments = chance.string();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingJobComments).toEqual(expect.any(String));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.printingJobComments;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -751,7 +751,7 @@ describe('Ticket validation', () => {
             const jobComments = chance.string();
             ticketAttributes.printingJobComments = ` ${jobComments} `;
             
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.printingJobComments).toEqual(jobComments.trim());
         });
@@ -760,7 +760,7 @@ describe('Ticket validation', () => {
     describe('attribute: jobSetup', () => {
         it('should not be required', () => {
             delete ticketAttributes.jobSetup;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -772,7 +772,7 @@ describe('Ticket validation', () => {
             const feet = chance.d100();
             ticketAttributes.jobSetup = { time, feet };
             
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.jobSetup.time).toEqual(time);
             expect(ticket.jobSetup.feet).toEqual(feet);
@@ -781,7 +781,7 @@ describe('Ticket validation', () => {
         it('should fail validation if the time field is negative', () => {
             ticketAttributes.jobSetup = { time: -1, feet: chance.d100() };
 
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -792,7 +792,7 @@ describe('Ticket validation', () => {
     describe('attribute: jobRun', () => {
         it('should not be required', () => {
             delete ticketAttributes.jobRun;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -803,7 +803,7 @@ describe('Ticket validation', () => {
             const time = chance.d100();
             const feet = chance.d100();
             ticketAttributes.jobRun = { time, feet };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.jobRun.time).toEqual(time);
             expect(ticket.jobRun.feet).toEqual(feet);
@@ -813,7 +813,7 @@ describe('Ticket validation', () => {
             const time = -1;
             const feet = chance.d100();
             ticketAttributes.jobRun = { time, feet };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -824,7 +824,7 @@ describe('Ticket validation', () => {
             const time = chance.d100();
             const feet = -1;
             ticketAttributes.jobRun = { time, feet };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -835,7 +835,7 @@ describe('Ticket validation', () => {
     describe('attribute: tearDownTime', () => {
         it('should not be required', () => {
             delete ticketAttributes.tearDownTime;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -850,7 +850,7 @@ describe('Ticket validation', () => {
     describe('attribute: dieCutterDown', () => {
         it('should not be required', () => {
             delete ticketAttributes.dieCutterDown;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -863,7 +863,7 @@ describe('Ticket validation', () => {
             const footageLost = chance.d100();
             ticketAttributes.dieCutterDown = { time, reason, footageLost };
             
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.dieCutterDown.time).toEqual(time);
             expect(ticket.dieCutterDown.reason).toEqual(reason);
@@ -875,7 +875,7 @@ describe('Ticket validation', () => {
             ticketAttributes.dieCutterDown = {
                 footageLost: nonIntegerFootageLost
             };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -887,7 +887,7 @@ describe('Ticket validation', () => {
             ticketAttributes.dieCutterDown = {
                 footageLost: negativeFootageLost
             };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -898,21 +898,21 @@ describe('Ticket validation', () => {
     describe('attribute: cuttingOutsideRollWaste', () => {
         it('should be a number', () => {
             ticketAttributes.cuttingOutsideRollWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingOutsideRollWaste).toEqual(expect.any(Number));
         });
 
         it('should default to 0', () => {
             delete ticketAttributes.cuttingOutsideRollWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingOutsideRollWaste).toEqual(0);
         });
 
         it('should not be less than 0', () => {
             ticketAttributes.cuttingOutsideRollWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -923,21 +923,21 @@ describe('Ticket validation', () => {
     describe('attribute: cuttingStockDefectWaste', () => {
         it('should be a number', () => {
             ticketAttributes.cuttingStockDefectWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingStockDefectWaste).toEqual(expect.any(Number));
         });
 
         it('should default to 0', () => {
             delete ticketAttributes.cuttingStockDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.cuttingStockDefectWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.cuttingStockDefectWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -948,21 +948,21 @@ describe('Ticket validation', () => {
     describe('attribute: cuttingDefectWaste', () => {
         it('should be a number', () => {
             ticketAttributes.cuttingDefectWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingDefectWaste).toEqual(expect.any(Number));
         });
 
         it('should default to 0', () => {
             delete ticketAttributes.cuttingDefectWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingDefectWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.cuttingDefectWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -973,21 +973,21 @@ describe('Ticket validation', () => {
     describe('attribute: cuttingOperatorErrorStockWaste', () => {
         it('should be a number', () => {
             ticketAttributes.cuttingOperatorErrorStockWaste = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingOperatorErrorStockWaste).toEqual(expect.any(Number));
         });
 
         it('should default to 0', () => {
             delete ticketAttributes.cuttingOperatorErrorStockWaste;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingOperatorErrorStockWaste).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.cuttingOperatorErrorStockWaste = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -998,14 +998,14 @@ describe('Ticket validation', () => {
     describe('attribute: cuttingJobComments', () => {
         it('should be a string', () => {
             ticketAttributes.cuttingJobComments = chance.string();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingJobComments).toEqual(expect.any(String));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.cuttingJobComments;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1016,7 +1016,7 @@ describe('Ticket validation', () => {
             const jobComments = chance.string();
             ticketAttributes.cuttingJobComments = ` ${jobComments} `;
             
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.cuttingJobComments).toEqual(jobComments.trim());
         });
@@ -1025,7 +1025,7 @@ describe('Ticket validation', () => {
     describe('attribute: rewindingDuration', () => {
         it('should not be required', () => {
             delete ticketAttributes.rewindingDuration;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1035,14 +1035,14 @@ describe('Ticket validation', () => {
         it('should be a number', () => {
             const rewindingDuration = chance.d100();
             ticketAttributes.rewindingDuration = rewindingDuration;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.rewindingDuration).toEqual(rewindingDuration);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.rewindingDuration = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -1051,7 +1051,7 @@ describe('Ticket validation', () => {
 
         it('should fail validation if attribute is not a whole number', () => {
             ticketAttributes.rewindingDuration = 932.43;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1060,7 +1060,7 @@ describe('Ticket validation', () => {
 
         it('should default to 0 if attribute is not defined', () => {
             delete ticketAttributes.rewindingDuration;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.rewindingDuration).toEqual(0);
         });
@@ -1069,7 +1069,7 @@ describe('Ticket validation', () => {
     describe('attribute: windingJobComments', () => {
         it('should not be required', () => {
             delete ticketAttributes.windingJobComments;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1079,7 +1079,7 @@ describe('Ticket validation', () => {
         it('should be a string', () => {
             const windingJobComments = chance.string();
             ticketAttributes.windingJobComments = windingJobComments;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.windingJobComments).toEqual(windingJobComments);
         });
@@ -1088,7 +1088,7 @@ describe('Ticket validation', () => {
     describe('attribute: packagingDuration', () => {
         it ('should not be required', () => {
             delete ticketAttributes.packagingDuration;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1103,7 +1103,7 @@ describe('Ticket validation', () => {
     describe('attribute: boxes', () => {
         it('should default to an empty array', () => {
             delete ticketAttributes.boxes;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.boxes).toEqual([]);
         });
@@ -1115,7 +1115,7 @@ describe('Ticket validation', () => {
             const box = {rollsPerBox, boxSize, quantityOfBoxes};
             ticketAttributes.boxes = [box];
 
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             const [box1] = ticket.boxes;
             
             expect(box1.rollsPerBox).toEqual(rollsPerBox);
@@ -1126,7 +1126,7 @@ describe('Ticket validation', () => {
         it('should default rollsPerBox, boxSize, and quantityOfBoxes to 0', () => {
             const emtpyBox = {};
             ticketAttributes.boxes = [emtpyBox];
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             const [box] = ticket.boxes;
             
             expect(box.rollsPerBox).toEqual(0);
@@ -1136,7 +1136,7 @@ describe('Ticket validation', () => {
 
         it('should fail validation boxes[n].rollsPerBox is negative', () => {
             ticketAttributes.boxes = [{rollsPerBox: -1, boxSize: chance.d100(), quantityOfBoxes: chance.d100() }];
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1145,7 +1145,7 @@ describe('Ticket validation', () => {
 
         it('should fail validation boxes[n].boxSize is negative', () => {
             ticketAttributes.boxes = [{rollsPerBox: chance.d100(), boxSize: -1, quantityOfBoxes: chance.d100() }];
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1154,7 +1154,7 @@ describe('Ticket validation', () => {
 
         it('should fail validation boxes[n].quantityOfBoxes is negative', () => {
             ticketAttributes.boxes = [{rollsPerBox: chance.d100(), boxSize: chance.d100(), quantityOfBoxes: -1 }];
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1165,7 +1165,7 @@ describe('Ticket validation', () => {
     describe('attribute: totalRollsBoxed', () => {
         it('should not be required', () => {
             delete ticketAttributes.totalRollsBoxed;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1182,7 +1182,7 @@ describe('Ticket validation', () => {
             ];
             const expectedTotalRollsBoxed = boxes[0].rollsPerBox + boxes[1].rollsPerBox + boxes[2].rollsPerBox;
             ticketAttributes.boxes = boxes;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.totalRollsBoxed).toEqual(expectedTotalRollsBoxed);
         });
@@ -1191,7 +1191,7 @@ describe('Ticket validation', () => {
     describe('attribute: totalQtyBoxed', () => {
         it('should not be required', () => {
             delete ticketAttributes.totalQtyBoxed;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -1200,14 +1200,14 @@ describe('Ticket validation', () => {
 
         it('should default to 0', () => {
             delete ticketAttributes.totalQtyBoxed;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.totalQtyBoxed).toEqual(0);
         });
 
         it('should be greater than or equal to 0', () => {
             ticketAttributes.totalQtyBoxed = -1;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1218,14 +1218,14 @@ describe('Ticket validation', () => {
     describe('attribute: packagingJobComments', () => {
         it('should be a string', () => {
             ticketAttributes.packagingJobComments = chance.d100();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.packagingJobComments).toEqual(expect.any(String));
         });
 
         it('should not be required', () => {
             delete ticketAttributes.packagingJobComments;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1236,7 +1236,7 @@ describe('Ticket validation', () => {
             const jobComments = chance.string();
             ticketAttributes.packagingJobComments = ` ${jobComments} `;
 
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.packagingJobComments).toEqual(jobComments.trim());
         });
@@ -1245,7 +1245,7 @@ describe('Ticket validation', () => {
     describe('attribute: destination', () => {
         it('should pass validation if attribute is not defined', () => {
             delete ticketAttributes.destination;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1254,7 +1254,7 @@ describe('Ticket validation', () => {
 
         it('should fail validation if attribute is not the correct type', () => {
             ticketAttributes.destination = chance.word();
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1268,14 +1268,14 @@ describe('Ticket validation', () => {
                 departmentStatus: chance.pickone(departmentsEnum.departmentToStatusesMappingForTicketObjects[randomDepartment])
             };
 
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             expect(ticket.destination._id).not.toBe(undefined);
         });
 
         it('should fail validation if destination is empty object', () => {
             ticketAttributes.destination = {};
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1290,7 +1290,7 @@ describe('Ticket validation', () => {
                 department: validTicketDepartment,
                 departmentStatus: validTicketDepartmentStatus
             };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1305,7 +1305,7 @@ describe('Ticket validation', () => {
                 department: validTicketDepartment,
                 departmentStatus: invalidTicketDepartmentStatus
             };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1322,7 +1322,7 @@ describe('Ticket validation', () => {
                 department: invalidTicketDepartment,
                 departmentStatus: validTicketDepartment
             };
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1333,7 +1333,7 @@ describe('Ticket validation', () => {
     describe('attribute: packingSlips', () => {
         it('should pass validation if attribute is defined correctly', () => {
             delete ticketAttributes.packingSlips;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
 
@@ -1342,7 +1342,7 @@ describe('Ticket validation', () => {
         
         it('should default to an empty array', () => {
             delete ticketAttributes.packingSlips;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.packingSlips).toEqual([]);
         });
@@ -1353,7 +1353,7 @@ describe('Ticket validation', () => {
                 new mongoose.Types.ObjectId()
             ];
             ticketAttributes.packingSlips = packingSlips;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.packingSlips.length).toEqual(packingSlips.length);
 
@@ -1373,7 +1373,7 @@ describe('Ticket validation', () => {
                 { baseProduct: new mongoose.Types.ObjectId() },
             ];
             ticketAttributes.products = products;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             const error = ticket.validateSync();
             
@@ -1391,7 +1391,7 @@ describe('Ticket validation', () => {
                 },
             ];
             ticketAttributes.products = products;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.products[0].baseProduct).toEqual(products[0].baseProduct);
             expect(ticket.products[0].labelQuantity).toEqual(products[0].labelQuantity);
@@ -1403,7 +1403,7 @@ describe('Ticket validation', () => {
     describe('attribute: estimatedTicket', () => {
         it('should not be required', () => {
             delete ticketAttributes.estimatedTicket;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
 
             const error = ticket.validateSync();
 
@@ -1413,7 +1413,7 @@ describe('Ticket validation', () => {
         it('should be set to the correct value', () => {
             const estimatedTicketObjectId = new mongoose.Types.ObjectId();
             ticketAttributes.estimatedTicket = estimatedTicketObjectId;
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             
             expect(ticket.estimatedTicket).toBe(estimatedTicketObjectId);
         });
@@ -1436,19 +1436,19 @@ describe('Ticket validation', () => {
 
         beforeEach(async () => {
             customerAttributes = testDataGenerator.mockData.Customer();
-            const customer = new Customer(customerAttributes);
+            const customer = new CustomerModel(customerAttributes);
             savedCustomer = await customer.save();
             ticketAttributes.customer = savedCustomer._id;
         });
 
         it('should soft delete items', async () => {
-            const ticket = new Ticket(ticketAttributes);
+            const ticket = new TicketModel(ticketAttributes);
             const id = ticket._id;
 
             await ticket.save();
-            await Ticket.deleteById(id);
+            await TicketModel.deleteById(id);
 
-            const softDeletedAdhesiveCategory = await Ticket.findOneDeleted({_id: id}).exec();
+            const softDeletedAdhesiveCategory = await TicketModel.findOneDeleted({_id: id}).exec();
 
             expect(softDeletedAdhesiveCategory).toBeDefined();
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
@@ -1464,7 +1464,7 @@ describe('Ticket validation', () => {
                         finishedLabelQuantity: chance.d100()
                     }
                 ];
-                const ticket = new Ticket(ticketAttributes);
+                const ticket = new TicketModel(ticketAttributes);
                 const savedTicket = await ticket.save();
                 
                 expect(savedTicket.products[0].createdAt).toBeDefined();
@@ -1475,7 +1475,7 @@ describe('Ticket validation', () => {
         describe('attribute: ticketNumber', () => {
             it('should generate upon save', async () => {
                 delete ticketAttributes.ticketNumber;
-                const ticket = new Ticket(ticketAttributes);
+                const ticket = new TicketModel(ticketAttributes);
                 const savedTicket = await ticket.save();
                 
                 expect(savedTicket.ticketNumber).toEqual(expect.any(Number));
@@ -1483,9 +1483,9 @@ describe('Ticket validation', () => {
 
             it('should set the first ticketNumber at 60000 and incriment future tickets by 1', async () => {
                 const startingTicketNumber = 60000;
-                const ticket1 = new Ticket(ticketAttributes);
-                const ticket2 = new Ticket(ticketAttributes);
-                const ticket3 = new Ticket(ticketAttributes);
+                const ticket1 = new TicketModel(ticketAttributes);
+                const ticket2 = new TicketModel(ticketAttributes);
+                const ticket3 = new TicketModel(ticketAttributes);
 
                 const savedTicket1 = await ticket1.save();
                 const savedTicket2 = await ticket2.save();
@@ -1500,7 +1500,7 @@ describe('Ticket validation', () => {
         describe('attribute: ticketNotes', () => {
             it('should append ticket.customer.notes to ticket.ticketNotes', async () => {
                 ticketAttributes.ticketNotes = chance.string();
-                const ticket = new Ticket(ticketAttributes);
+                const ticket = new TicketModel(ticketAttributes);
                 const savedTicket = await ticket.save();
                 const expectedTicketNotesAfterSaving = `${ticketAttributes.ticketNotes}\n\nCustomer Notes:\n${savedCustomer.notes}`;
 
@@ -1523,7 +1523,7 @@ describe('Ticket validation', () => {
             describe('mongoose ticketSchema.pre("save")', () => {
                 it('should add item to workflow database when one ticket is saved with a destination', async () => {
                     ticketAttributes.destination = destination;
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
                     await ticket.save({ validateBeforeSave: false });
 
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
@@ -1536,7 +1536,7 @@ describe('Ticket validation', () => {
 
                 it('should NOT add item to workflow database when one ticket is saved without a destination', async () => {
                     delete ticketAttributes.destination;
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
                     
                     await ticket.save({ validateBeforeSave: false });
 
@@ -1547,10 +1547,10 @@ describe('Ticket validation', () => {
 
             describe('mongoose ticketSchema.pre("findOneAndUpdate")', () => {
                 it('should add item to workflow database when one ticket is updated', async () => {
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
         
                     let savedTicket = await ticket.save({validateBeforeSave: false});
-                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
+                    await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
         
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
                     
@@ -1562,9 +1562,9 @@ describe('Ticket validation', () => {
                 });
         
                 it('should add item to workflow database with the correct attributes when one ticket is updated', async () => {
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
                     let savedTicket = await ticket.save({validateBeforeSave: false});
-                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
+                    await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: destination}}, {runValidators: true}).exec();
         
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
                     const workflowStep = allWorkflowStepsInDatabase[0];
@@ -1580,10 +1580,10 @@ describe('Ticket validation', () => {
                 });
         
                 it('should NOT add item to workflow database when one ticket is updated but the destination attribute was NOT updated', async () => {
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
                     let savedTicket = await ticket.save({validateBeforeSave: false});
                     const ticketAttributesOtherThanDestinationToUpdate = {};
-                    await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: ticketAttributesOtherThanDestinationToUpdate}, {runValidators: true}).exec();
+                    await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: ticketAttributesOtherThanDestinationToUpdate}, {runValidators: true}).exec();
         
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
                     
@@ -1591,7 +1591,7 @@ describe('Ticket validation', () => {
                 });
         
                 it('should add a new item to workflow database N times where N is the number of times a tickets destination attribute was updated', async () => {
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
                     const numberOfUpdatesToTicketDestination = chance.integer({min: 10, max: 100});
                     const departments = departmentsEnum.getAllDepartmentsWithDepartmentStatuses();
                     let savedTicket = await ticket.save({validateBeforeSave: false});
@@ -1605,7 +1605,7 @@ describe('Ticket validation', () => {
                             departmentStatus
                         };
         
-                        await Ticket.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
+                        await TicketModel.findOneAndUpdate({_id: savedTicket._id}, {$set: {destination: newTicketDestination}}, {runValidators: true}).exec();
                     }
         
                     const allWorkflowStepsInDatabase = await WorkflowStepModel.find({});
@@ -1635,7 +1635,7 @@ describe('Ticket validation', () => {
                 });
                 it('should have timestamps and _id on each element in colorCalibrations[n]', async () => {
                     ticketAttributes.colorCalibrations = [ { value: chance.d100() } ];
-                    const ticket = new Ticket(ticketAttributes);
+                    const ticket = new TicketModel(ticketAttributes);
 
                     const savedTicket = await ticket.save();
 

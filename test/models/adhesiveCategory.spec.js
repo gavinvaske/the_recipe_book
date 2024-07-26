@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import AdhesiveCategoryModel from '../../application/api/models/adhesiveCategory.ts';
+import { AdhesiveCategoryModel } from '../../application/api/models/adhesiveCategory.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();

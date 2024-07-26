@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
-import addressSchema from '../schemas/address.ts';
+import { addressSchema } from '../schemas/address.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
@@ -53,6 +53,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const Vendor = mongoose.model('Vendor', schema);
-
-export default Vendor;
+export const VendorModel = mongoose.model('Vendor', schema);

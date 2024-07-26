@@ -1,6 +1,6 @@
 import * as holdReasonService from '../../application/api/services/holdReasonService.ts';
 import Chance from 'chance';
-import mockHoldReasonModel from '../../application/api/models/holdReason.ts';
+import { HoldReasonModel } from '../../application/api/models/holdReason.ts';
 import { getAllDepartmentsWithDepartmentStatuses } from '../../application/api/enums/departmentsEnum.ts';
 
 const chance = Chance();
@@ -19,7 +19,7 @@ describe('holdReasonService test suite', () => {
                     exec: execFunction
                 };
             });
-            mockHoldReasonModel.find.mockImplementation(findFunction);
+            HoldReasonModel.find.mockImplementation(findFunction);
         });
 
         it ('should not throw error', async () => {

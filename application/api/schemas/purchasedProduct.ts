@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
-// TODO (10-7-2023): I think all of this can be removed. It was an old requirement... I think. Double Check.
-const purchasedProductSchema = new Schema({
+export const purchasedProductSchema = new Schema({
     baseProduct: {
         type: Schema.Types.ObjectId,
         ref: 'BaseProduct',
@@ -25,4 +24,3 @@ const purchasedProductSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = purchasedProductSchema;

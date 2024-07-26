@@ -167,5 +167,3 @@ const schema = new Schema({
 });
 
 export const MaterialModel = mongoose.model('Material', schema);
-
-export default MaterialModel;

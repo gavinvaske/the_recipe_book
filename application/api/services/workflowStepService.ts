@@ -1,4 +1,4 @@
-import WorkflowStepModel from '../models/WorkflowStep.ts';
+import { WorkflowStepModel } from '../models/WorkflowStep.ts';
 import * as dateTimeService from './dateTimeService.ts';
 import { COMPLETE_DEPARTMENT, productionDepartmentsAndDepartmentStatuses } from '../enums/departmentsEnum.ts';
 

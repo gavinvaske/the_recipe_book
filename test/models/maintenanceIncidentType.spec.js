@@ -1,4 +1,4 @@
-import MaintenanceIncidentTypeModel from '../../application/api/models/maintenanceIncidentType';
+import { MaintenanceIncidentTypeModel } from '../../application/api/models/maintenanceIncidentType';
 import Chance from 'chance';
 import * as databaseService from '../../application/api/services/databaseService';
 

@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import MaterialCategoryModel from '../../application/api/models/materialCategory.ts';
+import { MaterialCategoryModel } from '../../application/api/models/materialCategory.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();

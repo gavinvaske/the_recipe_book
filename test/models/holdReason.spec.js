@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import HoldReason from '../../application/api/models/holdReason.ts';
+import { HoldReasonModel } from '../../application/api/models/holdReason.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 
 const chance = Chance();
@@ -30,14 +30,14 @@ describe('validation', () => {
 
         describe('verify timestamps on created object', () => {
             it('should have a "createdAt" attribute once object is saved', async () => {
-                const holdReason = new HoldReason(holdReasonAttributes);
+                const holdReason = new HoldReasonModel(holdReasonAttributes);
                 let savedHoldReason = await holdReason.save({validateBeforeSave: false});
     
                 expect(savedHoldReason.createdAt).toBeDefined();
             });
     
             it('should have a "updated" attribute once object is saved', async () => {
-                const holdReason = new HoldReason(holdReasonAttributes);
+                const holdReason = new HoldReasonModel(holdReasonAttributes);
                 let savedHoldReason = await holdReason.save({validateBeforeSave: false});
     
                 expect(savedHoldReason.createdAt).toBeDefined();
@@ -46,13 +46,13 @@ describe('validation', () => {
 
         describe('verify soft deletes work', () => {
             it('should be "soft-deletable"', async () => {
-                const holdReason = new HoldReason(holdReasonAttributes);
+                const holdReason = new HoldReasonModel(holdReasonAttributes);
                 const holdReasonId = holdReason._id;
 
                 await holdReason.save({validateBeforeSave: false});
-                await HoldReason.deleteById(holdReasonId);
+                await HoldReasonModel.deleteById(holdReasonId);
 
-                const softDeletedHoldReason = await HoldReason.findOneDeleted({_id: holdReasonId}).exec();
+                const softDeletedHoldReason = await HoldReasonModel.findOneDeleted({_id: holdReasonId}).exec();
 
                 expect(softDeletedHoldReason).toBeDefined();
                 expect(softDeletedHoldReason.deleted).toBe(true);
@@ -62,14 +62,14 @@ describe('validation', () => {
 
     describe('attribute: department', () => {
         it('should be of type String', () => {
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             expect(holdReason.department).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is not defined', async () => {
             delete holdReasonAttributes.department;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -79,7 +79,7 @@ describe('validation', () => {
         it('should fail if attribute is NOT an accepted value', async () => {
             const invalidDepartment = chance.string();
             holdReasonAttributes.department = invalidDepartment;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -89,7 +89,7 @@ describe('validation', () => {
         it('should pass if attribute IS an accepted value', () => {
             const validDepartment = DEPARTMENT_NAME;
             holdReasonAttributes.department = validDepartment;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -100,7 +100,7 @@ describe('validation', () => {
             const whitespaceToTrim = '  ';
             const validDepartment = DEPARTMENT_NAME;
             holdReasonAttributes.department = whitespaceToTrim + validDepartment + whitespaceToTrim;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -110,14 +110,14 @@ describe('validation', () => {
 
     describe('attribute: reason', () => {
         it('should be of type String', () => {
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             expect(holdReason.reason).toEqual(expect.any(String));
         });
 
         it('should fail if attribute is not defined', () => {
             delete holdReasonAttributes.reason;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -126,7 +126,7 @@ describe('validation', () => {
 
         it('should fail if attribute is empty', () => {
             holdReasonAttributes.reason = '';
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             const error = holdReason.validateSync();
 
@@ -136,7 +136,7 @@ describe('validation', () => {
         it('should trim the attribute', () => {
             const reason = chance.string().toUpperCase();
             holdReasonAttributes.reason = ' ' + reason + '   ';
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             expect(holdReason.reason).toBe(reason);
         });
@@ -144,7 +144,7 @@ describe('validation', () => {
         it('should convert to uppercase', () => {
             const lowerCaseReason = chance.string({casing: 'lower'});
             holdReasonAttributes.reason = lowerCaseReason;
-            const holdReason = new HoldReason(holdReasonAttributes);
+            const holdReason = new HoldReasonModel(holdReasonAttributes);
 
             expect(holdReason.reason).toBe(lowerCaseReason.toUpperCase());
         });

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import SpotPlateModel from '../models/spotPlate.ts';
-import DieLineModel from '../models/dieLine.ts';
+import { SpotPlateModel } from '../models/spotPlate.ts';
+import { DieLineModel } from '../models/dieLine.ts';
 import * as destinationService from '../services/destinationService.ts';
 import { verifyJwtToken } from '../middleware/authorize.ts';
 

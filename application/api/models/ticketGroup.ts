@@ -17,6 +17,4 @@ const ticketGroupSchema = new Schema({
     }
 });
 
-const TicketGroup = mongoose.model('TicketGroup', ticketGroupSchema);
-
-module.exports = TicketGroup;
+export const TicketGroupModel = mongoose.model('TicketGroup', ticketGroupSchema);

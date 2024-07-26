@@ -69,6 +69,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const windingSetup = mongoose.model('windingSetups', schema);
-
-export default windingSetup;
+export const WindingSetupModel = mongoose.model('windingSetups', schema);

@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';
-import UserModel from '../models/user.ts';
+import { UserModel } from '../models/user.ts';
 import jwt from 'jsonwebtoken';
 import { verifyJwtToken } from '../middleware/authorize.ts';
 import { sendPasswordResetEmail } from '../services/emailService.ts';

@@ -11,6 +11,4 @@ const schema = new Schema({
     },
 }, { timestamps: true });
 
-const AdhesiveCategory = mongoose.model('AdhesiveCategory', schema);
-
-export default AdhesiveCategory;
+export const AdhesiveCategoryModel = mongoose.model('AdhesiveCategory', schema);

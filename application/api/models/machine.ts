@@ -23,6 +23,5 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-const Machine = mongoose.model('Machine', schema);
+export const MachineModel = mongoose.model('Machine', schema);
 
-export default Machine;

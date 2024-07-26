@@ -20,6 +20,4 @@ const downtimeLedgerSchema = new Schema({
     }
 }, { timestamps: true });
 
-const DowntimeLedger = mongoose.model('downtimeLedger', downtimeLedgerSchema);
-
-module.exports = DowntimeLedger;
+export const DowntimeLedgerModel = mongoose.model('downtimeLedger', downtimeLedgerSchema);

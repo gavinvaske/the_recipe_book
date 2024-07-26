@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Chance from 'chance';
-import CustomerModel from '../../application/api/models/customer.ts';
+import { CustomerModel } from '../../application/api/models/customer.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 import * as testDataGenerator from '../testDataGenerator';
 
@@ -277,7 +277,7 @@ describe('validation', () => {
             expect(contacts[0]._id).toBeDefined();
         });
 
-        it('should be an array with a multiple mongoose object', () => {
+        it('should be an array with a multiple mongoose object', () => { // TPDP
             customerAttributes.contacts = [getContact(), getContact()];
 
             const { contacts } = new CustomerModel(customerAttributes);

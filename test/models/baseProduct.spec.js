@@ -1,12 +1,12 @@
 import Chance from 'chance';
-import ProductModel from '../../application/api/models/baseProduct.ts';
+import { BaseProductModel } from '../../application/api/models/baseProduct.ts';
 import mongoose from 'mongoose';
 import * as databaseService from '../../application/api/services/databaseService';
-import CustomerModel from '../../application/api/models/customer.ts';
-import MaterialModel from '../../application/api/models/material.ts';
+import { CustomerModel } from '../../application/api/models/customer.ts';
+import { MaterialModel } from '../../application/api/models/material.ts';
 import { defaultUnwindDirection, unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
 import { finishTypes, defaultFinishType } from '../../application/api/enums/finishTypesEnum';
-import DieModel from '../../application/api/models/Die.ts';
+import { DieModel } from '../../application/api/models/Die.ts';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
@@ -26,7 +26,7 @@ describe('Product Model', () => {
     });
 
     it('should validate when attributes are defined correctly', () => {
-        const product = new ProductModel(productAttributes);
+        const product = new BaseProductModel(productAttributes);
 
         const error = product.validateSync();
 
@@ -38,13 +38,13 @@ describe('Product Model', () => {
        
         productAttributes[unknownAttribute] = chance.string();
 
-        expect(() => new ProductModel(productAttributes)).toThrow();
+        expect(() => new BaseProductModel(productAttributes)).toThrow();
     });
 
     describe('attribute: customer', () => {
         it('should be required', () => {
             delete productAttributes.customer;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -52,14 +52,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.customer).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.customer = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -70,7 +70,7 @@ describe('Product Model', () => {
     describe('attribute: productDescription', () => {
         it('should be required', () => {
             delete productAttributes.productDescription;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
             
@@ -78,7 +78,7 @@ describe('Product Model', () => {
         });
 
         it('should be a string', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.productDescription).toEqual(expect.any(String));
         });
@@ -87,7 +87,7 @@ describe('Product Model', () => {
             const productDescription = chance.string();
             productAttributes.productDescription = ` ${productDescription}   `;
 
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.productDescription).toEqual(productDescription);
         });
@@ -96,7 +96,7 @@ describe('Product Model', () => {
     describe('attribute: die', () => {
         it('should be required', () => {
             delete productAttributes.die;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -104,14 +104,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.die).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.die = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -122,7 +122,7 @@ describe('Product Model', () => {
     describe('attribute: unwindDirection', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.unwindDirection;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -132,7 +132,7 @@ describe('Product Model', () => {
 
         it('should fail if attribute is not a valid unwindDirection value', () => {
             productAttributes.unwindDirection = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -142,7 +142,7 @@ describe('Product Model', () => {
         it('should be a number', () => {
             productAttributes.unwindDirection = chance.pickone(unwindDirections);
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.unwindDirection).toEqual(expect.any(Number));
         });
@@ -159,7 +159,7 @@ describe('Product Model', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.ovOrEpm;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.ovOrEpm).toEqual(defaultOvOrEpmOption);
         });
@@ -167,7 +167,7 @@ describe('Product Model', () => {
         it('should fail if attribute is not a valid ovOrEpm value', () => {
             const invalidOvOrEpmOption = chance.string();
             productAttributes.ovOrEpm = invalidOvOrEpmOption;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -177,7 +177,7 @@ describe('Product Model', () => {
         it('should pass validation if attribute is a valid ovOrEpm value', () => {
             const validOvOrEpmOption = chance.pickone(ovOrEpmOptions);
             productAttributes.ovOrEpm = validOvOrEpmOption;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -187,7 +187,7 @@ describe('Product Model', () => {
         it('should convert attribute to upper case', () => {
             const lowerCaseOvOrEpmOption = chance.pickone(ovOrEpmOptions).toLowerCase();
             productAttributes.ovOrEpm = lowerCaseOvOrEpmOption;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -199,7 +199,7 @@ describe('Product Model', () => {
     describe('attribute: artNotes', () => {
         it('should not be required', () => {
             delete productAttributes.artNotes;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -210,7 +210,7 @@ describe('Product Model', () => {
             const artNotes = chance.string();
             productAttributes.artNotes = ` ${artNotes}   `;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.artNotes).toEqual(artNotes);
         });
@@ -219,7 +219,7 @@ describe('Product Model', () => {
     describe('attribute: primaryMaterial', () => {
         it('should be required', () => {
             delete productAttributes.primaryMaterial;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
             
@@ -227,14 +227,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.primaryMaterial).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.primaryMaterial = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -245,7 +245,7 @@ describe('Product Model', () => {
     describe('attribute: secondaryMaterial', () => {
         it('should not be required', () => {
             delete productAttributes.secondaryMaterial;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -255,14 +255,14 @@ describe('Product Model', () => {
         it('should be a valid mongoose ObjectId', () => {
             productAttributes.secondaryMaterial = new mongoose.Types.ObjectId();
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.secondaryMaterial).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.secondaryMaterial = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -273,7 +273,7 @@ describe('Product Model', () => {
     describe('attribute: finish', () => {
         it('should NOT be required', () => {
             delete productAttributes.finish;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -281,14 +281,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.finish).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.finish = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -299,7 +299,7 @@ describe('Product Model', () => {
     describe('attribute: pressNotes', () => {
         it('should not be required', () => {
             delete productAttributes.pressNotes;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -310,7 +310,7 @@ describe('Product Model', () => {
             const pressNotes = chance.string();
             productAttributes.pressNotes = ` ${pressNotes}   `;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.pressNotes).toEqual(pressNotes);
         });
@@ -320,14 +320,14 @@ describe('Product Model', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.finishType;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.finishType).toEqual(defaultFinishType);
         });
 
         it('should fail if attribute is not a valid finishType value', () => {
             productAttributes.finishType = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -337,7 +337,7 @@ describe('Product Model', () => {
         it('should pass validation if attribute is a valid finishType value AND convert to uppercase', () => {
             const validFinishType = chance.pickone(finishTypes).toLowerCase();
             productAttributes.finishType = validFinishType;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
 
@@ -352,14 +352,14 @@ describe('Product Model', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.coreDiameter;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.coreDiameter).toEqual(DEFAULT_CORE_DIAMETER);
         });
 
         it('should pass validation if attribute is a valid number', () => {
             productAttributes.coreDiameter = chance.integer({ min: 0 });
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -368,7 +368,7 @@ describe('Product Model', () => {
 
         it('should fail validation if attribute is negative', () => {
             productAttributes.coreDiameter = chance.integer({ max: -1 });
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -382,14 +382,14 @@ describe('Product Model', () => {
         it('should have a specific default value if not defined', () => {
             delete productAttributes.labelsPerRoll;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.labelsPerRoll).toEqual(DEFAULT_LABELS_PER_ROLL);
         });
 
         it('should fail validation if attribute is negative', () => {
             productAttributes.labelsPerRoll = chance.integer({ max: -1 });
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
             
@@ -398,7 +398,7 @@ describe('Product Model', () => {
 
         it('should fail validation if attribute is not a whole number', () => {
             productAttributes.labelsPerRoll = chance.floating({ min: 0.01 });
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -409,7 +409,7 @@ describe('Product Model', () => {
     describe('attribute: dieCuttingNotes', () => {
         it('should not be required', () => {
             delete productAttributes.dieCuttingNotes;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -420,7 +420,7 @@ describe('Product Model', () => {
             const dieCuttingNotes = chance.string();
             productAttributes.dieCuttingNotes = ` ${dieCuttingNotes}   `;
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.dieCuttingNotes).toEqual(dieCuttingNotes);
         });
@@ -429,7 +429,7 @@ describe('Product Model', () => {
     describe('attribute: customer', () => {
         it('should be required', () => {
             delete productAttributes.customer;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -437,14 +437,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.customer).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail validation if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.customer = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -455,7 +455,7 @@ describe('Product Model', () => {
     describe('attribute: author', () => {
         it('should be required', () => {
             delete productAttributes.author;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -463,14 +463,14 @@ describe('Product Model', () => {
         });
 
         it('should be a valid mongoose ObjectId', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.author).toBeInstanceOf(mongoose.Types.ObjectId);
         });
 
         it('should fail validation if attribute is not a valid mongoose ObjectId', () => {
             productAttributes.author = chance.word();
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
@@ -483,7 +483,7 @@ describe('Product Model', () => {
             const expectedDefaultValue = false;
             delete productAttributes.spotPlate;
 
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.spotPlate).toBe(expectedDefaultValue);
         });
@@ -492,7 +492,7 @@ describe('Product Model', () => {
             const definedValue = true;
             productAttributes.spotPlate = definedValue;
 
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             
             expect(product.spotPlate).toEqual(definedValue);
         });
@@ -501,7 +501,7 @@ describe('Product Model', () => {
     describe('attribute: numberOfColors', () => {
         it('should be required', () => {
             delete productAttributes.numberOfColors;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
             
@@ -509,7 +509,7 @@ describe('Product Model', () => {
         });
 
         it('should be a number', () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.numberOfColors).toEqual(expect.any(Number));
         });
@@ -517,7 +517,7 @@ describe('Product Model', () => {
         it('should be a whole number', () => {
             const nonWholeNumber = chance.floating({ min: 1 });
             productAttributes.numberOfColors = nonWholeNumber;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -527,7 +527,7 @@ describe('Product Model', () => {
         it('should be a non-negative number', () => {
             const negativeNumber = chance.d100() * -1;
             productAttributes.numberOfColors = negativeNumber;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -538,7 +538,7 @@ describe('Product Model', () => {
     describe('attribute: frameNumberAcross', () => {
         it('should not be required', () => {
             delete productAttributes.frameNumberAcross;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -548,14 +548,14 @@ describe('Product Model', () => {
         it('should be a number', () => {
             productAttributes.frameNumberAcross = chance.d100();
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.frameNumberAcross).toEqual(expect.any(Number));
         });
 
         it('should fail if value is negative', () => {
             productAttributes.frameNumberAcross = chance.d100() * -1;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -566,7 +566,7 @@ describe('Product Model', () => {
     describe('attribute: frameNumberAround', () => {
         it('should not be required', () => {
             delete productAttributes.frameNumberAround;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -576,14 +576,14 @@ describe('Product Model', () => {
         it('should be a number', () => {
             productAttributes.frameNumberAround = chance.d100();
             
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             expect(product.frameNumberAround).toEqual(expect.any(Number));
         });
 
         it('should fail if value is negative', () => {
             productAttributes.frameNumberAround = chance.d100() * -1;
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             const error = product.validateSync();
 
@@ -629,7 +629,7 @@ describe('Product Model', () => {
         });
 
         it('should have a timestamps once object is saved', async () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
 
             let savedProduct = await product.save();
 
@@ -638,13 +638,13 @@ describe('Product Model', () => {
         });
 
         it('should soft delete items', async () => {
-            const product = new ProductModel(productAttributes);
+            const product = new BaseProductModel(productAttributes);
             const productId = product._id;
 
             await product.save();
-            await ProductModel.deleteById(productId);
+            await BaseProductModel.deleteById(productId);
 
-            const softDeletedProduct = await ProductModel.findOneDeleted({_id: productId}).exec();
+            const softDeletedProduct = await BaseProductModel.findOneDeleted({_id: productId}).exec();
 
             expect(softDeletedProduct).toBeDefined();
             expect(softDeletedProduct.deleted).toBe(true);
@@ -656,9 +656,9 @@ describe('Product Model', () => {
                 const expectedProductNumber2 = `${savedCustomer.customerId}-002`;
                 const expectedProductNumber3 = `${savedCustomer.customerId}-003`;
 
-                const product1 = new ProductModel(productAttributes);
-                const product2 = new ProductModel(productAttributes);
-                const product3 = new ProductModel(productAttributes);
+                const product1 = new BaseProductModel(productAttributes);
+                const product2 = new BaseProductModel(productAttributes);
+                const product3 = new BaseProductModel(productAttributes);
 
                 let savedProduct1 = await product1.save();
                 let savedProduct2 = await product2.save();
@@ -673,7 +673,7 @@ describe('Product Model', () => {
         describe('attribute: overun', () => {
             it('should default product.secondaryMaterial to customer.overun when product is initially created', async () => {
                 const expectedOverun = savedCustomer.overun;
-                const product = new ProductModel(productAttributes);
+                const product = new BaseProductModel(productAttributes);
                 let savedProduct = await product.save();
                 
                 expect(savedProduct.overun).toBeDefined();
@@ -681,7 +681,7 @@ describe('Product Model', () => {
             });
 
             it('should NOT use the value from customer.overun if product.overun is EXPLICITLY set to equal 0', async () => {
-                const product = new ProductModel(productAttributes);
+                const product = new BaseProductModel(productAttributes);
                 let savedProduct = await product.save();
 
                 savedProduct.overun = 0; // EXPLICITLY set to 0

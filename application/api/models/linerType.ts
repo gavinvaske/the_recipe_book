@@ -18,6 +18,4 @@ const LinerTypeSchema = new Schema({
 
 LinerTypeSchema.plugin(mongoose_delete, { overrideMethods: true });
 
-const LinerType = mongoose.model('LinerType', LinerTypeSchema);
-
-export default LinerType;
+export const LinerTypeModel = mongoose.model('LinerType', LinerTypeSchema);

@@ -1,6 +1,6 @@
 import * as userService from '../../application/api/services/userService.ts';
 import * as databaseService from '../../application/api/services/databaseService';
-import UserModel from '../../application/api/models/user.ts';
+import { UserModel } from '../../application/api/models/user.ts';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';
 

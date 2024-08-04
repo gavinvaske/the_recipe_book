@@ -9,7 +9,7 @@
     "noImplicitReturns": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitOverride": true,
     "noUnusedParameters": true,
     "rootDir": ".",

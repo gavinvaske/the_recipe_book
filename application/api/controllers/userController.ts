@@ -283,7 +283,7 @@ router.post('/login', async (request, response) => {
         id: user._id,
         email: user.email,
         userType: user.userType
-    }, process.env.JWT_SECRET);
+    }, process.env.JWT_SECRET, { expiresIn: '13h'});
 
     response.cookie('jwtToken', jwtToken, {
         httpOnly: true

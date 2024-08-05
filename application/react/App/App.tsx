@@ -20,6 +20,8 @@ import { AdhesiveCategoryTable } from '../AdhesiveCategory/AdhesiveCategoryTable
 import { CustomerTable } from '../Customer/CustomerTable/CustomerTable';
 import { MaterialOrderForm } from '../MaterialOrder/MaterialOrderForm/MaterialOrderForm';
 import { MaterialOrderTable } from '../MaterialOrder/MaterialOrderTable/MaterialOrderTable';
+import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
+import { Login } from '../_auth/Login/Login';
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,13 @@ export function App() {
       <Routes >
         <Route path='react-ui'>
           <Route element={<TopNavbarLayout />}>
+            {/* Public Routes */}
+            <Route path='login' element={<Login />}></Route>
             <Route path='inventory' element={<Inventory />}></Route>
+            
+            {/* Protected Routes */}
+            <Route path='foobar' element={<ProtectedRoute />}></Route>
+
 
             <Route path='forms'>
               <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />

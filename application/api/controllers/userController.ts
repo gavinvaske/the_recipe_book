@@ -260,6 +260,7 @@ router.get('/login', (request, response) => {
     response.render('login');
 });
 
+// TODO @Gavin (8-4-2024): Implement this in a react friendly manner
 router.post('/login', async (request, response) => {
     const {email, password} = request.body;
 

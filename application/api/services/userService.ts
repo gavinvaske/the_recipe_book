@@ -49,7 +49,7 @@ export function isUserLoggedIn(jwtToken, jwtSecret) {
         jwt.verify(jwtToken, jwtSecret);
         return true;
     } catch (error) {
-        console.log(`error during isJwtTokenValid(): ${error.message}`);
+        console.error(`error during isJwtTokenValid(): ${error.message}`);
     }
 
     return false;

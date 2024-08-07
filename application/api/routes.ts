@@ -30,9 +30,11 @@ import materialLengthAdjustmentEndpoints from './controllers/materialLengthAdjus
 import customerEndpoints from './controllers/customerController.ts';
 import deliveryMethodEndpoints from './controllers/deliveryMethodController.ts';
 import creditTermEndpoints from './controllers/creditTermsController.ts';
+import authEndpoints from './controllers/authController.ts'
 import { Application } from 'express';
 
 export const setupApiRoutes = (app: Application) => {
+  app.use('/auth', authEndpoints);
   app.use('/', defaultRoute);
   app.use('/users', userEndpoints);
   app.use('/recipes', recipeEndpoints);

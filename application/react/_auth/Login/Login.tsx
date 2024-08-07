@@ -39,7 +39,7 @@ export const Login = () => {
           accessToken,
           roles
         })
-        navigate('/react-ui/foobar')  /* TODO: What should this be changed to  ??? */
+        navigate('/react-ui/forms/delivery-method')  /* TODO: What should this be changed to  ??? */
         useSuccessMessage('Welcome to E.L.I')
       })
       .catch((error: AxiosError) => useErrorMessage(error))
@@ -47,9 +47,6 @@ export const Login = () => {
 
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
       <br></br>
       <br></br>
       <br></br>
@@ -69,6 +66,7 @@ export const Login = () => {
             register={register}
             isRequired={true}
             errors={errors}
+            fieldType={'password'}
         />
         <button className='create-entry submit-button' type='submit'>Login</button>
       </form>

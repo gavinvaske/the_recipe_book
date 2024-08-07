@@ -13,7 +13,7 @@ type Props<T extends FieldValues> = {
   isRequired?: boolean
   additionalRegisterOptions?: any
   onChange?: () => void,
-  fieldType?: 'text' | 'checkbox' | 'date',
+  fieldType?: 'text' | 'checkbox' | 'date' | 'password',
   ref?: any
 }
 

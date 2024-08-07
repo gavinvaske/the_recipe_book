@@ -19,8 +19,9 @@
     "target": "es2022",
     "module": "node16",
     "paths": {
-      "~/db/*": ["./application/models/*"],
-      "~/schema/*": ["./application/schemas/*"],
+      "~/db/*": ["./application/api/models/*"],
+      "~/schema/*": ["./application/api/schemas/*"],
+      "~/enum/*": ["./application/api/enums/*"],
     },
     "sourceMap": true,
     "declaration": false,

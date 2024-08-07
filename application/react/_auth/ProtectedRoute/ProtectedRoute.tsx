@@ -11,13 +11,13 @@ export const ProtectedRoute = (props: Props) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  alert('auth: ' + JSON.stringify(auth))
+  const allowedRolesUppercased = allowedRoles.map(r => r.toUpperCase())
 
   return (
-    auth?.roles?.find((role) => allowedRoles?.includes(role))
+    auth?.roles?.find((role) => allowedRolesUppercased?.includes(role.toUpperCase()))
       ? <Outlet />
-      : auth?.accessToken //changed from user to accessToken to persist login after refresh
+      : auth?.accessToken
         ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-        : <Navigate to="/login" state={{ from: location }} replace />
+        : <Navigate to="/react-ui/login" state={{ from: location }} replace />
   );
 }

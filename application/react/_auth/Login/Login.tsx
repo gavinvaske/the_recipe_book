@@ -25,23 +25,35 @@ export const Login = () => {
   }, [])
 
   const onSubmit = (formData: any) => {
-    axios.post('/users/login', formData)
-    .then((_: AxiosResponse) => {
-      navigate(userProfilePage);
-      useSuccessMessage('Welcome to E.L.I')
-    })
-    .catch((error: AxiosError) => useErrorMessage(error))
+    axios.post('/auth/login', formData)
+      .then((response: AxiosResponse) => {
+        const { data: jsonResponse } = response;
+        const { accessToken, roles } = jsonResponse;
+
+        if (!accessToken || !roles ) {
+          console.error('Login error: ', jsonResponse)
+          throw new Error('Missing accessToken and/or roles from login response')
+        }
+
+        setAuth({
+          accessToken,
+          roles
+        })
+        navigate('/react-ui/foobar')  /* TODO: What should this be changed to  ??? */
+        useSuccessMessage('Welcome to E.L.I')
+      })
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   return (
     <>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <form id='login-form' onSubmit={handleSubmit(onSubmit)}>
         <Input
             attribute='email'
@@ -58,8 +70,8 @@ export const Login = () => {
             isRequired={true}
             errors={errors}
         />
-      <button className='create-entry submit-button' type='submit'>Login</button>
-    </form>
+        <button className='create-entry submit-button' type='submit'>Login</button>
+      </form>
     </>
   )
 }

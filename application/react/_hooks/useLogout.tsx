@@ -7,7 +7,7 @@ export const useLogout = () => {
   const logout = async () => {
     setAuth({});
     try {
-      await axios.get('/logout');
+      await axios.get('/auth/logout');
     } catch (err) {
       console.error(err);
     }

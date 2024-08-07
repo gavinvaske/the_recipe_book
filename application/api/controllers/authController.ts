@@ -2,13 +2,18 @@ import 'dotenv/config';
 import { Router } from 'express';
 import { UserModel } from '../models/user.ts';
 import { FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
-import { generateAccessToken, TokenPayload, verifyBearerToken, verifyJwtToken } from '../middleware/authorize.ts';
+import { generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 const router = Router();
- router.get('/foo111', verifyBearerToken, (_, response) => {
-  return response.send('its valid!')
+
+const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
+
+ router.get('/logout', (_, response) => {
+  response.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
+
+  return response.sendStatus(SUCCESS);
 })
 
 /* 
@@ -21,10 +26,10 @@ const router = Router();
   as well, it generates a new accessToken that is sent back to the user
 */
 router.get('/access-token', (request, response) => {
-  const refreshTokenFromSecureCookie = request.cookies['refresh-token'];
+  const refreshTokenFromSecureCookie = request.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
   if (!refreshTokenFromSecureCookie) {
-    return response.status(UNAUTHORIZED)
+    return response.sendStatus(UNAUTHORIZED)
   }
 
   try {
@@ -41,10 +46,11 @@ router.get('/access-token', (request, response) => {
     const accessToken = generateAccessToken(tokenPayload, accessTokenSecret);
 
     return response.json({
-      accessToken
+      accessToken,
+      roles: payloadWithExtraStuff.roles
     })
   } catch (error) {
-    return response.status(FORBIDDEN)
+    return response.sendStatus(FORBIDDEN)
   }
 })
 
@@ -65,10 +71,11 @@ router.post('/login', async (request, response) => {
       return response.status(UNAUTHORIZED).send(invalidLoginMessage);
     }
 
+    const userRoles = [user.userType] /* TODO @Gavin (8-6-2024): Rename "userType" to "roles" on the database level */
     const tokenPayload = {
       id: user._id as MongooseId,
       email: user.email as string,
-      roles: [user.userType]  /* TODO @Gavin (8-6-2024): Rename "userType" to "roles" on the database level */
+      roles: userRoles 
     }
 
     const accessTokenSecret = process.env.JWT_SECRET as string;
@@ -77,12 +84,13 @@ router.post('/login', async (request, response) => {
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string;
     const refreshToken = generateAccessToken(tokenPayload, refreshTokenSecret);
 
-    response.cookie('refresh-token', refreshToken, {
+    response.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       httpOnly: true
     });
 
     return response.status(SUCCESS).json({
-      accessToken
+      accessToken,
+      roles: userRoles
     })
 
   } catch (error) {

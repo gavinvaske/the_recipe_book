@@ -14,7 +14,7 @@ export const Login = () => {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/react-ui";
 
   const userRef = useRef(null);
 
@@ -39,7 +39,7 @@ export const Login = () => {
           accessToken,
           roles
         })
-        navigate('/react-ui/forms/delivery-method')  /* TODO: What should this be changed to  ??? */
+        navigate(from, { replace: true });
         useSuccessMessage('Welcome to E.L.I')
       })
       .catch((error: AxiosError) => useErrorMessage(error))

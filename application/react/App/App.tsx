@@ -23,6 +23,7 @@ import { MaterialOrderTable } from '../MaterialOrder/MaterialOrderTable/Material
 import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
 import { Login } from '../_auth/Login/Login';
 import { USER, ADMIN } from '../../api/enums/userTypesEnum'
+import { Home } from '../Home/Home';
 
 const queryClient = new QueryClient();
 
@@ -38,12 +39,10 @@ export function App() {
             <Route path='inventory' element={<Inventory />}></Route>
             <Route path='*' element={<PageNotFound />} /> {/* TODO @Storm: Build this page */}
             
-            {/* Protected Routes: USER and/or ADMIN */}
-            <Route element={
-              <ProtectedRoute 
-                allowedRoles={[USER, ADMIN]}
-              />
-            }>
+            {/* PROTECTED ROUTES: USER / ADMIN */}
+            <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]}/>}>
+              <Route path='' element={<Home />}></Route>
+
               <Route path='forms'>
                 <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
                 <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />

@@ -11,7 +11,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 const userProfilePage = '/users/profile'
 
 export const Login = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/react-ui";

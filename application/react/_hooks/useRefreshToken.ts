@@ -1,23 +1,21 @@
+import { UserAuth } from "../_context/authProvider";
 import axios from "../axios";
-import { useAuth } from "./useAuth"
+import { useAuth } from "./useAuth";
 
 export const useRefreshToken = () => {
   const { setAuth } = useAuth();
-  
-  const fetchRefreshToken = async () => {
+  const fetchAccessToken = async (): Promise<UserAuth> => {
+
     const response = await axios.get('/auth/access-token', {
       withCredentials: true // Tells axios to include HTTP only cookies in request to server
     })
 
-    const { accessToken, roles } = response.data
+    const userAuth: UserAuth = response.data
 
-    setAuth({
-      accessToken,
-      roles
-    })
+    setAuth(userAuth);
 
-    return accessToken
+    return userAuth;
   }
 
-  return fetchRefreshToken
+  return fetchAccessToken
 }

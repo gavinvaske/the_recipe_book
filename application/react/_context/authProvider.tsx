@@ -1,20 +1,23 @@
 import React, { createContext, useState } from "react";
 
-type Auth = {
-  token: string,
+export type UserAuth = {
+  accessToken: string,
   roles: string[]
 }
 
-/* TODO: fix the 'any' types */
 export type AuthContextType = {
-  auth: any,
-  setAuth: (auth: Auth) => void
+  auth: UserAuth,
+  setAuth: (auth: UserAuth) => void
 }
 
-export const AuthContext = createContext(undefined);
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState();
+type Props = {
+  children: React.ReactNode
+}
+
+export const AuthProvider = ({ children }: Props) => {
+  const [auth, setAuth] = useState<UserAuth>({} as UserAuth);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

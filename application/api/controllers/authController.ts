@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Router } from 'express';
 import { UserModel } from '../models/user.ts';
 import { FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
-import { generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
+import { generateRefreshToken, generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -82,7 +82,7 @@ router.post('/login', async (request, response) => {
     const accessToken = generateAccessToken(tokenPayload, accessTokenSecret);
 
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET as string;
-    const refreshToken = generateAccessToken(tokenPayload, refreshTokenSecret);
+    const refreshToken = generateRefreshToken(tokenPayload, refreshTokenSecret);
 
     response.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       httpOnly: true

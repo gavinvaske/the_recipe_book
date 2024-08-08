@@ -6,7 +6,5 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   const { auth } = context;
 
-  console.log('auth is ', auth);
-
   return context
 }

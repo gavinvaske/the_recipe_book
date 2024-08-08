@@ -111,16 +111,13 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
   }
 
   async recalculateInventorySummary(axios: AxiosInstance) {
-    console.log('bouta make an axios call')
     axios.get('/materials/inventory')
       .then((response: AxiosResponse) => {
-        alert('success? ' + JSON.stringify(response))
         const { data: materialInventorySummary}: { data: MaterialInventorySummary } = response;
         
         this.setInventorySummary(materialInventorySummary);
       })
       .catch((error: AxiosError) => {
-        alert('errrrrr?')
         useErrorMessage(error)
       })
   }

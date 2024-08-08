@@ -28,7 +28,7 @@ export function verifyBearerToken(request, response, next) {
   const authorizationHeader = request.headers.authorization
 
   if (!authorizationHeader || authorizationHeader.length === 0) {
-    return response.sendStatus(FORBIDDEN);
+    return response.sendStatus(UNAUTHORIZED);
   }
 
   try {
@@ -37,7 +37,7 @@ export function verifyBearerToken(request, response, next) {
     request.user = jwt.verify(accessToken, process.env.JWT_SECRET);
     return next();
   } catch (error) {
-    return response.sendStatus(UNAUTHORIZED)
+    return response.sendStatus(FORBIDDEN) // Must be a 403 error so the frontend knows to fetch accessToken using refresh token. "I know who you are, but I can't let you in."
   }
 }
 

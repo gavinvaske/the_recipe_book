@@ -4,6 +4,10 @@ import 'dotenv/config';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 
+/* @deprecated (8-7-2024): 
+    This is the old auth middleware. 
+    Recommended to transition to verifyBearerToken() 
+*/
 export function verifyJwtToken(request, response, next) {
     const token = request.cookies.jwtToken;
 

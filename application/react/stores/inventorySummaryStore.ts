@@ -1,6 +1,6 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
 import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "../_types/Filters";
 import { useErrorMessage } from "../_hooks/useErrorMessage";
@@ -110,14 +110,19 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     return this.inventorySummary.materialInventories || [];
   }
 
-  async recalculateInventorySummary() {
+  async recalculateInventorySummary(axios: AxiosInstance) {
+    console.log('bouta make an axios call')
     axios.get('/materials/inventory')
       .then((response: AxiosResponse) => {
+        alert('success? ' + JSON.stringify(response))
         const { data: materialInventorySummary}: { data: MaterialInventorySummary } = response;
         
         this.setInventorySummary(materialInventorySummary);
       })
-      .catch((error: AxiosError) => useErrorMessage(error))
+      .catch((error: AxiosError) => {
+        alert('errrrrr?')
+        useErrorMessage(error)
+      })
   }
 }
 

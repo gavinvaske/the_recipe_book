@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import { MaterialModel } from '../models/material.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { MaterialCategoryModel } from '../models/materialCategory.ts';
 
@@ -14,7 +14,7 @@ import * as mongooseService from '../services/mongooseService.ts';
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.delete('/:mongooseId', async (request, response) => {
     try { 

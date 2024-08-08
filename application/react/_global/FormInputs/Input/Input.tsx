@@ -14,12 +14,13 @@ type Props<T extends FieldValues> = {
   additionalRegisterOptions?: any
   onChange?: () => void,
   fieldType?: 'text' | 'checkbox' | 'date' | 'password',
-  ref?: any
+  ref?: any,
+  dataAttributes?: { [key: `data-${string}`]: string }
 }
 
 /* @Gavin More client side validation rules can be configured in react-hook-form. see https://react-hook-form.com/get-started#Applyvalidation */
 export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customRef: any) => {
-  const { placeholder, errors, attribute, defaultValue, label, register, isRequired, fieldType} = props
+  const { placeholder, errors, attribute, defaultValue, label, register, isRequired, fieldType, dataAttributes} = props
 
   const { ref, ...rest } = register(attribute,
     { required: isRequired ? "This is required" : undefined }
@@ -28,7 +29,7 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
   return (
     <div className='input-wrapper'>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
-      <input 
+      <input
         {...rest}
         type={fieldType ? fieldType : 'text'}
         placeholder={placeholder}
@@ -39,7 +40,8 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
             customRef.current = e
           }
         }}
-        />
+        {...dataAttributes}
+      />
       <FormErrorMessage errors={errors} name={attribute} />
     </div>
   )

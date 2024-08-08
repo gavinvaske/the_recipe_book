@@ -59,6 +59,9 @@ export const Login = () => {
             isRequired={true}
             errors={errors}
             ref={userRef}
+            dataAttributes={
+              {'data-test': 'username-input'}
+            }
         />
         <Input
             attribute='password'
@@ -67,8 +70,11 @@ export const Login = () => {
             isRequired={true}
             errors={errors}
             fieldType={'password'}
+            dataAttributes={
+              {'data-test': 'password-input'}
+            }
         />
-        <button className='create-entry submit-button' type='submit'>Login</button>
+        <button className='create-entry submit-button' type='submit' data-test='login-btn'>Login</button>
       </form>
     </>
   )

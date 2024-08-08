@@ -1,8 +1,8 @@
 describe('UI Test cases', () => {
     it('Unauthenticated user should see the login page', () => {
-        cy.visit('/');
+        cy.visit('/react-ui/inventory');
 
-        cy.contains('Please sign in to get started.');
+        cy.contains('Login');
     });
 
     it('User should see their dashboard upon login', () => {

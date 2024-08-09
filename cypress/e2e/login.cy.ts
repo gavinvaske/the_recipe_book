@@ -1,4 +1,4 @@
-describe('UI Test cases', () => {
+describe('Auth Test Cases', () => {
   it('User should see a home page upon login', () => {
     cy.login();
 
@@ -26,7 +26,7 @@ describe('UI Test cases', () => {
     })
   })
 
-  it('If an unauthenticated user attempts to visit a url, they should be redirected their after login', () => {
+  it('If an unauthenticated user attempts to visit a url, they should be redirected to that url after login', () => {
     cy.logout();
     const originallyRequestedUrl = '/react-ui/inventory';
     cy.visit(originallyRequestedUrl);
@@ -42,7 +42,7 @@ describe('UI Test cases', () => {
 
     /* Click login button */
     cy.get('[data-test=login-btn]').click();
-
+    
     /* Exo */
     cy.location().should(loc => {
       expect(loc.pathname).to.equal(originallyRequestedUrl)

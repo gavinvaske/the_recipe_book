@@ -117,9 +117,7 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
         
         this.setInventorySummary(materialInventorySummary);
       })
-      .catch((error: AxiosError) => {
-        useErrorMessage(error)
-      })
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 }
 

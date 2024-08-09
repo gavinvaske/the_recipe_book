@@ -11,7 +11,13 @@ Cypress.Commands.add('login', (username, password) => {
   /* And a User clicks login */
   cy.get('[data-test=login-btn]').click();
 
-  cy.contains('TODO Build Home.jsx').should('exist'); /* !! Important !! Without this line, the tests run too quickly and break */
+  /* 
+    [Important]
+      If we dont verify anything on the page after a login, 
+      the tests execute too quickly and sometimes that auth hasn't fully taken effect leading to random errors 
+  */
+  cy.contains('TODO Build Home.jsx').should('exist');
+  cy.contains('Welcome to E.L.I').should('exist');
 })
 
 Cypress.Commands.add('logout', () => {

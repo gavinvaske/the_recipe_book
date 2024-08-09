@@ -5,6 +5,7 @@ import { useRefreshToken } from '../../_hooks/useRefreshToken';
 import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator';
 import axios from 'axios';
 import { UserAuth } from '../../_context/authProvider';
+import { setBearerTokenToAxiosRequestsUsingInterceptors } from '../../axios';
 
 type Props = {
   allowedRoles: string[]
@@ -58,34 +59,7 @@ export const ProtectedRoute = (props: Props) => {
     Code Credit: https://github.com/gitdagray/react_persist_login/blob/8d489823df307bdecdbdc10dcb79d0c748ca1fca/src/hooks/useAxiosPrivate.js#L10
   */
   useLayoutEffect(() => {
-    const requestIntercept = axios.interceptors.request.use(
-      config => {
-        if (!config.headers['Authorization']) {
-          config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
-        }
-        return config;
-      }, (error) => Promise.reject(error)
-    );
-
-    const responseIntercept = axios.interceptors.response.use(
-      response => response,
-      async (error) => {
-        const prevRequest = error?.config;
-
-        if (error?.response?.status === 403 && !prevRequest?.sent) {
-          prevRequest.sent = true;
-          const newAccessToken = await refreshAccessToken();
-          prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-          return axios(prevRequest);
-        }
-        return Promise.reject(error);
-      }
-    );
-
-    return () => {
-      axios.interceptors.request.eject(requestIntercept);
-      axios.interceptors.response.eject(responseIntercept);
-    }
+    setBearerTokenToAxiosRequestsUsingInterceptors(axios, auth, refreshAccessToken);
   }, [auth, refreshAccessToken])
 
 

@@ -2,9 +2,9 @@ describe('Material Order Views', () => {
   const formUrlPrefix = '/react-ui/forms'
   const tableUrlPrefix = '/react-ui/tables'
 
-  before(() => {
+  beforeEach(() => {
     cy.login();
-  })
+  });
 
   it('Should render the Material Order form', () => {
       cy.visit(`${formUrlPrefix}/material-order`);

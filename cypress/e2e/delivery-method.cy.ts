@@ -2,7 +2,7 @@ describe('DeliveryMethod Views', () => {
   const formUrlPrefix = '/react-ui/forms';
   const tableUrlPrefix = '/react-ui/tables';
 
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 

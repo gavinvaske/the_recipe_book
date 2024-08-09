@@ -10,9 +10,11 @@ Cypress.Commands.add('login', (username, password) => {
 
   /* And a User clicks login */
   cy.get('[data-test=login-btn]').click();
+
+  cy.contains('TODO Build Home.jsx').should('exist'); /* !! Important !! Without this line, the tests run too quickly and break */
 })
 
 Cypress.Commands.add('logout', () => {
-  cy.visit('/auth/logout')  /* TODO: make this a UI endpoint */
+  cy.request('/auth/logout'); /* TODO: Initiate logout via a UI button instead of direct HTTP request*/
 })
 

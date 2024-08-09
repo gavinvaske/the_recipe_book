@@ -1,10 +1,10 @@
 import { Router } from 'express';
 const router = Router();
 import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.post('/', async (request, response) => {
     try {

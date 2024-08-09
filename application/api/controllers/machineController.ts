@@ -1,11 +1,11 @@
 import { Router } from 'express';
 const router = Router();
 import { MachineModel } from '../models/machine.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 
 const SHOW_ALL_MACHINES_ENDPOINT = '/machines';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.get('/all', async (request, response) => {
     try {

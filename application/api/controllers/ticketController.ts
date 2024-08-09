@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { upload } from '../middleware/upload.ts';
 import parser from 'xml2json';
 import * as ticketService from '../services/ticketService.ts';
@@ -19,7 +19,7 @@ import * as fileService from '../services/fileService.ts';
 import * as downtimeReasonService from '../services/downtimeReasonService.ts';
 import * as destinationService from '../services/destinationService.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_ERROR_CODE = 400;

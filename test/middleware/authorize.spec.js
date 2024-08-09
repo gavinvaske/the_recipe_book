@@ -1,4 +1,4 @@
-import { verifyJwtToken } from '../../application/api/middleware/authorize.ts';
+import { verifyBearerToken } from '../../application/api/middleware/authorize.ts';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';
 
@@ -36,7 +36,7 @@ describe('authorization', () => {
     it('should throw error if cookies is not defined', () => {
         request.cookies = undefined;
 
-        expect(() => verifyJwtToken(request, response, next)).toThrow();
+        expect(() => verifyBearerToken(request, response, next)).toThrow();
     });
 
     it('should send 403 status if JWT cookie is not defined', () => {
@@ -47,7 +47,7 @@ describe('authorization', () => {
         });
         response.status = statusMock;
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(statusMock).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledWith(FORBIDDEN_STATUS_CODE);
@@ -60,14 +60,14 @@ describe('authorization', () => {
         });
         response.status = statusMock;
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(redirectMock).toHaveBeenCalledTimes(1);
         expect(redirectMock).toHaveBeenCalledWith('/');
     });
 
     it('should use jsonwebtoken library to verify jwtToken', () => {
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(jwt.verify).toHaveBeenCalledTimes(1);
         expect(jwt.verify).toHaveBeenCalledWith(request.cookies.jwtToken, process.env.JWT_SECRET);
@@ -77,7 +77,7 @@ describe('authorization', () => {
         const user = {};
         jwt.verify.mockReturnValue(user);
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(request.user).toBeDefined();
     });
@@ -86,7 +86,7 @@ describe('authorization', () => {
         const user = {};
         jwt.verify.mockReturnValue(user);
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(next).toHaveBeenCalledTimes(1);
     });
@@ -96,7 +96,7 @@ describe('authorization', () => {
             throw new Error();
         });
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(clearCookieMock).toHaveBeenCalledTimes(1);
     });
@@ -108,7 +108,7 @@ describe('authorization', () => {
             throw new Error();
         });
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, next);
 
         expect(redirectMock).toHaveBeenCalledTimes(1);
         expect(redirectMock).toHaveBeenCalledWith(homepageUrl);

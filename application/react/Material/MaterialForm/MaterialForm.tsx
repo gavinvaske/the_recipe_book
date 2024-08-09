@@ -3,7 +3,7 @@ import './MaterialForm.scss'
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
@@ -13,6 +13,7 @@ import { Material } from '../../_types/databasemodels/material.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
+import { useAxios } from '../../_hooks/useAxios';
 
 const materialTableUrl = '/react-ui/tables/material'
 
@@ -20,6 +21,7 @@ export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
+  const axios = useAxios();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 

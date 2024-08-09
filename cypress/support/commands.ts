@@ -13,6 +13,6 @@ Cypress.Commands.add('login', (username, password) => {
 })
 
 Cypress.Commands.add('logout', () => {
-  cy.visit('/users/logout')
+  cy.visit('/auth/logout')  /* TODO: make this a UI endpoint */
 })
 

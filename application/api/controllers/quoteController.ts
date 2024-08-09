@@ -1,9 +1,9 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import * as quoteService from '../services/quoteService.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const BAD_REQUEST_STATUS = 400;
 

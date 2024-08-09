@@ -76,7 +76,6 @@ setupApiRoutes(app)
 
 // This route loads the ENTIRE REACT APP
 app.use('/react-ui', (_, response) => response.render('app.ejs'));
-app.use('/foo', (_, response) => response.render('adminPanel.ejs'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

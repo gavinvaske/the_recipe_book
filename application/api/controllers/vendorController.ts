@@ -1,17 +1,16 @@
 import express from 'express';
 const router = express.Router();
 import { VendorModel } from '../models/vendor.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { SERVER_ERROR } from '../enums/httpStatusCodes.ts'; 
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const SHOW_ALL_VENDORS_ENDPOINT = '/vendors';
 
 router.get('/', async (_, response) => {
     try {
         const vendors = await VendorModel.find().exec();
-        
         return response.json(vendors);
     } catch (error) {
         console.error('Error fetching vendors: ', error);

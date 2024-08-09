@@ -1,9 +1,9 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { HoldReasonModel } from '../models/holdReason.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const INVALID_REQUEST_ERROR_CODE = 400;
 const SERVER_ERROR_CODE = 500;

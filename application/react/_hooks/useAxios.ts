@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import axios, { setBearerTokenToAxiosRequestsUsingInterceptors } from '../axios';
+import axios, { setBearerTokenToAxiosRequestsUsingInterceptors as setBearerTokenOnAxiosRequests } from '../axios';
 import { useAuth } from './useAuth';
 import { useRefreshToken } from './useRefreshToken';
 import { AxiosInstance } from 'axios';
@@ -10,7 +10,7 @@ export const useAxios = (): AxiosInstance => {
   const { auth }: { auth: UserAuth} = useAuth();
 
   useEffect(() => {
-    setBearerTokenToAxiosRequestsUsingInterceptors(axios, auth, refreshAccessToken);
+    setBearerTokenOnAxiosRequests(axios, auth, refreshAccessToken);
   }, [auth, refreshAccessToken])
 
 

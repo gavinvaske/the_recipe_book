@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express'
 
 import 'dotenv/config';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 
-export function verifyBearerToken(request, response, next) {
+export function verifyBearerToken(request: Request, response: Response, next) {
   const authorizationHeader = request.headers.authorization
 
   if (!authorizationHeader || authorizationHeader.length === 0) {
@@ -14,6 +15,10 @@ export function verifyBearerToken(request, response, next) {
   try {
     const accessToken = authorizationHeader.split(' ')[1];
 
+    if (!accessToken) {
+      throw new Error('No access token provided in the authorization header.');
+    }
+    /* @ts-ignore: TODO: Add request.user type via a .d.ts file */
     request.user = jwt.verify(accessToken, process.env.JWT_SECRET);
     return next();
   } catch (error) {

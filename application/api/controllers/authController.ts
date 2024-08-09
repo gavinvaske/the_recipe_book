@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { UserModel } from '../models/user.ts';
 import { FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 import { generateRefreshToken, generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
@@ -10,7 +10,7 @@ const router = Router();
 
 const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
 
- router.get('/logout', (_, response) => {
+ router.get('/logout', (_: Request, response: Response) => {
   response.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
 
   return response.sendStatus(SUCCESS);
@@ -25,7 +25,7 @@ const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
   refresh token that was stored in an HTTP only cookie, and if it's valid, and not expired
   as well, it generates a new accessToken that is sent back to the user
 */
-router.get('/access-token', (request, response) => {
+router.get('/access-token', (request: Request, response: Response) => {
   const refreshTokenFromSecureCookie = request.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
   if (!refreshTokenFromSecureCookie) {
@@ -54,7 +54,7 @@ router.get('/access-token', (request, response) => {
   }
 })
 
-router.post('/login', async (request, response) => {
+router.post('/login', async (request: Request, response: Response) => {
   const { email, password } = request.body;
   const invalidLoginMessage = 'Invalid username or password'
 

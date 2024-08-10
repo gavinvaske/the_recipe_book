@@ -29,7 +29,7 @@ export const Login = () => {
         const { accessToken, roles } = jsonResponse;
 
         if (!accessToken || !roles ) {
-          console.error('Login error: ', jsonResponse)
+          console.error('Login error: ', response)
           throw new Error('Missing accessToken and/or roles from login response')
         }
 

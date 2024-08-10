@@ -48,9 +48,9 @@ export const ProtectedRoute = (props: Props) => {
     }
   }, [])
 
-  /* Yup, this is gross, but actually incredibly important.
+  /*
     This useEffect handles automatically adding a bearer token to each Axios request's Authorization header.
-    Ex: 
+    [Ex]
       headers: ['Authorization'  => `Bearer ${auth?.accessToken}`]
     
     There's a few edge cases, such as if that accessToken has expired, then this useEffect handles refreshing the accessToken

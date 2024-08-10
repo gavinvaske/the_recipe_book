@@ -1,7 +1,3 @@
-import { Chance } from 'chance';
-
-const chance = new Chance();
-
 describe('Auth Test Cases', () => {
   it('User should see a home page upon login', () => {
     cy.login();

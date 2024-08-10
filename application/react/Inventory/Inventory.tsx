@@ -9,8 +9,6 @@ import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
-import { useAxios } from '../_hooks/useAxios.ts';
-
 
 const socket = io();
 
@@ -32,18 +30,17 @@ export type MaterialInventorySummary = {
 const Inventory = observer(() => {
   const inventorySummary: Partial<MaterialInventorySummary> = inventorySummaryStore.getInventorySummary()
   const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
-  const axios = useAxios();
   
   useEffect(() => {
-    inventorySummaryStore.recalculateInventorySummary(axios) /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
+    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   }, []);
 
   socket.on('MATERIAL:CHANGED', (_: Material) => {
-    inventorySummaryStore.recalculateInventorySummary(axios) /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
+    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 
   socket.on('MATERIAL_ORDER:CHANGED', (_: MaterialOrder) => {
-    inventorySummaryStore.recalculateInventorySummary(axios) /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
+    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 
   function displayMaterialInventoryDetailsModal(materialInventory: MaterialInventory) {

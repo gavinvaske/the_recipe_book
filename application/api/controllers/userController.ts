@@ -259,7 +259,7 @@ router.get('/login', (request, response) => {
     response.render('login');
 });
 
-// TODO @Gavin (8-4-2024): Implement this in a react friendly manner
+// @deprecated (8-9-2024): Use /login from authController
 router.post('/login', async (request, response) => {
     const {email, password} = request.body;
 

@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react'
 import './SearchBar.scss'
 
-
 type Props = {
   value: string,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+
 const SearchBar = forwardRef((props: Props, ref: any) => {
   const { value, onChange} = props;
 

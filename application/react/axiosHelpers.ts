@@ -1,9 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import { UserAuth } from './_context/authProvider';
-
-const instance: AxiosInstance = axios.create({
-    baseURL: process.env.BASE_URL as string,
-});
 
 export function setBearerTokenToAxiosRequestsUsingInterceptors(axios: AxiosInstance, auth: UserAuth, refreshAccessToken: () => Promise<UserAuth>) {
   const requestIntercept = axios.interceptors.request.use(
@@ -35,5 +31,3 @@ export function setBearerTokenToAxiosRequestsUsingInterceptors(axios: AxiosInsta
     axios.interceptors.response.eject(responseIntercept);
   }
 }
-
-export default instance;

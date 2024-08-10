@@ -5,7 +5,7 @@ import { useRefreshToken } from '../../_hooks/useRefreshToken';
 import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator';
 import axios from 'axios';
 import { UserAuth } from '../../_context/authProvider';
-import { setBearerTokenToAxiosRequestsUsingInterceptors } from '../../axios';
+import { setBearerTokenToAxiosRequestsUsingInterceptors } from '../../axiosHelpers';
 
 type Props = {
   allowedRoles: string[]

@@ -1,5 +1,5 @@
 import { UserAuth } from "../_context/authProvider";
-import axios from "../axios";
+import axios from "axios";
 import { useAuth } from "./useAuth";
 
 export const useRefreshToken = () => {

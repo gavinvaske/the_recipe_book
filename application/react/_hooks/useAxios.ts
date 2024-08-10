@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import axios, { setBearerTokenToAxiosRequestsUsingInterceptors as setBearerTokenOnAxiosRequests } from '../axios';
+import axios from 'axios';
+import { setBearerTokenToAxiosRequestsUsingInterceptors as setBearerTokenOnAxiosRequests } from '../axiosHelpers';
 import { useAuth } from './useAuth';
 import { useRefreshToken } from './useRefreshToken';
 import { AxiosInstance } from 'axios';

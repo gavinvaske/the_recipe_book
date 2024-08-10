@@ -1,4 +1,4 @@
-describe.only('Material Views', () => {
+describe('Material Views', () => {
   beforeEach(() => {
     cy.login();
   });

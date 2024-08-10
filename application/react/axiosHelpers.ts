@@ -2,6 +2,7 @@ import { AxiosInstance } from 'axios';
 import { UserAuth } from './_context/authProvider';
 
 export function setBearerTokenToAxiosRequestsUsingInterceptors(axios: AxiosInstance, auth: UserAuth, refreshAccessToken: () => Promise<UserAuth>) {
+  /* Credit: https://github.com/gitdagray/react_persist_login/blob/8d489823df307bdecdbdc10dcb79d0c748ca1fca/src/hooks/useAxiosPrivate.js#L12 */
   const requestIntercept = axios.interceptors.request.use(
     config => {
       if (!config.headers['Authorization']) {

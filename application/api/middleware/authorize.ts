@@ -6,16 +6,13 @@ import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 export function verifyBearerToken(request: Request, response: Response, next) {
   const authorizationHeader = request.headers.authorization
 
-  if (!authorizationHeader || authorizationHeader.length === 0) {
+  if (!authorizationHeader) {
     return response.sendStatus(UNAUTHORIZED);
   }
 
   try {
     const accessToken = authorizationHeader.split(' ')[1];
 
-    if (!accessToken) {
-      throw new Error('No access token provided in the authorization header.');
-    }
     /* @ts-ignore: TODO: Add request.user type via a .d.ts file */
     request.user = jwt.verify(accessToken, process.env.JWT_SECRET);
     return next();

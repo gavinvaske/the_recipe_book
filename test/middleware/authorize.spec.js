@@ -47,6 +47,9 @@ describe('authorization', () => {
     });
 
     it('should return FORBIDDEN (403) if bearer token is provided but malformed', () => {
+        jwt.verify.mockImplementation(() => {
+            throw new Error('jwt must be provided');
+        });
         const malformedBearerToken = chance.string(); // Not in `bearer ${accessToken}` format
         request.headers.authorization = malformedBearerToken;
         response.sendStatus = statusMock;
@@ -54,6 +57,7 @@ describe('authorization', () => {
 
         verifyBearerToken(request, response, nextMock);
 
+        expect(jwt.verify).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledTimes(1);
         expect(statusMock).toHaveBeenCalledWith(forbiddenStatus);
     });

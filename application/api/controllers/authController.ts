@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { Router, Request, Response } from 'express';
 import { UserModel } from '../models/user.ts';
 import { FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';

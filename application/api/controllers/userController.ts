@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';
@@ -209,7 +208,7 @@ router.get('/logout', verifyBearerToken, (request, response) => {
     return response.redirect('/');
 });
 
-router.get('/profile', verifyBearerToken, verifyBearerToken, async (request, response) => {
+router.get('/profile', verifyBearerToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
     delete user.password;

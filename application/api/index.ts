@@ -1,8 +1,8 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
-import 'dotenv/config';
 import { connectToMongoDatabase } from './services/databaseService.ts';
 import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';

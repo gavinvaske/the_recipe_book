@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express'
-
-import 'dotenv/config';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 

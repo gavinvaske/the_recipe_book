@@ -15,6 +15,14 @@ const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
   return response.sendStatus(SUCCESS);
 })
 
+/* TODO: This type is a duplicate from the UI
+    * Investigate various ways to share types between API and frontend (issue #348)
+*/
+export type UserAuth = {
+  accessToken: string,
+  roles: string[]
+}
+
 /* 
   At login, an HTTP only cookie is created which stores a user's refresh-token
   A user is given a plain text "accessToken" which has a short expiration time
@@ -43,11 +51,12 @@ router.get('/access-token', (request: Request, response: Response) => {
 
     const accessTokenSecret = process.env.JWT_SECRET as string;
     const accessToken = generateAccessToken(tokenPayload, accessTokenSecret);
-
-    return response.json({
+    const userAuth: UserAuth = {
       accessToken,
       roles: payloadWithExtraStuff.roles
-    })
+    }
+
+    return response.json(userAuth)
   } catch (error) {
     return response.sendStatus(FORBIDDEN)
   }

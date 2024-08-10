@@ -71,7 +71,7 @@ router.post('/login', async (request: Request, response: Response) => {
     }
 
     const userRoles = [user.userType] /* TODO @Gavin (8-6-2024): Rename "userType" to "roles" on the database level */
-    const tokenPayload = {
+    const tokenPayload: TokenPayload = {
       id: user._id as MongooseId,
       email: user.email as string,
       roles: userRoles 

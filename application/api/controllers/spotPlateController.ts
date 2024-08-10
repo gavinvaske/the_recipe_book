@@ -6,9 +6,9 @@ import { upload } from '../middleware/upload.ts';
 import * as fileService from '../services/fileService.ts';
 import * as s3Service from '../services/s3Service.ts';
 import * as spotPlateService from '../services/spotPlateService.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const MAX_NUMBER_OF_FILES = 100;
 

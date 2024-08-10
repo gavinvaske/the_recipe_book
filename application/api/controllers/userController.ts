@@ -1,10 +1,9 @@
-import 'dotenv/config';
 import { Router } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';
 import { UserModel } from '../models/user.ts';
 import jwt from 'jsonwebtoken';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { sendPasswordResetEmail } from '../services/emailService.ts';
 import { upload } from '../middleware/upload.ts';
 import fs from 'fs';
@@ -14,14 +13,14 @@ import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
-const BCRYPT_SALT_LENGTH = 10;
+const BCRYPT_SALT_Rounds = 10;
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
-router.get('/', verifyJwtToken, async (_, response) => {
+router.get('/', verifyBearerToken, async (_, response) => {
     try {
         const users = await UserModel.find().exec();
 
@@ -35,14 +34,14 @@ router.get('/', verifyJwtToken, async (_, response) => {
     }
 });
 
-router.get('/logged-in-user-details', verifyJwtToken, async (request, response) => {
+router.get('/logged-in-user-details', verifyBearerToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id, 'email username fullName userType jobRole');
     delete user.profilePicture.data;
 
     return response.json(user);
 });
 
-router.post('/profile', verifyJwtToken, async (request, response) => {
+router.post('/profile', verifyBearerToken, async (request, response) => {
     const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
     const user = await UserModel.findById(request.user.id);
     user.username = userName;
@@ -62,7 +61,7 @@ router.post('/profile', verifyJwtToken, async (request, response) => {
     }
 });
 
-router.get('/profile-picture', verifyJwtToken, async (request, response) => {
+router.get('/profile-picture', verifyBearerToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
     const { contentType, data } = user.profilePicture;
 
@@ -72,7 +71,7 @@ router.get('/profile-picture', verifyJwtToken, async (request, response) => {
     });
 });
 
-router.post('/profile-picture', verifyJwtToken, upload.single('image'), async (request, response) => {
+router.post('/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 800000;
     const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
   
@@ -183,7 +182,7 @@ router.post('/reset-password/:id/:token', async (request, response) => {
             return response.redirect('back');
         }
 
-        const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_LENGTH);
+        const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_Rounds);
 
         await UserModel.updateOne({
             _id: user.id, 
@@ -203,13 +202,13 @@ router.post('/reset-password/:id/:token', async (request, response) => {
     }
 });
 
-router.get('/logout', verifyJwtToken, (request, response) => {
+router.get('/logout', verifyBearerToken, (request, response) => {
     response.clearCookie('jwtToken');
 
     return response.redirect('/');
 });
 
-router.get('/profile', verifyJwtToken, verifyJwtToken, async (request, response) => {
+router.get('/profile', verifyBearerToken, async (request, response) => {
     const user = await UserModel.findById(request.user.id);
 
     delete user.password;
@@ -220,11 +219,11 @@ router.get('/profile', verifyJwtToken, verifyJwtToken, async (request, response)
     });
 });
 
-router.get('/change-password', verifyJwtToken, (request, response) => {
+router.get('/change-password', verifyBearerToken, (request, response) => {
     response.render('changePassword');
 });
 
-router.post('/change-password', verifyJwtToken, async (request, response) => {
+router.post('/change-password', verifyBearerToken, async (request, response) => {
     const {newPassword, repeatPassword} = request.body;
 
     if (newPassword !== repeatPassword) {
@@ -239,7 +238,7 @@ router.post('/change-password', verifyJwtToken, async (request, response) => {
         return response.redirect('back');
     }
 
-    const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
+    const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_Rounds);
     
     const user = request.user;
 
@@ -260,6 +259,7 @@ router.get('/login', (request, response) => {
     response.render('login');
 });
 
+// @deprecated (8-9-2024): Use /login from authController
 router.post('/login', async (request, response) => {
     const {email, password} = request.body;
 
@@ -283,7 +283,7 @@ router.post('/login', async (request, response) => {
         id: user._id,
         email: user.email,
         userType: user.userType
-    }, process.env.JWT_SECRET);
+    }, process.env.JWT_SECRET, { expiresIn: '13h'});
 
     response.cookie('jwtToken', jwtToken, {
         httpOnly: true
@@ -315,7 +315,7 @@ router.post('/register', async (request, response) => {
         return response.redirect('back');
     }
 
-    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_LENGTH);
+    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_Rounds);
 
     try {
         await UserModel.create({

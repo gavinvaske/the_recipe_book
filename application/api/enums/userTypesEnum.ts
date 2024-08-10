@@ -1,5 +1,5 @@
-const USER = 'USER';
-const ADMIN = 'ADMIN';
+export const USER = 'USER';
+export const ADMIN = 'ADMIN';
 
 export const AVAILABLE_USER_TYPES = [
     USER,

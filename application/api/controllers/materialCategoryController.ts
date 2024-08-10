@@ -1,10 +1,10 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { MaterialCategoryModel } from '../models/materialCategory.ts';
 import { SERVER_ERROR } from '../enums/httpStatusCodes.ts'; 
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 const SHOW_ALL_MATERIAL_CATEGORIES_ENDPOINT = '/material-categories';
 

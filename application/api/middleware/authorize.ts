@@ -1,21 +1,36 @@
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express'
+import { MongooseId } from '../../react/_types/typeAliases.ts';
+import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 
-import 'dotenv/config';
+export function verifyBearerToken(request: Request, response: Response, next) {
+  const authorizationHeader = request.headers.authorization
 
-const FORBIDDEN_STATUS_CODE = 403;
+  if (!authorizationHeader) {
+    return response.sendStatus(UNAUTHORIZED);
+  }
 
-export function verifyJwtToken(request, response, next) {
-    const token = request.cookies.jwtToken;
+  try {
+    const accessToken = authorizationHeader.split(' ')[1];
 
-    if (!token) {
-        return response.status(FORBIDDEN_STATUS_CODE).redirect('/');
-    }
+    /* @ts-ignore: TODO: Add request.user type via a .d.ts file */
+    request.user = jwt.verify(accessToken, process.env.JWT_SECRET);
+    return next();
+  } catch (error) {
+    return response.sendStatus(FORBIDDEN) // Must be a 403 error so the frontend knows to fetch accessToken using refresh token. "I know who you are, but I can't let you in."
+  }
+}
 
-    try {
-        request.user = jwt.verify(token, process.env.JWT_SECRET);
-        return next();
-    } catch (error) {
-        response.clearCookie('jwtToken');
-        return response.redirect('/');
-    }
+export type TokenPayload = {
+  email: string;
+  id: MongooseId;
+  roles: string[];
+}
+
+export function generateAccessToken(payload: TokenPayload, secret: string) {
+  return jwt.sign(payload, secret, { expiresIn: '15m' });
+}
+
+export function generateRefreshToken(payload: TokenPayload, secret: string) {
+  return jwt.sign(payload, secret, { expiresIn: '7d' });
 }

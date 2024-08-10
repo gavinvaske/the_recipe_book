@@ -1,10 +1,10 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { DeliveryMethodModel } from '../models/deliveryMethod.ts';
 import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.get('/', async (_, response) => {
     try {

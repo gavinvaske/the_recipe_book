@@ -1,8 +1,8 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
-import 'dotenv/config';
 import { connectToMongoDatabase } from './services/databaseService.ts';
 import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';
@@ -76,7 +76,6 @@ setupApiRoutes(app)
 
 // This route loads the ENTIRE REACT APP
 app.use('/react-ui', (_, response) => response.render('app.ejs'));
-app.use('/foo', (_, response) => response.render('adminPanel.ejs'));
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

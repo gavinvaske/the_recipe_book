@@ -1,9 +1,9 @@
 describe('MaterialLengthAdjustment Views', () => {
   const formUrlPrefix = '/react-ui/forms'
 
-  before(() => {
+  beforeEach(() => {
     cy.login();
-  })
+  });
 
   it('Should render the MaterialLengthAdjustment form', () => {
       cy.visit(`${formUrlPrefix}/material-length-adjustment`);

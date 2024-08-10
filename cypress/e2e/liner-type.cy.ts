@@ -2,9 +2,9 @@ describe('LinerType Views', () => {
   const formUrlPrefix = '/react-ui/forms'
   const tableUrlPrefix = '/react-ui/tables'
 
-  before(() => {
+  beforeEach(() => {
     cy.login();
-  })
+  });
 
   it('Should render the LinerType form', () => {
       cy.visit(`${formUrlPrefix}/liner-type`);

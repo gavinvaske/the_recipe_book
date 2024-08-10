@@ -1,8 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 
 router.get('/form', (request, response) => {

@@ -1,10 +1,10 @@
 import { Router } from 'express';
 const router = Router();
 import { LinerTypeModel } from '../models/linerType.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.delete('/:mongooseId', async (request, response) => {
     try {

@@ -1,4 +1,4 @@
-import { verifyJwtToken } from '../../application/api/middleware/authorize.ts';
+import { verifyBearerToken } from '../../application/api/middleware/authorize.ts';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';
 
@@ -13,7 +13,7 @@ const redirectMock = jest.fn();
 describe('authorization', () => {
     let request,
         response;
-    const next = jest.fn();
+    const nextMock = jest.fn();
 
     beforeEach(() => {
         process.env.JWT_SECRET = chance.string();
@@ -21,7 +21,8 @@ describe('authorization', () => {
         request = {
             cookies: {
                 jwtToken: chance.string()
-            }
+            },
+            headers: {}
         };
         response = {
             clearCookie: clearCookieMock,
@@ -33,85 +34,62 @@ describe('authorization', () => {
         jest.resetAllMocks();
     });
 
-    it('should throw error if cookies is not defined', () => {
-        request.cookies = undefined;
+    it('should send UNAUTHORIZED (401) status if bearer token is missing', () => {
+        const missingBearerToken = chance.pickone(['', null, undefined]);
+        request.headers.authorization = missingBearerToken;
+        response.sendStatus = statusMock;
+        const unauthorizedStatus = 401;
 
-        expect(() => verifyJwtToken(request, response, next)).toThrow();
-    });
-
-    it('should send 403 status if JWT cookie is not defined', () => {
-        const FORBIDDEN_STATUS_CODE = 403;
-        request.cookies.jwtToken = undefined;
-        statusMock.mockReturnValue({
-            redirect: jest.fn()
-        });
-        response.status = statusMock;
-
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, nextMock);
 
         expect(statusMock).toHaveBeenCalledTimes(1);
-        expect(statusMock).toHaveBeenCalledWith(FORBIDDEN_STATUS_CODE);
+        expect(statusMock).toHaveBeenCalledWith(unauthorizedStatus);
     });
 
-    it('should redirect to homepage if JWT cookie is not defined', () => {
-        request.cookies.jwtToken = undefined;
-        statusMock.mockReturnValue({
-            redirect: redirectMock
+    it('should return FORBIDDEN (403) if bearer token is provided but malformed', () => {
+        jwt.verify.mockImplementation(() => {
+            throw new Error('jwt must be provided');
         });
-        response.status = statusMock;
+        const malformedBearerToken = chance.string(); // Not in `bearer ${accessToken}` format
+        request.headers.authorization = malformedBearerToken;
+        response.sendStatus = statusMock;
+        const forbiddenStatus = 403;
 
-        verifyJwtToken(request, response, next);
-
-        expect(redirectMock).toHaveBeenCalledTimes(1);
-        expect(redirectMock).toHaveBeenCalledWith('/');
-    });
-
-    it('should use jsonwebtoken library to verify jwtToken', () => {
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, nextMock);
 
         expect(jwt.verify).toHaveBeenCalledTimes(1);
-        expect(jwt.verify).toHaveBeenCalledWith(request.cookies.jwtToken, process.env.JWT_SECRET);
+        expect(statusMock).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledWith(forbiddenStatus);
     });
 
-    it('should set the user on the request if jwt verification is successful', () => {
-        const user = {};
-        jwt.verify.mockReturnValue(user);
+    it('should return FORBIDDEN (403) if jwt verification fails', () => {
+        const bearerToken = `bearer ${chance.string()}`;
+        request.headers.authorization = bearerToken;
+        response.sendStatus = statusMock;
+        const forbiddenStatus = 403;
 
-        verifyJwtToken(request, response, next);
-
-        expect(request.user).toBeDefined();
-    });
-
-    it('should call next() after jwt verification is successful', () => {
-        const user = {};
-        jwt.verify.mockReturnValue(user);
-
-        verifyJwtToken(request, response, next);
-
-        expect(next).toHaveBeenCalledTimes(1);
-    });
-
-    it('should clear jwtToken cookie if error is thrown during jwt verification', () => {
         jwt.verify.mockImplementation(() => {
             throw new Error();
         });
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, nextMock);
 
-        expect(clearCookieMock).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledTimes(1);
+        expect(statusMock).toHaveBeenCalledWith(forbiddenStatus);
     });
 
-    
-    it('should redirect to homepage if error is thrown during jwt verification', () => {
-        const homepageUrl = '/';
+    it('should call next() if jwt verification is successful', () => {
+        const bearerToken = `bearer ${chance.string()}`;
+        request.headers.authorization = bearerToken;
+        response.sendStatus = statusMock;
+
         jwt.verify.mockImplementation(() => {
-            throw new Error();
+            return {};
         });
 
-        verifyJwtToken(request, response, next);
+        verifyBearerToken(request, response, nextMock);
 
-        expect(redirectMock).toHaveBeenCalledTimes(1);
-        expect(redirectMock).toHaveBeenCalledWith(homepageUrl);
+        expect(nextMock).toHaveBeenCalledTimes(1);
+        expect(nextMock).toHaveBeenCalledWith();
     });
-
 });

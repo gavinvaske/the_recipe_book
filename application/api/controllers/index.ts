@@ -1,13 +1,8 @@
 import { Router } from 'express';
 const router = Router();
-import { isUserLoggedIn } from '../services/userService.ts';
 
-router.get('/', (request, response) => {
-    if (isUserLoggedIn(request.cookies.jwtToken, process.env.JWT_SECRET)) {
-        return response.redirect('/users/profile');
-    }
-
-    return response.render('login');
+router.get('/', (_, response) => {
+    return response.redirect('react-ui/');
 });
 
 export default router;

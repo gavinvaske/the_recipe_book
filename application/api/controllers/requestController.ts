@@ -3,9 +3,9 @@ const router = Router();
 import { SpotPlateModel } from '../models/spotPlate.ts';
 import { DieLineModel } from '../models/dieLine.ts';
 import * as destinationService from '../services/destinationService.ts';
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.get('/', async (request, response) => {
     const dieLineRequestPromises = DieLineModel.find({}).exec();

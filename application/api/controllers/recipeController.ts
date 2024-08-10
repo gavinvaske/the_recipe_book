@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { RecipeModel } from '../models/recipe.ts';
 
 const DEFAULT_PAGE_NUMBER = 1;
@@ -11,7 +11,7 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.post('/query', async (request, response) => {
     const {query, pageNumber, resultsPerPage} = request.body;

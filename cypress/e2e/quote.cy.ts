@@ -1,7 +1,7 @@
 describe('Quote Views', () => {
   const formUrlPrefix = '/react-ui/forms';
 
-  before(() => {
+  beforeEach(() => {
     cy.login();
   });
 

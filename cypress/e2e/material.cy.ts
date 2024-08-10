@@ -1,19 +1,16 @@
 describe('Material Views', () => {
-  const formUrlPrefix = '/react-ui/forms'
-  const tableUrlPrefix = '/react-ui/tables'
-
-  before(() => {
+  beforeEach(() => {
     cy.login();
-  })
+  });
 
   it('Should render the Material form', () => {
-      cy.visit(`${formUrlPrefix}/material`);
+      cy.visit(`/react-ui/forms/material`);
 
       cy.get('[data-test=material-form]').should('exist');
   });
 
   it('Should render the Material table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/material`);
+    cy.visit(`/react-ui/tables/material`);
 
     cy.get('#material-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');

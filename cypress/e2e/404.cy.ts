@@ -1,6 +1,7 @@
 describe('404 Page', () => {
   const reactUiPrefix = '/react-ui'
-  before(() => {
+
+  beforeEach(() => {
     cy.login();
   });
 

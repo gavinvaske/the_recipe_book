@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { verifyJwtToken } from '../middleware/authorize.ts';
+import { verifyBearerToken } from '../middleware/authorize.ts';
 import { UserModel } from '../models/user.ts';
 import { MachineModel } from '../models/machine.ts';
 import { MaterialModel} from '../models/material.ts';
@@ -14,7 +14,7 @@ const MONGOOSE_SORT_METHODS = {
     'descending': -1
 };
 
-router.use(verifyJwtToken);
+router.use(verifyBearerToken);
 
 router.post('/:recipeId/query', async (request, response) => {
     const hardCodedSearchResults = [{}, {}, {}];

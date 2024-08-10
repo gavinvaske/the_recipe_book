@@ -7,7 +7,7 @@
   "targets": {
     "main": false,
     "resources": {
-      "source": "application/react/index.js",
+      "source": "application/react/index.jsx",
       "distDir": "build",
       "publicUrl": "build"
     }

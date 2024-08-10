@@ -8,8 +8,6 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
-const userProfilePage = '/users/profile'
-
 export const Login = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();

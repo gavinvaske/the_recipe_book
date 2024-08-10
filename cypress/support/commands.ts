@@ -1,12 +1,16 @@
-Cypress.Commands.add('login', (username, password) => {
+import { Chance } from 'chance';
+
+const chance = new Chance();
+
+Cypress.Commands.add('login', () => {
   cy.visit('/react-ui/login')
 
-  if (!Cypress.env('loginUsername') && !username) throw new Error('Missing a required cypress environment variable: "loginUsername"')
-  if (!Cypress.env('loginPassword') && !password) throw new Error('Missing a required cypress environment variable: "loginPassword"')
+  if (!Cypress.env('loginUsername')) throw new Error('Missing a required cypress environment variable: "loginUsername"')
+  if (!Cypress.env('loginPassword')) throw new Error('Missing a required cypress environment variable: "loginPassword"')
 
   /* When username and password input fields are populated */
-  cy.get('[data-test=username-input]').type(username ? username : Cypress.env('loginUsername'))
-  cy.get('[data-test=password-input]').type(password ? password : Cypress.env('loginPassword'))
+  cy.get('[data-test=username-input]').type(Cypress.env('loginUsername'))
+  cy.get('[data-test=password-input]').type(Cypress.env('loginPassword'))
 
   /* And a User clicks login */
   cy.get('[data-test=login-btn]').click();
@@ -18,6 +22,28 @@ Cypress.Commands.add('login', (username, password) => {
   */
   cy.contains('TODO Build Home.jsx').should('exist');
   cy.contains('Welcome to E.L.I').should('exist');
+})
+
+Cypress.Commands.add('invalidLogin', () => {
+  cy.visit('/react-ui/login')
+  const invalidUsername = chance.string()
+  const invalidPassword = chance.string()
+
+  /* When username and password input fields are populated */
+  cy.get('[data-test=username-input]').type(invalidUsername)
+  cy.get('[data-test=password-input]').type(invalidPassword)
+
+  /* And a User clicks login */
+  cy.get('[data-test=login-btn]').click();
+
+  /* 
+    [Important]
+      If we dont verify anything on the page after a login, 
+      the tests execute too quickly and sometimes that auth hasn't fully taken effect leading to random errors 
+  */
+  cy.location().should(loc => {
+    expect(loc.pathname).to.equal('/react-ui/login')
+  })
 })
 
 Cypress.Commands.add('logout', () => {

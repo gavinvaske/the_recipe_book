@@ -1,3 +1,7 @@
+import { Chance } from 'chance';
+
+const chance = new Chance();
+
 describe('Auth Test Cases', () => {
   it('User should see a home page upon login', () => {
     cy.login();
@@ -7,7 +11,7 @@ describe('Auth Test Cases', () => {
     })
   })
 
-  it('Unauthenticated user should see the login page', () => {
+  it.only('Unauthenticated user should see the login page', () => {
     cy.logout();
     cy.visit('/react-ui/inventory');
 
@@ -15,6 +19,17 @@ describe('Auth Test Cases', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.equal('/react-ui/login')
     })
+  });
+
+  it('An error message should be shown for invalid login', () => {
+    cy.logout();
+    cy.invalidLogin();
+    const expectedInvalidLoginErrorMessage = 'Invalid username or password'
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.equal('/react-ui/login')
+    })
+    cy.contains(expectedInvalidLoginErrorMessage)
   });
 
   it('User should see a home page upon login', () => {

@@ -55,7 +55,7 @@ router.get('/access-token', (request: Request, response: Response) => {
 
 router.post('/login', async (request: Request, response: Response) => {
   const { email, password } = request.body;
-  const invalidLoginMessage = 'Invalid username or password'
+  const invalidLoginMessage = 'Invalid username and/or password'
 
   try {
     const user = await UserModel.findOne({ email }).lean();

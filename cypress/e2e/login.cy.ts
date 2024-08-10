@@ -20,7 +20,7 @@ describe('Auth Test Cases', () => {
   it('An error message should be shown for invalid login', () => {
     cy.logout();
     cy.invalidLogin();
-    const expectedInvalidLoginErrorMessage = 'Invalid username or password'
+    const expectedInvalidLoginErrorMessage = 'Invalid username and/or password'
 
     cy.location().should(loc => {
       expect(loc.pathname).to.equal('/react-ui/login')

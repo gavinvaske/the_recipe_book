@@ -7,9 +7,20 @@ describe('Auth Test Cases', () => {
     })
   })
 
-  it.only('Unauthenticated user should see the login page', () => {
+  it('Unauthenticated user should see the login page', () => {
     cy.logout();
     cy.visit('/react-ui/inventory');
+
+    cy.contains('Login');
+    cy.location().should(loc => {
+      expect(loc.pathname).to.equal('/react-ui/login')
+    })
+  });
+
+  it('Unauthenticated user should be sent to login page when visiting base route', () => {
+    cy.logout();
+    const baseRoute = '/';
+    cy.visit(baseRoute);
 
     cy.contains('Login');
     cy.location().should(loc => {

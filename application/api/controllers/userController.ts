@@ -13,7 +13,7 @@ import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
-const BCRYPT_SALT_LENGTH = 10;
+const BCRYPT_SALT_Rounds = 10;
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
 function deleteFileFromFileSystem(path) {
@@ -182,7 +182,7 @@ router.post('/reset-password/:id/:token', async (request, response) => {
             return response.redirect('back');
         }
 
-        const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_LENGTH);
+        const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_Rounds);
 
         await UserModel.updateOne({
             _id: user.id, 
@@ -238,7 +238,7 @@ router.post('/change-password', verifyBearerToken, async (request, response) => 
         return response.redirect('back');
     }
 
-    const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_LENGTH);
+    const encryptedPassword = await bcrypt.hash(newPassword, BCRYPT_SALT_Rounds);
     
     const user = request.user;
 
@@ -315,7 +315,7 @@ router.post('/register', async (request, response) => {
         return response.redirect('back');
     }
 
-    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_LENGTH);
+    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_Rounds);
 
     try {
         await UserModel.create({

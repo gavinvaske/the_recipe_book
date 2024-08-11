@@ -1,6 +1,7 @@
 import Chance from 'chance';
 import { UserModel } from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
+import { AVAILABLE_USER_TYPES } from '../../application/api/enums/userTypesEnum.ts';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
@@ -169,4 +170,55 @@ describe('validation', () => {
             expect(new Date(user.birthDate).getTime() === new Date(birthDate).getTime()).toBeTruthy();
         });
     });
+
+    describe('attribute: roles', () => {
+      it('should exist', () => {
+        const user = new UserModel(userAttributes);
+        
+        expect(user.roles).toBeDefined();
+      })
+
+      it('should not fail validation if roles are from allow-list', () => {
+        userAttributes.roles = [chance.pickone(AVAILABLE_USER_TYPES), chance.pickone(AVAILABLE_USER_TYPES)];
+        const user = new UserModel(userAttributes);
+        
+        const error = user.validateSync();
+
+        expect(error).toBe(undefined);
+      })
+
+      it('should FAIL validation if at least one role is unknown', () => {
+        const unknownRole = chance.string();
+        const validRole = chance.pickone(AVAILABLE_USER_TYPES);
+        userAttributes.roles = [
+          validRole, 
+          unknownRole,
+          validRole
+        ];
+        const user = new UserModel(userAttributes);
+        
+        const error = user.validateSync();
+
+        expect(error).toBeDefined();
+      })
+
+      it('should not fail validation if roles is empty', () => {
+        userAttributes.roles = [];
+        const user = new UserModel(userAttributes);
+        
+        const error = user.validateSync();
+
+        expect(error).toBe(undefined);
+      })
+
+      it('should default to empty list', () => {
+        delete userAttributes.roles;
+        const user = new UserModel(userAttributes);
+        
+        const error = user.validateSync();
+
+        expect(error).toBe(undefined);
+        expect(user.roles).toEqual([]);
+      })
+    })
 });

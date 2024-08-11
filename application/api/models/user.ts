@@ -61,6 +61,13 @@ const userSchema = new Schema({
     },
     birthDate: {
         type: Date
+    },
+    roles: {
+      type: [{
+        type: String,
+        enum: AVAILABLE_USER_TYPES
+      }],
+
     }
 }, { timestamps: true });
 

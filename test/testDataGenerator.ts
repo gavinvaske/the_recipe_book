@@ -119,7 +119,8 @@ function getUser() {
     return {
         email: chance.email(),
         password: chance.string({ length: PASSWORD_MIN_LENGTH }),
-        userType: chance.pickone(AVAILABLE_USER_TYPES)
+        userType: chance.pickone(AVAILABLE_USER_TYPES),
+        roles: [chance.pickone(AVAILABLE_USER_TYPES)]
     };
 }
 

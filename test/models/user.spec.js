@@ -1,7 +1,7 @@
 import Chance from 'chance';
 import { UserModel } from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
-import { AVAILABLE_USER_TYPES } from '../../application/api/enums/userTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES } from '../../application/api/enums/userTypesEnum.ts';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
@@ -171,15 +171,15 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: roles', () => {
+    describe('attribute: authRoles', () => {
       it('should exist', () => {
         const user = new UserModel(userAttributes);
         
-        expect(user.roles).toBeDefined();
+        expect(user.authRoles).toBeDefined();
       })
 
-      it('should not fail validation if roles are from allow-list', () => {
-        userAttributes.roles = [chance.pickone(AVAILABLE_USER_TYPES), chance.pickone(AVAILABLE_USER_TYPES)];
+      it('should not fail validation if authRoles are from allow-list', () => {
+        userAttributes.authRoles = [chance.pickone(AVAILABLE_AUTH_ROLES), chance.pickone(AVAILABLE_AUTH_ROLES)];
         const user = new UserModel(userAttributes);
         
         const error = user.validateSync();
@@ -189,8 +189,8 @@ describe('validation', () => {
 
       it('should FAIL validation if at least one role is unknown', () => {
         const unknownRole = chance.string();
-        const validRole = chance.pickone(AVAILABLE_USER_TYPES);
-        userAttributes.roles = [
+        const validRole = chance.pickone(AVAILABLE_AUTH_ROLES);
+        userAttributes.authRoles = [
           validRole, 
           unknownRole,
           validRole
@@ -203,7 +203,7 @@ describe('validation', () => {
       })
 
       it('should not fail validation if roles is empty', () => {
-        userAttributes.roles = [];
+        userAttributes.authRoles = [];
         const user = new UserModel(userAttributes);
         
         const error = user.validateSync();
@@ -212,13 +212,13 @@ describe('validation', () => {
       })
 
       it('should default to empty list', () => {
-        delete userAttributes.roles;
+        delete userAttributes.authRoles;
         const user = new UserModel(userAttributes);
         
         const error = user.validateSync();
 
         expect(error).toBe(undefined);
-        expect(user.roles).toEqual([]);
+        expect(user.authRoles).toEqual([]);
       })
     })
 });

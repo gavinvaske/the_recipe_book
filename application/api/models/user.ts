@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
-import { AVAILABLE_USER_TYPES, DEFAULT_USER_TYPE } from '../enums/userTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES, DEFAULT_AUTH_ROLE } from '../enums/userTypesEnum.ts';
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -28,8 +28,8 @@ const userSchema = new Schema({
     },
     userType: {
         type: String,
-        enum: AVAILABLE_USER_TYPES,
-        default: DEFAULT_USER_TYPE
+        enum: AVAILABLE_AUTH_ROLES,
+        default: DEFAULT_AUTH_ROLE
     },
     profilePicture: {
         data: {
@@ -62,12 +62,11 @@ const userSchema = new Schema({
     birthDate: {
         type: Date
     },
-    roles: {
+    authRoles: {
       type: [{
         type: String,
-        enum: AVAILABLE_USER_TYPES
+        enum: AVAILABLE_AUTH_ROLES
       }],
-
     }
 }, { timestamps: true });
 

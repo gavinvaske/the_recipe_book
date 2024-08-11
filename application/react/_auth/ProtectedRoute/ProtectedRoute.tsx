@@ -69,7 +69,7 @@ export const ProtectedRoute = (props: Props) => {
     <>
     {
       isLoading ? (<LoadingIndicator />) : (
-        auth?.roles?.find((role) => allowedRolesUppercased?.includes(role.toUpperCase()))
+        auth?.authRoles?.find((role) => allowedRolesUppercased?.includes(role.toUpperCase()))
           ? <Outlet />
           : auth?.accessToken
             ? <Navigate to="/unauthorized" state={{ from: location }} replace />

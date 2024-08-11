@@ -2,14 +2,14 @@ import Chance from 'chance';
 const chance = Chance();
 import mongoose from 'mongoose';
 
-import { dieShapes } from '../application/api/enums/dieShapesEnum';
-import { toolTypes } from '../application/api/enums/toolTypesEnum';
-import { dieVendors } from '../application/api/enums/dieVendorsEnum';
-import { dieMagCylinders } from '../application/api/enums/dieMagCylindersEnum';
-import { dieStatuses } from '../application/api/enums/dieStatusesEnum';
-import { unwindDirections } from '../application/api/enums/unwindDirectionsEnum';
-import { finishTypes } from '../application/api/enums/finishTypesEnum';
-import { AVAILABLE_USER_TYPES } from '../application/api/enums/userTypesEnum';
+import { dieShapes } from '../application/api/enums/dieShapesEnum.ts';
+import { toolTypes } from '../application/api/enums/toolTypesEnum.ts';
+import { dieVendors } from '../application/api/enums/dieVendorsEnum.ts';
+import { dieMagCylinders } from '../application/api/enums/dieMagCylindersEnum.ts';
+import { dieStatuses } from '../application/api/enums/dieStatusesEnum.ts';
+import { unwindDirections } from '../application/api/enums/unwindDirectionsEnum.ts';
+import { finishTypes } from '../application/api/enums/finishTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES } from '../application/api/enums/userTypesEnum.ts';
 
 export const mockData = {
     Die: getDie,
@@ -119,8 +119,8 @@ function getUser() {
     return {
         email: chance.email(),
         password: chance.string({ length: PASSWORD_MIN_LENGTH }),
-        userType: chance.pickone(AVAILABLE_USER_TYPES),
-        roles: [chance.pickone(AVAILABLE_USER_TYPES)]
+        userType: chance.pickone(AVAILABLE_AUTH_ROLES),
+        authRoles: [chance.pickone(AVAILABLE_AUTH_ROLES)]
     };
 }
 

@@ -9,7 +9,7 @@ import { dieMagCylinders } from '../application/api/enums/dieMagCylindersEnum.ts
 import { dieStatuses } from '../application/api/enums/dieStatusesEnum.ts';
 import { unwindDirections } from '../application/api/enums/unwindDirectionsEnum.ts';
 import { finishTypes } from '../application/api/enums/finishTypesEnum.ts';
-import { AVAILABLE_AUTH_ROLES } from '../application/api/enums/userTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES } from '../application/api/enums/authRolesEnum.ts';
 
 export const mockData = {
     Die: getDie,
@@ -119,7 +119,6 @@ function getUser() {
     return {
         email: chance.email(),
         password: chance.string({ length: PASSWORD_MIN_LENGTH }),
-        userType: chance.pickone(AVAILABLE_AUTH_ROLES),
         authRoles: [chance.pickone(AVAILABLE_AUTH_ROLES)]
     };
 }

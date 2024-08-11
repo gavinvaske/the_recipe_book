@@ -1,7 +1,7 @@
 import Chance from 'chance';
 import { UserModel } from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
-import { AVAILABLE_AUTH_ROLES } from '../../application/api/enums/userTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES } from '../../application/api/enums/authRolesEnum.ts';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
@@ -20,28 +20,10 @@ describe('validation', () => {
     
             expect(error).toBe(undefined);
         });
-    
-        it('should default "userType" to "USER" if one is not provided', () => {
-            delete userAttributes.userType;
-            const user = new UserModel(userAttributes);
-    
-            const error = user.validateSync();
-    
-            expect(error).toBe(undefined);
-            expect(user.userType).toBe('USER');
-        });
+
     });
 
     describe('non-successful validation', () => {
-        it('should not allow unknown "userType"', () => {
-            userAttributes.userType = chance.string();
-            const user = new UserModel(userAttributes);
-
-            const error = user.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
         it('should not validate incorrectly formatted emails', () => {
             userAttributes.email = chance.string();
             const user = new UserModel(userAttributes);

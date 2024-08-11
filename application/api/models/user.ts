@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
-import { AVAILABLE_AUTH_ROLES, DEFAULT_AUTH_ROLE } from '../enums/userTypesEnum.ts';
+import { AVAILABLE_AUTH_ROLES, DEFAULT_AUTH_ROLE } from '../enums/authRolesEnum.ts';  /* TODO: Rename */
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -25,11 +25,6 @@ const userSchema = new Schema({
         type: String,
         minLength: 8,
         required: true
-    },
-    userType: {
-        type: String,
-        enum: AVAILABLE_AUTH_ROLES,
-        default: DEFAULT_AUTH_ROLE
     },
     profilePicture: {
         data: {

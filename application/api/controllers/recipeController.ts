@@ -105,7 +105,7 @@ router.get('/', async (request, response) => {
             .sort(sortQuery)
             .populate({
                 path: 'author',
-                select: 'email userType profilePicture'
+                select: 'email authRoles profilePicture'
             })
             .skip(numberOfResultsToSkip)
             .limit(DEFAULT_RESULTS_PER_PAGE)

@@ -154,53 +154,53 @@ describe('validation', () => {
     });
 
     describe('attribute: authRoles', () => {
-      it('should exist', () => {
-        const user = new UserModel(userAttributes);
+        it('should exist', () => {
+            const user = new UserModel(userAttributes);
         
-        expect(user.authRoles).toBeDefined();
-      })
+            expect(user.authRoles).toBeDefined();
+        });
 
-      it('should not fail validation if authRoles are from allow-list', () => {
-        userAttributes.authRoles = [chance.pickone(AVAILABLE_AUTH_ROLES), chance.pickone(AVAILABLE_AUTH_ROLES)];
-        const user = new UserModel(userAttributes);
+        it('should not fail validation if authRoles are from allow-list', () => {
+            userAttributes.authRoles = [chance.pickone(AVAILABLE_AUTH_ROLES), chance.pickone(AVAILABLE_AUTH_ROLES)];
+            const user = new UserModel(userAttributes);
         
-        const error = user.validateSync();
+            const error = user.validateSync();
 
-        expect(error).toBe(undefined);
-      })
+            expect(error).toBe(undefined);
+        });
 
-      it('should FAIL validation if at least one role is unknown', () => {
-        const unknownRole = chance.string();
-        const validRole = chance.pickone(AVAILABLE_AUTH_ROLES);
-        userAttributes.authRoles = [
-          validRole, 
-          unknownRole,
-          validRole
-        ];
-        const user = new UserModel(userAttributes);
+        it('should FAIL validation if at least one role is unknown', () => {
+            const unknownRole = chance.string();
+            const validRole = chance.pickone(AVAILABLE_AUTH_ROLES);
+            userAttributes.authRoles = [
+                validRole, 
+                unknownRole,
+                validRole
+            ];
+            const user = new UserModel(userAttributes);
         
-        const error = user.validateSync();
+            const error = user.validateSync();
 
-        expect(error).toBeDefined();
-      })
+            expect(error).toBeDefined();
+        });
 
-      it('should not fail validation if roles is empty', () => {
-        userAttributes.authRoles = [];
-        const user = new UserModel(userAttributes);
+        it('should not fail validation if roles is empty', () => {
+            userAttributes.authRoles = [];
+            const user = new UserModel(userAttributes);
         
-        const error = user.validateSync();
+            const error = user.validateSync();
 
-        expect(error).toBe(undefined);
-      })
+            expect(error).toBe(undefined);
+        });
 
-      it('should default to empty list', () => {
-        delete userAttributes.authRoles;
-        const user = new UserModel(userAttributes);
+        it('should default to empty list', () => {
+            delete userAttributes.authRoles;
+            const user = new UserModel(userAttributes);
         
-        const error = user.validateSync();
+            const error = user.validateSync();
 
-        expect(error).toBe(undefined);
-        expect(user.authRoles).toEqual([]);
-      })
-    })
+            expect(error).toBe(undefined);
+            expect(user.authRoles).toEqual([]);
+        });
+    });
 });

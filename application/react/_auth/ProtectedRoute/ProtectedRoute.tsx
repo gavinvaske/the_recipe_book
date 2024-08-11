@@ -72,7 +72,7 @@ export const ProtectedRoute = (props: Props) => {
         auth?.authRoles?.find((role) => allowedRolesUppercased?.includes(role.toUpperCase()))
           ? <Outlet />
           : auth?.accessToken
-            ? <Navigate to="/unauthorized" state={{ from: location }} replace />
+            ? <Navigate to="/react-ui/unauthorized" state={{ from: location }} replace />
             : <Navigate to="/react-ui/login" state={{ from: location }} replace />
       )
     }

@@ -79,7 +79,7 @@ router.post('/login', async (request: Request, response: Response) => {
       return response.status(UNAUTHORIZED).send(invalidLoginMessage);
     }
 
-    const authRoles = user.authRoles || [user.userType]
+    const authRoles = user.authRoles || []
 
     const tokenPayload: TokenPayload = {
       id: user._id as MongooseId,
@@ -96,6 +96,16 @@ router.post('/login', async (request: Request, response: Response) => {
     response.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       httpOnly: true
     });
+
+    try {
+      /* Store user login date/time */
+      await UserModel.updateOne({ _id: user._id }, {
+        $set: { lastLoginDateTime: new Date() }
+      })
+    } catch (error) {
+      console.error('Failed to save login info: ', error);
+      // Do nothing else: aka allow login to proceed successfully
+    }
 
     return response.status(SUCCESS).json({
       accessToken,

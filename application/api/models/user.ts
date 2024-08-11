@@ -67,6 +67,9 @@ const userSchema = new Schema({
         type: String,
         enum: AVAILABLE_AUTH_ROLES
       }],
+    },
+    lastLoginDateTime: {
+      type: Date
     }
 }, { timestamps: true });
 

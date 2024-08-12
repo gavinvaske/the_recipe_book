@@ -55,7 +55,7 @@ export async function storeFilesInS3(files) {
     });
 
     const s3FileUploadResponses = await Promise.all(s3FileUploadResponsePromises);
-    const FileModel = mongoose.model('s3File', s3FileSchema);
+    const FileModel = mongoose.model('S3File', s3FileSchema);
 
     return s3FileUploadResponses.map((fileUploadResponse) => {
         return new FileModel(fileUploadResponse);

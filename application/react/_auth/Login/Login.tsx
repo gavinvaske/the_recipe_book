@@ -26,16 +26,16 @@ export const Login = () => {
     axios.post('/auth/login', formData)
       .then((response: AxiosResponse) => {
         const { data: jsonResponse } = response;
-        const { accessToken, roles } = jsonResponse;
+        const { accessToken, authRoles } = jsonResponse;
 
-        if (!accessToken || !roles ) {
+        if (!accessToken || !authRoles ) {
           console.error('Login error: ', response)
           throw new Error('Missing accessToken and/or roles from login response')
         }
 
         setAuth({
           accessToken,
-          roles
+          authRoles: authRoles
         })
         navigate(from, { replace: true });
         useSuccessMessage('Welcome to E.L.I')

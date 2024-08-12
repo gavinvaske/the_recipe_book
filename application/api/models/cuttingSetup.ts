@@ -66,4 +66,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-export const CuttingSetupModel = mongoose.model('cuttingSetups', schema);
+export const CuttingSetupModel = mongoose.model('CuttingSetup', schema);

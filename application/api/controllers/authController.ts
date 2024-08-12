@@ -20,7 +20,7 @@ const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
 */
 export type UserAuth = {
   accessToken: string,
-  roles: string[]
+  authRoles: string[]
 }
 
 /* 
@@ -46,14 +46,14 @@ router.get('/access-token', (request: Request, response: Response) => {
     const tokenPayload: TokenPayload = {
       email: payloadWithExtraStuff.email,
       id: payloadWithExtraStuff.id,
-      roles: payloadWithExtraStuff.roles
+      authRoles: payloadWithExtraStuff.authRoles
     }
 
     const accessTokenSecret = process.env.JWT_SECRET as string;
     const accessToken = generateAccessToken(tokenPayload, accessTokenSecret);
     const userAuth: UserAuth = {
       accessToken,
-      roles: payloadWithExtraStuff.roles
+      authRoles: payloadWithExtraStuff.authRoles
     }
 
     return response.json(userAuth)
@@ -79,11 +79,12 @@ router.post('/login', async (request: Request, response: Response) => {
       return response.status(UNAUTHORIZED).send(invalidLoginMessage);
     }
 
-    const userRoles = [user.userType] /* TODO @Gavin (8-6-2024): Rename "userType" to "roles" on the database level */
+    const authRoles = user.authRoles || []
+
     const tokenPayload: TokenPayload = {
       id: user._id as MongooseId,
       email: user.email as string,
-      roles: userRoles 
+      authRoles: authRoles
     }
 
     const accessTokenSecret = process.env.JWT_SECRET as string;
@@ -96,9 +97,19 @@ router.post('/login', async (request: Request, response: Response) => {
       httpOnly: true
     });
 
+    try {
+      /* Store user login date/time */
+      await UserModel.updateOne({ _id: user._id }, {
+        $set: { lastLoginDateTime: new Date() }
+      })
+    } catch (error) {
+      console.error('Failed to save login info: ', error);
+      // Do nothing else: aka allow login to proceed successfully
+    }
+
     return response.status(SUCCESS).json({
       accessToken,
-      roles: userRoles
+      authRoles: authRoles
     })
 
   } catch (error) {

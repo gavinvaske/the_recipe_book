@@ -2,13 +2,13 @@ import { MongooseAttributes } from "./_sharedMongooseAttributes";
 
 export type User = MongooseAttributes & {
   email: string;
-  userType: 'ADMIN' | 'USER',
   profilePicture?: ProfilePicture,
   username?: string,
   fullName?: string,
   jobRole?: string,
   phoneNumber?: string,
-  birthDate?: Date
+  birthDate?: Date,
+  authRoles: 'ADMIN' | 'USER',
 }
 
 type ProfilePicture = {

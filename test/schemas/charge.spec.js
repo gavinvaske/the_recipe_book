@@ -14,7 +14,7 @@ describe('validation', () => {
             ProductNumber: chance.word() + `-${chance.letter()}`,
             PriceM: String(chance.floating())
         };
-        ChargeModel = mongoose.model('DepartmentNotes', chargeSchema);
+        ChargeModel = mongoose.model('DepartmentNote', chargeSchema);
     });
 
     describe('attribute: productNumber (aka ProductNumber)', () => {

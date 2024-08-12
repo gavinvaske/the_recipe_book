@@ -14,7 +14,7 @@ describe('validation', () => {
             fileName: chance.string(),
             bucket: chance.string()
         };
-        S3FileModel = mongoose.model('s3File', s3FileSchema);
+        S3FileModel = mongoose.model('S3File', s3FileSchema);
     });
 
     it('should validate if all attributes are defined successfully', () => {

@@ -35,7 +35,7 @@ router.get('/', verifyBearerToken, async (_, response) => {
 });
 
 router.get('/logged-in-user-details', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user.id, 'email username fullName userType jobRole');
+    const user = await UserModel.findById(request.user.id, 'email username fullName authRoles jobRole');
     delete user.profilePicture.data;
 
     return response.json(user);
@@ -282,7 +282,7 @@ router.post('/login', async (request, response) => {
     const jwtToken = jwt.sign({
         id: user._id,
         email: user.email,
-        userType: user.userType
+        authRoles: user.authRoles || []
     }, process.env.JWT_SECRET, { expiresIn: '13h'});
 
     response.cookie('jwtToken', jwtToken, {

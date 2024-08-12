@@ -1,6 +1,7 @@
 import Chance from 'chance';
 import { UserModel } from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
+import { AVAILABLE_AUTH_ROLES } from '../../application/api/enums/authRolesEnum.ts';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
@@ -19,28 +20,10 @@ describe('validation', () => {
     
             expect(error).toBe(undefined);
         });
-    
-        it('should default "userType" to "USER" if one is not provided', () => {
-            delete userAttributes.userType;
-            const user = new UserModel(userAttributes);
-    
-            const error = user.validateSync();
-    
-            expect(error).toBe(undefined);
-            expect(user.userType).toBe('USER');
-        });
+
     });
 
     describe('non-successful validation', () => {
-        it('should not allow unknown "userType"', () => {
-            userAttributes.userType = chance.string();
-            const user = new UserModel(userAttributes);
-
-            const error = user.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
         it('should not validate incorrectly formatted emails', () => {
             userAttributes.email = chance.string();
             const user = new UserModel(userAttributes);
@@ -167,6 +150,57 @@ describe('validation', () => {
             user.validateSync();
 
             expect(new Date(user.birthDate).getTime() === new Date(birthDate).getTime()).toBeTruthy();
+        });
+    });
+
+    describe('attribute: authRoles', () => {
+        it('should exist', () => {
+            const user = new UserModel(userAttributes);
+        
+            expect(user.authRoles).toBeDefined();
+        });
+
+        it('should not fail validation if authRoles are from allow-list', () => {
+            userAttributes.authRoles = [chance.pickone(AVAILABLE_AUTH_ROLES), chance.pickone(AVAILABLE_AUTH_ROLES)];
+            const user = new UserModel(userAttributes);
+        
+            const error = user.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should FAIL validation if at least one role is unknown', () => {
+            const unknownRole = chance.string();
+            const validRole = chance.pickone(AVAILABLE_AUTH_ROLES);
+            userAttributes.authRoles = [
+                validRole, 
+                unknownRole,
+                validRole
+            ];
+            const user = new UserModel(userAttributes);
+        
+            const error = user.validateSync();
+
+            expect(error).toBeDefined();
+        });
+
+        it('should not fail validation if roles is empty', () => {
+            userAttributes.authRoles = [];
+            const user = new UserModel(userAttributes);
+        
+            const error = user.validateSync();
+
+            expect(error).toBe(undefined);
+        });
+
+        it('should default to empty list', () => {
+            delete userAttributes.authRoles;
+            const user = new UserModel(userAttributes);
+        
+            const error = user.validateSync();
+
+            expect(error).toBe(undefined);
+            expect(user.authRoles).toEqual([]);
         });
     });
 });

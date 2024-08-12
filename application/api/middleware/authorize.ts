@@ -24,7 +24,7 @@ export function verifyBearerToken(request: Request, response: Response, next) {
 export type TokenPayload = {
   email: string;
   id: MongooseId;
-  roles: string[];
+  authRoles: string[];
 }
 
 export function generateAccessToken(payload: TokenPayload, secret: string) {

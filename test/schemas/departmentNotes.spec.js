@@ -22,7 +22,7 @@ describe('validation', () => {
             shipping: chance.string(),
             billing: chance.string()
         };
-        DepartmentNotesModel = mongoose.model('DepartmentNotes', departmentNotesSchema);
+        DepartmentNotesModel = mongoose.model('DepartmentNote', departmentNotesSchema);
     });
 
     it('should validate if all attributes are defined successfully', () => {

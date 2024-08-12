@@ -66,7 +66,7 @@ window.addEventListener('load', (event) => {
                             <input type="file" id="image" name="image" value="" accept="image/png, image/jpg, image/jpeg" required>
                             <button type="submit">Submit</button>
                         </form>
-                        <p>Permission Level: <b><%= user.userType %></b></p>
+                        <p>Permission Level: <b><%= user.authRoles %></b></p>
                         <p>Allowed JPG, GIF, or PNG. Max size 800kb.</p>
                     </div>
                 </div>

@@ -22,7 +22,7 @@ import { MaterialOrderForm } from '../MaterialOrder/MaterialOrderForm/MaterialOr
 import { MaterialOrderTable } from '../MaterialOrder/MaterialOrderTable/MaterialOrderTable';
 import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
 import { Login } from '../_auth/Login/Login';
-import { USER, ADMIN } from '../../api/enums/userTypesEnum'
+import { USER, ADMIN } from '../../api/enums/authRolesEnum'
 import { Home } from '../Home/Home';
 
 const queryClient = new QueryClient();

@@ -80,4 +80,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-export const MaterialOrderModel = mongoose.model('materialOrders', schema);
+export const MaterialOrderModel = mongoose.model('MaterialOrders', schema);

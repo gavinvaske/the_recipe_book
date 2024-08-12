@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export type UserAuth = {
   accessToken: string,
-  roles: string[]
+  authRoles: string[]
 }
 
 export type AuthContextType = {

@@ -1,27 +1,14 @@
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
-
-const mailgun = new Mailgun(formData);
-const client = mailgun.client({
-    username: 'api',
-    key: process.env.MAILGUN_API_KEY
-});
+import sgMail from '@sendgrid/mail'
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
 
 export async function sendPasswordResetEmail(emailAddress, resetLink) {
-    if (!emailAddress || !resetLink) {
-        throw Error(`emailAddress and reset-link must both be defined: ${emailAddress}, ${resetLink}`);
-    }
+  const msg = {
+    to: emailAddress,
+    from: 'Gavin.Vaske@gmail.com',
+    subject: 'Reset your "E.L.I" Account Password',
+    text: `Click or Copy-and-paste the following url into your browser to reset your password: ${resetLink}`,
+  }
 
-    const messageData = {
-        from: 'The Label Factory <storm@labelAdvantage.com>',
-        to: emailAddress,
-        subject: 'Reset your "Recipe Book" Password',
-        text: `Copy and paste the following url into your browser to reset your password: ${resetLink}`
-    };
+  await sgMail.send(msg)
 
-    try {
-        await client.messages.create(process.env.MAILGUN_DOMAIN, messageData);
-    } catch (error) {
-        console.log(`Error occurred while trying to send email via MAILGUN: ${error}`);
-    }
 }

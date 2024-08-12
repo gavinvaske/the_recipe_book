@@ -5,6 +5,7 @@ import { generateRefreshToken, generateAccessToken, TokenPayload } from '../midd
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { sendPasswordResetEmail } from '../services/emailService.ts';
 const router = Router();
 
 const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
@@ -118,5 +119,37 @@ router.post('/login', async (request: Request, response: Response) => {
     return response.status(SERVER_ERROR).send('An error was thrown during login, see logs for more details');
   }
 })
+
+router.post('/forgot-password', async (request, response) => {
+  const { email } = request.body;
+
+  try {
+    /* For security purposes: The line below does nothing except add time complexity to making this request.  */
+    await bcrypt.hash('foobar-foobar-foobar', 10);
+
+    const user = await UserModel.findOne({ email }).lean();
+
+    if (!user) {
+      throw new Error(`A user was not found with the email provided`)
+    }
+
+    const secret = process.env.JWT_SECRET + user.password;
+    const payload = {
+        email: user.email,
+        id: user._id
+    };
+    const token = jwt.sign(payload, secret, { expiresIn: '30m' });
+    const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
+
+    await sendPasswordResetEmail(email, link);
+
+  } catch(error) {
+    console.error(`Password reset request for '${email}' resulted in an error: `, error)
+    /* Don't return error HTTP status for security purposes. Any/All requests should result in 200 HTTP status */
+  }
+
+  return response.sendStatus(200);
+});
+
 
 export default router;

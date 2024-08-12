@@ -24,6 +24,7 @@ import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
 import { Login } from '../_auth/Login/Login';
 import { USER, ADMIN } from '../../api/enums/authRolesEnum'
 import { Home } from '../Home/Home';
+import { ResetPassword } from '../_auth/ResetPassword/ResetPassword';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ export function App() {
 
           {/* PUBLIC ROUTES*/}
           <Route path='login' element={<Login />}></Route>
+          <Route path='reset-password' element={<ResetPassword />}></Route>
           <Route path='*' element={<PageNotFound />} />
             
             {/* PROTECTED ROUTES */}

@@ -133,7 +133,7 @@ router.post('/forgot-password', async (request, response) => {
 });
 
 router.get('/reset-password/:id/:token', async (request, response) => {
-    const {id, token} = request.params;
+    const { id, token } = request.params;
 
     const user = await UserModel.findById(id);
 

@@ -24,7 +24,8 @@ import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
 import { Login } from '../_auth/Login/Login';
 import { USER, ADMIN } from '../../api/enums/authRolesEnum'
 import { Home } from '../Home/Home';
-import { ResetPassword } from '../_auth/ResetPassword/ResetPassword';
+import { ForgotPassword } from '../_auth/ForgotPassword/ForgotPassword';
+import { ChangePassword } from '../_auth/ChangePassword/changePassword';
 
 const queryClient = new QueryClient();
 
@@ -36,7 +37,10 @@ export function App() {
 
           {/* PUBLIC ROUTES*/}
           <Route path='login' element={<Login />}></Route>
-          <Route path='reset-password' element={<ResetPassword />}></Route>
+
+          <Route path='forgot-password' element={<ForgotPassword />}></Route> {/* User types email */}
+          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} /> {/* Email links user to this page where they type in password and repeat Password */}
+
           <Route path='*' element={<PageNotFound />} />
             
             {/* PROTECTED ROUTES */}

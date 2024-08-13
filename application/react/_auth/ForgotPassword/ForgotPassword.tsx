@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import './ResetPassword.scss';
+import './ForgotPassword.scss';
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { Input } from '../../_global/FormInputs/Input/Input';
 
-export const ResetPassword = () => {
+export const ForgotPassword = () => {
   const resetPasswordFieldRef = useRef(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 

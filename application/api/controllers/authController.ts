@@ -1,14 +1,17 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, response } from 'express';
 import { UserModel } from '../models/user.ts';
-import { FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 import { generateRefreshToken, generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { sendPasswordResetEmail } from '../services/emailService.ts';
+import { User } from '../../react/_types/databasemodels/user.ts';
 const router = Router();
 
 const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
+const MIN_PASSWORD_LENGTH = 8;
+const BCRYPT_SALT_ROUNDS = 10;
 
  router.get('/logout', (_: Request, response: Response) => {
   response.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
@@ -125,7 +128,7 @@ router.post('/forgot-password', async (request, response) => {
 
   try {
     /* For security purposes: The line below does nothing except add time complexity to making this request.  */
-    await bcrypt.hash('foobar-foobar-foobar', 10);
+    await bcrypt.hash('foobar-foobar-foobar', BCRYPT_SALT_ROUNDS);
 
     const user = await UserModel.findOne({ email }).lean();
 
@@ -149,6 +152,49 @@ router.post('/forgot-password', async (request, response) => {
   }
 
   return response.sendStatus(200);
+});
+
+router.post('/change-password/:mongooseId/:token', async (request: Request, response: Response) => {
+  const { mongooseId, token } = request.params;
+  const { password, repeatPassword } = request.body;
+  
+  if (!password || !repeatPassword) {
+    return response.status(BAD_REQUEST).send('Missing password or repeat password')
+  }
+  if (password !== repeatPassword) {
+    return response.status(BAD_REQUEST).send('Passwords do not match')
+  }
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    return response.status(BAD_REQUEST).send(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`)
+  }
+
+  try {
+    /* For security purposes: The line below does nothing except add time complexity to making this request.  */
+    await bcrypt.hash('foobar-foobar-foobar', BCRYPT_SALT_ROUNDS);
+
+    const user: User = await UserModel.findById(mongooseId).lean();
+    
+    if (!user) {
+      throw new Error('A user was not found with the email provided')
+    }
+    
+    const secret = process.env.JWT_SECRET + user.password;
+
+    jwt.verify(token, secret);  /* Throws if not valid */
+
+    const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
+
+    await UserModel.updateOne({ _id: user.id, }, 
+      {
+        $set: { password: encryptedPassword }
+      }
+    );
+
+  } catch (error) {
+    console.warn(`Change password request for mongooseId of '${mongooseId}' resulted in an error: `, error)
+
+    return response.status(FORBIDDEN).send('Unable to change password. Your link may have expired, was incorrectly copied, or something else.')
+  }
 });
 
 

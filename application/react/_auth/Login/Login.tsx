@@ -7,6 +7,7 @@ import axios from 'axios';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import './Login.scss';
 
 export const Login = () => {
   const { auth, setAuth } = useAuth();

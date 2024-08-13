@@ -247,7 +247,7 @@ router.post('/change-password', verifyBearerToken, async (request, response) => 
     await UserModel.updateOne({
         _id: user.id, 
     }, {
-        $set: { password: encryptedPassword}
+        $set: { password: encryptedPassword }
     });
 
     response.clearCookie('jwtToken');

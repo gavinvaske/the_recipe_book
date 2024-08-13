@@ -1,6 +1,6 @@
 import { Router, Request, Response, response } from 'express';
 import { UserModel } from '../models/user.ts';
-import { BAD_REQUEST, FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 import { generateRefreshToken, generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
@@ -12,6 +12,7 @@ const router = Router();
 const REFRESH_TOKEN_COOKIE_NAME = 'refresh-token'
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_ROUNDS = 10;
+const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 
  router.get('/logout', (_: Request, response: Response) => {
   response.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
@@ -154,10 +155,7 @@ router.post('/forgot-password', async (request, response) => {
   return response.sendStatus(200);
 });
 
-router.post('/change-password/:mongooseId/:token', async (request: Request, response: Response) => {
-  const { mongooseId, token } = request.params;
-  const { password, repeatPassword } = request.body;
-  
+export const validatePasswordsOrSendErrorResponse = (password: string, repeatPassword: string, response: Response) => {
   if (!password || !repeatPassword) {
     return response.status(BAD_REQUEST).send('Missing password or repeat password')
   }
@@ -167,8 +165,15 @@ router.post('/change-password/:mongooseId/:token', async (request: Request, resp
   if (password.length < MIN_PASSWORD_LENGTH) {
     return response.status(BAD_REQUEST).send(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`)
   }
+}
 
+router.post('/change-password/:mongooseId/:token', async (request: Request, response: Response) => {
+  const { mongooseId, token } = request.params;
+  const { password, repeatPassword } = request.body;
+  
   try {
+    validatePasswordsOrSendErrorResponse(password, repeatPassword, response);
+
     /* For security purposes: The line below does nothing except add time complexity to making this request.  */
     await bcrypt.hash('foobar-foobar-foobar', BCRYPT_SALT_ROUNDS);
 
@@ -195,6 +200,35 @@ router.post('/change-password/:mongooseId/:token', async (request: Request, resp
 
     return response.status(FORBIDDEN).send('Unable to change password. Your link may have expired, was incorrectly copied, or something else.')
   }
+});
+
+router.post('/register', async (request: Request, response: Response) => {
+  const { email, password: plainTextPassword, repeatPassword } = request.body;
+  const genericErrorMessage = 'An error occurred during registration, see logs for more details';
+
+  if (!email) {
+    return response.status(BAD_REQUEST).send("Missing 'email' from request")
+  }
+
+  try {
+    validatePasswordsOrSendErrorResponse(plainTextPassword, repeatPassword, response);
+
+    const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_ROUNDS);
+
+    await UserModel.create({
+        email,
+        password: encryptedPassword
+    });
+  } catch (error) {
+    if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
+      return response.send(BAD_REQUEST).send('Username already exists')
+    }
+    console.error(`Unable to register user with email ${email}: `, error);
+
+    return response.status(SERVER_ERROR).send(genericErrorMessage);
+  }
+
+  return response.sendStatus(CREATED_SUCCESSFULLY);
 });
 
 

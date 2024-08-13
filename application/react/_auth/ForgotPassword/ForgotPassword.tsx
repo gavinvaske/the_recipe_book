@@ -17,6 +17,7 @@ export const ForgotPassword = () => {
   const onSubmit = (formData: any) => {
     axios.post('/auth/forgot-password', formData)
       .then((_: AxiosResponse) => {
+        
         useSuccessMessage('If the email was associated to an account, then a password reset link was sent to your email. Please check your INBOX or SPAM folder.');
       })
       .catch((error: AxiosError) => useErrorMessage(error))

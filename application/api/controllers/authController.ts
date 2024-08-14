@@ -222,7 +222,7 @@ router.post('/register', async (request: Request, response: Response) => {
     });
   } catch (error) {
     if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
-      return response.send(BAD_REQUEST).send('Username already exists')
+      return response.status(BAD_REQUEST).send('Username already exists')
     }
     console.error(`Unable to register user with email ${email}: `, error);
 

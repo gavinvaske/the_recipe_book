@@ -5,21 +5,23 @@ import { useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const ChangePassword = () => {
   const newPasswordFieldRef = useRef(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { mongooseId, token } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     newPasswordFieldRef.current?.focus();
   }, [])
 
   const onSubmit = (formData: any) => {
-    axios.post('/change-password', formData)
+    axios.post(`/auth/change-password/${mongooseId}/${token}`, formData)
       .then((error: AxiosResponse) => {
-        useSuccessMessage('Error while attempting to change password, see the logs for more details.');
+        navigate('/react-ui/login');
+        useSuccessMessage('Password changed successfully. Please log in again.');
       })
       .catch((error: AxiosError) => useErrorMessage(error))
   }
@@ -27,12 +29,13 @@ export const ChangePassword = () => {
   return (
     <form id='change-password-form' onSubmit={ handleSubmit(onSubmit) }>
     <Input
-        attribute='newPassword'
+        attribute='password'
         label="New Password"
         register={register}
         isRequired={true}
         errors={errors}
         ref={newPasswordFieldRef}
+        fieldType='password'
     />
     <Input
         attribute='repeatPassword'
@@ -41,6 +44,7 @@ export const ChangePassword = () => {
         isRequired={true}
         errors={errors}
         ref={newPasswordFieldRef}
+        fieldType='password'
     />
     <button className='create-entry submit-button' type='submit'>Login</button>
   </form>

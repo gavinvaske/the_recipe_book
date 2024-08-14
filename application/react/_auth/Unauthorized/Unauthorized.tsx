@@ -1,19 +1,16 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
+import './Unauthorized.scss';
 
 export const Unauthorized = () => {
-    const navigate = useNavigate();
-
-    const goBack = () => navigate(-1);
+    const location = useLocation();
+    const fromUrl = location.state?.from?.pathname;
 
     return (
-        <section>
+        <div>
             <h1>Unauthorized</h1>
-            <br />
-            <p>You do not have access to the requested page.</p>
-            <div className="flexGrow">
-                <button onClick={goBack}>Go Back</button>
-            </div>
-        </section>
+            <p>You do not have access to the requested page ("{fromUrl}").</p>
+            <p>To gain access, speak with the website administrator.</p>
+        </div>
     )
 }

@@ -142,13 +142,14 @@ router.post('/forgot-password', async (request, response) => {
         email: user.email,
         id: user._id
     };
-    const token = jwt.sign(payload, secret, { expiresIn: '30m' });
-    const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
-
-    await sendPasswordResetEmail(email, link);
+    const minutesUntilExpiration = 30;
+    const token = jwt.sign(payload, secret, { expiresIn: `${minutesUntilExpiration}m` });
+    const link = `${process.env.BASE_URL}/react-ui/change-password/${user._id}/${token}`;
+    
+    await sendPasswordResetEmail(email, link, minutesUntilExpiration);
 
   } catch(error) {
-    console.error(`Password reset request for '${email}' resulted in an error: `, error)
+    console.error(`Password reset request for '${email}' resulted in an error: `, JSON.stringify(error))
     /* Don't return error HTTP status for security purposes. Any/All requests should result in 200 HTTP status */
   }
 
@@ -189,17 +190,17 @@ router.post('/change-password/:mongooseId/:token', async (request: Request, resp
 
     const encryptedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
 
-    await UserModel.updateOne({ _id: user.id, }, 
-      {
-        $set: { password: encryptedPassword }
-      }
+    await UserModel.findOneAndUpdate(
+      user._id, 
+      { password: encryptedPassword }
     );
-
   } catch (error) {
     console.warn(`Change password request for mongooseId of '${mongooseId}' resulted in an error: `, error)
 
     return response.status(FORBIDDEN).send('Unable to change password. Your link may have expired, was incorrectly copied, or something else.')
   }
+
+  return response.sendStatus(SUCCESS);
 });
 
 router.post('/register', async (request: Request, response: Response) => {

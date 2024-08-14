@@ -1,12 +1,12 @@
 import sgMail from '@sendgrid/mail'
 sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
 
-export async function sendPasswordResetEmail(emailAddress, resetLink) {
+export async function sendPasswordResetEmail(emailAddress: string, resetLink: string, minutesUntilExpiration: number) {
   const msg = {
     to: emailAddress,
-    from: 'Gavin.Vaske@gmail.com',
+    from: 'The Label Factory <storm@labelAdvantage.com>',
     subject: 'Reset your "E.L.I" Account Password',
-    text: `Click or Copy-and-paste the following url into your browser to reset your password: ${resetLink}`,
+    text: `Click the link to reset your password (this link will expire in ${minutesUntilExpiration} minutes):\n\n\n ${resetLink}`,
   }
 
   await sgMail.send(msg)

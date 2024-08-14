@@ -25,8 +25,9 @@ import { Login } from '../_auth/Login/Login';
 import { USER, ADMIN } from '../../api/enums/authRolesEnum'
 import { Home } from '../Home/Home';
 import { ForgotPassword } from '../_auth/ForgotPassword/ForgotPassword';
-import { ChangePassword } from '../_auth/ChangePassword/changePassword';
+import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
+import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 
 const queryClient = new QueryClient();
 
@@ -42,7 +43,7 @@ export function App() {
 
           <Route path='forgot-password' element={<ForgotPassword />}></Route> {/* User types email */}
           <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} /> {/* Email links user to this page where they type in password and repeat Password */}
-
+          <Route path='unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<PageNotFound />} />
             
             {/* PROTECTED ROUTES */}

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAuth } from '../../_hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -46,10 +46,6 @@ export const Login = () => {
 
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <form id='login-form' onSubmit={handleSubmit(onSubmit)}>
         <Input
             attribute='email'
@@ -73,6 +69,7 @@ export const Login = () => {
               {'data-test': 'password-input'}
             }
         />
+        <Link to='/react-ui/forgot-password'>Forgot Password?</Link>
         <button className='create-entry submit-button' type='submit' data-test='login-btn'>Login</button>
       </form>
     </>

@@ -5,10 +5,12 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { Input } from '../../_global/FormInputs/Input/Input';
+import { useNavigate } from 'react-router-dom';
 
 export const ForgotPassword = () => {
   const resetPasswordFieldRef = useRef(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     resetPasswordFieldRef.current?.focus();
@@ -17,7 +19,7 @@ export const ForgotPassword = () => {
   const onSubmit = (formData: any) => {
     axios.post('/auth/forgot-password', formData)
       .then((_: AxiosResponse) => {
-        
+        navigate('/react-ui/login');
         useSuccessMessage('If the email was associated to an account, then a password reset link was sent to your email. Please check your INBOX or SPAM folder.');
       })
       .catch((error: AxiosError) => useErrorMessage(error))

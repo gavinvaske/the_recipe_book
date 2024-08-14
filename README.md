@@ -20,9 +20,10 @@ Steps
   5. Create a `.env` file in the root directory and populate it with all the variables found in `.env.example` (you'll need to replace all the 'TODO' valued variables. You'll need to decide the values they need to be.)
   5. start the application using:
      - `npm run start`
+  6. Start up react using
+     - `npm run react`
   6. open a browser window and enter the url: 
      - `http://localhost:8080/`
-  7. Tada, your done. You can open the cloned repo in the IDE of your choice and make whatever changes you want. Then make sure to run `npm run start` just like in step 4 to see the changes you make
 
 
 ## Developer Development Guide

@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAuth } from '../../_hooks/useAuth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import './Login.scss';
 
 export const Login = () => {
   const { auth, setAuth } = useAuth();
@@ -45,10 +46,6 @@ export const Login = () => {
 
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <form id='login-form' onSubmit={handleSubmit(onSubmit)}>
         <Input
             attribute='email'
@@ -72,6 +69,7 @@ export const Login = () => {
               {'data-test': 'password-input'}
             }
         />
+        <Link to='/react-ui/forgot-password' id='forgot-password-btn'>Forgot Password?</Link>
         <button className='create-entry submit-button' type='submit' data-test='login-btn'>Login</button>
       </form>
     </>

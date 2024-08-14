@@ -111,8 +111,9 @@ router.post('/forgot-password', async (request, response) => {
     const {email} = request.body;
 
     const user = await UserModel.findOne({email}).lean();
-    
-    if (user) {
+
+    try {
+      if (user) {
         const secret = process.env.JWT_SECRET + user.password;
         const payload = {
             email: user.email,
@@ -121,17 +122,18 @@ router.post('/forgot-password', async (request, response) => {
         const token = jwt.sign(payload, secret, {expiresIn: '15m'});
         const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${token}`;
 
-        sendPasswordResetEmail(email, link);
+        await sendPasswordResetEmail(email, link);
+      }
+    } catch(error) {
+      console.error('Error in POST /forgot-password: ', error)
+      return response.sendStatus(500)
     }
 
-
-    request.flash('alerts', ['If an account with that email exists, you will receive an email to reset your password']);
-
-    response.redirect('back');
+    return response.sendStatus(200);
 });
 
 router.get('/reset-password/:id/:token', async (request, response) => {
-    const {id, token} = request.params;
+    const { id, token } = request.params;
 
     const user = await UserModel.findById(id);
 
@@ -245,7 +247,7 @@ router.post('/change-password', verifyBearerToken, async (request, response) => 
     await UserModel.updateOne({
         _id: user.id, 
     }, {
-        $set: { password: encryptedPassword}
+        $set: { password: encryptedPassword }
     });
 
     response.clearCookie('jwtToken');

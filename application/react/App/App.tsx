@@ -41,8 +41,8 @@ export function App() {
           <Route path='login' element={<Login />}></Route>
           <Route path='register' element={<Register />}></Route>
 
-          <Route path='forgot-password' element={<ForgotPassword />}></Route> {/* User types email */}
-          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} /> {/* Email links user to this page where they type in password and repeat Password */}
+          <Route path='forgot-password' element={<ForgotPassword />}></Route>
+          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
           <Route path='unauthorized' element={<Unauthorized />} />
           <Route path='*' element={<PageNotFound />} />
             

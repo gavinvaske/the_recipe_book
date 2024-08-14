@@ -1,4 +1,4 @@
-describe('Auth Test Cases', () => {
+describe('Login Cases', () => {
   it('User should see a home page upon login', () => {
     cy.login();
 

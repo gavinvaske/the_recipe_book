@@ -34,8 +34,11 @@ export const ForgotPassword = () => {
         isRequired={true}
         errors={errors}
         ref={resetPasswordFieldRef}
+        dataAttributes={
+          {'data-test': 'email-input'}
+        }
     />
-    <button className='create-entry submit-button' type='submit'>Login</button>
+    <button className='create-entry submit-button' type='submit' data-test='reset-password-btn'>Reset</button>
   </form>
   )
 }

@@ -36,6 +36,9 @@ export const ChangePassword = () => {
         errors={errors}
         ref={newPasswordFieldRef}
         fieldType='password'
+        dataAttributes={
+          {'data-test': 'password-input'}
+        }
     />
     <Input
         attribute='repeatPassword'
@@ -45,8 +48,11 @@ export const ChangePassword = () => {
         errors={errors}
         ref={newPasswordFieldRef}
         fieldType='password'
+        dataAttributes={
+          {'data-test': 'repeat-password-input'}
+        }
     />
-    <button className='create-entry submit-button' type='submit'>Login</button>
+    <button className='create-entry submit-button' type='submit' data-test='change-password-btn'>Save Password</button>
   </form>
   )
 }

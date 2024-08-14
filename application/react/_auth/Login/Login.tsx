@@ -70,6 +70,7 @@ export const Login = () => {
             }
         />
         <Link to='/react-ui/forgot-password' id='forgot-password-btn'>Forgot Password?</Link>
+        <Link to='/react-ui/register' id='register-btn'>Sign Up</Link>
         <button className='create-entry submit-button' type='submit' data-test='login-btn'>Login</button>
       </form>
     </>

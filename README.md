@@ -54,7 +54,7 @@ To Run react locally, open two terminals.
 
 In the *first terminal*, run `npm run react`, this will start a automatically-hot-reloading react compiler, as you make changes to react components, the react compiler will automatically hot-reload react for you.
 
-In the *second terminal*, run `npm run nodemon`, this will start the express.js server for you. Note, any changes you make to the backend (i.e. controllers, services, models, ect) will trigger the server to reload automatically.
+In the *second terminal*, run `npm run start`, this will start the express.js server for you.
 
 Thats it, happy reacting!
 

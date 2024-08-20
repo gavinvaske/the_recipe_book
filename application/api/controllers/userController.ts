@@ -20,6 +20,29 @@ function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
 
+router.patch('/me', verifyBearerToken, async (request, response) => {
+  try {
+    if (!request.user._id) throw new Error('User not logged in');
+
+    const newUserValues = {
+      username: request.body.username || undefined,
+      fullName: request.body.fullName || undefined,
+      jobRole: request.body.jobRole || undefined,
+      birthDate: request.body.birthDate || undefined,
+      phone: request.body.phone || undefined
+    }
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: request.user._id }, 
+      { $set: newUserValues }, 
+      { runValidators: true, new: true }
+    );
+
+    return response.json(updatedUser);
+  } catch(error) {
+    return response.status(SERVER_ERROR).send(error.message)
+  }
+});
+
 router.get('/', verifyBearerToken, async (_, response) => {
     try {
         const users = await UserModel.find().exec();

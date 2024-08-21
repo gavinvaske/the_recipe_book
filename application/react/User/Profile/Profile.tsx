@@ -30,10 +30,13 @@ export const Profile = () => {
       .catch((error: AxiosError) => useErrorMessage(error))
   };
 
+  const hourOfDay = new Date().getHours();
+  const greeting = hourOfDay < 12 ? 'Good Morning' : hourOfDay < 18? 'Good Afternoon' : 'Good Evening';
+
   return (
     <div id='profile-page'>
-      <h1>Good Evening, {(loggedInUser && loggedInUser.fullName) || 'N/A'}</h1>
-      <p>Permission Level: {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
+      <h1>{greeting}, {(loggedInUser && loggedInUser.fullName) || 'N/A'}</h1>
+      <p>Permission(s): {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
         {/* User Name */}

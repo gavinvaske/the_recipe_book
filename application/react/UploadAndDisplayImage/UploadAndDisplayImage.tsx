@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useErrorMessage } from "../_hooks/useErrorMessage";
 import axios from 'axios';
+import './UploadAndDisplayImage.scss';
 
 type MimeType = 'image/jpeg' | 'image/png' | 'image/jpg';
 
@@ -11,7 +12,7 @@ type Props = {
 
 export const UploadAndDisplayImage = (props: Props) => {
   const { apiEndpoint, acceptedMimeTypes } = props;
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const clearSelectedImage = () => {
     const fileInputField = document.getElementById('image-upload');
@@ -59,30 +60,32 @@ export const UploadAndDisplayImage = (props: Props) => {
     }
   }
 
+  function Image({ img }: {img: File | null}) {
+    const placeholderImage = ''
+    return (
+      <div>
+        <img 
+          src={img ? URL.createObjectURL(img) : placeholderImage}
+          alt="Not Found"
+          width={"250px"}
+        />
+      </div>
+    );
+  }
+
   const allowedMimeTypes = acceptedMimeTypes.join(', ');
 
-  // Return the JSX for rendering
   return (
     <div>
-      {/* Header */}
-      <h1>Upload and Display Image</h1>
-      <h3>using React Hooks</h3>
-      <p>Is selected image? - {selectedImage ? 'true' : 'false'}</p>
+      <h1>Click to Upload an Image</h1>
 
-      {/* Conditionally render the selected image if it exists */}
-      {selectedImage && (
-        <div>
-          {/* Display the selected image */}
-          <img
-            alt="not found"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
-          />
-          <br /> <br />
-          {/* Button to remove the selected image */}
-          <button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>
-        </div>
-      )}
+      <div>
+        <Image img={selectedImage} />
+        <br /> <br />
+
+        <button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>
+      </div>
+
 
       <br />
 
@@ -92,7 +95,6 @@ export const UploadAndDisplayImage = (props: Props) => {
           type="file"
           name="image"
           accept={allowedMimeTypes}
-          // Event handler to capture file selection and update the state
           onChange={(event) => saveImage(event)}
         />
 

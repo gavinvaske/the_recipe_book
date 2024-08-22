@@ -7,6 +7,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { Input } from '../../_global/FormInputs/Input/Input';
+import { UploadAndDisplayImage } from '../../UploadAndDisplayImage/UploadAndDisplayImage';
 
 export const Profile = () => {
   const queryClient = useQueryClient()
@@ -37,6 +38,11 @@ export const Profile = () => {
     <div id='profile-page'>
       <h1>{greeting}, {(loggedInUser && loggedInUser.fullName) || 'N/A'}</h1>
       <p>Permission(s): {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
+
+      <UploadAndDisplayImage
+        apiEndpoint='/users/profile-picture' 
+        acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}
+      ></UploadAndDisplayImage>
 
       <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
         {/* User Name */}

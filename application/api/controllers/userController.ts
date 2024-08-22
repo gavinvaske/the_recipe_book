@@ -9,12 +9,16 @@ import { upload } from '../middleware/upload.ts';
 import fs from 'fs';
 import path from 'path';
 import { isUserLoggedIn } from '../services/userService.ts';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { fileURLToPath } from 'url';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_Rounds = 10;
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
@@ -96,31 +100,30 @@ router.get('/profile-picture', verifyBearerToken, async (request, response) => {
 
 router.post('/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 800000;
-    const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
-  
+    let imageFilePath;
+
     try {
+        imageFilePath = request.file.path;
         const base64EncodedImage = fs.readFileSync(imageFilePath);
 
-        if (request.file.size > maxImageSizeInBytes) {
-            request.flash('errors', ['File size is too big', 'Please use an image that is less than 3.5MB']);
-            return response.redirect('back');
+        if (request.file.size >= maxImageSizeInBytes) {
+            return response.status(BAD_REQUEST).send(`File size is too big! Please use an image that is ${(maxImageSizeInBytes / 1000).toFixed(0)} KB or less`)
         }
 
-        const user = await UserModel.findById(request.user.id);
-        user.profilePicture = {
+        const user = await UserModel.findById(request.user._id);
+
+        user.profilePicture = { /* TODO @Gavin: remove this from the request? */
             data: base64EncodedImage,
             contentType: request.file.mimetype
         };
 
         await user.save();
 
-        request.flash('alerts', ['Profile picture updated successfully']);
-
-        return response.redirect('/users/profile');
+        return response.sendStatus(SUCCESS);
     } catch (error) {
-        request.flash('errors', ['The following error occurred while attempting to update your profile picture', error.message]);
+        console.error('Failed to upload profile picture:', error)
 
-        return response.redirect('back');
+        return response.sendStatus(SERVER_ERROR)
     } finally {
         deleteFileFromFileSystem(imageFilePath);
     }

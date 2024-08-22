@@ -1,7 +1,12 @@
 import { resolve } from 'path';
 import { readFileSync, unlinkSync } from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 export const PDF_MIME_TYPE = 'application/pdf';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function getUploadedFilePath(uploadedFileName) {
     return resolve(__dirname, '../../') + '/uploads/' + uploadedFileName;

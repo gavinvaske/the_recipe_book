@@ -9,7 +9,7 @@ import { upload } from '../middleware/upload.ts';
 import fs from 'fs';
 import path from 'path';
 import { isUserLoggedIn } from '../services/userService.ts';
-import { BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, NOT_FOUND, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { fileURLToPath } from 'url';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
@@ -62,40 +62,30 @@ router.get('/', verifyBearerToken, async (_, response) => {
 });
 
 router.get('/logged-in-user-details', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user.id, 'email username fullName authRoles jobRole');
-    delete user.profilePicture.data;
+    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole');
 
     return response.json(user);
 });
 
-router.post('/profile', verifyBearerToken, async (request, response) => {
-    const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
-    const user = await UserModel.findById(request.user.id);
-    user.username = userName;
-    user.fullName = fullUserName;
-    user.jobRole = jobRole;
-    user.birthDate = birthDate;
-    user.phoneNumber = cellPhone;
-    
-    try {
-        await user.save();
-        request.flash('alerts', ['Profile updated successfully']);
+router.get('/me/profile-picture', verifyBearerToken, async (request, response) => {
+  try {
+    const user = await UserModel.findById(request.user._id);
 
-        return response.redirect('/users/profile');
-    } catch (error) {
-        request.flash('errors', ['The following error occurred while attempting to update your profile', error.message]);
-        return response.redirect('back');
-    }
-});
+    if (!user) throw new Error('User not found by ID')
 
-router.get('/profile-picture', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user.id);
-    const { contentType, data } = user.profilePicture;
+    if (!user.profilePicture) return response.send('');
 
-    return response.json({
-        imageType: contentType,
-        imageData: data ? data.toString('base64') : ''
-    });
+    const { contentType, data } = user.profilePicture
+
+    if (!contentType || !data) return response.send('');
+
+    const imageUrl = `data:image/${contentType};base64,${data.toString('base64')}`
+
+    return response.send(imageUrl)
+  } catch (error) {
+    console.error('failed to fetch profile picture: ', error)
+    return response.status(NOT_FOUND).send(error.message);
+  }
 });
 
 router.post('/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useErrorMessage } from "../_hooks/useErrorMessage";
 import axios from 'axios';
 import './UploadProfilePicture.scss';
@@ -14,6 +14,12 @@ type Props = {
 export const UploadProfilePicture = (props: Props) => {
   const { apiEndpoint, acceptedMimeTypes } = props;
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  useEffect(() => {
+    axios.get('/users/me/profile-picture')
+      .then(url => setSelectedImage(url.data))
+      .catch(error => useErrorMessage(error));
+  }, [])
 
   const clearSelectedImage = () => {
     const fileInputField = document.getElementById('image-upload');
@@ -41,6 +47,7 @@ export const UploadProfilePicture = (props: Props) => {
     }
 
     setSelectedImage(file);
+
     let formData = new FormData();
     formData.append("image", file);
 

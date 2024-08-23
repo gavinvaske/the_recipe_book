@@ -40,7 +40,7 @@ export const Profile = () => {
       <p>Permission(s): {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
 
       <UploadProfilePicture
-        apiEndpoint='/users/profile-picture' 
+        apiEndpoint='/users/me/profile-picture' 
         acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}
       ></UploadProfilePicture>
 

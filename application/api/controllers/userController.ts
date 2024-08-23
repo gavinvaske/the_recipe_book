@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';
 import { UserModel } from '../models/user.ts';
@@ -88,11 +88,32 @@ router.get('/me/profile-picture', verifyBearerToken, async (request, response) =
   }
 });
 
-router.post('/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
+router.delete('/me/profile-picture', verifyBearerToken, async (request: Request, response: Response) => {
+  try {
+    const user = await UserModel.findById(request.user._id);
+
+    if (!user) throw new Error('User not found');
+
+    user.profilePicture = null;
+
+    await user.save();
+
+    return response.sendStatus(SUCCESS);
+  } catch(error) {
+    console.error('Failed to delete profile picture', error)
+    return response.sendStatus(NOT_FOUND);
+  }
+})
+
+router.post('/me/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 800000;
     let imageFilePath;
 
     try {
+        if (!request.file) {
+          return response.sendStatus(SUCCESS);
+        }
+
         imageFilePath = request.file.path;
         const base64EncodedImage = fs.readFileSync(imageFilePath);
 
@@ -101,6 +122,8 @@ router.post('/profile-picture', verifyBearerToken, upload.single('image'), async
         }
 
         const user = await UserModel.findById(request.user._id);
+
+        if (!user) throw new Error('User not found')
 
         user.profilePicture = { /* TODO @Gavin: remove this from the request? */
             data: base64EncodedImage,

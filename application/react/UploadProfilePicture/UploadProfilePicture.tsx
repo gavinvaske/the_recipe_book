@@ -29,8 +29,14 @@ export const UploadProfilePicture = (props: Props) => {
       return
     }
 
-    setSelectedImage(null)
-    fileInputField.value = null; // Reset the file input field to nothing
+    axios.delete('/users/me/profile-picture')
+      .then(() => {
+        setSelectedImage(null)
+        fileInputField.value = null; // Reset the file input field to nothing
+      })
+      .catch((error) => {
+        useErrorMessage(error);
+      })
   }
 
   const deleteImage = async () => {

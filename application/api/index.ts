@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import path from 'path';
 import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
 import { connectToMongoDatabase } from './services/databaseService.ts';
@@ -12,11 +11,7 @@ import ejsService from './services/ejsService.ts';
 import httpServ from 'http';
 import { Server } from 'socket.io';
 import customWebSockets from './services/websockets/init.ts';
-import { fileURLToPath } from 'url';
 import { setupApiRoutes } from './routes.ts'
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;

@@ -3,6 +3,8 @@ import { useErrorMessage } from "../_hooks/useErrorMessage";
 import axios from 'axios';
 import './UploadProfilePicture.scss';
 import { Image } from "../_global/Image/Image";
+import { useQuery } from "@tanstack/react-query";
+import { getLoggedInUserProfilePictureUrl } from '../_queries/users';
 
 type MimeType = 'image/jpeg' | 'image/png' | 'image/jpg';
 
@@ -15,11 +17,19 @@ export const UploadProfilePicture = (props: Props) => {
   const { apiEndpoint, acceptedMimeTypes } = props;
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
+  const { data: profilePictureUrl, error } = useQuery({
+    queryKey: ['get-profile-picture'],
+    queryFn: getLoggedInUserProfilePictureUrl,
+    initialData: {}
+  })
+
+  if (error) {
+    useErrorMessage(error);
+  }
+
   useEffect(() => {
-    axios.get('/users/me/profile-picture')
-      .then(url => setSelectedImage(url.data))
-      .catch(error => useErrorMessage(error));
-  }, [])
+    setSelectedImage(profilePictureUrl)
+  }, [profilePictureUrl])
 
   const clearSelectedImage = () => {
     const fileInputField = document.getElementById('image-upload');

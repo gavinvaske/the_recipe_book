@@ -7,3 +7,10 @@ export const getUsers = async (): Promise<User[]> => {
 
   return users
 }
+
+export const getLoggedInUserProfilePictureUrl = async (): Promise<any> => {
+  const response : AxiosResponse = await axios.get('/users/me/profile-picture');
+  const profilePictureUrl: any = response.data;
+
+  return profilePictureUrl;
+}

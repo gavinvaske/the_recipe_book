@@ -71,7 +71,7 @@ router.get('/logged-in-user-details', verifyBearerToken, async (request, respons
 
 router.get('/me/profile-picture', verifyBearerToken, async (request, response) => {
   try {
-    const user = await UserModel.findById(request.user._id);
+    const user = await UserModel.findById(request.user._id, 'profilePicture').lean();
 
     if (!user) throw new Error('User not found by ID')
 

@@ -234,8 +234,8 @@ router.post('/register', async (request: Request, response: Response) => {
 
 router.get('/me', verifyBearerToken, async (request, response) => {
   try {
-    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole phoneNumber birthDate');
-
+    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole phoneNumber birthDate').lean();
+    
     return response.json(user);
   } catch (error) {
     return response.sendStatus(NOT_FOUND)

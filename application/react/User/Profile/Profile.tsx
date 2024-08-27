@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Profile.scss';
 import { getLoggedInUser } from '../../_queries/auth';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,6 +16,17 @@ export const Profile = () => {
     queryFn: getLoggedInUser,
     initialData: []
   })
+
+  useEffect(() => {
+    reset({
+      username: loggedInUser?.username,
+      fullName: loggedInUser?.fullName,
+      phoneNumber: loggedInUser?.phoneNumber,
+      jobRole: loggedInUser?.jobRole,
+      birthDate: loggedInUser?.birthDate || ''
+    })
+  }, [loggedInUser])
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FieldValues>();
 
   if (isError) {

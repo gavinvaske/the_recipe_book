@@ -32,17 +32,19 @@ router.patch('/me', verifyBearerToken, async (request, response) => {
       username: request.body.username || undefined,
       fullName: request.body.fullName || undefined,
       jobRole: request.body.jobRole || undefined,
-      birthDate: request.body.birthDate || undefined,
-      phone: request.body.phone || undefined
+      birthDate: request.body.birthDate || '',
+      phoneNumber: request.body.phoneNumber || undefined
     }
-    const updatedUser = await UserModel.findOneAndUpdate(
+    
+    await UserModel.findOneAndUpdate(
       { _id: request.user._id }, 
       { $set: newUserValues }, 
-      { runValidators: true, new: true }
+      { runValidators: true }
     );
 
-    return response.json(updatedUser);
+    return response.sendStatus(SUCCESS);
   } catch(error) {
+    console.error('Error updating user: ', error);
     return response.status(SERVER_ERROR).send(error.message)
   }
 });

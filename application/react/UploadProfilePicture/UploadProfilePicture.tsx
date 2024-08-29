@@ -88,7 +88,7 @@ export const UploadProfilePicture = (props: Props) => {
       <div>
         <Image img={selectedImage} width={250}/>
         <br /> <br />
-        <button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>
+        {selectedImage && (<button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>)}
       </div>
 
       <br />
@@ -101,7 +101,8 @@ export const UploadProfilePicture = (props: Props) => {
           onChange={(event) => saveImage(event)}
         />
 
-        <p>Allowed: {allowedMimeTypes}. Max size 800KB.</p>
+        <p>Allowed: {allowedMimeTypes.replace(/image\//g, '')} </p>
+        <p>Max size 800KB.</p>
       </div>
     </div>
   );

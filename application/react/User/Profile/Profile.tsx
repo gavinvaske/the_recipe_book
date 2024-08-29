@@ -50,7 +50,7 @@ export const Profile = () => {
       <h1>{timeBasedGreetingMessage}, {(loggedInUser && loggedInUser.fullName) || 'N/A'}</h1>
       <p>Permission(s): {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
 
-      <UploadProfilePicture
+      <UploadProfilePicture 
         apiEndpoint='/users/me/profile-picture' 
         acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}
       ></UploadProfilePicture>

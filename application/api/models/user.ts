@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
-import { AVAILABLE_AUTH_ROLES, DEFAULT_AUTH_ROLE } from '../enums/authRolesEnum.ts';  /* TODO: Rename */
+import { AVAILABLE_AUTH_ROLES } from '../enums/authRolesEnum.ts';
 
 const checkForSpaces = function(text) {
     if (!text) {
@@ -69,4 +69,3 @@ const userSchema = new Schema({
 }, { timestamps: true });
 
 export const UserModel = mongoose.model('User', userSchema);
-

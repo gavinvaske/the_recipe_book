@@ -14,7 +14,7 @@ export function verifyBearerToken(request: Request, response: Response, next) {
     const accessToken = authorizationHeader.split(' ')[1];
 
     /* @ts-ignore: TODO: Add request.user type via a .d.ts file */
-    request.user = jwt.verify(accessToken, process.env.JWT_SECRET);
+    request.user = jwt.verify(accessToken, process.env.JWT_SECRET) as TokenPayload;
     return next();
   } catch (error) {
     return response.sendStatus(FORBIDDEN) // Must be a 403 error so the frontend knows to fetch accessToken using refresh token. "I know who you are, but I can't let you in."
@@ -22,8 +22,8 @@ export function verifyBearerToken(request: Request, response: Response, next) {
 }
 
 export type TokenPayload = {
+  _id: MongooseId;
   email: string;
-  id: MongooseId;
   authRoles: string[];
 }
 

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import bcrypt from 'bcryptjs';
 import { UserModel } from '../models/user.ts';
@@ -9,16 +9,45 @@ import { upload } from '../middleware/upload.ts';
 import fs from 'fs';
 import path from 'path';
 import { isUserLoggedIn } from '../services/userService.ts';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, NOT_FOUND, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { fileURLToPath } from 'url';
 
 const MONGODB_DUPLICATE_KEY_ERROR_CODE = 11000;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_SALT_Rounds = 10;
 const INVALID_USERNAME_PASSWORD_MESSAGE = 'Invalid username/password combination';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 function deleteFileFromFileSystem(path) {
     fs.unlinkSync(path);
 }
+
+router.patch('/me', verifyBearerToken, async (request, response) => {
+  try {
+    if (!request.user._id) throw new Error('User not logged in');
+
+    const newUserValues = {
+      username: request.body.username || undefined,
+      fullName: request.body.fullName || undefined,
+      jobRole: request.body.jobRole || undefined,
+      birthDate: request.body.birthDate || '',
+      phoneNumber: request.body.phoneNumber || undefined
+    }
+    
+    await UserModel.findOneAndUpdate(
+      { _id: request.user._id }, 
+      { $set: newUserValues }, 
+      { runValidators: true }
+    );
+
+    return response.sendStatus(SUCCESS);
+  } catch(error) {
+    console.error('Error updating user: ', error);
+    return response.status(SERVER_ERROR).send(error.message)
+  }
+});
 
 router.get('/', verifyBearerToken, async (_, response) => {
     try {
@@ -35,69 +64,81 @@ router.get('/', verifyBearerToken, async (_, response) => {
 });
 
 router.get('/logged-in-user-details', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user.id, 'email username fullName authRoles jobRole');
-    delete user.profilePicture.data;
+    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole');
 
     return response.json(user);
 });
 
-router.post('/profile', verifyBearerToken, async (request, response) => {
-    const {userName, fullUserName, jobRole, birthDate, cellPhone} = request.body;
-    const user = await UserModel.findById(request.user.id);
-    user.username = userName;
-    user.fullName = fullUserName;
-    user.jobRole = jobRole;
-    user.birthDate = birthDate;
-    user.phoneNumber = cellPhone;
-    
-    try {
-        await user.save();
-        request.flash('alerts', ['Profile updated successfully']);
+router.get('/me/profile-picture', verifyBearerToken, async (request, response) => {
+  try {
+    const user = await UserModel.findById(request.user._id, 'profilePicture').lean();
 
-        return response.redirect('/users/profile');
-    } catch (error) {
-        request.flash('errors', ['The following error occurred while attempting to update your profile', error.message]);
-        return response.redirect('back');
-    }
+    if (!user) throw new Error('User not found by ID')
+
+    if (!user.profilePicture) return response.send('');
+
+    const { contentType, data } = user.profilePicture
+
+    if (!contentType || !data) return response.send('');
+
+    const imageUrl = `data:image/${contentType};base64,${data.toString('base64')}`
+
+    return response.send(imageUrl)
+  } catch (error) {
+    console.error('failed to fetch profile picture: ', error)
+    return response.status(NOT_FOUND).send(error.message);
+  }
 });
 
-router.get('/profile-picture', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user.id);
-    const { contentType, data } = user.profilePicture;
+router.delete('/me/profile-picture', verifyBearerToken, async (request: Request, response: Response) => {
+  try {
+    const user = await UserModel.findById(request.user._id);
 
-    return response.json({
-        imageType: contentType,
-        imageData: data ? data.toString('base64') : ''
-    });
-});
+    if (!user) throw new Error('User not found');
 
-router.post('/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
+    user.profilePicture = null;
+
+    await user.save();
+
+    return response.sendStatus(SUCCESS);
+  } catch(error) {
+    console.error('Failed to delete profile picture', error)
+    return response.sendStatus(NOT_FOUND);
+  }
+})
+
+router.post('/me/profile-picture', verifyBearerToken, upload.single('image'), async (request, response) => {
     const maxImageSizeInBytes = 800000;
-    const imageFilePath = path.join(path.resolve(__dirname, '../../') + '/uploads/' + request.file.filename);
-  
-    try {
-        const base64EncodedImage = fs.readFileSync(imageFilePath);
+    let imageFilePath;
 
-        if (request.file.size > maxImageSizeInBytes) {
-            request.flash('errors', ['File size is too big', 'Please use an image that is less than 3.5MB']);
-            return response.redirect('back');
+    try {
+        if (!request.file) {
+          return response.sendStatus(SUCCESS);
         }
 
-        const user = await UserModel.findById(request.user.id);
-        user.profilePicture = {
+        imageFilePath = request.file.path;
+        const base64EncodedImage = fs.readFileSync(imageFilePath);
+
+        if (request.file.size >= maxImageSizeInBytes) {
+            return response.status(BAD_REQUEST).send(`File size is too big! Please use an image that is ${(maxImageSizeInBytes / 1000).toFixed(0)} KB or less`)
+        }
+
+        const user = await UserModel.findById(request.user._id);
+
+        if (!user) throw new Error('User not found')
+
+        user.profilePicture = { /* TODO @Gavin: remove this from the request? */
             data: base64EncodedImage,
             contentType: request.file.mimetype
         };
 
         await user.save();
 
-        request.flash('alerts', ['Profile picture updated successfully']);
-
-        return response.redirect('/users/profile');
+        return response.sendStatus(SUCCESS);
     } catch (error) {
-        request.flash('errors', ['The following error occurred while attempting to update your profile picture', error.message]);
+        console.error('Failed to upload profile picture:', error)
 
-        return response.redirect('back');
+        return response.sendStatus(SERVER_ERROR)
     } finally {
         deleteFileFromFileSystem(imageFilePath);
     }

@@ -10,6 +10,7 @@ cypress/screenshots
 .terraform
 .parcel-cache
 dist
+application/public/images
 
 # Allowed
 !.env.example

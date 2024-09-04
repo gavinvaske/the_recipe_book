@@ -2,6 +2,7 @@ import React from 'react';
 import './HorizontalNavbar.scss';
 import { Link } from 'react-router-dom';
 
+
 export const HorizontalNavbar = () => {
   return (
     <nav className="navbar-main">
@@ -98,7 +99,7 @@ export const HorizontalNavbar = () => {
                 <ul className="dropdown-menu user-options">
                     <li><a href="/users/profile/"><i className="fa-regular fa-user"></i>Account</a></li>
                     <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
-                    <li><a href="/users/logout"><i className="fa-regular fa-right-from-bracket"></i>Log Out</a></li>
+                    <li><a href="/auth/logout"><i className="fa-regular fa-right-from-bracket"></i>Log Out</a></li>
                 </ul>
             </li>
        </ul>

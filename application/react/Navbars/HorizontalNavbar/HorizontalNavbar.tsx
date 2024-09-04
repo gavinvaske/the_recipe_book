@@ -2,6 +2,7 @@ import React from 'react';
 import './HorizontalNavbar.scss';
 import { Link } from 'react-router-dom';
 
+
 export const HorizontalNavbar = () => {
   return (
     <nav className="navbar-main">

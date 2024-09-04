@@ -1,0 +1,108 @@
+.register-frame {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .register-container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .col-left {
+            width: 33.3333%;
+            position: relative;
+            .eli-welcome-splash {
+                width: 50%;
+            }
+            .gray-background-shape {
+                position: absolute;
+                bottom: -87px;
+                width: 100%;
+            }
+            .logo-header-container {
+                position: fixed;
+                top: 25px;
+                left: 25px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row;
+                svg {
+                    fill: #157efb;
+                    height: 30px;
+                }
+                span {
+                    margin-left: 15px;
+                    font-size: 30px;
+                }
+            }
+        }
+        .col-right {
+            width: 66.6666%;
+            background-color: white;
+        }
+        .col-left, .col-right {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+#register-form {
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .submit-button {
+        width: 100%;
+    }
+    .input-wrapper {
+        width: 100%;
+        span {
+            display: none;
+        }
+        input {
+            margin-top: 10px;
+        }
+    }
+    .input-wrapper {
+        &:nth-child(1), &:nth-child(2) {
+            margin-bottom: 30px;
+        }
+    }
+    .remember-reset-container {
+        height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        .checkbox-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            input {
+                height: 20px;
+                width: 20px;
+            }
+            label {
+                margin:0 0 0 7px;
+            }
+        }
+    }
+}
+
+.register-link-container {
+    text-align: center;
+    margin-top: 15px;
+    a {
+        margin-left: 5px;
+    }
+}

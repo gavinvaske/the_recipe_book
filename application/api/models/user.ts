@@ -35,15 +35,6 @@ const userSchema = new Schema({
             enum: ['image/png', 'image/jpeg', 'image/jpg']
         }
     },
-    username: {
-        type: String,
-        unique: true,
-        validate: [{
-            validator: checkForSpaces, 
-            msg: 'Your username must not contain spaces'
-        }],
-        sparse: true
-    },
     fullName: {
         type: String
     },

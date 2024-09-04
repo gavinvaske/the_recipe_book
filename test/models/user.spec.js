@@ -44,37 +44,6 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: username', () => {
-        it('should validate successfully', () => {
-            userAttributes.username = chance.word();
-            const user = new UserModel(userAttributes);
-
-            const error = user.validateSync();
-
-            expect(error).toBe(undefined);
-        });
-
-        it('should fail if username contains a space', () => {
-            userAttributes.username = chance.word() + ' ' + chance.word();
-            const user = new UserModel(userAttributes);
-
-            const error = user.validateSync();
-
-            expect(error).not.toBe(undefined);
-        });
-
-        it('should trim whitespace around username', () => {
-            const username = chance.word();
-            userAttributes.username = ' ' + username + ' ';
-            const user = new UserModel(userAttributes);
-
-            const error = user.validateSync();
-
-            expect(error).toBe(undefined);
-            expect(user.username).toBe(username);
-        });
-    });
-
     describe('attribute: fullName', () => {
         it('should trim whitespace', () => {
             const fullName = chance.word();

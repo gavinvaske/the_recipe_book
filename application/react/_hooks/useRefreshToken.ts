@@ -5,14 +5,22 @@ import { useAuth } from "./useAuth";
 export const useRefreshToken = () => {
   const { setAuth } = useAuth();
   const fetchAccessToken = async (): Promise<UserAuth> => {
+    let userAuth: UserAuth = {
+      accessToken: '',
+      authRoles: []
+    }
 
-    const response = await axios.get('/auth/access-token', {
-      withCredentials: true // Tells axios to include HTTP only cookies in request to server
-    })
-
-    const userAuth: UserAuth = response.data
-
-    setAuth(userAuth);
+    try {
+      const response = await axios.get('/auth/access-token', {
+        withCredentials: true // Tells axios to include HTTP only cookies in request to server
+      })
+  
+      userAuth = response.data
+  
+      setAuth(userAuth);
+    } catch (error) {
+      setAuth(userAuth)
+    }
 
     return userAuth;
   }

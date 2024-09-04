@@ -39,8 +39,8 @@ export const ProtectedRoute = (props: Props) => {
 
     const doesAccessTokenNeedRefreshed = !auth?.accessToken;
 
-    doesAccessTokenNeedRefreshed ? 
-      getNewAccessToken() 
+    doesAccessTokenNeedRefreshed ?
+      getNewAccessToken()
       : setIsLoading(false);
 
     return () => {

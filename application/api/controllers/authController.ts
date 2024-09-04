@@ -1,7 +1,7 @@
 import { Router, Request, Response, response } from 'express';
 import { UserModel } from '../models/user.ts';
-import { BAD_REQUEST, CREATED_SUCCESSFULLY, FORBIDDEN, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
-import { generateRefreshToken, generateAccessToken, TokenPayload } from '../middleware/authorize.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, FORBIDDEN, NOT_FOUND, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
+import { generateRefreshToken, generateAccessToken, TokenPayload, verifyBearerToken } from '../middleware/authorize.ts';
 import { MongooseId } from '../../react/_types/typeAliases.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -50,7 +50,7 @@ router.get('/access-token', (request: Request, response: Response) => {
     
     const tokenPayload: TokenPayload = {
       email: payloadWithExtraStuff.email,
-      id: payloadWithExtraStuff.id,
+      _id: payloadWithExtraStuff._id,
       authRoles: payloadWithExtraStuff.authRoles
     }
 
@@ -87,7 +87,7 @@ router.post('/login', async (request: Request, response: Response) => {
     const authRoles = user.authRoles || []
 
     const tokenPayload: TokenPayload = {
-      id: user._id as MongooseId,
+      _id: user._id as MongooseId,
       email: user.email as string,
       authRoles: authRoles
     }
@@ -230,6 +230,16 @@ router.post('/register', async (request: Request, response: Response) => {
   }
 
   return response.sendStatus(CREATED_SUCCESSFULLY);
+});
+
+router.get('/me', verifyBearerToken, async (request, response) => {
+  try {
+    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole phoneNumber birthDate').lean();
+    
+    return response.json(user);
+  } catch (error) {
+    return response.sendStatus(NOT_FOUND)
+  }
 });
 
 

@@ -28,6 +28,7 @@ import { ForgotPassword } from '../_auth/ForgotPassword/ForgotPassword';
 import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
+import { Profile } from '../User/Profile/Profile';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ export function App() {
               <Route element={<TopNavbarLayout />}>
                 <Route path='' element={<Home />}></Route>
                 <Route path='inventory' element={<Inventory />}></Route>
+                <Route path='profile' element={<Profile />} />
 
                 <Route path='forms'>
                   <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />

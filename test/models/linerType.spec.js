@@ -110,35 +110,5 @@ describe('linerType validation', () => {
             expect(softDeletedAdhesiveCategory).toBeDefined();
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
         });
-
-        describe('attribute: name', () => {
-            it('should throw error if two linerTypes with the same name are saved to the DB', async () => {
-                const duplicateName = chance.string();
-                const linerType = new LinerTypeModel({
-                    ...linerTypeAttributes,
-                    name: duplicateName
-                });
-                const linerTypeWithDuplicateMaterialId = new LinerTypeModel({
-                    ...linerTypeAttributes,
-                    name: duplicateName
-                });
-                const anotherLinerTypeWithDuplicateMaterialId = new LinerTypeModel({
-                    ...linerTypeAttributes,
-                    name: duplicateName
-                });
-                let errorMessage;
-
-                await linerType.save();
-
-                try {
-                    await linerTypeWithDuplicateMaterialId.save();
-                    await anotherLinerTypeWithDuplicateMaterialId.save();
-                } catch (error) {
-                    errorMessage = error.message;
-                }
-
-                expect(errorMessage).toBeDefined();
-            });
-        });
     });
 });

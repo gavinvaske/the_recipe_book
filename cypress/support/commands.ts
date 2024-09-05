@@ -20,8 +20,9 @@ Cypress.Commands.add('login', () => {
       If we dont verify anything on the page after a login, 
       the tests execute too quickly and sometimes that auth hasn't fully taken effect leading to random errors 
   */
-  cy.contains('TODO Build Home.jsx').should('exist');
-  cy.contains('Welcome to E.L.I').should('exist');
+  cy.location().should(loc => {
+    expect(loc.pathname).to.equal('/react-ui/profile')
+  })
 })
 
 Cypress.Commands.add('invalidLogin', () => {

@@ -101,7 +101,7 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
             <i className="fa-regular fa-chevron-down"></i>
           </button>
         </div>
-        <div className={`quick-filter-dropdown quick-filter-drpdwn dropdown ${isDropdownDisplayed ? 'active' : ''}`}>
+        <div className={`quick-filter-dropdown quick-filter-drpdwn dropdown modal ${isDropdownDisplayed ? 'active' : ''}`}>
           <h5><b>Quick filters</b></h5>
           {renderTextQuickFilters(textQuickFilters, store)}
         </div>

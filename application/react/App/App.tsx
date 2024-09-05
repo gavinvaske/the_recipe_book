@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
 import { CustomerForm } from '../Customer/CustomerForm/CustomerForm';
@@ -32,6 +32,24 @@ import { Profile } from '../User/Profile/Profile';
 const queryClient = new QueryClient();
 
 export function App() {
+
+  useEffect(() => {
+    document.addEventListener('mousedown', (e) => {
+      const classesWhoseClickShouldNotCloseAnything = ['modal', 'btn', 'btn-primary', 'btn-secondary', 'btn-success', 'quick-filter-dropdown', 'btn-split'];
+      console.log('classes on clicked element', Object.values(e.target.classList))
+      const isModal = classesWhoseClickShouldNotCloseAnything.some(className => e.target.classList.contains(className));
+      console.log('is modal?', isModal)
+
+      // Question (9-4-2025): If storm is going to use "active" class on modals, filters, popups, ect, then should we remove it when clicked outside of the modal?
+      if (!isModal) {
+        //document.querySelector('.active')?.classList.remove('active');
+        const elements = document.querySelectorAll('.active');
+        console.log('elements', elements)
+        Array.from(elements).forEach((el) => el.classList.remove('active'));
+      }
+    })
+  })
+
   return (
     <QueryClientProvider client={queryClient}>
       <Routes >

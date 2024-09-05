@@ -32,5 +32,5 @@ export function generateAccessToken(payload: TokenPayload, secret: string) {
 }
 
 export function generateRefreshToken(payload: TokenPayload, secret: string) {
-  return jwt.sign(payload, secret, { expiresIn: '7d' });
+  return jwt.sign(payload, secret, { expiresIn: '12h' }); // user MUST login once refresh token expires
 }

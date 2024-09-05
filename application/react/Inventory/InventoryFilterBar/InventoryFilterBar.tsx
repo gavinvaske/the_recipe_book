@@ -12,12 +12,16 @@ const InventoryFilterBar = observer((_) => {
     <div id='inventory-filter-bar' className="workflow-filter flex-center-left-row full-width card">
       <Link
         to='/react-ui/forms/material-order'
-        className='create bg-blue text-white border-blue btn-create new-po-btn'
+        className='create bg-blue text-white border-blue btn-create'
       >PO <i className="fa-regular fa-plus"></i></Link>
       <Link
         to='/react-ui/forms/material'
-        className='create bg-blue text-white border-blue btn-create new-po-btn'
+        className='create bg-blue text-white border-blue btn-create'
       >Material <i className="fa-regular fa-plus"></i></Link>
+      <Link
+        to='/react-ui/forms/material-length-adjustment'
+        className='create bg-blue text-white border-blue btn-create'
+      >Adjustment <i className="fa-regular fa-plus"></i></Link>
 
       <FilterBar
           conditionalQuickFilters={conditionalQuickFilters}

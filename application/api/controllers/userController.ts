@@ -29,8 +29,8 @@ router.patch('/me', verifyBearerToken, async (request, response) => {
     if (!request.user._id) throw new Error('User not logged in');
 
     const newUserValues = {
-      username: request.body.username || undefined,
-      fullName: request.body.fullName || undefined,
+      firstName: request.body.firstName || undefined,
+      lastName: request.body.lastName || undefined,
       jobRole: request.body.jobRole || undefined,
       birthDate: request.body.birthDate || '',
       phoneNumber: request.body.phoneNumber || undefined
@@ -61,12 +61,6 @@ router.get('/', verifyBearerToken, async (_, response) => {
             .status(SERVER_ERROR)
             .send(error.message);
     }
-});
-
-router.get('/logged-in-user-details', verifyBearerToken, async (request, response) => {
-    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole');
-
-    return response.json(user);
 });
 
 router.get('/me/profile-picture', verifyBearerToken, async (request, response) => {

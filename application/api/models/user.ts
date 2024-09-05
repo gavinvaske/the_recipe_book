@@ -4,68 +4,57 @@ const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
 import { AVAILABLE_AUTH_ROLES } from '../enums/authRolesEnum.ts';
 
-const checkForSpaces = function(text) {
-    if (!text) {
-        return true;
-    }
-    const isValid = !text.includes(' ');
-
-    return isValid;
-};
-
 const userSchema = new Schema({
-    email: {
-        type: String,
-        uppercase: true,
-        unique: true,
-        required: 'Email address is required',
-        validate: [validateEmail, 'Please fill a valid email address'],
+  email: {
+    type: String,
+    index: true,
+    unique: true,
+    uppercase: true,
+    required: [true, 'Email address is required'],
+    validate: [validateEmail, 'Please fill a valid email address'],
+  },
+  password: {
+    type: String,
+    minLength: 8,
+    required: [true, 'Password is required']
+  },
+  profilePicture: {
+    data: {
+      type: Buffer
     },
-    password: {
-        type: String,
-        minLength: 8,
-        required: true
-    },
-    profilePicture: {
-        data: {
-            type: Buffer
-        },
-        contentType: {
-            type: String,
-            enum: ['image/png', 'image/jpeg', 'image/jpg']
-        }
-    },
-    username: {
-        type: String,
-        unique: true,
-        validate: [{
-            validator: checkForSpaces, 
-            msg: 'Your username must not contain spaces'
-        }],
-        sparse: true
-    },
-    fullName: {
-        type: String
-    },
-    jobRole: {
-        type: String
-    },
-    phoneNumber: {
-        type: String,
-        validate: [validatePhoneNumber, 'The provided phone number "{VALUE}" is not a valid phone number']
-    },
-    birthDate: {
-        type: Date
-    },
-    authRoles: {
-      type: [{
-        type: String,
-        enum: AVAILABLE_AUTH_ROLES
-      }],
-    },
-    lastLoginDateTime: {
-      type: Date
+    contentType: {
+      type: String,
+      enum: ['image/png', 'image/jpeg', 'image/jpg']
     }
-}, { timestamps: true });
+  },
+  firstName: {
+    type: String,
+    required: [true, 'First name is required']
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last name is required']
+  },
+  birthDate: {
+    type: Date,
+    required: [true, 'Birth date is required']
+  },
+  jobRole: {
+    type: String
+  },
+  phoneNumber: {
+    type: String,
+    validate: [validatePhoneNumber, 'The provided phone number "{VALUE}" is not a valid phone number']
+  },
+  authRoles: {
+    type: [{
+      type: String,
+      enum: AVAILABLE_AUTH_ROLES
+    }],
+  },
+  lastLoginDateTime: {
+    type: Date
+  }
+}, { timestamps: true, strict: 'throw' });
 
 export const UserModel = mongoose.model('User', userSchema);

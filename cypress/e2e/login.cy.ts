@@ -1,9 +1,9 @@
 describe('Login Cases', () => {
-  it('User should see a home page upon login', () => {
+  it('User should see a profile page upon login', () => {
     cy.login();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.equal('/react-ui')
+      expect(loc.pathname).to.equal('/react-ui/profile')
     })
   })
 
@@ -31,7 +31,7 @@ describe('Login Cases', () => {
   it('An error message should be shown for invalid login', () => {
     cy.logout();
     cy.invalidLogin();
-    const expectedInvalidLoginErrorMessage = 'Invalid username and/or password'
+    const expectedInvalidLoginErrorMessage = 'Invalid email and/or password'
 
     cy.location().should(loc => {
       expect(loc.pathname).to.equal('/react-ui/login')
@@ -44,7 +44,7 @@ describe('Login Cases', () => {
     cy.login();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.equal('/react-ui')
+      expect(loc.pathname).to.equal('/react-ui/profile')
     })
   })
 

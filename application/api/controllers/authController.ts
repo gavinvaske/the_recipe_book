@@ -69,7 +69,7 @@ router.get('/access-token', (request: Request, response: Response) => {
 
 router.post('/login', async (request: Request, response: Response) => {
   const { email, password } = request.body;
-  const invalidLoginMessage = 'Invalid username and/or password'
+  const invalidLoginMessage = 'Invalid email and/or password'
 
   try {
     const user = await UserModel.findOne({ email }).lean();
@@ -204,7 +204,7 @@ router.post('/change-password/:mongooseId/:token', async (request: Request, resp
 });
 
 router.post('/register', async (request: Request, response: Response) => {
-  const { email, password: plainTextPassword, repeatPassword } = request.body;
+  const { firstName, lastName, birthDate, email, password: plainTextPassword, repeatPassword } = request.body;
   const genericErrorMessage = 'An error occurred during registration, see logs for more details';
 
   if (!email) {
@@ -217,12 +217,15 @@ router.post('/register', async (request: Request, response: Response) => {
     const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_ROUNDS);
 
     await UserModel.create({
+        firstName,
+        lastName,
+        birthDate,
         email,
         password: encryptedPassword
     });
   } catch (error) {
     if (error.code === MONGODB_DUPLICATE_KEY_ERROR_CODE) {
-      return response.status(BAD_REQUEST).send('Username already exists')
+      return response.status(BAD_REQUEST).send('Email already exists')
     }
     console.error(`Unable to register user with email ${email}: `, error);
 
@@ -234,10 +237,11 @@ router.post('/register', async (request: Request, response: Response) => {
 
 router.get('/me', verifyBearerToken, async (request, response) => {
   try {
-    const user = await UserModel.findById(request.user._id, 'email username fullName authRoles jobRole phoneNumber birthDate').lean();
-    
+    const user = await UserModel.findById(request.user._id, 'email firstName lastName authRoles jobRole phoneNumber birthDate').lean();
+
     return response.json(user);
-  } catch (error) {
+  } catch (error) { 
+    console.error(error);
     return response.sendStatus(NOT_FOUND)
   }
 });

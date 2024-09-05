@@ -1,9 +1,17 @@
 import React from 'react';
 import './HorizontalNavbar.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 export const HorizontalNavbar = () => {
+  const navigate = useNavigate();
+
+  const logoutUser = async () => {
+    await axios.get('/auth/logout');
+    navigate('/react-ui/login', { replace: true  });
+  }
+
   return (
     <nav className="navbar-main">
       <div className="column column-left">
@@ -96,6 +104,8 @@ export const HorizontalNavbar = () => {
                         <div className="active-user"></div>
                     </div>
                 </div>
+                <NavLink to='/react-ui/profile'>Profile</NavLink>
+                <button onClickCapture={logoutUser}>Logout</button>
                 <ul className="dropdown-menu user-options">
                     <li><a href="/users/profile/"><i className="fa-regular fa-user"></i>Account</a></li>
                     <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>

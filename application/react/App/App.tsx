@@ -23,7 +23,6 @@ import { MaterialOrderTable } from '../MaterialOrder/MaterialOrderTable/Material
 import { ProtectedRoute } from '../_auth/ProtectedRoute/ProtectedRoute';
 import { Login } from '../_auth/Login/Login';
 import { USER, ADMIN } from '../../api/enums/authRolesEnum'
-import { Home } from '../Home/Home';
 import { ForgotPassword } from '../_auth/ForgotPassword/ForgotPassword';
 import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
@@ -50,7 +49,6 @@ export function App() {
             {/* PROTECTED ROUTES */}
             <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]}/>}>
               <Route element={<TopNavbarLayout />}>
-                <Route path='' element={<Home />}></Route>
                 <Route path='inventory' element={<Inventory />}></Route>
                 <Route path='profile' element={<Profile />} />
 

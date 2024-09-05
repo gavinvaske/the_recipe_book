@@ -204,7 +204,7 @@ router.post('/change-password/:mongooseId/:token', async (request: Request, resp
 });
 
 router.post('/register', async (request: Request, response: Response) => {
-  const { email, password: plainTextPassword, repeatPassword } = request.body;
+  const { firstName, lastName, birthDate, email, password: plainTextPassword, repeatPassword } = request.body;
   const genericErrorMessage = 'An error occurred during registration, see logs for more details';
 
   if (!email) {
@@ -217,6 +217,9 @@ router.post('/register', async (request: Request, response: Response) => {
     const encryptedPassword = await bcrypt.hash(plainTextPassword, BCRYPT_SALT_ROUNDS);
 
     await UserModel.create({
+        firstName,
+        lastName,
+        birthDate,
         email,
         password: encryptedPassword
     });

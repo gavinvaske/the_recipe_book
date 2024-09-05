@@ -43,6 +43,28 @@ export const Register = () => {
 
               <form id='register-form' onSubmit={handleSubmit(onSubmit)}>
                 <Input
+                    attribute='firstName'
+                    label="First Name"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                />
+                <Input
+                    attribute='lastName'
+                    label="Last Name"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                />
+                <Input
+                    attribute='birthDate'
+                    label="Birth Date"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                    fieldType='date'
+                />
+                <Input
                     attribute='email'
                     label="Email"
                     register={register}
@@ -56,7 +78,7 @@ export const Register = () => {
                     register={register}
                     isRequired={true}
                     errors={errors}
-                    fieldType={'password'}
+                    fieldType='password'
                 />
                 <Input
                     attribute='repeatPassword'
@@ -64,7 +86,7 @@ export const Register = () => {
                     register={register}
                     isRequired={true}
                     errors={errors}
-                    fieldType={'password'}
+                    fieldType='password'
                 />
                 <button className='create-entry submit-button' type='submit' data-test='login-btn'>Register</button>
               </form>

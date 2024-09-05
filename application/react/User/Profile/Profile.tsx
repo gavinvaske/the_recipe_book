@@ -19,11 +19,12 @@ export const Profile = () => {
 
   useEffect(() => {
     reset({
-      username: loggedInUser?.username,
-      fullName: loggedInUser?.fullName,
+      email: loggedInUser?.email,
+      firstName: loggedInUser?.firstName,
+      lastName: loggedInUser?.lastName,
+      birthDate: loggedInUser?.birthDate || '',
       phoneNumber: loggedInUser?.phoneNumber,
-      jobRole: loggedInUser?.jobRole,
-      birthDate: loggedInUser?.birthDate || ''
+      jobRole: loggedInUser?.jobRole
     })
   }, [loggedInUser])
 
@@ -57,14 +58,20 @@ export const Profile = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
         <Input
-          attribute='username'
-          label="Username"
+          attribute='email'
+          label="Email"
           register={register}
           errors={errors}
         />
         <Input
-          attribute='fullName'
-          label="Full Name"
+          attribute='firstName'
+          label="First Name"
+          register={register}
+          errors={errors}
+        />
+        <Input
+          attribute='lastName'
+          label="Last Name"
           register={register}
           errors={errors}
         />

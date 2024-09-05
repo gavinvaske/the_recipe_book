@@ -3,6 +3,7 @@ import * as databaseService from '../../application/api/services/databaseService
 import { UserModel } from '../../application/api/models/user.ts';
 import jwt from 'jsonwebtoken';
 import Chance from 'chance';
+import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
 
@@ -36,10 +37,7 @@ describe('userService', () => {
     });
 
     it('should save user to database', async () => {
-        userAttributes = {
-            email: 'test@gmail.com',
-            password: '12345678'
-        };
+        userAttributes = testDataGenerator.mockData.User();
         const {_id} = await userService.createUser(userAttributes);
     
         const userFromDatabase = await UserModel.findById(_id);
@@ -86,8 +84,9 @@ describe('userService', () => {
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
 
-        it('should return an empty string if users fullname is not defined', () => {
-            userAttributes.fullName = undefined;
+        it('should return an empty string if users firstName and lastName is not defined', () => {
+            userAttributes.firstName = undefined;
+            userAttributes.lastName = null;
             const user = UserModel(userAttributes);
             const expectedUserCredentials = '';
 
@@ -97,10 +96,10 @@ describe('userService', () => {
         });
 
         it('should return a single character if their fullName is only a single word', () => {
-            const firstName = chance.word();
-            userAttributes.fullName = firstName;
+            const firstName = chance.word().toLowerCase();
+            userAttributes.firstName = firstName;
             const user = UserModel(userAttributes);
-            const expectedUserCredentials = userAttributes.fullName[0];
+            const expectedUserCredentials = userAttributes.firstName[0].toUpperCase();
 
             const actualUserCredentials = userService.getUserInitials(user);
 
@@ -108,30 +107,17 @@ describe('userService', () => {
         });
 
         it('should return the first character of their first and last name', () => {
-            const firstName = chance.word();
-            const lastName = chance.word();
-            userAttributes.fullName = `${firstName} ${lastName}`;
+            const firstName = chance.word().toLowerCase();
+            const lastName = chance.word().toLowerCase();
+            userAttributes.firstName = firstName;
+            userAttributes.lastName = lastName;
             const user = UserModel(userAttributes);
-            const expectedUserCredentials = firstName[0] + lastName[0];
+            const expectedUserCredentials = firstName[0].toUpperCase() + lastName[0].toUpperCase();
 
             const actualUserCredentials = userService.getUserInitials(user);
 
             expect(actualUserCredentials).toBe(expectedUserCredentials);
         });
-
-        it('should only return the first character of their first and last name and ignore their middle name(s)', () => {
-            const firstName = chance.word();
-            const middleName = chance.word();
-            const lastName = chance.word();
-            userAttributes.fullName = `${firstName} ${middleName} ${lastName}`;
-            const user = UserModel(userAttributes);
-            const expectedUserCredentials = firstName[0] + lastName[0];
-
-            const actualUserCredentials = userService.getUserInitials(user);
-
-            expect(actualUserCredentials).toBe(expectedUserCredentials);
-        });
-
     });
 
     describe('getProfilePictureUrl()', () => {

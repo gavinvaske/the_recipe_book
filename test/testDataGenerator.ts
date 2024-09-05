@@ -117,6 +117,9 @@ function getUser() {
     const PASSWORD_MIN_LENGTH = 8;
 
     return {
+        firstName: chance.word(),
+        lastName: chance.word(),
+        birthDate: chance.date({ string: true }),
         email: chance.email(),
         password: chance.string({ length: PASSWORD_MIN_LENGTH }),
         authRoles: [chance.pickone(AVAILABLE_AUTH_ROLES)]

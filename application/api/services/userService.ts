@@ -23,21 +23,18 @@ export function getProfilePictureUrl(user) {
 }
 
 export function getUserInitials(user) {
-    const emptyString = '';
-    const indexOfFirstWordInArray = 0;
-    const indexOfLastWordInArray = -1;
-    const indexOfirstCharacterInWord = 0;
+  if (!user) return '';
+  
+  let initials = '';
 
-    if (!user || !user.fullName) {
-        return '';
-    }
+  if (user.firstName && user.firstName.length > 0) {
+    initials += user.firstName[0].toUpperCase(); 
+  }
+  if (user.lastName && user.lastName.length > 0) {
+    initials += user.lastName[0].toUpperCase();
+  }
 
-    const names = user.fullName.split(' ');
-
-    const firstNameInitial = (names.length > 0) ? names[indexOfFirstWordInArray][indexOfirstCharacterInWord] : emptyString; // eslint-disable-line no-magic-numbers
-    const lastNameInitial = (names.length > 1) ? names.slice(indexOfLastWordInArray)[indexOfFirstWordInArray][indexOfirstCharacterInWord] : emptyString;
-
-    return firstNameInitial + lastNameInitial;
+  return initials;
 }
 
 export function isUserLoggedIn(jwtToken, jwtSecret) {

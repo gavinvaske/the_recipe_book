@@ -12,16 +12,37 @@ describe('validation', () => {
     beforeEach(() => {
         userAttributes = testDataGenerator.mockData.User();
     });
-    describe('successful validation', () => {
-        it('should succeed when required attributes are defined', () => {
-            const user = new UserModel(userAttributes);
-    
-            const error = user.validateSync();
-    
-            expect(error).toBe(undefined);
-        });
 
+    it('should have the correct indexes', async () => {
+      const indexMetaData = UserModel.schema.indexes();
+      const expectedIndexes = ['email'];
+
+      console.log('indexMetaData: ', indexMetaData);
+
+      const isEveryExpectedIndexActuallyAnIndex = expectedIndexes.every((expectedIndex) => {
+          return indexMetaData.some((metaData) => {
+              const index = Object.keys(metaData[0])[0];
+              if (index === expectedIndex) return true;
+          });
+      });
+
+      expect(isEveryExpectedIndexActuallyAnIndex).toBe(true);
+  });
+
+    it('should succeed when required attributes are defined', () => {
+        const user = new UserModel(userAttributes);
+
+        const error = user.validateSync();
+
+        expect(error).toBe(undefined);
     });
+
+    it('should throw an error if unknown attribute is provided', () => {
+      const unknownAttribute = chance.string();
+      userAttributes[unknownAttribute] = chance.string();
+
+      expect(() => new UserModel(userAttributes)).toThrow();
+    })
 
     describe('non-successful validation', () => {
         it('should not validate incorrectly formatted emails', () => {
@@ -44,18 +65,49 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: fullName', () => {
+    describe('attribute: firstName', () => {
         it('should trim whitespace', () => {
-            const fullName = chance.word();
-            userAttributes.fullName = ' ' + fullName + ' ';
+            const firstName = chance.word();
+            userAttributes.firstName = ' ' + firstName + ' ';
             const user = new UserModel(userAttributes);
 
             const error = user.validateSync();
 
             expect(error).toBe(undefined);
-            expect(user.fullName).toBe(fullName);
+            expect(user.firstName).toBe(firstName);
         });
+
+        it('should be required', () => {
+          delete userAttributes.firstName;
+          const user = new UserModel(userAttributes);
+
+          const error = user.validateSync();
+
+          expect(error).not.toBe(undefined);
+        })
     });
+
+    describe('attribute: lastName', () => {
+      it('should trim whitespace', () => {
+          const lastName = chance.word();
+          userAttributes.lastName = ' ' + lastName + ' ';
+          const user = new UserModel(userAttributes);
+
+          const error = user.validateSync();
+
+          expect(error).toBe(undefined);
+          expect(user.lastName).toBe(lastName);
+      });
+
+      it('should be required', () => {
+        delete userAttributes.lastName;
+        const user = new UserModel(userAttributes);
+        
+        const error = user.validateSync();
+
+        expect(error).not.toBe(undefined);
+      })
+  });
 
     describe('attribute: jobRole', () => {
         it('should trim whitespace', () => {
@@ -120,6 +172,15 @@ describe('validation', () => {
 
             expect(new Date(user.birthDate).getTime() === new Date(birthDate).getTime()).toBeTruthy();
         });
+
+        it('should be required', () => {
+          delete userAttributes.birthDate;
+          const user = new UserModel(userAttributes);
+
+          const error = user.validateSync();
+
+          expect(error).not.toBe(undefined);
+        })
     });
 
     describe('attribute: authRoles', () => {

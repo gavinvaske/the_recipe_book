@@ -6,7 +6,7 @@ import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form
 type Props<T extends FieldValues> = {
   attribute: Path<T>
   label: string
-  register: UseFormRegister<T>
+  register: UseFormRegister<any>
   errors: FieldErrors,
   placeholder?: string
   defaultValue?: string

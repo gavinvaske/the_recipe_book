@@ -1,25 +1,23 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { FinishModel } from '../models/finish.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
+import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 const SHOW_ALL_FINISHES_ENDPOINT = '/finishes';
 
 router.use(verifyBearerToken);
 
-router.get('/', async (request, response) => {
-    try {
-        const finishes = await FinishModel.find().exec();
-        
-        return response.render('viewFinishes', {
-            finishes: finishes
-        });
+router.get('/', async (_: Request, response: Response) => {
+  try {
+    const finishes = await FinishModel.find().exec();
 
-    } catch (error) {
-        request.flash('errors', ['Unable to load Finishes, the following error(s) occurred:', error.message]);
-        return response.redirect('back');
-    }
-});
+    return response.json(finishes);
+  } catch (error) {
+    console.error(error);
+    return response.status(SERVER_ERROR).send(error.message);
+  }
+})
 
 router.get('/create', (request, response) => {
     return response.render('createFinish');

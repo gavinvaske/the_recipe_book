@@ -1,0 +1,1 @@
+export const ovOrEpmOptions = ['NO', 'OV', 'EPM'];

@@ -11,6 +11,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { getMaterials } from '../../_queries/material';
 import { getCustomers } from '../../_queries/customer';
+import { getOneProduct } from '../../_queries/product';
 import { getDies } from '../../_queries/die';
 import { getFinishes } from '../../_queries/finish';
 
@@ -18,7 +19,7 @@ export const ProductForm = () => {
   const { mongooseId } = useParams();
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
-  const [dies, setDies ] = useState<SelectOption[]>([])
+  const [dies, setDies] = useState<SelectOption[]>([])
   const [materials, setMaterials ] = useState<SelectOption[]>([])
   const [finishes, setFinishes ] = useState<SelectOption[]>([])
   const [customers, setCustomers ] = useState<SelectOption[]>([])
@@ -36,6 +37,34 @@ export const ProductForm = () => {
     setMaterials(materials.map((material) => ({ value: material._id, displayName: 'foo' })));
     setFinishes(finishes.map((finish) => ({ value: finish._id, displayName: 'foo' })));
     setCustomers(customers.map((customer) => ({ value: customer._id, displayName: 'foo' })));
+
+    if (!isUpdateRequest) return;
+
+    const product = await getOneProduct(mongooseId)
+
+    const formValues: ProductFormAttributes = {
+      productDescription: product.productDescription,
+      unwindDirection: product.unwindDirection,
+      ovOrEpm: product.ovOrEpm,
+      artNotes: product.artNotes,
+      pressNotes: product.pressNotes,
+      finishType: product.finishType,
+      coreDiameter: product.coreDiameter,
+      labelsPerRoll: product.labelsPerRoll,
+      dieCuttingNotes: product.dieCuttingNotes,
+      overun: product.overun,
+      spotPlate: product.spotPlate,
+      numberOfColors: product.numberOfColors,
+      die: product.die,
+      frameNumberAcross: product.frameNumberAcross,
+      frameNumberAround: product.frameNumberAround,
+      primaryMaterial: product.primaryMaterial,
+      secondaryMaterial: product.secondaryMaterial,
+      finish: product.finish,
+      customer: product.customer
+    }
+
+    reset(formValues) // Loads data into the form and forces a rerender
   }
 
 

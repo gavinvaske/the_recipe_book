@@ -5,8 +5,9 @@ import { upload } from '../middleware/upload.ts';
 import { TicketModel } from '../models/ticket.ts';
 
 import * as s3Service from '../services/s3Service.ts';
-import * as productService from '../services/productService.ts';
 import * as fileService from '../services/fileService.ts';
+import { BaseProductModel } from '../models/baseProduct.ts';
+import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_CODE = 400;
@@ -45,31 +46,17 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
     }
 });
 
-router.get('/:id', async (request, response) => {
-    const productObjectId = request.params.id;
+router.get('/:mongooseId', async (request, response) => {
+  try {
+    const product = await BaseProductModel.findById(request.params.mongooseId);
 
-    try {
-        const ticket = await TicketModel
-            .findOne({
-                'products._id': productObjectId
-            }).exec();
-
-        const product = productService.selectProductFromTicket(ticket, productObjectId);
-
-        if (!product) {
-            request.flash('errors', [`No product was found with an ID of "${productObjectId}"`]);
-            return response.redirect('/tickets');
-        }
-
-        return response.render('viewOneProduct', {
-            ticket,
-            product
-        });
-    } catch (error) {
-        console.log('Error loading product: ', error);
-        request.flash('errors', [`An error occurred while trying to load the product with an id of "${productObjectId}"`]);
-        return response.redirect('/tickets');
-    }
+    return response.json(product);
+  } catch (error) {
+    console.error('Error searching for product: ', error);
+    return response
+        .status(SERVER_ERROR)
+        .send(error.message);
+  }
 });
 
 export default router;

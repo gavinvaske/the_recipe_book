@@ -60,7 +60,6 @@ router.get('/:mongooseId', async (request, response) => {
 });
 
 router.post('/', async (request, response) => {
-  console.log('request.user:', request.user)
   try {
     const savedProduct = await BaseProductModel.create({
       ...request.body,

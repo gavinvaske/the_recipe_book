@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { unwindDirections, defaultUnwindDirection } from '../enums/unwindDirectionsEnum.ts';
-import { finishTypes, defaultFinishType } from '../enums/finishTypesEnum.ts';
+import { unwindDirections } from '../enums/unwindDirectionsEnum.ts';
+import { finishTypes } from '../enums/finishTypesEnum.ts';
 import { ovOrEpmOptions } from '../enums/ovOrEpmEnum.ts';
 
 import mongooseDelete from 'mongoose-delete';
@@ -41,14 +41,13 @@ const productSchema = new Schema({
   unwindDirection: {
     type: Number,
     enum: unwindDirections,
-    default: defaultUnwindDirection,
     required: true
   },
   ovOrEpm: {
     type: String,
     uppercase: true,
     enum: ovOrEpmOptions,
-    default: 'NO'
+    required: true
   },
   artNotes: {
     type: String
@@ -61,21 +60,21 @@ const productSchema = new Schema({
     type: String,
     uppercase: true,
     enum: finishTypes,
-    default: defaultFinishType
+    required: true
   },
   coreDiameter: {
     type: Number,
-    default: 3,
-    min: 0
+    min: 0,
+    required: true
   },
   labelsPerRoll: {
     type: Number,
-    default: 1000,
     min: 0,
     validate: {
       validator: Number.isInteger,
       message: '{VALUE} is not an integer'
     },
+    required: true
   },
   dieCuttingNotes: {
     type: String
@@ -86,7 +85,7 @@ const productSchema = new Schema({
   },
   spotPlate: {
     type: Boolean,
-    default: false
+    required: true
   },
   numberOfColors: {
     type: Number,
@@ -120,12 +119,14 @@ const productSchema = new Schema({
   secondaryMaterial: {
     type: Schema.Types.ObjectId,
     ref: 'Material',
-    required: false
+    required: false,
+    set: (val) => val === '' ? null : val
   },
   finish: {
     type: Schema.Types.ObjectId,
     ref: 'Finish',
-    required: false
+    required: false,
+    set: (val) => val === '' ? null : val
   },
   customer: {
     type: Schema.Types.ObjectId,

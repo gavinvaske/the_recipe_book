@@ -41,6 +41,7 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
           }
         }}
         {...dataAttributes}
+        { ...(fieldType === 'checkbox'? { defaultChecked: (defaultValue == 'true' ? true : false) } : {}) }
       />
       <FormErrorMessage errors={errors} name={attribute} />
     </div>

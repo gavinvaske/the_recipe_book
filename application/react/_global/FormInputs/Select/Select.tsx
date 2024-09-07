@@ -14,13 +14,15 @@ type Props<T extends FieldValues> = {
   label: string,
   register: UseFormRegister<T>,
   errors: FieldErrors,
-  defaultValue?: string,
+  defaultValue?: string | string[],
   isRequired?: boolean,
   isMultiSelect?: boolean
 }
 
 export const Select = <T extends FieldValues>(props: Props<T>) => {
   const { attribute, label, errors, options, isRequired, register, isMultiSelect, defaultValue } = props;
+
+  if (Array.isArray(props.defaultValue) && !isMultiSelect) throw new Error('Single select cannot have multiple default values')
 
   options.sort((a, b) => a.displayName?.localeCompare(b.displayName))  /* Sort all dropdowns alphabeticalically (My Best Random Idea ever!) */
 
@@ -34,7 +36,7 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
           <option
             key={index}
             value={option.value}
-            selected={defaultValue === option.value ? true : false}
+            selected={shouldBeSelected(defaultValue, option.value) ? true : false}
           >{option.displayName}</option>
         ))
         }
@@ -43,4 +45,14 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
       <FormErrorMessage errors={errors} name={attribute} />
     </div>
   )
+}
+
+function shouldBeSelected(defaultValue: string | string[] | undefined, value: string | number) {
+  if (!defaultValue) return false;
+
+  if (Array.isArray(defaultValue)) {
+    return defaultValue.includes(String(value))
+  }
+
+  return defaultValue === String(value);
 }

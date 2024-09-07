@@ -22,6 +22,8 @@ type Props<T extends FieldValues> = {
 export const Select = <T extends FieldValues>(props: Props<T>) => {
   const { attribute, label, errors, options, isRequired, register, isMultiSelect } = props;
 
+  options.sort((a, b) => a.displayName?.localeCompare(b.displayName))  /* Sort all dropdowns alphabeticalically (My Best Random Idea ever!) */
+
   return (
     <div>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>

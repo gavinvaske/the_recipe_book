@@ -7,7 +7,7 @@ import { TicketModel } from '../models/ticket.ts';
 import * as s3Service from '../services/s3Service.ts';
 import * as fileService from '../services/fileService.ts';
 import { BaseProductModel } from '../models/baseProduct.ts';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 const SERVER_ERROR_CODE = 500;
 const INVALID_REQUEST_CODE = 400;
@@ -56,6 +56,22 @@ router.get('/:mongooseId', async (request, response) => {
     return response
         .status(SERVER_ERROR)
         .send(error.message);
+  }
+});
+
+router.post('/', async (request, response) => {
+  console.log('request.user:', request.user)
+  try {
+    const savedProduct = await BaseProductModel.create({
+      ...request.body,
+      author: request.user._id
+    })
+    
+    return response.status(CREATED_SUCCESSFULLY).send(savedProduct);
+  } catch (error) {
+    console.error('Failed to create product', error);
+
+    return response.status(BAD_REQUEST).send(error.message);
   }
 });
 

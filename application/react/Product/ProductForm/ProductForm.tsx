@@ -14,8 +14,13 @@ import { getCustomers } from '../../_queries/customer';
 import { getOneProduct } from '../../_queries/product';
 import { getDies } from '../../_queries/die';
 import { getFinishes } from '../../_queries/finish';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+
+const productTableUrl = '/react-ui/tables/product'
 
 export const ProductForm = () => {
+  const navigate = useNavigate();
   const { mongooseId } = useParams();
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
@@ -25,7 +30,6 @@ export const ProductForm = () => {
   const [customers, setCustomers ] = useState<SelectOption[]>([])
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormAttributes>();
-  const navigate = useNavigate();
 
   const preloadFormData = async () => {
     const dies = await getDies();
@@ -33,10 +37,10 @@ export const ProductForm = () => {
     const customers = await getCustomers();
     const finishes = await getFinishes();
 
-    setDies(dies.map((die) => ({ value: die._id, displayName: 'foo' })));
-    setMaterials(materials.map((material) => ({ value: material._id, displayName: 'foo' })));
-    setFinishes(finishes.map((finish) => ({ value: finish._id, displayName: 'foo' })));
-    setCustomers(customers.map((customer) => ({ value: customer._id, displayName: 'foo' })));
+    setDies(dies.map((die) => ({ value: die._id, displayName: die.dieNumber || 'N/A' })));
+    setMaterials(materials.map((material) => ({ value: material._id, displayName: material.name || 'N/A' })));
+    setFinishes(finishes.map((finish) => ({ value: finish._id, displayName: finish.name || 'N/A' })));
+    setCustomers(customers.map((customer) => ({ value: customer._id, displayName: `${customer.customerId || 'N/A'}` })));
 
     if (!isUpdateRequest) return;
 
@@ -76,21 +80,22 @@ export const ProductForm = () => {
   }, [])
 
   const onSubmit = (formData: ProductFormAttributes) => {
-    // if (isUpdateRequest) {
-    //   axios.patch(`/delivery-methods/${mongooseId}`, formData)
-    //     .then((_) => {
-    //       navigate(deliveryMethodTableUrl)
-    //       useSuccessMessage('Update was successful')
-    //     })
-    //     .catch((error: AxiosError) => useErrorMessage(error));
-    // } else {
-    //   axios.post('/delivery-methods', formData)
-    //     .then((_: AxiosResponse) => {
-    //       navigate(deliveryMethodTableUrl);
-    //       useSuccessMessage('Creation was successful')
-    //     })
-    //     .catch((error: AxiosError) => useErrorMessage(error))
-    // }
+    alert('foobar');
+    if (isUpdateRequest) {
+      axios.patch(`/products/${mongooseId}`, formData)
+        .then((_) => {
+          navigate(productTableUrl)
+          useSuccessMessage('Update was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error));
+    } else {
+      axios.post('/products', formData)
+        .then((_: AxiosResponse) => {
+          navigate(productTableUrl);
+          useSuccessMessage('Creation was successful')
+        })
+        .catch((error: AxiosError) => useErrorMessage(error))
+    }
   };
 
   return (
@@ -106,6 +111,7 @@ export const ProductForm = () => {
               label="Product Description"
               register={register}
               errors={errors}
+              isRequired={true}
             />
             <Select
               attribute='unwindDirection'
@@ -113,6 +119,7 @@ export const ProductForm = () => {
               options={unwindDirections.map((direction) => ({ value: String(direction), displayName: String(direction) }))}
               register={register}
               errors={errors}
+              isRequired={true}
             />
             <Select
               attribute='ovOrEpm'
@@ -176,6 +183,7 @@ export const ProductForm = () => {
               label="Number of Colors"
               register={register}
               errors={errors}
+              isRequired={true}
             />
             <Select 
               attribute='die'
@@ -183,6 +191,7 @@ export const ProductForm = () => {
               options={dies}
               register={register}
               errors={errors}
+              isRequired={false}  /* TODO: Make this required */
             />
             <Input
               attribute='frameNumberAcross'
@@ -202,6 +211,7 @@ export const ProductForm = () => {
               options={materials}
               register={register}
               errors={errors}
+              isRequired={true}
             />
             <Select 
               attribute='secondaryMaterial'
@@ -223,6 +233,7 @@ export const ProductForm = () => {
               options={customers}
               register={register}
               errors={errors}
+              isRequired={true}
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

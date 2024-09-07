@@ -20,7 +20,7 @@ type Props<T extends FieldValues> = {
 }
 
 export const Select = <T extends FieldValues>(props: Props<T>) => {
-  const { attribute, label, errors, options, isRequired, register, isMultiSelect } = props;
+  const { attribute, label, errors, options, isRequired, register, isMultiSelect, defaultValue } = props;
 
   options.sort((a, b) => a.displayName?.localeCompare(b.displayName))  /* Sort all dropdowns alphabeticalically (My Best Random Idea ever!) */
 
@@ -28,9 +28,16 @@ export const Select = <T extends FieldValues>(props: Props<T>) => {
     <div>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
 
-      <select {...register(attribute, {required: isRequired ? "Please select an option" : undefined })} multiple={isMultiSelect ? true : false}>
+      <select {...register(attribute, { required: isRequired ? "Please select an option" : undefined })} multiple={isMultiSelect ? true : false}>
         <option value="">-- Select --</option>
-        {options && options.map((option: SelectOption, index: number) => (<option key={index} value={option.value}>{option.displayName}</option>))}
+        {options && options.map((option: SelectOption, index: number) => (
+          <option
+            key={index}
+            value={option.value}
+            selected={defaultValue === option.value ? true : false}
+          >{option.displayName}</option>
+        ))
+        }
       </select>
 
       <FormErrorMessage errors={errors} name={attribute} />

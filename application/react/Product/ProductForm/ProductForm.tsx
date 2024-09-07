@@ -82,14 +82,14 @@ export const ProductForm = () => {
   }, [])
 
   const onSubmit = (formData: ProductFormAttributes) => {
-    alert('foobar');
     if (isUpdateRequest) {
-      axios.patch(`/products/${mongooseId}`, formData)
-        .then((_) => {
-          navigate(productTableUrl)
-          useSuccessMessage('Update was successful')
-        })
-        .catch((error: AxiosError) => useErrorMessage(error));
+      alert('TODO: Implement updating product')
+      // axios.patch(`/products/${mongooseId}`, formData)
+      //   .then((_) => {
+      //     navigate(productTableUrl)
+      //     useSuccessMessage('Update was successful')
+      //   })
+      //   .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/products', formData)
         .then((_: AxiosResponse) => {

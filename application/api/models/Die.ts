@@ -107,8 +107,8 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    cost: {
-        type: Number,
+    cost: { 
+        type: Number, /* TODO (9-7-2024): Should $ attributes be a Number or String? */
         required: true,
         min: 0,
         get: convertPenniesToDollars,

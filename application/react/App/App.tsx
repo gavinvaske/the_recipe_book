@@ -29,6 +29,7 @@ import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
 import { ProductForm } from '../Product/ProductForm/ProductForm';
+import { ProductTable } from '../Product/ProductTable/ProductTable';
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ export function App() {
                   <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
                   <Route path='customer' element={<CustomerTable />} />
                   <Route path='material-order' element={<MaterialOrderTable />} />
+                  <Route path='product' element={<ProductTable />} />
                 </Route>
               </Route>
           </Route>

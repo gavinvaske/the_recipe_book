@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { unwindDirections } from '../enums/unwindDirectionsEnum.ts';
 import { finishTypes } from '../enums/finishTypesEnum.ts';
@@ -7,6 +6,9 @@ import { ovOrEpmOptions } from '../enums/ovOrEpmEnum.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
+
+mongoose.Schema.Types.String.set('trim', true);
+mongoose.Schema.Types.ObjectId.set('set', (val) => val === '' ? null : val);
 
 async function generateUniqueProductNumber(this: any) {
   await this.populate('customer');
@@ -120,13 +122,11 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Material',
     required: false,
-    set: (val) => val === '' ? null : val
   },
   finish: {
     type: Schema.Types.ObjectId,
     ref: 'Finish',
     required: false,
-    set: (val) => val === '' ? null : val
   },
   customer: {
     type: Schema.Types.ObjectId,

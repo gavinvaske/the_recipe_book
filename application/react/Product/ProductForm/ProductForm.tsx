@@ -203,7 +203,7 @@ export const ProductForm = () => {
               options={dies}
               register={register}
               errors={errors}
-              isRequired={false}  /* TODO: Make this required */
+              isRequired={true}
             />
             <Input
               attribute='frameNumberAcross'

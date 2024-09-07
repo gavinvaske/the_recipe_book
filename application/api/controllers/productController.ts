@@ -68,7 +68,7 @@ router.post('/', async (request, response) => {
     
     return response.status(CREATED_SUCCESSFULLY).send(savedProduct);
   } catch (error) {
-    console.error('Failed to create product', error);
+    console.error('Failed to create product', error.message);
 
     return response.status(BAD_REQUEST).send(error.message);
   }

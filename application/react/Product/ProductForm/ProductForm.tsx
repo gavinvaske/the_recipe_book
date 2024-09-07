@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { MongooseId } from '../../_types/typeAliases';
 import { unwindDirections } from '../../../api/enums/unwindDirectionsEnum';
 import { ovOrEpmOptions } from '../../../api/enums/ovOrEpmEnum';
-import { finishTypes } from '../../../api/enums/finishTypesEnum';
+import { defaultFinishType, finishTypes } from '../../../api/enums/finishTypesEnum';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { getMaterials } from '../../_queries/material';
@@ -16,6 +16,8 @@ import { getDies } from '../../_queries/die';
 import { getFinishes } from '../../_queries/finish';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { defaultUnwindDirection } from '../../../api/enums/unwindDirectionsEnum';
+import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -102,7 +104,7 @@ export const ProductForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Delivery Method</h1>
+          <h1>{isUpdateRequest ? 'Update' : 'Create'} Product</h1>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -120,6 +122,7 @@ export const ProductForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              defaultValue={`${defaultUnwindDirection}`}
             />
             <Select
               attribute='ovOrEpm'
@@ -127,6 +130,8 @@ export const ProductForm = () => {
               options={ovOrEpmOptions.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
+              defaultValue={defaultOvOrEpm}
+              isRequired={true}
             />
             <Input
               attribute='artNotes'
@@ -146,18 +151,24 @@ export const ProductForm = () => {
               options={finishTypes.map((finishType) => ({ value: finishType, displayName: finishType }))}
               register={register}
               errors={errors}
+              defaultValue={defaultFinishType}
+              isRequired={true}
             />
             <Input
               attribute='coreDiameter'
               label="Core Diameter"
               register={register}
               errors={errors}
+              defaultValue='3'
+              isRequired={true}
             />
             <Input
               attribute='labelsPerRoll'
-              label="Labels PerRoll"
+              label="Labels Per Roll"
               register={register}
               errors={errors}
+              defaultValue='1000'
+              isRequired={true}
             />
             <Input
               attribute='dieCuttingNotes'
@@ -177,6 +188,7 @@ export const ProductForm = () => {
               register={register}
               errors={errors}
               fieldType='checkbox'
+              defaultValue={'false'}
             />
             <Input
               attribute='numberOfColors'

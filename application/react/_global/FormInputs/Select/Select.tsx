@@ -5,7 +5,7 @@ import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
 
 export type SelectOption = {
   displayName: string,
-  value: string | number
+  value: string
 }
 
 type Props<T extends FieldValues> = {

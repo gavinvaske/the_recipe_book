@@ -15,7 +15,7 @@ describe('Product Model', () => {
     let productAttributes;
 
     beforeEach(() => {
-        productAttributes = testDataGenerator.mockData.BaseProduct()
+        productAttributes = testDataGenerator.mockData.BaseProduct();
     });
 
     it('should validate when attributes are defined correctly', () => {
@@ -141,7 +141,7 @@ describe('Product Model', () => {
     });
     
     describe('attribute: ovOrEpm', () => {
-        let ovOrEpmOptions, defaultOvOrEpmOption;
+        let ovOrEpmOptions;
 
         beforeEach(() => {
             ovOrEpmOptions = ['NO', 'OV', 'EPM'];
@@ -341,8 +341,6 @@ describe('Product Model', () => {
     });
 
     describe('attribute: coreDiameter', () => {
-        const DEFAULT_CORE_DIAMETER = 3;
-
         it('should be required', () => {
             delete productAttributes.coreDiameter;
             const product = new BaseProductModel(productAttributes);

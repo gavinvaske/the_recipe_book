@@ -107,7 +107,7 @@ export const ProductForm = () => {
           <h1>{isUpdateRequest ? 'Update' : 'Create'} Product</h1>
         </div>
         <div className='form-wrapper'>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} data-test='product-form'>
             <Input
               attribute='productDescription'
               label="Product Description"

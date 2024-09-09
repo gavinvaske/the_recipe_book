@@ -30,6 +30,7 @@ import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
 import { ProductForm } from '../Product/ProductForm/ProductForm';
 import { ProductTable } from '../Product/ProductTable/ProductTable';
+import { DieTable } from '../Die/DieTable/DieTable';
 
 const queryClient = new QueryClient();
 
@@ -76,6 +77,7 @@ export function App() {
                   <Route path='customer' element={<CustomerTable />} />
                   <Route path='material-order' element={<MaterialOrderTable />} />
                   <Route path='product' element={<ProductTable />} />
+                  <Route path='die' element={<DieTable />} />
                 </Route>
               </Route>
           </Route>

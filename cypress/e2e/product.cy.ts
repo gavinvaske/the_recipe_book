@@ -7,13 +7,13 @@ describe('Product Views', () => {
   });
 
   it('Should render the Product form', () => {
-      cy.visit(`${formUrlPrefix}/products`);
+      cy.visit(`${formUrlPrefix}/product`);
 
       cy.get('[data-test=product-form]').should('exist');
   });
 
   it('Should render the Product table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/products`);
+    cy.visit(`${tableUrlPrefix}/product`);
 
     cy.get('#product-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');

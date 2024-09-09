@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 const router = Router();
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { DieModel } from '../models/Die.ts';
+import { DieModel } from '../models/die.ts';
 import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 router.use(verifyBearerToken);

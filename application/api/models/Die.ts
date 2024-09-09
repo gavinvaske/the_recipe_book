@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { dieShapes } from '../enums/dieShapesEnum.ts';
@@ -47,7 +47,35 @@ function setDieStatus(newStatus) {
     return newStatus;
 }
 
-const schema = new Schema({
+export interface IDie extends SchemaTimestampsConfig, mongoose.Document {
+  shape: string,
+  sizeAcross: number,
+  sizeAround: number,
+  dieNumber: string,
+  numberAcross: number,
+  numberAround: number,
+  gear: number,
+  toolType: string,
+  notes: string,
+  cost: number,
+  vendor: string,
+  magCylinder: number,
+  cornerRadius: number,
+  topAndBottom: number,
+  leftAndRight: number,
+  spaceAcross: number,
+  spaceAround: number,
+  facestock: string,
+  liner: string,
+  specialType?: string,
+  serialNumber: string,
+  status: string,
+  quantity: number,
+  orderDate?: Date,
+  arrivalDate?: Date,
+}
+
+const schema = new Schema<IDie>({
     shape: {
         type: String,
         required: true,
@@ -165,8 +193,7 @@ const schema = new Schema({
         required: true
     },
     specialType: {
-        type: String,
-        required: false
+        type: String
     },
     serialNumber: {
         type: String,
@@ -179,23 +206,21 @@ const schema = new Schema({
         enum: [...dieStatuses],
         set: setDieStatus
     },
-    quantity: {
+    quantity: { // TODO @Gavin: Default to 1 via UI
         type: Number,
         validate : {
             validator : Number.isInteger,
             message: '{VALUE} is not an integer'
         },
-        default: 1,
-        min: 0
+        min: 0,
+        required: true,
     },
     orderDate: {
-        type: Date,
-        required: false
+        type: Date
     },
     arrivalDate: {
-        type: Date,
-        required: false
+        type: Date
     },
 }, { timestamps: true });
 
-export const DieModel = mongoose.model('Die', schema);
+export const DieModel = mongoose.model<IDie>('Die', schema);

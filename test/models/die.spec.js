@@ -752,13 +752,13 @@ describe('validation', () => {
     });
 
     describe('attribute: quantity', () => {
-        it('should default to 1 if attribute is not defined', () => {
-            const expectedQuantity = 1;
+        it('should be required', () => {
             delete dieAttributes.quantity;
-
             const die = new DieModel(dieAttributes);
+
+            const error = die.validateSync();
             
-            expect(die.quantity).toEqual(expectedQuantity);
+            expect(error).toBeDefined();
         });
 
         it('should fail if value is not an integer', () => {

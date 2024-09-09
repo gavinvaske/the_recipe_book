@@ -51,11 +51,13 @@ router.get('/:mongooseId', async (request: Request, response: Response) => {
   try {
     const product = await BaseProductModel.findById(request.params.mongooseId);
 
+    if (!product) throw new Error('Product not found');
+
     return response.json(product);
   } catch (error) {
-    console.error('Error searching for product: ', error);
+    console.error('Error fetching product: ', error.message);
     return response
-      .status(SERVER_ERROR)
+      .status(BAD_REQUEST)
       .send(error.message);
   }
 });

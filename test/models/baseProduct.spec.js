@@ -34,6 +34,16 @@ describe('Product Model', () => {
         expect(() => new BaseProductModel(productAttributes)).toThrow();
     });
 
+    it('should not have a validation error if non-required objectId attributes are set to empty string', () => {
+        productAttributes.secondaryMaterial = '';
+        productAttributes.finish = '';
+        const product = new BaseProductModel(productAttributes);
+
+        const error = product.validateSync();
+
+        expect(error).not.toBeDefined();
+    });
+
     describe('attribute: customer', () => {
         it('should be required', () => {
             delete productAttributes.customer;

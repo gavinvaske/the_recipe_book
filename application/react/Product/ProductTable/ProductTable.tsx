@@ -64,7 +64,7 @@ export const ProductTable = () => {
   const rows = table.getRowModel().rows;
 
   return (
-    <div className='page-wrapper credit-term-table'>
+    <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Products</h1>

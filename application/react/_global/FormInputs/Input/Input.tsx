@@ -33,7 +33,6 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
         {...rest}
         type={fieldType ? fieldType : 'text'}
         placeholder={placeholder}
-        value={defaultValue}
         ref={(e) => {   // solution from https://stackoverflow.com/a/71497701
           ref(e)
           if (customRef) {
@@ -41,7 +40,7 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
           }
         }}
         {...dataAttributes}
-        { ...(fieldType === 'checkbox'? { defaultChecked: (defaultValue == 'true' ? true : false) } : {}) }
+        { ...(fieldType === 'checkbox'? { defaultChecked: (defaultValue == 'true' ? true : false) } : {defaultValue: defaultValue}) }
       />
       <FormErrorMessage errors={errors} name={attribute} />
     </div>

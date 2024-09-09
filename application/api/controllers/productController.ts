@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { upload } from '../middleware/upload.ts';
@@ -46,7 +46,7 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
     }
 });
 
-router.get('/:mongooseId', async (request, response) => {
+router.get('/:mongooseId', async (request: Request, response: Response) => {
   try {
     const product = await BaseProductModel.findById(request.params.mongooseId);
 
@@ -59,7 +59,7 @@ router.get('/:mongooseId', async (request, response) => {
   }
 });
 
-router.post('/', async (request, response) => {
+router.post('/', async (request: Request, response: Response) => {
   try {
     const savedProduct = await BaseProductModel.create({
       ...request.body,
@@ -73,5 +73,21 @@ router.post('/', async (request, response) => {
     return response.status(BAD_REQUEST).send(error.message);
   }
 });
+
+router.patch('/:mongooseId', async (request: Request, response: Response) => {
+  try {
+    const baseProduct = await BaseProductModel.findOneAndUpdate(
+      { _id: request.params.mongooseId }, 
+      { $set: request.body },
+      { runValidators: true, new: true }
+  ).exec();
+
+  return response.json(baseProduct);
+  } catch(error) {
+    console.log('Failed to update product: ', error.message);
+
+    return response.status(BAD_REQUEST).send(error.message);
+  }
+})
 
 export default router;

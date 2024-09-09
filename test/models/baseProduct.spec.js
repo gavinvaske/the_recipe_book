@@ -155,7 +155,6 @@ describe('Product Model', () => {
 
         beforeEach(() => {
             ovOrEpmOptions = ['NO', 'OV', 'EPM'];
-            defaultOvOrEpmOption = 'NO';
         });
 
         it('should be required', () => {

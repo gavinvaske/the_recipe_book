@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import * as databaseService from '../../application/api/services/databaseService';
 import { CustomerModel } from '../../application/api/models/customer.ts';
 import { MaterialModel } from '../../application/api/models/material.ts';
-import { defaultUnwindDirection, unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
-import { finishTypes, defaultFinishType } from '../../application/api/enums/finishTypesEnum';
+import { unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
+import { finishTypes } from '../../application/api/enums/finishTypesEnum';
 import { DieModel } from '../../application/api/models/Die.ts';
 import * as testDataGenerator from '../testDataGenerator';
 
@@ -15,14 +15,7 @@ describe('Product Model', () => {
     let productAttributes;
 
     beforeEach(() => {
-        productAttributes = {
-            customer: new mongoose.Types.ObjectId(),
-            die: new mongoose.Types.ObjectId(),
-            primaryMaterial: new mongoose.Types.ObjectId(),
-            finish: new mongoose.Types.ObjectId(),
-            author: new mongoose.Types.ObjectId(),
-            ...testDataGenerator.mockData.SharedBaseProductAttributes()
-        };
+        productAttributes = testDataGenerator.mockData.BaseProduct()
     });
 
     it('should validate when attributes are defined correctly', () => {
@@ -120,14 +113,13 @@ describe('Product Model', () => {
     });
 
     describe('attribute: unwindDirection', () => {
-        it('should have a specific default value if not defined', () => {
+        it('should be required', () => {
             delete productAttributes.unwindDirection;
             const product = new BaseProductModel(productAttributes);
             
             const error = product.validateSync();
             
-            expect(error).not.toBeDefined();
-            expect(product.unwindDirection).toEqual(defaultUnwindDirection);
+            expect(error).toBeDefined();
         });
 
         it('should fail if attribute is not a valid unwindDirection value', () => {
@@ -156,12 +148,13 @@ describe('Product Model', () => {
             defaultOvOrEpmOption = 'NO';
         });
 
-        it('should have a specific default value if not defined', () => {
+        it('should be required', () => {
             delete productAttributes.ovOrEpm;
-            
             const product = new BaseProductModel(productAttributes);
+
+            const error = product.validateSync();
             
-            expect(product.ovOrEpm).toEqual(defaultOvOrEpmOption);
+            expect(error).toBeDefined();
         });
 
         it('should fail if attribute is not a valid ovOrEpm value', () => {
@@ -184,7 +177,7 @@ describe('Product Model', () => {
             expect(error).not.toBeDefined();
         });
 
-        it('should convert attribute to upper case', () => {
+        it('should convert attribute to uppercase', () => {
             const lowerCaseOvOrEpmOption = chance.pickone(ovOrEpmOptions).toLowerCase();
             productAttributes.ovOrEpm = lowerCaseOvOrEpmOption;
             const product = new BaseProductModel(productAttributes);
@@ -317,12 +310,13 @@ describe('Product Model', () => {
     });
 
     describe('attribute: finishType', () => {
-        it('should have a specific default value if not defined', () => {
+        it('should be required', () => {
             delete productAttributes.finishType;
-            
             const product = new BaseProductModel(productAttributes);
+
+            const error = product.validateSync();
             
-            expect(product.finishType).toEqual(defaultFinishType);
+            expect(error).toBeDefined();
         });
 
         it('should fail if attribute is not a valid finishType value', () => {
@@ -349,12 +343,13 @@ describe('Product Model', () => {
     describe('attribute: coreDiameter', () => {
         const DEFAULT_CORE_DIAMETER = 3;
 
-        it('should have a specific default value if not defined', () => {
+        it('should be required', () => {
             delete productAttributes.coreDiameter;
-            
             const product = new BaseProductModel(productAttributes);
+
+            const error = product.validateSync();
             
-            expect(product.coreDiameter).toEqual(DEFAULT_CORE_DIAMETER);
+            expect(error).toBeDefined();
         });
 
         it('should pass validation if attribute is a valid number', () => {
@@ -377,14 +372,13 @@ describe('Product Model', () => {
     });
 
     describe('attribute: labelsPerRoll', () => {
-        const DEFAULT_LABELS_PER_ROLL = 1000;
-
-        it('should have a specific default value if not defined', () => {
+        it('should be required', () => {
             delete productAttributes.labelsPerRoll;
-            
             const product = new BaseProductModel(productAttributes);
+
+            const error = product.validateSync();
             
-            expect(product.labelsPerRoll).toEqual(DEFAULT_LABELS_PER_ROLL);
+            expect(error).toBeDefined();
         });
 
         it('should fail validation if attribute is negative', () => {
@@ -479,13 +473,13 @@ describe('Product Model', () => {
     });
 
     describe('attribute: spotPlate', () => {
-        it('should default to FALSE', () => {
-            const expectedDefaultValue = false;
+        it('should be required', () => {
             delete productAttributes.spotPlate;
-
             const product = new BaseProductModel(productAttributes);
 
-            expect(product.spotPlate).toBe(expectedDefaultValue);
+            const error = product.validateSync();
+
+            expect(error).toBeDefined();
         });
 
         it('should use defined value instead of default value', () => {

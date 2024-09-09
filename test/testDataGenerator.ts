@@ -10,6 +10,7 @@ import { dieStatuses } from '../application/api/enums/dieStatusesEnum.ts';
 import { unwindDirections } from '../application/api/enums/unwindDirectionsEnum.ts';
 import { finishTypes } from '../application/api/enums/finishTypesEnum.ts';
 import { AVAILABLE_AUTH_ROLES } from '../application/api/enums/authRolesEnum.ts';
+import { ovOrEpmOptions } from '../application/api/enums/ovOrEpmEnum.ts';
 
 export const mockData = {
     Die: getDie,
@@ -18,7 +19,7 @@ export const mockData = {
     Customer: getCustomer,
     Contact: getContact,
     User: getUser,
-    SharedBaseProductAttributes: getSharedBaseProduct,
+    BaseProduct: getBaseProduct,
     Address: getAddress
 };
 
@@ -126,15 +127,22 @@ function getUser() {
     };
 }
 
-function getSharedBaseProduct() {
-    return {
-        productDescription: chance.string(),
-        unwindDirection: chance.pickone(unwindDirections),
-        artNotes: chance.string(),
-        finishType: chance.pickone(finishTypes),
-        labelsPerRoll: chance.integer({ min: 100, max: 1000 }),
-        numberOfColors: chance.d12()
-    };
+function getBaseProduct() {
+  return {
+    customer: new mongoose.Types.ObjectId(),
+    die: new mongoose.Types.ObjectId(),
+    primaryMaterial: new mongoose.Types.ObjectId(),
+    finish: new mongoose.Types.ObjectId(),
+    author: new mongoose.Types.ObjectId(),
+    productDescription: chance.string(),
+    unwindDirection: chance.pickone(unwindDirections),
+    ovOrEpm: chance.pickone(ovOrEpmOptions),
+    finishType: chance.pickone(finishTypes),
+    coreDiameter: chance.d10(),
+    labelsPerRoll: chance.integer({ min: 100, max: 1000 }),
+    spotPlate: chance.bool(),
+    numberOfColors: chance.d12()
+  }
 }
 
 function getAddress() {

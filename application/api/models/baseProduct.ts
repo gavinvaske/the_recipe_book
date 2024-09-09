@@ -79,8 +79,7 @@ const productSchema = new Schema<IBaseProduct>({
     type: String
   },
   pressNotes: {
-    type: String,
-    required: false
+    type: String
   },
   finishType: {
     type: String,

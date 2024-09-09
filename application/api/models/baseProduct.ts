@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 const Schema = mongoose.Schema;
 import { unwindDirections } from '../enums/unwindDirectionsEnum.ts';
 import { finishTypes } from '../enums/finishTypesEnum.ts';
@@ -31,7 +31,31 @@ async function setDefaultOverun(this: any) {
   this.overun = this.customer.overun;
 }
 
-const productSchema = new Schema({
+export interface IBaseProduct extends SchemaTimestampsConfig {
+  productNumber?: string,
+  productDescription: string,
+  unwindDirection: number,
+  ovOrEpm: string,
+  artNotes?: string,
+  pressNotes?: string,
+  finishType: string,
+  coreDiameter: number,
+  labelsPerRoll: number,
+  dieCuttingNotes?: string,
+  overun?: number,
+  spotPlate: boolean,
+  numberOfColors: number,
+  die: mongoose.Schema.Types.ObjectId,
+  frameNumberAcross?: number,
+  frameNumberAround?: number,
+  primaryMaterial: mongoose.Schema.Types.ObjectId,
+  secondaryMaterial?: mongoose.Schema.Types.ObjectId,
+  finish?: mongoose.Schema.Types.ObjectId,
+  customer: mongoose.Schema.Types.ObjectId,
+  author: mongoose.Schema.Types.ObjectId
+} 
+
+const productSchema = new Schema<IBaseProduct>({
   productNumber: {
     type: String,
     unique: true
@@ -146,5 +170,5 @@ const productSchema = new Schema({
 productSchema.pre('save', generateUniqueProductNumber);
 productSchema.pre('save', setDefaultOverun);
 
-export const BaseProductModel = mongoose.model('BaseProduct', productSchema);
+export const BaseProductModel = mongoose.model<IBaseProduct>('BaseProduct', productSchema);
 

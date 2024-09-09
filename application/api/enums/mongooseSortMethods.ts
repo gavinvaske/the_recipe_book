@@ -1,2 +1,2 @@
-export const ascending = 1;
-export const descending = -1;
+export const ASCENDING = 1;
+export const DESCENDING = -1;

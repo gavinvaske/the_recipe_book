@@ -31,7 +31,7 @@ async function setDefaultOverun(this: any) {
   this.overun = this.customer.overun;
 }
 
-export interface IBaseProduct extends SchemaTimestampsConfig {
+export interface IBaseProduct extends SchemaTimestampsConfig, mongoose.Document {
   productNumber?: string,
   productDescription: string,
   unwindDirection: number,

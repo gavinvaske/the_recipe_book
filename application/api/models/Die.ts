@@ -107,7 +107,7 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    cost: {
+    cost: { 
         type: Number,
         required: true,
         min: 0,

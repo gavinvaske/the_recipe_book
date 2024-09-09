@@ -6,7 +6,7 @@ import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form
 type Props<T extends FieldValues> = {
   attribute: Path<T>
   label: string
-  register: UseFormRegister<T>
+  register: UseFormRegister<any>
   errors: FieldErrors,
   placeholder?: string
   defaultValue?: string
@@ -33,7 +33,6 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
         {...rest}
         type={fieldType ? fieldType : 'text'}
         placeholder={placeholder}
-        value={defaultValue}
         ref={(e) => {   // solution from https://stackoverflow.com/a/71497701
           ref(e)
           if (customRef) {
@@ -41,6 +40,7 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
           }
         }}
         {...dataAttributes}
+        { ...(fieldType === 'checkbox'? { defaultChecked: (defaultValue == 'true' ? true : false) } : {defaultValue: defaultValue}) }
       />
       <FormErrorMessage errors={errors} name={attribute} />
     </div>

@@ -28,6 +28,8 @@ import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
+import { ProductForm } from '../Product/ProductForm/ProductForm';
+import { ProductTable } from '../Product/ProductTable/ProductTable';
 
 const queryClient = new QueryClient();
 
@@ -62,6 +64,7 @@ export function App() {
                   <Route path='material/:mongooseId?' element={<MaterialForm />} />
                   <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
                   <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
+                  <Route path='product/:mongooseId?' element={<ProductForm />} />
                 </Route>
 
                 <Route path='tables'>
@@ -72,6 +75,7 @@ export function App() {
                   <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
                   <Route path='customer' element={<CustomerTable />} />
                   <Route path='material-order' element={<MaterialOrderTable />} />
+                  <Route path='product' element={<ProductTable />} />
                 </Route>
               </Route>
           </Route>

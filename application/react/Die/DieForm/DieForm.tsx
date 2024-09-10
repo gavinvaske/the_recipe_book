@@ -8,6 +8,12 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { getOneDie } from '../../_queries/die';
 import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
+import { Select } from '../../_global/FormInputs/Select/Select';
+import { dieShapes } from '../../../api/enums/dieShapesEnum';
+import { toolTypes } from '../../../api/enums/toolTypesEnum';
+import { dieVendors } from '../../../api/enums/dieVendorsEnum';
+import { dieMagCylinders } from '../../../api/enums/dieMagCylindersEnum';
+import { dieStatuses } from '../../../api/enums/dieStatusesEnum';
 
 const dieTableUrl = '/react-ui/tables/die'
 
@@ -94,9 +100,10 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Input
+            <Select
               attribute='shape'
-              label="Shape"
+              label='Shape'
+              options={dieShapes.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
@@ -129,9 +136,10 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Input
+            <Select
               attribute='toolType'
-              label="Tool Type"
+              label='Tool Type'
+              options={toolTypes.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
@@ -150,16 +158,18 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Input
+            <Select
               attribute='vendor'
-              label="Vendor"
+              label='Vendor'
+              options={dieVendors.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
             />
-            <Input
+            <Select
               attribute='magCylinder'
-              label="Magnetic Cylinder"
+              label='Magnetic Cylinder'
+              options={dieMagCylinders.map((option) => ({ value: String(option), displayName: String(option) }))}
               register={register}
               errors={errors}
               isRequired={true}
@@ -227,9 +237,10 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Input
+            <Select
               attribute='status'
-              label="Status"
+              label='Status'
+              options={dieStatuses.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}

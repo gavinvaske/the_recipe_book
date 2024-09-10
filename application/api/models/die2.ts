@@ -206,7 +206,7 @@ const schema = new Schema<IDie>({
         enum: [...dieStatuses],
         set: setDieStatus
     },
-    quantity: { // TODO @Gavin: Default to 1 via UI
+    quantity: {
         type: Number,
         validate : {
             validator : Number.isInteger,

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 mongoose.set('strictQuery', true);
+/* Runs get methods when querying documents (hint: like converting pennies to dollars on queried docs): { type: foo, get: convertPenniesToDollars() } methods  */
+mongoose.set('toJSON', { getters: true });
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 

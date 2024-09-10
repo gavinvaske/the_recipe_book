@@ -412,6 +412,20 @@ describe('validation', () => {
             
             expect(die.cost).toEqual(roundedCost);
         });
+
+        it('should handle .toJSON method', () => {
+          /* 
+            Note: this is a very important test case. 
+            By default, Mongoose does not run GETTERS on each attribute when a document is converted toJSON. 
+            A global config was setup in databaseService.ts that ensures all getters are ran, and this test case will fail if that config is ever changed 
+          */
+          const giggityDollarAmount = 1.69;
+          dieAttributes.cost = giggityDollarAmount;
+          const die = new DieModel(dieAttributes);
+          const dieAsJson = die.toJSON();
+          
+          expect(dieAsJson.cost).toEqual(giggityDollarAmount);
+      });
     });
 
     describe('attribute: vendor', () => {

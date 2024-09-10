@@ -19,7 +19,7 @@ export const getDayMonthYear = (utcDate: Date | undefined): string => {
  * @param {Date} date - The Date object to be converted to a formatted string.
  * @returns {string} - A string containing the year, month, and day in the format 'YYYY-MM-DD'.
  */
-export const convertDateStringToFormInputDateString = (dateAsString: string): string => {
+export const convertDateStringToFormInputDateString = (dateAsString: string | undefined | null): string => {
   if (!dateAsString) {
     return ''
   }

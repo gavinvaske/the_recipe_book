@@ -18,7 +18,7 @@ export const DieRowActions = (props: Props) => {
   const queryClient = useQueryClient()
 
   const onEditClicked = (mongooseObjectId) => {
-    alert('TODO: Implement edit functionality')
+    navigate(`/react-ui/forms/die/${mongooseObjectId}`)
   }
   
   const onDeleteClicked = (mongooseObjectId) => {

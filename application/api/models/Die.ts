@@ -48,10 +48,10 @@ function setDieStatus(newStatus) {
 }
 
 export interface IDie extends SchemaTimestampsConfig, mongoose.Document {
+  dieNumber: string,
   shape: string,
   sizeAcross: number,
   sizeAround: number,
-  dieNumber: string,
   numberAcross: number,
   numberAround: number,
   gear: number,
@@ -72,10 +72,16 @@ export interface IDie extends SchemaTimestampsConfig, mongoose.Document {
   status: string,
   quantity: number,
   orderDate?: Date,
-  arrivalDate?: Date,
+  arrivalDate?: Date
 }
 
 const schema = new Schema<IDie>({
+    dieNumber: {
+      type: String,
+      required: true,
+      validate: [validateDieNumberFormat, 'The provided dieNumber "{VALUE}" must be in the following format: characters followed a dash followed by numbers'],
+      uppercase: true
+    },
     shape: {
         type: String,
         required: true,
@@ -91,12 +97,6 @@ const schema = new Schema<IDie>({
         type: Number,
         required: true,
         min: 0
-    },
-    dieNumber: {
-        type: String,
-        required: true,
-        validate: [validateDieNumberFormat, 'The provided dieNumber "{VALUE}" must be in the following format: characters followed a dash followed by numbers'],
-        uppercase: true
     },
     numberAcross: {
         type: Number,

@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { DieModel } from '../models/die.ts';
-import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
 
 router.use(verifyBearerToken);
 
@@ -25,6 +25,36 @@ router.post('/', async (request: Request, response: Response) => {
   } catch (error) {
     console.error('Failed to create die:', error.message);
     return response.status(SERVER_ERROR).send(error.message);
+  }
+});
+
+router.patch('/:mongooseId', async (request: Request, response: Response) => {
+  try {
+    const updatedDie = await DieModel.findByIdAndUpdate(
+      { _id: request.params.mongooseId },
+      { $set: request.body },
+      { runValidators: true, new: true }
+    ).exec();
+    
+    return response.json(updatedDie);
+  } catch (error) {
+    console.error('Failed to update die:', error.message);
+    return response.status(SERVER_ERROR).send(error.message);
+  }
+})
+
+router.get('/:mongooseId', async (request: Request, response: Response) => {
+  try {
+    const die = await DieModel.findById(request.params.mongooseId);
+
+    if (!die) throw new Error('Die not found');
+
+    return response.json(die);
+  } catch (error) {
+    console.error('Error fetching die: ', error.message);
+    return response
+      .status(BAD_REQUEST)
+      .send(error.message);
   }
 });
 

@@ -82,7 +82,6 @@ export const ProductForm = () => {
   }, [])
 
   const onSubmit = (formData: ProductFormAttributes) => {
-
     if (isUpdateRequest) {
       axios.patch(`/products/${mongooseId}`, formData)
         .then((_) => {

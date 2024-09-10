@@ -203,20 +203,6 @@ export const DieForm = () => {
               isRequired={true}
             />
             <Input
-              attribute='spaceAcross'
-              label="Space Across"
-              register={register}
-              errors={errors}
-              isRequired={true}
-            />
-            <Input
-              attribute='spaceAround'
-              label="Space Around"
-              register={register}
-              errors={errors}
-              isRequired={true}
-            />
-            <Input
               attribute='facestock'
               label="Facestock"
               register={register}
@@ -259,22 +245,6 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
               defaultValue='1'
-            />
-            <Input
-              attribute='orderDate'
-              label="Order Date"
-              register={register}
-              errors={errors}
-              isRequired={false}
-              fieldType='date'
-            />
-            <Input
-              attribute='arrivalDate'
-              label="Arrival Date"
-              register={register}
-              errors={errors}
-              isRequired={false}
-              fieldType='date'
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

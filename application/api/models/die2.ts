@@ -168,7 +168,6 @@ const schema = new Schema<IDie>({
     },
     spaceAcross: { // also known as "Col Space"
         type: Number,
-        required: true,
         set: function (spaceAcross) {
             this.topAndBottom = spaceAcross / 2;
             return spaceAcross;
@@ -177,7 +176,6 @@ const schema = new Schema<IDie>({
     }, 
     spaceAround: { // also known as "Row Space"
         type: Number,
-        required: true,
         set: function (spaceAround) {
             this.leftAndRight = spaceAround / 2;
             return spaceAround;

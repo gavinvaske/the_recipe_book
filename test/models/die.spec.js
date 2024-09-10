@@ -542,15 +542,6 @@ describe('validation', () => {
         });
     });
     describe('attribute: spaceAcross', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete dieAttributes.spaceAcross;
-            const die = new DieModel(dieAttributes);
-            
-            const error = die.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
         it('should be a number', () => {
             dieAttributes.spaceAcross = String(chance.floating());
             const die = new DieModel(dieAttributes);
@@ -580,15 +571,6 @@ describe('validation', () => {
     });
 
     describe('attribute: spaceAround', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete dieAttributes.spaceAround;
-            const die = new DieModel(dieAttributes);
-
-            const error = die.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
         it('should be a number', () => {
             dieAttributes.spaceAround = String(chance.floating());
             const die = new DieModel(dieAttributes);

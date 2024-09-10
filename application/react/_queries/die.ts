@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IDie } from '../../api/models/die';
+import { IDie } from '../../api/models/die2';
 import { MongooseId } from '../_types/typeAliases';
 
 export const getDies = async (): Promise<IDie[]> => {

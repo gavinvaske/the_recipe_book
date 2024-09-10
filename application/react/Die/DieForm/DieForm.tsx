@@ -130,6 +130,13 @@ export const DieForm = () => {
               isRequired={true}
             />
             <Input
+              attribute='numberAround'
+              label="Number Around"
+              register={register}
+              errors={errors}
+              isRequired={true}
+            />
+            <Input
               attribute='gear'
               label="Gear"
               register={register}

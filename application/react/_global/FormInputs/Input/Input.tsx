@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Ref } from 'react';
 import './Input'
 import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
 import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
@@ -6,7 +6,7 @@ import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form
 type Props<T extends FieldValues> = {
   attribute: Path<T>
   label: string
-  register: UseFormRegister<any>
+  register: UseFormRegister<T>
   errors: FieldErrors,
   placeholder?: string
   defaultValue?: string

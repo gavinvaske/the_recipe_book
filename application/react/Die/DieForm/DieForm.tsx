@@ -52,16 +52,12 @@ export const DieForm = () => {
       cornerRadius: die.cornerRadius,
       topAndBottom: die.topAndBottom,
       leftAndRight: die.leftAndRight,
-      spaceAcross: die.spaceAcross,
-      spaceAround: die.spaceAround,
       facestock: die.facestock,
       liner: die.liner,
       specialType: die.specialType,
       serialNumber: die.serialNumber,
       status: die.status,
-      quantity: die.quantity,
-      orderDate: convertDateStringToFormInputDateString(die.orderDate as unknown as string),
-      arrivalDate: convertDateStringToFormInputDateString(die.arrivalDate as unknown as string)
+      quantity: die.quantity
     }
 
     reset(formValues) // Loads data into the form and forces a rerender
@@ -270,14 +266,10 @@ type DieFormAttributes = {
   cornerRadius: number;
   topAndBottom: number;
   leftAndRight: number;
-  spaceAcross: number;
-  spaceAround: number;
   facestock: string;
   liner: string;
   specialType?: string;
   serialNumber: string;
   status: string;
   quantity: number;
-  orderDate?: string;
-  arrivalDate?: string;
 }

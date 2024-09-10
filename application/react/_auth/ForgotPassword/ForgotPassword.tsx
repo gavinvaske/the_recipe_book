@@ -8,7 +8,7 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useNavigate } from 'react-router-dom';
 
 export const ForgotPassword = () => {
-  const resetPasswordFieldRef = useRef(null);
+  const resetPasswordFieldRef = useRef<HTMLInputElement>(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
 

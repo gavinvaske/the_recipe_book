@@ -60,7 +60,7 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false)
   const [isAdvancedDropdownDisplayed, setIsAdvancedDropdownDisplayed] = useState(false)
   const [isSearchBarActive, setIsSearchBarActive] = useState(false)
-  const ref = useRef(null)
+  const ref = useRef<HTMLInputElement>(null)
 
   function toggleQuickFilterMenu() {
     setIsAdvancedDropdownDisplayed(false)

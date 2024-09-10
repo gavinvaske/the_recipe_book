@@ -18,8 +18,13 @@ type Props<T extends FieldValues> = {
   dataAttributes?: { [key: `data-${string}`]: string }
 }
 
+/* This "solution" was found here to solve hard-to-fix typescript errors resulting from usage of forwardRef(..): https://stackoverflow.com/a/73795494 */
+interface WithForwardRefType extends React.FC<Props<FieldValues>>  {
+  <T extends FieldValues>(props: Props<T>): ReturnType<React.FC<Props<T>>>
+}
+
 /* @Gavin More client side validation rules can be configured in react-hook-form. see https://react-hook-form.com/get-started#Applyvalidation */
-export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customRef: any) => {
+export const Input: WithForwardRefType = forwardRef((props, customRef) => {
   const { placeholder, errors, attribute, defaultValue, label, register, isRequired, fieldType, dataAttributes} = props
 
   const { ref, ...rest } = register(attribute,

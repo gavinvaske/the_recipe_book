@@ -1,7 +1,7 @@
 import React from 'react';
 import './DieTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { IDie } from '../../../api/models/die2';
+import { IDie } from '../../../api/models/die';
 import { DieRowActions } from './DieRowActions/DieRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getDies } from '../../_queries/die';

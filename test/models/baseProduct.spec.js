@@ -6,7 +6,7 @@ import { CustomerModel } from '../../application/api/models/customer.ts';
 import { MaterialModel } from '../../application/api/models/material.ts';
 import { unwindDirections } from '../../application/api/enums/unwindDirectionsEnum';
 import { finishTypes } from '../../application/api/enums/finishTypesEnum';
-import { DieModel } from '../../application/api/models/die2.ts';
+import { DieModel } from '../../application/api/models/die.ts';
 import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();

@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { DieModel } from '../models/die2.ts';
-import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 
 router.use(verifyBearerToken);
 
@@ -39,7 +39,7 @@ router.patch('/:mongooseId', async (request: Request, response: Response) => {
     return response.json(updatedDie);
   } catch (error) {
     console.error('Failed to update die:', error.message);
-    return response.status(SERVER_ERROR).send(error.message);
+    return response.status(BAD_REQUEST).send(error.message);
   }
 })
 
@@ -52,9 +52,21 @@ router.get('/:mongooseId', async (request: Request, response: Response) => {
     return response.json(die);
   } catch (error) {
     console.error('Error fetching die: ', error.message);
-    return response
-      .status(BAD_REQUEST)
-      .send(error.message);
+    return response.status(BAD_REQUEST).send(error.message);
+  }
+});
+
+router.delete('/:mongooseId', async (request: Request, response: Response) => {
+  try {
+    const deletedDie = await DieModel.findByIdAndDelete(request.params.mongooseId).exec();
+
+    if (!deletedDie) throw new Error('Die not found')
+
+    return response.status(SUCCESS).json(deletedDie);
+  } catch (error) {
+    console.error('Failed to delete die: ', error);
+
+    return response.status(SERVER_ERROR).send(error.message);
   }
 });
 

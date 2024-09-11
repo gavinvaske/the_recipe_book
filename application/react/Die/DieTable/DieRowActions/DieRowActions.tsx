@@ -5,6 +5,10 @@ import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { IDie } from '../../../../api/models/die2'
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { GET_DIES_QUERY_KEY } from '../DieTable';
 
 type Props = {
   row: Row<IDie>
@@ -22,7 +26,13 @@ export const DieRowActions = (props: Props) => {
   }
   
   const onDeleteClicked = (mongooseObjectId) => {
-    alert('TODO: Implement delete functionality')
+    alert('@TODO Storm: Add a confirmation modal before deletion?')
+    axios.delete(`/dies/${mongooseObjectId}`)
+      .then((_ : AxiosResponse) => {
+        queryClient.invalidateQueries({ queryKey: [GET_DIES_QUERY_KEY]})
+        useSuccessMessage('Deletion was successful')
+      })
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   return (

@@ -56,6 +56,8 @@ export const Profile = () => {
         acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}
       ></UploadProfilePicture>
 
+      <div style={{backgroundColor: 'red'}} className={'modal2'}>FOOOBAR THIS IS SOMETHING TO CLICK</div>
+
       <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
         <Input
           attribute='email'

@@ -1,10 +1,21 @@
-import mongoose from 'mongoose';
-import { addressSchema } from './address.ts';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import { addressSchema, IAddress } from './address.ts';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
 
-export const contactSchema = new Schema({
+export interface IContact extends SchemaTimestampsConfig, mongoose.Document {
+  fullName: string;
+  phoneNumber?: string;
+  phoneExtension?: number;
+  email?: string;
+  contactStatus: string;
+  notes?: string;
+  position?: string;
+  location?: IAddress;
+}
+
+export const contactSchema = new Schema<IContact>({
     fullName: {
         type: String,
         uppercase: true,

@@ -32,6 +32,7 @@ import { ProductForm } from '../Product/ProductForm/ProductForm';
 import { ProductTable } from '../Product/ProductTable/ProductTable';
 import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
+import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,10 @@ export function App() {
               <Route element={<TopNavbarLayout />}>
                 <Route path='inventory' element={<Inventory />}></Route>
                 <Route path='profile' element={<Profile />} />
+
+                <Route path='views'>
+                  <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+                </Route>
 
                 <Route path='forms'>
                   <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />

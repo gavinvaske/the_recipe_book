@@ -4,7 +4,7 @@ import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { IDie } from '../../../../api/models/die2'
+import { IDie } from '../../../../api/models/die'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';

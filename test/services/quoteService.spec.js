@@ -10,12 +10,12 @@ import * as databaseService from '../../application/api/services/databaseService
 
 const chance = Chance();
 
-jest.mock('../../application/api/models/die2.ts');
+jest.mock('../../application/api/models/die.ts');
 jest.mock('../../application/api/models/material.ts');
 jest.mock('../../application/api/models/finish.ts');
 jest.mock('../../application/api/models/baseProduct.ts');
 
-import { DieModel } from '../../application/api/models/die2.ts';
+import { DieModel } from '../../application/api/models/die.ts';
 import { MaterialModel } from '../../application/api/models/material.ts';
 import { FinishModel } from '../../application/api/models/finish.ts';
 import { BaseProductModel } from '../../application/api/models/baseProduct.ts';

@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import * as constants from '../enums/constantsEnum.ts';
-import { DieModel } from '../models/Die.ts';
+import { DieModel } from '../models/die2.ts';
 import { MaterialModel } from '../models/material.ts';
 import { BaseProductModel } from '../models/baseProduct.ts';
 import { FinishModel } from '../models/finish.ts';

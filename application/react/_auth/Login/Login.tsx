@@ -15,7 +15,7 @@ export const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/react-ui/profile";
 
-  const userRef = useRef(null);
+  const userRef = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 

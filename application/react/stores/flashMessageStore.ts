@@ -37,7 +37,7 @@ class FlashMessageStore {
 
   addErrorMessage(message: string): void {
     const errorMessage: ErrorFlashMessage = {
-      message: message || 'Undefined Error Message',
+      message: message || 'Uh, oh no! Something went wrong.',
       uuid: uuidv4(),
       type: 'ERROR'
     }

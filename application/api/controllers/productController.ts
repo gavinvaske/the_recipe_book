@@ -97,6 +97,8 @@ router.delete('/:mongooseId', async (request: Request, response: Response) => {
   try {
     const deletedProduct = await BaseProductModel.findByIdAndDelete(request.params.mongooseId).exec();
 
+    if (!deletedProduct) throw new Error('Product not found')
+
     return response.status(SUCCESS).json(deletedProduct);
   } catch (error) {
     console.error('Failed to delete product: ', error);

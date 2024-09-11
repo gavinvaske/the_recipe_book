@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { dieShapes } from '../enums/dieShapesEnum.ts';
@@ -47,7 +47,41 @@ function setDieStatus(newStatus) {
     return newStatus;
 }
 
-const schema = new Schema({
+export interface IDie extends SchemaTimestampsConfig, mongoose.Document {
+  dieNumber: string,
+  shape: string,
+  sizeAcross: number,
+  sizeAround: number,
+  numberAcross: number,
+  numberAround: number,
+  gear: number,
+  toolType: string,
+  notes: string,
+  cost: number,
+  vendor: string,
+  magCylinder: number,
+  cornerRadius: number,
+  topAndBottom: number,
+  leftAndRight: number,
+  spaceAcross: number,
+  spaceAround: number,
+  facestock: string,
+  liner: string,
+  specialType?: string,
+  serialNumber: string,
+  status: string,
+  quantity: number,
+  orderDate?: Date,
+  arrivalDate?: Date
+}
+
+const schema = new Schema<IDie>({
+    dieNumber: {
+      type: String,
+      required: true,
+      validate: [validateDieNumberFormat, 'The provided dieNumber "{VALUE}" must be in the following format: characters followed a dash followed by numbers'],
+      uppercase: true
+    },
     shape: {
         type: String,
         required: true,
@@ -63,12 +97,6 @@ const schema = new Schema({
         type: Number,
         required: true,
         min: 0
-    },
-    dieNumber: {
-        type: String,
-        required: true,
-        validate: [validateDieNumberFormat, 'The provided dieNumber "{VALUE}" must be in the following format: characters followed a dash followed by numbers'],
-        uppercase: true
     },
     numberAcross: {
         type: Number,
@@ -140,7 +168,6 @@ const schema = new Schema({
     },
     spaceAcross: { // also known as "Col Space"
         type: Number,
-        required: true,
         set: function (spaceAcross) {
             this.topAndBottom = spaceAcross / 2;
             return spaceAcross;
@@ -149,7 +176,6 @@ const schema = new Schema({
     }, 
     spaceAround: { // also known as "Row Space"
         type: Number,
-        required: true,
         set: function (spaceAround) {
             this.leftAndRight = spaceAround / 2;
             return spaceAround;
@@ -165,8 +191,7 @@ const schema = new Schema({
         required: true
     },
     specialType: {
-        type: String,
-        required: false
+        type: String
     },
     serialNumber: {
         type: String,
@@ -185,17 +210,15 @@ const schema = new Schema({
             validator : Number.isInteger,
             message: '{VALUE} is not an integer'
         },
-        default: 1,
-        min: 0
+        min: 0,
+        required: true,
     },
     orderDate: {
-        type: Date,
-        required: false
+        type: Date
     },
     arrivalDate: {
-        type: Date,
-        required: false
+        type: Date
     },
 }, { timestamps: true });
 
-export const DieModel = mongoose.model('Die', schema);
+export const DieModel = mongoose.model<IDie>('Die', schema);

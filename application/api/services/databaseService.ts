@@ -1,5 +1,14 @@
 import mongoose from 'mongoose';
 mongoose.set('strictQuery', true);
+/* 
+  [IMPORTANT]
+    Runs get methods when querying documents 
+    (hint: like converting pennies to dollars on queried docs): 
+  [EXAMPLE]
+    { type: foo, get: convertPenniesToDollars() } methods 
+*/
+mongoose.set('toJSON', { getters: true });
+mongoose.Schema.Types.String.set('trim', true);
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 

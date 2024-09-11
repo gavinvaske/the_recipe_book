@@ -38,6 +38,8 @@ function getDie() {
         vendor: chance.pickone(dieVendors),
         magCylinder: chance.pickone(dieMagCylinders),
         cornerRadius: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
+        topAndBottom: chance.d100(),
+        leftAndRight: chance.d100(),
         spaceAcross: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
         spaceAround: chance.floating({ min: 0.01, max: 10, fixed: 2 }),
         facestock: chance.string(),

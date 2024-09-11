@@ -8,7 +8,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const ChangePassword = () => {
-  const newPasswordFieldRef = useRef(null);
+  const newPasswordFieldRef = useRef<HTMLInputElement>(null);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const { mongooseId, token } = useParams();
   const navigate = useNavigate();

@@ -24,6 +24,9 @@
     "verify": "npm run test && npm run lint",
     "parcel:remove-cache": "rm -rf .parcel-cache"
   },
+  "config": {
+    "mongodbMemoryServer": {}
+  },
   "author": "Gavin Vaske",
   "license": "ISC",
   "dependencies": {

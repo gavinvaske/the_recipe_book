@@ -110,5 +110,16 @@ describe('linerType validation', () => {
             expect(softDeletedAdhesiveCategory).toBeDefined();
             expect(softDeletedAdhesiveCategory.deleted).toBe(true);
         });
+
+        it('should be unique', async () => {
+          const name = '123456789';
+          linerTypeAttributes.name = name;
+          const linerType1 = new LinerTypeModel(linerTypeAttributes);
+          const linerType2 = new LinerTypeModel(linerTypeAttributes);
+
+          await linerType1.save().then(async () => {
+              await expect(linerType2.save()).rejects.toThrow(Error);
+          });
+      });
     });
 });

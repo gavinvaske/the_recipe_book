@@ -36,8 +36,7 @@ export async function closeDatabase() {
     if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the database can ONLY be closed manually in test environments');
     }
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
+    await mongoose.disconnect();
     await mongod.stop();
 }
 

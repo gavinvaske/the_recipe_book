@@ -1,14 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { addressSchema } from '../schemas/address.ts';
-import { contactSchema } from '../schemas/contact.ts';
-
+import { addressSchema, IAddress } from '../schemas/address.ts';
+import { contactSchema, IContact } from '../schemas/contact.ts';
 import mongooseDelete from 'mongoose-delete';
+import { ICreditTerm } from './creditTerm.ts';
+
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
 function doesArrayContainElements(value) {
     return value.length > 0;
+}
+
+export interface IShippingLocation extends IAddress {
+  freightAccountNumber?: string;
+  deliveryMethod?: mongoose.Types.ObjectId;
 }
 
 // ShippingLocations inherit the attributes from the address schema and add additional properties.
@@ -23,9 +29,21 @@ const shippingLocationsSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'DeliveryMethod'
     }
-});
+}, { timestamps: true });
 
-const schema = new Schema({
+export interface ICustomer extends SchemaTimestampsConfig, mongoose.Document {
+  customerId: string;
+  name: string;
+  notes?: string;
+  businessLocations?: IAddress[];
+  shippingLocations?: IShippingLocation[];
+  billingLocations?: IAddress[];
+  contacts?: IContact[];
+  creditTerms?: mongoose.Types.ObjectId[] | ICreditTerm[];
+  overun: number;
+}
+
+const schema = new Schema<ICustomer>({
     customerId: {
         type: String,
         required: true,
@@ -63,4 +81,4 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-export const CustomerModel = mongoose.model('Customer', schema);
+export const CustomerModel = mongoose.model<ICustomer>('Customer', schema);

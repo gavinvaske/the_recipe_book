@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
@@ -6,6 +6,15 @@ const ZIP_CODE_REGEX = /(^\d{5}(?:[-\s]\d{4})?$)/;
 
 function validateZipCode(zipCode) {
     return ZIP_CODE_REGEX.test(zipCode);
+}
+
+export interface IAddress extends SchemaTimestampsConfig, mongoose.Document {
+  name: string;
+  street: string;
+  unitOrSuite?: string;
+  city: string;
+  state: string;
+  zipCode: string;
 }
 
 export const addressSchema = new Schema({

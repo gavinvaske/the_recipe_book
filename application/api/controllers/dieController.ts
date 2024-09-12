@@ -34,8 +34,8 @@ router.patch('/:mongooseId', async (request: Request, response: Response) => {
       { _id: request.params.mongooseId },
       { $set: request.body },
       { runValidators: true, new: true }
-    ).exec();
-    
+    ).orFail(new Error(`Die not found using ID '${request.params.mongooseId}'`)).exec();
+
     return response.json(updatedDie);
   } catch (error) {
     console.error('Failed to update die:', error.message);
@@ -45,7 +45,9 @@ router.patch('/:mongooseId', async (request: Request, response: Response) => {
 
 router.get('/:mongooseId', async (request: Request, response: Response) => {
   try {
-    const die = await DieModel.findById(request.params.mongooseId);
+    const die = await DieModel.findById(request.params.mongooseId)
+      .orFail(new Error(`Die not found using ID '${request.params.mongooseId}'`))
+      .exec();
 
     if (!die) throw new Error('Die not found');
 
@@ -58,9 +60,9 @@ router.get('/:mongooseId', async (request: Request, response: Response) => {
 
 router.delete('/:mongooseId', async (request: Request, response: Response) => {
   try {
-    const deletedDie = await DieModel.findByIdAndDelete(request.params.mongooseId).exec();
-
-    if (!deletedDie) throw new Error('Die not found')
+    const deletedDie = await DieModel.findByIdAndDelete(request.params.mongooseId)
+      .orFail(new Error(`Die not found using ID '${request.params.mongooseId}'`))
+      .exec();
 
     return response.status(SUCCESS).json(deletedDie);
   } catch (error) {

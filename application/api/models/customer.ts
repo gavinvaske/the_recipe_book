@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 import { addressSchema, IAddress } from '../schemas/address.ts';
 import { contactSchema, IContact } from '../schemas/contact.ts';
 import mongooseDelete from 'mongoose-delete';
+import { ICreditTerm } from './creditTerm.ts';
 
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
@@ -38,7 +39,7 @@ export interface ICustomer extends SchemaTimestampsConfig, mongoose.Document {
   shippingLocations?: IShippingLocation[];
   billingLocations?: IAddress[];
   contacts?: IContact[];
-  creditTerms?: mongoose.Types.ObjectId[];
+  creditTerms?: mongoose.Types.ObjectId[] | ICreditTerm[];
   overun: number;
 }
 

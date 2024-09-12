@@ -3,6 +3,7 @@ const router = Router();
 import { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CustomerModel } from '../models/customer.ts';
+import { ICreditTerm } from '../models/creditTerm.ts';
 
 router.use(verifyBearerToken);
 
@@ -60,7 +61,10 @@ router.patch('/:mongooseId', async (request, response) => {
 
 router.get('/:mongooseId', async (request, response) => {
     try {
-        const customer = await CustomerModel.findById(request.params.mongooseId);
+        const customer = await CustomerModel.findById(request.params.mongooseId)
+          .populate<{creditTerms: ICreditTerm[]}>('creditTerms')
+          .orFail(new Error(`Customer not found using ID '${request.params.mongooseId}'`))
+          .exec();
 
         return response.json(customer);
     } catch (error) {

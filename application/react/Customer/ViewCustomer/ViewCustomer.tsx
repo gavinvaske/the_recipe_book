@@ -6,6 +6,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { ICustomer, IShippingLocation } from '../../../api/models/customer';
 import { IAddress } from '../../../api/schemas/address'
 import { IContact } from '../../../api/schemas/contact';
+import { ICreditTerm } from '../../../api/models/creditTerm'
 
 export const ViewCustomer = () => {
   const { mongooseId }= useParams();
@@ -22,24 +23,52 @@ export const ViewCustomer = () => {
 
   return (
     <div>
+      <p>Created: {customer.createdAt}</p>
+      <p>Last Modified: {customer.updatedAt}</p>
       <p>Customer ID: {customer.customerId}</p>
       <p>Name: {customer.name}</p>
       <p>Notes: {customer.notes}</p>
+      <p>Overun: {customer.overun}</p>
       
-      <h3>Business Locations: </h3>
+      <h3>Business Locations:</h3>
       {customer.businessLocations?.map((location: IAddress) => (<Address location={location}/>))}
+      <br></br>
 
-      <h3>Shipping Locations: </h3>
+      <h3>Shipping Locations:</h3>
       {customer.shippingLocations?.map((shippingLocation: IShippingLocation) => (<ShippingLocation shippingLocation={shippingLocation} />))}
+      <br></br>
+
+      <h3>Billing Locations:</h3>
+      {customer.billingLocations?.map((billingLocation: IAddress) => (<Address location={billingLocation} />))}
+      <br></br>
 
       <h3>Contacts: </h3>
       {customer.contacts?.map((contact) => (<Contact contact={contact} />))}
+      <br></br>
+
+
+      <h3>Credit Terms:</h3>
+      {(customer.creditTerms as ICreditTerm[])?.map((creditTerm) => (<CreditTerm creditTerm={creditTerm}/>))}
+      <br></br>
     </div>
   )
 }
 
+type CreditTermProps = {
+  creditTerm: ICreditTerm
+}
+
 type ContactProps = {
   contact: IContact
+}
+
+const CreditTerm = (props: CreditTermProps) => {
+  const { creditTerm } = props;
+  return (
+    <div>
+      <p>Description: {creditTerm.description}</p>
+    </div>
+  )
 }
 
 const Contact = (props: ContactProps) => {
@@ -68,12 +97,12 @@ const Address = (props: AddressProps) => {
 
   return (
     <div>
-      <p>{location.name}</p>
-      <p>{location.street}</p>
-      <p>{location.unitOrSuite}</p>
-      <p>{location.city}</p>
-      <p>{location.state}</p>
-      <p>{location.zipCode}</p>
+      <p>Name: {location.name}</p>
+      <p>Street: {location.street}</p>
+      <p>Unit / Suite: {location.unitOrSuite}</p>
+      <p>City: {location.city}</p>
+      <p>State: {location.state}</p>
+      <p>Zip Code: {location.zipCode}</p>
     </div>
   )
 }

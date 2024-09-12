@@ -47,21 +47,6 @@ router.post('/:productNumber/upload-proof', upload.single('proof'), async (reque
   }
 });
 
-router.get('/:mongooseId', async (request: Request, response: Response) => {
-  try {
-    const product = await BaseProductModel.findById(request.params.mongooseId);
-
-    if (!product) throw new Error('Product not found');
-
-    return response.json(product);
-  } catch (error) {
-    console.error('Error fetching product: ', error.message);
-    return response
-      .status(BAD_REQUEST)
-      .send(error.message);
-  }
-});
-
 router.post('/', async (request: Request, response: Response) => {
   try {
     const savedProduct = await BaseProductModel.create({
@@ -83,7 +68,7 @@ router.patch('/:mongooseId', async (request: Request, response: Response) => {
       { _id: request.params.mongooseId },
       { $set: request.body },
       { runValidators: true, new: true }
-    ).exec();
+    ).orFail(new Error(`Product not found using ID '${request.params.mongooseId}'`)).exec();
 
     return response.json(baseProduct);
   } catch (error) {
@@ -95,9 +80,9 @@ router.patch('/:mongooseId', async (request: Request, response: Response) => {
 
 router.delete('/:mongooseId', async (request: Request, response: Response) => {
   try {
-    const deletedProduct = await BaseProductModel.findByIdAndDelete(request.params.mongooseId).exec();
-
-    if (!deletedProduct) throw new Error('Product not found')
+    const deletedProduct = await BaseProductModel.findByIdAndDelete(request.params.mongooseId)
+      .orFail(new Error(`Product not found using ID '${request.params.mongooseId}'`))
+      .exec();
 
     return response.status(SUCCESS).json(deletedProduct);
   } catch (error) {
@@ -115,6 +100,21 @@ router.get('/', async (_: Request, response: Response) => {
   } catch (error) {
     console.error('Error loading products', error);
     return response.status(SERVER_ERROR).send(error.message);
+  }
+});
+
+router.get('/:mongooseId', async (request: Request, response: Response) => {
+  try {
+    const product = await BaseProductModel.findById(request.params.mongooseId)
+      .orFail(new Error(`Product not found using ID '${request.params.mongooseId}'`))
+      .exec();
+
+    return response.json(product);
+  } catch (error) {
+    console.error('Error fetching product: ', error.message);
+    return response
+      .status(BAD_REQUEST)
+      .send(error.message);
   }
 });
 

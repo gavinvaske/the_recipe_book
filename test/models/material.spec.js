@@ -782,45 +782,43 @@ describe('File: material.js', () => {
             expect(softDeletedMaterial.deleted).toBe(true);
         });
 
-        describe('verify database interactions', () => {
-            it('should have a "createdAt" attribute once object is saved', async () => {
-                const material = new MaterialModel(materialAttributes);
-                let savedMaterial = await material.save({ validateBeforeSave: false });
+        it('should have a "createdAt" attribute once object is saved', async () => {
+            const material = new MaterialModel(materialAttributes);
+            let savedMaterial = await material.save({ validateBeforeSave: false });
 
-                expect(savedMaterial.createdAt).toBeDefined();
-                expect(savedMaterial.updatedAt).toBeDefined();
-            });
+            expect(savedMaterial.createdAt).toBeDefined();
+            expect(savedMaterial.updatedAt).toBeDefined();
         });
 
-        describe('attribute: productNumber', () => {
-            it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
-                const duplicateProductNumber = chance.string();
-                const material = new MaterialModel({
-                    ...testDataGenerator.mockData.Material(),
-                    productNumber: duplicateProductNumber
-                });
-                const materialWithDuplicateProductNumber = new MaterialModel({
-                    ...testDataGenerator.mockData.Material(),
-                    productNumber: duplicateProductNumber
-                });
-                const anothaMaterialWithDuplicateProductNumber = new MaterialModel({
-                    ...testDataGenerator.mockData.Material(),
-                    productNumber: duplicateProductNumber
-                });
-                let errorMessage;
 
-                await material.save();
-
-                try {
-                    await materialWithDuplicateProductNumber.save();
-                    await anothaMaterialWithDuplicateProductNumber.save();
-                } catch (error) {
-                    errorMessage = error.message;
-                }
-
-                expect(errorMessage).toBeDefined();
+        it('should throw error if two materials with the same productNumber are saved to the DB', async () => {
+            const duplicateProductNumber = chance.string();
+            const material = new MaterialModel({
+                ...testDataGenerator.mockData.Material(),
+                productNumber: duplicateProductNumber
             });
+            const materialWithDuplicateProductNumber = new MaterialModel({
+                ...testDataGenerator.mockData.Material(),
+                productNumber: duplicateProductNumber
+            });
+            const anothaMaterialWithDuplicateProductNumber = new MaterialModel({
+                ...testDataGenerator.mockData.Material(),
+                productNumber: duplicateProductNumber
+            });
+            let errorMessage;
+
+            await material.save();
+
+            try {
+                await materialWithDuplicateProductNumber.save();
+                await anothaMaterialWithDuplicateProductNumber.save();
+            } catch (error) {
+                errorMessage = error.message;
+            }
+
+            expect(errorMessage).toBeDefined();
         });
+
 
         describe('attribute: materialId', () => {
             it('should throw error if two materials with the same productNumber are saved to the DB', async () => {

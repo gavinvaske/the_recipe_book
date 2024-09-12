@@ -29,7 +29,7 @@ export async function connectToTestMongoDatabase() {
     }
 
     mongod = await MongoMemoryServer.create();
-    await mongoose.connect(mongod.getUri(), {});
+    mongoose.connect(mongod.getUri(), {});
 }
 
 export async function closeDatabase() {

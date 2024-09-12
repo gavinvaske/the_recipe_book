@@ -98,16 +98,16 @@ describe('File: deliveryMethod.js', () => {
         });
 
         it('should be unique', async () => {
-          const name = '123456789';
-          deliveryMethodAttributes.name = name;
-          const deliveryMethod1 = new DeliveryMethodModel(deliveryMethodAttributes);
+            const name = '123456789';
+            deliveryMethodAttributes.name = name;
+            const deliveryMethod1 = new DeliveryMethodModel(deliveryMethodAttributes);
 
-          deliveryMethodAttributes.name = name.toLowerCase();
-          const deliveryMethod2 = new DeliveryMethodModel(deliveryMethodAttributes);
+            deliveryMethodAttributes.name = name.toLowerCase();
+            const deliveryMethod2 = new DeliveryMethodModel(deliveryMethodAttributes);
 
-          await deliveryMethod1.save().then(async () => {
-              await expect(deliveryMethod2.save()).rejects.toThrow(Error);
-          });
-      });
+            await deliveryMethod1.save().then(async () => {
+                await expect(deliveryMethod2.save()).rejects.toThrow(Error);
+            });
+        });
     });
 });

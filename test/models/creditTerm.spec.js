@@ -106,26 +106,26 @@ describe('validation', () => {
         });
 
 
-      it('should enforce that "description" is a unique attribute', async () => {
-        const duplicateDescription = chance.string();
-        const creditTerm1 = new CreditTermModel({
-          description: duplicateDescription
-        });
-        const creditTerm2 = new CreditTermModel({
-          description: duplicateDescription
-        });
-        let errorMessage;
+        it('should enforce that "description" is a unique attribute', async () => {
+            const duplicateDescription = chance.string();
+            const creditTerm1 = new CreditTermModel({
+                description: duplicateDescription
+            });
+            const creditTerm2 = new CreditTermModel({
+                description: duplicateDescription
+            });
+            let errorMessage;
         
-        try {
-          await creditTerm1.save();
-          await creditTerm2.save();
+            try {
+                await creditTerm1.save();
+                await creditTerm2.save();
 
-        } catch (error) {
-          errorMessage = error.message;
-        }
+            } catch (error) {
+                errorMessage = error.message;
+            }
         
-        expect(errorMessage).toBeDefined();
-        expect(errorMessage).toContain('duplicate key');
-      })
+            expect(errorMessage).toBeDefined();
+            expect(errorMessage).toContain('duplicate key');
+        });
     });
 });

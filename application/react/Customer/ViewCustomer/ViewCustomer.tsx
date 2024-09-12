@@ -46,7 +46,6 @@ export const ViewCustomer = () => {
       {customer.contacts?.map((contact) => (<Contact contact={contact} />))}
       <br></br>
 
-
       <h3>Credit Terms:</h3>
       {(customer.creditTerms as ICreditTerm[])?.map((creditTerm) => (<CreditTerm creditTerm={creditTerm}/>))}
       <br></br>
@@ -58,10 +57,6 @@ type CreditTermProps = {
   creditTerm: ICreditTerm
 }
 
-type ContactProps = {
-  contact: IContact
-}
-
 const CreditTerm = (props: CreditTermProps) => {
   const { creditTerm } = props;
   return (
@@ -69,6 +64,10 @@ const CreditTerm = (props: CreditTermProps) => {
       <p>Description: {creditTerm.description}</p>
     </div>
   )
+}
+
+type ContactProps = {
+  contact: IContact
 }
 
 const Contact = (props: ContactProps) => {

@@ -12,7 +12,7 @@ mongoose.Schema.Types.String.set('trim', true);
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-let mongod;
+let mongoServer;
 const TEST_ENVIRONMENT = 'test';
 
 export async function connectToMongoDatabase(databaseUrl) {
@@ -28,17 +28,16 @@ export async function connectToTestMongoDatabase() {
         throw Error('the test database can only be connected too from test environments');
     }
 
-    mongod = await MongoMemoryServer.create();
-    mongoose.connect(mongod.getUri(), {});
+    mongoServer = await MongoMemoryServer.create();
+    await mongoose.connect(mongoServer.getUri(), {});
 }
 
 export async function closeDatabase() {
     if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the database can ONLY be closed manually in test environments');
     }
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-    await mongod.stop();
+    await mongoose.disconnect();
+    await mongoServer.stop();
 }
 
 export async function clearDatabase() {

@@ -29,15 +29,14 @@ export async function connectToTestMongoDatabase() {
     }
 
     mongod = await MongoMemoryServer.create();
-    mongoose.connect(mongod.getUri(), {});
+    await mongoose.connect(mongod.getUri(), {});
 }
 
 export async function closeDatabase() {
     if (process.env.NODE_ENV !== TEST_ENVIRONMENT) {
         throw Error('the database can ONLY be closed manually in test environments');
     }
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
+    await mongoose.disconnect();
     await mongod.stop();
 }
 
@@ -48,6 +47,6 @@ export async function clearDatabase() {
     const collections = mongoose.connection.collections;
     for (const key in collections) {
         const collection = collections[key];
-        await collection.deleteMany({});
+        collection && await collection.deleteMany({});
     }
 }

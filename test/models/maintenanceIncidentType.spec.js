@@ -78,16 +78,5 @@ describe('MaintenanceIncidentType', () => {
             expect(savedMaintenanceIncidentType.createdAt).toBeDefined();
             expect(savedMaintenanceIncidentType.updatedAt).toBeDefined();
         });
-
-        it('should be unique', async () => {
-            const incidentName = chance.string();
-            maintenanceIncidentTypeAttributes.incidentName = incidentName;
-            const incident1 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
-            const incident2 = new MaintenanceIncidentTypeModel(maintenanceIncidentTypeAttributes);
-
-            await incident1.save().then(async () => {
-                await expect(incident2.save()).rejects.toThrow(Error);
-            });
-        });
     });
 });

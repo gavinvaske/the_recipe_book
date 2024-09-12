@@ -803,17 +803,13 @@ describe('File: material.js', () => {
                     ...testDataGenerator.mockData.Material(),
                     productNumber: duplicateProductNumber
                 });
-                const anothaMaterialWithDuplicateProductNumber = new MaterialModel({
-                    ...testDataGenerator.mockData.Material(),
-                    productNumber: duplicateProductNumber
-                });
+
                 let errorMessage;
 
                 await material.save();
 
                 try {
                     await materialWithDuplicateProductNumber.save();
-                    await anothaMaterialWithDuplicateProductNumber.save();
                 } catch (error) {
                     errorMessage = error.message;
                 }

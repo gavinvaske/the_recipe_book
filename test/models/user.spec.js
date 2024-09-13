@@ -2,6 +2,8 @@ import Chance from 'chance';
 import { UserModel } from '../../application/api/models/user.ts';
 import * as testDataGenerator from '../testDataGenerator';
 import { AVAILABLE_AUTH_ROLES } from '../../application/api/enums/authRolesEnum.ts';
+import * as databaseService from '../../application/api/services/databaseService';
+import mongoose from 'mongoose';
 
 const chance = Chance();
 const PASSWORD_MIN_LENGTH = 8;
@@ -48,9 +50,9 @@ describe('validation', () => {
         it('should not validate incorrectly formatted emails', () => {
             userAttributes.email = chance.string();
             const user = new UserModel(userAttributes);
-    
+
             const error = user.validateSync();
-    
+
             expect(error).not.toBe(undefined);
         });
 
@@ -102,7 +104,7 @@ describe('validation', () => {
         it('should be required', () => {
             delete userAttributes.lastName;
             const user = new UserModel(userAttributes);
-        
+
             const error = user.validateSync();
 
             expect(error).not.toBe(undefined);
@@ -154,7 +156,7 @@ describe('validation', () => {
 
     describe('attribute: birthDate', () => {
         it('should not fail if date is valid', () => {
-            const birthDate = chance.date({string: true});
+            const birthDate = chance.date({ string: true });
             userAttributes.birthDate = birthDate;
             const user = new UserModel(userAttributes);
 
@@ -164,7 +166,7 @@ describe('validation', () => {
         });
 
         it('should trim whitespace', () => {
-            const birthDate = chance.date({string: true});
+            const birthDate = chance.date({ string: true });
             userAttributes.birthDate = '  ' + birthDate + ' ';
             const user = new UserModel(userAttributes);
 
@@ -186,14 +188,14 @@ describe('validation', () => {
     describe('attribute: authRoles', () => {
         it('should exist', () => {
             const user = new UserModel(userAttributes);
-        
+
             expect(user.authRoles).toBeDefined();
         });
 
         it('should not fail validation if authRoles are from allow-list', () => {
             userAttributes.authRoles = [chance.pickone(AVAILABLE_AUTH_ROLES), chance.pickone(AVAILABLE_AUTH_ROLES)];
             const user = new UserModel(userAttributes);
-        
+
             const error = user.validateSync();
 
             expect(error).toBe(undefined);
@@ -203,12 +205,12 @@ describe('validation', () => {
             const unknownRole = chance.string();
             const validRole = chance.pickone(AVAILABLE_AUTH_ROLES);
             userAttributes.authRoles = [
-                validRole, 
+                validRole,
                 unknownRole,
                 validRole
             ];
             const user = new UserModel(userAttributes);
-        
+
             const error = user.validateSync();
 
             expect(error).toBeDefined();
@@ -217,7 +219,7 @@ describe('validation', () => {
         it('should not fail validation if roles is empty', () => {
             userAttributes.authRoles = [];
             const user = new UserModel(userAttributes);
-        
+
             const error = user.validateSync();
 
             expect(error).toBe(undefined);
@@ -226,11 +228,61 @@ describe('validation', () => {
         it('should default to empty list', () => {
             delete userAttributes.authRoles;
             const user = new UserModel(userAttributes);
-        
+
             const error = user.validateSync();
 
             expect(error).toBe(undefined);
             expect(user.authRoles).toEqual([]);
+        });
+    });
+
+    describe('verify database interactions', () => {
+        beforeEach(async () => {
+            await mongoose.syncIndexes(); // Fixes: https://github.com/gavinvaske/the_recipe_book/issues/370
+        });
+
+        beforeAll(async () => {
+            await databaseService.connectToTestMongoDatabase();
+        });
+
+        afterEach(async () => {
+            await databaseService.clearDatabase();
+        });
+
+        afterAll(async () => {
+            await databaseService.closeDatabase();
+        });
+
+        it('should have a "createdAt" attribute once object is saved', async () => {
+            const user = new UserModel(userAttributes);
+            let savedUser = await user.save({ validateBeforeSave: false });
+
+            expect(savedUser.createdAt).toBeDefined();
+            expect(savedUser.updatedAt).toBeDefined();
+        });
+
+        it('should have a unique "email"', async () => {
+            const email = chance.email();
+            const user1 = new UserModel({
+                ...testDataGenerator.mockData.User(),
+                email
+            });
+            const user2 = new UserModel({
+                ...testDataGenerator.mockData.User(),
+                email
+            });
+
+            let errorMessage;
+      
+            try {
+                await user1.save();
+                await user2.save();
+            } catch (error) {
+                errorMessage = error.message;
+            }
+
+            expect(errorMessage).toBeDefined();
+            expect(errorMessage).toContain('duplicate key');
         });
     });
 });

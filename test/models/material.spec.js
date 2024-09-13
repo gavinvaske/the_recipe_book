@@ -757,6 +757,10 @@ describe('File: material.js', () => {
     });
 
     describe('verify database interactions', () => {
+        beforeEach(async () => {
+            await mongoose.syncIndexes(); // Fixes: https://github.com/gavinvaske/the_recipe_book/issues/370
+        });
+
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });

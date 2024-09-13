@@ -1,7 +1,7 @@
 import React from 'react';
 import './CustomerTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { Customer } from '../../_types/databasemodels/customer.ts';
+// import { Customer } from '../../_types/databasemodels/customer.ts';
 import { CustomerRowActions } from './CustomerRowActions/CustomerRowActions'
 import { useQuery } from '@tanstack/react-query';
 import { getCustomers } from '../../_queries/customer';
@@ -11,8 +11,9 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { ICustomer } from '../../../api/models/customer.ts';
 
-const columnHelper = createColumnHelper<Customer>()
+const columnHelper = createColumnHelper<ICustomer>()
 
 const columns = [
   columnHelper.accessor('name', {
@@ -20,6 +21,15 @@ const columns = [
   }),
   columnHelper.accessor('_id', {
     header: 'ID'
+  }),
+  columnHelper.accessor(row => row.customerId.length, { /* TODO: Remove this attribute, I'm using it mearly as an example */
+    header: 'Length of Customer ID',
+    id: 'lengthOfCustomerId'
+  }),
+  columnHelper.accessor(row => row.customerId?.length || 0, {
+    header: '# of Products',
+    id: 'numberOfProducts',
+    cell: (TODO) => <a href={`/customers/${'TODO'}/products`}>{'TODO: # of products'}</a>
   }),
   columnHelper.display({
     id: 'actions',

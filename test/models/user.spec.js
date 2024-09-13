@@ -286,15 +286,3 @@ describe('validation', () => {
     });
   });
 });
-
-// it('should have a unique "email"', async () => {
-//   const email = chance.email();
-//   userAttributes.email = email;
-//   const user1 = new UserModel(userAttributes);
-
-//   userAttributes.email = email.toLowerCase();
-//   const user2 = new UserModel(userAttributes);
-
-//   await user1.save().then(async () => {
-//     await expect(user2.save()).rejects.toThrow(Error);
-//   });

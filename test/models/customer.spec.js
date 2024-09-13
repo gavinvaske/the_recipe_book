@@ -20,7 +20,7 @@ function getContact() {
     return testDataGenerator.mockData.Contact();
 }
 
-describe('validation', () => {
+describe('File: customer', () => {
     let customerAttributes;
 
     beforeEach(() => {
@@ -359,6 +359,10 @@ describe('validation', () => {
     });
 
     describe('verify database interactions', () => {
+        beforeEach(async () => {
+          await mongoose.syncIndexes()  // Fixes: https://github.com/gavinvaske/the_recipe_book/issues/370
+        })
+
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });

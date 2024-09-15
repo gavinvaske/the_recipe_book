@@ -48,53 +48,55 @@ export const Profile = () => {
 
   return (
     <div id='profile-page'>
-      <h1>{timeBasedGreetingMessage}, {(loggedInUser && loggedInUser.fullName) || 'N/A'}</h1>
-      <p>Permission(s): {(loggedInUser && loggedInUser.authRoles && JSON.stringify(loggedInUser.authRoles)) || 'None'}</p>
+      <div className='profile-header-container'>
+        <div className='profile-canvas-background'></div>
+        <div className='profile-details-footer'>
+          <UploadProfilePicture apiEndpoint='/users/me/profile-picture' acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}></UploadProfilePicture>
+        </div>
+      </div>
 
-      <UploadProfilePicture 
-        apiEndpoint='/users/me/profile-picture' 
-        acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}
-      ></UploadProfilePicture>
 
-      <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
-        <Input
-          attribute='email'
-          label="Email"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          attribute='firstName'
-          label="First Name"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          attribute='lastName'
-          label="Last Name"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          attribute='jobRole'
-          label="Job Role"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          attribute='birthDate'
-          label="Birth Date"
-          register={register}
-          errors={errors}
-        />
-        <Input
-          attribute='phoneNumber'
-          label="Phone"
-          register={register}
-          errors={errors}
-        />
-        <button className='create-entry submit-button' type='submit'>{'Update'}</button>
-      </form>
+      <div className='card'>
+        <form onSubmit={handleSubmit(onSubmit)} data-test='user-form'>
+          <Input
+            attribute='email'
+            label="Email"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            attribute='firstName'
+            label="First Name"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            attribute='lastName'
+            label="Last Name"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            attribute='jobRole'
+            label="Job Role"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            attribute='birthDate'
+            label="Birth Date"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            attribute='phoneNumber'
+            label="Phone"
+            register={register}
+            errors={errors}
+          />
+          <button className='create-entry submit-button' type='submit'>{'Update'}</button>
+        </form>
+      </div>
     </div>
   )
 }

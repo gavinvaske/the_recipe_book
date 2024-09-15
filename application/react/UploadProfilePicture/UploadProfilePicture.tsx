@@ -82,28 +82,28 @@ export const UploadProfilePicture = (props: Props) => {
   const allowedMimeTypes = acceptedMimeTypes.join(', ');
 
   return (
-    <div>
-      <h1>Click to Upload an Image</h1>
+    <div className='profile-picture-container'>
 
-      <div>
-        <Image img={selectedImage} width={250}/>
-        <br /> <br />
-        {selectedImage && (<button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>)}
+      <div className='profile-picture-frame'>
+        <Image img={selectedImage} width={300}/>
+        <div className="photo-details">
+          <input
+            id='image-upload'
+            type="file"
+            name="image"
+            accept={allowedMimeTypes}
+            onChange={(event) => saveImage(event)}
+            title=" "
+          />
+        </div>
       </div>
+      
 
-      <br />
-      <div className="photo-details">
-        <input
-          id='image-upload'
-          type="file"
-          name="image"
-          accept={allowedMimeTypes}
-          onChange={(event) => saveImage(event)}
-        />
+      {/* {selectedImage && (<button onClick={() => deleteImage()}>Click to Delete my Profile Picture</button>)} */}
 
-        <p>Allowed: {allowedMimeTypes.replace(/image\//g, '')} </p>
-        <p>Max size 800KB.</p>
-      </div>
+        {/* <p>Allowed: {allowedMimeTypes.replace(/image\//g, '')} </p>
+        <p>Max size 800KB.</p> */}
+      
     </div>
   );
 };

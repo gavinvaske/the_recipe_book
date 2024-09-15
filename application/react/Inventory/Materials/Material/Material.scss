@@ -1,11 +1,11 @@
-.left,
-.right {
+.modal-left,
+.modal-right {
   height: 100%;
   border-radius: 0.428rem;
   padding: 28px 32px 56px 32px;
 }
 
-.left {
+.modal-left {
   width: 570px;
 
   .title-wrapper {
@@ -145,7 +145,7 @@
   }
 }
 
-.right {
+.modal-.right {
   width: 280px;
   background-color: #f5f6f8;
 }

@@ -28,6 +28,7 @@ import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
+import { CrudNavigation } from '../CrudNavigation/CrudNavigation';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ export function App() {
               <Route element={<TopNavbarLayout />}>
                 <Route path='inventory' element={<Inventory />}></Route>
                 <Route path='profile' element={<Profile />} />
+                <Route path='crud-navigation' element={<CrudNavigation />} />
 
                 <Route path='forms'>
                   <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
@@ -73,6 +75,7 @@ export function App() {
                   <Route path='customer' element={<CustomerTable />} />
                   <Route path='material-order' element={<MaterialOrderTable />} />
                 </Route>
+
               </Route>
           </Route>
 

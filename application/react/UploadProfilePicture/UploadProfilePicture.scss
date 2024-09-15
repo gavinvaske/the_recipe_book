@@ -1,3 +1,57 @@
-.img-box {
-  background-color: red;
+.profile-picture-container {
+  .profile-picture-frame {
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    left: calc(50% - 150px);
+    top: -200px;
+    // background-color: #7367f0;
+    background-color: #2D2D2D;
+    border-radius: 50%;
+    border: 5px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img, div {
+      border-radius: 50%;
+      height: 290px;
+      width: 290px;
+    }
+    .photo-details {
+      position: absolute;
+      height: 290px;
+      width: 290px;
+      top: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      input {
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        border: 5px solid transparent;
+        color: transparent;
+        background: none;
+        background-size: 60px 60px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      &:hover {
+        background-color: rgba(0,0,0,.7);
+        input {
+          color: white;
+          background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png') center center no-repeat transparent;
+          background-size: 60px 60px;
+        }
+      }
+      
+      input::-webkit-file-upload-button {
+        display: none;
+      }
+      input[type='file'] {
+        color: transparent;
+      }
+    }
+  }
 }

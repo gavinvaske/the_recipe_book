@@ -132,7 +132,7 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
 
   return (
     <Modal onClose={() => onClose()}>
-      <div className='left'>
+      <div className='modal-left'>
         <div className='title-wrapper'>
           <h4>Purchase orders: {material.materialId}</h4>
         </div>
@@ -157,7 +157,7 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
           </div>
         </div>
       </div>
-      <div className='right'>
+      <div className='modal-right'>
         left panel for storm to do something neat
       </div>
     </Modal>

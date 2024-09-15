@@ -42,53 +42,61 @@ export const Register = () => {
               </div>
 
               <form id='register-form' onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                    attribute='firstName'
-                    label="First Name"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                />
-                <Input
-                    attribute='lastName'
-                    label="Last Name"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                />
-                <Input
-                    attribute='birthDate'
-                    label="Birth Date"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                    fieldType='date'
-                />
-                <Input
-                    attribute='email'
-                    label="Email"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                    ref={emailFieldRef}
-                />
-                <Input
-                    attribute='password'
-                    label="Password"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                    fieldType='password'
-                />
-                <Input
-                    attribute='repeatPassword'
-                    label="Re-type Password"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                    fieldType='password'
-                />
-                <button className='create-entry submit-button' type='submit' data-test='login-btn'>Register</button>
+                <div className='form-container'>
+                  <div className='form-col-left'>
+                    <Input
+                        attribute='firstName'
+                        label="First Name"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                    />
+                    <Input
+                        attribute='lastName'
+                        label="Last Name"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                    />
+                    <Input
+                        attribute='birthDate'
+                        label="Birth Date"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                        fieldType='date'
+                    />
+                  </div>
+                  <div className='form-col-right'>
+                    <Input
+                        attribute='email'
+                        label="Email"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                        ref={emailFieldRef}
+                    />
+                    <Input
+                        attribute='password'
+                        label="Password"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                        fieldType='password'
+                    />
+                    <Input
+                        attribute='repeatPassword'
+                        label="Re-type Password"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                        fieldType='password'
+                    />
+                  </div>
+                </div>
+                <div className='button-container'>
+                  <button className='create-entry submit-button' type='submit' data-test='login-btn'>Register</button>
+                </div>
               </form>
 
               <div className='register-link-container'>

@@ -7,7 +7,7 @@ describe('Login Cases', () => {
     })
   })
 
-  it('Unauthenticated user should see the login page', () => {
+  it('Unauthenticated user should see the login page with the email field in focus', () => {
     cy.logout();
     cy.visit('/react-ui/inventory');
 
@@ -15,6 +15,7 @@ describe('Login Cases', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.equal('/react-ui/login')
     })
+    cy.get('input[name="email"]').should('be.focused');
   });
 
   it('Unauthenticated user should be sent to login page when visiting base route', () => {

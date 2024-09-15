@@ -29,6 +29,7 @@ router.patch('/me', verifyBearerToken, async (request, response) => {
     if (!request.user._id) throw new Error('User not logged in');
 
     const newUserValues = {
+      email: request.body.email || undefined,
       firstName: request.body.firstName || undefined,
       lastName: request.body.lastName || undefined,
       jobRole: request.body.jobRole || undefined,

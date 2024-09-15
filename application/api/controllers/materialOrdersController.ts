@@ -5,7 +5,7 @@ import { MaterialModel } from '../models/material.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
-import { descending } from '../enums/mongooseSortMethods.ts';
+import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
 
@@ -70,7 +70,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
 router.get('/', async (_, response) => {
     try {
-        const materialOrders = await MaterialOrderModel.find().sort({ createdAt: descending }).exec();
+        const materialOrders = await MaterialOrderModel.find().sort({ createdAt: DESCENDING }).exec();
 
         return response.json(materialOrders);
     } catch (error) {

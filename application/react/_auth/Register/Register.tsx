@@ -8,7 +8,7 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 
 export const Register = () => {
-  const emailFieldRef = useRef(null);
+  const emailFieldRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();

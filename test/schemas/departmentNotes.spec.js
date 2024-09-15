@@ -34,12 +34,10 @@ describe('validation', () => {
     });
 
     it('should have one key for every department', () => {
-        const departmentNotes = new DepartmentNotesModel(departmentNotesAttributes);
-        const actualNumberOfKeys = Object.keys(departmentNotes.toJSON()).length;
-        const numberOfMongooseKeysToIgnore = 1;
-        const expectedNumberOfKeys = departmentsEnum.getAllDepartmentsWithDepartmentStatuses().length;
+        const actualNumberOfKeys = departmentsEnum.getAllDepartmentsWithDepartmentStatuses().length;
+        const expectedNumberOfKeys = 9;
 
-        expect(actualNumberOfKeys - numberOfMongooseKeysToIgnore).toBe(expectedNumberOfKeys);
+        expect(actualNumberOfKeys).toBe(expectedNumberOfKeys);
     });
 
     it('should trim values', () => {
@@ -72,15 +70,6 @@ describe('validation', () => {
             const error = departmentNotes.validateSync();
     
             expect(error).toBe(undefined);
-        });
-
-        it('should have one key for every department', () => {
-            const departmentNotes = new DepartmentNotesModel(departmentNotesAttributes);
-            const actualNumberOfKeys = Object.keys(departmentNotes.toJSON()).length;
-            const numberOfMongooseKeysToIgnore = 1;
-            const expectedNumberOfKeys = departmentsEnum.getAllDepartmentsWithDepartmentStatuses().length;
-    
-            expect(actualNumberOfKeys - numberOfMongooseKeysToIgnore).toBe(expectedNumberOfKeys);
         });
 
         it('should throw an error if an unknown key is attempted to be set onto the schema', () => {

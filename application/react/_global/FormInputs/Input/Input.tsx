@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Ref } from 'react';
 import './Input'
 import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage';
 import { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
@@ -18,8 +18,13 @@ type Props<T extends FieldValues> = {
   dataAttributes?: { [key: `data-${string}`]: string }
 }
 
+/* This "solution" was found here to solve hard-to-fix typescript errors resulting from usage of forwardRef(..): https://stackoverflow.com/a/73795494 */
+interface WithForwardRefType extends React.FC<Props<FieldValues>>  {
+  <T extends FieldValues>(props: Props<T>): ReturnType<React.FC<Props<T>>>
+}
+
 /* @Gavin More client side validation rules can be configured in react-hook-form. see https://react-hook-form.com/get-started#Applyvalidation */
-export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customRef: any) => {
+export const Input: WithForwardRefType = forwardRef((props, customRef) => {
   const { placeholder, errors, attribute, defaultValue, label, register, isRequired, fieldType, dataAttributes} = props
 
   const { ref, ...rest } = register(attribute,
@@ -33,7 +38,6 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
         {...rest}
         type={fieldType ? fieldType : 'text'}
         placeholder={placeholder}
-        value={defaultValue}
         ref={(e) => {   // solution from https://stackoverflow.com/a/71497701
           ref(e)
           if (customRef) {
@@ -41,6 +45,7 @@ export const Input = forwardRef(<T extends FieldValues>(props: Props<T>, customR
           }
         }}
         {...dataAttributes}
+        { ...(fieldType === 'checkbox'? { defaultChecked: (defaultValue == 'true' ? true : false) } : {defaultValue: defaultValue}) }
       />
       <FormErrorMessage errors={errors} name={attribute} />
     </div>

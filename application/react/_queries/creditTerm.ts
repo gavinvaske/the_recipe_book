@@ -1,17 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
-import { CreditTerm } from '../_types/databasemodels/creditTerm.ts';
 import { MongooseId } from '../_types/typeAliases';
+import { ICreditTerm } from '../../api/models/creditTerm.ts';
 
-export const getCreditTerms = async (): Promise<CreditTerm[]> => {
+export const getCreditTerms = async (): Promise<ICreditTerm[]> => {
   const response : AxiosResponse = await axios.get('/credit-terms');
-  const creditTerms: CreditTerm[] = response.data;
+  const creditTerms: ICreditTerm[] = response.data;
 
   return creditTerms
 }
 
-export const getOneCreditTerm = async (mongooseId: MongooseId): Promise<CreditTerm> => {
+export const getOneCreditTerm = async (mongooseId: MongooseId): Promise<ICreditTerm> => {
   const response : AxiosResponse = await axios.get(`/credit-terms/${mongooseId}`);
-  const creditTerm: CreditTerm = response.data;
+  const creditTerm: ICreditTerm = response.data;
 
   return creditTerm;
 }

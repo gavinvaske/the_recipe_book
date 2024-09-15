@@ -35,8 +35,13 @@ export const CustomerRowActions = (props: Props) => {
     navigate(`/react-ui/forms/customer/${mongooseObjectId}`)
   }
 
+  const onViewClicked = (mongooseObjectId: MongooseId) => {
+    navigate(`/react-ui/views/customer/${mongooseObjectId}`)
+  }
+
   return (
     <RowActions>
+      <div className='dropdown-option' onClick={() => onViewClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>View</div>
       <div className='dropdown-option' onClick={() => onEditClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>Edit</div>
       <div className='dropdown-option' onClick={() => onDeleteClicked(mongooseObjectId)}><i className="fa-regular fa-trash"></i>Delete</div>
     </RowActions>

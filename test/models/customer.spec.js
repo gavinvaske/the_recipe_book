@@ -20,7 +20,7 @@ function getContact() {
     return testDataGenerator.mockData.Contact();
 }
 
-describe('validation', () => {
+describe('File: customer', () => {
     let customerAttributes;
 
     beforeEach(() => {
@@ -359,6 +359,10 @@ describe('validation', () => {
     });
 
     describe('verify database interactions', () => {
+        beforeEach(async () => {
+            await mongoose.syncIndexes(); // Fixes: https://github.com/gavinvaske/the_recipe_book/issues/370
+        });
+
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
         });
@@ -391,6 +395,46 @@ describe('validation', () => {
 
                 expect(savedCustomer.createdAt).toBeDefined();
                 expect(savedCustomer.updatedAt).toBeDefined();
+            });
+            
+            it('should have timestamps on "shippingLocation" attribute', async () => {
+                const addresses = [getAddress()];
+                customerAttributes.shippingLocations = addresses;
+                const customer = new CustomerModel(customerAttributes);
+                let savedCustomer = await customer.save({ validateBeforeSave: false });
+
+                expect(savedCustomer.shippingLocations[0].createdAt).toBeDefined();
+                expect(savedCustomer.shippingLocations[0].updatedAt).toBeDefined();
+            });
+
+            it('should have timestamps on "businessLocations" attribute', async () => {
+                const addresses = [getAddress()];
+                customerAttributes.businessLocations = addresses;
+                const customer = new CustomerModel(customerAttributes);
+                let savedCustomer = await customer.save({ validateBeforeSave: false });
+
+                expect(savedCustomer.businessLocations[0].createdAt).toBeDefined();
+                expect(savedCustomer.businessLocations[0].updatedAt).toBeDefined();
+            });
+
+            it('should have timestamps on "billingLocations" attribute', async () => {
+                const addresses = [getAddress()];
+                customerAttributes.billingLocations = addresses;
+                const customer = new CustomerModel(customerAttributes);
+                let savedCustomer = await customer.save({ validateBeforeSave: false });
+
+                expect(savedCustomer.billingLocations[0].createdAt).toBeDefined();
+                expect(savedCustomer.billingLocations[0].updatedAt).toBeDefined();
+            });
+          
+            it('should have timestamps on "contacts" attribute', async () => {
+                const contacts = [getContact()];
+                customerAttributes.contacts = contacts;
+                const customer = new CustomerModel(customerAttributes);
+                let savedCustomer = await customer.save({ validateBeforeSave: false });
+
+                expect(savedCustomer.contacts[0].createdAt).toBeDefined();
+                expect(savedCustomer.contacts[0].updatedAt).toBeDefined();
             });
         });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './DieInput.scss';
-import DropdownField from '../InputFields/DropdownField/DropdownField';
+import { DropdownField } from '../InputFields/DropdownField/DropdownField';
 import TextField from '../InputFields/TextField/TextField';
 import quoteStore from '../../../stores/quoteStore';
 import axios, { AxiosError } from 'axios';

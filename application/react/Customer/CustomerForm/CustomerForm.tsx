@@ -21,7 +21,6 @@ import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
-import { Customer } from '../../_types/databasemodels/customer.ts';
 import { MongooseId } from '../../_types/typeAliases';
 import { getCreditTerms } from '../../_queries/creditTerm';
 

@@ -1,5 +1,5 @@
 import Chance from 'chance';
-import { DieModel } from '../../application/api/models/Die.ts';
+import { DieModel } from '../../application/api/models/die.ts';
 import { dieShapes } from '../../application/api/enums/dieShapesEnum';
 import { toolTypes } from '../../application/api/enums/toolTypesEnum';
 import { dieVendors } from '../../application/api/enums/dieVendorsEnum';
@@ -97,7 +97,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is negative', () => {
-            const negativeSizeAcross = chance.floating( {max: -1} );
+            const negativeSizeAcross = chance.floating({ max: -1 });
             dieAttributes.sizeAcross = negativeSizeAcross;
             const die = new DieModel(dieAttributes);
 
@@ -126,7 +126,7 @@ describe('validation', () => {
         });
 
         it('should fail if attribute is negative', () => {
-            const negativeSizeAround = chance.floating( {max: -1} );
+            const negativeSizeAround = chance.floating({ max: -1 });
             dieAttributes.sizeAround = negativeSizeAround;
             const die = new DieModel(dieAttributes);
 
@@ -148,7 +148,7 @@ describe('validation', () => {
 
         it('should be a string', () => {
             const die = new DieModel(dieAttributes);
-        
+
             expect(die.dieNumber).toEqual(expect.any(String));
         });
 
@@ -158,7 +158,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -176,9 +176,9 @@ describe('validation', () => {
             validDieNumbers.forEach((dieNumber) => {
                 dieAttributes.dieNumber = dieNumber;
                 const die = new DieModel(dieAttributes);
-                
+
                 const error = die.validateSync();
-                
+
                 expect(error).toBeUndefined();
             });
         });
@@ -188,18 +188,18 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete dieAttributes.numberAcross;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
             dieAttributes.numberAcross = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -207,9 +207,9 @@ describe('validation', () => {
             const negativeValue = chance.d100() * -1;
             dieAttributes.numberAcross = negativeValue;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -226,18 +226,18 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete dieAttributes.numberAround;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
             dieAttributes.numberAround = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -245,9 +245,9 @@ describe('validation', () => {
             const negativeValue = chance.d100() * -1;
             dieAttributes.numberAround = negativeValue;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -264,18 +264,18 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete dieAttributes.gear;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should fail validation if value IS NOT a whole number', () => {
             dieAttributes.gear = chance.floating({ min: 0 });
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -283,9 +283,9 @@ describe('validation', () => {
             const negativeValue = chance.d100() * -1;
             dieAttributes.gear = negativeValue;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -355,16 +355,16 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete dieAttributes.notes;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.notes = chance.floating();
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.notes).toEqual(expect.any(String));
         });
 
@@ -372,7 +372,7 @@ describe('validation', () => {
             const expectedNotes = chance.string();
             dieAttributes.notes = '  ' + expectedNotes + ' ';
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.notes).toEqual(expectedNotes);
         });
     });
@@ -381,16 +381,16 @@ describe('validation', () => {
         it('should fail validation if attribute is undefined', () => {
             delete dieAttributes.cost;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a number', () => {
             dieAttributes.cost = getRandomCost();
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.cost).toEqual(expect.any(Number));
         });
 
@@ -399,7 +399,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -409,8 +409,22 @@ describe('validation', () => {
             dieAttributes.cost = unroundedCost;
 
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.cost).toEqual(roundedCost);
+        });
+
+        it('should handle .toJSON method', () => {
+            /* 
+        Note: this is a very important test case. 
+        By default, Mongoose does not run GETTERS on each attribute when a document is converted toJSON. 
+        A global config was setup in databaseService.ts that ensures all getters are ran, and this test case will fail if that config is ever changed 
+      */
+            const giggityDollarAmount = 1.69;
+            dieAttributes.cost = giggityDollarAmount;
+            const die = new DieModel(dieAttributes);
+            const dieAsJson = die.toJSON();
+
+            expect(dieAsJson.cost).toEqual(giggityDollarAmount);
         });
     });
 
@@ -418,9 +432,9 @@ describe('validation', () => {
         it('should fail validation if attribute is not defined', () => {
             delete dieAttributes.vendor;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -437,9 +451,9 @@ describe('validation', () => {
             const invalidVendor = chance.string();
             dieAttributes.vendor = invalidVendor;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -449,7 +463,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
 
@@ -457,7 +471,7 @@ describe('validation', () => {
             const lowercaseVendor = chance.pickone(dieVendors).toLowerCase();
             dieAttributes.vendor = lowercaseVendor;
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.vendor).toEqual(lowercaseVendor.toUpperCase());
         });
     });
@@ -468,7 +482,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -484,9 +498,9 @@ describe('validation', () => {
             dieAttributes.magCylinder = invalidMagCylinder;
 
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -494,9 +508,9 @@ describe('validation', () => {
             const validMagCylinder = chance.pickone(dieMagCylinders);
             dieAttributes.magCylinder = validMagCylinder;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
     });
@@ -514,33 +528,24 @@ describe('validation', () => {
         it('should be a number', () => {
             dieAttributes.cornerRadius = String(chance.floating());
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.cornerRadius).toEqual(expect.any(Number));
         });
-        
+
         it('should not be negative', () => {
             dieAttributes.cornerRadius = -1;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
     });
     describe('attribute: spaceAcross', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete dieAttributes.spaceAcross;
-            const die = new DieModel(dieAttributes);
-            
-            const error = die.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
         it('should be a number', () => {
             dieAttributes.spaceAcross = String(chance.floating());
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.spaceAcross).toEqual(expect.any(Number));
         });
 
@@ -566,19 +571,10 @@ describe('validation', () => {
     });
 
     describe('attribute: spaceAround', () => {
-        it('should fail validation if attribute is not defined', () => {
-            delete dieAttributes.spaceAround;
-            const die = new DieModel(dieAttributes);
-
-            const error = die.validateSync();
-            
-            expect(error).toBeDefined();
-        });
-
         it('should be a number', () => {
             dieAttributes.spaceAround = String(chance.floating());
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.spaceAround).toEqual(expect.any(Number));
         });
 
@@ -607,16 +603,16 @@ describe('validation', () => {
         it('should fail validation if attribute is not defined', () => {
             delete dieAttributes.facestock;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.facestock = chance.string();
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.facestock).toEqual(expect.any(String));
         });
 
@@ -624,7 +620,7 @@ describe('validation', () => {
             const expectedFacestock = chance.string();
             dieAttributes.facestock = '  ' + expectedFacestock + ' ';
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.facestock).toEqual(expectedFacestock);
         });
     });
@@ -635,24 +631,24 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.liner = chance.floating();
-            
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.liner).toEqual(expect.any(String));
         });
 
         it('should trim whitespace', () => {
             const expectedLiner = chance.string();
-            dieAttributes.liner ='  ' + expectedLiner + '  ';
-            
+            dieAttributes.liner = '  ' + expectedLiner + '  ';
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.liner).toEqual(expectedLiner);
         });
     });
@@ -661,17 +657,17 @@ describe('validation', () => {
         it('should NOT fail validation if attribute is not defined', () => {
             delete dieAttributes.specialType;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.specialType = chance.floating();
-            
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.specialType).toEqual(expect.any(String));
         });
     });
@@ -680,26 +676,26 @@ describe('validation', () => {
         it('should fail validation if attribute is not defined', () => {
             delete dieAttributes.serialNumber;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.serialNumber = chance.floating();
-            
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.serialNumber).toEqual(expect.any(String));
         });
 
         it('should trim whitespace', () => {
             const expectedSerialNumber = chance.string();
-            dieAttributes.serialNumber =' ' + expectedSerialNumber + ' ';
-            
+            dieAttributes.serialNumber = ' ' + expectedSerialNumber + ' ';
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.serialNumber).toEqual(expectedSerialNumber);
         });
     });
@@ -708,17 +704,17 @@ describe('validation', () => {
         it('should fail validation if attribute is not defined', () => {
             delete dieAttributes.status;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
         it('should be a string', () => {
             dieAttributes.status = chance.floating();
-            
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.status).toEqual(expect.any(String));
         });
 
@@ -728,7 +724,7 @@ describe('validation', () => {
             const die = new DieModel(dieAttributes);
 
             const error = die.validateSync();
-            
+
             expect(error).toBeDefined();
         });
 
@@ -736,9 +732,9 @@ describe('validation', () => {
             const validStatus = chance.pickone(dieStatuses);
             dieAttributes.status = validStatus;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
 
@@ -746,19 +742,19 @@ describe('validation', () => {
             const validLowercaseStatus = chance.pickone(dieStatuses).toLowerCase();
             dieAttributes.status = validLowercaseStatus;
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.status).toEqual(validLowercaseStatus.toUpperCase());
         });
     });
 
     describe('attribute: quantity', () => {
-        it('should default to 1 if attribute is not defined', () => {
-            const expectedQuantity = 1;
+        it('should be required', () => {
             delete dieAttributes.quantity;
-
             const die = new DieModel(dieAttributes);
-            
-            expect(die.quantity).toEqual(expectedQuantity);
+
+            const error = die.validateSync();
+
+            expect(error).toBeDefined();
         });
 
         it('should fail if value is not an integer', () => {
@@ -794,18 +790,18 @@ describe('validation', () => {
         it('should not fail validation if attribute is not defined', () => {
             delete dieAttributes.orderDate;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
 
         it('should be set to a date when die.status is set to "ORDERED"', () => {
             delete dieAttributes.orderDate;
             dieAttributes.status = ORDERED_DIE_STATUS;
-            
+
             const die = new DieModel(dieAttributes);
-            
+
             expect(die.orderDate).toBeDefined();
             expect(die.orderDate instanceof Date).toEqual(true);
         });
@@ -816,7 +812,7 @@ describe('validation', () => {
 
             const die = new DieModel(dieAttributes);
             const originalDate = die.orderDate;
-            
+
             var delayInMilliseconds = 10;
 
             await delay(delayInMilliseconds);
@@ -830,9 +826,9 @@ describe('validation', () => {
         it('should not fail validation if attribute is not defined', () => {
             delete dieAttributes.arrivalDate;
             const die = new DieModel(dieAttributes);
-            
+
             const error = die.validateSync();
-            
+
             expect(error).not.toBeDefined();
         });
 
@@ -852,7 +848,7 @@ describe('validation', () => {
 
             const die = new DieModel(dieAttributes);
             const originalDate = die.arrivalDate;
-            
+
             var delayInMilliseconds = 10;
 
             await delay(delayInMilliseconds);
@@ -861,7 +857,7 @@ describe('validation', () => {
             expect(die.arrivalDate).toEqual(originalDate);
         });
     });
-    
+
     describe('verify timestamps on created object', () => {
         beforeAll(async () => {
             await databaseService.connectToTestMongoDatabase();
@@ -882,7 +878,7 @@ describe('validation', () => {
             await die.save();
             await DieModel.deleteById(id);
 
-            const softDeletedDie = await DieModel.findOneDeleted({_id: id}).exec();
+            const softDeletedDie = await DieModel.findOneDeleted({ _id: id }).exec();
 
             expect(softDeletedDie).toBeDefined();
             expect(softDeletedDie.deleted).toBe(true);

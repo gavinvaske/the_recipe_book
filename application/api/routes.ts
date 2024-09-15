@@ -59,7 +59,7 @@ export const setupApiRoutes = (app: Application) => {
   app.use('/file-plan', filePlanEndpoints);
   app.use('/packaging', packagingEndpoints);
   app.use('/quote', quoteEndpoints);
-  app.use('/die', dieEndpoints);
+  app.use('/dies', dieEndpoints);
   app.use('/liner-types', linerTypeEndpoints);
   app.use('/adhesive-categories', adhesiveCategoryEndpoints);
   app.use('/material-length-adjustments', materialLengthAdjustmentEndpoints);

@@ -29,6 +29,11 @@ import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
 import { CrudNavigation } from '../CrudNavigation/CrudNavigation';
+import { ProductForm } from '../Product/ProductForm/ProductForm';
+import { ProductTable } from '../Product/ProductTable/ProductTable';
+import { DieTable } from '../Die/DieTable/DieTable';
+import { DieForm } from '../Die/DieForm/DieForm';
+import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 
 const queryClient = new QueryClient();
 
@@ -54,6 +59,10 @@ export function App() {
                 <Route path='profile' element={<Profile />} />
                 <Route path='crud-navigation' element={<CrudNavigation />} />
 
+                <Route path='views'>
+                  <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+                </Route>
+
                 <Route path='forms'>
                   <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
                   <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
@@ -64,6 +73,8 @@ export function App() {
                   <Route path='material/:mongooseId?' element={<MaterialForm />} />
                   <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
                   <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
+                  <Route path='product/:mongooseId?' element={<ProductForm />} />
+                  <Route path='die/:mongooseId?' element={<DieForm />} />
                 </Route>
 
                 <Route path='tables'>
@@ -74,6 +85,8 @@ export function App() {
                   <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
                   <Route path='customer' element={<CustomerTable />} />
                   <Route path='material-order' element={<MaterialOrderTable />} />
+                  <Route path='product' element={<ProductTable />} />
+                  <Route path='die' element={<DieTable />} />
                 </Route>
 
               </Route>

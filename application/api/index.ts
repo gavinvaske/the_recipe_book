@@ -63,6 +63,12 @@ if (!fs.existsSync(reactBuildFolderPath)) {
     throw new Error('React build folder does not exist. Please run `npm run build` and try again.');
 }
 
+const pathToReactEntryPoint = path.join(__dirname, '..', 'react/index.html')
+
+if (!fs.existsSync(pathToReactEntryPoint)) {
+  throw new Error(`React entry file does not exist. Investigate why this path is not linked correctly: ${pathToReactEntryPoint}`);
+}
+
 app.use(express.static(reactBuildFolderPath));  // Sets up React
 
 /* Defines every HTTP route the API provides */ 
@@ -70,7 +76,7 @@ setupApiRoutes(app)
 
 // This route loads the ENTIRE REACT APP
 app.use('/react-ui', (_, response) => {
-  response.sendFile(path.join(__dirname, '..', 'views/foobar.html'));
+  response.sendFile(pathToReactEntryPoint);
 });
 
 databaseConnection.on('error', (error) => {

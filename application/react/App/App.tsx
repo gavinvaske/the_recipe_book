@@ -28,6 +28,7 @@ import { ChangePassword } from '../_auth/ChangePassword/ChangePassword';
 import { Register } from '../_auth/Register/Register';
 import { Unauthorized } from '../_auth/Unauthorized/Unauthorized';
 import { Profile } from '../User/Profile/Profile';
+import { CrudNavigation } from '../CrudNavigation/CrudNavigation';
 import { ProductForm } from '../Product/ProductForm/ProductForm';
 import { ProductTable } from '../Product/ProductTable/ProductTable';
 import { DieTable } from '../Die/DieTable/DieTable';
@@ -56,6 +57,7 @@ export function App() {
               <Route element={<TopNavbarLayout />}>
                 <Route path='inventory' element={<Inventory />}></Route>
                 <Route path='profile' element={<Profile />} />
+                <Route path='crud-navigation' element={<CrudNavigation />} />
 
                 <Route path='views'>
                   <Route path='customer/:mongooseId' element={<ViewCustomer />} />
@@ -86,6 +88,7 @@ export function App() {
                   <Route path='product' element={<ProductTable />} />
                   <Route path='die' element={<DieTable />} />
                 </Route>
+
               </Route>
           </Route>
 

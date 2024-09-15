@@ -717,178 +717,21 @@ input:focus + .show-password-frame {
     height: 1.285rem;
     border: 1px solid #d8d6de;
 }
-.navbar-main {
-  top: 0;
-  left:0;
-  box-sizing: border-box;
-  position: fixed;
-  width: 100%;
-  height: 80px;
-  /* padding-left: 2rem;
-  padding-right: 2rem; */
-  padding-left: 15px;
-  padding-right: 15px;
-  background-color:white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  -webkit-box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-  box-shadow: 0 4px 24px 0 rgb(34 41 47 / 10%);
-  z-index: 61;
-}
-.navbar-main .column-left .feather-chevron-down {
-  margin-left: 7px;
-  margin-right: 0!important;
-}
-.navbar-main .column {
-  width: 33.33333%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.navbar-main .column-left .navbar-links a {
-  padding: 12px 20px;
-}
-.navbar-main .column-left .navbar-links .material,
-.navbar-main .column-left .navbar-links .recipes,
-.navbar-main .column-left .navbar-links .insights {
-  padding: 12px 20px;
-}
-.navbar-main .column-left .navbar-links {
-  border-radius: 5px;
-  margin-right: 10px;
-}
-.navbar-main .column-left .navbar-links:hover {
-  background-color:#f8f8f8;
-  transition: .3s;
-  cursor: pointer;
-}
-.navbar-main .column-left .navbar-links.active {
-  background-color:#f8f8f8;
-}
-.navbar-main .column-left a,
-.navbar-main .column-left div.recipes {
-  color: #6e6b7b;
-  font-size: 1rem;
-  font-weight: 400;
-}
-.navbar-main .column-left a svg,
-.navbar-main .column-left div.recipes svg {
-  margin-right: 7px;
-}
-.navbar-main .column-right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-}
-.navbar-main .column-right ul.primary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
-.user-frame {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
 
-.user-details {
-  display: flex;
-  justify-content:center;
-  align-items: flex-end;
-  flex-direction: column;
-}
-.sidebar-main .user-profile-picture {
-  background: #f8f8f8;
-}
-.user-profile-picture {
-  position: relative;
-  height: 45px;
-  background: #7367F6;
-  width: 45px;
-  border-radius: 50%;
-  margin-left: 20px;
-}
-.sidebar-main .user-profile-picture {
-  margin-left: 0;
-  width: 35px;
-  height: 35px;
-}
-.user-name {
-  font-weight: 600;
-  line
-}
-.job-role {
-  line-height: 1;
-}
-.active-user {
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  background-color: #28c76f;
-  border: 2px solid white;
-  position: absolute;
-  bottom: -2px;
-  right: -3px;
-}
-.user-frame:hover {
-  cursor: pointer;
-}
-#recipe-dropdown-trigger,
-#material-dropdown-trigger,
-#insights-dropdown-trigger {
-  position: relative;
-}
-.navbar-main .column-left .navbar-links .material .fa-regular,
-.navbar-main .column-left .navbar-links .recipes .fa-light,
-.navbar-main .column-left .navbar-links .recipes .fa-chart-network, 
-.navbar-main .column-left .navbar-links .fa-chart-network,
-.navbar-main .column-left .navbar-links .fa-table-tree {
-  font-size: 20px;
-  margin-right: 7px;
-}
-.navbar-main .navbar-links .fa-cubes-stacked,
-.navbar-main .navbar-links .fa-layer-group,
-.navbar-main .navbar-links .fa-list-timeline {
-  font-size: 22px;
-  /* margin-left: 25px; */
-  margin-left: 15px;
-  margin-right: 10px;
-}
-.navbar-main .column-left .navbar-links .tickets .fa-sharp {
-  font-size: 20px;
-  margin-right: 7px;
-  transform: rotate(90deg);
-}
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 5px);
-  z-index: 10;
-  display: none;
-  min-width: 10rem;
-  font-size: 1rem;
-  color: #6e6b7b;
-  padding: 0.5rem 0;
-  margin: 0 0 0;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(34,41,47,.05);
-  border-radius: 0.358rem;
-  box-shadow: 0 5px 25px rgb(34 41 47 / 10%);
-  width: 13rem;
-  margin-top: 35px;
-  right: 0;
-  visibility: hidden;
-}
-.dropdown-menu.user-options.active {
-  visibility: visible;
-  margin-top: 10px;
-  transition: .3s;
-  z-index: 888;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .dropdown-menu.recipe-dropdown,
 .dropdown-menu.material-dropdown,
 .dropdown-menu.insights-dropdown {
@@ -914,7 +757,7 @@ input:focus + .show-password-frame {
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 100%;
+  width: 100%!important;
   clear: both;
   text-align: inherit;
   background-color: transparent;
@@ -934,21 +777,22 @@ input:focus + .show-password-frame {
   margin-left: 15px;
   font-size: 22px;
 }
-.dropdown-menu li a:hover,
-.options-dropdown li a:hover {
+/* .dropdown-menu li a:hover,
+.options-dropdown li a:hover,
+.dropdown-menu button:hover {
   background-color: rgba(115,103,240,.12);
   color: #7567F6;
-}
+} */
 .dropdown-menu li a:hover svg
 .options-dropdown li a:hover svg {
   stroke: #7567F6;
 }
-.dropdown-menu {
+/* .dropdown-menu {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
+} */
 .card {
   padding: 1.5rem;
   border: none;
@@ -2619,7 +2463,7 @@ a.storm {
 	opacity: 1;
 	/* transition-delay:.5s; */
 }
-.tooltip-bottom .tooltiptext {
+/* .tooltip-bottom .tooltiptext {
 	visibility: hidden;
 	min-width: 120px;
 	background-color: #323338;
@@ -2632,7 +2476,7 @@ a.storm {
 	bottom: -55px;
 	opacity: 0;
 	transition: opacity 0.3s;
-}
+} */
 .tooltip-bottom .tooltiptext::after {
 	content: "";
 	position: absolute;
@@ -2643,23 +2487,23 @@ a.storm {
 	border-style: solid;
 	border-color: transparent transparent #323338 transparent;
 }
-.tooltip-bottom:hover .tooltiptext {
+/* .tooltip-bottom:hover .tooltiptext {
 	visibility: visible;
 	opacity: 1;
 	transition-delay:.5s;
-}
-.activity-option.tooltip-bottom .tooltiptext {
+} */
+/* .activity-option.tooltip-bottom .tooltiptext {
   min-width: 200px;
   margin-left: -87px;
 }
 .settings-option.tooltip-bottom .tooltiptext {
   min-width: 200px;
   margin-left: -88px;
-}
-.team-chat-option.tooltip-bottom .tooltiptext,
+} */
+/* .team-chat-option.tooltip-bottom .tooltiptext,
 .notification-option.tooltip-bottom .tooltiptext {
   margin-left: -48px;
-} 
+}  */
 
 .btn-filter .tooltiptext {
 	width: 170px;

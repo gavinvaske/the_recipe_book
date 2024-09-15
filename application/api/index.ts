@@ -12,12 +12,17 @@ import httpServ from 'http';
 import { Server } from 'socket.io';
 import customWebSockets from './services/websockets/init.ts';
 import { setupApiRoutes } from './routes.ts'
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 connectToMongoDatabase(process.env.MONGO_DB_URL);
 const databaseConnection = mongoose.connection;
 
 const defaultPort = 8080;
 const PORT = process.env.PORT || defaultPort;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -45,8 +50,6 @@ app.use((request, response, next) => {
 });
 
 const publicDirectory = 'application/public'
-const ejsViewsDirectory = 'application/views'
-const ejsLayoutFilename = 'layout.ejs'
 
 app.use(express.static(publicDirectory));
 
@@ -54,11 +57,7 @@ if (!fs.existsSync(publicDirectory)) {
     throw new Error('Public folder does not exist, cannot render any .ejs views and/or css styles for those pages');
 }
 
-app.set('view engine', 'ejs');
-app.set('views', ejsViewsDirectory);
-app.set('layout', ejsLayoutFilename);
-
-const reactBuildFolderPath = './build';
+const reactBuildFolderPath = 'build';
 
 if (!fs.existsSync(reactBuildFolderPath)) {
     throw new Error('React build folder does not exist. Please run `npm run build` and try again.');
@@ -70,7 +69,9 @@ app.use(express.static(reactBuildFolderPath));  // Sets up React
 setupApiRoutes(app)
 
 // This route loads the ENTIRE REACT APP
-app.use('/react-ui', (_, response) => response.render('app.ejs'));
+app.use('/react-ui', (_, response) => {
+  response.sendFile(path.join(__dirname, '..', 'views/foobar.html'));
+});
 
 databaseConnection.on('error', (error) => {
     throw new Error(`Error connecting to the database: ${error}`);

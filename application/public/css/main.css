@@ -1,4 +1,5 @@
-<link rel="preload" href="/fonts/Montserrat-Black.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+/* <link rel="preload" href="/fonts/Montserrat-Black.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="/fonts/Montserrat-BlackItalic.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="/fonts/Montserrat-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="/fonts/Montserrat-BoldItalic.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -15,7 +16,7 @@
 <link rel="preload" href="/fonts/Montserrat-SemiBold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="/fonts/Montserrat-SemiBoldItalic.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="/fonts/Montserrat-Thin.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-<link rel="preload" href="/fonts/Montserrat-ThinItalic.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+<link rel="preload" href="/fonts/Montserrat-ThinItalic.ttf" as="font" type="font/ttf" crossorigin="anonymous"> */
 
 
   /* Document
@@ -819,7 +820,6 @@ input:focus + .show-password-frame {
 }
 .user-name {
   font-weight: 600;
-  line
 }
 .job-role {
   line-height: 1;
@@ -1156,8 +1156,10 @@ input:focus + .show-password-frame {
   font-weight: 200;
   margin-left: 3px;
   color: #6e6b7b;
-  /* margin-top: 10px; */
-} */
+  margin-top: 10px; 
+  } 
+*/
+
 .header p b {
   color: #157efb;
   font-weight: 500;
@@ -1530,13 +1532,11 @@ a.storm {
 .content-box.active {
   display: block;
 }
+
 .recipe-filter-options {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.recipe-filter {
-  height: ;
 }
 
 .full-width {
@@ -3553,7 +3553,8 @@ canvas{
   background-color: #21D4FD;
   background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */
 }
-} /* ---- stats.js ---- */ 
+
+/* ---- stats.js ---- */ 
 .count-particles { 
   background: #000022; 
   position: absolute; 
@@ -4396,17 +4397,14 @@ span.drpdwn-title {
   left: -5px;
   right: -5px;
   z-index: -1;
-  border-r
+  /* border-r */
 }
+
 .duration-dropdown-trigger:hover .duration-dropdown-options {
   display: block;
   right: -7px;
   z-index: 9;
 }
-
-
-
-
 
 .on-hold-status-cell {
   position: relative;

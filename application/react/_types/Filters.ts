@@ -3,7 +3,7 @@ export type ConditionalFilterFunction<T> = (objects: Partial<T>[]) => Partial<T>
 export type UuidToTextFilter = {[key: string]: string}
 export type UuidToConditionalFilter<T> = {[key: string]: ConditionalFilterFunction<T>}
 
-export interface Filter<T> {
+export interface IFilter<T> {
   searchBarInput: string;
   textQuickFilters: UuidToTextFilter;
   conditionalQuickFilters: {[key: string]: ConditionalFilterFunction<T>}

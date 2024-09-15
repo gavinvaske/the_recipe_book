@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import './FilterBar.scss';
 import { observer } from 'mobx-react-lite';
-import { ConditionalFilter, ConditionalFilterFunction, Filter, TextFilter, TextFilterOption } from '../../_types/Filters';
+import { ConditionalFilter, ConditionalFilterFunction, IFilter, TextFilter, TextFilterOption } from '../../_types/Filters';
 import { ConditionalQuickFilter } from '../QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
 import { TextQuickFilter } from '../QuickFilterModal/TextQuickFilter/QuickFilterButton';
 import SearchBar from '../SearchBar/SearchBar';
 
-const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], store: Filter<T>) => {
+const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], store: IFilter<T>) => {
   return (
     textQuickFilters.map((quickFilter: TextFilter) => {
       const { description, options } = quickFilter;
@@ -28,7 +28,7 @@ const renderTextQuickFilters = <T extends any>(textQuickFilters: TextFilter[], s
   )
 }
 
-const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions: ConditionalFilter<T>[], store: Filter<T>) => {
+const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions: ConditionalFilter<T>[], store: IFilter<T>) => {
   return (
     conditionalFilterFunctions.map((filterFunction: ConditionalFilter<T>) => {
       const { uuid, textToDisplay, conditionalFilter } = filterFunction;
@@ -51,7 +51,7 @@ const renderConditionalQuickFilters = <T extends any>(conditionalFilterFunctions
 type Props<T> = {
   conditionalQuickFilters: ConditionalFilter<T>[];
   textQuickFilters: TextFilter[];
-  store: Filter<T>
+  store: IFilter<T>
   filterableItemsCount: number
 }
 

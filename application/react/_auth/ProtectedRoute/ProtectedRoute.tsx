@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../_hooks/useAuth";
 import { useRefreshToken } from '../../_hooks/useRefreshToken';
 import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator';
@@ -17,6 +17,7 @@ export const ProtectedRoute = (props: Props) => {
   const { auth }: { auth: UserAuth} = useAuth();
   const refreshAccessToken = useRefreshToken();
   const location = useLocation();
+  const navigate = useNavigate();
 
   /* 
     This useEffect checks if the accessToken is null (this usually happens when the page refreshes).
@@ -27,10 +28,10 @@ export const ProtectedRoute = (props: Props) => {
 
     const getNewAccessToken = async () => {
         try {
-          await refreshAccessToken();
+          await refreshAccessToken(); // throws if the refreshToken is expired or non-existant.
         }
         catch (err) {
-          console.error(err);
+          navigate('/react-ui/login', {state: { from: location }, replace: true });
         }
         finally {
           isMounted && setIsLoading(false);

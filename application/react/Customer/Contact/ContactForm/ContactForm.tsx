@@ -92,7 +92,6 @@ export const ContactForm = (props) => {
           register={register}
           isRequired={false}
           errors={errors}
-          isMultiSelect={false}
         />
       <button className='submit-button' type="submit">Submit</button>
     </form>

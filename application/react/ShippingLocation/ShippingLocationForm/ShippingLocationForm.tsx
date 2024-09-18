@@ -36,68 +36,76 @@ export const ShippingLocationForm = (props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormAttributes>();
 
   return (
-    <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        attribute='name'
-        label="Name"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='freightAccountNumber'
-        label="Freight Account Number"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Select
-        attribute='deliveryMethod'
-        label="Delivery Method"
-        options={deliveryMethods}
-        register={register}
-        isRequired={false}
-        errors={errors}
-      />
-      <Input
-        attribute='street'
-        label="Street"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='unitOrSuite'
-        label="Unit or Suite #"
-        register={register}
-        isRequired={false}
-        errors={errors}
-      />
-      <Input
-        attribute='city'
-        label="City"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='state'
-        label="State"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='zipCode'
-        label="Zip"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
+    <div className='modal-content'>
+      <div className='header'>
+        <h2>New Shipping Address</h2>
+      </div>
+      <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
+        <div className='double-column-container'>
+          <Input
+            attribute='name'
+            label="Name"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='freightAccountNumber'
+            label="Freight Account Number"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+        </div>
+        <Select
+          attribute='deliveryMethod'
+          label="Delivery Method"
+          options={deliveryMethods}
+          register={register}
+          isRequired={false}
+          errors={errors}
+        />
+        <Input
+          attribute='street'
+          label="Street"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+        <Input
+          attribute='unitOrSuite'
+          label="Unit or Suite #"
+          register={register}
+          isRequired={false}
+          errors={errors}
+        />
+        <div className='triple-column-container'>
+          <Input
+            attribute='city'
+            label="City"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='state'
+            label="State"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='zipCode'
+            label="Zip"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+        </div>
 
-      <button type="submit">Submit</button>
-      <button type="button" onClick={() => onCancel()}>Close Modal</button>
-    </form>
+        <button className='submit-button' type="submit">Submit</button>
+      </form>
+    </div>
   )
 }
 

@@ -53,22 +53,22 @@ export const Navbar = () => {
 
   const dropdownLists = [
     <ul className='shortcut-body-create'>
-      <li><NavLink to='/react-ui/tables/customer'>Create Ticket</NavLink></li>
-      <li><NavLink to='/'>Create Quote</NavLink></li>
-      <li><NavLink to='/'>Create Product</NavLink></li>
+      <li><NavLink to='/react-ui/forms/ticket'>Create Ticket</NavLink></li>
+      <li><NavLink to='/react-ui/forms/quote'>Create Quote</NavLink></li>
+      <li><NavLink to='/react-ui/forms/product'>Create Product</NavLink></li>
       <li><NavLink to='/react-ui/forms/customer' className={({ isActive, isPending }) => `${isPending ? "pending" : isActive ? "active" : ""}`}>Create Customer</NavLink></li>
-      <li><NavLink to='/'>Create Die</NavLink></li>
+      <li><NavLink to='/react-ui/forms/die'>Create Die</NavLink></li>
       <li><NavLink to='/'>Create Plate</NavLink></li>
       <li><NavLink to='/'>Create PO</NavLink></li>
     </ul>,
     <ul className='shortcut-body-view'>
-      <li><NavLink to='/'>View Ticket</NavLink></li>
-      <li><NavLink to='/'>View Quote</NavLink></li>
+      <li><NavLink to='/react-ui/tables/ticket'>View Ticket</NavLink></li>
+      <li><NavLink to='/react-ui/tables/quote'>View Quote</NavLink></li>
       <li><NavLink to='/react-ui/tables/product'>View Product</NavLink></li>
       <li><NavLink to='/react-ui/tables/customer'>View Customer</NavLink></li>
       <li><NavLink to='/react-ui/tables/die'>View Die</NavLink></li>
-      <li><NavLink to='/'>View Plate</NavLink></li>
-      <li><NavLink to='/'>View PO</NavLink></li>
+      <li><NavLink to='/react-ui/tables/plate'>View Plate</NavLink></li>
+      <li><NavLink to='/react-ui/tables/po'>View PO</NavLink></li>
     </ul>,
     <ul className='shortcut-body-purchase'>
       <li><NavLink to='/'>Purchase Plates</NavLink></li>
@@ -287,6 +287,7 @@ export const Navbar = () => {
               <div className='line-divide'></div>
                 <ul className='user-options-list'>
                     <li><NavLink to="/react-ui/profile" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-user"></i>My Account</NavLink></li>
+                    <li><NavLink to="/react-ui/admin-settings" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-crown"></i>Admin Settings</NavLink></li>
                     <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
                 </ul>
               <div className='line-divide'></div>

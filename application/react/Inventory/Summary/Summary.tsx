@@ -10,7 +10,7 @@ const Summary = observer((props: {inventorySummaryStore: any}) => {
   return (
     <div className='material-header flex-top-space-between-row full-width'>
       <div className='card col col-one'>
-        <h1>Inventory Page</h1>
+        <h1>Inventory</h1>
       </div>
       <div className='card col col-two'>
         <span>Feet On Hand</span>

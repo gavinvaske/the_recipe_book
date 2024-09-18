@@ -70,23 +70,28 @@ export const MaterialTable = () => {
   const rows = table.getRowModel().rows;
 
   return (
-    <>
-      <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
+    <div className='page-wrapper products-table'>
+      <div className='card table-card'>
+        <div className="header-description">
+          <h1 className="text-blue">Materials</h1>
+          <p>Complete list of all <p className='text-blue'>{rows.length} </p> materials.</p>
+        </div>
+        <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 
-      <Table id='material-table'>
-        <TableHead table={table} />
-        
-        <TableBody>
-          {rows.map(row => (
-            <ExpandableRow row={row} key={row.id}>
-              <div>@Storm: Any HTML elements within ExpandableRow are auto-magically placed into a, wait for it - expandable row ;)</div>
-            </ExpandableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <br />
-      <p>Row Count: {rows.length}</p>
-    </>
+        <Table id='material-table'>
+          <TableHead table={table} />
+          
+          <TableBody>
+            {rows.map(row => (
+              <ExpandableRow row={row} key={row.id}>
+                <div>@Storm: Any HTML elements within ExpandableRow are auto-magically placed into a, wait for it - expandable row ;)</div>
+              </ExpandableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <p>Row Count: {rows.length}</p>
+      </div>
+    </div>
+      
   )
 };

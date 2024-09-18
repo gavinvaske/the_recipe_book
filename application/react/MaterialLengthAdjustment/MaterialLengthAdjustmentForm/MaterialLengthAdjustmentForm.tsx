@@ -40,31 +40,35 @@ export const MaterialLengthAdjustmentForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
-      <Select
-        attribute='material'
-        label="Material"
-        options={materials}
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='length'
-        label="Length"
-        register={register}
-        isRequired={true}
-        errors={errors}
-      />
-      <Input
-        attribute='notes'
-        label="Notes"
-        register={register}
-        isRequired={false}
-        errors={errors}
-      />
-      <button className='btn-primary' type="submit">Create Material Inventory Entry</button>
-    </form>
+    <div className='material-adjustment-page'>
+      <div className='card'>
+        <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
+          <Select
+            attribute='material'
+            label="Material"
+            options={materials}
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='length'
+            label="Length"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='notes'
+            label="Notes"
+            register={register}
+            isRequired={false}
+            errors={errors}
+          />
+          <button className='btn-primary' type="submit">Create Material Inventory Entry</button>
+        </form>
+      </div>
+    </div>
   )
 }
 

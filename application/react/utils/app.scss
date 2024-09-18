@@ -9,6 +9,7 @@
         flex-direction: row;
 
         .tbl-cell {
+            font-weight: bold;
             &:first-of-type {
                 border-radius: 5px 0 0 0;
                 .pulse-indicator {

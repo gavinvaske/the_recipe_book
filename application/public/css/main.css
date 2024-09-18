@@ -446,7 +446,7 @@ html {
   color: #39c2dd;
 }
 .page-wrapper {
-  padding: 80px 2rem 0 2rem;
+  padding: 95px 15px 15px 15px;
 }
 .body p {
     line-height: 1.5rem;
@@ -4864,6 +4864,38 @@ background: #000;
 }
 .ticket-details-wrapper {
   position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.table-search-bar-container {
+  margin: 10px 0;
+}
+
+.table-search-bar-container input {
+  width: 280px;
 }
 
 

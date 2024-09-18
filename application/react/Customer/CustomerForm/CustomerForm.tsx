@@ -145,9 +145,8 @@ export const CustomerForm = () => {
   }
 
   return (
-    <div>
-    <div className='page-container'>
-      <div className='form-card'>
+    <div className='create-customer-page-wrapper'>
+      <div className='card'>
         <div className='form-card-header'>
           <h1>{isUpdateRequest ? 'Update' : 'Create'} Customer</h1>
         </div>
@@ -155,34 +154,37 @@ export const CustomerForm = () => {
           <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
             <div className='form-elements-wrapper'>
               <div className='group-field-wrapper'>
-                <Input
-                    attribute='customerId'
-                    label="Customer ID"
+                <div className='triple-column-container'>
+                  <Input
+                      attribute='customerId'
+                      label="Customer ID"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
+                    />
+                  <Input
+                    attribute='name'
+                    label="Name"
                     register={register}
                     isRequired={true}
                     errors={errors}
                   />
+                  <Input
+                    attribute='overun'
+                    label="Overun"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+                  
+                </div>
                 <Input
-                  attribute='name'
-                  label="Name"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                />
-                <Input
-                  attribute='notes'
-                  label="Notes"
-                  register={register}
-                  isRequired={false}
-                  errors={errors}
-                />
-                <Input
-                  attribute='overun'
-                  label="Overun"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                />
+                    attribute='notes'
+                    label="Notes"
+                    register={register}
+                    isRequired={false}
+                    errors={errors}
+                  />
                 <Select
                   attribute='creditTerms'
                   label="Credit Term"
@@ -190,122 +192,166 @@ export const CustomerForm = () => {
                   register={register}
                   isRequired={false}
                   errors={errors}
-                  isMultiSelect={true}
+                  isMultiSelect={false}
                 />
               </div>
             </div>
 
+            <h3>Business Locations:</h3>
+            <div id='business-location-cards'>
+              <div className='table-header'>
+                <div className='column-title'>Name</div>
+                <div className='column-title'>Address</div>
+                <div className='column-title'>Unit #</div>
+                <div className='column-title'>City</div>
+                <div className='column-title'>State</div>
+                <div className='column-title'>Zip</div>
+                <div className='column-title'>Delete</div>
+              </div>
+              <div className='table'>
+                {
+                  businessLocations.map((businessLocation, index) => {
+                    return (
+                      <div className='table-row' key={index}>
+                        <AddressCard 
+                          data={businessLocation} 
+                          onDelete={() => removeElementFromArray(index, businessLocations, setBusinessLocations)}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <button className='add-new-row' type="button" onClick={() => setShowBusinessLocationForm(true)}><i className="fa-solid fa-plus"></i> Add Business Location</button>
+
+            <h3>Shipping Locations:</h3>
+            <div id='shipping-location-cards'>
+              <div className='table-header'>
+                  <div className='column-title'>Freight Acct Number:</div>
+                  <div className='column-title'>Delivery Method</div>
+                  <div className='column-title'>Name</div>
+                  <div className='column-title'>Street</div>
+                  <div className='column-title'>Unit</div>
+                  <div className='column-title'>City</div>
+                  <div className='column-title'>State</div>
+                  <div className='column-title'>Zip</div>
+                  <div className='column-title'>Delete</div>
+                </div>
+              <div className='table'>
+                {
+                  shippingLocations.map((shippingLocation, index) => {
+                    return (
+                      <div key={index}>
+                        <ShippingLocationCard
+                          data={shippingLocation} 
+                          onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)} 
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <button className='add-new-row' type="button" onClick={() => setShowShippingLocationForm(true)}><i className="fa-solid fa-plus"></i>Add Shipping Location</button>
+
+            <h3>Billing Locations:</h3>
+            <div id='billing-location-cards'>
+            <div className='table-header'>
+                  <div className='column-title'>Name</div>
+                  <div className='column-title'>Freight Number</div>
+                  <div className='column-title'>Delivery Method</div>
+                  <div className='column-title'>Street</div>
+                  <div className='column-title'>Unit</div>
+                  <div className='column-title'>City</div>
+                  <div className='column-title'>State</div>
+                  <div className='column-title'>Zip</div>
+                  <div className='column-title'>Delete</div>
+                </div>
+              <div className='table'>
+                {
+                  billingLocations.map((billingLocation, index) => {
+                    return (
+                      <div key={index}>
+                        <AddressCard 
+                          data={billingLocation} 
+                          onDelete={() => removeElementFromArray(index, billingLocations, setBillingLocations)}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <button className='add-new-row' type="button" onClick={() => setShowBillingLocationForm(true)}><i className="fa-solid fa-plus"></i> Add Billing Location</button>
+
+            <h3>Contacts:</h3>
+            <div id='contact-cards'>
+              <div className='table-header'>
+                <div className='column-title'>Name</div>
+                <div className='column-title'>Freight Number</div>
+                <div className='column-title'>Delivery Method</div>
+                <div className='column-title'>Street</div>
+                <div className='column-title'>Unit</div>
+                <div className='column-title'>City</div>
+                <div className='column-title'>State</div>
+                <div className='column-title'>Zip</div>
+                <div className='column-title'>Delete</div>
+              </div>
+              <div className='table'>
+                {
+                  contacts.map((contact, index) => {
+                    return (
+                      <div key={index}>
+                        <ContactCard 
+                          data={contact} 
+                          onDelete={() => removeElementFromArray(index, contacts, setContacts)}
+                        />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <button className='add-new-row' type="button" onClick={() => setShowContactForm(true)}><i className="fa-solid fa-plus"></i> Add Contact</button>
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
-      </div>
-    </div>
-
-      <div>
-        <button type="button" onClick={() => setShowBusinessLocationForm(true)}>Add Business Location</button>
-        <button type="button" onClick={() => setShowShippingLocationForm(true)}>Add Shipping Location</button>
-        <button type="button" onClick={() => setShowBillingLocationForm(true)}>Add Billing Location</button>
-        <button type="button" onClick={() => setShowContactForm(true)}>Add Contact</button>
-      </div>
-
-      <h3>Business Locations:</h3>
-      <div id='business-location-cards'>
+        {/* Code Below Renders a modal IFF user initiated one to open */}
         {
-          businessLocations.map((businessLocation, index) => {
-            return (
-              <div key={index}>
-                <AddressCard 
-                  data={businessLocation} 
-                  onDelete={() => removeElementFromArray(index, businessLocations, setBusinessLocations)}
-                />
-              </div>
-            )
-          })
+          showBillingLocationForm &&
+          <FormModal
+            Form={AddressForm}
+            onSubmit={onBillingLocationFormSubmit}
+            onCancel={hideBillingLocationForm}
+          />
+        }
+        {
+          showShippingLocationForm &&
+          <FormModal
+            Form={ShippingLocationForm}
+            onSubmit={onShippingLocationFormSubmit}
+            onCancel={hideShippingLocationForm}
+          />
+        }
+        {
+          showBusinessLocationForm &&
+          <FormModal
+            Form={AddressForm}
+            onSubmit={onBusinessLocationFormSubmit}
+            onCancel={hideBusinessLocationForm}
+          />
+        }
+        {
+          showContactForm &&
+          <FormModal
+            Form={ContactForm}
+            onSubmit={onContactFormSubmit}
+            onCancel={hideContactForm}
+            locations={locations}
+          />
         }
       </div>
-
-      <h3>Shipping Locations:</h3>
-      <div id='shipping-location-cards'>
-        {
-          shippingLocations.map((shippingLocation, index) => {
-            return (
-              <div key={index}>
-                <ShippingLocationCard
-                  data={shippingLocation} 
-                  onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)} 
-                />
-              </div>
-            )
-          })
-        }
-      </div>
-
-      <h3>Billing Locations:</h3>
-      <div id='billing-location-cards'>
-        {
-          billingLocations.map((billingLocation, index) => {
-            return (
-              <div key={index}>
-                <AddressCard 
-                  data={billingLocation} 
-                  onDelete={() => removeElementFromArray(index, billingLocations, setBillingLocations)}
-                />
-              </div>
-            )
-          })
-        }
-      </div>
-
-      <h3>Contacts:</h3>
-      <div id='contact-cards'>
-        {
-          contacts.map((contact, index) => {
-            return (
-              <div key={index}>
-                <ContactCard 
-                  data={contact} 
-                  onDelete={() => removeElementFromArray(index, contacts, setContacts)}
-                />
-              </div>
-            )
-          })
-        }
-      </div>
-
-      {/* Code Below Renders a modal IFF user initiated one to open */}
-      {
-        showBillingLocationForm &&
-        <FormModal
-          Form={AddressForm}
-          onSubmit={onBillingLocationFormSubmit}
-          onCancel={hideBillingLocationForm}
-        />
-      }
-      {
-        showShippingLocationForm &&
-        <FormModal
-          Form={ShippingLocationForm}
-          onSubmit={onShippingLocationFormSubmit}
-          onCancel={hideShippingLocationForm}
-        />
-      }
-      {
-        showBusinessLocationForm &&
-        <FormModal
-          Form={AddressForm}
-          onSubmit={onBusinessLocationFormSubmit}
-          onCancel={hideBusinessLocationForm}
-        />
-      }
-      {
-        showContactForm &&
-        <FormModal
-          Form={ContactForm}
-          onSubmit={onContactFormSubmit}
-          onCancel={hideContactForm}
-          locations={locations}
-        />
-      }
     </div>
   );
 }

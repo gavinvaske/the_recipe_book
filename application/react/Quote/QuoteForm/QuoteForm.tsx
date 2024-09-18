@@ -19,12 +19,14 @@ const QuoteForm = () => {
       })
   }
   return (
-    <div id='quote-form' data-test='quote-form'>
-      <button className='btn-primary temp-button-class flex-center-center-row' onClick={generateQuotes}><i className="fa-duotone fa-bullseye"></i></button>
-      <QuoteHeader />
-      <CostSummary />
-      <InputSection />
-      <OutputSection />
+    <div className='quote-page-wrapper'>
+      <div id='quote-form' data-test='quote-form'>
+        <button className='btn-primary temp-button-class flex-center-center-row' onClick={generateQuotes}><i className="fa-duotone fa-bullseye"></i></button>
+        <QuoteHeader />
+        <CostSummary />
+        <InputSection />
+        <OutputSection />
+      </div>
     </div>
   );
 };

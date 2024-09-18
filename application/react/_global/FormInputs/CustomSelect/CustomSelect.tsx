@@ -11,13 +11,18 @@ type Props<T extends FieldValues> = {
   errors: FieldErrors,
   defaultValue?: string,
   isRequired?: boolean,
-  control: Control<T, any>
+  control: Control<T, any>,
+  register: UseFormRegister<T>,
 }
 
 export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
-  const { attribute, options, label, errors, isRequired, control } = props;
+  const { attribute, options, label, errors, isRequired, control, register } = props;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  register(attribute, 
+    { required: isRequired ? "Please select an option" : undefined }
+  )
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

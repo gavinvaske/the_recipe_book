@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CustomSelect.scss';
 import { SelectOption } from '../Select/Select.tsx';
 import { FieldErrors, FieldValues, UseFormRegister, Path, UseFormSetValue, Controller, Control } from 'react-hook-form';
+import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage.js';
 
 type Props<T extends FieldValues> = {
   attribute: Path<T>,
@@ -14,7 +15,7 @@ type Props<T extends FieldValues> = {
 }
 
 export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
-  const { attribute, options, label, errors, defaultValue, isRequired, control } = props;
+  const { attribute, options, label, errors, isRequired, control } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,33 +25,65 @@ export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
 
   return (
     <div className="custom-select-container">
+      <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <Controller
         control={control}
         name={attribute}
         render={({ field: { onChange, value } }) => (
-          <>
+          <div>
             {/* Selected Option: */}
             <div className="select-selected" onClick={toggleDropdown}>
-              {value || "Please select an option"}
+              {value || `Please select an option`}
               <span className={`dropdown-arrow ${isOpen ? "active" : ""}`}>▼</span>
             </div>
 
             {/* All Available Options: */}
-            <div className="select-items">
+            {isOpen && <div className="select-items-v2">  {/* TODO: @Storm: I had to rename select-items -> select-items-v2 because some global class or Jquery was breaking this! Change if needed */}
+              <DropdownOption 
+                option={{displayName: `Please select an option`, value: ''}}
+                key={-1}
+                onClick={() => {
+                  onChange('')
+                  setIsOpen(false)
+                }}
+              />
               {options.map((option, index) => (
-                <div
+                <DropdownOption 
+                  option={option} 
+                  isSelected={option.value == value} 
                   key={index}
-                  className={`dropdown-item ${option.value == value ? "same-as-selected" : ""
-                    }`}
-                  onClick={() => onChange(option.value)}
-                >
-                  {option.displayName}
-                </div>
+                  onClick={() => {
+                    onChange(option.value)
+                    setIsOpen(false)
+                  }}
+                />
               ))}
-            </div>
-          </>
+            </div>}
+          </div>
         )}
       />
+      
+      <FormErrorMessage errors={errors} name={attribute} />
     </div>
   );
+}
+
+type DropdownOptionProps = {
+  option: SelectOption,
+  key: number,
+  onClick: () => void,
+  isSelected?: boolean,
+}
+
+const DropdownOption = ({ option, key, onClick, isSelected }: DropdownOptionProps) => {
+  return (
+    <div
+      key={key}
+      className={`dropdown-item ${isSelected ? "same-as-selected" : ""
+        }`}
+      onClick={onClick}
+    >
+      {option.displayName}
+    </div>
+  )
 }

@@ -18,6 +18,8 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { defaultUnwindDirection } from '../../../api/enums/unwindDirectionsEnum';
 import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -31,7 +33,16 @@ export const ProductForm = () => {
   const [finishes, setFinishes ] = useState<SelectOption[]>([])
   const [customers, setCustomers ] = useState<SelectOption[]>([])
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<ProductFormAttributes>({
+    defaultValues: {
+      unwindDirection: defaultUnwindDirection,
+      ovOrEpm: defaultOvOrEpm,
+      finishType: defaultFinishType,
+      coreDiameter: 3,
+      labelsPerRoll: 1000,
+      spotPlate: false
+    },
+  });
 
   const preloadFormData = async () => {
     const dies = await getDies();
@@ -62,8 +73,6 @@ export const ProductForm = () => {
       spotPlate: product.spotPlate,
       numberOfColors: product.numberOfColors,
       die: product.die,
-      frameNumberAcross: product.frameNumberAcross,
-      frameNumberAround: product.frameNumberAround,
       primaryMaterial: product.primaryMaterial,
       secondaryMaterial: product.secondaryMaterial,
       finish: product.finish,
@@ -114,43 +123,43 @@ export const ProductForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select
+            <CustomSelect
               attribute='unwindDirection'
               label='Unwind Direction'
               options={unwindDirections.map((direction) => ({ value: String(direction), displayName: String(direction) }))}
               register={register}
               errors={errors}
+              control={control}
               isRequired={true}
-              defaultValue={`${defaultUnwindDirection}`}
             />
-            <Select
+            <CustomSelect
               attribute='ovOrEpm'
               label='OV / EPM'
               options={ovOrEpmOptions.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
-              defaultValue={defaultOvOrEpm}
+              control={control}
               isRequired={true}
             />
-            <Input
+            <TextArea
               attribute='artNotes'
               label="Art Notes"
               register={register}
               errors={errors}
             />
-            <Input
+            <TextArea
               attribute='pressNotes'
               label="Press Notes"
               register={register}
               errors={errors}
             />
-            <Select
+            <CustomSelect
               attribute='finishType'
               label='Finish Types'
               options={finishTypes.map((finishType) => ({ value: finishType, displayName: finishType }))}
               register={register}
               errors={errors}
-              defaultValue={defaultFinishType}
+              control={control}
               isRequired={true}
             />
             <Input
@@ -158,7 +167,6 @@ export const ProductForm = () => {
               label="Core Diameter"
               register={register}
               errors={errors}
-              defaultValue='3'
               isRequired={true}
             />
             <Input
@@ -166,10 +174,9 @@ export const ProductForm = () => {
               label="Labels Per Roll"
               register={register}
               errors={errors}
-              defaultValue='1000'
               isRequired={true}
             />
-            <Input
+            <TextArea
               attribute='dieCuttingNotes'
               label="Die Cutting Notes"
               register={register}
@@ -187,7 +194,6 @@ export const ProductForm = () => {
               register={register}
               errors={errors}
               fieldType='checkbox'
-              defaultValue={'false'}
             />
             <Input
               attribute='numberOfColors'
@@ -196,54 +202,47 @@ export const ProductForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select 
+            <CustomSelect 
               attribute='die'
               label="Die"
               options={dies}
               register={register}
               errors={errors}
+              control={control}
               isRequired={true}
             />
-            <Input
-              attribute='frameNumberAcross'
-              label="Frame Number Across"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              attribute='frameNumberAround'
-              label="Frame Number Around"
-              register={register}
-              errors={errors}
-            />
-            <Select 
+            <CustomSelect 
               attribute='primaryMaterial'
               label="Primary Material"
               options={materials}
               register={register}
               errors={errors}
+              control={control}
               isRequired={true}
             />
-            <Select 
+            <CustomSelect 
               attribute='secondaryMaterial'
               label="Secondary Material"
               options={materials}
               register={register}
               errors={errors}
+              control={control}
             />
-            <Select 
+            <CustomSelect 
               attribute='finish'
               label="Finish"
               options={finishes}
               register={register}
               errors={errors}
+              control={control}
             />
-            <Select 
+            <CustomSelect 
               attribute='customer'
               label="Customer"
               options={customers}
               register={register}
               errors={errors}
+              control={control}
               isRequired={true}
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
@@ -268,8 +267,6 @@ type ProductFormAttributes = {
   spotPlate: boolean;
   numberOfColors: number;
   die: MongooseId;
-  frameNumberAcross: number;
-  frameNumberAround: number;
   primaryMaterial: MongooseId;
   secondaryMaterial: MongooseId;
   finish: MongooseId;

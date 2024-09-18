@@ -192,7 +192,6 @@ export const CustomerForm = () => {
                   register={register}
                   isRequired={false}
                   errors={errors}
-                  isMultiSelect={false}
                 />
               </div>
             </div>

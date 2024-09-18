@@ -22,7 +22,11 @@ export const DieForm = () => {
   const { mongooseId } = useParams();
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<DieFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<DieFormAttributes>({
+    defaultValues: {
+      quantity: 1
+    }
+  });
 
   useEffect(() => {
     preloadFormData()
@@ -240,7 +244,6 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
-              defaultValue='1'
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

@@ -73,8 +73,6 @@ export const ProductForm = () => {
       spotPlate: product.spotPlate,
       numberOfColors: product.numberOfColors,
       die: product.die,
-      frameNumberAcross: product.frameNumberAcross,
-      frameNumberAround: product.frameNumberAround,
       primaryMaterial: product.primaryMaterial,
       secondaryMaterial: product.secondaryMaterial,
       finish: product.finish,
@@ -213,18 +211,6 @@ export const ProductForm = () => {
               control={control}
               isRequired={true}
             />
-            <Input
-              attribute='frameNumberAcross'
-              label="Frame Number Across"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              attribute='frameNumberAround'
-              label="Frame Number Around"
-              register={register}
-              errors={errors}
-            />
             <CustomSelect 
               attribute='primaryMaterial'
               label="Primary Material"
@@ -281,8 +267,6 @@ type ProductFormAttributes = {
   spotPlate: boolean;
   numberOfColors: number;
   die: MongooseId;
-  frameNumberAcross: number;
-  frameNumberAround: number;
   primaryMaterial: MongooseId;
   secondaryMaterial: MongooseId;
   finish: MongooseId;

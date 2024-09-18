@@ -46,8 +46,6 @@ export interface IBaseProduct extends SchemaTimestampsConfig, mongoose.Document 
   spotPlate: boolean,
   numberOfColors: number,
   die: mongoose.Schema.Types.ObjectId,
-  frameNumberAcross?: number,
-  frameNumberAround?: number,
   primaryMaterial: mongoose.Schema.Types.ObjectId,
   secondaryMaterial?: mongoose.Schema.Types.ObjectId,
   finish?: mongoose.Schema.Types.ObjectId,
@@ -126,23 +124,6 @@ const productSchema = new Schema<IBaseProduct>({
     ref: 'Die',
     required: true
   },
-  /* Calculated Field - see lucid: Delete this */
-  frameNumberAcross: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  /* Calculated Field - see lucid: Delete this */
-  frameNumberAround: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-
-  // TODO:
-    /* frameRepeat: Calculated Field - see lucid: Delete this */
-
-
   primaryMaterial: {
     type: Schema.Types.ObjectId,
     ref: 'Material',

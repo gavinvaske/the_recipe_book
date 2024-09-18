@@ -536,62 +536,6 @@ describe('Product Model', () => {
         });
     });
 
-    describe('attribute: frameNumberAcross', () => {
-        it('should not be required', () => {
-            delete productAttributes.frameNumberAcross;
-            const product = new BaseProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            productAttributes.frameNumberAcross = chance.d100();
-            
-            const product = new BaseProductModel(productAttributes);
-
-            expect(product.frameNumberAcross).toEqual(expect.any(Number));
-        });
-
-        it('should fail if value is negative', () => {
-            productAttributes.frameNumberAcross = chance.d100() * -1;
-            const product = new BaseProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeDefined();
-        });
-    });
-
-    describe('attribute: frameNumberAround', () => {
-        it('should not be required', () => {
-            delete productAttributes.frameNumberAround;
-            const product = new BaseProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeUndefined();
-        });
-
-        it('should be a number', () => {
-            productAttributes.frameNumberAround = chance.d100();
-            
-            const product = new BaseProductModel(productAttributes);
-
-            expect(product.frameNumberAround).toEqual(expect.any(Number));
-        });
-
-        it('should fail if value is negative', () => {
-            productAttributes.frameNumberAround = chance.d100() * -1;
-            const product = new BaseProductModel(productAttributes);
-
-            const error = product.validateSync();
-
-            expect(error).toBeDefined();
-        });
-    });
-
     describe('verify database interactions', () => {
         let savedCustomer,
             savedDie,

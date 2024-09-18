@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CustomSelect.scss';
 import { SelectOption } from '../Select/Select.tsx';
 import { FieldErrors, FieldValues, UseFormRegister, Path, UseFormSetValue, Controller, Control } from 'react-hook-form';
@@ -17,19 +17,34 @@ type Props<T extends FieldValues> = {
 
 export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
   const { attribute, options, label, errors, isRequired, control, register } = props;
-
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLInputElement>(null);
 
+  /* Setup validation rules: see https://react-hook-form.com/get-started#Applyvalidation for more */
   register(attribute, 
     { required: isRequired ? "Please select an option" : undefined }
   )
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="custom-select-container">
+    <div className="custom-select-container" ref={dropdownRef}>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <Controller
         control={control}

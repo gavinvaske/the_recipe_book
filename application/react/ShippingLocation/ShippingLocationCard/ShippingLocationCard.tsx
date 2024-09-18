@@ -6,16 +6,16 @@ const ShippingLocationCard = (props) => {
   const { freightAccountNumber, deliveryMethod, name, street, unitOrSuite, city, state, zipCode } = data;
   return (
     <div className='shipping-location-card'>
-      <p>Freight Account Number: {freightAccountNumber}</p>
-      <p>Delivery Method: {deliveryMethod}</p>
-      <p>Name: {name}</p>
-      <p>Street: {street}</p>
-      <p>Unit/Suite #: {unitOrSuite}</p>
-      <p>City: {city}</p>
-      <p>State: {state}</p>
-      <p>Zip: {zipCode}</p>
+      <div className='column-td'>{freightAccountNumber}</div>
+      <div className='column-td'>{deliveryMethod}</div>
+      <div className='column-td'>{name}</div>
+      <div className='column-td'>{street}</div>
+      <div className='column-td'>{unitOrSuite}</div>
+      <div className='column-td'>{city}</div>
+      <div className='column-td'>{state}</div>
+      <div className='column-td'>{zipCode}</div>
 
-      <div onClick={onDelete}>Click to Delete</div>
+      <div className='column-td' onClick={onDelete}><i className="fa-regular fa-trash-can"></i></div>
     </div>
   )
 }

@@ -1,14 +1,137 @@
-.page-container {
-    .form-card { 
-        .form-wrapper { 
-            .group-field-wrapper {
-                .input-wrapper {
-                    label {
-                        font-size: 15px;
-                        font-weight: 300;
-                    }
-                }
+.create-customer-page-wrapper {
+    padding: 95px 15px 15px 15px;
+    .input-wrapper {
+        margin-bottom: 15px;
+    }
+    .triple-column-container {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        flex-direction: row;
+        .input-wrapper {
+            width: 32%;
+            input {
+                width: 100%;
             }
         }
+    }
+    .double-column-container {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        flex-direction: row;
+        .input-wrapper {
+            width: 49%;
+            input {
+                width: 100%;
+            }
+        }
+    }
+}
+
+#business-location-cards {
+    .table-header {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        background-color: #f3f2f7;
+        .column-title {
+            width: 14%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            height: 45px;
+        }
+    }
+    .table-row {
+        height: 45px;
+        border-bottom: 1px solid #ebe9f1;
+        margin-bottom: 0;
+        background-color: white;
+    }
+}
+.add-new-row {
+    height: 45px;
+    width: 100%;
+    border: 1px dashed #ebe9f1;
+    margin-bottom: 25px;
+
+    &:hover {
+        background-color: #f3f2f7;
+    }
+}
+#shipping-location-cards {
+    .table-header {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        background-color: #f3f2f7;
+        .column-title {
+            width: 9%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            height: 45px;
+        }
+    }
+    .table-row {
+        height: 45px;
+        border-bottom: 1px solid #ebe9f1;
+        margin-bottom: 0;
+        background-color: white;
+    }
+}
+#billing-location-cards {
+    .table-header {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        background-color: #f3f2f7;
+        .column-title {
+            width: 9%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            height: 45px;
+        }
+    }
+    .table-row {
+        height: 45px;
+        border-bottom: 1px solid #ebe9f1;
+        margin-bottom: 0;
+        background-color: white;
+    }
+}
+#contact-cards {
+    .table-header {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        background-color: #f3f2f7;
+        .column-title {
+            width: 9%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            height: 45px;
+        }
+    }
+    .table-row {
+        height: 45px;
+        border-bottom: 1px solid #ebe9f1;
+        margin-bottom: 0;
+        background-color: white;
     }
 }

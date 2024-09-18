@@ -1,4 +1,4 @@
-.modal {
+.modal-wrapper {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -8,12 +8,37 @@
   overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal {
+    width: 60%;
+    position: relative;
+    .close-button {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      z-index: 15;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: #f3f2f3;
+        cursor: pointer;
+    }
+    }
+    .submit-button {
+
+    }
+  }
+
+  .modal-content {
+
+  }
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}

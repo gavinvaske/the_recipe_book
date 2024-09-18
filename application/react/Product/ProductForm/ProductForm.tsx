@@ -100,10 +100,10 @@ export const ProductForm = () => {
   };
 
   return (
-    <div className='page-container'>
-      <div className='form-card'>
+    <div id='create-update-product-page-wrapper'>
+      <div className='card'>
         <div className='form-card-header'>
-          <h1>{isUpdateRequest ? 'Update' : 'Create'} Product</h1>
+          <h1>{isUpdateRequest ? 'Update' : 'Create New'} Product</h1>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='product-form'>

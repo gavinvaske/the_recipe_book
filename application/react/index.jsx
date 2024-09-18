@@ -4,6 +4,7 @@ import { App } from './App/App'
 import { BrowserRouter } from 'react-router-dom';
 import { FlashMessagePanel } from './_global/FlashMessagePanel/FlashMessagePanel';
 import { AuthProvider } from './_context/authProvider';
+import './_styles/main.scss'
 
 const rootHtmlElement = document.getElementById('root');
 const root = createRoot(rootHtmlElement);

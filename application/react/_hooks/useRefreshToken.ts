@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../_context/authProvider";
 import { useAuth } from "./useAuth";
 
 export const useRefreshToken = () => {
   const { setAuth } = useAuth();
-  const fetchAccessToken = async (): Promise<UserAuth> => {
+  const fetchAccessToken = async (): Promise<void> => {
     let userAuth: UserAuth = {
       accessToken: '',
       authRoles: []
@@ -19,11 +18,10 @@ export const useRefreshToken = () => {
       userAuth = response.data
 
       setAuth(userAuth);
-    } catch (error) {
+    } catch (error) { /* throws if the refreshToken is expired or non-existant. */ 
       setAuth(userAuth)
+      throw error;
     }
-
-    return userAuth;
   }
 
   return fetchAccessToken

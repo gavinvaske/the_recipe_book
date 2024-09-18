@@ -7,6 +7,12 @@ import axios, { AxiosError } from 'axios';
 import { Die } from '../../../_types/databasemodels/Die.ts';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
+{
+  /* TODO @Gavin (9-17-2027): 
+    1) Can this page be converted to use react-hook-form
+    2) if yes, then can I deprecate and remove the <DropdownField> and <TextField> components
+  */
+}
 const Die = (props) => {
   const dieOverride = quoteStore.quoteInputs.dieOverride as Die;
   const [ dies, setDies ] = useState<Die[]>([]);

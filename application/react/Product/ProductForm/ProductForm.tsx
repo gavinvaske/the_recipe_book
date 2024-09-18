@@ -18,6 +18,8 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { defaultUnwindDirection } from '../../../api/enums/unwindDirectionsEnum';
 import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -31,7 +33,7 @@ export const ProductForm = () => {
   const [finishes, setFinishes ] = useState<SelectOption[]>([])
   const [customers, setCustomers ] = useState<SelectOption[]>([])
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<ProductFormAttributes>();
 
   const preloadFormData = async () => {
     const dies = await getDies();
@@ -123,6 +125,14 @@ export const ProductForm = () => {
               isRequired={true}
               defaultValue={`${defaultUnwindDirection}`}
             />
+            <CustomSelect 
+              attribute='unwindDirection'
+              label='Unwind Direction'
+              options={unwindDirections.map((direction) => ({ value: String(direction), displayName: String(direction) }))}
+              errors={errors}
+              isRequired={true}
+              control={control}
+            />
             <Select
               attribute='ovOrEpm'
               label='OV / EPM'
@@ -138,7 +148,7 @@ export const ProductForm = () => {
               register={register}
               errors={errors}
             />
-            <Input
+            <TextArea
               attribute='pressNotes'
               label="Press Notes"
               register={register}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './DieInput.scss';
-import { DropdownField } from '../InputFields/DropdownField/DropdownField';
-import TextField from '../InputFields/TextField/TextField';
-import quoteStore from '../../../stores/quoteStore';
+import { DropdownField } from '../InputFields/DropdownField/DropdownField.tsx';
+import TextField from '../InputFields/TextField/TextField.js';
+import quoteStore from '../../../../stores/quoteStore.ts';
 import axios, { AxiosError } from 'axios';
-import { Die } from '../../../_types/databasemodels/Die.ts';
-import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { Die } from '../../../../_types/databasemodels/Die.ts';
+import { useErrorMessage } from '../../../../_hooks/useErrorMessage.ts';
 
 {
   /* TODO @Gavin (9-17-2027): 
@@ -18,7 +18,7 @@ const Die = (props) => {
   const [ dies, setDies ] = useState<Die[]>([]);
 
   useEffect(() => {
-    axios.get(`/die`)
+    axios.get(`/dies`)
       .then((response) => {
         const { data } = response;
         setDies(data)

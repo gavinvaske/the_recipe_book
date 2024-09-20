@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 import './CostSummary.scss';
 import TableRow from '../TableRow/TableRow';
 import LabelQtyInputField from './LabelQtyInputField/LabelQtyInputField';
-import quoteStore from '../../stores/quoteStore'
-import { currencyFormatter, floatingPointFormatter } from '../../utils/formatters';
+import quoteStore from '../../../stores/quoteStore'
+import { currencyFormatter, floatingPointFormatter } from '../../../utils/formatters';
 
 const FOUR_DECIMALS = 4;
 

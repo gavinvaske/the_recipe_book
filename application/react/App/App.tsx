@@ -34,6 +34,7 @@ import { ProductTable } from '../Product/ProductTable/ProductTable';
 import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
+import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ export function App() {
                 </Route>
 
                 <Route path='tables'>
+                  <Route path='quote' element={<QuoteTable />} />
                   <Route path='credit-term' element={<CreditTermTable />} />
                   <Route path='delivery-method' element={<DeliveryMethodTable />} />
                   <Route path='liner-type' element={<LinerTypeTable />} />

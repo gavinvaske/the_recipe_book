@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './FinishInput.scss';
 import TextField from '../InputFields/TextField/TextField';
 import { DropdownField } from '../InputFields/DropdownField/DropdownField';
-import quoteStore from '../../../stores/quoteStore';
+import quoteStore from '../../../../stores/quoteStore';
 import { observer } from 'mobx-react-lite';
 
 export default FinishInput = observer(() => {

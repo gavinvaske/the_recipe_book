@@ -1,7 +1,7 @@
 import React from 'react';
 import './LabelsPerRoll.scss';
 import { observer } from 'mobx-react-lite';
-import quoteStore from '../../../../stores/quoteStore'
+import quoteStore from '../../../../../stores/quoteStore'
 
 const LABELS_PER_ROLL = {
     ONE_HUNDRED: 100,

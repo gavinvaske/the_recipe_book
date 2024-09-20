@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import './NumberOfColors.scss';
-import quoteStore from '../../../stores/quoteStore'
+import quoteStore from '../../../../stores/quoteStore'
 
 export default NumberOfColors = () => {
   const DEFAULT_COLOR_TO_COUNT = {

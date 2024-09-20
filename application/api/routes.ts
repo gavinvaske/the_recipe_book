@@ -58,7 +58,7 @@ export const setupApiRoutes = (app: Application) => {
   app.use('/material-categories', materialCategoryEndpoints);
   app.use('/file-plan', filePlanEndpoints);
   app.use('/packaging', packagingEndpoints);
-  app.use('/quote', quoteEndpoints);
+  app.use('/quotes', quoteEndpoints);
   app.use('/dies', dieEndpoints);
   app.use('/liner-types', linerTypeEndpoints);
   app.use('/adhesive-categories', adhesiveCategoryEndpoints);

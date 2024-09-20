@@ -1,6 +1,6 @@
 import React from 'react';
 import './UnwindDirection.scss';
-import quoteStore from '../../../stores/quoteStore'
+import quoteStore from '../../../../stores/quoteStore'
 
 const UnwindDirectionOption = (props) => {
   const { value, onChange } = props;

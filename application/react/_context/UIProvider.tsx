@@ -1,9 +1,21 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Create a context
-const UIContext = createContext({});
+interface UIContextType {
+  registerUIElement: (id: string, ref: any) => void;
+  unregisterUIElement: (id: string) => void;
+  closeAllUIElements: () => void;
+}
 
-interface ClosableHTMLElement extends HTMLElement {
+const defaultUIContext: UIContextType = {
+  registerUIElement: () => {},
+  unregisterUIElement: () => {},
+  closeAllUIElements: () => {},
+}
+
+// Create a context
+const UIContext = createContext<UIContextType>(defaultUIContext);
+
+export interface ClosableHTMLElement extends HTMLElement {
   close: () => void; // Expose a close method
 }
 

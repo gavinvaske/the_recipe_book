@@ -35,7 +35,7 @@ import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
-import { UIProvider, useUIContext } from '../_context/uiProvider'; // Adjust the import path
+import { UIProvider, useUIContext } from '../_context/UIProvider';
 
 const queryClient = new QueryClient();
 

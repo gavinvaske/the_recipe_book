@@ -17,6 +17,8 @@ export const Profile = () => {
     initialData: []
   })
 
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FieldValues>();
+
   useEffect(() => {
     reset({
       email: loggedInUser?.email,
@@ -26,9 +28,7 @@ export const Profile = () => {
       phoneNumber: loggedInUser?.phoneNumber,
       jobRole: loggedInUser?.jobRole
     })
-  }, [loggedInUser])
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FieldValues>();
+  }, [loggedInUser, reset])
 
   if (isError) {
     useErrorMessage(error)

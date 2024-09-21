@@ -12,7 +12,7 @@ const root = createRoot(rootHtmlElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider> 
+      <AuthProvider>
         <FlashMessagePanel />
         <App />
       </AuthProvider>

@@ -123,7 +123,11 @@ export function App() {
 
 const AppContainer = ({ children }) => {
   const context = useUIContext();
-  if (!context) throw new Error('useUIContext can only be used inside a UIProvider component');
+  
+  if (!context) {
+    throw new Error('useUIContext can only be used inside a UIProvider component');
+  }
+
   const { closeAllUIElements } = context;
 
   const appRef = useRef<HTMLDivElement>(null);

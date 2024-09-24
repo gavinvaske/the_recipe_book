@@ -14,7 +14,7 @@ export const Dropdown = forwardRef((props: PropsWithChildren<Props>, ref: any) =
   const { isActive, classNames, children } = props;
   const elementRef = React.useRef<ClosableHTMLElement>();
   const { registerUIElement, unregisterUIElement } = useUIContext();
-  const id = uuidv4();
+  const [id, setId] = React.useState<string | null>(null);
 
   // Expose the close method to the parent component
   useImperativeHandle(ref, () => ({
@@ -27,11 +27,14 @@ export const Dropdown = forwardRef((props: PropsWithChildren<Props>, ref: any) =
   }));
 
   useEffect(() => {
-    registerUIElement(id, elementRef);
+    if (id) return;
+    let uuid = uuidv4();
+    setId(uuid);
+    registerUIElement(uuid, elementRef);
     return () => {
-      unregisterUIElement(id);
+      unregisterUIElement(uuid);
     };
-  }, [id, registerUIElement, unregisterUIElement]);
+  }, [registerUIElement, unregisterUIElement]);
 
   return (
     <div className={`dropdown-menu ${classNames} ${isActive ? 'active' : ''}`}>

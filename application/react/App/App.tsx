@@ -35,26 +35,28 @@ import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
+import { DropdownProvider } from '../_context/dropdownProvider';
 
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes >
-        <Route path='react-ui'>
+    <DropdownProvider>
+      <QueryClientProvider client={queryClient}>
+        <Routes >
+          <Route path='react-ui'>
 
-          {/* PUBLIC ROUTES*/}
-          <Route path='login' element={<Login />}></Route>
-          <Route path='register' element={<Register />}></Route>
+            {/* PUBLIC ROUTES*/}
+            <Route path='login' element={<Login />}></Route>
+            <Route path='register' element={<Register />}></Route>
 
-          <Route path='forgot-password' element={<ForgotPassword />}></Route>
-          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
-          <Route path='unauthorized' element={<Unauthorized />} />
-          <Route path='*' element={<PageNotFound />} />
-            
+            <Route path='forgot-password' element={<ForgotPassword />}></Route>
+            <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
+            <Route path='unauthorized' element={<Unauthorized />} />
+            <Route path='*' element={<PageNotFound />} />
+
             {/* PROTECTED ROUTES */}
-            <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]}/>}>
+            <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]} />}>
               <Route element={<TopNavbarLayout />}>
                 <Route path='inventory' element={<Inventory />}></Route>
                 <Route path='profile' element={<Profile />} />
@@ -92,10 +94,11 @@ export function App() {
                 </Route>
 
               </Route>
-          </Route>
+            </Route>
 
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+          </Route>
+        </Routes>
+      </QueryClientProvider>
+    </DropdownProvider>
   )
 }

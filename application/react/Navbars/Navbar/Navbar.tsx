@@ -6,6 +6,7 @@ import { Image } from '../../_global/Image/Image';
 import { getLoggedInUserProfilePictureUrl } from '../../_queries/users';
 import { useQuery } from '@tanstack/react-query';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { Dropdown } from '../../_global/Dropdown/Dropdown';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -205,7 +206,7 @@ export const Navbar = () => {
         <li className={`settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
             <span className='tooltiptext'>Shortcuts</span>
             <i className="fa-solid fa-grid-2-plus"></i>
-            <div className={`dropdown-menu shortcut-options ${isShortcutDropdownDisplayed ? 'active' : ''}`}>
+            <Dropdown classNames='shortcut-options' isActive={isShortcutDropdownDisplayed}>
                 <div className="header">
                   <div className='left'>
                   {listName[currentNameIndex]}
@@ -227,7 +228,7 @@ export const Navbar = () => {
                 <div className='carousel-container'>
                   {dropdownLists[currentIndex]}
                 </div>
-            </div>
+            </Dropdown>
         </li>
         <li className="activity-option tooltip-bottom">
             <span className="tooltiptext">Intelligence</span>

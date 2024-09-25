@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
 import { CustomerForm } from '../Customer/CustomerForm/CustomerForm';
@@ -35,67 +35,107 @@ import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
+import { UIProvider, useUIContext } from '../_context/UIProvider';
 
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes >
-        <Route path='react-ui'>
+    <UIProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppContainer>
+          <Routes>
+            <Route path='react-ui'>
+              {/* PUBLIC ROUTES*/}
+              <Route path='login' element={<Login />}></Route>
+              <Route path='register' element={<Register />}></Route>
 
-          {/* PUBLIC ROUTES*/}
-          <Route path='login' element={<Login />}></Route>
-          <Route path='register' element={<Register />}></Route>
+              <Route path='forgot-password' element={<ForgotPassword />}></Route>
+              <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
+              <Route path='unauthorized' element={<Unauthorized />} />
+              <Route path='*' element={<PageNotFound />} />
 
-          <Route path='forgot-password' element={<ForgotPassword />}></Route>
-          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
-          <Route path='unauthorized' element={<Unauthorized />} />
-          <Route path='*' element={<PageNotFound />} />
-            
-            {/* PROTECTED ROUTES */}
-            <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]}/>}>
-              <Route element={<TopNavbarLayout />}>
-                <Route path='inventory' element={<Inventory />}></Route>
-                <Route path='profile' element={<Profile />} />
-                <Route path='crud-navigation' element={<CrudNavigation />} />
+              {/* PROTECTED ROUTES */}
+              <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]} />}>
+                <Route element={<TopNavbarLayout />}>
+                  <Route path='inventory' element={<Inventory />}></Route>
+                  <Route path='profile' element={<Profile />} />
+                  <Route path='crud-navigation' element={<CrudNavigation />} />
 
-                <Route path='views'>
-                  <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+                  <Route path='views'>
+                    <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+                  </Route>
+
+                  <Route path='forms'>
+                    <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
+                    <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
+                    <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
+                    <Route path='quote' element={<QuoteForm />} />
+                    <Route path='customer/:mongooseId?' element={<CustomerForm />} />
+                    <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
+                    <Route path='material/:mongooseId?' element={<MaterialForm />} />
+                    <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
+                    <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
+                    <Route path='product/:mongooseId?' element={<ProductForm />} />
+                    <Route path='die/:mongooseId?' element={<DieForm />} />
+                  </Route>
+
+                  <Route path='tables'>
+                    <Route path='quote' element={<QuoteTable />} />
+                    <Route path='credit-term' element={<CreditTermTable />} />
+                    <Route path='delivery-method' element={<DeliveryMethodTable />} />
+                    <Route path='liner-type' element={<LinerTypeTable />} />
+                    <Route path='material' element={<MaterialTable />} />
+                    <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
+                    <Route path='customer' element={<CustomerTable />} />
+                    <Route path='material-order' element={<MaterialOrderTable />} />
+                    <Route path='product' element={<ProductTable />} />
+                    <Route path='die' element={<DieTable />} />
+                  </Route>
                 </Route>
-
-                <Route path='forms'>
-                  <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
-                  <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
-                  <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
-                  <Route path='quote' element={<QuoteForm />} />
-                  <Route path='customer/:mongooseId?' element={<CustomerForm />} />
-                  <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
-                  <Route path='material/:mongooseId?' element={<MaterialForm />} />
-                  <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
-                  <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
-                  <Route path='product/:mongooseId?' element={<ProductForm />} />
-                  <Route path='die/:mongooseId?' element={<DieForm />} />
-                </Route>
-
-                <Route path='tables'>
-                  <Route path='quote' element={<QuoteTable />} />
-                  <Route path='credit-term' element={<CreditTermTable />} />
-                  <Route path='delivery-method' element={<DeliveryMethodTable />} />
-                  <Route path='liner-type' element={<LinerTypeTable />} />
-                  <Route path='material' element={<MaterialTable />} />
-                  <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
-                  <Route path='customer' element={<CustomerTable />} />
-                  <Route path='material-order' element={<MaterialOrderTable />} />
-                  <Route path='product' element={<ProductTable />} />
-                  <Route path='die' element={<DieTable />} />
-                </Route>
-
               </Route>
-          </Route>
-
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+            </Route>
+          </Routes>
+        </AppContainer>
+      </QueryClientProvider>
+    </UIProvider>
   )
 }
+
+const AppContainer = ({ children }) => {
+  const context = useUIContext();
+  
+  if (!context) {
+    throw new Error('useUIContext can only be used inside a UIProvider component');
+  }
+
+  const { closeAllUIElements, uiElements } = context;
+
+  const appRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (appRef.current && appRef.current.contains(event.target)) {
+        console.log(uiElements.length)
+        const isClickInsideAnyElement = uiElements.some(({ ref }) =>
+          ref.current && ref.current.contains(event.target as Node)
+        );
+        console.log('isClickInsideAnyElement: ', String(isClickInsideAnyElement))
+        if (!isClickInsideAnyElement) {
+          closeAllUIElements();
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [closeAllUIElements]);
+
+  return (
+    <div ref={appRef}>
+      {children}
+    </div>
+  );
+};

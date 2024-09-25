@@ -40,25 +40,6 @@ import { UIProvider, useUIContext } from '../_context/UIProvider';
 const queryClient = new QueryClient();
 
 export function App() {
-  const context = useUIContext();
-  if (!context) throw new Error('No UI context found. Ensure this component is wrapped within a Provider component.');
-  const { closeAllUIElements } = context;
-  
-  const appRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (appRef.current && !appRef.current.contains(event.target)) {
-        closeAllUIElements();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [closeAllUIElements]);
-
   return (
     <UIProvider>
       <QueryClientProvider client={queryClient}>
@@ -128,14 +109,21 @@ const AppContainer = ({ children }) => {
     throw new Error('useUIContext can only be used inside a UIProvider component');
   }
 
-  const { closeAllUIElements } = context;
+  const { closeAllUIElements, uiElements } = context;
 
   const appRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (appRef.current && !appRef.current.contains(event.target)) {
-        closeAllUIElements();
+      if (appRef.current && appRef.current.contains(event.target)) {
+        console.log(uiElements.length)
+        const isClickInsideAnyElement = uiElements.some(({ ref }) =>
+          ref.current && ref.current.contains(event.target as Node)
+        );
+        console.log('isClickInsideAnyElement: ', String(isClickInsideAnyElement))
+        if (!isClickInsideAnyElement) {
+          closeAllUIElements();
+        }
       }
     };
 

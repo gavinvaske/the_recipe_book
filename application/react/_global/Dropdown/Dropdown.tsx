@@ -12,13 +12,14 @@ type Props = {
 
 export const Dropdown = forwardRef((props: PropsWithChildren<Props>, ref: any) => {
   const { isActive, classNames, children } = props;
-  const elementRef = React.useRef<ClosableHTMLElement>();
   const { registerUIElement, unregisterUIElement } = useUIContext();
   const [id, setId] = React.useState<string | null>(null);
+  const elementRef = React.useRef<ClosableHTMLElement>(null);
 
   // Expose the close method to the parent component
   useImperativeHandle(ref, () => ({
     close: () => {
+      alert('trying to close')
       if (elementRef.current && elementRef.current.close) {
         alert('Dropdown closed')
         elementRef.current.close();
@@ -26,18 +27,20 @@ export const Dropdown = forwardRef((props: PropsWithChildren<Props>, ref: any) =
     }
   }));
 
+  /* TODO: This useEffect seems to be problematic, this works, but the "other" code doesnt */
   useEffect(() => {
-    if (id) return;
-    let uuid = uuidv4();
-    setId(uuid);
-    registerUIElement(uuid, elementRef);
+    // if (id) return
+    // let uuid = uuidv4();
+
+    // setId(uuid);
+    registerUIElement('123', elementRef);
     return () => {
-      unregisterUIElement(uuid);
+      unregisterUIElement('123');
     };
-  }, [registerUIElement, unregisterUIElement]);
+  }, []);
 
   return (
-    <div className={`dropdown-menu ${classNames} ${isActive ? 'active' : ''}`}>
+    <div className={`dropdown-menu ${classNames} ${isActive ? 'active' : ''}`} ref={elementRef}>
       {children}
     </div>
   )

@@ -4,18 +4,25 @@ interface UIContextType {
   registerUIElement: (id: string, ref: any) => void;
   unregisterUIElement: (id: string) => void;
   closeAllUIElements: () => void;
+  uiElements: UIElement[];
+}
+
+interface UIElement {
+  id: string;
+  ref: React.RefObject<HTMLDivElement>;
 }
 
 const defaultUIContext: UIContextType = {
   registerUIElement: () => {},
   unregisterUIElement: () => {},
   closeAllUIElements: () => {},
+  uiElements: []
 }
 
 // Create a context
 const UIContext = createContext<UIContextType>(defaultUIContext);
 
-export interface ClosableHTMLElement extends HTMLElement {
+export interface ClosableHTMLElement extends HTMLDivElement {
   close: () => void; // Expose a close method
 }
 
@@ -46,7 +53,7 @@ export const UIProvider = ({ children }) => {
   };
 
   return (
-    <UIContext.Provider value={{ registerUIElement, unregisterUIElement, closeAllUIElements }}>
+    <UIContext.Provider value={{ registerUIElement, unregisterUIElement, closeAllUIElements, uiElements }}>
       {children}
     </UIContext.Provider>
   );

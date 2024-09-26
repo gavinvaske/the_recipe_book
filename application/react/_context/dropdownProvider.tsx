@@ -1,15 +1,18 @@
 import React, { createContext, useContext, useState } from 'react';
 
+interface TargetNode {
+  target: Node
+}
 interface DropdownContextType {
   registerDropdown: (id: string, ref: any) => void;
   unregisterDropdown: (id: string) => void;
-  closeDropdownsIfClickWasOutside: (target: Node) => void;
+  closeDropdownsIfClickWasOutside: ({ target }: TargetNode) => void;
 }
 
 const defaultDropdownContext: DropdownContextType = {
   registerDropdown: () => {},
   unregisterDropdown: () => {},
-  closeDropdownsIfClickWasOutside: (target: Node) => {}
+  closeDropdownsIfClickWasOutside: ({ target }: TargetNode) => {}
 }
 
 // Create a context
@@ -39,7 +42,7 @@ export const DropdownProvider = ({ children }) => {
     setDropdownRefs(prevElements => prevElements.filter(element => element.id !== id));
   };
 
-  const closeDropdownsIfClickWasOutside = (target: Node) => {
+  const closeDropdownsIfClickWasOutside = ({ target }: TargetNode) => {
     const wasADropdownClicked = dropdownRefs.some(element => element.ref.current && element.ref.current.contains(target));
 
     if (!wasADropdownClicked) {

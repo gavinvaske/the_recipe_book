@@ -51,6 +51,9 @@ export const Navbar = () => {
     setIsShortcutDropdownDisplayed(!isShortcutDropdownDisplayed)
   }
 
+  function alertOnClose() {
+    alert('hello mars');
+  }
 
   const dropdownLists = [
     <ul className='shortcut-body-create'>
@@ -205,29 +208,36 @@ export const Navbar = () => {
         <li className={`secondary-navbar-links settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
           <span className='tooltiptext'>Shortcuts</span>
           <i className="navbar-icon fa-solid fa-grid-2-plus"></i>
-          <div className={`dropdown-menu shortcut-options ${isShortcutDropdownDisplayed ? 'active' : ''}`}>
-              <div className="header">
-                <div className='left'>
-                {listName[currentNameIndex]}
-                </div>
-                <div className='right'>
-                  <div className='shortcut-mark-all-wrapper'>
-                    {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
-                    <div className='shortcut-controls-container'>
-                      <button className="carousel-control prev" onClick={handlePrev}>
-                        <i className="fa-regular fa-arrow-left"></i>
-                      </button>
-                      <button className="carousel-control next" onClick={handleNext}>
-                        <i className="fa-regular fa-arrow-right"></i>
-                      </button>
-                    </div>
+          <Dropdown
+              className='shortcut-options'
+              isActive={isShortcutDropdownDisplayed}
+              onClose={() => {
+                setIsShortcutDropdownDisplayed(false); 
+                alertOnClose();
+              }}
+            >
+            <div className="header">
+              <div className='left'>
+              {listName[currentNameIndex]}
+              </div>
+              <div className='right'>
+                <div className='shortcut-mark-all-wrapper'>
+                  {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
+                  <div className='shortcut-controls-container'>
+                    <button className="carousel-control prev" onClick={handlePrev}>
+                      <i className="fa-regular fa-arrow-left"></i>
+                    </button>
+                    <button className="carousel-control next" onClick={handleNext}>
+                      <i className="fa-regular fa-arrow-right"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-              <div className='carousel-container'>
-                {dropdownLists[currentIndex]}
-              </div>
-          </div>
+            </div>
+            <div className='carousel-container'>
+              {dropdownLists[currentIndex]}
+            </div>
+          </Dropdown>
         </li>
         <li className="secondary-navbar-links activity-option tooltip-bottom">
           <span className="tooltiptext">Intelligence</span>
@@ -237,7 +247,11 @@ export const Navbar = () => {
           <span className="tooltiptext">Notifications</span>
           <div className='notification-counter'>1</div>
           <i className="navbar-icon fa-regular fa-bell"></i>
-          <div className={`dropdown-menu notification-teaser ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`}>
+          <Dropdown
+            className={`notification-teaser`}
+            isActive={isUserNotificationsDropdownDisplayed}
+            onClose={() => setIsUserNotificationsDropdownDisplayed(false)}
+            >
             <div className="header">
               <div className='left'>
                 Notifications
@@ -258,7 +272,7 @@ export const Navbar = () => {
             <div className="footer flex-center-center-row">
               <a href='#' className="btn btn-primary">See All Notifications</a>
             </div>
-          </div>
+          </Dropdown>
         </li>
         <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
             <div className="user-frame">

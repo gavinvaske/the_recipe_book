@@ -28,7 +28,7 @@ export const Navbar = () => {
 
   const logoutUser = async () => {
     await axios.get('/auth/logout');
-    navigate('/react-ui/login', { replace: true  });
+    navigate('/react-ui/login', { replace: true });
   }
 
   useEffect(() => {
@@ -87,30 +87,30 @@ export const Navbar = () => {
     'View',
     'Purchase'
   ];
-  
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [currentNameIndex, setCurrentNameIndex] = useState(0);
-  
-    const handlePrev = (e) => {
-      e.stopPropagation();
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? dropdownLists.length - 1 : prevIndex - 1
-      );
-      setCurrentNameIndex((prevIndex) =>
-        prevIndex === 0 ? listName.length - 1 : prevIndex - 1
-      );
-    };
-  
-    const handleNext = (e) => {
-      e.stopPropagation();
-      setCurrentIndex((prevIndex) =>
-        prevIndex === dropdownLists.length - 1 ? 0 : prevIndex + 1
-      );
-      setCurrentNameIndex((prevIndex) =>
-        prevIndex === listName.length - 1 ? 0 : prevIndex + 1
-      );
-    };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentNameIndex, setCurrentNameIndex] = useState(0);
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? dropdownLists.length - 1 : prevIndex - 1
+    );
+    setCurrentNameIndex((prevIndex) =>
+      prevIndex === 0 ? listName.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
+      prevIndex === dropdownLists.length - 1 ? 0 : prevIndex + 1
+    );
+    setCurrentNameIndex((prevIndex) =>
+      prevIndex === listName.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
 
   return (
@@ -202,71 +202,75 @@ export const Navbar = () => {
         </ul>
       </div>
       <div className="column column-right">
-      <ul className="primary">
-        <li className={`settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
+        <ul className="primary">
+          <li className={`settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
             <span className='tooltiptext'>Shortcuts</span>
             <i className="fa-solid fa-grid-2-plus"></i>
-            <Dropdown classNames='shortcut-options' isActive={isShortcutDropdownDisplayed}>
-                <div className="header">
-                  <div className='left'>
+            <Dropdown
+              className='shortcut-options delete-this-storm'
+              isActive={isShortcutDropdownDisplayed}
+              onClose={() => setIsShortcutDropdownDisplayed(false)}
+            >
+              <div className="header">
+                <div className='left'>
                   {listName[currentNameIndex]}
-                  </div>
-                  <div className='right'>
-                    <div className='shortcut-mark-all-wrapper'>
-                      {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
-                      <div className='shortcut-controls-container'>
-                        <button className="carousel-control prev" onClick={handlePrev}>
-                          <i className="fa-regular fa-arrow-left"></i>
-                        </button>
-                        <button className="carousel-control next" onClick={handleNext}>
-                          <i className="fa-regular fa-arrow-right"></i>
-                        </button>
-                      </div>
+                </div>
+                <div className='right'>
+                  <div className='shortcut-mark-all-wrapper'>
+                    {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
+                    <div className='shortcut-controls-container'>
+                      <button className="carousel-control prev" onClick={handlePrev}>
+                        <i className="fa-regular fa-arrow-left"></i>
+                      </button>
+                      <button className="carousel-control next" onClick={handleNext}>
+                        <i className="fa-regular fa-arrow-right"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div className='carousel-container'>
-                  {dropdownLists[currentIndex]}
-                </div>
+              </div>
+              <div className='carousel-container'>
+                {dropdownLists[currentIndex]}
+              </div>
             </Dropdown>
-        </li>
-        <li className="activity-option tooltip-bottom">
+          </li>
+          <li className="activity-option tooltip-bottom">
             <span className="tooltiptext">Intelligence</span>
             <i className="fa-solid fa-brain-circuit"></i>
-        </li>
-        <li className={`notification-option tooltip-bottom ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleUserNotificationsDrpdwnMenu()}>
+          </li>
+          <li className={`notification-option tooltip-bottom ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleUserNotificationsDrpdwnMenu()}>
             <span className="tooltiptext">Notifications</span>
             <div className='notification-counter'>1</div>
             <i className="fa-regular fa-bell"></i>
             <div className={`dropdown-menu notification-teaser ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`}>
-                <div className="header">
-                  <div className='left'>
-                    Notifications
-                  </div>
-                  <div className='right'>
-                    <div className='notification-mark-all-wrapper'>
-                      <i className="fa-light fa-envelope"></i>
-                    </div>
+              <div className="header">
+                <div className='left'>
+                  Notifications
+                </div>
+                <div className='right'>
+                  <div className='notification-mark-all-wrapper'>
+                    <i className="fa-light fa-envelope"></i>
                   </div>
                 </div>
-                <ul className='notification-body'>
-                    <li>Sam Tarrant asked you do better</li>
-                    <li>Sam Tarrant asked you do better</li>
-                    <li>Sam Tarrant asked you do better</li>
-                    <li>Sam Tarrant asked you do better</li>
-                    <li>Sam Tarrant asked you do better</li>
-                </ul>
-                <div className="footer flex-center-center-row">
-                  <a href='#' className="btn btn-primary">See All Notifications</a>
-                </div>
+              </div>
+              <ul className='notification-body'>
+                <li>Sam Tarrant asked you do better</li>
+                <li>Sam Tarrant asked you do better</li>
+                <li>Sam Tarrant asked you do better</li>
+                <li>Sam Tarrant asked you do better</li>
+                <li>Sam Tarrant asked you do better</li>
+              </ul>
+              <div className="footer flex-center-center-row">
+                <a href='#' className="btn btn-primary">See All Notifications</a>
+              </div>
             </div>
-        </li>
-        <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
+          </li>
+          <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
             <div className="user-frame">
-                <div className="user-profile-picture profile-picture">
-                    <Image img={selectedImage} width={250}/>
-                    <div className="active-user"></div>
-                </div>
+              <div className="user-profile-picture profile-picture">
+                <Image img={selectedImage} width={250} />
+                <div className="active-user"></div>
+              </div>
             </div>
             <div className={`dropdown-menu user-options ${isUserOptionsDropdownDisplayed ? 'active' : ''}`}>
               <NavLink className={({ isActive, isPending }) => `user-options-dropdown-header ${isPending ? "pending" : isActive ? "active" : ""}`} to="/react-ui/profile">
@@ -274,7 +278,7 @@ export const Navbar = () => {
                   <div className='user-picture-column'>
                     <div className='user-picture-container'>
                       <div className='user-picture-background'>
-                        <Image img={selectedImage} width={250}/>
+                        <Image img={selectedImage} width={250} />
                         <div className='active-indicator'></div>
                       </div>
                     </div>
@@ -286,18 +290,18 @@ export const Navbar = () => {
                 </div>
               </NavLink>
               <div className='line-divide'></div>
-                <ul className='user-options-list'>
-                    <li><NavLink to="/react-ui/profile" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-user"></i>My Account</NavLink></li>
-                    <li><NavLink to="/react-ui/admin-settings" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-crown"></i>Admin Settings</NavLink></li>
-                    <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
-                </ul>
+              <ul className='user-options-list'>
+                <li><NavLink to="/react-ui/profile" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-user"></i>My Account</NavLink></li>
+                <li><NavLink to="/react-ui/admin-settings" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-crown"></i>Admin Settings</NavLink></li>
+                <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
+              </ul>
               <div className='line-divide'></div>
               <div className='user-logout-footer'>
                 <button onClickCapture={logoutUser}>Log Out <i className="fa-regular fa-right-from-bracket"></i></button>
               </div>
             </div>
-        </li>
-       </ul>
+          </li>
+        </ul>
 
       </div>
     </nav>

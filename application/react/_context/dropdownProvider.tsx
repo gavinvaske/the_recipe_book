@@ -15,22 +15,23 @@ const defaultDropdownContext: DropdownContextType = {
 // Create a context
 const DropdownContext = createContext<DropdownContextType>(defaultDropdownContext);
 
-export interface ClosableHTMLElement extends HTMLDivElement {
-  close: () => void; // Expose a close method
+export interface Closable {
+  close: () => void;
 }
 
-type Ref = React.RefObject<ClosableHTMLElement>
+export interface ClosableHTMLElement extends HTMLDivElement, Closable {}
+
+export type RefToClosableHtmlElement = React.RefObject<ClosableHTMLElement>
 
 type DropdownRef = {
   id: string,
-  ref: Ref
+  ref: RefToClosableHtmlElement
 }
 
 export const DropdownProvider = ({ children }) => {
   const [dropdownRefs, setDropdownRefs] = useState<DropdownRef[]>([]);
 
-  const registerDropdown = (id: string, ref: Ref) => {
-    console.log('registered Dropdown with ID:', id);
+  const registerDropdown = (id: string, ref: RefToClosableHtmlElement) => {
     setDropdownRefs(prevElements => [...prevElements, { id, ref }]);
   };
 

@@ -1,15 +1,16 @@
 import React, { PropsWithChildren, useEffect, useImperativeHandle } from 'react';
 import './Dropdown.scss';
-import { useDropdownContext } from '../../_context/dropdownProvider';
+import { Closable, useDropdownContext } from '../../_context/dropdownProvider';
 import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
   isActive?: boolean;
-  classNames?: string;
+  className?: string;
+  onClose?: () => void
 };
 
 export const Dropdown = (props: PropsWithChildren<Props>) => {
-  const { isActive, classNames, children } = props;
+  const { isActive, className, children, onClose } = props;
   const context = useDropdownContext();
   const [isOpen, setIsOpen] = React.useState(isActive || false);
   
@@ -18,13 +19,13 @@ export const Dropdown = (props: PropsWithChildren<Props>) => {
   }
 
   const { registerDropdown, unregisterDropdown } = context;
-  const elementRef = React.useRef(null);
+  const elementRef = React.useRef<Closable>(null);
 
-  // Expose the close method to the parent component
   useImperativeHandle(elementRef, () => ({
     close: () => {
       if (isOpen && elementRef.current) {
         setIsOpen(false);
+        onClose && onClose();
       }
     }
   }));
@@ -44,7 +45,7 @@ export const Dropdown = (props: PropsWithChildren<Props>) => {
   }, []);
 
   return (
-    <div className={`dropdown-menu ${classNames} ${isOpen ? 'active' : ''}`} ref={elementRef}>
+    <div className={`dropdown-menu ${className} ${isOpen ? 'active' : ''}`} ref={elementRef}>
       {children}
     </div>
   );

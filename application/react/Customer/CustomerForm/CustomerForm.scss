@@ -1,33 +1,4 @@
-.create-customer-page-wrapper {
-    padding: 95px 15px 15px 15px;
-    .input-wrapper {
-        margin-bottom: 15px;
-    }
-    .triple-column-container {
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-        flex-direction: row;
-        .input-wrapper {
-            width: 32%;
-            input {
-                width: 100%;
-            }
-        }
-    }
-    .double-column-container {
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-        flex-direction: row;
-        .input-wrapper {
-            width: 49%;
-            input {
-                width: 100%;
-            }
-        }
-    }
-}
+
 
 #business-location-cards {
     .table-header {

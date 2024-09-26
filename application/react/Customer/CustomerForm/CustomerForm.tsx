@@ -145,10 +145,10 @@ export const CustomerForm = () => {
   }
 
   return (
-    <div className='create-customer-page-wrapper'>
+    <div id='customer-form-page-wrapper' className='page-wrapper'>
       <div className='card'>
         <div className='form-card-header'>
-          <h1>{isUpdateRequest ? 'Update' : 'Create'} Customer</h1>
+          <h3>{isUpdateRequest ? 'Update' : 'Create'} Customer</h3>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
@@ -161,7 +161,7 @@ export const CustomerForm = () => {
                       register={register}
                       isRequired={true}
                       errors={errors}
-                    />
+                  />
                   <Input
                     attribute='name'
                     label="Name"
@@ -176,7 +176,6 @@ export const CustomerForm = () => {
                     isRequired={true}
                     errors={errors}
                   />
-                  
                 </div>
                 <Input
                     attribute='notes'
@@ -195,7 +194,6 @@ export const CustomerForm = () => {
                 />
               </div>
             </div>
-
             <h3>Business Locations:</h3>
             <div id='business-location-cards'>
               <div className='table-header'>
@@ -227,7 +225,7 @@ export const CustomerForm = () => {
             <h3>Shipping Locations:</h3>
             <div id='shipping-location-cards'>
               <div className='table-header'>
-                  <div className='column-title'>Freight Acct Number:</div>
+                  <div className='column-title'>Freight Acct #:</div>
                   <div className='column-title'>Delivery Method</div>
                   <div className='column-title'>Name</div>
                   <div className='column-title'>Street</div>
@@ -258,8 +256,6 @@ export const CustomerForm = () => {
             <div id='billing-location-cards'>
             <div className='table-header'>
                   <div className='column-title'>Name</div>
-                  <div className='column-title'>Freight Number</div>
-                  <div className='column-title'>Delivery Method</div>
                   <div className='column-title'>Street</div>
                   <div className='column-title'>Unit</div>
                   <div className='column-title'>City</div>

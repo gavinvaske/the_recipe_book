@@ -42,6 +42,9 @@
         font-size: 1.05rem;
     }
 }
+.advanced-filter-dropdown {
+    background-color: white;
+}
 
 .search-wrapper {
     padding-right: 15px;
@@ -85,5 +88,11 @@
     &:hover {
         background-color: #cce5ff;
     }
+}
+
+.all-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

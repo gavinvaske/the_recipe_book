@@ -51,6 +51,9 @@ export const Navbar = () => {
     setIsShortcutDropdownDisplayed(!isShortcutDropdownDisplayed)
   }
 
+  function alertOnClose() {
+    alert('hello mars');
+  }
 
   const dropdownLists = [
     <ul className='shortcut-body-create'>
@@ -119,12 +122,11 @@ export const Navbar = () => {
         <svg
           id="Layer_2"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 106 109.52"
-        >
+          viewBox="0 0 106 109.52">
           <defs>
             <style>
               {
-                ".cls-1{fill:#000;stroke-width:0px;}.cls-2{fill:none;opacity:.9;stroke:#000;stroke-miterlimit:10;}"
+                ".cls-1{fill:#7367f0;stroke-width:0px;}.cls-2{fill:none;opacity:.9;stroke:#7367f0;stroke-miterlimit:10;}"
               }
             </style>
           </defs>
@@ -183,7 +185,7 @@ export const Navbar = () => {
             <circle className="cls-1" cx={31} cy={71} r={7} />
           </g>
         </svg>
-        E L I
+        Eli
       </div>
       <div className="column column-center">
         <ul className="full-width flex-center-center-row main-navbar-links">
@@ -202,78 +204,81 @@ export const Navbar = () => {
         </ul>
       </div>
       <div className="column column-right">
-        <ul className="primary">
-          <li className={`settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
-            <span className='tooltiptext'>Shortcuts</span>
-            <i className="fa-solid fa-grid-2-plus"></i>
-            <Dropdown
-              className='shortcut-options delete-this-storm'
+      <ul className="primary">
+        <li className={`secondary-navbar-links settings-option settings tooltip-bottom ${isShortcutDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleShortcutDrpdwnMenu()}>
+          <span className='tooltiptext'>Shortcuts</span>
+          <i className="navbar-icon fa-solid fa-grid-2-plus"></i>
+          <Dropdown
+              className='shortcut-options'
               isActive={isShortcutDropdownDisplayed}
-              onClose={() => setIsShortcutDropdownDisplayed(false)}
+              onClose={() => {
+                setIsShortcutDropdownDisplayed(false); 
+                alertOnClose();
+              }}
             >
-              <div className="header">
-                <div className='left'>
-                  {listName[currentNameIndex]}
-                </div>
-                <div className='right'>
-                  <div className='shortcut-mark-all-wrapper'>
-                    {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
-                    <div className='shortcut-controls-container'>
-                      <button className="carousel-control prev" onClick={handlePrev}>
-                        <i className="fa-regular fa-arrow-left"></i>
-                      </button>
-                      <button className="carousel-control next" onClick={handleNext}>
-                        <i className="fa-regular fa-arrow-right"></i>
-                      </button>
-                    </div>
+            <div className="header">
+              <div className='left'>
+              {listName[currentNameIndex]}
+              </div>
+              <div className='right'>
+                <div className='shortcut-mark-all-wrapper'>
+                  {/* <NavLink to='/react-ui/crud-navigation'><i class="fa-solid fa-grid"></i></NavLink> */}
+                  <div className='shortcut-controls-container'>
+                    <button className="carousel-control prev" onClick={handlePrev}>
+                      <i className="fa-regular fa-arrow-left"></i>
+                    </button>
+                    <button className="carousel-control next" onClick={handleNext}>
+                      <i className="fa-regular fa-arrow-right"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-              <div className='carousel-container'>
-                {dropdownLists[currentIndex]}
-              </div>
-            </Dropdown>
-          </li>
-          <li className="activity-option tooltip-bottom">
-            <span className="tooltiptext">Intelligence</span>
-            <i className="fa-solid fa-brain-circuit"></i>
-          </li>
-          <li className={`notification-option tooltip-bottom ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleUserNotificationsDrpdwnMenu()}>
-            <span className="tooltiptext">Notifications</span>
-            <div className='notification-counter'>1</div>
-            <i className="fa-regular fa-bell"></i>
-            <Dropdown
-              className={`notification-teaser`}
-              isActive={isUserNotificationsDropdownDisplayed}
-              onClose={() => setIsUserNotificationsDropdownDisplayed(false)}
+            </div>
+            <div className='carousel-container'>
+              {dropdownLists[currentIndex]}
+            </div>
+          </Dropdown>
+        </li>
+        <li className="secondary-navbar-links activity-option tooltip-bottom">
+          <span className="tooltiptext">Intelligence</span>
+          <i className="navbar-icon fa-solid fa-brain-circuit"></i>
+        </li>
+        <li className={`secondary-navbar-links notification-option tooltip-bottom ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`} onClick={() => toggleUserNotificationsDrpdwnMenu()}>
+          <span className="tooltiptext">Notifications</span>
+          <div className='notification-counter'>1</div>
+          <i className="navbar-icon fa-regular fa-bell"></i>
+          <Dropdown
+            className={`notification-teaser`}
+            isActive={isUserNotificationsDropdownDisplayed}
+            onClose={() => setIsUserNotificationsDropdownDisplayed(false)}
             >
-              <div className="header">
-                <div className='left'>
-                  Notifications
-                </div>
-                <div className='right'>
-                  <div className='notification-mark-all-wrapper'>
-                    <i className="fa-light fa-envelope"></i>
-                  </div>
+            <div className="header">
+              <div className='left'>
+                Notifications
+              </div>
+              <div className='right'>
+                <div className='notification-mark-all-wrapper'>
+                  <i className="fa-light fa-envelope"></i>
                 </div>
               </div>
-              <ul className='notification-body'>
-                <li>Sam Tarrant asked you do better</li>
-                <li>Sam Tarrant asked you do better</li>
-                <li>Sam Tarrant asked you do better</li>
-                <li>Sam Tarrant asked you do better</li>
-                <li>Sam Tarrant asked you do better</li>
-              </ul>
-              <div className="footer flex-center-center-row">
-                <a href='#' className="btn btn-primary">See All Notifications</a>
-              </div>
-            </Dropdown>
-          </li>
-          <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
+            </div>
+            <ul className='notification-body'>
+              <li>Sam Tarrant asked you do better</li>
+              <li>Sam Tarrant asked you do better</li>
+              <li>Sam Tarrant asked you do better</li>
+              <li>Sam Tarrant asked you do better</li>
+              <li>Sam Tarrant asked you do better</li>
+            </ul>
+            <div className="footer flex-center-center-row">
+              <a href='#' className="btn btn-primary">See All Notifications</a>
+            </div>
+          </Dropdown>
+        </li>
+        <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
             <div className="user-frame">
               <div className="user-profile-picture profile-picture">
-                <Image img={selectedImage} width={250} />
-                <div className="active-user"></div>
+                  <Image img={selectedImage} width={250}/>
+                  <div className="active-user"></div>
               </div>
             </div>
             <div className={`dropdown-menu user-options ${isUserOptionsDropdownDisplayed ? 'active' : ''}`}>

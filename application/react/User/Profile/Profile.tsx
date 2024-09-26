@@ -52,6 +52,7 @@ export const Profile = () => {
         <div className='profile-canvas-background'></div>
         <div className='profile-details-footer'>
           <UploadProfilePicture apiEndpoint='/users/me/profile-picture' acceptedMimeTypes={['image/jpeg', 'image/png', 'image/jpg']}></UploadProfilePicture>
+          { timeBasedGreetingMessage }
         </div>
       </div>
 

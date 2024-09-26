@@ -103,10 +103,10 @@ export const MaterialOrderForm = () => {
   }
 
   return (
-    <div className='page-container'>
-      <div className='form-card'>
+    <div id='material-po-form-page-wrapper' className='page-wrapper'>
+      <div className='card'>
         <div className='form-card-header'>
-          <h1>Create Material Order</h1>
+          <h3>Create Material Order</h3>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='material-order-form'>

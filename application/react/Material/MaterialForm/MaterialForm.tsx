@@ -139,10 +139,10 @@ export const MaterialForm = () => {
   };
 
   return (
-    <div className='page-container'>
-      <div className='form-card'>
+    <div className='page-wrapper'>
+      <div className='card'>
         <div className='form-card-header'>
-          <h1>{isUpdateRequest ? 'Update' : 'Create'} Material</h1>
+          <h3>{isUpdateRequest ? 'Edit' : 'Create'} Material</h3>
         </div>
         <div className='form-wrapper'>
           <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)} data-test='material-form'>

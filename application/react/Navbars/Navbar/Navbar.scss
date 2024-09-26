@@ -25,7 +25,8 @@
     .column-left {
         width: 15%;
         font-size: 27px;
-        color: black;
+        color: var(--primary-text-color);
+        font-weight: bold;
         svg {
             height: 45px;
             margin-right: 7px;
@@ -44,7 +45,7 @@
                 border-radius: 5px;
                 padding: 12px 20px;
                 &:hover {
-                    background-color:#f8f8f8;
+                    background-color: rgba(var(--primary-dark-background), var(--opacity-1));
                     transition: .3s;
                     cursor: pointer;
                 }
@@ -53,11 +54,11 @@
                 }
             }
             a.active {
-                background-color: #157efb;
-                color: white;
+                color: rgba(var(--primary-purple-text-color));
+                background-color: rgba(var(--action-background), .12);
             }
             a, div.recipes {
-                color: #6e6b7b;
+                color: rgba(var(--primary-text-color),var(--opacity-10));
                 font-size: 1rem;
                 font-weight: 400;
             }
@@ -100,6 +101,8 @@
                 justify-content: center;
                 align-items: center;
                 height: 45px;
+                color: rgba(var(--primary-text-color),var(--opacity-10));
+                
                 .notification-counter {
                     position: absolute;
                     width: 20px;
@@ -116,6 +119,21 @@
                     justify-content: center;
                     align-items: center;
                 }
+            }
+            li.secondary-navbar-links {
+                width: 45px;
+                border-radius: 5px;
+                margin-right: 5px;
+                .navbar-icon {
+                    margin-right: 0;
+                }
+                &:hover {
+                    background-color: rgba(var(--primary-dark-background), var(--opacity-1));
+                }
+            }
+            li.secondary-navbar-links.active {
+                color: rgba(var(--primary-purple-text-color));
+                background-color: rgba(var(--action-background), .12);
             }
         }
     }
@@ -144,7 +162,7 @@
         position: relative;
         height: 45px;
         // background: #7367F6;
-        background: black;
+        background: #2F2B3D;
         width: 45px;
         border-radius: 50%;
     }
@@ -194,7 +212,7 @@
         z-index: 10;
         min-width: 10rem;
         font-size: 1rem;
-        color: #6e6b7b;
+        color: #2F2B3D;
         margin: 0 0 0;
         background-color: #fff;
         background-clip: padding-box;
@@ -240,7 +258,7 @@
                         align-items: flex-start;
                         position: relative;
                         .user-picture-background {
-                            background-color: #7367f6;
+                            background-color: #2f2b3d;
                             height: 45px;
                             width: 45px;
                             border-radius: 50%;
@@ -273,10 +291,12 @@
                         font-size: 12px;
                         font-weight: 600;
                         margin-bottom: 3px;
+                        color: #2f2b3d;
                     }
                     .user-title {
                         font-size: 12px;
                         font-weight: 400;
+                        color: #2f2b3d;
                     }
                 }
             }
@@ -284,7 +304,7 @@
         .line-divide {
             height: 1px;
             background-color: rgba(47, 43, 61, .12);
-            width: 100%;
+            width: calc(100% - 1rem);
         }
         .user-options-list {
             padding: 0.5rem;
@@ -292,9 +312,7 @@
             li {
                 font-size: 15px;
                 border-radius: 5px;
-                &:hover {
-                    background-color:#f3f2f3;
-                }
+                margin-bottom: 2px;
                 i {
                     margin-right: 10px;
                     margin-left: 15px;
@@ -302,9 +320,18 @@
                 }
                 a { 
                     font-size: 15px;
+                    border-radius: 5px;
+                    &:hover {
+                        background-color:#f3f2f3;
+                    }
                 }
                 a.active {
-                    color: #7367f6;
+                    color: rgba(var(--primary-purple-text-color), 1);
+                    background-color: rgba(var(--action-background), .12);
+                    &:hover {
+                        color: rgba(var(--primary-purple-text-color), 1);
+                        background-color: rgba(var(--action-background), .12);
+                    }
                 }
             }
         }
@@ -503,51 +530,18 @@
                         height: 100%;
                         display: flex;
                         &:hover {
-                            color: black;
+                            color: #2F2B3D;
                             cursor: pointer;
-                            background-color: #f3f2f3;
+                            background-color: rgba(var(--primary-dark-background), .12);
                         }
                     }
                     a.active {
-                        background-color: #157efb;
-                        color: white;
+                        background-color: rgba(var(--action-background), var(--opacity-1));
+                        color: rgba(var(--primary-purple-text-color), 1);
                     }
 
                 }
             }
-        }
-    }
-    .tooltip-bottom {
-        
-        .tooltiptext {
-            visibility: hidden;
-            min-width: 200px;
-            margin-left: -25px;
-            background-color: #323338;
-            color: #fff;
-            text-align: center;
-            border-radius: 3px;
-            padding: 10px 0;
-            position: absolute;
-            z-index: 11;
-            bottom: -55px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-    }
-    .tooltip-bottom:hover .tooltiptext {
-        visibility: visible;
-        opacity: 1;
-        transition-delay:.5s;
-    }
-    .tooltip-bottom.active {
-        i.fa-grid-2-plus, .fa-bell {
-            color: #157efb;
-        }
-    }
-    .tooltip-bottom.active:hover {
-        .tooltiptext {
-            visibility: hidden;
         }
     }
     .dropdown-menu.user-options.active,

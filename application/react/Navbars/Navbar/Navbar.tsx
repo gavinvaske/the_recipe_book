@@ -242,7 +242,11 @@ export const Navbar = () => {
             <span className="tooltiptext">Notifications</span>
             <div className='notification-counter'>1</div>
             <i className="fa-regular fa-bell"></i>
-            <div className={`dropdown-menu notification-teaser ${isUserNotificationsDropdownDisplayed ? 'active' : ''}`}>
+            <Dropdown
+              className={`notification-teaser`}
+              isActive={isUserNotificationsDropdownDisplayed}
+              onClose={() => setIsUserNotificationsDropdownDisplayed(false)}
+            >
               <div className="header">
                 <div className='left'>
                   Notifications
@@ -263,7 +267,7 @@ export const Navbar = () => {
               <div className="footer flex-center-center-row">
                 <a href='#' className="btn btn-primary">See All Notifications</a>
               </div>
-            </div>
+            </Dropdown>
           </li>
           <li className="list-item-user-detail nav-dropdown-trigger" onClick={() => toggleUserOptionsDrpdwnMenu()}>
             <div className="user-frame">

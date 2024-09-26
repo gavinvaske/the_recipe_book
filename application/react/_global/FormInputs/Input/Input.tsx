@@ -30,6 +30,7 @@ export const Input: WithForwardRefType = forwardRef((props, customRef) => {
     { required: isRequired ? "This is required" : undefined }
   );
 
+
   return (
     <div className='input-wrapper'>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>

@@ -86,10 +86,10 @@ export const DieForm = () => {
   }
 
   return (
-    <div className='page-container'>
-      <div className='form-card'>
+    <div id='die-form-page-wrapper' className='page-wrapper'>
+      <div className='card'>
         <div className='form-card-header'>
-          <h1>{isUpdateRequest ? 'Update' : 'Create'} Die</h1>
+          <h3>{isUpdateRequest ? 'Update' : 'Create'} Die</h3>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='die-form'>

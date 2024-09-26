@@ -10,18 +10,18 @@ const InventoryFilterBar = observer((_) => {
 
   return (
     <div id='inventory-filter-bar' className="workflow-filter flex-center-left-row full-width card">
-      <Link
-        to='/react-ui/forms/material-order'
-        className='create bg-blue text-white border-blue btn-create'
-      >PO <i className="fa-regular fa-plus"></i></Link>
-      <Link
-        to='/react-ui/forms/material'
-        className='create bg-blue text-white border-blue btn-create'
-      >Material <i className="fa-regular fa-plus"></i></Link>
-      <Link
-        to='/react-ui/forms/material-length-adjustment'
-        className='create bg-blue text-white border-blue btn-create'
-      >Adjustment <i className="fa-regular fa-plus"></i></Link>
+      <div className='tooltip-top btn-wrapper'> 
+        <Link to='/react-ui/forms/material-order' className='btn-create'><i className="fa-regular fa-plus"></i> Order</Link>
+        <span className="tooltiptext">Order material</span>
+      </div>
+      <div className='tooltip-top btn-wrapper'> 
+        <Link to='/react-ui/forms/material' className='btn-create'><i className="fa-regular fa-plus"></i> Material</Link>
+        <span className="tooltiptext">Create a new material</span>
+      </div>
+      <div className='tooltip-top btn-wrapper'>
+        <Link to='/react-ui/forms/material-length-adjustment' className='btn-create'>Adjustment</Link>
+        <span className="tooltiptext">Adjust footage for material</span>
+      </div>
 
       <FilterBar
           conditionalQuickFilters={conditionalQuickFilters}

@@ -91,8 +91,8 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
         <i className="fa-light fa-xmark" onClick={() => store.resetAllFilters()}></i>
       </div>
 
-      <div className="split-btn-frame btn-filter flex-center-center-row tooltip">
-        <span className="tooltiptext">Filter by anything</span>
+      <div className="split-btn-frame btn-filter flex-center-center-row tooltip-top">
+        <span className="tooltiptext">Filter materials</span>
         <div className={`filter-btn-wrapper flex-center-center-row ${isDropdownDisplayed ? 'active' : '' || isAdvancedDropdownDisplayed ? 'active' : ''}`}>
           <button className="btn-split quick-filter flex-center-center-row" onClick={() => toggleQuickFilterMenu()}>
             <i className="fa-light fa-filter"></i>Filter
@@ -112,8 +112,8 @@ export const FilterBar = observer(<T extends any>(props: Props<T>) => {
         </div>
 
       </div>
-      <div className="all-wrapper tooltip">
-        <span className="tooltiptext">See All</span>
+      <div className="all-wrapper tooltip-top">
+        <span className="tooltiptext">See all materials</span>
         <button className="sort btn-sort see-all" onClick={() => store.resetAllFilters()}><i className="fa-solid fa-layer-group"></i> See All(<span id="material-count">{filterableItemsCount}</span>)</button>
       </div>
     </>

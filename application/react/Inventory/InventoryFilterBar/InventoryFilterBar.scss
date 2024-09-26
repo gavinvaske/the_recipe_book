@@ -1,0 +1,23 @@
+#inventory-filter-bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+
+    .btn-primary {
+        width: 95px;
+        i {
+            margin-right: 5px;
+        }
+    }
+    .btn-wrapper {
+        width: 110px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a {
+            margin: 0;
+        }
+    }
+}

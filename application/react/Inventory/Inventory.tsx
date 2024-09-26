@@ -52,7 +52,7 @@ const Inventory = observer(() => {
   }
 
   return (
-    <div id='inventory-page' data-test='inventory-page'>
+    <div id='inventory-page' className='page-wrapper' data-test='inventory-page'>
       {
         clickedMaterial && 
         (<MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />)

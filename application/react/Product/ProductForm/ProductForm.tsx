@@ -109,13 +109,22 @@ export const ProductForm = () => {
   };
 
   return (
-    <div id='create-update-product-page-wrapper'>
+    <div id='product-form-page-wrapper' className='page-wrapper'>
       <div className='card'>
         <div className='form-card-header'>
-          <h1>{isUpdateRequest ? 'Update' : 'Create New'} Product</h1>
+          <h3>{isUpdateRequest ? 'Update' : 'Create New'} Product</h3>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='product-form'>
+            <CustomSelect 
+              attribute='customer'
+              label="Customer"
+              options={customers}
+              register={register}
+              errors={errors}
+              control={control}
+              isRequired={true}
+            />
             <Input
               attribute='productDescription'
               label="Product Description"
@@ -123,24 +132,107 @@ export const ProductForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <CustomSelect
-              attribute='unwindDirection'
-              label='Unwind Direction'
-              options={unwindDirections.map((direction) => ({ value: String(direction), displayName: String(direction) }))}
+            <div className='triple-column-wrapper'>
+              <CustomSelect
+                attribute='unwindDirection'
+                label='Unwind Direction'
+                options={unwindDirections.map((direction) => ({ value: String(direction), displayName: String(direction) }))}
+                register={register}
+                errors={errors}
+                control={control}
+                isRequired={true}
+              />
+              <CustomSelect
+                attribute='ovOrEpm'
+                label='OV / EPM'
+                options={ovOrEpmOptions.map((option) => ({ value: option, displayName: option }))}
+                register={register}
+                errors={errors}
+                control={control}
+                isRequired={true}
+              />
+              <CustomSelect
+                attribute='finishType'
+                label='Finish Types'
+                options={finishTypes.map((finishType) => ({ value: finishType, displayName: finishType }))}
+                register={register}
+                errors={errors}
+                control={control}
+                isRequired={true}
+              />
+            </div>
+            <div className='quad-column-wrapper'>
+              <CustomSelect 
+                attribute='die'
+                label="Die"
+                options={dies}
+                register={register}
+                errors={errors}
+                control={control}
+                isRequired={true}
+              />
+              <CustomSelect 
+                attribute='primaryMaterial'
+                label="Primary Material"
+                options={materials}
+                register={register}
+                errors={errors}
+                control={control}
+                isRequired={true}
+              />
+              <CustomSelect 
+                attribute='secondaryMaterial'
+                label="Secondary Material"
+                options={materials}
+                register={register}
+                errors={errors}
+                control={control}
+              />
+              <CustomSelect 
+                attribute='finish'
+                label="Finish"
+                options={finishes}
+                register={register}
+                errors={errors}
+                control={control}
+              />
+            </div>
+            <div className='quad-column-wrapper'>
+              <Input
+                attribute='coreDiameter'
+                label="Core Diameter"
+                register={register}
+                errors={errors}
+                isRequired={true}
+              />
+              <Input
+                attribute='labelsPerRoll'
+                label="Labels Per Roll"
+                register={register}
+                errors={errors}
+                isRequired={true}
+              />
+              <Input
+                attribute='overun'
+                label="Overun"
+                register={register}
+                errors={errors}
+              />
+              <Input
+                attribute='numberOfColors'
+                label="Number of Colors"
+                register={register}
+                errors={errors}
+                isRequired={true}
+              />
+              <Input
+              attribute='spotPlate'
+              label="Has Spot Plate"
               register={register}
               errors={errors}
-              control={control}
-              isRequired={true}
+              fieldType='checkbox'
             />
-            <CustomSelect
-              attribute='ovOrEpm'
-              label='OV / EPM'
-              options={ovOrEpmOptions.map((option) => ({ value: option, displayName: option }))}
-              register={register}
-              errors={errors}
-              control={control}
-              isRequired={true}
-            />
+            </div>
             <TextArea
               attribute='artNotes'
               label="Art Notes"
@@ -153,98 +245,13 @@ export const ProductForm = () => {
               register={register}
               errors={errors}
             />
-            <CustomSelect
-              attribute='finishType'
-              label='Finish Types'
-              options={finishTypes.map((finishType) => ({ value: finishType, displayName: finishType }))}
-              register={register}
-              errors={errors}
-              control={control}
-              isRequired={true}
-            />
-            <Input
-              attribute='coreDiameter'
-              label="Core Diameter"
-              register={register}
-              errors={errors}
-              isRequired={true}
-            />
-            <Input
-              attribute='labelsPerRoll'
-              label="Labels Per Roll"
-              register={register}
-              errors={errors}
-              isRequired={true}
-            />
             <TextArea
               attribute='dieCuttingNotes'
               label="Die Cutting Notes"
               register={register}
               errors={errors}
-            />
-            <Input
-              attribute='overun'
-              label="Overun"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              attribute='spotPlate'
-              label="Has Spot Plate"
-              register={register}
-              errors={errors}
-              fieldType='checkbox'
-            />
-            <Input
-              attribute='numberOfColors'
-              label="Number of Colors"
-              register={register}
-              errors={errors}
-              isRequired={true}
-            />
-            <CustomSelect 
-              attribute='die'
-              label="Die"
-              options={dies}
-              register={register}
-              errors={errors}
-              control={control}
-              isRequired={true}
-            />
-            <CustomSelect 
-              attribute='primaryMaterial'
-              label="Primary Material"
-              options={materials}
-              register={register}
-              errors={errors}
-              control={control}
-              isRequired={true}
-            />
-            <CustomSelect 
-              attribute='secondaryMaterial'
-              label="Secondary Material"
-              options={materials}
-              register={register}
-              errors={errors}
-              control={control}
-            />
-            <CustomSelect 
-              attribute='finish'
-              label="Finish"
-              options={finishes}
-              register={register}
-              errors={errors}
-              control={control}
-            />
-            <CustomSelect 
-              attribute='customer'
-              label="Customer"
-              options={customers}
-              register={register}
-              errors={errors}
-              control={control}
-              isRequired={true}
-            />
+            /> 
+
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>

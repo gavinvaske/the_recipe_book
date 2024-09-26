@@ -20,9 +20,11 @@ export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLInputElement>(null);
 
+  options.sort((a, b) => a.displayName?.localeCompare(b.displayName));
+
   /* Setup validation rules: see https://react-hook-form.com/get-started#Applyvalidation for more */
   register(attribute, 
-    { required: isRequired ? "Please select an option" : undefined }
+    { required: isRequired ? "Nothing Selected" : undefined }
   )
 
   // Close dropdown if clicked outside
@@ -50,17 +52,17 @@ export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
         control={control}
         name={attribute}
         render={({ field: { onChange, value } }) => (
-          <div>
+          <div className='input-wrapper'>
             {/* Selected Option: */}
-            <div className="select-selected" onClick={toggleDropdown}>
-              {value || `Please select an option`}
-              <span className={`dropdown-arrow ${isOpen ? "active" : ""}`}>▼</span>
+            <div className={`select-selected ${value && 'active'}`} onClick={toggleDropdown}>
+              {(value && options.find((option: SelectOption) => value == option.value))?.displayName || 'Nothing Selected'}
+              <span className={`dropdown-arrow ${isOpen ? "active" : ""}`}><i className="fa-regular fa-chevron-down"></i></span>
             </div>
 
             {/* All Available Options: */}
-            {isOpen && <div className="select-items-v2">  {/* TODO: @Storm: I had to rename select-items -> select-items-v2 because some global class or Jquery was breaking this! Change if needed */}
+            {isOpen && <div className="select-items-dropdown"> 
               <DropdownOption 
-                option={{displayName: `Please select an option`, value: ''}}
+                option={{displayName: `Nothing Selected`, value: ''}}
                 key={-1}
                 onClick={() => {
                   onChange('')
@@ -82,7 +84,6 @@ export const CustomSelect = <T extends FieldValues>(props: Props<T>) => {
           </div>
         )}
       />
-      
       <FormErrorMessage errors={errors} name={attribute} />
     </div>
   );

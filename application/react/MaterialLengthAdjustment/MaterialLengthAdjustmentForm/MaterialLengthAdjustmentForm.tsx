@@ -40,33 +40,38 @@ export const MaterialLengthAdjustmentForm = () => {
   }
 
   return (
-    <div className='material-adjustment-page'>
+    <div id='material-po-form-page-wrapper' className='page-wrapper'>
       <div className='card'>
-        <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
-          <Select
-            attribute='material'
-            label="Material"
-            options={materials}
-            register={register}
-            isRequired={true}
-            errors={errors}
-          />
-          <Input
-            attribute='length'
-            label="Length"
-            register={register}
-            isRequired={true}
-            errors={errors}
-          />
-          <Input
-            attribute='notes'
-            label="Notes"
-            register={register}
-            isRequired={false}
-            errors={errors}
-          />
-          <button className='btn-primary' type="submit">Create Material Inventory Entry</button>
-        </form>
+        <div className='form-card-header'>
+          <h3>Create Material Adjustment</h3>
+        </div>
+        <div className='form-wrapper'>
+          <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
+            <Select
+              attribute='material'
+              label="Material"
+              options={materials}
+              register={register}
+              isRequired={true}
+              errors={errors}
+            />
+            <Input
+              attribute='length'
+              label="Length"
+              register={register}
+              isRequired={true}
+              errors={errors}
+            />
+            <Input
+              attribute='notes'
+              label="Notes"
+              register={register}
+              isRequired={false}
+              errors={errors}
+            />
+            <button className='create-entry submit-button' type="submit">Create</button>
+          </form>
+        </div>
       </div>
     </div>
   )

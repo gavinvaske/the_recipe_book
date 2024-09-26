@@ -40,10 +40,13 @@ export const DropdownProvider = ({ children }) => {
   };
 
   const closeDropdownsIfClickWasOutside = (target: Node) => {
-    console.log('before dropdownRefs')
-    dropdownRefs.forEach(({ ref }) => {
-      ref.current.close()
-    })
+    const wasADropdownClicked = dropdownRefs.some(element => element.ref.current && element.ref.current.contains(target));
+
+    if (!wasADropdownClicked) {
+      dropdownRefs.forEach(({ ref }) => {
+        ref.current?.close()
+      });
+    }
   };
 
   return (

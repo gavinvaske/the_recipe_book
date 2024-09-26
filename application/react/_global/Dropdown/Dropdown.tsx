@@ -26,12 +26,16 @@ export const Dropdown = (props: PropsWithChildren<Props>) => {
   }, [isActive]);
 
   useEffect(() => {
-    if (elementRef.current) {
-      const uuid = uuidv4();
+    if (!elementRef.current) return;
 
-      registerDropdown(uuid, elementRef);
+    const uuid = uuidv4();
+
+    registerDropdown(uuid, elementRef);
+
+    return () => {
+      unregisterDropdown(uuid);
     }
-  }, [elementRef.current]);
+  }, []);
 
   useEffect(() => {
     if (elementRef.current) {
@@ -43,6 +47,7 @@ export const Dropdown = (props: PropsWithChildren<Props>) => {
           }
         }
       };
+      // Add custom close() to ref.current
       Object.assign(elementRef.current, closeMethod);
     }
   }, [isOpen, onClose]);

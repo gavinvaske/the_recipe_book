@@ -108,14 +108,14 @@ const AppContainer = ({ children }) => {
 
   if (!context) throw new Error('useDropdownContext must be used within the correct Provider');
 
-  const { closeAllDropdowns } = context;
+  const { closeDropdownsIfClickWasOutside } = context;
   // const { closeAllDropdowns, wasDropdownClicked } = context;
 
   useEffect(() => {
-    const closeDropdownsOnOutsideClick = (event) => {
+    const closeDropdownsOnOutsideClick = (event: MouseEvent) => {
       // TODO (9-24-2024): Only close dropdowns if the clicked element is not a dropdown itself or a child of a dropdown
       
-      closeAllDropdowns();
+      closeDropdownsIfClickWasOutside();
     }
 
     document.addEventListener('mousedown', closeDropdownsOnOutsideClick);

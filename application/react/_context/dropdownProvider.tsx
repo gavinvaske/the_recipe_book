@@ -3,13 +3,13 @@ import React, { createContext, useContext, useState } from 'react';
 interface DropdownContextType {
   registerDropdown: (id: string, ref: any) => void;
   unregisterDropdown: (id: string) => void;
-  closeAllDropdowns: () => void;
+  closeDropdownsIfClickWasOutside: (target: Node) => void;
 }
 
 const defaultDropdownContext: DropdownContextType = {
   registerDropdown: () => {},
   unregisterDropdown: () => {},
-  closeAllDropdowns: () => {}
+  closeDropdownsIfClickWasOutside: (target: Node) => {}
 }
 
 // Create a context
@@ -39,16 +39,15 @@ export const DropdownProvider = ({ children }) => {
     setDropdownRefs(prevElements => prevElements.filter(element => element.id !== id));
   };
 
-  const closeAllDropdowns = () => {
-    dropdownRefs.forEach(element => {
-      if (element.ref.current && element.ref.current.close) {
-        element.ref.current.close(); // Call the exposed close method
-      }
-    });
+  const closeDropdownsIfClickWasOutside = (target: Node) => {
+    console.log('before dropdownRefs')
+    dropdownRefs.forEach(({ ref }) => {
+      ref.current.close()
+    })
   };
 
   return (
-    <DropdownContext.Provider value={{ registerDropdown, unregisterDropdown, closeAllDropdowns }}>
+    <DropdownContext.Provider value={{ registerDropdown, unregisterDropdown, closeDropdownsIfClickWasOutside }}>
       {children}
     </DropdownContext.Provider>
   );

@@ -6,6 +6,7 @@ import { Image } from '../../_global/Image/Image';
 import { getLoggedInUserProfilePictureUrl } from '../../_queries/users';
 import { useQuery } from '@tanstack/react-query';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { Dropdown } from '../../_global/Dropdown/Dropdown';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export const Navbar = () => {
 
   const logoutUser = async () => {
     await axios.get('/auth/logout');
-    navigate('/react-ui/login', { replace: true  });
+    navigate('/react-ui/login', { replace: true });
   }
 
   useEffect(() => {
@@ -86,30 +87,30 @@ export const Navbar = () => {
     'View',
     'Purchase'
   ];
-  
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [currentNameIndex, setCurrentNameIndex] = useState(0);
-  
-    const handlePrev = (e) => {
-      e.stopPropagation();
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? dropdownLists.length - 1 : prevIndex - 1
-      );
-      setCurrentNameIndex((prevIndex) =>
-        prevIndex === 0 ? listName.length - 1 : prevIndex - 1
-      );
-    };
-  
-    const handleNext = (e) => {
-      e.stopPropagation();
-      setCurrentIndex((prevIndex) =>
-        prevIndex === dropdownLists.length - 1 ? 0 : prevIndex + 1
-      );
-      setCurrentNameIndex((prevIndex) =>
-        prevIndex === listName.length - 1 ? 0 : prevIndex + 1
-      );
-    };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentNameIndex, setCurrentNameIndex] = useState(0);
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? dropdownLists.length - 1 : prevIndex - 1
+    );
+    setCurrentNameIndex((prevIndex) =>
+      prevIndex === 0 ? listName.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
+      prevIndex === dropdownLists.length - 1 ? 0 : prevIndex + 1
+    );
+    setCurrentNameIndex((prevIndex) =>
+      prevIndex === listName.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
 
   return (
@@ -272,7 +273,7 @@ export const Navbar = () => {
                   <div className='user-picture-column'>
                     <div className='user-picture-container'>
                       <div className='user-picture-background'>
-                        <Image img={selectedImage} width={250}/>
+                        <Image img={selectedImage} width={250} />
                         <div className='active-indicator'></div>
                       </div>
                     </div>
@@ -284,18 +285,18 @@ export const Navbar = () => {
                 </div>
               </NavLink>
               <div className='line-divide'></div>
-                <ul className='user-options-list'>
-                    <li><NavLink to="/react-ui/profile" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-user"></i>My Account</NavLink></li>
-                    <li><NavLink to="/react-ui/admin-settings" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-crown"></i>Admin Settings</NavLink></li>
-                    <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
-                </ul>
+              <ul className='user-options-list'>
+                <li><NavLink to="/react-ui/profile" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-user"></i>My Account</NavLink></li>
+                <li><NavLink to="/react-ui/admin-settings" className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""}><i className="fa-regular fa-crown"></i>Admin Settings</NavLink></li>
+                <li><a href="#"><i className="fa-regular fa-books"></i>Resources</a></li>
+              </ul>
               <div className='line-divide'></div>
               <div className='user-logout-footer'>
                 <button onClickCapture={logoutUser}>Log Out <i className="fa-regular fa-right-from-bracket"></i></button>
               </div>
             </div>
-        </li>
-       </ul>
+          </li>
+        </ul>
 
       </div>
     </nav>

@@ -6,7 +6,7 @@ import NumberOfColors from './NumberOfColors/NumberOfColors';
 import UnwindDirection from './UnwindDirection/UnwindDirection';
 import CheckboxField from './InputFields/CheckboxField/CheckboxField';
 import TextField from './InputFields/TextField/TextField';
-import quoteStore from '../../stores/quoteStore';
+import quoteStore from '../../../stores/quoteStore';
 import FinishInput from './FinishInput/FinishInput';
 import LabelsPerRoll from './InputFields/LabelsPerRoll/LabelsPerRoll';
 

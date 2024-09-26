@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import QuoteForm from '../Quote/QuoteForm/QuoteForm';
 import { CustomerForm } from '../Customer/CustomerForm/CustomerForm';
@@ -34,66 +34,92 @@ import { ProductTable } from '../Product/ProductTable/ProductTable';
 import { DieTable } from '../Die/DieTable/DieTable';
 import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
+import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
+import { DropdownProvider, useDropdownContext } from '../_context/dropdownProvider';
 
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes >
-        <Route path='react-ui'>
+    <DropdownProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppContainer>
+          <Routes >
+            <Route path='react-ui'>
 
-          {/* PUBLIC ROUTES*/}
-          <Route path='login' element={<Login />}></Route>
-          <Route path='register' element={<Register />}></Route>
+              {/* PUBLIC ROUTES*/}
+              <Route path='login' element={<Login />}></Route>
+              <Route path='register' element={<Register />}></Route>
 
-          <Route path='forgot-password' element={<ForgotPassword />}></Route>
-          <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
-          <Route path='unauthorized' element={<Unauthorized />} />
-          <Route path='*' element={<PageNotFound />} />
-            
-            {/* PROTECTED ROUTES */}
-            <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]}/>}>
-              <Route element={<TopNavbarLayout />}>
-                <Route path='inventory' element={<Inventory />}></Route>
-                <Route path='profile' element={<Profile />} />
-                <Route path='crud-navigation' element={<CrudNavigation />} />
+              <Route path='forgot-password' element={<ForgotPassword />}></Route>
+              <Route path='change-password/:mongooseId/:token' element={<ChangePassword />} />
+              <Route path='unauthorized' element={<Unauthorized />} />
+              <Route path='*' element={<PageNotFound />} />
 
-                <Route path='views'>
-                  <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+              {/* PROTECTED ROUTES */}
+              <Route element={<ProtectedRoute allowedRoles={[USER, ADMIN]} />}>
+                <Route element={<TopNavbarLayout />}>
+                  <Route path='inventory' element={<Inventory />}></Route>
+                  <Route path='profile' element={<Profile />} />
+                  <Route path='crud-navigation' element={<CrudNavigation />} />
+
+                  <Route path='views'>
+                    <Route path='customer/:mongooseId' element={<ViewCustomer />} />
+                  </Route>
+
+                  <Route path='forms'>
+                    <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
+                    <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
+                    <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
+                    <Route path='quote' element={<QuoteForm />} />
+                    <Route path='customer/:mongooseId?' element={<CustomerForm />} />
+                    <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
+                    <Route path='material/:mongooseId?' element={<MaterialForm />} />
+                    <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
+                    <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
+                    <Route path='product/:mongooseId?' element={<ProductForm />} />
+                    <Route path='die/:mongooseId?' element={<DieForm />} />
+                  </Route>
+
+                  <Route path='tables'>
+                    <Route path='quote' element={<QuoteTable />} />
+                    <Route path='credit-term' element={<CreditTermTable />} />
+                    <Route path='delivery-method' element={<DeliveryMethodTable />} />
+                    <Route path='liner-type' element={<LinerTypeTable />} />
+                    <Route path='material' element={<MaterialTable />} />
+                    <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
+                    <Route path='customer' element={<CustomerTable />} />
+                    <Route path='material-order' element={<MaterialOrderTable />} />
+                    <Route path='product' element={<ProductTable />} />
+                    <Route path='die' element={<DieTable />} />
+                  </Route>
                 </Route>
-
-                <Route path='forms'>
-                  <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
-                  <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
-                  <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
-                  <Route path='quote' element={<QuoteForm />} />
-                  <Route path='customer/:mongooseId?' element={<CustomerForm />} />
-                  <Route path="liner-type/:mongooseId?" element={<LinerTypeForm />} /> {/* TODO (6-5-2024): Enforce admin routes only render for admins */}
-                  <Route path='material/:mongooseId?' element={<MaterialForm />} />
-                  <Route path='adhesive-category/:mongooseId?' element={<AdhesiveCategoryForm />} />
-                  <Route path='material-order/:mongooseId?' element={<MaterialOrderForm />} />
-                  <Route path='product/:mongooseId?' element={<ProductForm />} />
-                  <Route path='die/:mongooseId?' element={<DieForm />} />
-                </Route>
-
-                <Route path='tables'>
-                  <Route path='credit-term' element={<CreditTermTable />} />
-                  <Route path='delivery-method' element={<DeliveryMethodTable />} />
-                  <Route path='liner-type' element={<LinerTypeTable />} />
-                  <Route path='material' element={<MaterialTable />} />
-                  <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
-                  <Route path='customer' element={<CustomerTable />} />
-                  <Route path='material-order' element={<MaterialOrderTable />} />
-                  <Route path='product' element={<ProductTable />} />
-                  <Route path='die' element={<DieTable />} />
-                </Route>
-
               </Route>
-          </Route>
-
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+            </Route>
+          </Routes>
+        </AppContainer>
+      </QueryClientProvider>
+    </DropdownProvider>
   )
+}
+
+const AppContainer = ({ children }) => {
+  const context = useDropdownContext();
+
+  if (!context) throw new Error('useDropdownContext must be used within the correct Provider');
+
+  const { closeDropdownsIfClickWasOutside } = context;
+
+  useEffect(() => {
+    document.addEventListener('mousedown', closeDropdownsIfClickWasOutside);
+    return () => {
+      document.removeEventListener('mousedown', closeDropdownsIfClickWasOutside);
+    };
+  })
+
+  return (
+    <>
+      {children}
+    </>
+  );
 }

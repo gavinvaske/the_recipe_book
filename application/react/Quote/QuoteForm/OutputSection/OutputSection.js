@@ -1,14 +1,14 @@
 import React from 'react';
 import './OutputSection.scss';
 import TableRow from '../TableRow/TableRow';
-import quoteStore from '../../stores/quoteStore'
+import quoteStore from '../../../stores/quoteStore'
 import { observer } from 'mobx-react-lite';
 import { 
     secondsFormatter,
     floatingPointFormatter, 
     percentageFormatter, 
     currencyFormatter 
-} from '../../utils/formatters';
+} from '../../../utils/formatters';
 
 const TWO_DECIMALS = 2;
 const ZERO_DECIMALS = 0;

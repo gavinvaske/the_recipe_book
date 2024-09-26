@@ -1,8 +1,8 @@
 import React from 'react';
-import QuoteHeader from '../QuoteHeader/QuoteHeader';
-import CostSummary from '../CostSummary/CostSummary';
-import InputSection from '../InputSection/InputSection';
-import OutputSection from '../OutputSection/OutputSection';
+import QuoteHeader from './QuoteHeader/QuoteHeader';
+import CostSummary from './CostSummary/CostSummary';
+import InputSection from './InputSection/InputSection';
+import OutputSection from './OutputSection/OutputSection';
 import axios from 'axios';
 import './QuoteForm.scss';
 import quoteStore from '../../stores/quoteStore'

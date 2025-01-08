@@ -12,6 +12,9 @@
       "publicUrl": "build"
     }
   },
+  "engines": {
+    "node": "20.13.1"
+  },
   "scripts": {
     "build": "parcel build",
     "start": "npm run build && npx tsx application/api/index.ts",

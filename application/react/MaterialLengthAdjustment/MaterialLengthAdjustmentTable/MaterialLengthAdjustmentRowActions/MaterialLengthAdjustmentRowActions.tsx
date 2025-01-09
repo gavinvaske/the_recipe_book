@@ -3,6 +3,11 @@ import './MaterialLengthAdjustmentRowActions.scss'
 import { Row } from '@tanstack/react-table';
 import { MongooseId } from '../../../_types/typeAliases';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
+import { useNavigate } from 'react-router-dom';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 
 type TODO = any;
 
@@ -14,22 +19,26 @@ export const MaterialLengthAdjustmentRowActions = (props: Props) => {
   const { row }: { row: any } = props;
   const { _id : mongooseObjectId } = row.original;
 
-  const onViewClicked = (mongooseObjectId: MongooseId) => {
-    alert("TODO: Implement view logic")
-  }
+  const navigate = useNavigate();
+  const queryClient = useQueryClient()
+
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
-    alert("TODO: Implement deletion logic")
+    axios.delete(`/material-length-adjustments/${mongooseObjectId}`)
+      .then((_ : AxiosResponse) => {
+        queryClient.invalidateQueries({ queryKey: ['get-material-length-adjustments']})
+        useSuccessMessage('Deletion was successful')
+      })
+      .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    alert("TODO: Implement edit logic")
+    navigate(`/react-ui/forms/material-length-adjustment/${mongooseObjectId}`)
   }
 
   return (
     <RowActions>
-      <div onClick={() => onViewClicked(mongooseObjectId)}>View</div>
       <div onClick={() => onEditClicked(mongooseObjectId)}>Edit</div>
       <div onClick={() => onDeleteClicked(mongooseObjectId)}>Delete</div>
     </RowActions>

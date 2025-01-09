@@ -69,7 +69,7 @@ export function App() {
                   </Route>
 
                   <Route path='forms'>
-                    <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
+                    <Route path='material-length-adjustment/:mongooseId?' element={<MaterialLengthAdjustmentForm />} />
                     <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
                     <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
                     <Route path='quote' element={<QuoteForm />} />

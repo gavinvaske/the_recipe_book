@@ -42,7 +42,7 @@ export const MaterialLengthAdjustmentTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: materialLengthAdjustments, error } = useQuery({
-    queryKey: ['get-delivery-methods'],
+    queryKey: ['get-material-length-adjustments'],
     queryFn: getMaterialLengthAdjustments,
     initialData: []
   })

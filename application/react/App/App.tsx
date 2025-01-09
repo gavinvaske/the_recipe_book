@@ -36,6 +36,7 @@ import { DieForm } from '../Die/DieForm/DieForm';
 import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
 import { DropdownProvider, useDropdownContext } from '../_context/dropdownProvider';
+import { MaterialLengthAdjustmentTable } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable';
 
 const queryClient = new QueryClient();
 
@@ -68,7 +69,7 @@ export function App() {
                   </Route>
 
                   <Route path='forms'>
-                    <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentForm />} />
+                    <Route path='material-length-adjustment/:mongooseId?' element={<MaterialLengthAdjustmentForm />} />
                     <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
                     <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
                     <Route path='quote' element={<QuoteForm />} />
@@ -82,6 +83,7 @@ export function App() {
                   </Route>
 
                   <Route path='tables'>
+                    <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentTable />} />
                     <Route path='quote' element={<QuoteTable />} />
                     <Route path='credit-term' element={<CreditTermTable />} />
                     <Route path='delivery-method' element={<DeliveryMethodTable />} />

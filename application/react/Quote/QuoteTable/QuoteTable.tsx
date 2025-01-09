@@ -9,7 +9,6 @@ import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
-import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import Row from '../../_global/Table/Row/Row';
 
 type TODO = any;

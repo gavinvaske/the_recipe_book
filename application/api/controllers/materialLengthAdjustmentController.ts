@@ -21,4 +21,20 @@ router.post('/', async (request, response) => {
     }
 });
 
+router.get('/', async (request, response) => {
+  try {
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().exec();
+
+    console.log('materialLengthAdjustments', materialLengthAdjustments)
+
+    return response.json(materialLengthAdjustments);
+} catch (error) {
+    console.error('Error fetching material length adjustments: ', error);
+
+    return response
+        .status(SERVER_ERROR)
+        .send(error.message);
+}
+})
+
 export default router;

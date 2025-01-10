@@ -14,11 +14,12 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { useAxios } from '../../_hooks/useAxios';
+import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<MaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -267,12 +268,8 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
-                <Input
-                  attribute='location'
-                  label="Location"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
+                <MaterialLocationSelector 
+                  setValue={setValue}
                 />
                 <Input
                   attribute='productNumber'
@@ -359,7 +356,7 @@ export type MaterialFormAttributes = {
   facesheetWeightPerMsi: number;
   adhesiveWeightPerMsi: number;
   linerWeightPerMsi: number;
-  location: string;
+  locations: string[];
   linerType: MongooseId;
   productNumber: string;
   masterRollSize: number;

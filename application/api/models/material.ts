@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { Decimal } from 'decimal.js';
@@ -23,13 +23,41 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
     };
 }
 
+export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
+  name: string;
+  materialId: mongoose.Schema.Types.ObjectId;
+  vendor: mongoose.Schema.Types.ObjectId;
+  materialCategory: mongoose.Schema.Types.ObjectId;
+  weight: number;
+  costPerMsi: number;
+  freightCostPerMsi: number;
+  width: number;
+  faceColor: string;
+  adhesive: string;
+  thickness: number;
+  adhesiveCategory: mongoose.Schema.Types.ObjectId;
+  quotePricePerMsi: number;
+  description: string;
+  whenToUse: string;
+  alternativeStock?: string;
+  length: number;
+  facesheetWeightPerMsi: number;
+  adhesiveWeightPerMsi: number;
+  linerWeightPerMsi: number;
+  locations: string[];
+  linerType: mongoose.Schema.Types.ObjectId;
+  productNumber: string;
+  masterRollSize: number;
+  image: string;
+}
+
 const weightPerMsiAttribute = {
     type: Number,
     min: 0,
     set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
 };
 
-const schema = new Schema({
+const schema = new Schema<IMaterial>({
     name: {
         type: String,
         required: true,
@@ -131,8 +159,8 @@ const schema = new Schema({
         ...weightPerMsiAttribute,
         required: true
     },
-    location: {
-        type: String,
+    locations: {
+        type: [String],
         required: true
     },
     linerType: {
@@ -166,4 +194,4 @@ const schema = new Schema({
     strict: 'throw'
 });
 
-export const MaterialModel = mongoose.model('Material', schema);
+export const MaterialModel = mongoose.model<IMaterial>('Material', schema);

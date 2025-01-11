@@ -52,7 +52,7 @@ export const Navbar = () => {
   }
 
   function alertOnClose() {
-    alert('hello mars');
+    console.log('hello mars');
   }
 
   const dropdownLists = [

@@ -16,10 +16,14 @@ function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
 }
 
-function validateLocations(locations) {
+function validateLocationsFormat(locations) {
   return locations.every((location) => {
     return LOCATION_REGEX.test(location)
   });
+}
+
+function validateLocationsAreUnique(locations) {
+  return new Set(locations).size === locations.length;
 }
 
 function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
@@ -168,11 +172,17 @@ const schema = new Schema<IMaterial>({
     },
     locations: {
         type: [String],
+        uppercase: true,
         required: true,
+        set: (locations: string[]) => locations.map(location => location.toUpperCase()),
         validate: [
           {
-            validator: validateLocations,
+            validator: validateLocationsFormat,
             message: 'Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).'
+          },
+          {
+            validator: validateLocationsAreUnique,
+            message: 'Each location must be unique (i.e no duplicates allowed).'
           }
         ]
     },

@@ -620,9 +620,27 @@ describe('File: material.js', () => {
     describe('attribute: locations', () => {
         it('should default to an empty array', () => {
             delete materialAttributes.locations;
-            const materail = new MaterialModel(materialAttributes);
+            const material = new MaterialModel(materialAttributes);
         
-            expect(materail.locations).toEqual([]);
+            expect(material.locations).toEqual([]);
+        });
+
+        it('should auto uppercase', () => {
+          const lowerCaseLocation = 'a1';
+          materialAttributes.locations = [lowerCaseLocation];
+          const material = new MaterialModel(materialAttributes);
+      
+          expect(material.locations).toEqual([lowerCaseLocation.toUpperCase()]);
+        });
+
+        it('should fail validation if duplicates exist', () => {
+          const location = 'P22';
+          materialAttributes.locations = [location, location];
+          const material = new MaterialModel(materialAttributes);
+          const { errors } = material.validateSync();
+      
+          expect(errors.locations).toBeDefined();
+          expect(errors?.locations?.properties?.message.includes('Each location must be unique (i.e no duplicates allowed).')).toBeTruthy();
         });
 
         it('should fail validation if one of the locaitons is not in the valid format (test #1)', () => {
@@ -635,6 +653,7 @@ describe('File: material.js', () => {
           const { errors } = material.validateSync();
           
           expect(errors.locations).toBeDefined();
+          expect(errors?.locations?.properties?.message.includes('Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).')).toBeTruthy();
         })
 
         it('should fail validation if one of the locaitons is not in the valid format (test #2)', () => {

@@ -35,10 +35,11 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
 }
 
 export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
+  // TODO @Gavin: Verify these types are correct.
   name: string;
-  materialId: mongoose.Schema.Types.ObjectId;
-  vendor: mongoose.Schema.Types.ObjectId;
-  materialCategory: mongoose.Schema.Types.ObjectId;
+  materialId: string;
+  vendor: mongoose.Types.ObjectId;
+  materialCategory: mongoose.Types.ObjectId;
   weight: number;
   costPerMsi: number;
   freightCostPerMsi: number;
@@ -46,7 +47,7 @@ export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
   faceColor: string;
   adhesive: string;
   thickness: number;
-  adhesiveCategory: mongoose.Schema.Types.ObjectId;
+  adhesiveCategory: mongoose.Types.ObjectId;
   quotePricePerMsi: number;
   description: string;
   whenToUse: string;
@@ -56,7 +57,7 @@ export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
   adhesiveWeightPerMsi: number;
   linerWeightPerMsi: number;
   locations: string[];
-  linerType: mongoose.Schema.Types.ObjectId;
+  linerType: mongoose.Types.ObjectId;
   productNumber: string;
   masterRollSize: number;
   image: string;

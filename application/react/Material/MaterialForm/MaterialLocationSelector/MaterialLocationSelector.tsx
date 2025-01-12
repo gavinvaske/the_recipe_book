@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MaterialLocationSelector.scss'
-import { FieldValues, UseFormSetValue } from 'react-hook-form';
+import { FieldValues, Path, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
 const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;
+  getValues: UseFormGetValues<T>;
 }
 
+const LOCATION_ATTRIBUTE_SELECTOR = 'locations'
+
 export const MaterialLocationSelector = <T extends FieldValues>(props: Props<T>) => {
-  const { setValue } = props
+  const { setValue, getValues } = props
   const [location, setLocation] = React.useState<string>('');
   const [locations, setLocations] = React.useState<string[]>([]);
   const [errorMessage, setErrorMessage] = React.useState('');
 
+  useEffect(() => {
+    const currentLocations = getValues(LOCATION_ATTRIBUTE_SELECTOR) || [];
+    setLocations(currentLocations);
+  }, [getValues(LOCATION_ATTRIBUTE_SELECTOR)]);
+
   const removeLocation = (locationToRemove) => {
     setLocations(locations.filter((loc) => loc!== locationToRemove));
-    setValue('locations', locations);
+    setValue(LOCATION_ATTRIBUTE_SELECTOR, locations);
   }
 
   const addLocation = (e) => {
@@ -36,7 +44,7 @@ export const MaterialLocationSelector = <T extends FieldValues>(props: Props<T>)
     } else {
       setLocations((prevLocations) => {
         const updatedLocations = [...prevLocations, newLocation];
-        setValue('locations', updatedLocations);
+        setValue(LOCATION_ATTRIBUTE_SELECTOR, updatedLocations);
         return updatedLocations;
       });
       setLocation('');

@@ -70,9 +70,13 @@ const Material = observer((props: Props) => {
   const [shouldShowPoModal, setShouldShowPoModal] = useState(false);
 
   const showPurchaseOrderModal = (e) => {
+    if (e.currentTarget.classList.contains('disabled')) {
+      e.stopPropagation();
+      return; // Prevent further execution if the class is present
+    }
     setShouldShowPoModal(true)
     e.stopPropagation() // This is required to prevent any parents' onClick from being called
-  }
+  };
 
   return (
     <div className='card' id={material._id} onClick={() => onClick()} data-test='material-inventory-card'>
@@ -80,15 +84,17 @@ const Material = observer((props: Props) => {
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>
           <div className='tooltip-top material-width-container'>
-            <h2 className='material-width'>{material.width || 'N/A'}</h2>
-            <span className='tooltiptext'>Material width inches</span>
+            <h2 className='material-width'>{material.width ? `${material.width}"` : 'N/A'}</h2>
+            <span className='tooltiptext'>{material.width ? `${material.width}"` : 'N/A'} material width</span>
           </div>
         </div>
         <div className='col col-right'>
           <div className='material-card-options-container'>
-            <div className='material-option po-container tooltip-top' onClick={(e) => showPurchaseOrderModal(e)}>
-              <span className='tooltiptext'>View open POs</span>
-              <i className="fa-regular fa-calendar-clock"></i>
+            <div className={`material-option po-container tooltip-top ${materialInventory.purchaseOrdersForMaterial.length === 0 ? 'disabled' : 'enabled'}`} onClick={(e) => showPurchaseOrderModal(e)}>
+              <span className='tooltiptext'>{materialInventory.purchaseOrdersForMaterial.length === 0 ? 'No purchase orders' : `View ${materialInventory.purchaseOrdersForMaterial.length} purchase orders`}</span>
+              <div className='icon-container'>
+                <div className='po-counter'>{materialInventory.purchaseOrdersForMaterial.length === 0 ? '0' : `${materialInventory.purchaseOrdersForMaterial.length}`}</div>
+              </div>
 
               {
                 shouldShowPoModal && 
@@ -96,12 +102,18 @@ const Material = observer((props: Props) => {
               }
 
             </div>
-            <div className='material-option open-ticket-container tooltip-top'>
-              <i className="fa-regular fa-memo"></i>
+            <div className='material-option open-ticket-container tooltip-top enabled'>
+              <div className='icon-container'>
+                <i className="fa-regular fa-memo"></i>
+              </div>
               <span className='tooltiptext'>View open tickets</span>
             </div>
             <div className='material-option edit-container tooltip-top'>
-              <Link to={`/react-ui/forms/material/${material._id}`}><i className="fa-regular fa-pen-to-square"></i></Link>
+              <Link to={`/react-ui/forms/material/${material._id}`}>
+                <div className='icon-container'>
+                  <i className="fa-regular fa-pen-to-square"></i>
+                </div>
+              </Link>
               <span className='tooltiptext'>Edit material details</span>
             </div>
           </div>
@@ -129,7 +141,8 @@ const Material = observer((props: Props) => {
           <h2 className='material-length-ordered'>{materialInventory.netLengthOfMaterialInStock}</h2>
         </div>
       </div>
-      <div className='material-location-container'>
+      <div className='material-location-container tooltip-top'>
+        <span className='tooltiptext'>Location of material</span>
         <div className='span-wrapper'>
           <span className='material-location'>A22</span>
         </div>

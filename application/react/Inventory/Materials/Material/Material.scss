@@ -11,7 +11,6 @@
     height: 230px;
     max-width: 500px;
     position: relative;
-
     .material-location-container {
       position: absolute;
       height: 30px;
@@ -28,8 +27,8 @@
         overflow: hidden;
         .material-location {
           position: absolute;
-          color: rgba(128,131,144,1);
-          background-color: rgba(128,131,144,.12);
+          background: rgba(115, 103, 240, .12);
+          color: rgba(115, 103, 240, 1);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -56,8 +55,12 @@
       .card-header {
         .col-right {
           .material-card-options-container {
-            top: 0;
-            transition: .3s;
+            .icon-container {
+              i, .po-counter {
+                top: 0;
+                transition: .3s;
+              }
+            }
           }
         }
       }
@@ -69,16 +72,37 @@
       align-items: center;
       flex-direction: row;
       .col-right {
-        overflow: hidden;
         position: relative;
         height: 42px;
         .material-card-options-container {
-          top: -100%;
           position: absolute;
           display: flex;
           justify-content: center;
           align-items: center;
           transition: .3s;
+          .icon-container {
+            position: relative;
+            height: 35px;
+            width: 35px;
+            overflow: hidden;
+            i, .po-counter {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 35px;
+              width: 35px;
+              border-radius: 5px;
+              position: absolute;
+              top:-35px;
+              transition: .3s;
+            }
+            .po-counter.active {
+              &:hover {
+                background: rgba(var(--alert-success), .12);
+                color: rgba(var(--alert-success), 1);
+              }
+            }
+          }
         }
       }
       h2 {
@@ -89,19 +113,8 @@
         border-radius: 5px;
         padding: 5px 15px;
       }
-      i {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 35px;
-        width: 35px;
-        border-radius: 5px;
-      }
       .material-option {
         border-radius: 5px;
-        &:hover {
-          background-color: rgba(var(--primary-dark-background), var(--opacity-1));
-        }
       }
       .material-width-container {
         margin-left: 7px;
@@ -112,9 +125,18 @@
         }
       }
       .po-container {
-        i {
+        .po-counter {
           color: rgba(128,131,144,1);
           background-color: rgba(128,131,144,.12);
+        }
+      }
+      .po-container.enabled {
+        .po-counter {
+          background-color: rgba(var(--primary-green), .12);
+          color: rgba(var(--primary-green), 1);
+          &:hover {
+            background-color: rgba(var(--primary-green), .24);
+          }
         }
       }
       .open-ticket-container {
@@ -124,15 +146,32 @@
           background-color: rgba(128,131,144,.12);
         }
       }
+      .open-ticket-container.enabled {
+        i {
+          color: rgba(var(--primary-blue),var(--opacity-10));
+          background-color: rgba(var(--primary-blue), .12);
+          &:hover {
+            background-color: rgba(var(--primary-blue), .24);
+          }
+        }
+      }
       .edit-container {
         i {
           color: rgba(128,131,144,1);
           background-color: rgba(128,131,144,.12);
+          &:hover {
+            background-color: rgba(var(--primary-dark-background), var(--opacity-2));
+          }
+        }
+      }
+      .po-container.disabled, .open-ticket-container.disabled {
+        .po-counter, i {
+          &:hover {
+            cursor: not-allowed;
+          }
         }
       }
     }
-    
-
     .material-description {
         font-size: 20px;
         font-weight: 400;
@@ -166,8 +205,6 @@
     }
   }
 }
-
-
 .modal-content {
   width: 100%;
   height: 100%;
@@ -287,7 +324,6 @@
     }
   }
 }
-
 .fa-light.fa-xmark {
   position: absolute;
   display: flex;
@@ -298,21 +334,16 @@
   height: 28px;
   width: 32px;
   border-radius: 0.428rem;
-
   &:hover {
     background-color: rgba(103, 104, 121, 0.1);
     cursor: pointer;
   }
 }
-
 .po-container {
   display: flex;
-
   &.modal-active {
     .modal-background {
-
       display: flex;
-
     }
   }
 }

@@ -1,7 +1,8 @@
 :root {
-    --primary-text-color: 47,43,61;
+    --primary-text-c-olor: 47,43,61;
     --primary-blue-text-color: 21, 126, 251;
-    --primary-purple-text-color: 115,103,240;
+    --primary-purple: 115,103,240;
+    --primary-blue: 0,186,209;
     --opacity-1: .1;
     --opacity-2: .2;
     --opacity-7: .7;
@@ -17,7 +18,7 @@
     --alert-warning: 255,159,67;
     --alert-error: 255,76,81;
     --alert-success: 40,199,111;
-
+    --primary-green: 40,199,111;
 }
 body, html {
 	width: 100%;
@@ -264,4 +265,20 @@ textarea {
 }
 .alert-success-background-soft {
     color: rgba(var(--alert-sucess), var(--light-opacity))!important;
+}
+
+//Notification Counter
+.notification-counter {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ea5455;
+    color: white;
+    font-size: 13px;
+    font-family: sans-serif;
+    padding-top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

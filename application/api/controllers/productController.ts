@@ -94,7 +94,7 @@ router.delete('/:mongooseId', async (request: Request, response: Response) => {
 
 router.get('/', async (_: Request, response: Response) => {
   try {
-    const products = await BaseProductModel.find().sort({ createdAt: DESCENDING }).exec();
+    const products = await BaseProductModel.find().sort({ updatedAt: DESCENDING }).exec();
 
     return response.json(products);
   } catch (error) {

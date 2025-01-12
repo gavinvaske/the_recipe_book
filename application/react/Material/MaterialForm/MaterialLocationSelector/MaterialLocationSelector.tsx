@@ -1,6 +1,6 @@
-import React, { forwardRef, useRef } from 'react';
+import React from 'react';
 import './MaterialLocationSelector.scss'
-import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { FieldValues, UseFormSetValue } from 'react-hook-form';
 
 const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
 

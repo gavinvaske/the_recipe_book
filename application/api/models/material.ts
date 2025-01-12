@@ -10,9 +10,16 @@ const FOUR_DECIMAL_PLACES = 4;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const LOCATION_REGEX = /^[a-zA-Z][1-9][0-9]?$/;
 
 function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
+}
+
+function validateLocations(locations) {
+  return locations.every((location) => {
+    return LOCATION_REGEX.test(location)
+  });
 }
 
 function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
@@ -161,7 +168,13 @@ const schema = new Schema<IMaterial>({
     },
     locations: {
         type: [String],
-        required: true
+        required: true,
+        validate: [
+          {
+            validator: validateLocations,
+            message: 'Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).'
+          }
+        ]
     },
     linerType: {
         type: Schema.Types.ObjectId,

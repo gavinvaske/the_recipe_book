@@ -626,47 +626,47 @@ describe('File: material.js', () => {
         });
 
         it('should auto uppercase', () => {
-          const lowerCaseLocation = 'a1';
-          materialAttributes.locations = [lowerCaseLocation];
-          const material = new MaterialModel(materialAttributes);
+            const lowerCaseLocation = 'a1';
+            materialAttributes.locations = [lowerCaseLocation];
+            const material = new MaterialModel(materialAttributes);
       
-          expect(material.locations).toEqual([lowerCaseLocation.toUpperCase()]);
+            expect(material.locations).toEqual([lowerCaseLocation.toUpperCase()]);
         });
 
         it('should fail validation if duplicates exist', () => {
-          const location = 'P22';
-          materialAttributes.locations = [location, location];
-          const material = new MaterialModel(materialAttributes);
-          const { errors } = material.validateSync();
+            const location = 'P22';
+            materialAttributes.locations = [location, location];
+            const material = new MaterialModel(materialAttributes);
+            const { errors } = material.validateSync();
       
-          expect(errors.locations).toBeDefined();
-          expect(errors?.locations?.properties?.message.includes('Each location must be unique (i.e no duplicates allowed).')).toBeTruthy();
+            expect(errors.locations).toBeDefined();
+            expect(errors?.locations?.properties?.message.includes('Each location must be unique (i.e no duplicates allowed).')).toBeTruthy();
         });
 
         it('should fail validation if one of the locaitons is not in the valid format (test #1)', () => {
-          const invalidLocations = ['AA12', 'Z100'];
-          const validLocations = ['A1', 'z99'];
-          const locations = [chance.pickone(invalidLocations), chance.pickone(validLocations)];
-          materialAttributes.locations = locations;
+            const invalidLocations = ['AA12', 'Z100'];
+            const validLocations = ['A1', 'z99'];
+            const locations = [chance.pickone(invalidLocations), chance.pickone(validLocations)];
+            materialAttributes.locations = locations;
 
-          const material = new MaterialModel(materialAttributes);
-          const { errors } = material.validateSync();
+            const material = new MaterialModel(materialAttributes);
+            const { errors } = material.validateSync();
           
-          expect(errors.locations).toBeDefined();
-          expect(errors?.locations?.properties?.message.includes('Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).')).toBeTruthy();
-        })
+            expect(errors.locations).toBeDefined();
+            expect(errors?.locations?.properties?.message.includes('Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).')).toBeTruthy();
+        });
 
         it('should fail validation if one of the locaitons is not in the valid format (test #2)', () => {
-          const invalidLocations = ['12', 'Z01', 'A'];
-          const validLocations = ['U10', 'p90'];
-          const locations = [chance.pickone(invalidLocations), chance.pickone(validLocations)];
-          materialAttributes.locations = locations;
+            const invalidLocations = ['12', 'Z01', 'A'];
+            const validLocations = ['U10', 'p90'];
+            const locations = [chance.pickone(invalidLocations), chance.pickone(validLocations)];
+            materialAttributes.locations = locations;
 
-          const material = new MaterialModel(materialAttributes);
-          const { errors } = material.validateSync();
+            const material = new MaterialModel(materialAttributes);
+            const { errors } = material.validateSync();
           
-          expect(errors.locations).toBeDefined();
-        })
+            expect(errors.locations).toBeDefined();
+        });
     });
 
     describe('attribute: linerType', () => {

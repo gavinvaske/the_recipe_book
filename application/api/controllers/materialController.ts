@@ -13,6 +13,7 @@ import * as mongooseService from '../services/mongooseService.ts';
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
 import { SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
 
@@ -30,7 +31,7 @@ router.delete('/:mongooseId', async (request, response) => {
 
 router.get('/', async (request, response) => {
     try {
-        const materials = await MaterialModel.find().exec();
+        const materials = await MaterialModel.find().sort({ updatedAt: DESCENDING }).exec();
 
         return response.json(materials);
     } catch (error) {

@@ -26,7 +26,7 @@ router.post('/', async (request, response) => {
 
 router.get('/', async (_: Request, response: Response) => {
   try {
-    const quotes = await QuoteModel.find().sort({ createdAt: DESCENDING }).exec();
+    const quotes = await QuoteModel.find().sort({ updatedAt: DESCENDING }).exec();
 
     return response.json(quotes);
   } catch (error) {

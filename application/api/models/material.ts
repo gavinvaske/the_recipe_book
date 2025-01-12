@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { Decimal } from 'decimal.js';
@@ -10,9 +10,20 @@ const FOUR_DECIMAL_PLACES = 4;
 
 // For help deciphering these regex expressions, visit: https://regexr.com/
 const URL_VALIDATION_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const LOCATION_REGEX = /^[a-zA-Z][1-9][0-9]?$/;
 
 function validateUrl(url) {
     return URL_VALIDATION_REGEX.test(url);
+}
+
+function validateLocationsFormat(locations) {
+  return locations.every((location) => {
+    return LOCATION_REGEX.test(location)
+  });
+}
+
+function validateLocationsAreUnique(locations) {
+  return new Set(locations).size === locations.length;
 }
 
 function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
@@ -23,13 +34,41 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
     };
 }
 
+export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
+  name: string;
+  materialId: string;
+  vendor: mongoose.Types.ObjectId;
+  materialCategory: mongoose.Types.ObjectId;
+  weight: number;
+  costPerMsi: number;
+  freightCostPerMsi: number;
+  width: number;
+  faceColor: string;
+  adhesive: string;
+  thickness: number;
+  adhesiveCategory: mongoose.Types.ObjectId;
+  quotePricePerMsi: number;
+  description: string;
+  whenToUse: string;
+  alternativeStock?: string;
+  length: number;
+  facesheetWeightPerMsi: number;
+  adhesiveWeightPerMsi: number;
+  linerWeightPerMsi: number;
+  locations: string[];
+  linerType: mongoose.Types.ObjectId;
+  productNumber: string;
+  masterRollSize: number;
+  image: string;
+}
+
 const weightPerMsiAttribute = {
     type: Number,
     min: 0,
     set: roundNumberToNthDecimalPlace(FOUR_DECIMAL_PLACES),
 };
 
-const schema = new Schema({
+const schema = new Schema<IMaterial>({
     name: {
         type: String,
         required: true,
@@ -131,9 +170,21 @@ const schema = new Schema({
         ...weightPerMsiAttribute,
         required: true
     },
-    location: {
-        type: String,
-        required: true
+    locations: {
+        type: [String],
+        uppercase: true,
+        required: true,
+        set: (locations: string[]) => locations.map(location => location.toUpperCase()),
+        validate: [
+          {
+            validator: validateLocationsFormat,
+            message: 'Each location must start with a letter and end with a number between 1 and 99 (Ex: C13).'
+          },
+          {
+            validator: validateLocationsAreUnique,
+            message: 'Each location must be unique (i.e no duplicates allowed).'
+          }
+        ]
     },
     linerType: {
         type: Schema.Types.ObjectId,
@@ -166,4 +217,4 @@ const schema = new Schema({
     strict: 'throw'
 });
 
-export const MaterialModel = mongoose.model('Material', schema);
+export const MaterialModel = mongoose.model<IMaterial>('Material', schema);

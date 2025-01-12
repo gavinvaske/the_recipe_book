@@ -3,6 +3,7 @@ const router = Router();
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
+import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
 
@@ -23,7 +24,7 @@ router.post('/', async (request, response) => {
 
 router.get('/', async (request, response) => {
   try {
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().exec();
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().sort({ updatedAt: DESCENDING }).exec();
 
     return response.json(materialLengthAdjustments);
   } catch (error) {

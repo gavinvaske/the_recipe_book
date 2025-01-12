@@ -9,16 +9,17 @@ import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
 import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { LinerType } from '../../_types/databasemodels/linerType.ts';
-import { Material } from '../../_types/databasemodels/material.ts';
+import { IMaterial } from '../../../api/models/material.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { useAxios } from '../../_hooks/useAxios';
+import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues, watch } = useForm<IMaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -34,8 +35,8 @@ export const MaterialForm = () => {
     if (!isUpdateRequest) return;
 
     axios.get('/materials/' + mongooseId)
-      .then(({ data }: {data: Material}) => {
-        const formValues: MaterialFormAttributes = {
+      .then(({ data }: { data: IMaterial }) => {
+        const formValues: IMaterialFormAttributes = {
           name: data.name,
           materialId: data.materialId,
           thickness: data.thickness,
@@ -53,14 +54,14 @@ export const MaterialForm = () => {
           facesheetWeightPerMsi: data.facesheetWeightPerMsi,
           adhesiveWeightPerMsi: data.adhesiveWeightPerMsi,
           linerWeightPerMsi: data.linerWeightPerMsi,
-          location: data.location,
+          locations: data.locations,
           productNumber: data.productNumber,
           masterRollSize: data.masterRollSize,
           image: data.image,
           linerType: data.linerType,
-          adhesiveCategory: data.adhesiveCategory as MongooseId,
-          vendor: data.vendor as MongooseId,
-          materialCategory: data.materialCategory as MongooseId
+          adhesiveCategory: data.adhesiveCategory,
+          vendor: data.vendor,
+          materialCategory: data.materialCategory
         }
 
         reset(formValues) // pre-populate form with existing values from the DB
@@ -120,7 +121,7 @@ export const MaterialForm = () => {
       .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
-  const onSubmit = (formData: MaterialFormAttributes) => {
+  const onSubmit = (formData: IMaterialFormAttributes) => {
     if (isUpdateRequest) {
       axios.patch(`/materials/${mongooseId}`, formData)
         .then((_) => {
@@ -267,12 +268,9 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
-                <Input
-                  attribute='location'
-                  label="Location"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
+                <MaterialLocationSelector 
+                  setValue={setValue}
+                  getValues={getValues}
                 />
                 <Input
                   attribute='productNumber'
@@ -338,7 +336,7 @@ export const MaterialForm = () => {
   )
 }
 
-export type MaterialFormAttributes = {
+export interface IMaterialFormAttributes {
   name: string;
   materialId: string;
   vendor: MongooseId;
@@ -359,7 +357,7 @@ export type MaterialFormAttributes = {
   facesheetWeightPerMsi: number;
   adhesiveWeightPerMsi: number;
   linerWeightPerMsi: number;
-  location: string;
+  locations: string[];
   linerType: MongooseId;
   productNumber: string;
   masterRollSize: number;

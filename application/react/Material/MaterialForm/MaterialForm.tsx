@@ -36,7 +36,6 @@ export const MaterialForm = () => {
 
     axios.get('/materials/' + mongooseId)
       .then(({ data }: { data: IMaterial }) => {
-        console.log('material locations: ', data.locations)
         const formValues: IMaterialFormAttributes = {
           name: data.name,
           materialId: data.materialId,

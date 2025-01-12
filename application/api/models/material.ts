@@ -35,7 +35,6 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
 }
 
 export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document  {
-  // TODO @Gavin: Verify these types are correct.
   name: string;
   materialId: string;
   vendor: mongoose.Types.ObjectId;

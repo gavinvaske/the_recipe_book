@@ -1,17 +1,17 @@
 import axios, { AxiosResponse } from "axios";
 import { MongooseId } from "../_types/typeAliases";
-import { MaterialOrder } from "../_types/databaseModels/materialOrder";
+import { IMaterialOrder } from "../../api/models/materialOrder";
 
-export const getOneMaterialOrder = async (mongooseId: MongooseId): Promise<MaterialOrder> => {
+export const getOneMaterialOrder = async (mongooseId: MongooseId): Promise<IMaterialOrder> => {
   const response : AxiosResponse = await axios.get(`/material-orders/${mongooseId}`);
-  const materialOrder: MaterialOrder = response.data;
+  const materialOrder: IMaterialOrder = response.data;
 
   return materialOrder
 }
 
-export const getMaterialOrders = async (): Promise<MaterialOrder[]> => {
+export const getMaterialOrders = async (): Promise<IMaterialOrder[]> => {
   const response : AxiosResponse = await axios.get(`/material-orders`);
-  const materialOrders: MaterialOrder[] = response.data;
+  const materialOrders: IMaterialOrder[] = response.data;
 
   return materialOrders
 }

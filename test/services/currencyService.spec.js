@@ -1,7 +1,19 @@
 import * as currencyService from '../../application/api/services/currencyService';
+import Chance from 'chance';
+
+const chance = Chance();
 
 describe('File: currencyService.js', () => {
     describe('Function: convertDollarsToPennies', () => {
+        it('should return the falsy value if the input is not a number', () => {
+            const nonNumber = chance.pickone([null, undefined, '']);
+            const expectedResult = nonNumber;
+
+            const actualResult = currencyService.convertDollarsToPennies(nonNumber);
+
+            expect(actualResult).toBe(expectedResult);
+        });
+
         it('should convert integer to pennies', () => {
             const integer = 999;
             const expectedResult = 99900;
@@ -121,6 +133,15 @@ describe('File: currencyService.js', () => {
     });
 
     describe('Function: convertPenniesToDollars', () => {
+        it('should return the falsy value if the input is not a number', () => {
+            const nonNumber = chance.pickone([null, undefined, '']);
+            const expectedResult = nonNumber;
+
+            const actualResult = currencyService.convertPenniesToDollars(nonNumber);
+
+            expect(actualResult).toBe(expectedResult);
+        });
+
         it('should convert an integer representing pennies to dollars (case 1)', () => {
             const pennies = 99900;
             const expectedResult = 999;

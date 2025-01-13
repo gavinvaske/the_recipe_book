@@ -3,21 +3,21 @@ import './Inventory.scss'
 import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
 import Materials from './Materials/Materials';
-import { MaterialOrder } from '../_types/databaseModels/MaterialOrder';
-import { Material } from '../_types/databasemodels/material.ts';
 import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
+import { IMaterial } from '../../api/models/material.ts';
+import { IMaterialOrder } from '../../api/models/materialOrder.ts';
 
 const socket = io();
 
 export type MaterialInventory = {
   lengthOfMaterialInStock: number
   lengthOfMaterialOrdered: number
-  material: Material,
+  material: IMaterial,
   netLengthOfMaterialInStock: number,
-  purchaseOrdersForMaterial: MaterialOrder[]
+  purchaseOrdersForMaterial: IMaterialOrder[]
 }
 
 export type MaterialInventorySummary = {
@@ -35,11 +35,11 @@ const Inventory = observer(() => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   }, []);
 
-  socket.on('MATERIAL:CHANGED', (_: Material) => {
+  socket.on('MATERIAL:CHANGED', (_: IMaterial) => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 
-  socket.on('MATERIAL_ORDER:CHANGED', (_: MaterialOrder) => {
+  socket.on('MATERIAL_ORDER:CHANGED', (_: IMaterialOrder) => {
     inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
   })
 

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './Material.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory';
-import { Material } from '../../../_types/databasemodels/material.ts';
 import { Modal } from '../../../_global/Modal/Modal';
 import { Link } from 'react-router-dom';
 import { getDayMonthYear } from '../../../_helperFunctions/dateTime';
+import { IMaterial } from '../../../../api/models/material.ts';
 
 function renderPurchaseOrders(materialInventory: MaterialInventory) {
   const { purchaseOrdersForMaterial } = materialInventory
@@ -66,7 +66,7 @@ type Props = {
 
 const Material = observer((props: Props) => {
   const { materialInventory, onClick } = props;
-  const material: Material = materialInventory.material;
+  const material: IMaterial = materialInventory.material;
   const [shouldShowPoModal, setShouldShowPoModal] = useState(false);
 
   const showPurchaseOrderModal = (e) => {
@@ -79,7 +79,7 @@ const Material = observer((props: Props) => {
   };
 
   return (
-    <div className='card' id={material._id} onClick={() => onClick()} data-test='material-inventory-card'>
+    <div id={material._id} className={`card ${getLowInventoryClass(material.minFootageAlertThreshold, materialInventory)}`} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>
@@ -152,7 +152,7 @@ const Material = observer((props: Props) => {
 });
 
 type PurchaseOrderModalProps = {
-  material: Material, 
+  material: IMaterial, 
   materialInventory: MaterialInventory,
   onClose: () => void
 }
@@ -189,6 +189,20 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
       </div>
     </Modal>
   )
+}
+
+function getLowInventoryClass(minFootageAlertThreshold: number | undefined, materialInventory: MaterialInventory): string {
+  if (!minFootageAlertThreshold) return 'low-inventory';
+
+  if (materialInventory.netLengthOfMaterialInStock < minFootageAlertThreshold) {
+    return 'low-inventory';
+  }
+
+  if (materialInventory.netLengthOfMaterialInStock < minFootageAlertThreshold + 10000) {
+    return 'low-inventory-warning';
+  }
+
+  return '';
 }
 
 export default Material;

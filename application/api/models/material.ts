@@ -60,6 +60,7 @@ export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document {
   productNumber: string;
   masterRollSize: number;
   image: string;
+  minFootageAlertThreshold: number;
 }
 
 const weightPerMsiAttribute = {
@@ -211,6 +212,15 @@ const schema = new Schema<IMaterial>({
         type: String,
         required: true,
         validate: [validateUrl, '{VALUE} is not a valid url']
+    },
+    minFootageAlertThreshold: {
+        type: Number,
+        required: true,
+        min: 0,
+        validate : {
+            validator : Number.isInteger,
+            message: '{VALUE} is not an integer'
+        },
     }
 }, {
     timestamps: true,

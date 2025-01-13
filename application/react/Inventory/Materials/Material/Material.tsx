@@ -144,7 +144,7 @@ const Material = observer((props: Props) => {
       <div className='material-location-container tooltip-top'>
         <span className='tooltiptext'>Location of material</span>
         <div className='span-wrapper'>
-          <span className='material-location'>A22</span>
+          <span className='material-location'>{material?.locations?.length > 0 ? material.locations.join(', ') : 'N/A'}</span>
         </div>
       </div>
     </div>

@@ -25,7 +25,9 @@ describe('materialOrder validation', () => {
             vendor: new mongoose.Types.ObjectId(),
             hasArrived: chance.bool(),
             notes: chance.string(),
-            author: new mongoose.Types.ObjectId()
+            author: new mongoose.Types.ObjectId(),
+            freightCharge: chance.floating({ min: 0, fixed: 2 }),
+            fuelCharge: chance.floating({ min: 0, fixed: 2 })
         };
     });
 
@@ -288,6 +290,58 @@ describe('materialOrder validation', () => {
             expect(materialOrder.notes).toBe(notesWithoutSpaces);
         });
     });
+
+    describe('attribute: freightCharge', () => {
+        it('should be required', () => {
+            delete materialOrderAttributes.freightCharge;
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            const { errors } = materialOrder.validateSync();
+
+            expect(errors.freightCharge).toBeDefined();
+        })
+
+        it('should be a number', () => {
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            expect(materialOrder.freightCharge).toEqual(expect.any(Number));
+        })
+
+        it('should be a positive number', () => {
+            materialOrderAttributes.freightCharge = -1
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+            
+            const { errors } = materialOrder.validateSync();
+            
+            expect(errors.freightCharge).toBeDefined();
+        })
+    })
+
+    describe('attribute: fuelCharge', () => {
+        it('should be required', () => {
+            delete materialOrderAttributes.fuelCharge;
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            const { errors } = materialOrder.validateSync();
+
+            expect(errors.fuelCharge).toBeDefined();
+        })
+
+        it('should be a number', () => {
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+
+            expect(materialOrder.fuelCharge).toEqual(expect.any(Number));
+        })
+
+        it('should be a positive number', () => {
+            materialOrderAttributes.fuelCharge = -1
+            const materialOrder = new MaterialOrderModel(materialOrderAttributes);
+            
+            const { errors } = materialOrder.validateSync();
+            
+            expect(errors.fuelCharge).toBeDefined();
+        })
+    })
 
     describe('materialOrder.author validation', () => {
         it('should fail validation if author is not defined', () => {

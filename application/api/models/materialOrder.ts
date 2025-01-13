@@ -17,6 +17,22 @@ const validatePurchaseOrderNumber = function(text) {
     return ONLY_NUMBERS_REGEX.test(text);
 };
 
+export interface IMaterialOrder {
+    author: mongoose.Types.ObjectId,
+    material: mongoose.Types.ObjectId,
+    purchaseOrderNumber: string,
+    orderDate: Date,
+    arrivalDate: Date,
+    feetPerRoll: number,
+    totalRolls: number,
+    totalCost: number,
+    vendor: mongoose.Types.ObjectId,
+    hasArrived?: boolean,
+    notes?: string
+    freightCharge: number,
+    fuelCharge: number,
+}
+
 const schema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
@@ -26,7 +42,7 @@ const schema = new Schema({
     material: {
         type: Schema.Types.ObjectId,
         ref: 'Material',
-        required: [true, 'MATERIAL is required']
+        required: true
     },
     purchaseOrderNumber: {
         type: String,
@@ -77,6 +93,16 @@ const schema = new Schema({
     notes: {
         type: String,
         required: false
+    },
+    freightCharge: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    fuelCharge: {
+        type: Number,
+        required: true,
+        min: 0
     }
 }, { timestamps: true });
 

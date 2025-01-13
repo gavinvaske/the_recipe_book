@@ -789,6 +789,43 @@ describe('File: material.js', () => {
 
             expect(error).toBeDefined();
         });
+
+        describe('attribute: minFootageAlertThreshold', () => {
+            it('should be required', () => {
+                delete materialAttributes.minFootageAlertThreshold;
+                const material = new MaterialModel(materialAttributes);
+
+                const { errors } = material.validateSync();
+
+                expect(errors.minFootageAlertThreshold).toBeDefined();
+            });
+
+            it('should be a number', () => {
+                const material = new MaterialModel(materialAttributes);
+
+                expect(material.minFootageAlertThreshold).toEqual(expect.any(Number));
+            });
+
+            it('should fail validation if the value is not a positive number', () => {
+                const material = new MaterialModel(materialAttributes);
+                const negativeNumber = -1;
+                material.minFootageAlertThreshold = negativeNumber;
+
+                const { errors } = material.validateSync();
+
+                expect(errors.minFootageAlertThreshold).toBeDefined();
+            });
+
+            it('should fail validation if the value is a floating point number', () => {
+                const material = new MaterialModel(materialAttributes);
+                const floatingPointNumber = 1.123;
+                material.minFootageAlertThreshold = floatingPointNumber;
+
+                const { errors } = material.validateSync();
+
+                expect(errors.minFootageAlertThreshold).toBeDefined();
+            });
+        });
     });
 
     describe('verify database interactions', () => {

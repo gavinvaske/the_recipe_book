@@ -77,7 +77,8 @@ function getMaterial() {
         linerType: new mongoose.Types.ObjectId(),
         productNumber: chance.string(),
         masterRollSize: chance.integer({ min: 1, max: 10 }),
-        image: chance.url()
+        image: chance.url(),
+        minFootageAlertThreshold: chance.integer({ min: 0, max: 10000 })
     };
 }
 

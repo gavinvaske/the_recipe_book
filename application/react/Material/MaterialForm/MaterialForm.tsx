@@ -220,6 +220,13 @@ export const MaterialForm = () => {
                   errors={errors}
                 />
                 <Input
+                  attribute='minFootageAlertThreshold'
+                  label="Min Footage Alert Threshold"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
                   attribute='description'
                   label="Description"
                   register={register}
@@ -362,4 +369,5 @@ export interface IMaterialFormAttributes {
   productNumber: string;
   masterRollSize: number;
   image: string;
+  minFootageAlertThreshold: number;
 }

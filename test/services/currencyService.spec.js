@@ -12,7 +12,7 @@ describe('File: currencyService.js', () => {
             const actualResult = currencyService.convertDollarsToPennies(nonNumber);
 
             expect(actualResult).toBe(expectedResult);
-        })
+        });
 
         it('should convert integer to pennies', () => {
             const integer = 999;
@@ -140,7 +140,7 @@ describe('File: currencyService.js', () => {
             const actualResult = currencyService.convertPenniesToDollars(nonNumber);
 
             expect(actualResult).toBe(expectedResult);
-        })
+        });
 
         it('should convert an integer representing pennies to dollars (case 1)', () => {
             const pennies = 99900;

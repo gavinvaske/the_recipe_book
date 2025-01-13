@@ -233,13 +233,13 @@ describe('materialOrder validation', () => {
         });
 
         it('should auto round to nearest penny', () => {
-            const unrounderedFreightCharge = 99.999
-            const roundedFreightCharge = 100.00
-            materialOrderAttributes.totalCost = unrounderedFreightCharge
+            const unrounderedFreightCharge = 99.999;
+            const roundedFreightCharge = 100.00;
+            materialOrderAttributes.totalCost = unrounderedFreightCharge;
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
             
             expect(materialOrder.totalCost).toBe(roundedFreightCharge);
-        })
+        });
     });
 
     describe('materialOrder.vendor validation', () => {
@@ -308,32 +308,32 @@ describe('materialOrder validation', () => {
             const { errors } = materialOrder.validateSync();
 
             expect(errors.freightCharge).toBeDefined();
-        })
+        });
 
         it('should be a number', () => {
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 
             expect(materialOrder.freightCharge).toEqual(expect.any(Number));
-        })
+        });
 
         it('should be a positive number', () => {
-            materialOrderAttributes.freightCharge = -1
+            materialOrderAttributes.freightCharge = -1;
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
             
             const { errors } = materialOrder.validateSync();
             
             expect(errors.freightCharge).toBeDefined();
-        })
+        });
 
         it('should auto round to nearest penny', () => {
-            const unrounderedFreightCharge = 10.125
-            const roundedFreightCharge = 10.13
-            materialOrderAttributes.freightCharge = unrounderedFreightCharge
+            const unrounderedFreightCharge = 10.125;
+            const roundedFreightCharge = 10.13;
+            materialOrderAttributes.freightCharge = unrounderedFreightCharge;
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
             
             expect(materialOrder.freightCharge).toBe(roundedFreightCharge);
-        })
-    })
+        });
+    });
 
     describe('attribute: fuelCharge', () => {
         it('should be required', () => {
@@ -343,32 +343,32 @@ describe('materialOrder validation', () => {
             const { errors } = materialOrder.validateSync();
 
             expect(errors.fuelCharge).toBeDefined();
-        })
+        });
 
         it('should be a number', () => {
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
 
             expect(materialOrder.fuelCharge).toEqual(expect.any(Number));
-        })
+        });
 
         it('should be a positive number', () => {
-            materialOrderAttributes.fuelCharge = -1
+            materialOrderAttributes.fuelCharge = -1;
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
             
             const { errors } = materialOrder.validateSync();
             
             expect(errors.fuelCharge).toBeDefined();
-        })
+        });
 
         it('should auto round to nearest penny', () => {
-            const unrounderedFreightCharge = 99.999
-            const roundedFreightCharge = 100.00
-            materialOrderAttributes.freightCharge = unrounderedFreightCharge
+            const unrounderedFreightCharge = 99.999;
+            const roundedFreightCharge = 100.00;
+            materialOrderAttributes.freightCharge = unrounderedFreightCharge;
             const materialOrder = new MaterialOrderModel(materialOrderAttributes);
             
             expect(materialOrder.freightCharge).toBe(roundedFreightCharge);
-        })
-    })
+        });
+    });
 
     describe('materialOrder.author validation', () => {
         it('should fail validation if author is not defined', () => {

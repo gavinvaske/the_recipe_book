@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import { convertDollarsToPennies, convertPenniesToDollars, PENNIES_PER_DOLLAR } from '../services/currencyService.ts';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 
@@ -17,7 +18,7 @@ const validatePurchaseOrderNumber = function(text) {
     return ONLY_NUMBERS_REGEX.test(text);
 };
 
-export interface IMaterialOrder {
+export interface IMaterialOrder extends SchemaTimestampsConfig, mongoose.Document  {
     author: mongoose.Types.ObjectId,
     material: mongoose.Types.ObjectId,
     purchaseOrderNumber: string,
@@ -78,8 +79,10 @@ const schema = new Schema({
     totalCost: {
         type: Number,
         required: [true, 'TOTAL COST is required'],
-        min: [TOTAL_COST_MIN, 'Total Cost must be more than $1'],
-        max: [TOTAL_COST_MAX, 'Total Cost must be less than $500,000']
+        min: [TOTAL_COST_MIN * PENNIES_PER_DOLLAR, 'Total Cost must be more than $1'],
+        max: [TOTAL_COST_MAX * PENNIES_PER_DOLLAR, 'Total Cost must be less than $500,000'],
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
     },
     vendor: {
         type: Schema.Types.ObjectId,
@@ -97,11 +100,15 @@ const schema = new Schema({
     freightCharge: {
         type: Number,
         required: true,
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
         min: 0
     },
     fuelCharge: {
         type: Number,
         required: true,
+        get: convertPenniesToDollars,
+        set: convertDollarsToPennies,
         min: 0
     }
 }, { timestamps: true });

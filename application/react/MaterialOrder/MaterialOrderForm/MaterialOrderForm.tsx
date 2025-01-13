@@ -17,11 +17,17 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { getOneMaterialOrder } from '../../_queries/materialOrder';
 import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
+import { IMaterialOrder } from '../../../api/models/materialOrder'
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
 export const MaterialOrderForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialOrderFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialOrderFormAttributes>({
+    defaultValues: {
+      freightCharge: 0,
+      fuelCharge: 0
+    }
+  });
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const [users, setUsers] = useState<SelectOption[]>([])
@@ -57,20 +63,22 @@ export const MaterialOrderForm = () => {
     // The code below deals with populating the fields on the form if a user has selected "edit" on an existing object
     if (!isUpdateRequest) return;
 
-    const materialOrder: MaterialOrder = await getOneMaterialOrder(mongooseId)
+    const materialOrder: IMaterialOrder = await getOneMaterialOrder(mongooseId)
 
     const formValues: MaterialOrderFormAttributes = {
       author: materialOrder.author,
       material: materialOrder.material,
       vendor: materialOrder.vendor,
       purchaseOrderNumber: materialOrder.purchaseOrderNumber,
-      orderDate: convertDateStringToFormInputDateString(materialOrder.orderDate as string),
+      orderDate: convertDateStringToFormInputDateString(materialOrder.orderDate as unknown as string),
       feetPerRoll: materialOrder.feetPerRoll,
       totalRolls: materialOrder.totalRolls,
       totalCost: materialOrder.totalCost,
       hasArrived: materialOrder.hasArrived,
       notes: materialOrder.notes,
-      arrivalDate: convertDateStringToFormInputDateString(materialOrder.arrivalDate as unknown as string)
+      arrivalDate: convertDateStringToFormInputDateString(materialOrder.arrivalDate as unknown as string),
+      freightCharge: materialOrder.freightCharge,
+      fuelCharge: materialOrder.fuelCharge
     }
 
     reset(formValues) // Loads data into the form and forces a rerender
@@ -193,6 +201,20 @@ export const MaterialOrderForm = () => {
                 errors={errors}
                 fieldType='date'
             />
+            <Input
+                attribute='freightCharge'
+                label="Freight Charge"
+                register={register}
+                isRequired={true}
+                errors={errors}
+            />
+            <Input
+                attribute='fuelCharge'
+                label="Fuel Charge"
+                register={register}
+                isRequired={true}
+                errors={errors}
+            />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
@@ -213,4 +235,6 @@ type MaterialOrderFormAttributes = {
   hasArrived?: boolean;
   notes?: string;
   arrivalDate: string;
+  freightCharge: number;
+  fuelCharge: number;
 }

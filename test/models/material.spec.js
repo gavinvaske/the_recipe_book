@@ -795,9 +795,9 @@ describe('File: material.js', () => {
                 delete materialAttributes.minFootageAlertThreshold;
                 const material = new MaterialModel(materialAttributes);
 
-                const error = material.validateSync();
+                const { errors } = material.validateSync();
 
-                expect(error).toBeDefined();
+                expect(errors.minFootageAlertThreshold).toBeDefined();
             });
 
             it('should be a number', () => {
@@ -811,9 +811,9 @@ describe('File: material.js', () => {
                 const negativeNumber = -1;
                 material.minFootageAlertThreshold = negativeNumber;
 
-                const error = material.validateSync();
+                const { errors } = material.validateSync();
 
-                expect(error).toBeDefined();
+                expect(errors.minFootageAlertThreshold).toBeDefined();
             });
 
             it('should fail validation if the value is a floating point number', () => {

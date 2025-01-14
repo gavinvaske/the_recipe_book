@@ -11,6 +11,7 @@ import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../../_queries/material';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { PageSelect } from '../../_global/Table/PageSelect/PageSelect.tsx';
 
 const columnHelper = createColumnHelper<Material>()
 
@@ -43,6 +44,8 @@ const columns = [
 export const MaterialTable = () => {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [page, setPage] = React.useState(1);
+
   const { isError, data: materials, error } = useQuery({
     queryKey: ['get-materials'],
     queryFn: getMaterials,
@@ -89,7 +92,7 @@ export const MaterialTable = () => {
             ))}
           </TableBody>
         </Table>
-        <p>Row Count: {rows.length}</p>
+        <PageSelect currentPage={page} totalPages={Math.ceil(rows.length / 10)} onPageChange={setPage} />
       </div>
     </div>
       

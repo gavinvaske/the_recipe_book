@@ -19,19 +19,19 @@ const validatePurchaseOrderNumber = function(text) {
 };
 
 export interface IMaterialOrder extends SchemaTimestampsConfig, mongoose.Document  {
-    author: mongoose.Types.ObjectId,
-    material: mongoose.Types.ObjectId,
-    purchaseOrderNumber: string,
-    orderDate: Date,
-    arrivalDate: Date,
-    feetPerRoll: number,
-    totalRolls: number,
-    totalCost: number,
-    vendor: mongoose.Types.ObjectId,
-    hasArrived?: boolean,
-    notes?: string
-    freightCharge: number,
-    fuelCharge: number,
+    author: mongoose.Types.ObjectId;
+    material: mongoose.Types.ObjectId;
+    purchaseOrderNumber: string;
+    orderDate: Date;
+    arrivalDate: Date;
+    feetPerRoll: number;
+    totalRolls: number;
+    totalCost: number;
+    vendor: mongoose.Types.ObjectId;
+    hasArrived?: boolean;
+    notes?: string;
+    freightCharge: number;
+    fuelCharge: number;
 }
 
 const schema = new Schema({

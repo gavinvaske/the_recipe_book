@@ -12,5 +12,10 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
+// Add indexes to enable "text based search"
+schema.index({
+    name: 'text'
+});
+
 
 export const MaterialCategoryModel = mongoose.model('MaterialCategory', schema);

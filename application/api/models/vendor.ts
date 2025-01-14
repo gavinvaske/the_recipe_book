@@ -53,4 +53,17 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
+// Add indexes to enable "text based search"
+schema.index({
+    name: 'text',
+    phoneNumber: 'text',
+    email: 'text',
+    notes: 'text',
+    website: 'text',
+    primaryContactName: 'text',
+    primaryContactPhoneNumber: 'text',
+    primaryContactEmail: 'text',
+    mfgSpecNumber: 'text',
+});
+
 export const VendorModel = mongoose.model('Vendor', schema);

@@ -1,13 +1,16 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
-import { DESCENDING, SortOption } from '../enums/mongooseSortMethods.ts';
+import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
+import { DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { SearchQuery, SearchResult } from '../../_types/shared/http.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
+import { SortOption } from '../../_types/api/mongoose.ts';
 
 router.use(verifyBearerToken);
 
-router.post('/', async (request, response) => {
+router.post('/', async (request: Request, response: Response) => {
     try {
         const savedMaterialLengthAdjustment = await MaterialLengthAdjustmentModel.create(request.body);
 
@@ -22,7 +25,7 @@ router.post('/', async (request, response) => {
     }
 });
 
-router.get('/', async (request, response) => {
+router.get('/', async (_: Request, response: Response) => {
   try {
     const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().populate('material').sort({ updatedAt: DESCENDING }).exec();
 
@@ -36,43 +39,53 @@ router.get('/', async (request, response) => {
   }
 })
 
-router.get('/search', async (request, response) => {
+router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
-    const { query, page = '1', limit = '10', sortField, sortDirection } = request.query as QueryParams;
+    const { query, page = '1', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
 
     const pageNumber = Math.max(1, parseInt(page, 10));
     const pageSize = Math.max(1, parseInt(limit, 10));
     const numDocsToSkip = (pageNumber - 1) * pageSize;
     const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
-      ? { [sortField]: sortDirection } : {};
+      ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
+    const textSearch = query && query.length ? {
+      'notes': { $regex: query, $options: 'i' },
+      'material.name': { $regex: query, $options: 'i' },
+      'material.materialId': { $regex: query, $options: 'i' },
+      'material.productNumber': { $regex: query, $options: 'i' },
+      'material.location': { $regex: query, $options: 'i' },
+    } : {};
 
-    console.log('sortOption: ', sortOptions)
-    console.log('numDocsToSkip: ', numDocsToSkip)
-    console.log('query is: ', query)
-
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find({$text: { $search: 'anotha' }}).sort(sortOptions).skip(numDocsToSkip).exec()
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel
+      .find(textSearch)
+      .populate('material', 'name')
+      .sort(sortOptions)
+      .skip(numDocsToSkip)
+      .limit(pageSize)
+      .exec()
 
     const totalDocumentCount = await MaterialLengthAdjustmentModel.countDocuments();
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
-    const results = {
-      totalResults: materialLengthAdjustments.length,
+    const results: SearchResult<IMaterialLengthAdjustment> = {
+      totalResults: totalDocumentCount,
       totalPages: totalPages,
       currentPage: pageNumber,
       results: materialLengthAdjustments,
+      pageSize: pageSize
     }
 
-    console.log('results: ', results)
+    console.log('pagination results: ', results)
 
     return response.json(results)
 
   } catch (error) {
-    console.error('Error during search:', error);
-    response.status(500).send(error.message);
+    console.error('Error during material-length-adjustment search:', error);
+    return response.status(500).send(error.message);
   }
 });
 
-router.get('/:mongooseId', async (request, response) => {
+router.get('/:mongooseId', async (request: Request, response: Response) => {
   try {
     const materialLengthAdjustment = await MaterialLengthAdjustmentModel.findById(request.params.mongooseId);
 
@@ -86,7 +99,7 @@ router.get('/:mongooseId', async (request, response) => {
   }
 })
 
-router.patch('/:mongooseId', async (request, response) => {
+router.patch('/:mongooseId', async (request: Request, response: Response) => {
   try {
       const updatedMaterialLengthAdjustment = await MaterialLengthAdjustmentModel.findOneAndUpdate(
           { _id: request.params.mongooseId }, 
@@ -98,13 +111,13 @@ router.patch('/:mongooseId', async (request, response) => {
   } catch (error) {
       console.error('Failed to update materialLengthAdjustment: ', error);
 
-      response
+      return response
           .status(SERVER_ERROR)
           .send(error.message);
   }
 });
 
-router.delete('/:mongooseId', async (request, response) => {
+router.delete('/:mongooseId', async (request: Request, response: Response) => {
   try { 
       const deletedMaterialLengthAdjustment = await MaterialLengthAdjustmentModel.findByIdAndDelete(request.params.mongooseId).exec();
 
@@ -115,13 +128,5 @@ router.delete('/:mongooseId', async (request, response) => {
       return response.status(SERVER_ERROR).send(error.message);
   }
 });
-
-interface QueryParams {
-  query?: string;
-  page?: string;
-  limit?: string;
-  sortField?: string;
-  sortDirection?: 'asc' | 'desc';
-}
 
 export default router;

@@ -3,7 +3,7 @@ const router = Router();
 import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
-import { DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { DESCENDING, SortOption } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
 
@@ -24,7 +24,7 @@ router.post('/', async (request, response) => {
 
 router.get('/', async (request, response) => {
   try {
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().sort({ updatedAt: DESCENDING }).exec();
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().populate('material').sort({ updatedAt: DESCENDING }).exec();
 
     return response.json(materialLengthAdjustments);
   } catch (error) {
@@ -35,6 +35,42 @@ router.get('/', async (request, response) => {
           .send(error.message);
   }
 })
+
+router.get('/search', async (request, response) => {
+  try {
+    const { query, page = '1', limit = '10', sortField, sortDirection } = request.query as QueryParams;
+
+    const pageNumber = Math.max(1, parseInt(page, 10));
+    const pageSize = Math.max(1, parseInt(limit, 10));
+    const numDocsToSkip = (pageNumber - 1) * pageSize;
+    const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
+      ? { [sortField]: sortDirection } : {};
+
+    console.log('sortOption: ', sortOptions)
+    console.log('numDocsToSkip: ', numDocsToSkip)
+    console.log('query is: ', query)
+
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find({$text: { $search: 'anotha' }}).sort(sortOptions).skip(numDocsToSkip).exec()
+
+    const totalDocumentCount = await MaterialLengthAdjustmentModel.countDocuments();
+    const totalPages = Math.ceil(totalDocumentCount / pageSize);
+
+    const results = {
+      totalResults: materialLengthAdjustments.length,
+      totalPages: totalPages,
+      currentPage: pageNumber,
+      results: materialLengthAdjustments,
+    }
+
+    console.log('results: ', results)
+
+    return response.json(results)
+
+  } catch (error) {
+    console.error('Error during search:', error);
+    response.status(500).send(error.message);
+  }
+});
 
 router.get('/:mongooseId', async (request, response) => {
   try {
@@ -79,5 +115,13 @@ router.delete('/:mongooseId', async (request, response) => {
       return response.status(SERVER_ERROR).send(error.message);
   }
 });
+
+interface QueryParams {
+  query?: string;
+  page?: string;
+  limit?: string;
+  sortField?: string;
+  sortDirection?: 'asc' | 'desc';
+}
 
 export default router;

@@ -16,8 +16,9 @@ type TODO = any;
 const columnHelper = createColumnHelper<TODO>()
 
 const columns = [
-  columnHelper.accessor('material', {
-    header: 'Material ID',
+  columnHelper.accessor(row => row.material.name, {
+    id: 'materialName', // Specify an ID since the accessor is a function
+    header: 'Material Name',
   }),
   columnHelper.accessor('length', {
     header: 'Length',
@@ -44,7 +45,7 @@ export const MaterialLengthAdjustmentTable = () => {
 
   const { isError, data: materialLengthAdjustments, error } = useQuery({
     queryKey: ['get-material-length-adjustments'],
-    queryFn: getMaterialLengthAdjustments,
+    queryFn: () => getMaterialLengthAdjustments({ query: 'Foo', pageIndex: 1, pageSize: 10, sorting: [] }),
     initialData: []
   })
 

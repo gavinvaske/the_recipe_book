@@ -60,7 +60,7 @@ export const MaterialLengthAdjustmentTable = () => {
       const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting: [] }) || {}
       return results
     },
-    meta: { keepPreviousData: true, initialData: { rows: [], total: 0 } } // Initial data shape
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } } // Initial data shape
   })
 
   if (isError) {
@@ -90,6 +90,8 @@ export const MaterialLengthAdjustmentTable = () => {
   const rows = table.getRowModel().rows;
 
   const onPageChange = (pageIndex: number) => {
+    console.log('pagination (1): ', pagination)
+    console.log('setting new page index (2): ', pageIndex)
     setPagination((prev: any) => ({...prev, pageIndex }))
   }
 
@@ -114,11 +116,8 @@ export const MaterialLengthAdjustmentTable = () => {
               <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
-          <div>
-            <p>CurrentPage: {table.getState().pagination.pageIndex}</p>
-          </div>
 
-          <PageSelect currentPage={table.getState().pagination.pageIndex} totalPages={table.getPageCount()} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} pageSize={table.getState().pagination.pageSize}/>
+          <PageSelect currentPageIndex={table.getState().pagination.pageIndex} totalPages={table.getPageCount()} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} pageSize={table.getState().pagination.pageSize}/>
         </Table>
       </div>
     </div>

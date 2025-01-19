@@ -10,11 +10,8 @@ import { TableHead } from '../../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../../_global/Table/TableBody/TableBody';
 import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
-
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
-
 import { SearchResult } from '@shared/http';
-
 
 type TODO = any;
 
@@ -52,10 +49,9 @@ export const MaterialLengthAdjustmentTable = () => {
     pageSize: 2,
   })
   const defaultData = useMemo(() => [], [])
-  console.log('globalFilter: ', globalFilter)
 
   const { isError, data: materialLengthAdjustments, error } = useQuery({
-    queryKey: ['get-material-length-adjustments', pagination, sorting],
+    queryKey: ['get-material-length-adjustments', pagination, sorting, globalFilter],
     queryFn: async () => {
       const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting }) || {}
       return results
@@ -90,8 +86,6 @@ export const MaterialLengthAdjustmentTable = () => {
   const rows = table.getRowModel().rows;
 
   const onPageChange = (pageIndex: number) => {
-    console.log('pagination (1): ', pagination)
-    console.log('setting new page index (2): ', pageIndex)
     setPagination((prev: any) => ({...prev, pageIndex }))
   }
 
@@ -106,7 +100,7 @@ export const MaterialLengthAdjustmentTable = () => {
           <h1 className="text-blue">Material Length Adjustments</h1>
           <p>Complete list of all <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
         </div>
-         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
+         <SearchBar value={globalFilter} performSearch={(value: string) => setGlobalFilter(value)} />
 
         <Table id='material-length-adjustment-table'>
           <TableHead table={table} />
@@ -117,7 +111,14 @@ export const MaterialLengthAdjustmentTable = () => {
             ))}
           </TableBody>
 
-          <PageSelect currentPageIndex={table.getState().pagination.pageIndex} totalPages={table.getPageCount()} onPageChange={onPageChange} onPageSizeChange={onPageSizeChange} pageSize={table.getState().pagination.pageSize}/>
+          <PageSelect 
+            currentPageIndex={table.getState().pagination.pageIndex} 
+            totalPages={table.getPageCount()} 
+            onPageChange={onPageChange} 
+            onPageSizeChange={onPageSizeChange} 
+            pageSize={table.getState().pagination.pageSize}
+            numberOfDisplayedRows={rows.length} 
+          />
         </Table>
       </div>
     </div>

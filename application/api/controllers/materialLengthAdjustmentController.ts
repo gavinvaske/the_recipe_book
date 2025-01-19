@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 const router = Router();
-import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 import { DESCENDING } from '../enums/mongooseSortMethods.ts';
@@ -41,7 +41,9 @@ router.get('/', async (_: Request, response: Response) => {
 
 router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
-    const { query, pageIndex = '0', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
+    const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
+
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
 
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
@@ -49,7 +51,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
       ? { [sortField]: sortDirection === 'desc' ? -1 : 1 } : DEFAULT_SORT_OPTIONS;
 
-    console.log('sort options 111: ', sortOptions)
     const textSearch = query && query.length
     ? {
         $or: [
@@ -68,7 +69,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           ...textSearch, // Add text search conditions
         },
       },
-      // Always include the material lookup
       {
         $lookup: {
           from: 'materials',       // The collection for the Material model
@@ -83,38 +83,40 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           preserveNullAndEmptyArrays: true, // In case material is not populated
         },
       },
-      { 
-        $sort: {
-          ...sortOptions
-        },
-      },
-      { $skip: numDocsToSkip },
-      { $limit: pageSize },
-      // Project the desired fields
       {
-        $project: {
-          ...Object.fromEntries(Object.keys(MaterialLengthAdjustmentModel.schema.paths).map(key => [key, `$${key}`])),
-          material: "$material"
+        $facet: {
+          paginatedResults: [
+            { $sort: { ...sortOptions } },
+            { $skip: numDocsToSkip },
+            { $limit: pageSize },
+            {
+              $project: {
+                ...Object.fromEntries(Object.keys(MaterialLengthAdjustmentModel.schema.paths).map(key => [key, `$${key}`])),
+                material: '$material',
+              },
+            },
+          ],
+          totalCount: [
+            { $count: 'count' },
+          ],
         },
       },
     ];
 
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate<IMaterialLengthAdjustment>(pipeline);
-
-    const totalDocumentCount = await MaterialLengthAdjustmentModel.countDocuments();
+    const results = await MaterialLengthAdjustmentModel.aggregate<any>(pipeline);
+    const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
+    const materialLengthAdjustments = results[0]?.paginatedResults || [];
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
-    const results: SearchResult<IMaterialLengthAdjustment> = {
+    const paginationResponse: SearchResult<IMaterialLengthAdjustment> = {
       totalResults: totalDocumentCount,
-      totalPages: totalPages,
+      totalPages,
       currentPage: pageNumber,
       results: materialLengthAdjustments,
-      pageSize: pageSize
+      pageSize,
     }
 
-    console.log('pagination results: ', JSON.stringify(results.results))
-
-    return response.json(results)
+    return response.json(paginationResponse)
 
   } catch (error) {
     console.error('Error during material-length-adjustment search:', error);

@@ -22,7 +22,7 @@ const columnHelper = createColumnHelper<TODO>()
 
 const columns = [
   columnHelper.accessor(row => row.material.name, {
-    id: 'materialName', // Specify an ID since the accessor is a function
+    id: 'material.name', // Specify an ID since the accessor is a function
     header: 'Material Name',
   }),
   columnHelper.accessor('length', {
@@ -55,9 +55,9 @@ export const MaterialLengthAdjustmentTable = () => {
   console.log('globalFilter: ', globalFilter)
 
   const { isError, data: materialLengthAdjustments, error } = useQuery({
-    queryKey: ['get-material-length-adjustments', pagination],
+    queryKey: ['get-material-length-adjustments', pagination, sorting],
     queryFn: async () => {
-      const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting: [] }) || {}
+      const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting }) || {}
       return results
     },
     meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } } // Initial data shape

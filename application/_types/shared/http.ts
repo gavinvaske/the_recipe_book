@@ -1,6 +1,6 @@
 export interface SearchQuery {
   query?: string;
-  page?: string;
+  pageIndex?: string;
   limit?: string;
   sortField?: string;
   sortDirection?: 'asc' | 'desc';

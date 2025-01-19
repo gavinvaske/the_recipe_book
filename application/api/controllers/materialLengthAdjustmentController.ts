@@ -41,28 +41,65 @@ router.get('/', async (_: Request, response: Response) => {
 
 router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
-    const { query, page = '0', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
+    const { query, pageIndex = '0', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
 
-    const pageNumber = parseInt(page, 10);
+    const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
     const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
-      ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
-    const textSearch = query && query.length ? {
-      'notes': { $regex: query, $options: 'i' },
-      'material.name': { $regex: query, $options: 'i' },
-      'material.materialId': { $regex: query, $options: 'i' },
-      'material.productNumber': { $regex: query, $options: 'i' },
-      'material.location': { $regex: query, $options: 'i' },
-    } : {};
+      ? { [sortField]: sortDirection === 'desc' ? -1 : 1 } : DEFAULT_SORT_OPTIONS;
 
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel
-      .find(textSearch)
-      .populate('material', 'name')
-      .sort(sortOptions)
-      .skip(numDocsToSkip)
-      .limit(pageSize)
-      .exec()
+    console.log('sort options 111: ', sortOptions)
+    const textSearch = query && query.length
+    ? {
+        $or: [
+          { notes: { $regex: query, $options: 'i' } },
+          { 'material.name': { $regex: query, $options: 'i' } },
+          { 'material.materialId': { $regex: query, $options: 'i' } },
+          { 'material.productNumber': { $regex: query, $options: 'i' } },
+          { 'material.location': { $regex: query, $options: 'i' } },
+        ],
+      }
+    : {};
+
+    const pipeline = [
+      {
+        $match: {
+          ...textSearch, // Add text search conditions
+        },
+      },
+      // Always include the material lookup
+      {
+        $lookup: {
+          from: 'materials',       // The collection for the Material model
+          localField: 'material',  // Field in Order referencing the Material
+          foreignField: '_id',     // Field in Material for matching
+          as: 'material',
+        },
+      },
+      {
+        $unwind: {
+          path: '$material',
+          preserveNullAndEmptyArrays: true, // In case material is not populated
+        },
+      },
+      { 
+        $sort: {
+          ...sortOptions
+        },
+      },
+      { $skip: numDocsToSkip },
+      { $limit: pageSize },
+      // Project the desired fields
+      {
+        $project: {
+          ...Object.fromEntries(Object.keys(MaterialLengthAdjustmentModel.schema.paths).map(key => [key, `$${key}`])),
+          material: "$material"
+        },
+      },
+    ];
+
+    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate<IMaterialLengthAdjustment>(pipeline);
 
     const totalDocumentCount = await MaterialLengthAdjustmentModel.countDocuments();
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
@@ -75,7 +112,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       pageSize: pageSize
     }
 
-    console.log('pagination results: ', results)
+    console.log('pagination results: ', JSON.stringify(results.results))
 
     return response.json(results)
 

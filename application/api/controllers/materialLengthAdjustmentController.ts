@@ -41,11 +41,11 @@ router.get('/', async (_: Request, response: Response) => {
 
 router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
-    const { query, page = '1', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
+    const { query, page = '0', limit = '10', sortField, sortDirection } = request.query as SearchQuery;
 
-    const pageNumber = Math.max(1, parseInt(page, 10));
-    const pageSize = Math.max(1, parseInt(limit, 10));
-    const numDocsToSkip = (pageNumber - 1) * pageSize;
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const numDocsToSkip = pageNumber * pageSize;
     const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
       ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
     const textSearch = query && query.length ? {

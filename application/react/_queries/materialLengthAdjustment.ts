@@ -9,7 +9,4 @@ export const getMaterialLengthAdjustments = async ({ query, pagination, sorting 
 
   const response : AxiosResponse<SearchResult<IMaterialLengthAdjustment>> = await axios.get(`/material-length-adjustments/search?query=${query || ''}&page=${pageIndex}&limit=${pageSize}&sortField=${sortField}&sortDirection=${sortDirection}`);
   return response.data;
-  // const materialLengthAdjustments: IMaterialLengthAdjustment[] = response.data.results;
-
-  // return materialLengthAdjustments;
 }

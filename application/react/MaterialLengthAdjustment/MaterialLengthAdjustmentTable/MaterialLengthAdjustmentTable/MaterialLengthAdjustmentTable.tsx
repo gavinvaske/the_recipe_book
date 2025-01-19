@@ -54,6 +54,7 @@ export const MaterialLengthAdjustmentTable = () => {
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalFilter],
     queryFn: async () => {
       const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting }) || {}
+      setPagination((prev) => ({...prev, pageIndex: results.currentPageIndex}))
       return results
     },
     meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } } // Initial data shape

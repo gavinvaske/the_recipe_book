@@ -48,7 +48,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && sortDirection && ['asc', 'desc'].includes(sortDirection)) 
+    const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
       ? { [sortField]: sortDirection === 'desc' ? -1 : 1 } : DEFAULT_SORT_OPTIONS;
 
     const textSearch = query && query.length
@@ -111,10 +111,12 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const paginationResponse: SearchResult<IMaterialLengthAdjustment> = {
       totalResults: totalDocumentCount,
       totalPages,
-      currentPage: pageNumber,
+      currentPageIndex: (query && query.length) ? 0 : pageNumber,
       results: materialLengthAdjustments,
       pageSize,
     }
+
+    console.log('paginationResponse: ', paginationResponse)
 
     return response.json(paginationResponse)
 

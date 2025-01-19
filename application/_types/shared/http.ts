@@ -7,7 +7,7 @@ export interface SearchQuery {
 }
 
 export interface SearchResult<T> {
-  currentPage: number;
+  currentPageIndex: number;
   pageSize: number;
   totalResults: number;
   totalPages: number;

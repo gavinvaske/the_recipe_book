@@ -88,7 +88,7 @@ export const PageSelect = (props: Props) => {
         >
           Previous
         </button>
-        <span style={{ margin: '0 1rem' }}>Page {visiblePageNumber} of {totalPages}</span>
+        <span style={{ margin: '0 1rem' }}>Page {visiblePageNumber} of {totalPages > 0 ? totalPages : 1}</span>
         <button
             onClick={(e) => onPageChange(currentPageIndex + 1)}
             disabled={isNextDisabled}

@@ -4,23 +4,18 @@ import { Table } from '@tanstack/react-table';
 
 interface Props {
   table: Table<any>;
-  // currentPageIndex: number;
-  // totalPages: number;
-  // onPageChange: (pageIndex: number) => void;
-  // onPageSizeChange: (pageSize: number) => void
-  // pageSize: number
-  // numberOfDisplayedRows: number;
   isLoading: boolean;
 }
 
+const MAX_PAGE_SIZE = 200;
 
 export const PageSelect = (props: Props) => {
   const { table, isLoading } = props;
-
+  const pageSize = table.getState().pagination.pageSize;
   const currentPageIndex = table.getState().pagination.pageIndex;
-  const totalPages = table.getPageCount();
-
-  console.log('currentPageIndex: ', currentPageIndex)
+  const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
+  const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
+  const [errorMessage, setErrorMessage] = useState('');
   
   const onPageChange = (pageIndex: number) => {
     table.setPageIndex(pageIndex)
@@ -29,27 +24,9 @@ export const PageSelect = (props: Props) => {
   const onPageSizeChange = (pageSize: number) => {
     table.setPageSize(pageSize)
   }
+
   const numberOfDisplayedRows = table.getRowModel().rows.length;
-
-  console.log('numberOfDisplayedRows: ', numberOfDisplayedRows)
-
-  const pageSize = table.getState().pagination.pageSize;
-
-  const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
-  const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
-  const [errorMessage, setErrorMessage] = useState('');
-  const visiblePageNumber = currentPageIndex + 1;
-  const isPreviousDisabled = visiblePageNumber === 1; 
-  const isNextDisabled = visiblePageNumber >= totalPages;
-
-  const changePageNumber = (pageIndex: number) => {
-    setPageNumberInputField(pageIndex + 1);
-
-    onPageChange(pageIndex);
-  }
-
-
-  const maxPageSize = 200;
+  const totalPages = table.getPageCount();
 
   const handlePageChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     setErrorMessage('');
@@ -87,7 +64,7 @@ export const PageSelect = (props: Props) => {
 
     if (isNaN(pageSize)) {
       setErrorMessage('Page size must be a number');
-      return;
+      return;2
     }
     
     if ((pageSize < 1)) {
@@ -96,9 +73,9 @@ export const PageSelect = (props: Props) => {
       return;
     }
 
-    if ((pageSize > maxPageSize)) {
-      setErrorMessage(`Page size must be less than or equal to ${maxPageSize}`);
-      setPageSizeInputField(maxPageSize);
+    if ((pageSize > MAX_PAGE_SIZE)) {
+      setErrorMessage(`Page size must be less than or equal to ${MAX_PAGE_SIZE}`);
+      setPageSizeInputField(MAX_PAGE_SIZE);
       return;
     }
     const defaultPageIndex = 0;
@@ -149,10 +126,10 @@ export const PageSelect = (props: Props) => {
             name='page' 
             type='number' 
             value={pageSizeInputField} 
-            onChange={e => setPageSizeInputField(Number(e.target.value))}
             onKeyDown={handlePageSizeChange}
+            onChange={e => setPageSizeInputField(Number(e.target.value))}
             min={1}
-            max={maxPageSize}
+            max={MAX_PAGE_SIZE}
           />
         </div>
         <p>{showingDescription}</p>

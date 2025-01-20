@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import './PageSelect.scss';
 
 interface Props {
@@ -8,18 +8,18 @@ interface Props {
   onPageSizeChange: (pageSize: number) => void
   pageSize: number
   numberOfDisplayedRows: number;
+  isLoading: boolean;
 }
 
-export const PageSelect = (props: Props) => {
-  const { currentPageIndex, totalPages, onPageChange, onPageSizeChange, pageSize, numberOfDisplayedRows } = props;
+
+export const PageSelect = memo((props: Props) => {
+  const { currentPageIndex, totalPages, onPageChange, onPageSizeChange, pageSize, numberOfDisplayedRows, isLoading } = props;
   const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
   const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
   const [errorMessage, setErrorMessage] = useState('');
   const visiblePageNumber = currentPageIndex + 1;
   const isPreviousDisabled = visiblePageNumber === 1;
   const isNextDisabled = visiblePageNumber >= totalPages;
-
-  console.log('props 222:', props);
 
   const maxPageSize = 200;
 
@@ -80,6 +80,9 @@ export const PageSelect = (props: Props) => {
     onPageSizeChange(pageSize);
   };
 
+  const pageNumberDescription = isLoading? 'Loading...': `Page ${visiblePageNumber} of ${totalPages > 0 ? totalPages : 1}`;
+  const showingDescription = isLoading ? 'Loading... ' : `Showing ${numberOfDisplayedRows} ${numberOfDisplayedRows === 1 ? 'row' : 'rows'}`
+
     return (
       <div style={{ marginTop: '1rem' }}>
         <button
@@ -88,7 +91,7 @@ export const PageSelect = (props: Props) => {
         >
           Previous
         </button>
-        <span style={{ margin: '0 1rem' }}>Page {visiblePageNumber} of {totalPages > 0 ? totalPages : 1}</span>
+        <span style={{ margin: '0 1rem' }}>{pageNumberDescription}</span>
         <button
             onClick={(e) => onPageChange(currentPageIndex + 1)}
             disabled={isNextDisabled}
@@ -122,8 +125,7 @@ export const PageSelect = (props: Props) => {
             max={maxPageSize}
           />
         </div>
-
-        <p>Showing {numberOfDisplayedRows} {numberOfDisplayedRows === 1 ? 'row' : 'rows'}</p>
+        <p>{showingDescription}</p>
       </div>
     )
-}
+})

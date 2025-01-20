@@ -50,7 +50,7 @@ export const MaterialLengthAdjustmentTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialLengthAdjustments, error } = useQuery({
+  const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalFilter],
     queryFn: async () => {
       const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting }) || {}
@@ -81,7 +81,6 @@ export const MaterialLengthAdjustmentTable = () => {
     onGlobalFilterChange: setGlobalFilter,
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
-    debugTable: true,
   })
 
   const rows = table.getRowModel().rows;
@@ -119,6 +118,7 @@ export const MaterialLengthAdjustmentTable = () => {
             onPageSizeChange={onPageSizeChange} 
             pageSize={table.getState().pagination.pageSize}
             numberOfDisplayedRows={rows.length} 
+            isLoading={isLoading}
           />
         </Table>
       </div>

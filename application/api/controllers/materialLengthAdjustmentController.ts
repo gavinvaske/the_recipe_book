@@ -44,7 +44,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           { 'material.name': { $regex: query, $options: 'i' } },
           { 'material.materialId': { $regex: query, $options: 'i' } },
           { 'material.productNumber': { $regex: query, $options: 'i' } },
-          { 'material.location': { $regex: query, $options: 'i' } },
+          { 'material.locations': { $regex: query, $options: 'i' } },
         ],
       }
     : {};

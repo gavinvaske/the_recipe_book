@@ -53,7 +53,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       {
         $lookup: {
           from: 'materials',       // The collection for the Material model
-          localField: 'material',  // Field in Order referencing the Material
+          localField: 'material',  // Field referencing the Material
           foreignField: '_id',     // Field in Material for matching
           as: 'material',
         },
@@ -66,7 +66,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       },
       {
         $match: {
-          ...textSearch, // Add text search conditions
+          ...textSearch,
         },
       },
       {

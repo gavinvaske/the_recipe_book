@@ -3,10 +3,10 @@ const router = Router();
 import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
-import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 import { SearchQuery, SearchResult } from '../../_types/shared/http.ts';
 import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
 import { SortOption } from '../../_types/api/mongoose.ts';
+import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
 
@@ -25,20 +25,6 @@ router.post('/', async (request: Request, response: Response) => {
     }
 });
 
-router.get('/', async (_: Request, response: Response) => {
-  try {
-    const materialLengthAdjustments = await MaterialLengthAdjustmentModel.find().populate('material').sort({ updatedAt: DESCENDING }).exec();
-
-    return response.json(materialLengthAdjustments);
-  } catch (error) {
-      console.error('Error fetching material length adjustments: ', error);
-
-      return response
-          .status(SERVER_ERROR)
-          .send(error.message);
-  }
-})
-
 router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
@@ -49,7 +35,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
     const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
-      ? { [sortField]: sortDirection === 'desc' ? -1 : 1 } : DEFAULT_SORT_OPTIONS;
+      ? { [sortField]: sortDirection === 'desc' ? DESCENDING : ASCENDING } : {};
 
     const textSearch = query && query.length
     ? {
@@ -86,7 +72,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       {
         $facet: {
           paginatedResults: [
-            { $sort: { ...sortOptions } },
+            { $sort: { ...sortOptions, ...DEFAULT_SORT_OPTIONS } },
             { $skip: numDocsToSkip },
             { $limit: pageSize },
             {

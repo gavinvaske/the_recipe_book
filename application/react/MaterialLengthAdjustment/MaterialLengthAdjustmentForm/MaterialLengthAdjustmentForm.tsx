@@ -50,7 +50,7 @@ export const MaterialLengthAdjustmentForm = () => {
         )))
       })
       .catch((error: AxiosError) => useErrorMessage(error))
-    });
+    }, []);
 
   const onFormSubmit = (formData: MaterialLengthAdjustmentFormFormAttributes) => {
     if (isUpdateRequest) {

@@ -53,12 +53,20 @@ export const MaterialLengthAdjustmentTable = () => {
   const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
-      const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalSearch, pagination: pagination, sorting }) || {}
-      setPagination((prev) => ({...prev, pageIndex: results.currentPageIndex}))
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? 'desc' : 'asc') : undefined;
+      const sortField = sorting.length ? sorting[0]?.id : undefined;
+      const results: SearchResult<any> = await getMaterialLengthAdjustments({
+        query: globalSearch,
+        pageIndex: String(pagination.pageIndex),
+        limit: String(pagination.pageSize),
+        sortField: sortField,
+        sortDirection: sortDirection
+      }) || {}
+
       return results
     },
-    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } } // Initial data shape
-  })
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
+    })
 
   if (isError) {
     useErrorMessage(error)
@@ -67,9 +75,9 @@ export const MaterialLengthAdjustmentTable = () => {
   const table = useReactTable<any>({
     data: materialLengthAdjustments?.results ?? defaultData,
     columns,
-    rowCount: materialLengthAdjustments?.totalResults ?? 0, // new in v8.13.0 - alternatively, just pass in `pageCount` directly
-    manualSorting: true, // Disable front-end sorting
-    manualPagination: true, // Disable front-end pagination
+    rowCount: materialLengthAdjustments?.totalResults ?? 0,
+    manualSorting: true,
+    manualPagination: true,
     state: {
       globalFilter: globalSearch,
       sorting: sorting,
@@ -101,7 +109,10 @@ export const MaterialLengthAdjustmentTable = () => {
           <h1 className="text-blue">Material Length Adjustments</h1>
           <p>Viewing <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
         </div>
-         <SearchBar value={globalSearch} performSearch={(value: string) => setGlobalSearch(value)} />
+         <SearchBar value={globalSearch} performSearch={(value: string) => {
+          setGlobalSearch(value)
+          table.resetPageIndex(); // reset to first page when searching
+        }} />
 
         <Table id='material-length-adjustment-table'>
           <TableHead table={table} />

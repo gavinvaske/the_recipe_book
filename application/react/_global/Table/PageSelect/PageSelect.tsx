@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import './PageSelect.scss';
 
 interface Props {
@@ -12,14 +12,24 @@ interface Props {
 }
 
 
-export const PageSelect = memo((props: Props) => {
+export const PageSelect = (props: Props) => {
   const { currentPageIndex, totalPages, onPageChange, onPageSizeChange, pageSize, numberOfDisplayedRows, isLoading } = props;
   const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
   const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
   const [errorMessage, setErrorMessage] = useState('');
   const visiblePageNumber = currentPageIndex + 1;
-  const isPreviousDisabled = visiblePageNumber === 1;
+  const isPreviousDisabled = visiblePageNumber === 1; 
   const isNextDisabled = visiblePageNumber >= totalPages;
+
+  const changePageNumber = (pageIndex: number) => {
+    setPageNumberInputField(pageIndex + 1);
+
+    onPageChange(pageIndex);
+  }
+
+  // useEffect(() => {
+  //   setPageNumberInputField(currentPageIndex + 1);
+  // }, [currentPageIndex])
 
   const maxPageSize = 200;
 
@@ -86,14 +96,14 @@ export const PageSelect = memo((props: Props) => {
     return (
       <div style={{ marginTop: '1rem' }}>
         <button
-            onClick={(e) => onPageChange(currentPageIndex - 1)}
+            onClick={(_) => changePageNumber(currentPageIndex - 1)}
             disabled={isPreviousDisabled}
         >
           Previous
         </button>
         <span style={{ margin: '0 1rem' }}>{pageNumberDescription}</span>
         <button
-            onClick={(e) => onPageChange(currentPageIndex + 1)}
+            onClick={(_) => changePageNumber(currentPageIndex + 1)}
             disabled={isNextDisabled}
         >
           Next
@@ -128,4 +138,4 @@ export const PageSelect = memo((props: Props) => {
         <p>{showingDescription}</p>
       </div>
     )
-})
+}

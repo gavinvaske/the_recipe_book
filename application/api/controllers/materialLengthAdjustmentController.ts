@@ -65,11 +65,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
 
     const pipeline = [
       {
-        $match: {
-          ...textSearch, // Add text search conditions
-        },
-      },
-      {
         $lookup: {
           from: 'materials',       // The collection for the Material model
           localField: 'material',  // Field in Order referencing the Material
@@ -81,6 +76,11 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
         $unwind: {
           path: '$material',
           preserveNullAndEmptyArrays: true, // In case material is not populated
+        },
+      },
+      {
+        $match: {
+          ...textSearch, // Add text search conditions
         },
       },
       {

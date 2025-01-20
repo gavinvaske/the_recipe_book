@@ -1,19 +1,40 @@
 import React, { useState, memo, useEffect } from 'react';
 import './PageSelect.scss';
+import { Table } from '@tanstack/react-table';
 
 interface Props {
-  currentPageIndex: number;
-  totalPages: number;
-  onPageChange: (pageIndex: number) => void;
-  onPageSizeChange: (pageSize: number) => void
-  pageSize: number
-  numberOfDisplayedRows: number;
+  table: Table<any>;
+  // currentPageIndex: number;
+  // totalPages: number;
+  // onPageChange: (pageIndex: number) => void;
+  // onPageSizeChange: (pageSize: number) => void
+  // pageSize: number
+  // numberOfDisplayedRows: number;
   isLoading: boolean;
 }
 
 
 export const PageSelect = (props: Props) => {
-  const { currentPageIndex, totalPages, onPageChange, onPageSizeChange, pageSize, numberOfDisplayedRows, isLoading } = props;
+  const { table, isLoading } = props;
+
+  const currentPageIndex = table.getState().pagination.pageIndex;
+  const totalPages = table.getPageCount();
+
+  console.log('currentPageIndex: ', currentPageIndex)
+  
+  const onPageChange = (pageIndex: number) => {
+    table.setPageIndex(pageIndex)
+  }
+
+  const onPageSizeChange = (pageSize: number) => {
+    table.setPageSize(pageSize)
+  }
+  const numberOfDisplayedRows = table.getRowModel().rows.length;
+
+  console.log('numberOfDisplayedRows: ', numberOfDisplayedRows)
+
+  const pageSize = table.getState().pagination.pageSize;
+
   const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
   const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,9 +48,6 @@ export const PageSelect = (props: Props) => {
     onPageChange(pageIndex);
   }
 
-  // useEffect(() => {
-  //   setPageNumberInputField(currentPageIndex + 1);
-  // }, [currentPageIndex])
 
   const maxPageSize = 200;
 
@@ -90,21 +108,23 @@ export const PageSelect = (props: Props) => {
     onPageSizeChange(pageSize);
   };
 
-  const pageNumberDescription = isLoading? 'Loading...': `Page ${visiblePageNumber} of ${totalPages > 0 ? totalPages : 1}`;
+  console.log('table.getState().pagination.pageIndex: ', table.getState().pagination.pageIndex)
+
+  const pageNumberDescription = isLoading? 'Loading...': `Page ${table.getState().pagination.pageIndex + 1} of ${totalPages > 0 ? totalPages : 1}`;
   const showingDescription = isLoading ? 'Loading... ' : `Showing ${numberOfDisplayedRows} ${numberOfDisplayedRows === 1 ? 'row' : 'rows'}`
 
     return (
       <div style={{ marginTop: '1rem' }}>
         <button
-            onClick={(_) => changePageNumber(currentPageIndex - 1)}
-            disabled={isPreviousDisabled}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
         >
           Previous
         </button>
         <span style={{ margin: '0 1rem' }}>{pageNumberDescription}</span>
         <button
-            onClick={(_) => changePageNumber(currentPageIndex + 1)}
-            disabled={isNextDisabled}
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
         >
           Next
         </button>

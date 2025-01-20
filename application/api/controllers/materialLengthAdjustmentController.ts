@@ -102,8 +102,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       pageSize,
     }
 
-    console.log('paginationResponse: ', paginationResponse)
-
     return response.json(paginationResponse)
 
   } catch (error) {

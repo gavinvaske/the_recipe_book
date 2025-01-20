@@ -42,18 +42,18 @@ const columns = [
 ];
 
 export const MaterialLengthAdjustmentTable = () => {
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 2,
+    pageSize: 50,
   })
   const defaultData = useMemo(() => [], [])
 
   const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
-    queryKey: ['get-material-length-adjustments', pagination, sorting, globalFilter],
+    queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
-      const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalFilter, pagination: pagination, sorting }) || {}
+      const results: SearchResult<any> = await getMaterialLengthAdjustments({ query: globalSearch, pagination: pagination, sorting }) || {}
       setPagination((prev) => ({...prev, pageIndex: results.currentPageIndex}))
       return results
     },
@@ -64,33 +64,35 @@ export const MaterialLengthAdjustmentTable = () => {
     useErrorMessage(error)
   }
 
-  const table = useReactTable({
+  const table = useReactTable<any>({
     data: materialLengthAdjustments?.results ?? defaultData,
     columns,
-    pageCount: materialLengthAdjustments?.totalPages ?? 0,
+    rowCount: materialLengthAdjustments?.totalResults ?? 0, // new in v8.13.0 - alternatively, just pass in `pageCount` directly
     manualSorting: true, // Disable front-end sorting
     manualPagination: true, // Disable front-end pagination
     state: {
-      globalFilter: globalFilter,
+      globalFilter: globalSearch,
       sorting: sorting,
       pagination: pagination
+
     },
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
-    getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
-  })
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: (updaterOrValue) => {
+      table.resetPageIndex(); // reset to first page when sorting
+      setSorting((oldSorting) => 
+        typeof updaterOrValue === 'function' 
+          ? updaterOrValue(oldSorting) 
+          : updaterOrValue
+      );
+    },
+    debugTable: true,
+    onGlobalFilterChange: setGlobalSearch,
+    getSortedRowModel: getSortedRowModel(),
+    })
+    
 
   const rows = table.getRowModel().rows;
-
-  const onPageChange = (pageIndex: number) => {
-    setPagination((prev: any) => ({...prev, pageIndex }))
-  }
-
-  const onPageSizeChange = (pageSize: number) => {
-    setPagination((prev: any) => ({...prev, pageSize }))
-  }
 
   return (
     <div className='page-wrapper'>
@@ -99,7 +101,7 @@ export const MaterialLengthAdjustmentTable = () => {
           <h1 className="text-blue">Material Length Adjustments</h1>
           <p>Viewing <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
         </div>
-         <SearchBar value={globalFilter} performSearch={(value: string) => setGlobalFilter(value)} />
+         <SearchBar value={globalSearch} performSearch={(value: string) => setGlobalSearch(value)} />
 
         <Table id='material-length-adjustment-table'>
           <TableHead table={table} />
@@ -110,13 +112,14 @@ export const MaterialLengthAdjustmentTable = () => {
             ))}
           </TableBody>
 
-          <PageSelect 
-            currentPageIndex={table.getState().pagination.pageIndex} 
-            totalPages={table.getPageCount()} 
-            onPageChange={onPageChange} 
-            onPageSizeChange={onPageSizeChange} 
-            pageSize={table.getState().pagination.pageSize}
-            numberOfDisplayedRows={rows.length} 
+          <PageSelect
+            table={table}
+            // currentPageIndex={table.getState().pagination.pageIndex} 
+            // totalPages={table.getPageCount()} 
+            // onPageChange={onPageChange} 
+            // onPageSizeChange={onPageSizeChange} 
+            // pageSize={table.getState().pagination.pageSize}
+            // numberOfDisplayedRows={rows.length} 
             isLoading={isLoading}
           />
         </Table>

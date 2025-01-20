@@ -111,7 +111,7 @@ export const MaterialLengthAdjustmentTable = () => {
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)
-          table.resetPageIndex(); // reset to first page when searching
+          table.resetPageIndex();
         }} />
 
         <Table id='material-length-adjustment-table'>

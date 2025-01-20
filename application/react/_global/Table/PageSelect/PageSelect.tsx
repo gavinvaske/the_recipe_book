@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from 'react';
+import React, { useState } from 'react';
 import './PageSelect.scss';
 import { Table } from '@tanstack/react-table';
 

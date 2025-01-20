@@ -20,9 +20,8 @@
     "module": "node16",
     "paths": {
       "@shared/*": ["./application/_types/shared/*"],
-      "@fo/*": ["application/_types/shared/*"],
-      "@foo/*": ["application/_types/shared/*"],
-      "@ui/*": ["./application/_types/ui/*"]
+      "@api/*": ["application/_types/api/*"],
+      "@ui/*": ["./application/_types/ui/*"],
     },
     "sourceMap": true,
     "declaration": false,

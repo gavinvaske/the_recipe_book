@@ -114,12 +114,6 @@ export const MaterialLengthAdjustmentTable = () => {
 
           <PageSelect
             table={table}
-            // currentPageIndex={table.getState().pagination.pageIndex} 
-            // totalPages={table.getPageCount()} 
-            // onPageChange={onPageChange} 
-            // onPageSizeChange={onPageSizeChange} 
-            // pageSize={table.getState().pagination.pageSize}
-            // numberOfDisplayedRows={rows.length} 
             isLoading={isLoading}
           />
         </Table>

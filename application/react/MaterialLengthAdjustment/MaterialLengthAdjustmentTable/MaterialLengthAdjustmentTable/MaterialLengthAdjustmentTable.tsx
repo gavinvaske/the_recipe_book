@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable, PaginationState } from '@tanstack/react-table';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, SortingState, useReactTable, PaginationState } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { MaterialLengthAdjustmentRowActions } from '../MaterialLengthAdjustmentRowActions/MaterialLengthAdjustmentRowActions';
@@ -75,7 +75,6 @@ export const MaterialLengthAdjustmentTable = () => {
       sorting: sorting,
       pagination: pagination
     },
-    getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,

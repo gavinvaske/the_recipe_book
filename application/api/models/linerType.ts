@@ -15,11 +15,6 @@ const schema = new Schema({
     strict: 'throw'
 });
 
-// Add indexes to enable "text based search"
-schema.index({
-    name: 'text'
-});
-
 schema.plugin(mongoose_delete, { overrideMethods: true });
 
 export const LinerTypeModel = mongoose.model('LinerType', schema);

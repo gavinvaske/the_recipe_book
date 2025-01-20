@@ -227,19 +227,4 @@ const schema = new Schema<IMaterial>({
     strict: 'throw'
 });
 
-// Add indexes to enable "text based search"
-schema.index({
-    notes: 'text',
-    name: 'text', 
-    materialId: 'text', 
-    facecolor: 'text', 
-    adhesive: 'text', 
-    description: 'text', 
-    whenToUse: 'text', 
-    alternativeStock: 'text', 
-    locations: 'text', 
-    productNumber: 'text', 
-    image: 'text'
-});
-
 export const MaterialModel = mongoose.model<IMaterial>('Material', schema);

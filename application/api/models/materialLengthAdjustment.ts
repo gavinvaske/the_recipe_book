@@ -32,9 +32,4 @@ const schema = new Schema<IMaterialLengthAdjustment>({
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
 
-// Add indexes to enable "text based search"
-schema.index({
-  notes: 'text',
-});
-
 export const MaterialLengthAdjustmentModel = mongoose.model<IMaterialLengthAdjustment>('MaterialLengthAdjustment', schema);

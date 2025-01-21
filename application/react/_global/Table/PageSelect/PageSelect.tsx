@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PageSelect.scss';
 import { Table } from '@tanstack/react-table';
 
@@ -12,10 +12,17 @@ const MAX_PAGE_SIZE = 200;
 export const PageSelect = (props: Props) => {
   const { table, isLoading } = props;
   const pageSize = table.getState().pagination.pageSize;
-  const currentPageIndex = table.getState().pagination.pageIndex;
-  const [pageNumberInputField, setPageNumberInputField] = useState<string>(String(currentPageIndex + 1));
+  const [pageNumberInputField, setPageNumberInputField] = useState<string>('');
   const [pageSizeInputField, setPageSizeInputField] = useState<string>(String(pageSize));
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    const { pagination } = table.getState();
+
+    setPageNumberInputField(String(pagination.pageIndex + 1));
+  }, [isLoading, table.getState().pagination.pageIndex]);
   
   const onPageChange = (pageIndex: number) => {
     table.setPageIndex(pageIndex)

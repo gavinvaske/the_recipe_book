@@ -43,7 +43,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           { notes: { $regex: query, $options: 'i' } },
           { 'material.name': { $regex: query, $options: 'i' } },
           { 'material.materialId': { $regex: query, $options: 'i' } },
-          { 'material.productNumber': { $regex: query, $options: 'i' } },
           { 'material.locations': { $regex: query, $options: 'i' } },
         ],
       }
@@ -103,7 +102,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     }
 
     return response.json(paginationResponse)
-
+    
   } catch (error) {
     console.error('Error during material-length-adjustment search:', error);
     return response.status(500).send(error.message);

@@ -97,8 +97,7 @@ export const MaterialLengthAdjustmentTable = () => {
     debugTable: true,
     onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
-    })
-    
+  })
 
   const rows = table.getRowModel().rows;
 

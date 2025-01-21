@@ -1,13 +1,116 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
-import { MaterialOrderModel } from '../models/materialOrder.ts';
+import { IMaterialOrder, MaterialOrderModel } from '../models/materialOrder.ts';
 import { MaterialModel } from '../models/material.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
-import { DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { SortOption } from '@api/types/mongoose.ts';
+import { SearchQuery, SearchResult } from '@shared/types/http.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
 
 router.use(verifyBearerToken);
+
+router.get('/search', async (request: Request, response: Response) => {
+  try {
+    const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
+
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
+
+    const pageNumber = parseInt(pageIndex, 10);
+    const pageSize = parseInt(limit, 10);
+    const numDocsToSkip = pageNumber * pageSize;
+    const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
+      ? { [sortField]: sortDirection === 'desc' ? DESCENDING : ASCENDING } : {};
+
+    const textSearch = query && query.length
+    ? {
+        $or: [
+          { notes: { $regex: query, $options: 'i' } },
+          { purchaseOrderNumber: { $regex: query, $options: 'i' } },
+          { 'material.name': { $regex: query, $options: 'i' } },
+          { 'material.materialId': { $regex: query, $options: 'i' } },
+          { 'material.locations': { $regex: query, $options: 'i' } },
+          { 'vendor.name': { $regex: query, $options: 'i' } },
+        ],
+      }
+    : {};
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: 'materials',       // The collection for the Material model
+          localField: 'material',  // Field referencing the Material
+          foreignField: '_id',     // Field in Material for matching
+          as: 'material',
+        },
+      },
+      {
+        $lookup: {
+          from: 'vendors',       // The collection for the Material model
+          localField: 'vendor',  // Field referencing the Material
+          foreignField: '_id',     // Field in Material for matching
+          as: 'vendor',
+        },
+      },
+      {
+        $unwind: {
+          path: '$material',
+          preserveNullAndEmptyArrays: true, // In case material is not populated
+        },
+      },
+      {
+        $unwind: {
+          path: '$vendor',
+          preserveNullAndEmptyArrays: true, // In case vendor is not populated
+        },
+      },
+      {
+        $match: {
+          ...textSearch,
+        },
+      },
+      {
+        $facet: {
+          paginatedResults: [
+            { $sort: { ...sortOptions, ...DEFAULT_SORT_OPTIONS } },
+            { $skip: numDocsToSkip },
+            { $limit: pageSize },
+            {
+              $project: {
+                ...Object.fromEntries(Object.keys(MaterialOrderModel.schema.paths).map(key => [key, `$${key}`])),
+                material: '$material',
+              },
+            },
+          ],
+          totalCount: [
+            { $count: 'count' },
+          ],
+        },
+      },
+    ];
+
+    const results = await MaterialOrderModel.aggregate<any>(pipeline);
+    const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
+    const materialLengthAdjustments = results[0]?.paginatedResults || [];
+    const totalPages = Math.ceil(totalDocumentCount / pageSize);
+
+    const paginationResponse: SearchResult<IMaterialOrder> = {
+      totalResults: totalDocumentCount,
+      totalPages,
+      currentPageIndex: (query && query.length) ? 0 : pageNumber,
+      results: materialLengthAdjustments,
+      pageSize,
+    }
+
+    return response.json(paginationResponse)
+
+  } catch (error) {
+    console.error('Failed to search for materialOrders: ', error);
+    return response.status(SERVER_ERROR).send(error.message);
+  }
+})
 
 router.delete('/:mongooseId', async (request, response) => {
     try {
@@ -20,35 +123,7 @@ router.delete('/:mongooseId', async (request, response) => {
     }
 });
 
-router.post('/query', async (request, response) => {
-    const {query, pageNumber, resultsPerPage} = request.body;
 
-    const searchCriteria = {
-        $or:[
-            {purchaseOrderNumber: {$regex: query, $options: 'i'}},
-            {notes: {$regex: query, $options: 'i'}}
-        ]};
-    const numberOfResultsToSkip = (pageNumber - 1) * resultsPerPage;
-
-    try {
-        const searchResults = await MaterialOrderModel
-            .find(searchCriteria)
-            .populate({path: 'author', select: 'fullName email'})
-            .populate({path: 'vendor'})
-            .populate({path: 'material'})
-            .skip(numberOfResultsToSkip)
-            .limit(resultsPerPage)
-            .exec();
-
-        return response.send(searchResults);
-    } catch (error) {
-        console.log(error);
-        request.flash('errors', ['A problem occurred while performing your search:', error.message]);
-        return response.json({
-            error
-        });
-    }
-});
 
 router.patch('/:mongooseId', async (request, response) => {
     try {

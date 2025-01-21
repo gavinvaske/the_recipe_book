@@ -11,17 +11,28 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateFromIsoStr, getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 
 const columnHelper = createColumnHelper<MaterialOrder>()
 
 const columns = [
   columnHelper.accessor('purchaseOrderNumber', {
-    header: 'Purchase Order Number',
+    header: 'P.O Number',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => row.material?.materialId, {
+    id: 'material.materialId', // Specify an ID since the accessor is a function
+    header: 'Material ID',
+  }),
+  columnHelper.accessor(row => getDateFromIsoStr(row.orderDate), {
+    header: 'Order Date'
+  }),
+  columnHelper.accessor(row => getDateFromIsoStr(row.arrivalDate), {
+    header: 'Arrival Date'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({

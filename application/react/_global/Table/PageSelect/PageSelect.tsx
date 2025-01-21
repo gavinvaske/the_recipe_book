@@ -81,8 +81,6 @@ export const PageSelect = (props: Props) => {
     onPageSizeChange(pageSize);
   };
 
-  console.log('table.getState().pagination.pageIndex: ', table.getState().pagination.pageIndex)
-
   const pageNumberDescription = isLoading? 'Loading...': `Page ${table.getState().pagination.pageIndex + 1} of ${totalPages > 0 ? totalPages : 1}`;
   const showingDescription = isLoading ? 'Loading... ' : `Showing ${numberOfDisplayedRows} ${numberOfDisplayedRows === 1 ? 'row' : 'rows'}`
 

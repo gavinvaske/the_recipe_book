@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { IMaterialLengthAdjustment } from '../../api/models/materialLengthAdjustment';
-import { SearchResult } from '@shared/http';
+import { SearchResult, SearchQuery } from '@shared/types/http';
 
 export const getMaterialLengthAdjustments = async (searchQuery: SearchQuery): Promise<any> => {
   const { query, limit: pageSize, pageIndex, sortField, sortDirection } = searchQuery;

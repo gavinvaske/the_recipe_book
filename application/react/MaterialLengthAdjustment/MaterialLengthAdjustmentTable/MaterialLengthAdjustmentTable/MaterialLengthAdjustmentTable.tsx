@@ -11,7 +11,7 @@ import { TableBody } from '../../../_global/Table/TableBody/TableBody';
 import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
-import { SearchResult } from '@shared/http';
+import { SearchResult } from '@shared/types/http';
 
 type TODO = any;
 

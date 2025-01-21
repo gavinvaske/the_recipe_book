@@ -70,7 +70,7 @@ router.patch('/:mongooseId', async (request, response) => {
 
 router.get('/', async (_, response) => {
     try {
-        const materialOrders = await MaterialOrderModel.find().sort({ updatedAt: DESCENDING }).exec();
+        const materialOrders = await MaterialOrderModel.find().populate('material').sort({ updatedAt: DESCENDING }).exec();
 
         return response.json(materialOrders);
     } catch (error) {

@@ -13,7 +13,7 @@ export const PageSelect = (props: Props) => {
   const { table, isLoading } = props;
   const pageSize = table.getState().pagination.pageSize;
   const currentPageIndex = table.getState().pagination.pageIndex;
-  const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
+  const [pageNumberInputField, setPageNumberInputField] = useState<string>(String(currentPageIndex + 1));
   const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
   const [errorMessage, setErrorMessage] = useState('');
   
@@ -32,23 +32,19 @@ export const PageSelect = (props: Props) => {
     setErrorMessage('');
     if (e.key !== 'Enter') return;
 
+    if (!pageNumberInputField || isNaN(Number(pageNumberInputField))) {
+      setPageNumberInputField('1');
+    }
+  
     const page = Number(pageNumberInputField);
 
-    if (isNaN(pageSize)) {
-      setErrorMessage('Page number must be a number');
-      setPageNumberInputField(1);
-      return;
-    }
-
     if (page < 1) {
-      setErrorMessage(`Page number must be greater than 0`);
-      setPageNumberInputField(1);
-      return;
+      setPageNumberInputField('1');
     }
 
     if (page > totalPages) {
       setErrorMessage(`Page number must be less than or equal to ${totalPages}`);
-      setPageNumberInputField(totalPages);
+      setPageNumberInputField(String(totalPages));
       return;
     }
 
@@ -79,7 +75,7 @@ export const PageSelect = (props: Props) => {
       return;
     }
     const defaultPageIndex = 0;
-    setPageNumberInputField(defaultPageIndex + 1);
+    setPageNumberInputField(String(defaultPageIndex + 1));
     onPageChange(defaultPageIndex);
     setPageSizeInputField(pageSize)
     onPageSizeChange(pageSize);
@@ -114,7 +110,7 @@ export const PageSelect = (props: Props) => {
             type='number'
             value={pageNumberInputField}
             onKeyDown={handlePageChange}
-            onChange={(e) => setPageNumberInputField(Number(e.target.value))}
+            onChange={(e) => setPageNumberInputField(e.target.value)}
             min={1}
             max={totalPages}
           />

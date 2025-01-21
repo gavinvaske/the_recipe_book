@@ -5,7 +5,7 @@ import { verifyBearerToken } from '../middleware/authorize.ts';
 import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 import { SearchQuery, SearchResult } from '../../_types/shared/http.ts';
 import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
-import { SortOption } from '../../_types/api/mongoose.ts';
+import { SortOption } from '../../_types/shared/mongoose.ts';
 import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
 
 router.use(verifyBearerToken);
@@ -30,12 +30,12 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 
     if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).json('Invalid sort direction');
 
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
-      ? { [sortField]: sortDirection === 'desc' ? DESCENDING : ASCENDING } : {};
+    const sortOptions: SortOption = (sortField && sortDirection) ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
 
     const textSearch = query && query.length
     ? {

@@ -56,15 +56,14 @@ export const MaterialOrderTable = () => {
   const { isError, data: materialOrders, error, isLoading } = useQuery({
     queryKey: ['get-material-orders', pagination, sorting, globalSearch],
     queryFn: async () => {
-      console.log('todo, sorting: ', sorting)
-      const sortDirection = sorting.length ? (sorting[0]?.desc ? 'desc' : 'asc') : undefined;
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
       const results: SearchResult<any> = await getMaterialOrders({
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),
         sortField: sortField,
-        sortDirection: sortDirection
+        sortDirection: sortDirection,
       }) || {}
 
       return results

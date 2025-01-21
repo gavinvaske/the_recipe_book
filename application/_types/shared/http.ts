@@ -2,8 +2,8 @@ export interface SearchQuery {
   query?: string;
   pageIndex?: string;
   limit?: string;
-  sortField?: string;
-  sortDirection?: 'asc' | 'desc';
+  sortField?: string | undefined;
+  sortDirection?: '1' | '-1' | undefined;
 }
 
 export interface SearchResult<T> {

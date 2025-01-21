@@ -53,7 +53,7 @@ export const MaterialLengthAdjustmentTable = () => {
   const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
-      const sortDirection = sorting.length ? (sorting[0]?.desc ? 'desc' : 'asc') : undefined;
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
       const results: SearchResult<any> = await getMaterialLengthAdjustments({
         query: globalSearch,

@@ -6,7 +6,7 @@ import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
-import { SortOption } from '@api/types/mongoose.ts';
+import { SortOption } from '@shared/types/mongoose.ts';
 import { SearchQuery, SearchResult } from '@shared/types/http.ts';
 import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
 
@@ -17,12 +17,12 @@ router.get('/search', async (request: Request, response: Response) => {
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 
     if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).json('Invalid sort direction');
 
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
-      ? { [sortField]: sortDirection === 'desc' ? DESCENDING : ASCENDING } : {};
+    const sortOptions: SortOption = (sortField && sortDirection) ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
 
     const textSearch = query && query.length
     ? {

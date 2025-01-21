@@ -12,7 +12,10 @@ export const getOneMaterialOrder = async (mongooseId: MongooseId): Promise<IMate
 
 export const getMaterialOrders = async (searchQuery: SearchQuery): Promise<SearchResult<any>> => {
   const { query, limit: pageSize, pageIndex, sortField, sortDirection } = searchQuery;
-  const response : AxiosResponse = await axios.get(`/material-orders/search?query=${query || ''}&pageIndex=${pageIndex}&limit=${pageSize}&sortField=${sortField}&sortDirection=${sortDirection}`);
+  const response : AxiosResponse = await axios.get(`/material-orders/search?query=${query || ''}&pageIndex=${pageIndex}&limit=${pageSize}`
+    + (sortField ? `&sortField=${sortField}` : '')
+    + (sortDirection ? `&sortDirection=${sortDirection}` : '')
+  );
   
   return response.data;
 }

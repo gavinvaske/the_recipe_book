@@ -14,7 +14,7 @@ export const PageSelect = (props: Props) => {
   const pageSize = table.getState().pagination.pageSize;
   const currentPageIndex = table.getState().pagination.pageIndex;
   const [pageNumberInputField, setPageNumberInputField] = useState<string>(String(currentPageIndex + 1));
-  const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
+  const [pageSizeInputField, setPageSizeInputField] = useState<string>(String(pageSize));
   const [errorMessage, setErrorMessage] = useState('');
   
   const onPageChange = (pageIndex: number) => {
@@ -65,19 +65,19 @@ export const PageSelect = (props: Props) => {
     
     if ((pageSize < 1)) {
       setErrorMessage(`Page size must be greater than 0`);
-      setPageSizeInputField(1);
+      setPageSizeInputField('1');
       return;
     }
 
     if ((pageSize > MAX_PAGE_SIZE)) {
       setErrorMessage(`Page size must be less than or equal to ${MAX_PAGE_SIZE}`);
-      setPageSizeInputField(MAX_PAGE_SIZE);
+      setPageSizeInputField(String(MAX_PAGE_SIZE));
       return;
     }
     const defaultPageIndex = 0;
     setPageNumberInputField(String(defaultPageIndex + 1));
     onPageChange(defaultPageIndex);
-    setPageSizeInputField(pageSize)
+    setPageSizeInputField(String(pageSize))
     onPageSizeChange(pageSize);
   };
 
@@ -123,7 +123,7 @@ export const PageSelect = (props: Props) => {
             type='number' 
             value={pageSizeInputField} 
             onKeyDown={handlePageSizeChange}
-            onChange={e => setPageSizeInputField(Number(e.target.value))}
+            onChange={e => setPageSizeInputField(e.target.value)}
             min={1}
             max={MAX_PAGE_SIZE}
           />

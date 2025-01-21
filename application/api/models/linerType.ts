@@ -3,11 +3,10 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import mongoose_delete from 'mongoose-delete';
 
-const LinerTypeSchema = new Schema({
+const schema = new Schema({
     name: {
         type: String,
         required: true,
-        index: true,
         uppercase: true,
         unique: true
     }
@@ -16,6 +15,6 @@ const LinerTypeSchema = new Schema({
     strict: 'throw'
 });
 
-LinerTypeSchema.plugin(mongoose_delete, { overrideMethods: true });
+schema.plugin(mongoose_delete, { overrideMethods: true });
 
-export const LinerTypeModel = mongoose.model('LinerType', LinerTypeSchema);
+export const LinerTypeModel = mongoose.model('LinerType', schema);

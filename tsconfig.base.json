@@ -19,6 +19,9 @@
     "target": "es2022",
     "module": "node16",
     "paths": {
+      "@shared/*": ["./application/_types/shared/*"],
+      "@api/*": ["application/_types/api/*"],
+      "@ui/*": ["./application/_types/ui/*"],
     },
     "sourceMap": true,
     "declaration": false,
@@ -29,6 +32,6 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["**/*.ts"],
+"include": ["application/**/*"],
   "exclude": ["node_modules", "build"]
 }

@@ -21,7 +21,7 @@ const columns = [
     header: 'P.O Number',
   }),
   columnHelper.accessor(row => row.material?.materialId, {
-    id: 'material.materialId', // Specify an ID since the accessor is a function
+    id: 'material.materialId',
     header: 'Material ID',
   }),
   columnHelper.accessor(row => getDateFromIsoStr(row.orderDate), {

@@ -19,7 +19,7 @@ const columnHelper = createColumnHelper<TODO>()
 
 const columns = [
   columnHelper.accessor(row => row.material.name, {
-    id: 'material.name', // Specify an ID since the accessor is a function
+    id: 'material.name',
     header: 'Material Name',
   }),
   columnHelper.accessor('length', {

@@ -91,39 +91,39 @@ describe('mongooseService test cases', () => {
     });
 
     describe('Function: getSortOption()', () => {
-      let validSortOption, validSortDirection;
-       beforeEach(() => {
-          validSortOption = chance.word();
-          validSortDirection = chance.pickone(['1', '-1', 1, -1]);
-       });
+        let validSortOption;
 
-       it('should return an empty object when sort option is not defined', () => {
+        beforeEach(() => {
+            validSortOption = chance.word();
+        });
+
+        it('should return an empty object when sort option is not defined', () => {
             const sortOption = undefined;
             const expectedSortOption = {};
 
             const actualSortOption = mongooseService.getSortOption(sortOption);
 
             expect(actualSortOption).toEqual(expectedSortOption);
-       });
+        });
 
-       it('should return an empty object when sort direction is not defined', () => {
-         const sortOption = validSortOption;
-         const sortDirection = undefined;
-         const expectedSortOption = {};
+        it('should return an empty object when sort direction is not defined', () => {
+            const sortOption = validSortOption;
+            const sortDirection = undefined;
+            const expectedSortOption = {};
 
-         const actualSortOption = mongooseService.getSortOption(sortOption, sortDirection);
+            const actualSortOption = mongooseService.getSortOption(sortOption, sortDirection);
 
-         expect(actualSortOption).toEqual(expectedSortOption);
-       })
+            expect(actualSortOption).toEqual(expectedSortOption);
+        });
 
-       it('should convert the sort direction from a string to the integer 1 or -1', () => {
-         const sortOption = validSortOption;
-         const sortDirection = String(chance.pickone([1, -1]));
-         const expectedSortOption = { [sortOption]: parseInt(sortDirection) };
+        it('should convert the sort direction from a string to the integer 1 or -1', () => {
+            const sortOption = validSortOption;
+            const sortDirection = String(chance.pickone([1, -1]));
+            const expectedSortOption = { [sortOption]: parseInt(sortDirection) };
          
-         const actualSortOption = mongooseService.getSortOption(sortOption, sortDirection);
+            const actualSortOption = mongooseService.getSortOption(sortOption, sortDirection);
          
-         expect(actualSortOption).toEqual(expectedSortOption);
-       })
-    })
+            expect(actualSortOption).toEqual(expectedSortOption);
+        });
+    });
 });

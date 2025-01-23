@@ -12,7 +12,7 @@ import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
 import { SearchResult } from '@shared/types/http';
-import { getDateFromIsoStr } from '@ui/utils/dateTime';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 
 type TODO = any;
 
@@ -23,16 +23,16 @@ const columns = [
     id: 'material.name',
     header: 'Material Name',
   }),
-  columnHelper.accessor('length', {
+  columnHelper.accessor(row => (row.length && row.length > 0) ? `${row.length}` : `(${Math.abs(row.length)})`, {
     header: 'Length',
   }),
   columnHelper.accessor('notes', {
     header: 'Notes',
   }),
-  columnHelper.accessor(row => getDateFromIsoStr(row.updatedAt), {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor(row => getDateFromIsoStr(row.createdAt), {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({

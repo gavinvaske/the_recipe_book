@@ -143,29 +143,6 @@ router.patch('/:mongooseId', async (request, response) => {
     }
 });
 
-router.get('/', async (_, response) => {
-    try {
-        const materialOrders = await MaterialOrderModel.find().populate('material').sort({ updatedAt: DESCENDING }).exec();
-
-        return response.json(materialOrders);
-    } catch (error) {
-        console.error('Error loading materialOrders', error);
-        return response.status(SERVER_ERROR).send(error.message);
-    }
-});
-
-// @deprecated
-router.get('/create', async (request, response) => {
-    const materials = await MaterialModel.find().exec();
-    const vendors = await VendorModel.find().exec();
-
-    return response.render('createMaterialOrder', {
-        materials,
-        vendors,
-        user: request.user
-    });
-});
-
 router.post('/', async (request, response) => {
     try {
         const savedMaterialOrder = await MaterialOrderModel.create(request.body);

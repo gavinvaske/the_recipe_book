@@ -1,7 +1,6 @@
 import React from 'react';
 import './CustomerTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { Customer } from '../../_types/databasemodels/customer.ts';
 import { CustomerRowActions } from './CustomerRowActions/CustomerRowActions'
 import { useQuery } from '@tanstack/react-query';
 import { getCustomers } from '../../_queries/customer';
@@ -11,15 +10,19 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
 
-const columnHelper = createColumnHelper<Customer>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
   }),
-  columnHelper.accessor('_id', {
-    header: 'ID'
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',
@@ -63,7 +66,7 @@ export const CustomerTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Customers</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> customers.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> customers.</p>
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 

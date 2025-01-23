@@ -24,6 +24,10 @@ const columns = [
     id: 'material.materialId',
     header: 'Material ID',
   }),
+  columnHelper.accessor(row => row.vendor.name, {
+    id: 'vendor.name',
+    header: 'Vendor',
+  }),
   columnHelper.accessor(row => getDateFromIsoStr(row.orderDate), {
     header: 'Order Date'
   }),
@@ -106,7 +110,7 @@ export const MaterialOrderTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Orders</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> material orders.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> material orders.</p>
         </div>
         <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

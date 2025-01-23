@@ -14,19 +14,22 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead'
 import { TableBody } from '../../_global/Table/TableBody/TableBody'
 import { Table } from '../../_global/Table/Table'
 import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
-import { LinerType } from '../../_types/databasemodels/linerType.ts';
 import { useQuery } from '@tanstack/react-query';
 import { getLinerTypes } from '../../_queries/linerType';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
 
-const columnHelper = createColumnHelper<LinerType>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
   }),
-  columnHelper.accessor('_id', {
-    header: 'ID'
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',

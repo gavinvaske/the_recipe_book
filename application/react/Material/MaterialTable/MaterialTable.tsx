@@ -1,7 +1,6 @@
 import React from 'react';
 import './MaterialTable.scss';
 import { SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
-import { Material } from '../../_types/databasemodels/material.ts';
 import { MaterialRowActions } from './MaterialRowActions/MaterialRowActions';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
@@ -11,8 +10,9 @@ import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../../_queries/material';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
 
-const columnHelper = createColumnHelper<Material>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('name', {
@@ -32,6 +32,12 @@ const columns = [
   }),
   columnHelper.accessor('description', {
     header: 'Description'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',
@@ -74,7 +80,7 @@ export const MaterialTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Materials</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> materials.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> materials.</p>
         </div>
         <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
 

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './MaterialOrderTable.scss'
-import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { MaterialOrder } from '../../_types/databaseModels/materialOrder';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { MaterialOrderRowActions } from './MaterialOrderRowActions/MaterialOrderRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterialOrders } from '../../_queries/materialOrder';
@@ -11,17 +10,30 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateFromIsoStr, getDateTimeFromIsoStr } from '@ui/utils/dateTime';
+import { SearchResult } from '@shared/types/http';
+import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
 
-const columnHelper = createColumnHelper<MaterialOrder>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('purchaseOrderNumber', {
-    header: 'Purchase Order Number',
+    header: 'P.O Number',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => row.material?.materialId, {
+    id: 'material.materialId',
+    header: 'Material ID',
+  }),
+  columnHelper.accessor(row => getDateFromIsoStr(row.orderDate), {
+    header: 'Order Date'
+  }),
+  columnHelper.accessor(row => getDateFromIsoStr(row.arrivalDate), {
+    header: 'Arrival Date'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({
@@ -32,33 +44,61 @@ const columns = [
 ];
 
 export const MaterialOrderTable = () => {
-  const [globalFilter, setGlobalFilter] = React.useState('');
+  const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 50,
+  })
+  const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialOrders, error } = useQuery({
-    queryKey: ['get-material-orders'],
-    queryFn: getMaterialOrders,
-    initialData: []
+  const { isError, data: materialOrders, error, isLoading } = useQuery({
+    queryKey: ['get-material-orders', pagination, sorting, globalSearch],
+    queryFn: async () => {
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
+      const sortField = sorting.length ? sorting[0]?.id : undefined;
+      const results: SearchResult<any> = await getMaterialOrders({
+        query: globalSearch,
+        pageIndex: String(pagination.pageIndex),
+        limit: String(pagination.pageSize),
+        sortField: sortField,
+        sortDirection: sortDirection,
+      }) || {}
+
+      return results
+    },
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
   })
 
   if (isError) {
     useErrorMessage(error)
   }
 
-  const table = useReactTable({
-    data: materialOrders,
+  const table = useReactTable<any>({
+    data: materialOrders?.results ?? defaultData,
     columns,
+    rowCount: materialOrders?.totalResults ?? 0,
+    manualSorting: true,
+    manualPagination: true,
     state: {
-      globalFilter: globalFilter,
+      globalFilter: globalSearch,
       sorting: sorting,
+      pagination: pagination
+
     },
-    getFilteredRowModel: getFilteredRowModel(),
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: (updaterOrValue) => {
+      table.resetPageIndex(); // reset to first page when sorting
+      setSorting((oldSorting) => 
+        typeof updaterOrValue === 'function' 
+          ? updaterOrValue(oldSorting) 
+          : updaterOrValue
+      );
+    },
+    onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })
-
   const rows = table.getRowModel().rows;
 
   return (
@@ -68,7 +108,10 @@ export const MaterialOrderTable = () => {
           <h1 className="text-blue">Material Orders</h1>
           <p>Complete list of all <p className='text-blue'>{rows.length} </p> material orders.</p>
         </div>
-         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
+        <SearchBar value={globalSearch} performSearch={(value: string) => {
+          setGlobalSearch(value)
+          table.resetPageIndex();
+        }} />
 
         <Table id='material-order-table'>
           <TableHead table={table} />
@@ -78,6 +121,10 @@ export const MaterialOrderTable = () => {
               <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
+          <PageSelect
+            table={table}
+            isLoading={isLoading}
+          />
         </Table>
       </div>
     </div>

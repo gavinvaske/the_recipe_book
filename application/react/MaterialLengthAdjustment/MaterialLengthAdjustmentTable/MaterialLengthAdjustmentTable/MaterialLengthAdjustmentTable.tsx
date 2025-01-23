@@ -11,7 +11,8 @@ import { TableBody } from '../../../_global/Table/TableBody/TableBody';
 import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
-import { SearchResult } from '@shared/http';
+import { SearchResult } from '@shared/types/http';
+import { getDateFromIsoStr } from '@ui/utils/dateTime';
 
 type TODO = any;
 
@@ -19,7 +20,7 @@ const columnHelper = createColumnHelper<TODO>()
 
 const columns = [
   columnHelper.accessor(row => row.material.name, {
-    id: 'material.name', // Specify an ID since the accessor is a function
+    id: 'material.name',
     header: 'Material Name',
   }),
   columnHelper.accessor('length', {
@@ -28,10 +29,10 @@ const columns = [
   columnHelper.accessor('notes', {
     header: 'Notes',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => getDateFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({
@@ -53,7 +54,7 @@ export const MaterialLengthAdjustmentTable = () => {
   const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
-      const sortDirection = sorting.length ? (sorting[0]?.desc ? 'desc' : 'asc') : undefined;
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
       const results: SearchResult<any> = await getMaterialLengthAdjustments({
         query: globalSearch,
@@ -94,11 +95,9 @@ export const MaterialLengthAdjustmentTable = () => {
           : updaterOrValue
       );
     },
-    debugTable: true,
     onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
-    })
-    
+  })
 
   const rows = table.getRowModel().rows;
 

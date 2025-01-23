@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './PageSelect.scss';
 import { Table } from '@tanstack/react-table';
 
@@ -12,10 +12,17 @@ const MAX_PAGE_SIZE = 200;
 export const PageSelect = (props: Props) => {
   const { table, isLoading } = props;
   const pageSize = table.getState().pagination.pageSize;
-  const currentPageIndex = table.getState().pagination.pageIndex;
-  const [pageNumberInputField, setPageNumberInputField] = useState<number>(currentPageIndex + 1);
-  const [pageSizeInputField, setPageSizeInputField] = useState<number>(pageSize);
+  const [pageNumberInputField, setPageNumberInputField] = useState<string>('');
+  const [pageSizeInputField, setPageSizeInputField] = useState<string>(String(pageSize));
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    const { pagination } = table.getState();
+
+    setPageNumberInputField(String(pagination.pageIndex + 1));
+  }, [isLoading, table.getState().pagination.pageIndex]);
   
   const onPageChange = (pageIndex: number) => {
     table.setPageIndex(pageIndex)
@@ -32,23 +39,19 @@ export const PageSelect = (props: Props) => {
     setErrorMessage('');
     if (e.key !== 'Enter') return;
 
+    if (!pageNumberInputField || isNaN(Number(pageNumberInputField))) {
+      setPageNumberInputField('1');
+    }
+  
     const page = Number(pageNumberInputField);
 
-    if (isNaN(pageSize)) {
-      setErrorMessage('Page number must be a number');
-      setPageNumberInputField(1);
-      return;
-    }
-
     if (page < 1) {
-      setErrorMessage(`Page number must be greater than 0`);
-      setPageNumberInputField(1);
-      return;
+      setPageNumberInputField('1');
     }
 
     if (page > totalPages) {
       setErrorMessage(`Page number must be less than or equal to ${totalPages}`);
-      setPageNumberInputField(totalPages);
+      setPageNumberInputField(String(totalPages));
       return;
     }
 
@@ -69,23 +72,21 @@ export const PageSelect = (props: Props) => {
     
     if ((pageSize < 1)) {
       setErrorMessage(`Page size must be greater than 0`);
-      setPageSizeInputField(1);
+      setPageSizeInputField('1');
       return;
     }
 
     if ((pageSize > MAX_PAGE_SIZE)) {
       setErrorMessage(`Page size must be less than or equal to ${MAX_PAGE_SIZE}`);
-      setPageSizeInputField(MAX_PAGE_SIZE);
+      setPageSizeInputField(String(MAX_PAGE_SIZE));
       return;
     }
     const defaultPageIndex = 0;
-    setPageNumberInputField(defaultPageIndex + 1);
+    setPageNumberInputField(String(defaultPageIndex + 1));
     onPageChange(defaultPageIndex);
-    setPageSizeInputField(pageSize)
+    setPageSizeInputField(String(pageSize))
     onPageSizeChange(pageSize);
   };
-
-  console.log('table.getState().pagination.pageIndex: ', table.getState().pagination.pageIndex)
 
   const pageNumberDescription = isLoading? 'Loading...': `Page ${table.getState().pagination.pageIndex + 1} of ${totalPages > 0 ? totalPages : 1}`;
   const showingDescription = isLoading ? 'Loading... ' : `Showing ${numberOfDisplayedRows} ${numberOfDisplayedRows === 1 ? 'row' : 'rows'}`
@@ -114,7 +115,7 @@ export const PageSelect = (props: Props) => {
             type='number'
             value={pageNumberInputField}
             onKeyDown={handlePageChange}
-            onChange={(e) => setPageNumberInputField(Number(e.target.value))}
+            onChange={(e) => setPageNumberInputField(e.target.value)}
             min={1}
             max={totalPages}
           />
@@ -127,7 +128,7 @@ export const PageSelect = (props: Props) => {
             type='number' 
             value={pageSizeInputField} 
             onKeyDown={handlePageSizeChange}
-            onChange={e => setPageSizeInputField(Number(e.target.value))}
+            onChange={e => setPageSizeInputField(e.target.value)}
             min={1}
             max={MAX_PAGE_SIZE}
           />

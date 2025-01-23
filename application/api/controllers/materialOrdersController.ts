@@ -17,8 +17,8 @@ router.get('/search', async (request: Request, response: Response) => {
   try {
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 
-    if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
-    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).json('Invalid sort direction');
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).send('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).send('Invalid sort direction');
 
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);

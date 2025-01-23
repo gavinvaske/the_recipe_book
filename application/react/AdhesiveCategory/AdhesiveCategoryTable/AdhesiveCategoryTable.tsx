@@ -1,7 +1,6 @@
 import React from 'react';
 import './AdhesiveCategoryTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts'
 import { AdhesiveCategoryRowActions } from './AdhesiveCategoryRowActions/AdhesiveCategoryRowActions';
 import { getAdhesiveCategories } from '../../_queries/adhesiveCategory';
 import { useQuery } from '@tanstack/react-query';
@@ -11,15 +10,19 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
 
-const columnHelper = createColumnHelper<AdhesiveCategory>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
   }),
-  columnHelper.accessor('_id', {
-    header: 'ID'
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',

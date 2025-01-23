@@ -24,6 +24,10 @@ const columns = [
     id: 'material.materialId',
     header: 'Material ID',
   }),
+  columnHelper.accessor(row => row.vendor.name, {
+    id: 'vendor.name',
+    header: 'Vendor',
+  }),
   columnHelper.accessor(row => getDateFromIsoStr(row.orderDate), {
     header: 'Order Date'
   }),

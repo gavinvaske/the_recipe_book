@@ -1,7 +1,6 @@
 import React from 'react';
 import './DieTable.scss';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { IDie } from '../../../api/models/die';
 import { DieRowActions } from './DieRowActions/DieRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getDies } from '../../_queries/die';
@@ -11,8 +10,9 @@ import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 
-const columnHelper = createColumnHelper<IDie>()
+const columnHelper = createColumnHelper<any>()
 
 export const GET_DIES_QUERY_KEY = 'get-dies'
 
@@ -20,10 +20,10 @@ const columns = [
   columnHelper.accessor('dieNumber', {
     header: 'Die Number',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({

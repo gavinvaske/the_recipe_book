@@ -16,17 +16,20 @@ import { Table } from '../../_global/Table/Table'
 import { CreditTermRowActions } from './CreditTermRowActions/CreditTermRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getCreditTerms } from '../../_queries/creditTerm';
-import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
 
-const columnHelper = createColumnHelper<CreditTerm>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('description', {
     header: 'Description'
   }),
-  columnHelper.accessor('_id', {
-    header: 'ID'
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',

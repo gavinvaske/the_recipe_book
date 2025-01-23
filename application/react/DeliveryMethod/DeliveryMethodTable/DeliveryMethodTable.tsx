@@ -16,17 +16,20 @@ import { Table } from '../../_global/Table/Table'
 import { DeliveryMethodRowActions } from './DeliveryMethodRowActions/DeliveryMethodRowActions'
 import { getDeliveryMethods } from '../../_queries/deliveryMethod'
 import { useQuery } from '@tanstack/react-query'
-import { DeliveryMethod } from '../../_types/databasemodels/deliveryMethod.ts'
 import { useErrorMessage } from '../../_hooks/useErrorMessage'
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts'
 
-const columnHelper = createColumnHelper<DeliveryMethod>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('name', {
     header: 'Name'
   }),
-  columnHelper.accessor('_id', {
-    header: 'ID'
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
+    header: 'Updated'
+  }),
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
+    header: 'Created'
   }),
   columnHelper.display({
     id: 'actions',

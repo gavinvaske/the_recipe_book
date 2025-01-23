@@ -94,7 +94,6 @@ export const MaterialLengthAdjustmentTable = () => {
           : updaterOrValue
       );
     },
-    debugTable: true,
     onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import './MaterialOrderTable.scss'
-import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
-import { MaterialOrder } from '../../_types/databaseModels/materialOrder';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { MaterialOrderRowActions } from './MaterialOrderRowActions/MaterialOrderRowActions';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterialOrders } from '../../_queries/materialOrder';
@@ -15,7 +14,7 @@ import { getDateFromIsoStr, getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 import { SearchResult } from '@shared/types/http';
 import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
 
-const columnHelper = createColumnHelper<MaterialOrder>()
+const columnHelper = createColumnHelper<any>()
 
 const columns = [
   columnHelper.accessor('purchaseOrderNumber', {
@@ -97,7 +96,6 @@ export const MaterialOrderTable = () => {
           : updaterOrValue
       );
     },
-    debugTable: true,
     onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })

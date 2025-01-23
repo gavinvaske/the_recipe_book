@@ -4,9 +4,9 @@ import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enu
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 import { SearchQuery, SearchResult } from '../../_types/shared/http.ts';
-import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
 import { SortOption } from '../../_types/shared/mongoose.ts';
-import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { getSortOption } from '../services/mongooseService.ts';
 
 router.use(verifyBearerToken);
 
@@ -35,7 +35,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && sortDirection) ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
 
     const textSearch = query && query.length
     ? {
@@ -43,7 +43,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           { notes: { $regex: query, $options: 'i' } },
           { 'material.name': { $regex: query, $options: 'i' } },
           { 'material.materialId': { $regex: query, $options: 'i' } },
-          { 'material.locations': { $regex: query, $options: 'i' } },
         ],
       }
     : {};

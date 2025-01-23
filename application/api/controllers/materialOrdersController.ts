@@ -5,10 +5,11 @@ import { MaterialModel } from '../models/material.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
-import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 import { SortOption } from '@shared/types/mongoose.ts';
 import { SearchQuery, SearchResult } from '@shared/types/http.ts';
-import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { getSortOption } from '../services/mongooseService.ts';
 
 router.use(verifyBearerToken);
 
@@ -22,7 +23,7 @@ router.get('/search', async (request: Request, response: Response) => {
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && sortDirection) ? { [sortField]: sortDirection } : DEFAULT_SORT_OPTIONS;
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
 
     const textSearch = query && query.length
     ? {
@@ -31,7 +32,6 @@ router.get('/search', async (request: Request, response: Response) => {
           { purchaseOrderNumber: { $regex: query, $options: 'i' } },
           { 'material.name': { $regex: query, $options: 'i' } },
           { 'material.materialId': { $regex: query, $options: 'i' } },
-          { 'material.locations': { $regex: query, $options: 'i' } },
           { 'vendor.name': { $regex: query, $options: 'i' } },
         ],
       }

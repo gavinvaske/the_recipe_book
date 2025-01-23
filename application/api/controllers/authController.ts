@@ -41,31 +41,31 @@ router.get('/access-token', (request: Request, response: Response) => {
   const refreshTokenFromSecureCookie = request.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
   if (!refreshTokenFromSecureCookie) {
-    return response.sendStatus(UNAUTHORIZED)
+    return response.status(FORBIDDEN).json({ error: 'Refresh token missing' });
   }
 
   try {
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-    const payloadWithExtraStuff: any = jwt.verify(refreshTokenFromSecureCookie, refreshTokenSecret)
+    const payloadWithExtraStuff: any = jwt.verify(refreshTokenFromSecureCookie, refreshTokenSecret);
     
     const tokenPayload: TokenPayload = {
       email: payloadWithExtraStuff.email,
       _id: payloadWithExtraStuff._id,
-      authRoles: payloadWithExtraStuff.authRoles
-    }
+      authRoles: payloadWithExtraStuff.authRoles,
+    };
 
     const accessTokenSecret = process.env.JWT_SECRET as string;
     const accessToken = generateAccessToken(tokenPayload, accessTokenSecret);
     const userAuth: UserAuth = {
       accessToken,
-      authRoles: payloadWithExtraStuff.authRoles
-    }
+      authRoles: payloadWithExtraStuff.authRoles,
+    };
 
-    return response.json(userAuth)
+    return response.json(userAuth);
   } catch (error) {
-    return response.sendStatus(FORBIDDEN)
+    return response.status(FORBIDDEN).json({ error: 'Refresh token expired' });
   }
-})
+});
 
 router.post('/login', async (request: Request, response: Response) => {
   const { email, password } = request.body;

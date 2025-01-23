@@ -2,7 +2,7 @@ export const getDateFromIsoStr = (dateAsString: string | undefined): string => {
   if (!dateAsString) {
     return ''
   }
-  return new Date(dateAsString).toISOString().substring(0, 10)
+  return new Date(dateAsString).toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
 }
 
 export const getDateTimeFromIsoStr = (dateTimeAsString: string | undefined): string => {
@@ -10,5 +10,5 @@ export const getDateTimeFromIsoStr = (dateTimeAsString: string | undefined): str
     return ''
   }
 
-  return new Date(dateTimeAsString).toLocaleString()
+  return new Date(dateTimeAsString).toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit', hour: 'numeric', minute: 'numeric' });
 }

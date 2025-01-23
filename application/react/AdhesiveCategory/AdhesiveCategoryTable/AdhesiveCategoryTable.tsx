@@ -66,7 +66,7 @@ export const AdhesiveCategoryTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Adhesive Categories</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> Adhesive Categories.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> Adhesive Categories.</p>
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 

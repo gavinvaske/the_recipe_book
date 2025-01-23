@@ -66,7 +66,7 @@ export const CustomerTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Customers</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> customers.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> customers.</p>
         </div>
          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
 

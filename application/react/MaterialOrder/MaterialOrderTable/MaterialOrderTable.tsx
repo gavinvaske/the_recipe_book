@@ -110,7 +110,7 @@ export const MaterialOrderTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Orders</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> material orders.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> material orders.</p>
         </div>
         <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

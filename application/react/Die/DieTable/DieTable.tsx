@@ -68,7 +68,7 @@ export const DieTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Dies</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> dies.</p>
+          <p>Showing <p className='text-blue'>{rows.length} </p> dies.</p>
         </div>
         <div className='table-search-bar-container'>
           <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />

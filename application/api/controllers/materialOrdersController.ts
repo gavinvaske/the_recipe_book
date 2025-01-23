@@ -5,7 +5,6 @@ import { MaterialModel } from '../models/material.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CREATED_SUCCESSFULLY, BAD_REQUEST, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
-import { DESCENDING } from '../enums/mongooseSortMethods.ts';
 import { SortOption } from '@shared/types/mongoose.ts';
 import { SearchQuery, SearchResult } from '@shared/types/http.ts';
 import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';

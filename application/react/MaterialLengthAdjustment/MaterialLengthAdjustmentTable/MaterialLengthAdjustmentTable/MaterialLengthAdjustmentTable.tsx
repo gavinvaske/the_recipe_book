@@ -12,6 +12,7 @@ import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
 import { SearchResult } from '@shared/types/http';
+import { getDateFromIsoStr } from '@ui/utils/dateTime';
 
 type TODO = any;
 
@@ -28,10 +29,10 @@ const columns = [
   columnHelper.accessor('notes', {
     header: 'Notes',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => getDateFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({

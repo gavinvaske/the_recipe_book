@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { CREATED_SUCCESSFULLY, SERVER_ERROR } from '../enums/httpStatusCodes.ts'; 
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts'; 
 
 router.use(verifyBearerToken);
 
@@ -43,6 +43,30 @@ router.patch('/:mongooseId', async (request, response) => {
         response
             .status(SERVER_ERROR)
             .send(error.message);
+    }
+});
+
+router.get('/:mongooseId', async (request, response) => {
+    try {
+        const vendors = await VendorModel.findById(request.params.mongooseId)
+        return response.json(vendors);
+    } catch (error) {
+        console.error('Error fetching vendors: ', error);
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
+    }
+});
+
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        const deletedAdhesiveCategory = await VendorModel.findByIdAndDelete(request.params.mongooseId).exec();
+    
+        return response.status(SUCCESS).json(deletedAdhesiveCategory);
+    } catch (error) {
+        console.error('Failed to delete vendor: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 

@@ -6,8 +6,14 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../../_types/typeAliases';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
+import { Row } from '@tanstack/react-table';
+import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 
-export const VendorRowActions = () => {
+type Props = {
+  row: Row<any>
+}
+
+export const VendorRowActions = (props: Props) => {
   const { row } = props;
   const { _id : mongooseObjectId } = row.original;
 
@@ -16,7 +22,7 @@ export const VendorRowActions = () => {
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
     alert('@TODO Storm: Add a confirmation modal before deletion?')
-    axios.delete(`/customers/${mongooseObjectId}`)
+    axios.delete(`/vendors/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => {
         queryClient.invalidateQueries({ queryKey: ['get-customers']})
         useSuccessMessage('Deletion was successful')
@@ -25,10 +31,13 @@ export const VendorRowActions = () => {
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    navigate(`/react-ui/forms/customer/${mongooseObjectId}`)
+    navigate(`/react-ui/forms/vendor/${mongooseObjectId}`)
   }
 
-  const onViewClicked = (mongooseObjectId: MongooseId) => {
-    navigate(`/react-ui/views/customer/${mongooseObjectId}`)
-  }
+  return (
+    <RowActions>
+      <div className='dropdown-option' onClick={() => onEditClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>Edit</div>
+      <div className='dropdown-option' onClick={() => onDeleteClicked(mongooseObjectId)}><i className="fa-regular fa-trash"></i>Delete</div>
+    </RowActions>
+  )
 }

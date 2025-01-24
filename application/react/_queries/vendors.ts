@@ -7,3 +7,10 @@ export const getVendors = async (): Promise<Vendor[]> => {
 
   return vendors
 }
+
+export const getOneVendor = async (mongooseId: string): Promise<Vendor> => {
+  const response : AxiosResponse = await axios.get(`/vendors/${mongooseId}`);
+  const vendor: Vendor = response.data;
+
+  return vendor;
+}

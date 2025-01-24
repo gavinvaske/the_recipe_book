@@ -38,6 +38,7 @@ import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
 import { DropdownProvider, useDropdownContext } from '../_context/dropdownProvider';
 import { MaterialLengthAdjustmentTable } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable';
 import { VendorForm } from '../Vendor/VendorForm/VendorForm';
+import { VendorTable } from '../Vendor/VendorTable/VendorTable';
 
 const queryClient = new QueryClient();
 
@@ -85,6 +86,7 @@ export function App() {
                   </Route>
 
                   <Route path='tables'>
+                    <Route path='vendor' element={<VendorTable />} />
                     <Route path='material-length-adjustment' element={<MaterialLengthAdjustmentTable />} />
                     <Route path='quote' element={<QuoteTable />} />
                     <Route path='credit-term' element={<CreditTermTable />} />

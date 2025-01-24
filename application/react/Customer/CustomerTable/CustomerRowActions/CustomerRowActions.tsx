@@ -22,26 +22,20 @@ export const CustomerRowActions = (props: Props) => {
   const queryClient = useQueryClient()
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
-    alert('@TODO Storm: Add a confirmation modal before deletion?')
-    axios.delete(`/customers/${mongooseObjectId}`)
+    axios.delete(`/vendors/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => {
-        queryClient.invalidateQueries({ queryKey: ['get-customers']})
+        queryClient.invalidateQueries({ queryKey: ['get-vendors']})
         useSuccessMessage('Deletion was successful')
       })
       .catch((error: AxiosError) => useErrorMessage(error))
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    navigate(`/react-ui/forms/customer/${mongooseObjectId}`)
-  }
-
-  const onViewClicked = (mongooseObjectId: MongooseId) => {
-    navigate(`/react-ui/views/customer/${mongooseObjectId}`)
+    navigate(`/react-ui/forms/vendor/${mongooseObjectId}`)
   }
 
   return (
     <RowActions>
-      <div className='dropdown-option' onClick={() => onViewClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>View</div>
       <div className='dropdown-option' onClick={() => onEditClicked(mongooseObjectId)}><i className="fa-regular fa-pen-to-square"></i>Edit</div>
       <div className='dropdown-option' onClick={() => onDeleteClicked(mongooseObjectId)}><i className="fa-regular fa-trash"></i>Delete</div>
     </RowActions>

@@ -53,8 +53,6 @@ export const VendorForm = () => {
   }, [])
 
   const onVendorFormSubmit = (vendor: VendorFormAttributes) => {
-    console.log('address: ', address)
-    console.log('!address: ', !address)
     if (!address) { 
       setError("address", {
         type: "manual",
@@ -62,6 +60,7 @@ export const VendorForm = () => {
       });
       return;
     }
+  
     vendor.address = address;
 
     if (isUpdateRequest) {

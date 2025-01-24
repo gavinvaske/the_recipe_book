@@ -1,7 +1,6 @@
 import React from 'react';
 import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
 import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
-import { CustomerRowActions } from '../../Customer/CustomerTable/CustomerRowActions/CustomerRowActions';
 import { VendorRowActions } from './VendorRowActions/VendorRowActions';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
@@ -48,7 +47,7 @@ export const VendorTable = () => {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const { isError, data: creditTerms, error } = useQuery({
-    queryKey: ['get-customers'],
+    queryKey: ['get-vendors'],
     queryFn: getVendors,
     initialData: []
   })

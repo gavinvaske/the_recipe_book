@@ -2,11 +2,9 @@ import express from 'express';
 const router = express.Router();
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { SERVER_ERROR } from '../enums/httpStatusCodes.ts'; 
+import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts'; 
 
 router.use(verifyBearerToken);
-
-const SHOW_ALL_VENDORS_ENDPOINT = '/vendors';
 
 router.get('/', async (_, response) => {
     try {
@@ -20,60 +18,56 @@ router.get('/', async (_, response) => {
     }
 });
 
-router.get('/create', (request, response) => {
-    return response.render('createVendor');
-});
-
-router.post('/create', async (request, response) => {
-    const {name} = request.body;
+router.post('/', async (request, response) => {
     try {
-        await VendorModel.create({name});
+        const vendor = await VendorModel.create(request.body);
+        return response.status(CREATED_SUCCESSFULLY).json(vendor);
     } catch (error) {
-        request.flash('errors', ['Unable to save the Vendor, the following error(s) occurred:', error.message]);
-
-        return response.redirect('back');
-    }
-    request.flash('alerts', ['Vendor created successfully']);
-
-    return response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
-});
-
-router.get('/update/:id', async (request, response) => {
-    try {
-        const vendor = await VendorModel.findById(request.params.id).exec();
-
-        return response.render('updateVendor', {
-            vendor
-        });
-    } catch (error) {
-        request.flash('errors', error.message);
-        
-        return response.redirect('back');
+        console.log('Error creating vendor: ', error.message);
+        return response.status(SERVER_ERROR).send(error.message);
     }
 });
 
-router.post('/update/:id', async (request, response) => {
+router.patch('/:mongooseId', async (request, response) => {
     try {
-        await VendorModel.findByIdAndUpdate(request.params.id, request.body,{ runValidators: true }).exec();
+        const updatedVendor = await VendorModel.findOneAndUpdate(
+            { _id: request.params.mongooseId }, 
+            { $set: request.body }, 
+            { runValidators: true, new: true }
+        ).exec();
 
-        request.flash('alerts', 'Updated successfully');
-        response.redirect(SHOW_ALL_VENDORS_ENDPOINT);
+        return response.json(updatedVendor);
     } catch (error) {
-        request.flash('errors', error.message);
-        return response.redirect('back');
+        console.error('Failed to update vendor: ', error.message);
+
+        response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
 });
 
-router.get('/delete/:id', async (request, response) => {
+router.get('/:mongooseId', async (request, response) => {
     try {
-        await VendorModel.findByIdAndDelete(request.params.id).exec();
-
-        request.flash('alerts', 'Deletion was successful');
+        const vendors = await VendorModel.findById(request.params.mongooseId)
+        return response.json(vendors);
     } catch (error) {
-        request.flash('errors', error.message);
+        console.error('Error fetching vendors: ', error);
+        return response
+            .status(SERVER_ERROR)
+            .send(error.message);
     }
+});
 
-    return response.redirect('back');
+router.delete('/:mongooseId', async (request, response) => {
+    try {
+        const deletedAdhesiveCategory = await VendorModel.findByIdAndDelete(request.params.mongooseId).exec();
+    
+        return response.status(SUCCESS).json(deletedAdhesiveCategory);
+    } catch (error) {
+        console.error('Failed to delete vendor: ', error);
+
+        return response.status(SERVER_ERROR).send(error.message);
+    }
 });
 
 export default router;

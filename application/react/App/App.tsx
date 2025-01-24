@@ -37,6 +37,7 @@ import { ViewCustomer } from '../Customer/ViewCustomer/ViewCustomer';
 import { QuoteTable } from '../Quote/QuoteTable/QuoteTable';
 import { DropdownProvider, useDropdownContext } from '../_context/dropdownProvider';
 import { MaterialLengthAdjustmentTable } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable';
+import { VendorForm } from '../Vendor/VendorForm/VendorForm';
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,7 @@ export function App() {
                   </Route>
 
                   <Route path='forms'>
+                    <Route path='vendor/:mongooseId?' element={<VendorForm />} />
                     <Route path='material-length-adjustment/:mongooseId?' element={<MaterialLengthAdjustmentForm />} />
                     <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
                     <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />

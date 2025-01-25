@@ -1,5 +1,20 @@
 import { Document, Types } from "mongoose";
 import { SchemaTimestampsConfig } from "mongoose";
+import { IAddress } from "./schemas.ts";
+
+export interface IVendor extends SchemaTimestampsConfig, Document  {
+  name: string;
+  phoneNumber?: string;
+  email?: string;
+  notes?: string;
+  website?: string;
+  address: IAddress;
+  primaryContactName: string;
+  primaryContactPhoneNumber: string;
+  primaryContactEmail: string;
+  mfgSpecNumber?: string;
+}
+
 
 export interface IMaterialLengthAdjustment extends SchemaTimestampsConfig, Document  {
   material: Types.ObjectId | IMaterial;

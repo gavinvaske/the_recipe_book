@@ -1,5 +1,6 @@
 import mongoose, { SchemaTimestampsConfig } from 'mongoose';
-import { addressSchema, IAddress } from './address.ts';
+import { addressSchema } from './address.ts';
+import { IAddress } from '@shared/types/schemas.ts';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';

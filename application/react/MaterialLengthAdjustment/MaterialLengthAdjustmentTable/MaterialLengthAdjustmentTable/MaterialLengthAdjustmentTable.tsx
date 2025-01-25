@@ -51,7 +51,7 @@ export const MaterialLengthAdjustmentTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
+  const { isError, data: materialLengthAdjustmentSearchResults, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
@@ -74,9 +74,9 @@ export const MaterialLengthAdjustmentTable = () => {
   }
 
   const table = useReactTable<any>({
-    data: materialLengthAdjustments?.results ?? defaultData,
+    data: materialLengthAdjustmentSearchResults?.results ?? defaultData,
     columns,
-    rowCount: materialLengthAdjustments?.totalResults ?? 0,
+    rowCount: materialLengthAdjustmentSearchResults?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -106,7 +106,7 @@ export const MaterialLengthAdjustmentTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Length Adjustments</h1>
-          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialLengthAdjustments?.totalResults}</p> results.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialLengthAdjustmentSearchResults?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

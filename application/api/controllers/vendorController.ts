@@ -33,12 +33,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           { primaryContactName: { $regex: query, $options: 'i' } },
           { primaryContactEmail: { $regex: query, $options: 'i' } },
           { mfgSpecNumber: { $regex: query, $options: 'i' } },
-          // { shape: { $regex: query, $options: 'i' } },
-          // { notes: { $regex: query, $options: 'i' } },
-          // { vendor: { $regex: query, $options: 'i' } },
-          // { vendor: { $regex: query, $options: 'i' } },
-          // { liner: { $regex: query, $options: 'i' } },
-          // { serialNumber: { $regex: query, $options: 'i' } }
         ],
       }
     : {};

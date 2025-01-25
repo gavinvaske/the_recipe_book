@@ -107,7 +107,7 @@ export const DieTable = () => {
           table.resetPageIndex();
         }} />
 
-        <Table id='material-length-adjustment-table'>
+        <Table id='die-table'>
           <TableHead table={table} />
           
           <TableBody>

@@ -3,7 +3,6 @@ import { createColumnHelper, getCoreRowModel, getSortedRowModel, SortingState, u
 import React, { useMemo } from 'react';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { MaterialLengthAdjustmentRowActions } from '../MaterialLengthAdjustmentRowActions/MaterialLengthAdjustmentRowActions';
-import { getMaterialLengthAdjustments } from '../../../_queries/materialLengthAdjustment' 
 import SearchBar from '../../../_global/SearchBar/SearchBar';
 import { Table } from '../../../_global/Table/Table';
 import { TableHead } from '../../../_global/Table/TableHead/TableHead';
@@ -13,13 +12,14 @@ import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
 import { SearchResult } from '@shared/types/http';
 import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
+import { performTextSearch } from '../../../_queries/_common';
+import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
+import { isPopulated } from '@shared/types/_utility';
 
-type TODO = any;
-
-const columnHelper = createColumnHelper<TODO>()
+const columnHelper = createColumnHelper<IMaterialLengthAdjustment>()
 
 const columns = [
-  columnHelper.accessor(row => row.material.name, {
+  columnHelper.accessor(row => isPopulated<IMaterial>(row.material) ? row.material.name : '', {
     id: 'material.name',
     header: 'Material Name',
   }),
@@ -56,7 +56,7 @@ export const MaterialLengthAdjustmentTable = () => {
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
-      const results: SearchResult<any> = await getMaterialLengthAdjustments({
+      const results: SearchResult<IMaterialLengthAdjustment> = await performTextSearch('/material-length-adjustments/search', {
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),

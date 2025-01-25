@@ -9,7 +9,7 @@ import { Material } from '../../_types/databasemodels/material.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
-import { IMaterialLengthAdjustment } from '../../../api/models/materialLengthAdjustment.ts';
+import { IMaterialLengthAdjustment } from '@shared/types/models.ts';
 
 
 export const MaterialLengthAdjustmentForm = () => {

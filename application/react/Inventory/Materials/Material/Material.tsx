@@ -5,7 +5,7 @@ import { MaterialInventory } from '../../Inventory';
 import { Modal } from '../../../_global/Modal/Modal';
 import { Link } from 'react-router-dom';
 import { getDayMonthYear } from '../../../_helperFunctions/dateTime';
-import { IMaterial } from '../../../../api/models/material.ts';
+import { IMaterial } from '@shared/types/models.ts';
 
 function renderPurchaseOrders(materialInventory: MaterialInventory) {
   const { purchaseOrdersForMaterial } = materialInventory

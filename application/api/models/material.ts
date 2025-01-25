@@ -1,8 +1,9 @@
-import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { Decimal } from 'decimal.js';
 import mongooseDelete from 'mongoose-delete';
+import { IMaterial } from '@shared/types/models.ts';
 
 mongoose.plugin(mongooseDelete, {overrideMethods: true});
 
@@ -32,35 +33,6 @@ function roundNumberToNthDecimalPlace(nthDecimalPlaces) {
 
         return moreAccurateNumber.toFixed(nthDecimalPlaces);
     };
-}
-
-export interface IMaterial extends SchemaTimestampsConfig, mongoose.Document {
-  name: string;
-  materialId: string;
-  vendor: mongoose.Types.ObjectId;
-  materialCategory: mongoose.Types.ObjectId;
-  weight: number;
-  costPerMsi: number;
-  freightCostPerMsi: number;
-  width: number;
-  faceColor: string;
-  adhesive: string;
-  thickness: number;
-  adhesiveCategory: mongoose.Types.ObjectId;
-  quotePricePerMsi: number;
-  description: string;
-  whenToUse: string;
-  alternativeStock?: string;
-  length: number;
-  facesheetWeightPerMsi: number;
-  adhesiveWeightPerMsi: number;
-  linerWeightPerMsi: number;
-  locations: string[];
-  linerType: mongoose.Types.ObjectId;
-  productNumber: string;
-  masterRollSize: number;
-  image: string;
-  minFootageAlertThreshold: number;
 }
 
 const weightPerMsiAttribute = {

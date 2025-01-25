@@ -45,8 +45,8 @@ export const DieTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
-    queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
+  const { isError, data: dies, error, isLoading } = useQuery({
+    queryKey: ['get-dies', pagination, sorting, globalSearch],
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
@@ -68,9 +68,9 @@ export const DieTable = () => {
   }
 
   const table = useReactTable<any>({
-    data: materialLengthAdjustments?.results ?? defaultData,
+    data: dies?.results ?? defaultData,
     columns,
-    rowCount: materialLengthAdjustments?.totalResults ?? 0,
+    rowCount: dies?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -99,8 +99,8 @@ export const DieTable = () => {
     <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
-          <h1 className="text-blue">Material Length Adjustments</h1>
-          <p>Viewing <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
+          <h1 className="text-blue">Die</h1>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{dies?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

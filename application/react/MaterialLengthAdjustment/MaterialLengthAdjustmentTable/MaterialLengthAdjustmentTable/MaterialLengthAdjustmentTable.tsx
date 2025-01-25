@@ -106,7 +106,7 @@ export const MaterialLengthAdjustmentTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Length Adjustments</h1>
-          <p>Viewing <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialLengthAdjustments?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

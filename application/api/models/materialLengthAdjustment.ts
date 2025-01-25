@@ -27,4 +27,10 @@ const schema = new Schema<IMaterialLengthAdjustment>({
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
 
+schema.index({ 
+  productNumber: 'text', 
+  'material.name': 'text', 
+  'material.materialId': 'text' 
+});
+
 export const MaterialLengthAdjustmentModel = mongoose.model<IMaterialLengthAdjustment>('MaterialLengthAdjustment', schema);

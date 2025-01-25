@@ -199,4 +199,6 @@ const schema = new Schema<IMaterial>({
     strict: 'throw'
 });
 
+schema.index({ name: 'text', materialId: 'text' });
+
 export const MaterialModel = mongoose.model<IMaterial>('Material', schema);

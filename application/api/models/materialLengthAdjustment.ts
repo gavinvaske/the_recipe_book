@@ -1,13 +1,8 @@
-import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import { IMaterialLengthAdjustment } from '@shared/types/models.ts';
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import mongoose_delete from 'mongoose-delete';
-
-export interface IMaterialLengthAdjustment extends SchemaTimestampsConfig, mongoose.Document  {
-  material: mongoose.Schema.Types.ObjectId;
-  length: number;
-  notes?: string;
-}
 
 /* 
   * This table is responsible for Adding or Subtracting material from Inventory.
@@ -31,5 +26,10 @@ const schema = new Schema<IMaterialLengthAdjustment>({
 }, { timestamps: true, strict: 'throw' });
 
 schema.plugin(mongoose_delete, {overrideMethods: true});
+
+schema.index({ 
+  'material.name': 'text', 
+  'material.materialId': 'text' 
+});
 
 export const MaterialLengthAdjustmentModel = mongoose.model<IMaterialLengthAdjustment>('MaterialLengthAdjustment', schema);

@@ -89,7 +89,6 @@ export const PageSelect = (props: Props) => {
   };
 
   const pageNumberDescription = isLoading? 'Loading...': `Page ${table.getState().pagination.pageIndex + 1} of ${totalPages > 0 ? totalPages : 1}`;
-  const showingDescription = isLoading ? 'Loading... ' : `Showing ${numberOfDisplayedRows} ${numberOfDisplayedRows === 1 ? 'row' : 'rows'}`
 
     return (
       <div style={{ marginTop: '1rem' }}>
@@ -133,7 +132,6 @@ export const PageSelect = (props: Props) => {
             max={MAX_PAGE_SIZE}
           />
         </div>
-        <p>{showingDescription}</p>
       </div>
     )
 }

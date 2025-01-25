@@ -1,7 +1,7 @@
 export interface SearchQuery {
   query?: string;
   pageIndex?: string;
-  limit?: string;
+  limit: string;
   sortField?: string | undefined;
   sortDirection?: '1' | '-1' | undefined;
 }

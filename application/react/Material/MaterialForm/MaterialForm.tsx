@@ -9,7 +9,7 @@ import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
 import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { LinerType } from '../../_types/databasemodels/linerType.ts';
-import { IMaterial } from '../../../api/models/material.ts';
+import { IMaterial } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
@@ -61,7 +61,8 @@ export const MaterialForm = () => {
           linerType: data.linerType,
           adhesiveCategory: data.adhesiveCategory,
           vendor: data.vendor,
-          materialCategory: data.materialCategory
+          materialCategory: data.materialCategory,
+          minFootageAlertThreshold: data.minFootageAlertThreshold,
         }
 
         reset(formValues) // pre-populate form with existing values from the DB

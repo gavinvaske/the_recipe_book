@@ -14,12 +14,12 @@ import { SearchResult } from '@shared/types/http';
 import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 import { performTextSearch } from '../../../_queries/_common';
 import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
-import { isPopulated } from '@shared/types/_utility';
+import { isRefPopulated } from '@shared/types/_utility';
 
 const columnHelper = createColumnHelper<IMaterialLengthAdjustment>()
 
 const columns = [
-  columnHelper.accessor(row => isPopulated<IMaterial>(row.material) ? row.material.name : '', {
+  columnHelper.accessor(row => isRefPopulated<IMaterial>(row.material) ? row.material.name : '', {
     id: 'material.name',
     header: 'Material Name',
   }),

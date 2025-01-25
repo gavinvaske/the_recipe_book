@@ -45,7 +45,7 @@ export const DieTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: dies, error, isLoading } = useQuery({
+  const { isError, data: dieSearchResults, error, isLoading } = useQuery({
     queryKey: ['get-dies', pagination, sorting, globalSearch],
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
@@ -68,9 +68,9 @@ export const DieTable = () => {
   }
 
   const table = useReactTable<any>({
-    data: dies?.results ?? defaultData,
+    data: dieSearchResults?.results ?? defaultData,
     columns,
-    rowCount: dies?.totalResults ?? 0,
+    rowCount: dieSearchResults?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -100,7 +100,7 @@ export const DieTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Die</h1>
-          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{dies?.totalResults}</p> results.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{dieSearchResults?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

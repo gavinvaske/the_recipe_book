@@ -3,11 +3,12 @@ mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { validatePhoneNumber, validateEmail } from '../services/dataValidationService.ts';
 import { addressSchema } from '../schemas/address.ts';
+import { IVendor } from '@shared/types/models.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
 
-const schema = new Schema({
+const schema = new Schema<IVendor>({
     name: {
         type: String,
         required: true
@@ -53,4 +54,7 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
-export const VendorModel = mongoose.model('Vendor', schema);
+
+schema.index({ name: 'text', mfgSpecNumber: 'text' });
+
+export const VendorModel = mongoose.model<IVendor>('Vendor', schema);

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getOneCustomer } from '../../_queries/customer';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { ICustomer, IShippingLocation } from '../../../api/models/customer';
-import { IAddress } from '../../../api/schemas/address'
+import { IAddress } from '@shared/types/schemas.ts';
 import { IContact } from '../../../api/schemas/contact';
 import { ICreditTerm } from '../../../api/models/creditTerm'
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
+import React, { useMemo } from 'react';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 import { VendorRowActions } from './VendorRowActions/VendorRowActions';
 import SearchBar from '../../_global/SearchBar/SearchBar';
@@ -8,8 +8,11 @@ import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
 import { useQuery } from '@tanstack/react-query';
-import { getVendors } from '../../_queries/vendors';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
+import { SearchResult } from '@shared/types/http';
+import { performTextSearch } from '../../_queries/_common';
+import { IVendor } from '@shared/types/models';
 
 const columnHelper = createColumnHelper<any>()
 
@@ -41,45 +44,76 @@ const columns = [
     cell: props => <VendorRowActions row={props.row}/>
   })
 ];
-
 export const VendorTable = () => {
-  const [globalFilter, setGlobalFilter] = React.useState('');
+  const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
-
-  const { isError, data: creditTerms, error } = useQuery({
-    queryKey: ['get-vendors'],
-    queryFn: getVendors,
-    initialData: []
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 50,
   })
+  const defaultData = useMemo(() => [], [])
+
+  const { isError, data: vendorSearchResults, error, isLoading } = useQuery({
+    queryKey: ['get-vendors', pagination, sorting, globalSearch],
+    queryFn: async () => {
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
+      const sortField = sorting.length ? sorting[0]?.id : undefined;
+      const results: SearchResult<IVendor> = await performTextSearch<IVendor>('/vendors/search', {
+        query: globalSearch,
+        pageIndex: String(pagination.pageIndex),
+        limit: String(pagination.pageSize),
+        sortField: sortField,
+        sortDirection: sortDirection
+      }) || {}
+
+      return results
+    },
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
+    })
 
   if (isError) {
     useErrorMessage(error)
   }
 
-  const table = useReactTable({
-    data: creditTerms,
+  const table = useReactTable<any>({
+    data: vendorSearchResults?.results ?? defaultData,
     columns,
+    rowCount: vendorSearchResults?.totalResults ?? 0,
+    manualSorting: true,
+    manualPagination: true,
     state: {
-      globalFilter: globalFilter,
+      globalFilter: globalSearch,
       sorting: sorting,
+      pagination: pagination
+
     },
-    getFilteredRowModel: getFilteredRowModel(),
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: (updaterOrValue) => {
+      table.resetPageIndex(); // reset to first page when sorting
+      setSorting((oldSorting) => 
+        typeof updaterOrValue === 'function' 
+          ? updaterOrValue(oldSorting) 
+          : updaterOrValue
+      );
+    },
+    onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })
 
   const rows = table.getRowModel().rows;
 
   return (
-    <div className='page-wrapper credit-term-table'>
+    <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
-          <h1 className="text-blue">Vendors</h1>
-          <p>Showing <p className='text-blue'>{rows.length} </p> vendors.</p>
+          <h1 className="text-blue">Vendor</h1>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{vendorSearchResults?.totalResults}</p> results.</p>
         </div>
-         <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
+         <SearchBar value={globalSearch} performSearch={(value: string) => {
+          setGlobalSearch(value)
+          table.resetPageIndex();
+        }} />
 
         <Table id='vendor-table'>
           <TableHead table={table} />
@@ -89,6 +123,11 @@ export const VendorTable = () => {
               <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
+
+          <PageSelect
+            table={table}
+            isLoading={isLoading}
+          />
         </Table>
       </div>
     </div>

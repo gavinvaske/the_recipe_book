@@ -1,7 +1,8 @@
 import mongoose, { SchemaTimestampsConfig } from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
-import { addressSchema, IAddress } from '../schemas/address.ts';
+import { addressSchema } from '../schemas/address.ts';
+import { IAddress } from '@shared/types/schemas.ts';
 import { contactSchema, IContact } from '../schemas/contact.ts';
 import mongooseDelete from 'mongoose-delete';
 import { ICreditTerm } from './creditTerm.ts';

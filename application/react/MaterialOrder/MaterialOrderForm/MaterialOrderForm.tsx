@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './MaterialOrderForm.scss'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { MaterialOrder } from '../../../react/_types/databaseModels/materialOrder'
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { getMaterials } from '../../_queries/material';
-import { Material } from '../../_types/databasemodels/material.ts';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getUsers } from '../../_queries/users';
 import { User } from '../../_types/databasemodels/user.ts';
@@ -18,6 +15,8 @@ import { MongooseId } from '../../_types/typeAliases';
 import { getOneMaterialOrder } from '../../_queries/materialOrder';
 import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
 import { IMaterialOrder } from '../../../api/models/materialOrder'
+import { performTextSearch } from '../../_queries/_common.ts';
+import { IMaterial } from '@shared/types/models.ts';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
@@ -37,14 +36,15 @@ export const MaterialOrderForm = () => {
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
   const preloadFormData = async () => {
-    const materials = await getMaterials();
+    const materialSearchResults = await performTextSearch<IMaterial>('/materials/search', { query: '', limit: '100' });
+    const materials = materialSearchResults.results;
     const users = await getUsers();
     const vendors = await getVendors();
 
-    setMaterials(materials.map((material: Material) => {
+    setMaterials(materials.map((material: IMaterial) => {
       return {
         displayName: material.name,
-        value: material._id
+        value: material._id as string
       }
     }))
     setUsers(users.map((user: User) => {
@@ -74,8 +74,8 @@ export const MaterialOrderForm = () => {
       feetPerRoll: materialOrder.feetPerRoll,
       totalRolls: materialOrder.totalRolls,
       totalCost: materialOrder.totalCost,
-      hasArrived: materialOrder.hasArrived,
-      notes: materialOrder.notes,
+      hasArrived: Boolean(materialOrder.hasArrived),
+      notes: materialOrder.notes || '',
       arrivalDate: convertDateStringToFormInputDateString(materialOrder.arrivalDate as unknown as string),
       freightCharge: materialOrder.freightCharge,
       fuelCharge: materialOrder.fuelCharge

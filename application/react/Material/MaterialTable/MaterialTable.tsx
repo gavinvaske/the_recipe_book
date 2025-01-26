@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './MaterialTable.scss';
-import { SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
+import { PaginationState, SortingState, createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table';
 import { MaterialRowActions } from './MaterialRowActions/MaterialRowActions';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
-import ExpandableRow from '../../_global/Table/ExpandableRow/ExpandableRow';
 import { useQuery } from '@tanstack/react-query';
-import { getMaterials } from '../../_queries/material';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
+import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
+import Row from '../../_global/Table/Row/Row';
+import { SearchResult } from '@shared/types/http';
+import { IMaterial } from '@shared/types/models';
+import { performTextSearch } from '../../_queries/_common';
+import { isRefPopulated } from '@shared/types/_utility';
 
 const columnHelper = createColumnHelper<any>()
 
@@ -24,7 +28,7 @@ const columns = [
   columnHelper.accessor('productNumber', {
     header: 'Product Number'
   }),
-  columnHelper.accessor('linerType', {
+  columnHelper.accessor(row => isRefPopulated(row.linerType) ? row.linerType.name : '', {
     header: 'Liner Type'
   }),
   columnHelper.accessor('whenToUse', {
@@ -32,6 +36,9 @@ const columns = [
   }),
   columnHelper.accessor('description', {
     header: 'Description'
+  }),
+  columnHelper.accessor(row => isRefPopulated(row.vendor) ? row.vendor.name : '', {
+    header: 'Vendor Name'
   }),
   columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
@@ -47,57 +54,91 @@ const columns = [
 ];
 
 export const MaterialTable = () => {
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const { isError, data: materials, error } = useQuery({
-    queryKey: ['get-materials'],
-    queryFn: getMaterials,
-    initialData: []
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 50,
   })
+  const defaultData = useMemo(() => [], [])
+
+  const { isError, data: materialSearchResults, error, isLoading } = useQuery({
+    queryKey: ['get-materials', pagination, sorting, globalSearch],
+    queryFn: async () => {
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
+      const sortField = sorting.length ? sorting[0]?.id : undefined;
+      const results: SearchResult<IMaterial> = await performTextSearch<IMaterial>('/materials/search', {
+        query: globalSearch,
+        pageIndex: String(pagination.pageIndex),
+        limit: String(pagination.pageSize),
+        sortField: sortField,
+        sortDirection: sortDirection
+      }) || {}
+
+      return results
+    },
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
+    })
 
   if (isError) {
     useErrorMessage(error)
   }
 
-  const table = useReactTable({
-    data: materials,
+  const table = useReactTable<any>({
+    data: materialSearchResults?.results ?? defaultData,
     columns,
+    rowCount: materialSearchResults?.totalResults ?? 0,
+    manualSorting: true,
+    manualPagination: true,
     state: {
-      globalFilter: globalFilter,
+      globalFilter: globalSearch,
       sorting: sorting,
+      pagination: pagination
+
     },
-    getFilteredRowModel: getFilteredRowModel(),
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: (updaterOrValue) => {
+      table.resetPageIndex(); // reset to first page when sorting
+      setSorting((oldSorting) => 
+        typeof updaterOrValue === 'function' 
+          ? updaterOrValue(oldSorting) 
+          : updaterOrValue
+      );
+    },
+    onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })
 
   const rows = table.getRowModel().rows;
 
   return (
-    <div className='page-wrapper products-table'>
+    <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Materials</h1>
-          <p>Showing <p className='text-blue'>{rows.length} </p> materials.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialSearchResults?.totalResults}</p> results.</p>
         </div>
-        <SearchBar value={globalFilter} onChange={e => setGlobalFilter(e.target.value)} />
+         <SearchBar value={globalSearch} performSearch={(value: string) => {
+          setGlobalSearch(value)
+          table.resetPageIndex();
+        }} />
 
         <Table id='material-table'>
           <TableHead table={table} />
           
           <TableBody>
             {rows.map(row => (
-              <ExpandableRow row={row} key={row.id}>
-                <div>@Storm: Any HTML elements within ExpandableRow are auto-magically placed into a, wait for it - expandable row ;)</div>
-              </ExpandableRow>
+              <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
+
+          <PageSelect
+            table={table}
+            isLoading={isLoading}
+          />
         </Table>
-        <p>Row Count: {rows.length}</p>
       </div>
     </div>
-      
   )
-};
+}

@@ -9,7 +9,6 @@ import { ovOrEpmOptions } from '../../../api/enums/ovOrEpmEnum';
 import { defaultFinishType, finishTypes } from '../../../api/enums/finishTypesEnum';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { SelectOption } from '../../_global/FormInputs/Select/Select';
-import { getMaterials } from '../../_queries/material';
 import { getCustomers } from '../../_queries/customer';
 import { getOneProduct } from '../../_queries/product';
 import { getFinishes } from '../../_queries/finish';
@@ -20,7 +19,7 @@ import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 import { performTextSearch } from '../../_queries/_common';
-import { IDie } from '@shared/types/models';
+import { IDie, IMaterial } from '@shared/types/models';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -48,12 +47,13 @@ export const ProductForm = () => {
   const preloadFormData = async () => {
     const diesSearchResults = await performTextSearch<IDie>('/dies/search', { limit: '100',  });
     const dies = diesSearchResults.results
-    const materials = await getMaterials();
+    const materialSearchResults = await performTextSearch<IMaterial>('/materials/search', { limit: '100',  });
+    const materials = materialSearchResults.results
     const customers = await getCustomers();
     const finishes = await getFinishes();
 
     setDies(dies.map((die) => ({ value: die._id as string, displayName: die.dieNumber || 'N/A' })));
-    setMaterials(materials.map((material) => ({ value: material._id, displayName: material.name || 'N/A' })));
+    setMaterials(materials.map((material) => ({ value: material._id as string, displayName: material.name || 'N/A' })));
     setFinishes(finishes.map((finish) => ({ value: finish._id, displayName: finish.name || 'N/A' })));
     setCustomers(customers.map((customer) => ({ value: customer._id as string, displayName: `${customer.customerId || 'N/A'}` })));
 

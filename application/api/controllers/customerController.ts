@@ -3,11 +3,11 @@ const router = Router();
 import { SERVER_ERROR, CREATED_SUCCESSFULLY, SUCCESS, BAD_REQUEST } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CustomerModel } from '../models/customer.ts';
-import { ICreditTerm } from '../models/creditTerm.ts';
 import { SearchQuery, SearchResult } from '@shared/types/http.ts';
 import { getSortOption } from '../services/mongooseService.ts';
 import { SortOption } from '@shared/types/mongoose.ts';
 import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { ICustomer } from '@shared/types/models.ts';
 
 router.use(verifyBearerToken);
 
@@ -22,18 +22,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
     const sortOptions: SortOption = getSortOption(sortField, sortDirection);
-
-    const customerSchemaPaths = Object.keys(CustomerModel.schema.paths);
-    const groupFields = customerSchemaPaths.reduce((acc, field) => {
-      // Skip _id field as it's already handled by _id
-      if (field !== '_id') {
-        acc[field] = { $first: `$${field}` }; // Use $first to capture the value of the field
-      }
-      return acc;
-    }, {});
-
-    // Add shippingLocations and creditTerms to the dynamic group fields
-    groupFields.shippingLocations = { $push: '$shippingLocations' };
 
     const textSearch = query && query.length
       ? {
@@ -54,14 +42,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
             as: 'creditTerms',
           },
         },
-        // { // TODO: Lookup shippingLocationsSchema.deliveryMethod?
-        //   $lookup: {
-        //     from: 'creditterms',
-        //     localField: 'creditTerms',
-        //     foreignField: '_id',
-        //     as: 'creditTerms',
-        //   },
-        // },
         {
           $unwind: {
             path: '$creditterms',
@@ -94,15 +74,13 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const customers = results[0]?.paginatedResults || [];
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
-    const paginationResponse: SearchResult<any> = {
+    const paginationResponse: SearchResult<ICustomer> = {
       totalResults: totalDocumentCount,
       totalPages,
       currentPageIndex: (query && query.length) ? 0 : pageNumber,
       results: customers,
       pageSize,
     }
-
-    console.log('customers: ', JSON.stringify(customers))
 
     return response.json(paginationResponse)
 

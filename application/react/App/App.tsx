@@ -39,6 +39,8 @@ import { DropdownProvider, useDropdownContext } from '../_context/dropdownProvid
 import { MaterialLengthAdjustmentTable } from '../MaterialLengthAdjustment/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable/MaterialLengthAdjustmentTable';
 import { VendorForm } from '../Vendor/VendorForm/VendorForm';
 import { VendorTable } from '../Vendor/VendorTable/VendorTable';
+import { MaterialCategoryTable } from '../MaterialCategory/MaterialCategoryTable/MaterialCategoryTable';
+import { MaterialCategoryForm } from '../MaterialCategory/MaterialCategoryForm/MaterialCategoryForm';
 
 const queryClient = new QueryClient();
 
@@ -72,6 +74,7 @@ export function App() {
 
                   <Route path='forms'>
                     <Route path='vendor/:mongooseId?' element={<VendorForm />} />
+                    <Route path='material-category/:mongooseId?' element={<MaterialCategoryForm />} />
                     <Route path='material-length-adjustment/:mongooseId?' element={<MaterialLengthAdjustmentForm />} />
                     <Route path='delivery-method/:mongooseId?' element={<DeliveryMethodForm />} />
                     <Route path='credit-term/:mongooseId?' element={<CreditTermForm />} />
@@ -92,6 +95,7 @@ export function App() {
                     <Route path='credit-term' element={<CreditTermTable />} />
                     <Route path='delivery-method' element={<DeliveryMethodTable />} />
                     <Route path='liner-type' element={<LinerTypeTable />} />
+                    <Route path='material-category' element={<MaterialCategoryTable />} />
                     <Route path='material' element={<MaterialTable />} />
                     <Route path='adhesive-category' element={<AdhesiveCategoryTable />} />
                     <Route path='customer' element={<CustomerTable />} />

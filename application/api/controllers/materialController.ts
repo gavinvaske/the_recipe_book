@@ -35,10 +35,10 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     const textSearch = query && query.length
       ? {
         $or: [
-          // { name: { $regex: query, $options: 'i' } },
-          // { materialId: { $regex: query, $options: 'i' } },
-          // { 'vendor.name': { $regex: query, $options: 'i' } },
-          // { 'adhesiveCategory.name': { $regex: query, $options: 'i' } }
+          { name: { $regex: query, $options: 'i' } },
+          { materialId: { $regex: query, $options: 'i' } },
+          { 'vendor.name': { $regex: query, $options: 'i' } },
+          { 'adhesiveCategory.name': { $regex: query, $options: 'i' } }
         ],
       }
       : {};

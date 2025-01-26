@@ -104,7 +104,7 @@ export const CreditTermTable = () => {
     <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
-          <h1 className="text-blue">Vendor</h1>
+          <h1 className="text-blue">Credit Terms</h1>
           <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{creditTermSearchResults?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
@@ -112,7 +112,7 @@ export const CreditTermTable = () => {
           table.resetPageIndex();
         }} />
 
-        <Table id='vendor-table'>
+        <Table id='credit-term-table'>
           <TableHead table={table} />
           
           <TableBody>

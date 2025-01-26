@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getOneCustomer } from '../../_queries/customer';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { ICustomer, IShippingLocation } from '../../../api/models/customer';
+import { ICustomer, ICreditTerm } from '@shared/types/models.ts';
+import { IShippingLocation } from '@shared/types/schemas.ts';
 import { IAddress } from '@shared/types/schemas.ts';
-import { IContact } from '../../../api/schemas/contact';
-import { ICreditTerm } from '../../../api/models/creditTerm'
+import { IContact } from '@shared/types/schemas.ts';
 
 export const ViewCustomer = () => {
   const { mongooseId }= useParams();

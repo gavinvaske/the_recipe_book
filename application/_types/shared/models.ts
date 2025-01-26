@@ -1,6 +1,22 @@
 import { Document, Types } from "mongoose";
 import { SchemaTimestampsConfig } from "mongoose";
-import { IAddress } from "./schemas.ts";
+import { IAddress, IContact, IShippingLocation } from "./schemas.ts";
+
+export interface ICreditTerm extends SchemaTimestampsConfig, Document {
+  description: string;
+}
+
+export interface ICustomer extends SchemaTimestampsConfig, Document {
+  customerId: string;
+  name: string;
+  notes?: string;
+  businessLocations?: IAddress[];
+  shippingLocations?: IShippingLocation[];
+  billingLocations?: IAddress[];
+  contacts?: IContact[];
+  creditTerms?: Types.ObjectId[] | ICreditTerm[];
+  overun: number;
+}
 
 export interface IVendor extends SchemaTimestampsConfig, Document  {
   name: string;
@@ -15,7 +31,6 @@ export interface IVendor extends SchemaTimestampsConfig, Document  {
   mfgSpecNumber?: string;
 }
 
-
 export interface IMaterialLengthAdjustment extends SchemaTimestampsConfig, Document  {
   material: Types.ObjectId | IMaterial;
   length: number;
@@ -25,7 +40,7 @@ export interface IMaterialLengthAdjustment extends SchemaTimestampsConfig, Docum
 export interface IMaterial extends SchemaTimestampsConfig, Document {
   name: string;
   materialId: string;
-  vendor: Types.ObjectId;
+  vendor: Types.ObjectId | IVendor;
   materialCategory: Types.ObjectId;
   weight: number;
   costPerMsi: number;

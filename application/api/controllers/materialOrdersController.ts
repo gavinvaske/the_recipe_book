@@ -12,7 +12,7 @@ import { getSortOption } from '../services/mongooseService.ts';
 
 router.use(verifyBearerToken);
 
-router.get('/search', async (request: Request, response: Response) => {
+router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
   try {
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 

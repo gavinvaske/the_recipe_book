@@ -100,14 +100,14 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
 
     const results = await DieModel.aggregate<any>(pipeline);
     const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
-    const materialLengthAdjustments = results[0]?.paginatedResults || [];
+    const dies = results[0]?.paginatedResults || [];
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
     const paginationResponse: SearchResult<IDie> = {
       totalResults: totalDocumentCount,
       totalPages,
       currentPageIndex: (query && query.length) ? 0 : pageNumber,
-      results: materialLengthAdjustments,
+      results: dies,
       pageSize,
     }
 

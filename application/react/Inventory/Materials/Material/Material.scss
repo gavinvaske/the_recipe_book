@@ -1,9 +1,60 @@
-div .low-inventory {
-  background-color: red;
+.material-card-section {
+  .card.low-inventory {
+    // color: white!important;
+    // background-color: #e42728;
+    // .card-header h2 {
+    //   color: white!important;
+    //   background-color: #ea5455!important;
+    // }
+    // .icon-container {
+    //   i, div {
+    //     color: white!important;
+    //     background-color: #ea5455!important;
+    //   }
+    // }
+    // .material-location {
+    //   color: white!important;
+    //   background-color: #ea5455!important;
+    // }
+    // .divide-line {
+    //   background-color: white!important;
+    // }
+    .card-header h2 {
+      background-color: #e42728;
+      color: white;
+    }
+  }
 }
 
-div .low-inventory-warning {
-  background-color: orange;
+.material-card-section {
+  .card.low-inventory-warning {
+    // color: white!important;
+    // background-color: #ff8510;
+    // .card-header h2 {
+    //   color: white!important;
+    //   background-color: #f67800!important;
+    // }
+    // .icon-container {
+    //   i, div {
+    //     color: white!important;
+    //     background-color: #f67800!important;
+    //   }
+    // }
+    // .material-location {
+    //   color: white!important;
+    //   background-color: #f67800!important;
+    // }
+    // .divide-line {
+    //   background-color: white!important;
+    // }
+    .card-header h2 {
+      background-color: #f67800;
+      color: white;
+    }
+    .actual-vs-ordered-container .col-left h2 {
+      color: #f67800; 
+    }
+  }
 }
 
 .material-card-section {
@@ -23,16 +74,19 @@ div .low-inventory-warning {
       position: absolute;
       height: 30px;
       bottom: 0;
-      left: calc(50% - 30px);
-      width: 60px;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       .span-wrapper {
         position: relative;
         height: 30px;
-        width: 60px;
+        width: 100%;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .material-location {
           position: absolute;
           background: rgba(115, 103, 240, .12);
@@ -42,7 +96,11 @@ div .low-inventory-warning {
           align-items: center;
           bottom: -30px;
           height: 30px;
-          width: 60px;
+          min-width: 60px;
+          max-width: 100%;
+          width: auto;
+          white-space: nowrap;
+          padding: 0 7px 0 7px;
           border-top-right-radius: 5px;
           border-top-left-radius: 5px;
           transition: .3s;

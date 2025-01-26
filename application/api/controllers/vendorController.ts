@@ -59,14 +59,14 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
 
     const results = await VendorModel.aggregate<any>(pipeline);
     const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
-    const materialLengthAdjustments = results[0]?.paginatedResults || [];
+    const vendors = results[0]?.paginatedResults || [];
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
     const paginationResponse: SearchResult<IVendor> = {
       totalResults: totalDocumentCount,
       totalPages,
       currentPageIndex: (query && query.length) ? 0 : pageNumber,
-      results: materialLengthAdjustments,
+      results: vendors,
       pageSize,
     }
 

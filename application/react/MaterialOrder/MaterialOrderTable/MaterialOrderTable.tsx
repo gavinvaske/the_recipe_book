@@ -57,12 +57,12 @@ export const MaterialOrderTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialOrders, error, isLoading } = useQuery({
+  const { isError, data: materialOrderResults, error, isLoading } = useQuery({
     queryKey: ['get-material-orders', pagination, sorting, globalSearch],
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
-      const results: SearchResult<IMaterial> = await performTextSearch<IMaterial>('/materials/search', {
+      const results: SearchResult<IMaterial> = await performTextSearch<IMaterial>('/material-orders/search', {
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),
@@ -80,9 +80,9 @@ export const MaterialOrderTable = () => {
   }
 
   const table = useReactTable<any>({
-    data: materialOrders?.results ?? defaultData,
+    data: materialOrderResults?.results ?? defaultData,
     columns,
-    rowCount: materialOrders?.totalResults ?? 0,
+    rowCount: materialOrderResults?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -111,7 +111,7 @@ export const MaterialOrderTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Orders</h1>
-          <p>Showing <p className='text-blue'>{rows.length} </p> material orders.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialOrderResults?.totalResults}</p> results.</p>
         </div>
         <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

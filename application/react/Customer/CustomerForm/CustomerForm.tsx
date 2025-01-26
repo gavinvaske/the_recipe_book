@@ -14,7 +14,6 @@ import ContactCard from '../Contact/ContactCard/ContactCard';
 import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
 
-import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
@@ -23,6 +22,9 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
 import { MongooseId } from '../../_types/typeAliases';
 import { getCreditTerms } from '../../_queries/creditTerm';
+import { performTextSearch } from '../../_queries/_common';
+import { ICreditTerm } from '@shared/types/models';
+import { SearchResult } from '@shared/types/http';
 
 const customerTableUrl = '/react-ui/tables/customer'
 
@@ -54,12 +56,13 @@ export const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   const preloadFormData = async () => {
-    const creditTerms = await getCreditTerms();
-
-    setCreditTerms(creditTerms.map((creditTerm : CreditTerm) => (
+    const creditTermSearchResults = await performTextSearch<ICreditTerm>('/credit-terms/search', { query: '', limit: '100' })
+    const creditTerms = creditTermSearchResults.results
+  
+    setCreditTerms(creditTerms.map((creditTerm : ICreditTerm) => (
       {
         displayName: creditTerm.description,
-        value: creditTerm._id
+        value: creditTerm._id as string
       }
     )))
 
@@ -71,7 +74,7 @@ export const CustomerForm = () => {
       customerId: customer.customerId,
       name: customer.name,
       overun: customer.overun ? String(customer.overun) : '',
-      notes: customer.notes,
+      notes: customer.notes || '',
       creditTerms: customer.creditTerms as MongooseId[]
     }
 

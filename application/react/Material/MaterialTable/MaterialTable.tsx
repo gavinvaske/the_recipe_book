@@ -31,9 +31,6 @@ const columns = [
   columnHelper.accessor(row => isRefPopulated(row.linerType) ? row.linerType.name : '', {
     header: 'Liner Type'
   }),
-  columnHelper.accessor('whenToUse', {
-    header: 'When-to-Use'
-  }),
   columnHelper.accessor('description', {
     header: 'Description'
   }),

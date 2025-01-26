@@ -7,8 +7,6 @@ import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getUsers } from '../../_queries/users';
 import { User } from '../../_types/databasemodels/user.ts';
-import { getVendors } from '../../_queries/vendors';
-import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
@@ -16,7 +14,7 @@ import { getOneMaterialOrder } from '../../_queries/materialOrder';
 import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
 import { IMaterialOrder } from '../../../api/models/materialOrder'
 import { performTextSearch } from '../../_queries/_common.ts';
-import { IMaterial } from '@shared/types/models.ts';
+import { IMaterial, IVendor } from '@shared/types/models.ts';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
@@ -39,7 +37,8 @@ export const MaterialOrderForm = () => {
     const materialSearchResults = await performTextSearch<IMaterial>('/materials/search', { query: '', limit: '100' });
     const materials = materialSearchResults.results;
     const users = await getUsers();
-    const vendors = await getVendors();
+    const VendorSearchResults = await performTextSearch<IVendor>('/vendors/search', { query: '', limit: '100' });
+    const vendors = VendorSearchResults.results;
 
     setMaterials(materials.map((material: IMaterial) => {
       return {
@@ -53,10 +52,10 @@ export const MaterialOrderForm = () => {
         value: user._id
       }
     }))
-    setVendors(vendors.map((vendor: Vendor) => {
+    setVendors(vendors.map((vendor: IVendor) => {
       return {
         displayName: vendor.name,
-        value: vendor._id
+        value: vendor._id as string
       }
     }))
 

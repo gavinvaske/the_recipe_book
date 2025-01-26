@@ -37,6 +37,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
         $or: [
           { name: { $regex: query, $options: 'i' } },
           { materialId: { $regex: query, $options: 'i' } },
+          { description: { $regex: query, $options: 'i' } },
           { 'vendor.name': { $regex: query, $options: 'i' } },
           { 'adhesiveCategory.name': { $regex: query, $options: 'i' } }
         ],
@@ -85,19 +86,19 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
         {
           $unwind: {
             path: '$materialCategory',
-            preserveNullAndEmptyArrays: true, // In case material is not populated
+            preserveNullAndEmptyArrays: true, // In case materialCategory is not populated
           },
         },
         {
           $unwind: {
             path: '$adhesiveCategory',
-            preserveNullAndEmptyArrays: true, // In case material is not populated
+            preserveNullAndEmptyArrays: true, // In case adhesiveCategory is not populated
           },
         },
         {
           $unwind: {
             path: '$linerType',
-            preserveNullAndEmptyArrays: true, // In case material is not populated
+            preserveNullAndEmptyArrays: true, // In case linerType is not populated
           },
         },
         // Text search
@@ -133,8 +134,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       results: materials,
       pageSize,
     }
-
-    console.log('results: ', JSON.stringify(materials))
 
     return response.json(paginationResponse)
 

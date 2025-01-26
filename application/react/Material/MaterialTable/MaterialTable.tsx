@@ -28,7 +28,7 @@ const columns = [
   columnHelper.accessor('productNumber', {
     header: 'Product Number'
   }),
-  columnHelper.accessor('linerType', {
+  columnHelper.accessor(row => isRefPopulated(row.linerType) ? row.linerType.name : '', {
     header: 'Liner Type'
   }),
   columnHelper.accessor('whenToUse', {
@@ -37,7 +37,7 @@ const columns = [
   columnHelper.accessor('description', {
     header: 'Description'
   }),
-  columnHelper.accessor(row => isRefPopulated(row.vendor) ?? row.vendor.name, {
+  columnHelper.accessor(row => isRefPopulated(row.vendor) ? row.vendor.name : '', {
     header: 'Vendor Name'
   }),
   columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {

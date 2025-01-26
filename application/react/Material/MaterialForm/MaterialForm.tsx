@@ -9,17 +9,19 @@ import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
 import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { LinerType } from '../../_types/databasemodels/linerType.ts';
-import { IMaterial } from '@shared/types/models.ts';
+import { IMaterial, IVendor } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { useAxios } from '../../_hooks/useAxios';
 import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
+import { performTextSearch } from '../../_queries/_common.ts';
+import { SearchResult } from '@shared/types/http.ts';
 
 const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues, watch } = useForm<IMaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm<IMaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -73,17 +75,18 @@ export const MaterialForm = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('/vendors')
-      .then((response : AxiosResponse) => {
-        const vendors: Vendor[] = response.data
-        setVendors(vendors.map((vendor: Vendor) => (
+    performTextSearch<IVendor>('/vendors/search', { query: '', limit: '100' })
+      .then((response: SearchResult<IVendor>) => {
+        const vendors = response.results
+        setVendors(vendors.map((vendor: IVendor) => (
           {
             displayName: vendor.name,
-            value: vendor._id
+            value: vendor._id as string
           }
         )))
       })
       .catch((error: AxiosError) => useErrorMessage(error))
+
 
     axios.get('/material-categories')
       .then((response : AxiosResponse) => {

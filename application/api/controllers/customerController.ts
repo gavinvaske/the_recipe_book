@@ -47,23 +47,25 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
 
       const pipeline = [
         {
-          $unwind: {
-            path: '$shippingLocations',
-            preserveNullAndEmptyArrays: true, // Keep empty arrays if no shippingLocations
-          },
-        },
-        {
-          $group: {
-            _id: '$_id', // Group by customer ID
-            ...groupFields, // Dynamically include all other fields
-          },
-        },
-        {
           $lookup: {
             from: 'creditterms',
             localField: 'creditTerms',
             foreignField: '_id',
             as: 'creditTerms',
+          },
+        },
+        // { // TODO: Lookup shippingLocationsSchema.deliveryMethod?
+        //   $lookup: {
+        //     from: 'creditterms',
+        //     localField: 'creditTerms',
+        //     foreignField: '_id',
+        //     as: 'creditTerms',
+        //   },
+        // },
+        {
+          $unwind: {
+            path: '$creditterms',
+            preserveNullAndEmptyArrays: true, // In case material is not populated
           },
         },
         // Text search

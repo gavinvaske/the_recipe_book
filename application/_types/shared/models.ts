@@ -2,6 +2,18 @@ import { Document, Types } from "mongoose";
 import { SchemaTimestampsConfig } from "mongoose";
 import { IAddress, IContact, IShippingLocation } from "./schemas.ts";
 
+export interface IMaterialCategory extends SchemaTimestampsConfig, Document {
+  name: string;
+}
+
+export interface IAdhesiveCategory extends SchemaTimestampsConfig, Document {
+  name: string;
+}
+
+export interface ILinerType extends SchemaTimestampsConfig, Document {
+  name: string;
+}
+
 export interface ICreditTerm extends SchemaTimestampsConfig, Document {
   description: string;
 }

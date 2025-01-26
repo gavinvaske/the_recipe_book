@@ -66,17 +66,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
             as: 'creditTerms',
           },
         },
-        {
-          $addFields: {
-            shippingLocations: {
-              $cond: {
-                if: { $eq: [{ $size: '$shippingLocations' }, 0] }, // Check if it should be empty
-                then: [],
-                else: '$shippingLocations', // Otherwise, keep it as is
-              },
-            },
-          },
-        },
         // Text search
         {
           $match: {
@@ -110,6 +99,8 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
       results: customers,
       pageSize,
     }
+
+    console.log('customers: ', JSON.stringify(customers))
 
     return response.json(paginationResponse)
 

@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import { LinerType } from '../_types/databasemodels/linerType.ts';
 import { MongooseId } from '../_types/typeAliases';
+import { ILinerType } from '@shared/types/models';
 
-export const getOneLinerType = async (mongooseId: MongooseId) : Promise<LinerType> => {
+export const getOneLinerType = async (mongooseId: MongooseId) : Promise<ILinerType> => {
   const response : AxiosResponse = await axios.get(`/liner-types/${mongooseId}`);
-  const linerType: LinerType = response.data;
+  const linerType: ILinerType = response.data;
 
   return linerType;
 }

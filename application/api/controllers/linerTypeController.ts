@@ -53,14 +53,14 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
 
     const results = await LinerTypeModel.aggregate<any>(pipeline);
     const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
-    const vendors = results[0]?.paginatedResults || [];
+    const linerTypes = results[0]?.paginatedResults || [];
     const totalPages = Math.ceil(totalDocumentCount / pageSize);
 
     const paginationResponse: SearchResult<ILinerType> = {
       totalResults: totalDocumentCount,
       totalPages,
       currentPageIndex: (query && query.length) ? 0 : pageNumber,
-      results: vendors,
+      results: linerTypes,
       pageSize,
     }
 

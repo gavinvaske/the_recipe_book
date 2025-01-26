@@ -18,8 +18,17 @@ import { ICustomer } from '@shared/types/models';
 const columnHelper = createColumnHelper<any>()
 
 const columns = [
+  columnHelper.accessor('customerId', {
+    header: 'Customer ID'
+  }),
   columnHelper.accessor('name', {
     header: 'Name'
+  }),
+  columnHelper.accessor('notes', {
+    header: 'Notes'
+  }),
+  columnHelper.accessor('overun', {
+    header: 'Overun'
   }),
   columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'

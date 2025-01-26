@@ -3,7 +3,6 @@ import './MaterialOrderTable.scss'
 import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { MaterialOrderRowActions } from './MaterialOrderRowActions/MaterialOrderRowActions';
 import { useQuery } from '@tanstack/react-query';
-import { getMaterialOrders } from '../../_queries/materialOrder';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
@@ -13,6 +12,8 @@ import Row from '../../_global/Table/Row/Row';
 import { getDateFromIsoStr, getDateTimeFromIsoStr } from '@ui/utils/dateTime';
 import { SearchResult } from '@shared/types/http';
 import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
+import { performTextSearch } from '../../_queries/_common';
+import { IMaterial } from '@shared/types/models';
 
 const columnHelper = createColumnHelper<any>()
 
@@ -61,7 +62,7 @@ export const MaterialOrderTable = () => {
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
-      const results: SearchResult<any> = await getMaterialOrders({
+      const results: SearchResult<IMaterial> = await performTextSearch<IMaterial>('/materials/search', {
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),

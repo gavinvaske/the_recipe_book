@@ -56,7 +56,7 @@ export const MaterialCategoryForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Material Category</h1>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Material Category</h3>
         </div>
         <div className='form-wrapper'>
           <form id='material-category-form' onSubmit={handleSubmit(onSubmit)} data-test='material-category-form'>

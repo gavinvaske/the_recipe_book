@@ -56,7 +56,7 @@ export const LinerTypeForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Liner Type</h1>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Liner Type</h3>
         </div>
         <div className='form-wrapper'>
           <form id='liner-type-form' onSubmit={handleSubmit(onSubmit)} data-test='liner-type-form'>

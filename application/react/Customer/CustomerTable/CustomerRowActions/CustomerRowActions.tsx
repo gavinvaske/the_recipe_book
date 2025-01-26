@@ -22,7 +22,7 @@ export const CustomerRowActions = (props: Props) => {
   const queryClient = useQueryClient()
 
   const onDeleteClicked = (mongooseObjectId: MongooseId) => {
-    axios.delete(`/vendors/${mongooseObjectId}`)
+    axios.delete(`/customers/${mongooseObjectId}`)
       .then((_ : AxiosResponse) => {
         queryClient.invalidateQueries({ queryKey: ['get-vendors']})
         useSuccessMessage('Deletion was successful')
@@ -31,7 +31,7 @@ export const CustomerRowActions = (props: Props) => {
   }
 
   const onEditClicked = (mongooseObjectId: MongooseId) => {
-    navigate(`/react-ui/forms/vendor/${mongooseObjectId}`)
+    navigate(`/react-ui/forms/customer/${mongooseObjectId}`)
   }
 
   return (

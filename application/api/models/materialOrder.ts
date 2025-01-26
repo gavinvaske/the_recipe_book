@@ -113,4 +113,11 @@ const schema = new Schema({
     }
 }, { timestamps: true });
 
+schema.index({ 
+    'purchaseOrderNumber': 'text',
+    'material.name': 'text', 
+    'material.materialId': 'text', 
+    'vendor.name': 'text' 
+});
+
 export const MaterialOrderModel = mongoose.model('MaterialOrders', schema);

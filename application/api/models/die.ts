@@ -1,4 +1,4 @@
-import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import mongoose from 'mongoose';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
 import { dieShapes } from '../enums/dieShapesEnum.ts';
@@ -7,6 +7,7 @@ import { dieVendors } from '../enums/dieVendorsEnum.ts';
 import { dieMagCylinders } from '../enums/dieMagCylindersEnum.ts';
 import { dieStatuses, ORDERED_DIE_STATUS, IN_STOCK_DIE_STATUS } from '../enums/dieStatusesEnum.ts';
 import { convertDollarsToPennies, convertPenniesToDollars } from '../services/currencyService.ts';
+import { IDie } from '@shared/types/models.ts';
 
 import mongooseDelete from 'mongoose-delete';
 mongoose.plugin(mongooseDelete, { overrideMethods: true });
@@ -45,34 +46,6 @@ function setDieStatus(newStatus) {
     if (newStatus === IN_STOCK_DIE_STATUS) this.arrivalDate = new Date();
 
     return newStatus;
-}
-
-export interface IDie extends SchemaTimestampsConfig, mongoose.Document {
-  dieNumber: string,
-  shape: string,
-  sizeAcross: number,
-  sizeAround: number,
-  numberAcross: number,
-  numberAround: number,
-  gear: number,
-  toolType: string,
-  notes: string,
-  cost: number,
-  vendor: string,
-  magCylinder: number,
-  cornerRadius: number,
-  topAndBottom: number,
-  leftAndRight: number,
-  spaceAcross: number,
-  spaceAround: number,
-  facestock: string,
-  liner: string,
-  specialType?: string,
-  serialNumber: string,
-  status: string,
-  quantity: number,
-  orderDate?: Date,
-  arrivalDate?: Date
 }
 
 const schema = new Schema<IDie>({
@@ -220,5 +193,7 @@ const schema = new Schema<IDie>({
         type: Date
     },
 }, { timestamps: true });
+
+schema.index({ dieNumber: 'text', serialNumber: 'text' });
 
 export const DieModel = mongoose.model<IDie>('Die', schema);

@@ -8,11 +8,9 @@ import { unwindDirections } from '../../../api/enums/unwindDirectionsEnum';
 import { ovOrEpmOptions } from '../../../api/enums/ovOrEpmEnum';
 import { defaultFinishType, finishTypes } from '../../../api/enums/finishTypesEnum';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { getMaterials } from '../../_queries/material';
+import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { getCustomers } from '../../_queries/customer';
 import { getOneProduct } from '../../_queries/product';
-import { getDies } from '../../_queries/die';
 import { getFinishes } from '../../_queries/finish';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
@@ -20,6 +18,8 @@ import { defaultUnwindDirection } from '../../../api/enums/unwindDirectionsEnum'
 import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { performTextSearch } from '../../_queries/_common';
+import { IDie, IMaterial } from '@shared/types/models';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -45,15 +45,17 @@ export const ProductForm = () => {
   });
 
   const preloadFormData = async () => {
-    const dies = await getDies();
-    const materials = await getMaterials();
+    const diesSearchResults = await performTextSearch<IDie>('/dies/search', { limit: '100',  });
+    const dies = diesSearchResults.results
+    const materialSearchResults = await performTextSearch<IMaterial>('/materials/search', { limit: '100',  });
+    const materials = materialSearchResults.results
     const customers = await getCustomers();
     const finishes = await getFinishes();
 
-    setDies(dies.map((die) => ({ value: die._id, displayName: die.dieNumber || 'N/A' })));
-    setMaterials(materials.map((material) => ({ value: material._id, displayName: material.name || 'N/A' })));
+    setDies(dies.map((die) => ({ value: die._id as string, displayName: die.dieNumber || 'N/A' })));
+    setMaterials(materials.map((material) => ({ value: material._id as string, displayName: material.name || 'N/A' })));
     setFinishes(finishes.map((finish) => ({ value: finish._id, displayName: finish.name || 'N/A' })));
-    setCustomers(customers.map((customer) => ({ value: customer._id, displayName: `${customer.customerId || 'N/A'}` })));
+    setCustomers(customers.map((customer) => ({ value: customer._id as string, displayName: `${customer.customerId || 'N/A'}` })));
 
     if (!isUpdateRequest) return;
 

@@ -1,3 +1,5 @@
+import { SortDirection, SortOption } from "@shared/types/mongoose.ts";
+
 export function getObjectIds(objects) {
     return objects.map(({_id}) => {
         return _id;
@@ -33,4 +35,18 @@ export function parseHumanReadableMessages(error) {
         console.log(`Error: parse error in parseHumanReadableMessages: ${JSON.stringify(error)}`);
         return ['Uh oh, an unknown error occurred, please contact the IT department.'];
     }
+}
+
+export const getSortOption = (sortOption: string | undefined, sortDirection: '1' | '-1' | 1 | -1 | undefined): SortOption => {
+  if (!sortOption || !sortDirection) return {}
+
+  if (typeof sortDirection ==='string') {
+    return { 
+      [sortOption]: parseInt(sortDirection) as SortDirection 
+    };
+  }
+
+  return { 
+    [sortOption]: sortDirection 
+  };
 }

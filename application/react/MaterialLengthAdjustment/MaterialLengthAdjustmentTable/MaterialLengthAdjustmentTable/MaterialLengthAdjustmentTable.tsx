@@ -3,7 +3,6 @@ import { createColumnHelper, getCoreRowModel, getSortedRowModel, SortingState, u
 import React, { useMemo } from 'react';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { MaterialLengthAdjustmentRowActions } from '../MaterialLengthAdjustmentRowActions/MaterialLengthAdjustmentRowActions';
-import { getMaterialLengthAdjustments } from '../../../_queries/materialLengthAdjustment' 
 import SearchBar from '../../../_global/SearchBar/SearchBar';
 import { Table } from '../../../_global/Table/Table';
 import { TableHead } from '../../../_global/Table/TableHead/TableHead';
@@ -11,27 +10,29 @@ import { TableBody } from '../../../_global/Table/TableBody/TableBody';
 import Row from '../../../_global/Table/Row/Row';
 import './MaterialLengthAdjustmentTable.scss'
 import { PageSelect } from '../../../_global/Table/PageSelect/PageSelect';
-import { SearchResult } from '@shared/http';
+import { SearchResult } from '@shared/types/http';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
+import { performTextSearch } from '../../../_queries/_common';
+import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
+import { isRefPopulated } from '@shared/types/_utility';
 
-type TODO = any;
-
-const columnHelper = createColumnHelper<TODO>()
+const columnHelper = createColumnHelper<IMaterialLengthAdjustment>()
 
 const columns = [
-  columnHelper.accessor(row => row.material.name, {
-    id: 'material.name', // Specify an ID since the accessor is a function
+  columnHelper.accessor(row => isRefPopulated<IMaterial>(row.material) ? row.material.name : '', {
+    id: 'material.name',
     header: 'Material Name',
   }),
-  columnHelper.accessor('length', {
+  columnHelper.accessor(row => (row.length && row.length > 0) ? `${row.length}` : `(${Math.abs(row.length)})`, {
     header: 'Length',
   }),
   columnHelper.accessor('notes', {
     header: 'Notes',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({
@@ -50,12 +51,12 @@ export const MaterialLengthAdjustmentTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: materialLengthAdjustments, error, isLoading } = useQuery({
+  const { isError, data: materialLengthAdjustmentSearchResults, error, isLoading } = useQuery({
     queryKey: ['get-material-length-adjustments', pagination, sorting, globalSearch],
     queryFn: async () => {
-      const sortDirection = sorting.length ? (sorting[0]?.desc ? 'desc' : 'asc') : undefined;
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
-      const results: SearchResult<any> = await getMaterialLengthAdjustments({
+      const results: SearchResult<IMaterialLengthAdjustment> = await performTextSearch('/material-length-adjustments/search', {
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),
@@ -73,9 +74,9 @@ export const MaterialLengthAdjustmentTable = () => {
   }
 
   const table = useReactTable<any>({
-    data: materialLengthAdjustments?.results ?? defaultData,
+    data: materialLengthAdjustmentSearchResults?.results ?? defaultData,
     columns,
-    rowCount: materialLengthAdjustments?.totalResults ?? 0,
+    rowCount: materialLengthAdjustmentSearchResults?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -94,11 +95,9 @@ export const MaterialLengthAdjustmentTable = () => {
           : updaterOrValue
       );
     },
-    debugTable: true,
     onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
-    })
-    
+  })
 
   const rows = table.getRowModel().rows;
 
@@ -107,7 +106,7 @@ export const MaterialLengthAdjustmentTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Length Adjustments</h1>
-          <p>Viewing <p className='text-blue'>{rows.length} </p> material length adjustments.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialLengthAdjustmentSearchResults?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

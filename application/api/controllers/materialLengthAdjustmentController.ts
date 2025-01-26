@@ -2,11 +2,12 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { IMaterialLengthAdjustment, MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
+import { IMaterialLengthAdjustment } from '@shared/types/models.ts';
+import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
 import { SearchQuery, SearchResult } from '../../_types/shared/http.ts';
-import { DEFAULT_SORT_OPTIONS } from '../constants/express.ts';
-import { SortOption } from '../../_types/api/mongoose.ts';
-import { ASCENDING, DESCENDING } from '../enums/mongooseSortMethods.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { SortOption } from '../../_types/shared/mongoose.ts';
+import { getSortOption } from '../services/mongooseService.ts';
 
 router.use(verifyBearerToken);
 
@@ -29,13 +30,13 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
   try {
     const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 
-    if (!pageIndex || !limit) return response.status(BAD_REQUEST).json('Invalid page index or limit');
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).send('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).send('Invalid sort direction');
 
     const pageNumber = parseInt(pageIndex, 10);
     const pageSize = parseInt(limit, 10);
     const numDocsToSkip = pageNumber * pageSize;
-    const sortOptions: SortOption = (sortField && ['asc', 'desc'].includes(sortDirection || '')) 
-      ? { [sortField]: sortDirection === 'desc' ? DESCENDING : ASCENDING } : {};
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
 
     const textSearch = query && query.length
     ? {
@@ -43,8 +44,6 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
           { notes: { $regex: query, $options: 'i' } },
           { 'material.name': { $regex: query, $options: 'i' } },
           { 'material.materialId': { $regex: query, $options: 'i' } },
-          { 'material.productNumber': { $regex: query, $options: 'i' } },
-          { 'material.locations': { $regex: query, $options: 'i' } },
         ],
       }
     : {};
@@ -103,7 +102,7 @@ router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response
     }
 
     return response.json(paginationResponse)
-
+    
   } catch (error) {
     console.error('Error during material-length-adjustment search:', error);
     return response.status(500).send(error.message);

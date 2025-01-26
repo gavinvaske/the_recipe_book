@@ -9,7 +9,9 @@ import { Material } from '../../_types/databasemodels/material.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
-import { IMaterialLengthAdjustment } from '../../../api/models/materialLengthAdjustment.ts';
+import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
+import { performTextSearch } from '../../_queries/_common.ts';
+import { SearchResult } from '@shared/types/http.ts';
 
 
 export const MaterialLengthAdjustmentForm = () => {
@@ -39,13 +41,13 @@ export const MaterialLengthAdjustmentForm = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('/materials')
-      .then((response : AxiosResponse) => {
-        const materials: Material[] = response.data
-        setMaterials(materials.map((material: Material) => (
+    performTextSearch<IMaterial>('/materials/search', { limit: '100',  })
+      .then((searchResults: SearchResult<IMaterial>) => {
+        const materials = searchResults.results
+        setMaterials(materials.map((material: IMaterial) => (
           {
             displayName: material.name,
-            value: material._id
+            value: material._id as string
           }
         )))
       })

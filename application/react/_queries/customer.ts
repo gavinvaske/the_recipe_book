@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { MongooseId } from "../_types/typeAliases";
-import { ICustomer } from "../../api/models/customer";
+import { ICustomer } from '@shared/types/models.ts';
 
 export const getCustomers = async (): Promise<ICustomer[]> => {
   const response : AxiosResponse = await axios.get(`/customers`);

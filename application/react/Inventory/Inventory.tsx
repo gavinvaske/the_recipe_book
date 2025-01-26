@@ -7,7 +7,7 @@ import inventorySummaryStore from '../stores/inventorySummaryStore';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
-import { IMaterial } from '../../api/models/material.ts';
+import { IMaterial } from '@shared/types/models.ts';
 import { IMaterialOrder } from '../../api/models/materialOrder.ts';
 
 const socket = io();

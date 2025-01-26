@@ -16,13 +16,32 @@ export function setBearerTokenToAxiosRequestsUsingInterceptors(axios: AxiosInsta
     response => response,
     async (error) => {
       const prevRequest = error?.config;
-
+  
       if (error?.response?.status === 403 && !prevRequest?.sent) {
+        const errorMessage = error.response.data?.error;
+    
+        // If the refresh token has expired, handle it gracefully
+        if (
+          errorMessage === 'Refresh token expired' 
+          || errorMessage === 'Refresh token missing'
+        ) {
+          // Redirect to login page or clear user session
+          return Promise.reject(error); // Stop retrying
+        }
+  
+        // Otherwise, attempt to refresh the access token
         prevRequest.sent = true;
-        const { accessToken } = await refreshAccessToken();
-        prevRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-        return axios(prevRequest);
+  
+        try {
+          const { accessToken } = await refreshAccessToken(); // Call refresh endpoint
+          prevRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+          return axios(prevRequest); // Retry the original request
+        } catch (refreshError) {
+          console.error('Failed to refresh access token.', refreshError);
+          return Promise.reject(refreshError);
+        }
       }
+  
       return Promise.reject(error);
     }
   );

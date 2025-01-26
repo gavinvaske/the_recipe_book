@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './DieTable.scss';
-import { createColumnHelper, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { IDie } from '../../../api/models/die';
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { DieRowActions } from './DieRowActions/DieRowActions';
 import { useQuery } from '@tanstack/react-query';
-import { getDies } from '../../_queries/die';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import SearchBar from '../../_global/SearchBar/SearchBar';
 import { Table } from '../../_global/Table/Table';
 import { TableHead } from '../../_global/Table/TableHead/TableHead';
 import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
+import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
+import { SearchResult } from '@shared/types/http';
+import { performTextSearch } from '../../_queries/_common';
+import { IDie } from '@shared/types/models';
 
 const columnHelper = createColumnHelper<IDie>()
 
@@ -20,10 +23,10 @@ const columns = [
   columnHelper.accessor('dieNumber', {
     header: 'Die Number',
   }),
-  columnHelper.accessor('updatedAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.updatedAt), {
     header: 'Updated'
   }),
-  columnHelper.accessor('createdAt', {
+  columnHelper.accessor(row => getDateTimeFromIsoStr(row.createdAt), {
     header: 'Created'
   }),
   columnHelper.display({
@@ -34,30 +37,59 @@ const columns = [
 ];
 
 export const DieTable = () => {
-  const [globalFilter, setGlobalFilter] = React.useState('');
+  const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
-
-  const { isError, data: dies, error } = useQuery({
-    queryKey: [GET_DIES_QUERY_KEY],
-    queryFn: getDies,
-    initialData: []
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 50,
   })
+  const defaultData = useMemo(() => [], [])
+
+  const { isError, data: dieSearchResults, error, isLoading } = useQuery({
+    queryKey: ['get-dies', pagination, sorting, globalSearch],
+    queryFn: async () => {
+      const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
+      const sortField = sorting.length ? sorting[0]?.id : undefined;
+      const results: SearchResult<IDie> = await performTextSearch<IDie>('/dies/search', {
+        query: globalSearch,
+        pageIndex: String(pagination.pageIndex),
+        limit: String(pagination.pageSize),
+        sortField: sortField,
+        sortDirection: sortDirection
+      }) || {}
+
+      return results
+    },
+    meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
+    })
 
   if (isError) {
     useErrorMessage(error)
   }
 
-  const table = useReactTable({
-    data: dies,
+  const table = useReactTable<any>({
+    data: dieSearchResults?.results ?? defaultData,
     columns,
+    rowCount: dieSearchResults?.totalResults ?? 0,
+    manualSorting: true,
+    manualPagination: true,
     state: {
-      globalFilter: globalFilter,
+      globalFilter: globalSearch,
       sorting: sorting,
+      pagination: pagination
+
     },
-    getFilteredRowModel: getFilteredRowModel(),
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: (updaterOrValue) => {
+      table.resetPageIndex(); // reset to first page when sorting
+      setSorting((oldSorting) => 
+        typeof updaterOrValue === 'function' 
+          ? updaterOrValue(oldSorting) 
+          : updaterOrValue
+      );
+    },
+    onGlobalFilterChange: setGlobalSearch,
     getSortedRowModel: getSortedRowModel(),
   })
 
@@ -68,11 +100,12 @@ export const DieTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Dies</h1>
-          <p>Complete list of all <p className='text-blue'>{rows.length} </p> dies.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{dieSearchResults?.totalResults}</p> results.</p>
         </div>
-        <div className='table-search-bar-container'>
-          <SearchBar value={globalFilter} onChange={(e: any) => setGlobalFilter(e.target.value)} />
-        </div>
+         <SearchBar value={globalSearch} performSearch={(value: string) => {
+          setGlobalSearch(value)
+          table.resetPageIndex();
+        }} />
 
         <Table id='die-table'>
           <TableHead table={table} />
@@ -82,8 +115,13 @@ export const DieTable = () => {
               <Row row={row} key={row.id}></Row>
             ))}
           </TableBody>
+
+          <PageSelect
+            table={table}
+            isLoading={isLoading}
+          />
         </Table>
       </div>
     </div>
   )
-};
+}

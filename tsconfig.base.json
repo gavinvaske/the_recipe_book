@@ -19,9 +19,10 @@
     "target": "es2022",
     "module": "node16",
     "paths": {
-      "@shared/*": ["./application/_types/shared/*"],
-      "@api/*": ["application/_types/api/*"],
-      "@ui/*": ["./application/_types/ui/*"],
+      "@shared/types/*": ["./application/_types/shared/*"],
+      "@api/types/*": ["application/_types/api/*"],
+      "@ui/types/*": ["./application/_types/ui/*"],
+      "@ui/utils/*": ["./application/react/_utils/*"],
     },
     "sourceMap": true,
     "declaration": false,

@@ -1,21 +1,75 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { SUCCESS, SERVER_ERROR, BAD_REQUEST, CREATED_SUCCESSFULLY } from '../enums/httpStatusCodes.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { CreditTermModel } from '../models/creditTerm.ts';
+import { SearchQuery, SearchResult } from '@shared/types/http.ts';
+import { SortOption } from '@shared/types/mongoose.ts';
+import { getSortOption } from '../services/mongooseService.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { ICreditTerm } from '@shared/types/models.ts';
 
 router.use(verifyBearerToken);
 
-router.get('/', async (request, response) => {
-    try {
-        const creditTerms = await CreditTermModel.find().exec();
+router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
+  try {
+    const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
 
-        return response.send(creditTerms);
-    } catch (error) {
-        console.error('Error fetching creditTerms: ', error);
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).send('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).send('Invalid sort direction');
 
-        return response.status(SERVER_ERROR).send(error.message);
+    const pageNumber = parseInt(pageIndex, 10);
+    const pageSize = parseInt(limit, 10);
+    const numDocsToSkip = pageNumber * pageSize;
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
+
+    const textSearch = query && query.length
+    ? {
+        $or: [
+          { description: { $regex: query, $options: 'i' } },
+        ],
+      }
+    : {};
+
+    const pipeline = [
+      {
+        $match: {
+          ...textSearch,
+        },
+      },
+      {
+        $facet: {
+          paginatedResults: [
+            { $sort: { ...sortOptions, ...DEFAULT_SORT_OPTIONS } },
+            { $skip: numDocsToSkip },
+            { $limit: pageSize },
+          ],
+          totalCount: [
+            { $count: 'count' },
+          ],
+        },
+      },
+    ];
+
+    const results = await CreditTermModel.aggregate<any>(pipeline);
+    const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
+    const creditTerms = results[0]?.paginatedResults || [];
+    const totalPages = Math.ceil(totalDocumentCount / pageSize);
+
+    const paginationResponse: SearchResult<ICreditTerm> = {
+      totalResults: totalDocumentCount,
+      totalPages,
+      currentPageIndex: (query && query.length) ? 0 : pageNumber,
+      results: creditTerms,
+      pageSize,
     }
+
+    return response.json(paginationResponse)
+    
+  } catch (error) {
+    console.error('Error during material-length-adjustment search:', error);
+    return response.status(500).send(error);
+  }
 });
 
 router.post('/', async (request, response) => {

@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CustomSelect.scss';
-import { SelectOption } from '../Select/Select.tsx';
-import { FieldErrors, FieldValues, UseFormRegister, Path, UseFormSetValue, Controller, Control } from 'react-hook-form';
+import { FieldErrors, FieldValues, UseFormRegister, Path, Controller, Control } from 'react-hook-form';
 import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage.js';
+
+export type SelectOption = {
+  displayName: string,
+  value: string
+}
 
 type Props<T extends FieldValues> = {
   attribute: Path<T>,

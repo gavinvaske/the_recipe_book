@@ -4,14 +4,13 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 
 export const MaterialLengthAdjustmentForm = () => {

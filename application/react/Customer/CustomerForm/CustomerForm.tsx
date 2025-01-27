@@ -16,14 +16,13 @@ import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
 import { MongooseId } from '../../_types/typeAliases';
 import { performTextSearch } from '../../_queries/_common';
 import { ICreditTerm } from '@shared/types/models';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 
 const customerTableUrl = '/react-ui/tables/customer'
 

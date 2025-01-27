@@ -3,9 +3,8 @@ import { useForm } from'react-hook-form';
 import './ContactForm.scss'
 import { AddressFormAttributes } from '../../../Address/AddressForm/AddressForm';
 import { Input } from '../../../_global/FormInputs/Input/Input';
-import { SelectOption } from '../../../_global/FormInputs/Select/Select';
 import { ShippingLocationFormAttributes } from '../../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
-import { CustomSelect } from '../../../_global/FormInputs/CustomSelect/CustomSelect';
+import { CustomSelect, SelectOption } from '../../../_global/FormInputs/CustomSelect/CustomSelect';
 
 interface Props {
   onSubmit: (contact: any) => void, 

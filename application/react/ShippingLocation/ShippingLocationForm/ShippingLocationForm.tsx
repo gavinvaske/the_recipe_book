@@ -3,11 +3,10 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { MongooseId } from '../../_types/typeAliases';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 import { IDeliveryMethod } from '@shared/types/models.ts';
 
 interface Props {

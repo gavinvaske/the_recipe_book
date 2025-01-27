@@ -3,7 +3,6 @@ import './MaterialOrderForm.scss'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getUsers } from '../../_queries/users';
 import { User } from '../../_types/databasemodels/user.ts';
@@ -15,7 +14,7 @@ import { convertDateStringToFormInputDateString } from '../../_helperFunctions/d
 import { IMaterialOrder } from '../../../api/models/materialOrder'
 import { performTextSearch } from '../../_queries/_common.ts';
 import { IMaterial, IVendor } from '@shared/types/models.ts';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 

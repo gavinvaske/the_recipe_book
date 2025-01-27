@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './MaterialForm.scss'
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Vendor } from '../../_types/databasemodels/vendor.ts';
-import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
-import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
-import { LinerType } from '../../_types/databasemodels/linerType.ts';
 import { IAdhesiveCategory, ILinerType, IMaterial, IMaterialCategory, IVendor } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
@@ -17,7 +12,7 @@ import { useAxios } from '../../_hooks/useAxios';
 import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
 

@@ -165,6 +165,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                unit='@storm'
             />
             <Input
                 attribute='totalRolls'
@@ -179,6 +180,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <Input
                 attribute='hasArrived'
@@ -209,6 +211,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <Input
                 attribute='fuelCharge'
@@ -216,6 +219,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

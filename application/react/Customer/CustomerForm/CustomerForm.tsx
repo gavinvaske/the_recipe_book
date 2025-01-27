@@ -54,7 +54,7 @@ export const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   const preloadFormData = async () => {
-    const creditTermSearchResults = await performTextSearch<ICreditTerm>('/customers', { query: '', limit: '100' })
+    const creditTermSearchResults = await performTextSearch<ICreditTerm>('/credit-terms/search', { query: '', limit: '100' })
     const creditTerms = creditTermSearchResults.results
   
     setCreditTerms(creditTerms.map((creditTerm : ICreditTerm) => (
@@ -176,6 +176,7 @@ export const CustomerForm = () => {
                     register={register}
                     isRequired={true}
                     errors={errors}
+                    unit='@Storm'
                   />
                 </div>
                 <Input

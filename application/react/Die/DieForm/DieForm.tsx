@@ -57,7 +57,7 @@ export const DieForm = () => {
       leftAndRight: die.leftAndRight,
       facestock: die.facestock,
       liner: die.liner,
-      specialType: die.specialType,
+      specialType: die.specialType || '',
       serialNumber: die.serialNumber,
       status: die.status,
       quantity: die.quantity
@@ -114,6 +114,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='sizeAround'
@@ -121,6 +122,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='numberAcross'
@@ -128,6 +130,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+                unit='@storm'
             />
             <Input
               attribute='numberAround'
@@ -135,6 +138,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='gear'
@@ -165,6 +169,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              fieldType='currency'
             />
             <CustomSelect
               attribute='vendor'
@@ -190,6 +195,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='topAndBottom'
@@ -197,6 +203,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='leftAndRight'
@@ -204,6 +211,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='facestock'

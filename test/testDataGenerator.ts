@@ -65,7 +65,7 @@ function getMaterial() {
         faceColor: chance.string(),
         adhesive: chance.string(),
         adhesiveCategory: new mongoose.Types.ObjectId(),
-        quotePricePerMsi: chance.integer({ min: 0.001, fixed: 3, max: 3 }),
+        quotePricePerMsi: chance.integer({ min: 0.001, max: 3 }),
         description: chance.string(),
         whenToUse: chance.string(),
         alternativeStock: chance.string(),
@@ -78,7 +78,8 @@ function getMaterial() {
         productNumber: chance.string(),
         masterRollSize: chance.integer({ min: 1, max: 10 }),
         image: chance.url(),
-        minFootageAlertThreshold: chance.integer({ min: 0, max: 10000 })
+        lowStockThreshold: chance.integer({ min: 0, max: 10000 }),
+        lowStockBuffer: chance.integer({ min: 0, max: 10000 })
     };
 }
 

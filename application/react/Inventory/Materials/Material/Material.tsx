@@ -79,7 +79,7 @@ const Material = observer((props: Props) => {
   };
 
   return (
-    <div id={material._id} className={`card ${getLowInventoryClass(material.minFootageAlertThreshold, materialInventory)}`} onClick={() => onClick()} data-test='material-inventory-card'>
+    <div id={material._id} className={`card ${getLowInventoryClass(material.lowStockThreshold, material.lowStockBuffer, materialInventory)}`} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>
@@ -191,14 +191,14 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
   )
 }
 
-function getLowInventoryClass(minFootageAlertThreshold: number | undefined, materialInventory: MaterialInventory): string {
-  if (!minFootageAlertThreshold) return 'low-inventory';
+function getLowInventoryClass(lowStockThreshold: number | undefined, lowStockBuffer: number | undefined, materialInventory: MaterialInventory): string {
+  if (!lowStockThreshold || !lowStockBuffer) return 'low-inventory';
 
-  if (materialInventory.netLengthOfMaterialInStock < minFootageAlertThreshold) {
+  if (materialInventory.netLengthOfMaterialInStock < lowStockThreshold) {
     return 'low-inventory';
   }
 
-  if (materialInventory.netLengthOfMaterialInStock < minFootageAlertThreshold + 10000) {
+  if (materialInventory.netLengthOfMaterialInStock < lowStockThreshold + lowStockBuffer) {
     return 'low-inventory-warning';
   }
 

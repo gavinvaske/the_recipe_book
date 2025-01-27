@@ -790,40 +790,77 @@ describe('File: material.js', () => {
             expect(error).toBeDefined();
         });
 
-        describe('attribute: minFootageAlertThreshold', () => {
+        describe('attribute: lowStockThreshold', () => {
             it('should be required', () => {
-                delete materialAttributes.minFootageAlertThreshold;
+                delete materialAttributes.lowStockThreshold;
                 const material = new MaterialModel(materialAttributes);
 
                 const { errors } = material.validateSync();
 
-                expect(errors.minFootageAlertThreshold).toBeDefined();
+                expect(errors.lowStockThreshold).toBeDefined();
             });
 
             it('should be a number', () => {
                 const material = new MaterialModel(materialAttributes);
 
-                expect(material.minFootageAlertThreshold).toEqual(expect.any(Number));
+                expect(material.lowStockThreshold).toEqual(expect.any(Number));
             });
 
             it('should fail validation if the value is not a positive number', () => {
                 const material = new MaterialModel(materialAttributes);
                 const negativeNumber = -1;
-                material.minFootageAlertThreshold = negativeNumber;
+                material.lowStockThreshold = negativeNumber;
 
                 const { errors } = material.validateSync();
 
-                expect(errors.minFootageAlertThreshold).toBeDefined();
+                expect(errors.lowStockThreshold).toBeDefined();
             });
 
             it('should fail validation if the value is a floating point number', () => {
                 const material = new MaterialModel(materialAttributes);
                 const floatingPointNumber = 1.123;
-                material.minFootageAlertThreshold = floatingPointNumber;
+                material.lowStockThreshold = floatingPointNumber;
 
                 const { errors } = material.validateSync();
 
-                expect(errors.minFootageAlertThreshold).toBeDefined();
+                expect(errors.lowStockThreshold).toBeDefined();
+            });
+        });
+
+        describe('attribute: lowStockBuffer', () => {
+            it('should be required', () => {
+                delete materialAttributes.lowStockBuffer;
+                const material = new MaterialModel(materialAttributes);
+
+                const { errors } = material.validateSync();
+
+                expect(errors.lowStockBuffer).toBeDefined();
+            });
+
+            it('should be a number', () => {
+                const material = new MaterialModel(materialAttributes);
+
+                expect(material.lowStockBuffer).toEqual(expect.any(Number));
+            });
+
+            it('should fail validation if the value is not a positive number', () => {
+                const material = new MaterialModel(materialAttributes);
+                const negativeNumber = -1;
+                material.lowStockBuffer = negativeNumber;
+
+                const { errors } = material.validateSync();
+
+                expect(errors.lowStockBuffer).toBeDefined();
+            });
+
+            it('should fail validation if the value is a floating point number', () => {
+                const material = new MaterialModel(materialAttributes);
+                const floatingPointNumber = 1.123;
+                material.lowStockBuffer = floatingPointNumber;
+
+                const { errors } = material.validateSync();
+
+                expect(errors.lowStockBuffer).toBeDefined();
             });
         });
     });

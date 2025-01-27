@@ -79,7 +79,8 @@ export interface IMaterial extends SchemaTimestampsConfig, Document {
   productNumber: string;
   masterRollSize: number;
   image: string;
-  minFootageAlertThreshold: number;
+  lowStockThreshold: number;
+  lowStockBuffer: number;
 }
 
 export interface IDie extends SchemaTimestampsConfig, Document {

@@ -60,7 +60,8 @@ export const MaterialForm = () => {
           adhesiveCategory: data.adhesiveCategory,
           vendor: data.vendor as MongooseId,
           materialCategory: data.materialCategory,
-          minFootageAlertThreshold: data.minFootageAlertThreshold,
+          lowStockThreshold: data.lowStockThreshold,
+          lowStockBuffer: data.lowStockBuffer,
         }
 
         reset(formValues) // pre-populate form with existing values from the DB
@@ -225,8 +226,16 @@ export const MaterialForm = () => {
                   fieldType='currency'
                 />
                 <Input
-                  attribute='minFootageAlertThreshold'
-                  label="Min Footage Alert Threshold"
+                  attribute='lowStockThreshold'
+                  label="Low Stock Threshold"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  unit='@storm'
+                />
+                <Input
+                  attribute='lowStockBuffer'
+                  label="Low Stock Buffer"
                   register={register}
                   isRequired={true}
                   errors={errors}
@@ -383,5 +392,6 @@ export interface IMaterialFormAttributes {
   productNumber: string;
   masterRollSize: number;
   image: string;
-  minFootageAlertThreshold: number;
+  lowStockThreshold: number;
+  lowStockBuffer: number;
 }

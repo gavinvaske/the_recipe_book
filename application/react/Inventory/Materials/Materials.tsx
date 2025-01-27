@@ -16,10 +16,10 @@ const Materials = observer((props: Props) => {
 
   return (
     <div className='material-card-section full-width'>
-      {materialInventories.map((materialInventory, index: number) =>
+      {materialInventories.map((materialInventory) =>
         <Material 
           materialInventory={materialInventory} 
-          key={materialInventory.material._id}
+          key={materialInventory.material._id as string}
           onClick={() => onMaterialClicked(materialInventory)}
         />
       )}

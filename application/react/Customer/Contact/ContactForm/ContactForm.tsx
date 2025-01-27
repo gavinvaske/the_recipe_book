@@ -5,6 +5,7 @@ import { AddressFormAttributes } from '../../../Address/AddressForm/AddressForm'
 import { Input } from '../../../_global/FormInputs/Input/Input';
 import { ShippingLocationFormAttributes } from '../../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
 import { CustomSelect, SelectOption } from '../../../_global/FormInputs/CustomSelect/CustomSelect';
+import { TextArea } from '../../../_global/FormInputs/TextArea/TextArea';
 
 interface Props {
   onSubmit: (contact: any) => void, 
@@ -71,7 +72,7 @@ export const ContactForm = (props: Props) => {
               errors={errors}
           />
         </div>
-        <Input
+        <TextArea
             attribute='notes'
             label="Notes"
             register={register}

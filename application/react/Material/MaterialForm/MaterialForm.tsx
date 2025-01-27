@@ -168,6 +168,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='weight'
@@ -175,6 +176,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='costPerMsi'
@@ -182,6 +184,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  fieldType='currency'
                 />
                 <Input
                   attribute='freightCostPerMsi'
@@ -189,6 +192,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  fieldType='currency'
                 />
                 <Input
                   attribute='width'
@@ -196,6 +200,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='faceColor'
@@ -217,6 +222,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  fieldType='currency'
                 />
                 <Input
                   attribute='minFootageAlertThreshold'
@@ -224,6 +230,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='description'
@@ -252,6 +259,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='facesheetWeightPerMsi'
@@ -259,6 +267,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='adhesiveWeightPerMsi'
@@ -266,6 +275,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='linerWeightPerMsi'
@@ -273,6 +283,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <MaterialLocationSelector
                   setValue={setValue}
@@ -291,6 +302,7 @@ export const MaterialForm = () => {
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  unit='@storm'
                 />
                 <Input
                   attribute='image'
@@ -335,7 +347,6 @@ export const MaterialForm = () => {
                   errors={errors}
                   control={control}
                 />
-
               </div>
               <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
             </div>

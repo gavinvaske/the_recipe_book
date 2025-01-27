@@ -13,6 +13,7 @@ import { dieVendors } from '../../../api/enums/dieVendorsEnum';
 import { dieMagCylinders } from '../../../api/enums/dieMagCylindersEnum';
 import { dieStatuses } from '../../../api/enums/dieStatusesEnum';
 import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 
 const dieTableUrl = '/react-ui/tables/die'
 
@@ -57,7 +58,7 @@ export const DieForm = () => {
       leftAndRight: die.leftAndRight,
       facestock: die.facestock,
       liner: die.liner,
-      specialType: die.specialType,
+      specialType: die.specialType || '',
       serialNumber: die.serialNumber,
       status: die.status,
       quantity: die.quantity
@@ -114,6 +115,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='sizeAround'
@@ -121,6 +123,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='numberAcross'
@@ -128,6 +131,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+                unit='@storm'
             />
             <Input
               attribute='numberAround'
@@ -135,6 +139,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='gear'
@@ -152,7 +157,7 @@ export const DieForm = () => {
               isRequired={true}
               control={control}
             />
-            <Input
+            <TextArea
               attribute='notes'
               label="Notes"
               register={register}
@@ -165,6 +170,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              fieldType='currency'
             />
             <CustomSelect
               attribute='vendor'
@@ -190,6 +196,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='topAndBottom'
@@ -197,6 +204,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='leftAndRight'
@@ -204,6 +212,7 @@ export const DieForm = () => {
               register={register}
               errors={errors}
               isRequired={true}
+              unit='@storm'
             />
             <Input
               attribute='facestock'

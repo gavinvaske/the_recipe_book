@@ -15,6 +15,7 @@ import { IMaterialOrder } from '../../../api/models/materialOrder'
 import { performTextSearch } from '../../_queries/_common.ts';
 import { IMaterial, IVendor } from '@shared/types/models.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea.tsx';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
@@ -165,6 +166,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                unit='@storm'
             />
             <Input
                 attribute='totalRolls'
@@ -179,6 +181,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <Input
                 attribute='hasArrived'
@@ -188,7 +191,7 @@ export const MaterialOrderForm = () => {
                 errors={errors}
                 fieldType='checkbox'
             />
-            <Input
+            <TextArea
                 attribute='notes'
                 label="Notes"
                 register={register}
@@ -209,6 +212,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <Input
                 attribute='fuelCharge'
@@ -216,6 +220,7 @@ export const MaterialOrderForm = () => {
                 register={register}
                 isRequired={true}
                 errors={errors}
+                fieldType='currency'
             />
             <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

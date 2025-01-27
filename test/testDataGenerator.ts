@@ -78,7 +78,8 @@ function getMaterial() {
         productNumber: chance.string(),
         masterRollSize: chance.integer({ min: 1, max: 10 }),
         image: chance.url(),
-        minFootageAlertThreshold: chance.integer({ min: 0, max: 10000 })
+        lowStockThreshold: chance.integer({ min: 0, max: 10000 }),
+        lowStockBuffer: chance.integer({ min: 0, max: 10000 })
     };
 }
 

@@ -11,6 +11,7 @@ import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea.tsx';
 
 
 export const MaterialLengthAdjustmentForm = () => {
@@ -96,7 +97,7 @@ export const MaterialLengthAdjustmentForm = () => {
               errors={errors}
               unit='@storm'
             />
-            <Input
+            <TextArea
               attribute='notes'
               label="Notes"
               register={register}

@@ -13,6 +13,7 @@ import { dieVendors } from '../../../api/enums/dieVendorsEnum';
 import { dieMagCylinders } from '../../../api/enums/dieMagCylindersEnum';
 import { dieStatuses } from '../../../api/enums/dieStatusesEnum';
 import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 
 const dieTableUrl = '/react-ui/tables/die'
 
@@ -156,7 +157,7 @@ export const DieForm = () => {
               isRequired={true}
               control={control}
             />
-            <Input
+            <TextArea
               attribute='notes'
               label="Notes"
               register={register}

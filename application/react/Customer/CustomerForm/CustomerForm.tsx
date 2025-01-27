@@ -23,6 +23,7 @@ import { MongooseId } from '../../_types/typeAliases';
 import { performTextSearch } from '../../_queries/_common';
 import { ICreditTerm } from '@shared/types/models';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 
 const customerTableUrl = '/react-ui/tables/customer'
 
@@ -179,7 +180,7 @@ export const CustomerForm = () => {
                     unit='@Storm'
                   />
                 </div>
-                <Input
+                <TextArea
                     attribute='notes'
                     label="Notes"
                     register={register}

@@ -11,6 +11,7 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneVendor } from '../../_queries/vendors';
+import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
 
@@ -117,7 +118,7 @@ export const VendorForm = () => {
                       isRequired={true}
                       errors={errors}
                   />
-                  <Input
+                  <TextArea
                     attribute='notes'
                     label="Notes"
                     register={register}

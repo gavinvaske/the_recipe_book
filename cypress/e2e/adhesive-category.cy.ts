@@ -7,15 +7,20 @@ describe('AdhesiveCategory Views', () => {
   });
 
   it('Should render the AdhesiveCategory form', () => {
-      cy.visit(`${formUrlPrefix}/adhesive-category`);
+    const url = `${formUrlPrefix}/adhesive-category`;
 
-      cy.get('[data-test=adhesive-category-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=adhesive-category-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the AdhesiveCategory table and a searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/adhesive-category`);
+    const url = `${tableUrlPrefix}/adhesive-category`;
+    cy.visit(url);
 
     cy.get('#adhesive-category-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

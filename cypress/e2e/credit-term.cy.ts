@@ -7,15 +7,19 @@ describe('CreditTerm Views', () => {
   });
 
   it('Should render the CreditTerm form', () => {
-      cy.visit(`${formUrlPrefix}/credit-term`);
+    const url = `${formUrlPrefix}/credit-term`;
+    cy.visit(url);
 
-      cy.get('[data-test=credit-term-form]').should('exist');
+    cy.get('[data-test=credit-term-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the CreditTerm table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/credit-term`);
+    const url = `${tableUrlPrefix}/credit-term`;
+    cy.visit(url);
 
     cy.get('#credit-term-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

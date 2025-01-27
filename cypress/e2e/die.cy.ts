@@ -7,15 +7,21 @@ describe('Product Views', () => {
   });
 
   it('Should render the Die form', () => {
-      cy.visit(`${formUrlPrefix}/die`);
+    const url = `${formUrlPrefix}/die`;
 
-      cy.get('[data-test=die-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=die-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the Die table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/die`);
+    const url = `${tableUrlPrefix}/die`;
+
+    cy.visit(url);
 
     cy.get('#die-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

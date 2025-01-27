@@ -3,7 +3,6 @@ import './MaterialOrderForm.scss'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getUsers } from '../../_queries/users';
 import { User } from '../../_types/databasemodels/user.ts';
@@ -15,11 +14,12 @@ import { convertDateStringToFormInputDateString } from '../../_helperFunctions/d
 import { IMaterialOrder } from '../../../api/models/materialOrder'
 import { performTextSearch } from '../../_queries/_common.ts';
 import { IMaterial, IVendor } from '@shared/types/models.ts';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
 export const MaterialOrderForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialOrderFormAttributes>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<MaterialOrderFormAttributes>({
     defaultValues: {
       freightCharge: 0,
       fuelCharge: 0
@@ -117,29 +117,32 @@ export const MaterialOrderForm = () => {
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='material-order-form'>
-            <Select 
+            <CustomSelect 
               attribute='author'
               label="Author"
               options={users}
               register={register}
               isRequired={true}
               errors={errors}
+              control={control}
             />
-            <Select 
+            <CustomSelect 
               attribute='material'
               label="Material"
               options={materials}
               register={register}
               isRequired={true}
               errors={errors}
+              control={control}
             />
-            <Select 
+            <CustomSelect 
               attribute='vendor'
               label="Vendors"
               options={vendors}
               register={register}
               isRequired={true}
               errors={errors}
+              control={control}
             />
             <Input
                 attribute='purchaseOrderNumber'

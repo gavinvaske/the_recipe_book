@@ -7,7 +7,7 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCreditTerm } from '../../_queries/creditTerm';
-import { CreditTerm } from '../../_types/databasemodels/creditTerm.ts';
+import { ICreditTerm } from '@shared/types/models';
 
 const creditTermTableUrl = '/react-ui/tables/credit-term'
 
@@ -22,7 +22,7 @@ export const CreditTermForm = () => {
     if (!isUpdateRequest) return;
 
     getOneCreditTerm(mongooseId)
-      .then((creditTerm: CreditTerm) => {
+      .then((creditTerm: ICreditTerm) => {
         const formValues: CreditTermFormAttributes = {
           description: creditTerm.description
         }

@@ -7,15 +7,21 @@ describe('Material Order Views', () => {
   });
 
   it('Should render the Material Order form', () => {
-      cy.visit(`${formUrlPrefix}/material-order`);
+    const url = `${formUrlPrefix}/material-order`;
 
-      cy.get('[data-test=material-order-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=material-order-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the Material Order table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/material-order`);
+    const url = `${tableUrlPrefix}/material-order`;
+
+    cy.visit(url);
 
     cy.get('#material-order-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

@@ -7,15 +7,21 @@ describe('DeliveryMethod Views', () => {
   });
 
   it('Should render the DeliveryMethod form', () => {
-      cy.visit(`${formUrlPrefix}/delivery-method`);
+    const url = `${formUrlPrefix}/delivery-method`;
 
-      cy.get('[data-test=delivery-method-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=delivery-method-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the DeliveryMethod table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/delivery-method`);
+    const url = `${tableUrlPrefix}/delivery-method`;
+
+    cy.visit(url);
 
     cy.get('#delivery-method-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

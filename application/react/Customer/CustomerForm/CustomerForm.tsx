@@ -16,21 +16,19 @@ import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
 import { MongooseId } from '../../_types/typeAliases';
-import { getCreditTerms } from '../../_queries/creditTerm';
 import { performTextSearch } from '../../_queries/_common';
 import { ICreditTerm } from '@shared/types/models';
-import { SearchResult } from '@shared/types/http';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 
 const customerTableUrl = '/react-ui/tables/customer'
 
 export const CustomerForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CustomerFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<CustomerFormAttributes>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -56,7 +54,7 @@ export const CustomerForm = () => {
   }, [billingLocations, shippingLocations, businessLocations]);
 
   const preloadFormData = async () => {
-    const creditTermSearchResults = await performTextSearch<ICreditTerm>('/credit-terms/search', { query: '', limit: '100' })
+    const creditTermSearchResults = await performTextSearch<ICreditTerm>('/customers', { query: '', limit: '100' })
     const creditTerms = creditTermSearchResults.results
   
     setCreditTerms(creditTerms.map((creditTerm : ICreditTerm) => (
@@ -187,13 +185,14 @@ export const CustomerForm = () => {
                     isRequired={false}
                     errors={errors}
                   />
-                <Select
+                <CustomSelect
                   attribute='creditTerms'
                   label="Credit Term"
                   options={creditTerms}
                   register={register}
                   isRequired={false}
                   errors={errors}
+                  control={control}
                 />
               </div>
             </div>

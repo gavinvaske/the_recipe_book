@@ -8,7 +8,6 @@ import { unwindDirections } from '../../../api/enums/unwindDirectionsEnum';
 import { ovOrEpmOptions } from '../../../api/enums/ovOrEpmEnum';
 import { defaultFinishType, finishTypes } from '../../../api/enums/finishTypesEnum';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { getCustomers } from '../../_queries/customer';
 import { getOneProduct } from '../../_queries/product';
 import { getFinishes } from '../../_queries/finish';
@@ -17,7 +16,7 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { defaultUnwindDirection } from '../../../api/enums/unwindDirectionsEnum';
 import { defaultOvOrEpm } from '../../../api/enums/ovOrEpmEnum';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
-import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
+import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 import { performTextSearch } from '../../_queries/_common';
 import { IDie, IMaterial } from '@shared/types/models';
 

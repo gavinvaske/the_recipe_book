@@ -7,15 +7,21 @@ describe('Customer Views', () => {
   });
 
   it('Should render the Customer form', () => {
-      cy.visit(`${formUrlPrefix}/customer`);
+    const url = `${formUrlPrefix}/customer`;
 
-      cy.get('[data-test=customer-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=customer-form]').should('exist', 'have.text')
+    cy.url().should('include', url)
   });
 
   it('Should render the Customer table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/customer`);
+    const url = `${tableUrlPrefix}/customer`;
+
+    cy.visit(url);
 
     cy.get('#customer-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

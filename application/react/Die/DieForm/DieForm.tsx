@@ -7,13 +7,12 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { getOneDie } from '../../_queries/die';
-import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
-import { Select } from '../../_global/FormInputs/Select/Select';
 import { dieShapes } from '../../../api/enums/dieShapesEnum';
 import { toolTypes } from '../../../api/enums/toolTypesEnum';
 import { dieVendors } from '../../../api/enums/dieVendorsEnum';
 import { dieMagCylinders } from '../../../api/enums/dieMagCylindersEnum';
 import { dieStatuses } from '../../../api/enums/dieStatusesEnum';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 
 const dieTableUrl = '/react-ui/tables/die'
 
@@ -22,7 +21,7 @@ export const DieForm = () => {
   const { mongooseId } = useParams();
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<DieFormAttributes>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<DieFormAttributes>({
     defaultValues: {
       quantity: 1
     }
@@ -100,13 +99,14 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select
+            <CustomSelect
               attribute='shape'
               label='Shape'
               options={dieShapes.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
+              control={control}
             />
             <Input
               attribute='sizeAcross'
@@ -143,13 +143,14 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select
+            <CustomSelect
               attribute='toolType'
               label='Tool Type'
               options={toolTypes.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
+              control={control}
             />
             <Input
               attribute='notes'
@@ -165,21 +166,23 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select
+            <CustomSelect
               attribute='vendor'
               label='Vendor'
               options={dieVendors.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
+              control={control}
             />
-            <Select
+            <CustomSelect
               attribute='magCylinder'
               label='Magnetic Cylinder'
               options={dieMagCylinders.map((option) => ({ value: String(option), displayName: String(option) }))}
               register={register}
               errors={errors}
               isRequired={true}
+              control={control}
             />
             <Input
               attribute='cornerRadius'
@@ -230,13 +233,14 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
-            <Select
+            <CustomSelect
               attribute='status'
               label='Status'
               options={dieStatuses.map((option) => ({ value: option, displayName: option }))}
               register={register}
               errors={errors}
               isRequired={true}
+              control={control}
             />
             <Input
               attribute='quantity'

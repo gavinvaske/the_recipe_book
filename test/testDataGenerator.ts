@@ -65,7 +65,7 @@ function getMaterial() {
         faceColor: chance.string(),
         adhesive: chance.string(),
         adhesiveCategory: new mongoose.Types.ObjectId(),
-        quotePricePerMsi: chance.integer({ min: 0.001, fixed: 3, max: 3 }),
+        quotePricePerMsi: chance.integer({ min: 0.001, max: 3 }),
         description: chance.string(),
         whenToUse: chance.string(),
         alternativeStock: chance.string(),

@@ -114,7 +114,7 @@ export const ProductForm = () => {
     <div id='product-form-page-wrapper' className='page-wrapper'>
       <div className='card'>
         <div className='form-card-header'>
-          <h3>{isUpdateRequest ? 'Update' : 'Create New'} Product</h3>
+          <h3>{isUpdateRequest ? 'Update' : 'Create'} Product</h3>
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onSubmit)} data-test='product-form'>

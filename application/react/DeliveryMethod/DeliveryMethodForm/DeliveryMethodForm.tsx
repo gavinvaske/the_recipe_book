@@ -56,7 +56,7 @@ export const DeliveryMethodForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Delivery Method</h1>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Delivery Method</h3>
         </div>
         <div className='form-wrapper'>
           <form id='delivery-method-form' onSubmit={handleSubmit(onSubmit)} data-test='delivery-method-form'>

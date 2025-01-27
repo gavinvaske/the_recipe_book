@@ -1,26 +1,19 @@
 import React, { useMemo } from 'react';
-import './LinerTypeTable.scss';
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  useReactTable,
-  getSortedRowModel,
-  SortingState,
-  PaginationState,
-} from '@tanstack/react-table'
-import SearchBar from '../../_global/SearchBar/SearchBar'
-import { TableHead } from '../../_global/Table/TableHead/TableHead'
-import { TableBody } from '../../_global/Table/TableBody/TableBody'
-import { Table } from '../../_global/Table/Table'
-import { LinerTypeRowActions } from './LinerTypeRowActions/LinerTypeRowActions'
+import './MaterialCategoryTable.scss'
+import { createColumnHelper, getCoreRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from '@tanstack/react-table';
 import { useQuery } from '@tanstack/react-query';
-import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { getDateTimeFromIsoStr } from '@ui/utils/dateTime.ts';
+import { IMaterialCategory } from '@shared/types/models';
 import { SearchResult } from '@shared/types/http';
 import { performTextSearch } from '../../_queries/_common';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { getDateTimeFromIsoStr } from '@ui/utils/dateTime';
+import { MaterialCategoryRowActions } from './MaterialCategoryRowActions/MaterialCategoryRowActions';
+import SearchBar from '../../_global/SearchBar/SearchBar';
+import { Table } from '../../_global/Table/Table';
+import { TableHead } from '../../_global/Table/TableHead/TableHead';
+import { TableBody } from '../../_global/Table/TableBody/TableBody';
 import Row from '../../_global/Table/Row/Row';
 import { PageSelect } from '../../_global/Table/PageSelect/PageSelect';
-import { ILinerType } from '@shared/types/models';
 
 const columnHelper = createColumnHelper<any>()
 
@@ -37,11 +30,12 @@ const columns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
-    cell: props => <LinerTypeRowActions row={props.row} />
+    cell: props => <MaterialCategoryRowActions row={props.row} />
   })
 ];
 
-export const LinerTypeTable = () => {
+
+export const MaterialCategoryTable = () => {
   const [globalSearch, setGlobalSearch] = React.useState('');
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [pagination, setPagination] = React.useState<PaginationState>({
@@ -50,12 +44,12 @@ export const LinerTypeTable = () => {
   })
   const defaultData = useMemo(() => [], [])
 
-  const { isError, data: linerTypeSearchResults, error, isLoading } = useQuery({
-    queryKey: ['get-liner-types', pagination, sorting, globalSearch],
+  const { isError, data: materialCategorySearchResults, error, isLoading } = useQuery({
+    queryKey: ['get-material-categories', pagination, sorting, globalSearch],
     queryFn: async () => {
       const sortDirection = sorting.length ? (sorting[0]?.desc ? '-1' : '1') : undefined;
       const sortField = sorting.length ? sorting[0]?.id : undefined;
-      const results: SearchResult<ILinerType> = await performTextSearch<ILinerType>('/liner-types/search', {
+      const results: SearchResult<IMaterialCategory> = await performTextSearch<IMaterialCategory>('/material-categories/search', {
         query: globalSearch,
         pageIndex: String(pagination.pageIndex),
         limit: String(pagination.pageSize),
@@ -66,16 +60,16 @@ export const LinerTypeTable = () => {
       return results
     },
     meta: { keepPreviousData: true, initialData: { results: [], totalPages: 0 } }
-    })
+  })
 
   if (isError) {
     useErrorMessage(error)
   }
 
   const table = useReactTable<any>({
-    data: linerTypeSearchResults?.results ?? defaultData,
+    data: materialCategorySearchResults?.results ?? defaultData,
     columns,
-    rowCount: linerTypeSearchResults?.totalResults ?? 0,
+    rowCount: materialCategorySearchResults?.totalResults ?? 0,
     manualSorting: true,
     manualPagination: true,
     state: {
@@ -88,9 +82,9 @@ export const LinerTypeTable = () => {
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: (updaterOrValue) => {
       table.resetPageIndex(); // reset to first page when sorting
-      setSorting((oldSorting) => 
-        typeof updaterOrValue === 'function' 
-          ? updaterOrValue(oldSorting) 
+      setSorting((oldSorting) =>
+        typeof updaterOrValue === 'function'
+          ? updaterOrValue(oldSorting)
           : updaterOrValue
       );
     },
@@ -104,17 +98,17 @@ export const LinerTypeTable = () => {
     <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
-          <h1 className="text-blue">Liner Types</h1>
-          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{linerTypeSearchResults?.totalResults}</p> results.</p>
+          <h1 className="text-blue">Material Categories</h1>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialCategorySearchResults?.totalResults}</p> results.</p>
         </div>
-         <SearchBar value={globalSearch} performSearch={(value: string) => {
+        <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)
           table.resetPageIndex();
         }} />
 
-        <Table id='liner-type-table'>
+        <Table id='material-category-table'>
           <TableHead table={table} />
-          
+
           <TableBody>
             {rows.map(row => (
               <Row row={row} key={row.id}></Row>

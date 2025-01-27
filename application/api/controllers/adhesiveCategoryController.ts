@@ -1,10 +1,76 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { verifyBearerToken } from '../middleware/authorize.ts';
 import { AdhesiveCategoryModel } from '../models/adhesiveCategory.ts';
-import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { SearchQuery, SearchResult } from '@shared/types/http.ts';
+import { SortOption } from '@shared/types/mongoose.ts';
+import { getSortOption } from '../services/mongooseService.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { IAdhesiveCategory } from '@shared/types/models.ts';
 
 router.use(verifyBearerToken);
+
+router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
+  try {
+    const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
+
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).send('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).send('Invalid sort direction');
+
+    const pageNumber = parseInt(pageIndex, 10);
+    const pageSize = parseInt(limit, 10);
+    const numDocsToSkip = pageNumber * pageSize;
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
+
+    const textSearch = query && query.length
+    ? {
+        $or: [
+          { name: { $regex: query, $options: 'i' } }
+        ],
+      }
+    : {};
+
+    const pipeline = [
+      {
+        $match: {
+          ...textSearch,
+        },
+      },
+      {
+        $facet: {
+          paginatedResults: [
+            { $sort: { ...sortOptions, ...DEFAULT_SORT_OPTIONS } },
+            { $skip: numDocsToSkip },
+            { $limit: pageSize },
+          ],
+          totalCount: [
+            { $count: 'count' },
+          ],
+        },
+      },
+    ];
+
+    const results = await AdhesiveCategoryModel.aggregate<any>(pipeline);
+    const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
+    const adhesiveCategories = results[0]?.paginatedResults || [];
+    const totalPages = Math.ceil(totalDocumentCount / pageSize);
+
+    const paginationResponse: SearchResult<IAdhesiveCategory> = {
+      totalResults: totalDocumentCount,
+      totalPages,
+      currentPageIndex: (query && query.length) ? 0 : pageNumber,
+      results: adhesiveCategories,
+      pageSize,
+    }
+
+    return response.json(paginationResponse)
+    
+  } catch (error) {
+    console.error('Error during adhesiveCategory search:', error);
+    return response.status(500).send(error);
+  }
+});
 
 router.delete('/:mongooseId', async (request, response) => {
     try {

@@ -3,11 +3,11 @@ import './AdhesiveCategoryForm.scss';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneAdhesiveCategory } from '../../_queries/adhesiveCategory';
+import { IAdhesiveCategory } from '@shared/types/models.ts';
 
 const adhesiveCategoryTableUrl = '/react-ui/tables/adhesive-category'
 
@@ -22,7 +22,7 @@ export const AdhesiveCategoryForm = () => {
     if (!isUpdateRequest) return;
 
     getOneAdhesiveCategory(mongooseId)
-      .then((adhesiveCategory: AdhesiveCategory) => {
+      .then((adhesiveCategory: IAdhesiveCategory) => {
         const formValues: AdhesiveCategoryFormAttributes = {
           name: adhesiveCategory.name
         }
@@ -34,40 +34,46 @@ export const AdhesiveCategoryForm = () => {
       })
   }, [])
 
-  const onFormSubmit = (adhesiveCategory: AdhesiveCategoryFormAttributes) => {
+  const onSubmit = (formData: AdhesiveCategoryFormAttributes) => {
     if (isUpdateRequest) {
-      axios.patch(`/adhesive-categories/${mongooseId}`, adhesiveCategory)
+      axios.patch(`/adhesive-categories/${mongooseId}`, formData)
         .then((_) => {
           navigate(adhesiveCategoryTableUrl)
           useSuccessMessage('Update was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {
-      axios.post('/adhesive-categories', adhesiveCategory)
+      axios.post('/adhesive-categories', formData)
         .then((_: AxiosResponse) => {
-          navigate(adhesiveCategoryTableUrl)
+          navigate(adhesiveCategoryTableUrl);
           useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }
-
-  }
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onFormSubmit)} data-test='adhesive-category-form'>
-        <Input
-          attribute='name'
-          label="Name"
-          register={register}
-          isRequired={true}
-          errors={errors}
-        />
-        <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
-      </form>
+    <div className='page-container'>
+      <div className='form-card'>
+        <div className='form-card-header'>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Adhesive Category</h3>
+        </div>
+        <div className='form-wrapper'>
+          <form id='adhesive-category-form' onSubmit={handleSubmit(onSubmit)} data-test='adhesive-category-form'>
+            <Input
+              attribute='name'
+              label="Name"
+              register={register}
+              isRequired={true}
+              errors={errors}
+            />
+            <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
+          </form>
+        </div>
+      </div>
     </div>
   )
-};
+}
 
 export type AdhesiveCategoryFormAttributes = {
   name: string; 

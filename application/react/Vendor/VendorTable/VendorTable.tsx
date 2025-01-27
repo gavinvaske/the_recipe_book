@@ -107,7 +107,7 @@ export const VendorTable = () => {
     <div className='page-wrapper'>
       <div className='card table-card'>
         <div className="header-description">
-          <h1 className="text-blue">Vendor</h1>
+          <h1 className="text-blue">Vendors</h1>
           <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{vendorSearchResults?.totalResults}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {

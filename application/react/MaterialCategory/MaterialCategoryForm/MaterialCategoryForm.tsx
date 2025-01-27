@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import './LinerTypeForm.scss';
+import './MaterialCategoryForm.scss';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from "react-router-dom";
-import { Input } from '../../_global/FormInputs/Input/Input';
-import { getOneLinerType } from '../../_queries/linerType';
-import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { IMaterialCategory } from '@shared/types/models';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
-import { ILinerType } from '@shared/types/models';
+import { useErrorMessage } from '../../_hooks/useErrorMessage';
+import { Input } from '../../_global/FormInputs/Input/Input';
+import { getOneMaterialCategory } from '../../_queries/materialCategory';
 
-const linerTypeTableUrl = '/react-ui/tables/liner-type'
+const materialCategoryTableUrl = '/react-ui/tables/material-category'
 
-export const LinerTypeForm = () => {
+export const MaterialCategoryForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialCategoryFormAttributes>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -21,31 +21,31 @@ export const LinerTypeForm = () => {
   useEffect(() => {
     if (!isUpdateRequest) return;
 
-    getOneLinerType(mongooseId)
-      .then((linerType: ILinerType) => {
-        const formValues: LinerTypeFormAttributes = {
-          name: linerType.name
+    getOneMaterialCategory(mongooseId)
+      .then((materialCategory: IMaterialCategory) => {
+        const formValues: MaterialCategoryFormAttributes = {
+          name: materialCategory.name
         }
         reset(formValues)
       })
       .catch((error: AxiosError) => {
-        navigate(linerTypeTableUrl)
+        navigate(materialCategoryTableUrl)
         useErrorMessage(error)
       })
   }, [])
 
-  const onSubmit = (formData: LinerTypeFormAttributes) => {
+  const onSubmit = (formData: MaterialCategoryFormAttributes) => {
     if (isUpdateRequest) {
-      axios.patch(`/liner-types/${mongooseId}`, formData)
+      axios.patch(`/material-categories/${mongooseId}`, formData)
         .then((_) => {
-          navigate(linerTypeTableUrl)
+          navigate(materialCategoryTableUrl)
           useSuccessMessage('Update was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {
-      axios.post('/liner-types', formData)
+      axios.post('/material-categories', formData)
         .then((_: AxiosResponse) => {
-          navigate(linerTypeTableUrl);
+          navigate(materialCategoryTableUrl);
           useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
@@ -56,10 +56,10 @@ export const LinerTypeForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-        <h3>{isUpdateRequest ? 'Update' : 'Create'} Liner Type</h3>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Material Category</h3>
         </div>
         <div className='form-wrapper'>
-          <form id='liner-type-form' onSubmit={handleSubmit(onSubmit)} data-test='liner-type-form'>
+          <form id='material-category-form' onSubmit={handleSubmit(onSubmit)} data-test='material-category-form'>
             <Input
               attribute='name'
               label="Name"
@@ -75,6 +75,6 @@ export const LinerTypeForm = () => {
   )
 }
 
-export type LinerTypeFormAttributes = {
+export type MaterialCategoryFormAttributes = {
   name: String
 }

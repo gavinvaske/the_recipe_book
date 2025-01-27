@@ -23,8 +23,16 @@ const columns = [
     id: 'material.name',
     header: 'Material Name',
   }),
-  columnHelper.accessor(row => (row.length && row.length > 0) ? `${row.length}` : `(${Math.abs(row.length)})`, {
+  columnHelper.accessor(row => row.length, {
     header: 'Length',
+    cell: ({ getValue }) => {
+      const length = getValue();
+      return (
+        <span style={{ color: length > 0 ? 'green' : 'red' }}>
+          {length > 0 ? `${length}` : `(${Math.abs(length)})`}
+        </span>
+      );
+    },
   }),
   columnHelper.accessor('notes', {
     header: 'Notes',

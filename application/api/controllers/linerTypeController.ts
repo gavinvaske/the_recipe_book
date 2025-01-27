@@ -1,10 +1,76 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 import { LinerTypeModel } from '../models/linerType.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';
-import { CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { BAD_REQUEST, CREATED_SUCCESSFULLY, SERVER_ERROR, SUCCESS } from '../enums/httpStatusCodes.ts';
+import { SearchQuery, SearchResult } from '@shared/types/http.ts';
+import { SortOption } from '@shared/types/mongoose.ts';
+import { getSortOption } from '../services/mongooseService.ts';
+import { DEFAULT_SORT_OPTIONS } from '../constants/mongoose.ts';
+import { ILinerType } from '@shared/types/models.ts';
 
 router.use(verifyBearerToken);
+
+router.get('/search', async (request: Request<{}, {}, {}, SearchQuery>, response: Response) => {
+  try {
+    const { query, pageIndex, limit, sortField, sortDirection } = request.query as SearchQuery;
+
+    if (!pageIndex || !limit) return response.status(BAD_REQUEST).send('Invalid page index or limit');
+    if (sortDirection?.length && sortDirection !== '1' && sortDirection !== '-1') return response.status(BAD_REQUEST).send('Invalid sort direction');
+
+    const pageNumber = parseInt(pageIndex, 10);
+    const pageSize = parseInt(limit, 10);
+    const numDocsToSkip = pageNumber * pageSize;
+    const sortOptions: SortOption = getSortOption(sortField, sortDirection);
+
+    const textSearch = query && query.length
+    ? {
+        $or: [
+          { name: { $regex: query, $options: 'i' } }
+        ],
+      }
+    : {};
+
+    const pipeline = [
+      {
+        $match: {
+          ...textSearch,
+        },
+      },
+      {
+        $facet: {
+          paginatedResults: [
+            { $sort: { ...sortOptions, ...DEFAULT_SORT_OPTIONS } },
+            { $skip: numDocsToSkip },
+            { $limit: pageSize },
+          ],
+          totalCount: [
+            { $count: 'count' },
+          ],
+        },
+      },
+    ];
+
+    const results = await LinerTypeModel.aggregate<any>(pipeline);
+    const totalDocumentCount = results[0]?.totalCount[0]?.count || 0; // Extract total count
+    const linerTypes = results[0]?.paginatedResults || [];
+    const totalPages = Math.ceil(totalDocumentCount / pageSize);
+
+    const paginationResponse: SearchResult<ILinerType> = {
+      totalResults: totalDocumentCount,
+      totalPages,
+      currentPageIndex: (query && query.length) ? 0 : pageNumber,
+      results: linerTypes,
+      pageSize,
+    }
+
+    return response.json(paginationResponse)
+    
+  } catch (error) {
+    console.error('Error during linerTypes search:', error);
+    return response.status(500).send(error);
+  }
+});
 
 router.delete('/:mongooseId', async (request, response) => {
     try {
@@ -15,19 +81,6 @@ router.delete('/:mongooseId', async (request, response) => {
         console.error('Failed to delete LinerType: ', error);
 
         return response.status(SERVER_ERROR).send(error.message);
-    }
-});
-
-router.get('/', async (_, response) => {
-    try {
-        const linerTypes = await LinerTypeModel.find().exec();
-    
-        return response.json(linerTypes);
-    } catch (error) {
-        console.error('Error fetching LinerTypes: ', error);
-        return response
-            .status(SERVER_ERROR)
-            .send(error.message);
     }
 });
 

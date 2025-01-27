@@ -57,7 +57,7 @@ export const CreditTermForm = () => {
     <div className='page-container'>
       <div className='form-card'>
         <div className='form-card-header'>
-          <h1>Create New Credit Term</h1>
+        <h3>{isUpdateRequest ? 'Update' : 'Create'} Credit Term</h3>
         </div>
         <div className='form-wrapper'>
           <form id='credit-terms-form' onSubmit={handleSubmit(onSubmit)} data-test='credit-term-form'>

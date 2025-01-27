@@ -39,8 +39,8 @@ export const MaterialLengthAdjustmentRowActions = (props: Props) => {
 
   return (
     <RowActions>
-      <div onClick={() => onEditClicked(mongooseObjectId)}>Edit</div>
-      <div onClick={() => onDeleteClicked(mongooseObjectId)}>Delete</div>
+      <div className='dropdown-option' onClick={() => onEditClicked(mongooseObjectId)}>Edit</div>
+      <div className='dropdown-option' onClick={() => onDeleteClicked(mongooseObjectId)}>Delete</div>
     </RowActions>
   )
 };

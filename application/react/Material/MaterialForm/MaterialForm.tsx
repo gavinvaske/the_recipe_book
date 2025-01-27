@@ -9,7 +9,7 @@ import { Vendor } from '../../_types/databasemodels/vendor.ts';
 import { MaterialCategory } from '../../_types/databasemodels/materialCategory.ts';
 import { AdhesiveCategory } from '../../_types/databasemodels/adhesiveCategory.ts';
 import { LinerType } from '../../_types/databasemodels/linerType.ts';
-import { IMaterial, IVendor } from '@shared/types/models.ts';
+import { IAdhesiveCategory, ILinerType, IMaterial, IMaterialCategory, IVendor } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
@@ -51,7 +51,7 @@ export const MaterialForm = () => {
           quotePricePerMsi: data.quotePricePerMsi,
           description: data.description,
           whenToUse: data.whenToUse,
-          alternativeStock: data.alternativeStock,
+          alternativeStock: data.alternativeStock || '',
           length: data.length,
           facesheetWeightPerMsi: data.facesheetWeightPerMsi,
           adhesiveWeightPerMsi: data.adhesiveWeightPerMsi,
@@ -62,7 +62,7 @@ export const MaterialForm = () => {
           image: data.image,
           linerType: data.linerType,
           adhesiveCategory: data.adhesiveCategory,
-          vendor: data.vendor,
+          vendor: data.vendor as MongooseId,
           materialCategory: data.materialCategory,
           minFootageAlertThreshold: data.minFootageAlertThreshold,
         }
@@ -87,38 +87,37 @@ export const MaterialForm = () => {
       })
       .catch((error: AxiosError) => useErrorMessage(error))
 
-
-    axios.get('/material-categories')
-      .then((response : AxiosResponse) => {
-        const materialCategories: MaterialCategory[] = response.data
-        setMaterialCategories(materialCategories.map((materialCategory: MaterialCategory) => (
+    performTextSearch<IMaterialCategory>('/material-categories/search', { query: '', limit: '100' })
+      .then((response: SearchResult<IMaterialCategory>) => {
+        const materialCategories = response.results
+        setMaterialCategories(materialCategories.map((materialCategory: IMaterialCategory) => (
           {
             displayName: materialCategory.name,
-            value: materialCategory._id
+            value: materialCategory._id as string
           }
         )))
       })
       .catch((error: AxiosError) => useErrorMessage(error))
 
-    axios.get('/adhesive-categories')
-      .then((response : AxiosResponse) => {
-        const adhesiveCategories: AdhesiveCategory[] = response.data
-        setAdhesiveCategories(adhesiveCategories.map((adhesiveCategory: AdhesiveCategory) => (
+    performTextSearch<IAdhesiveCategory>('/adhesive-categories/search', { query: '', limit: '100' })
+      .then((response: SearchResult<IAdhesiveCategory>) => {
+        const adhesiveCategories = response.results
+        setAdhesiveCategories(adhesiveCategories.map((adhesiveCategory: IAdhesiveCategory) => (
           {
             displayName: adhesiveCategory.name,
-            value: adhesiveCategory._id
+            value: adhesiveCategory._id as string
           }
         )))
       })
       .catch((error: AxiosError) => useErrorMessage(error))
 
-    axios.get('/liner-types')
-      .then((response : AxiosResponse) => {
-        const linerTypes: LinerType[] = response.data
-        setLinerTypes(linerTypes.map((linerType: LinerType) => (
+    performTextSearch<ILinerType>('/liner-types/search', { query: '', limit: '100' })
+      .then((response: SearchResult<ILinerType>) => {
+        const linerTypes = response.results
+        setLinerTypes(linerTypes.map((linerType: ILinerType) => (
           {
             displayName: linerType.name,
-            value: linerType._id
+            value: linerType._id as string
           }
         )))
       })
@@ -279,7 +278,7 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
-                <MaterialLocationSelector 
+                <MaterialLocationSelector
                   setValue={setValue}
                   getValues={getValues}
                 />

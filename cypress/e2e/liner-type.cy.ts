@@ -7,15 +7,21 @@ describe('LinerType Views', () => {
   });
 
   it('Should render the LinerType form', () => {
-      cy.visit(`${formUrlPrefix}/liner-type`);
+    const url = `${formUrlPrefix}/liner-type`;
 
-      cy.get('[data-test=liner-type-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=liner-type-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the LinerType table and searchbar', () => {
-    cy.visit(`${tableUrlPrefix}/liner-type`);
+    const url = `${tableUrlPrefix}/liner-type`;
+
+    cy.visit(url);
 
     cy.get('#liner-type-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

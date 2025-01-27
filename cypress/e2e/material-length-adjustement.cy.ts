@@ -1,20 +1,27 @@
 describe('MaterialLengthAdjustment Views', () => {
   const formUrlPrefix = '/react-ui/forms'
+  const tableUrlPrefix = '/react-ui/tables'
 
   beforeEach(() => {
     cy.login();
   });
 
   it('Should render the MaterialLengthAdjustment form', () => {
-      cy.visit(`${formUrlPrefix}/material-length-adjustment`);
+    const url = `${formUrlPrefix}/material-length-adjustment`;
 
-      cy.get('[data-test=material-length-adjustment-form]').should('exist');
+    cy.visit(url);
+
+    cy.get('[data-test=material-length-adjustment-form]').should('exist');
+    cy.url().should('include', url)
   });
 
   it('Should render the Material Order table and searchbar', () => {
-    cy.visit(`/react-ui/tables/material-length-adjustment`);
+    const url = `${tableUrlPrefix}/material-length-adjustment`;
+
+    cy.visit(url);
 
     cy.get('#material-length-adjustment-table').should('exist');
     cy.get('[data-test=searchbar]').should('exist');
+    cy.url().should('include', url)
   });
 });

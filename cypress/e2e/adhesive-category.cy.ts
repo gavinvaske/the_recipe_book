@@ -17,6 +17,7 @@ describe('AdhesiveCategory Views', () => {
 
   it('Should render the AdhesiveCategory table and a searchbar', () => {
     const url = `${tableUrlPrefix}/adhesive-category`;
+
     cy.visit(url);
 
     cy.get('#adhesive-category-table').should('exist');

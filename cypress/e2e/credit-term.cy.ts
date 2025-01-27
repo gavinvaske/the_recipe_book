@@ -8,6 +8,7 @@ describe('CreditTerm Views', () => {
 
   it('Should render the CreditTerm form', () => {
     const url = `${formUrlPrefix}/credit-term`;
+
     cy.visit(url);
 
     cy.get('[data-test=credit-term-form]').should('exist');
@@ -16,6 +17,7 @@ describe('CreditTerm Views', () => {
 
   it('Should render the CreditTerm table and searchbar', () => {
     const url = `${tableUrlPrefix}/credit-term`;
+
     cy.visit(url);
 
     cy.get('#credit-term-table').should('exist');

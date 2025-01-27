@@ -3,18 +3,19 @@ import { useForm } from'react-hook-form';
 import './ContactForm.scss'
 import { AddressFormAttributes } from '../../../Address/AddressForm/AddressForm';
 import { Input } from '../../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../../_global/FormInputs/Select/Select';
+import { SelectOption } from '../../../_global/FormInputs/Select/Select';
 import { ShippingLocationFormAttributes } from '../../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
+import { CustomSelect } from '../../../_global/FormInputs/CustomSelect/CustomSelect';
 
-export const ContactForm = (props) => {
+interface Props {
+  onSubmit: (contact: any) => void, 
+  onCancel: () => void, 
+  locations: (AddressFormAttributes | ShippingLocationFormAttributes)[]
+}
+export const ContactForm = (props: Props) => {
   const { 
     onSubmit,
-    onCancel,
     locations
-  }: {
-    onSubmit: any, 
-    onCancel: any, 
-    locations: (AddressFormAttributes | ShippingLocationFormAttributes)[]
   } = props;
 
   const selectableLocations: SelectOption[] = locations.map((address: AddressFormAttributes | ShippingLocationFormAttributes, index: number) => {
@@ -24,7 +25,7 @@ export const ContactForm = (props) => {
     }
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<ContactFormAttributes>();
 
   return (
     <div className='modal-content'>
@@ -85,13 +86,14 @@ export const ContactForm = (props) => {
             isRequired={false}
             errors={errors}
         />
-        <Select 
+        <CustomSelect
           attribute='location'
           label="Location"
           options={selectableLocations}
           register={register}
           isRequired={false}
           errors={errors}
+          control={control}
         />
       <button className='submit-button' type="submit">Submit</button>
     </form>

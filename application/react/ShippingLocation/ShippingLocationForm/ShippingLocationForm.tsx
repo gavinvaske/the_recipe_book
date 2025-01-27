@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
-import { DeliveryMethod } from '../../_types/databasemodels/deliveryMethod.ts';
-
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
+import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { MongooseId } from '../../_types/typeAliases';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { IDeliveryMethod } from '@shared/types/models.ts';
 
-export const ShippingLocationForm = (props) => {
+interface Props {
+  onSubmit: (data: ShippingLocationFormAttributes) => void
+}
+
+export const ShippingLocationForm = (props: Props) => {
   const { 
     onSubmit,
-    onCancel
   } = props;
 
   const [ deliveryMethods, setDeliveryMethods ] = useState<SelectOption[]>([]);
@@ -21,19 +24,19 @@ export const ShippingLocationForm = (props) => {
   useEffect(() => {
     axios.get('/delivery-methods')
       .then((response: AxiosResponse) => {
-        const deliveryMethods: DeliveryMethod[] = response.data;
+        const deliveryMethods: IDeliveryMethod[] = response.data;
 
-        setDeliveryMethods(deliveryMethods.map((deliveryMethod: DeliveryMethod) => (
+        setDeliveryMethods(deliveryMethods.map((deliveryMethod: IDeliveryMethod) => (
           {
             displayName: deliveryMethod.name,
-            value: deliveryMethod._id
+            value: deliveryMethod._id as string
           }
         )))
       })
       .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
   
-  const { register, handleSubmit, formState: { errors } } = useForm<ShippingLocationFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<ShippingLocationFormAttributes>();
 
   return (
     <div className='modal-content'>
@@ -57,13 +60,14 @@ export const ShippingLocationForm = (props) => {
             errors={errors}
           />
         </div>
-        <Select
+        <CustomSelect
           attribute='deliveryMethod'
           label="Delivery Method"
           options={deliveryMethods}
           register={register}
           isRequired={false}
           errors={errors}
+          control={control}
         />
         <Input
           attribute='street'

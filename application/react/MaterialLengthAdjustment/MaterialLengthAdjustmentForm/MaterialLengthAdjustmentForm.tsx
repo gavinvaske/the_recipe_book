@@ -4,18 +4,18 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
-import { Select, SelectOption } from '../../_global/FormInputs/Select/Select';
-import { Material } from '../../_types/databasemodels/material.ts';
+import { SelectOption } from '../../_global/FormInputs/Select/Select';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 
 export const MaterialLengthAdjustmentForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialLengthAdjustmentFormFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<MaterialLengthAdjustmentFormFormAttributes>();
   const navigate = useNavigate();
   const [materials, setMaterials] = useState<SelectOption[]>([])
   const { mongooseId } = useParams();
@@ -80,13 +80,14 @@ export const MaterialLengthAdjustmentForm = () => {
         </div>
         <div className='form-wrapper'>
           <form onSubmit={handleSubmit(onFormSubmit)} data-test='material-length-adjustment-form'>
-            <Select
+            <CustomSelect
               attribute='material'
               label="Material"
               options={materials}
               register={register}
               isRequired={true}
               errors={errors}
+              control={control}
             />
             <Input
               attribute='length'

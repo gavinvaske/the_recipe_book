@@ -17,11 +17,12 @@ import { useAxios } from '../../_hooks/useAxios';
 import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
+import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm<IMaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues, control } = useForm<IMaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -303,37 +304,41 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
-                <Select
+                <CustomSelect
                   attribute='linerType'
                   label="Liner Type"
                   options={linerTypes}
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  control={control}
                 />
-                <Select
+                <CustomSelect
                   attribute='adhesiveCategory'
                   label="Adhesive Category"
                   options={adhesiveCategories}
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  control={control}
                 />
-                <Select
+                <CustomSelect
                   attribute='vendor'
                   label="Vendor"
                   options={vendors}
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  control={control}
                 />
-                <Select
+                <CustomSelect
                   attribute='materialCategory'
                   label="Material Category"
                   options={materialCategories}
                   register={register}
                   isRequired={true}
                   errors={errors}
+                  control={control}
                 />
 
               </div>

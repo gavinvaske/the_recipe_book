@@ -148,7 +148,7 @@ export const MaterialForm = () => {
         <div className='form-wrapper'>
           <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)} data-test='material-form'>
             <div className='form-elements-wrapper'>
-              <div className='group-field-wrapper'>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='name'
                   label="Name"
@@ -163,6 +163,29 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
+                <Input
+                  attribute='width'
+                  label="Width"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  unit='@storm'
+                />
+                <CustomSelect
+                  attribute='vendor'
+                  label="Vendor"
+                  options={vendors}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  control={control}
+                />
+                <MaterialLocationSelector
+                  setValue={setValue}
+                  getValues={getValues}
+                />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='thickness'
                   label="Thickness"
@@ -180,13 +203,21 @@ export const MaterialForm = () => {
                   unit='@storm'
                 />
                 <Input
-                  attribute='costPerMsi'
-                  label="Cost (per MSI)"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                  fieldType='currency'
-                />
+                    attribute='faceColor'
+                    label="Face Color"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+                  <Input
+                    attribute='adhesive'
+                    label="Adhesive"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='freightCostPerMsi'
                   label="Freight Cost (per MSI)"
@@ -196,26 +227,12 @@ export const MaterialForm = () => {
                   fieldType='currency'
                 />
                 <Input
-                  attribute='width'
-                  label="Width"
+                  attribute='costPerMsi'
+                  label="Cost (per MSI)"
                   register={register}
                   isRequired={true}
                   errors={errors}
-                  unit='@storm'
-                />
-                <Input
-                  attribute='faceColor'
-                  label="Face Color"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                />
-                <Input
-                  attribute='adhesive'
-                  label="Adhesive"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
+                  fieldType='currency'
                 />
                 <Input
                   attribute='quotePricePerMsi'
@@ -225,6 +242,8 @@ export const MaterialForm = () => {
                   errors={errors}
                   fieldType='currency'
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='lowStockThreshold'
                   label="Low Stock Threshold"
@@ -241,6 +260,8 @@ export const MaterialForm = () => {
                   errors={errors}
                   unit='@storm'
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='description'
                   label="Description"
@@ -248,6 +269,8 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='whenToUse'
                   label="When-to-use"
@@ -262,6 +285,8 @@ export const MaterialForm = () => {
                   isRequired={false}
                   errors={errors}
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='length'
                   label="Length"
@@ -293,10 +318,6 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                   unit='@storm'
-                />
-                <MaterialLocationSelector
-                  setValue={setValue}
-                  getValues={getValues}
                 />
                 <Input
                   attribute='productNumber'
@@ -333,15 +354,6 @@ export const MaterialForm = () => {
                   attribute='adhesiveCategory'
                   label="Adhesive Category"
                   options={adhesiveCategories}
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                  control={control}
-                />
-                <CustomSelect
-                  attribute='vendor'
-                  label="Vendor"
-                  options={vendors}
                   register={register}
                   isRequired={true}
                   errors={errors}

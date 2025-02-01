@@ -54,9 +54,11 @@ export const MaterialLocationSelector = <T extends FieldValues>(props: Props<T>)
 
   return (
     <div>
-      <p>Material Location(s)</p>
       <span className='location-error-message'>{errorMessage}</span>
-      <input id='material-location-input' type='text' placeholder='Ex: C13' onChange={(e) => setLocation(e.target.value)}></input>
+      <div className='input-wrapper'>
+        <label>Location</label>
+        <input id='material-location-input' type='text' placeholder='Ex: C13' onChange={(e) => setLocation(e.target.value)}></input>
+      </div>
       <button onClick={addLocation}>Click me Location</button>
       <div>
         {locations.map((location, index) => (

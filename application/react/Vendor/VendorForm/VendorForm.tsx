@@ -93,69 +93,73 @@ export const VendorForm = () => {
           <h3>{isUpdateRequest ? 'Update' : 'Create'} Vendor</h3>
         </div>
         <div className='form-wrapper'>
-          <form onSubmit={handleSubmit(onVendorFormSubmit)} data-test='vendor-form'>
+          <form onSubmit={handleSubmit(onVendorFormSubmit)} data-test='vendor-form' className='create-vendor-form'>
             <div className='form-elements-wrapper'>
               <div className='group-field-wrapper'>
                 <div className='triple-column-container'>
-                  <Input
-                      attribute='name'
-                      label="Name"
+                  <div className='input-group-wrapper'>
+                    <Input
+                        attribute='name'
+                        label="Name"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                    />
+                    <Input
+                      attribute='phoneNumber'
+                      label="Phone #"
                       register={register}
-                      isRequired={true}
+                      isRequired={false}
                       errors={errors}
-                  />
-                  <Input
-                    attribute='phoneNumber'
-                    label="Phone #"
-                    register={register}
-                    isRequired={false}
-                    errors={errors}
-                  />
-                  <Input
-                      attribute='email'
-                      label="Email"
-                      register={register}
-                      isRequired={true}
-                      errors={errors}
-                  />
-                  <TextArea
-                    attribute='notes'
-                    label="Notes"
-                    register={register}
-                    isRequired={false}
-                    errors={errors}
-                  />
-                  <Input
+                    />
+                    <Input
+                        attribute='email'
+                        label="Email"
+                        register={register}
+                        isRequired={true}
+                        errors={errors}
+                    />
+                    <Input
                       attribute='website'
                       label="Website"
                       register={register}
                       isRequired={true}
                       errors={errors}
-                  />
-                  <Input
-                    attribute='primaryContactName'
-                    label="P.C Name"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                  />
-                  <Input
-                    attribute='primaryContactPhoneNumber'
-                    label="P.C Phone #"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                  />
-                  <Input
-                    attribute='primaryContactEmail'
-                    label="P.C Email"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                  />
-                  <Input
-                    attribute='mfgSpecNumber'
-                    label="MFG Spec #"
+                    />
+                  </div>
+                  <div className='input-group-wrapper'>
+                    <Input
+                      attribute='primaryContactName'
+                      label="P.C Name"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
+                    />
+                    <Input
+                      attribute='primaryContactPhoneNumber'
+                      label="P.C Phone #"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
+                    />
+                    <Input
+                      attribute='primaryContactEmail'
+                      label="P.C Email"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
+                    />
+                    <Input
+                      attribute='mfgSpecNumber'
+                      label="MFG Spec #"
+                      register={register}
+                      isRequired={false}
+                      errors={errors}
+                    />
+                  </div>
+                  <TextArea
+                    attribute='notes'
+                    label="Notes"
                     register={register}
                     isRequired={false}
                     errors={errors}
@@ -165,11 +169,22 @@ export const VendorForm = () => {
             </div>
 
             <h3>Address:</h3>
+            <div className='tbl-pri'>
+            <div className='tbl-hdr'>
+              <div className='tbl-cell'>Name</div>
+              <div className='tbl-cell'>Street</div>
+              <div className='tbl-cell'>Apt/Unit</div>
+              <div className='tbl-cell'>City</div>
+              <div className='tbl-cell'>State</div>
+              <div className='tbl-cell'>Zip</div>
+              <div className='tbl-cell'>Action</div>
+            </div>
             {errors.address && <p style={{ color: "red" }}>{errors.address.message}</p>}
             {address && <AddressCard 
               data={address} 
               onDelete={() => setAddress(null)}
             />}
+            </div>
             <button className='add-new-row' type="button" onClick={() => setShowAddressForm(true)}><i className="fa-solid fa-plus"></i> Add Address</button>
 
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>

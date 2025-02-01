@@ -153,61 +153,61 @@ export const CustomerForm = () => {
           <h3>{isUpdateRequest ? 'Update' : 'Create'} Customer</h3>
         </div>
         <div className='form-wrapper'>
-          <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form'>
+          <form onSubmit={handleSubmit(onCustomerFormSubmit)} data-test='customer-form' className='create-customer-form'>
             <div className='form-elements-wrapper'>
-              <div className='group-field-wrapper'>
-                <div className='triple-column-container'>
-                  <Input
-                      attribute='customerId'
-                      label="Customer ID"
-                      register={register}
-                      isRequired={true}
-                      errors={errors}
-                  />
-                  <Input
-                    attribute='name'
-                    label="Name"
+              <div className='input-group-wrapper'>
+                <Input
+                    attribute='customerId'
+                    label="Customer ID"
                     register={register}
                     isRequired={true}
                     errors={errors}
-                  />
-                  <Input
-                    attribute='overun'
-                    label="Overun"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
-                    unit='@Storm'
-                  />
-                </div>
-                <TextArea
-                    attribute='notes'
-                    label="Notes"
-                    register={register}
-                    isRequired={false}
-                    errors={errors}
-                  />
-                <CustomSelect
-                  attribute='creditTerms'
-                  label="Credit Term"
-                  options={creditTerms}
+                />
+                <Input
+                  attribute='name'
+                  label="Name"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                />
+                <Input
+                  attribute='overun'
+                  label="Overun"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  unit='@Storm'
+                />
+              </div>
+              <TextArea
+                  attribute='notes'
+                  label="Notes"
                   register={register}
                   isRequired={false}
                   errors={errors}
-                  control={control}
                 />
-              </div>
+              <CustomSelect
+                attribute='creditTerms'
+                label="Credit Term"
+                options={creditTerms}
+                register={register}
+                isRequired={false}
+                errors={errors}
+                control={control}
+              />
             </div>
-            <h3>Business Locations:</h3>
-            <div id='business-location-cards'>
-              <div className='table-header'>
-                <div className='column-title'>Name</div>
-                <div className='column-title'>Address</div>
-                <div className='column-title'>Unit #</div>
-                <div className='column-title'>City</div>
-                <div className='column-title'>State</div>
-                <div className='column-title'>Zip</div>
-                <div className='column-title'>Delete</div>
+            <div className='title-header'>
+              <h3>Business Locations:</h3>
+            </div>
+            <div id='business-location-cards' className='tbl-pri'>
+              <div className='tbl-hdr'>
+                <div className='tbl-cell'>Name</div>
+                <div className='tbl-cell'>Address</div>
+                <div className='tbl-cell'>Unit #</div>
+                <div className='tbl-cell'>City</div>
+                <div className='tbl-cell'>State</div>
+                <div className='tbl-cell'>Zip</div>
+                <div className='tbl-cell'>Delete</div>
               </div>
               <div className='table'>
                 {
@@ -226,18 +226,20 @@ export const CustomerForm = () => {
             </div>
             <button className='add-new-row' type="button" onClick={() => setShowBusinessLocationForm(true)}><i className="fa-solid fa-plus"></i> Add Business Location</button>
 
-            <h3>Shipping Locations:</h3>
-            <div id='shipping-location-cards'>
-              <div className='table-header'>
-                  <div className='column-title'>Freight Acct #:</div>
-                  <div className='column-title'>Delivery Method</div>
-                  <div className='column-title'>Name</div>
-                  <div className='column-title'>Street</div>
-                  <div className='column-title'>Unit</div>
-                  <div className='column-title'>City</div>
-                  <div className='column-title'>State</div>
-                  <div className='column-title'>Zip</div>
-                  <div className='column-title'>Delete</div>
+            <div className='title-header'>
+              <h3>Shipping Locations:</h3>
+            </div>
+            <div id='shipping-location-cards' className='tbl-pri'>
+              <div className='tbl-hdr'>
+                  <div className='tbl-cell'>Freight Acct #:</div>
+                  <div className='tbl-cell'>Delivery Method</div>
+                  <div className='tbl-cell'>Name</div>
+                  <div className='tbl-cell'>Street</div>
+                  <div className='tbl-cell'>Unit</div>
+                  <div className='tbl-cell'>City</div>
+                  <div className='tbl-cell'>State</div>
+                  <div className='tbl-cell'>Zip</div>
+                  <div className='tbl-cell'>Delete</div>
                 </div>
               <div className='table'>
                 {
@@ -256,16 +258,18 @@ export const CustomerForm = () => {
             </div>
             <button className='add-new-row' type="button" onClick={() => setShowShippingLocationForm(true)}><i className="fa-solid fa-plus"></i>Add Shipping Location</button>
 
-            <h3>Billing Locations:</h3>
-            <div id='billing-location-cards'>
-            <div className='table-header'>
-                  <div className='column-title'>Name</div>
-                  <div className='column-title'>Street</div>
-                  <div className='column-title'>Unit</div>
-                  <div className='column-title'>City</div>
-                  <div className='column-title'>State</div>
-                  <div className='column-title'>Zip</div>
-                  <div className='column-title'>Delete</div>
+            <div className='title-header'>
+              <h3>Billing Locations:</h3>
+            </div>
+            <div id='billing-location-cards' className='tbl-pri'>
+            <div className='tbl-hdr'>
+                  <div className='tbl-cell'>Name</div>
+                  <div className='tbl-cell'>Street</div>
+                  <div className='tbl-cell'>Unit</div>
+                  <div className='tbl-cell'>City</div>
+                  <div className='tbl-cell'>State</div>
+                  <div className='tbl-cell'>Zip</div>
+                  <div className='tbl-cell'>Delete</div>
                 </div>
               <div className='table'>
                 {
@@ -284,18 +288,20 @@ export const CustomerForm = () => {
             </div>
             <button className='add-new-row' type="button" onClick={() => setShowBillingLocationForm(true)}><i className="fa-solid fa-plus"></i> Add Billing Location</button>
 
-            <h3>Contacts:</h3>
-            <div id='contact-cards'>
-              <div className='table-header'>
-                <div className='column-title'>Name</div>
-                <div className='column-title'>Freight Number</div>
-                <div className='column-title'>Delivery Method</div>
-                <div className='column-title'>Street</div>
-                <div className='column-title'>Unit</div>
-                <div className='column-title'>City</div>
-                <div className='column-title'>State</div>
-                <div className='column-title'>Zip</div>
-                <div className='column-title'>Delete</div>
+            <div className='title-header'>
+              <h3>Contacts:</h3>
+            </div>
+            <div id='contact-cards' className='tbl-pri'>
+              <div className='tbl-hdr'>
+                <div className='tbl-cell'>Name</div>
+                <div className='tbl-cell'>Freight Number</div>
+                <div className='tbl-cell'>Delivery Method</div>
+                <div className='tbl-cell'>Street</div>
+                <div className='tbl-cell'>Unit</div>
+                <div className='tbl-cell'>City</div>
+                <div className='tbl-cell'>State</div>
+                <div className='tbl-cell'>Zip</div>
+                <div className='tbl-cell'>Delete</div>
               </div>
               <div className='table'>
                 {

@@ -12,33 +12,33 @@ export const AddressForm = (props) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
-    <div className='modal-content'>
+    <div>
       <div className='header'>
         <h2>New Address</h2>
       </div>
       <form id='address-form' onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          attribute='name'
-          label="Name"
-          register={register}
-          isRequired={true}
-          errors={errors}
-        />
-        <Input
-          attribute='street'
-          label="Street"
-          register={register}
-          isRequired={true}
-          errors={errors}
-        />
-        <Input
-          attribute='unitOrSuite'
-          label="Unit or Suite #"
-          register={register}
-          isRequired={false}
-          errors={errors}
-        />
-        <div className='triple-column-container'>
+        <div className='input-group-wrapper'>
+          <Input
+            attribute='name'
+            label="Name"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='street'
+            label="Street"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='unitOrSuite'
+            label="Unit or Suite #"
+            register={register}
+            isRequired={false}
+            errors={errors}
+          />
           <Input
             attribute='city'
             label="City"

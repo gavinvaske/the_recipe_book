@@ -38,12 +38,12 @@ export const ShippingLocationForm = (props: Props) => {
   const { register, handleSubmit, formState: { errors }, control } = useForm<ShippingLocationFormAttributes>();
 
   return (
-    <div className='modal-content'>
+    <div className=''>
       <div className='header'>
         <h2>New Shipping Address</h2>
       </div>
       <form id='shipping-location-form' onSubmit={handleSubmit(onSubmit)}>
-        <div className='double-column-container'>
+        <div className='input-group-wrapper'>
           <Input
             attribute='name'
             label="Name"
@@ -58,31 +58,29 @@ export const ShippingLocationForm = (props: Props) => {
             isRequired={true}
             errors={errors}
           />
-        </div>
-        <CustomSelect
-          attribute='deliveryMethod'
-          label="Delivery Method"
-          options={deliveryMethods}
-          register={register}
-          isRequired={false}
-          errors={errors}
-          control={control}
-        />
-        <Input
-          attribute='street'
-          label="Street"
-          register={register}
-          isRequired={true}
-          errors={errors}
-        />
-        <Input
-          attribute='unitOrSuite'
-          label="Unit or Suite #"
-          register={register}
-          isRequired={false}
-          errors={errors}
-        />
-        <div className='triple-column-container'>
+          <CustomSelect
+            attribute='deliveryMethod'
+            label="Delivery Method"
+            options={deliveryMethods}
+            register={register}
+            isRequired={false}
+            errors={errors}
+            control={control}
+          />
+          <Input
+            attribute='street'
+            label="Street"
+            register={register}
+            isRequired={true}
+            errors={errors}
+          />
+          <Input
+            attribute='unitOrSuite'
+            label="Unit or Suite #"
+            register={register}
+            isRequired={false}
+            errors={errors}
+          />
           <Input
             attribute='city'
             label="City"
@@ -105,7 +103,6 @@ export const ShippingLocationForm = (props: Props) => {
             errors={errors}
           />
         </div>
-
         <button className='submit-button' type="submit">Submit</button>
       </form>
     </div>

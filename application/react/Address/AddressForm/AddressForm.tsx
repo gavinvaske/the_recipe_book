@@ -1,68 +1,82 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import './AddressForm.scss'
 import { Input } from '../../_global/FormInputs/Input/Input';
 
-export const AddressForm = (props) => {
-  const { 
+interface Props {
+  header?: string;
+  onSubmit?: (data: any) => void;
+  customClass?: string;
+  register: any;
+  errors: any;
+  handleSubmit?: any;  // TODO: ???
+  attribute: string;
+}
+
+export const AddressForm = (props: Props) => {  // TODO: Rename AddressForm to AddressFormInputs
+  const {
+    header,
     onSubmit,
-    onCancel
+    customClass,
+    register,
+    errors,
+    attribute,
+    handleSubmit
   } = props;
-  
-  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const attr = attribute;
 
   return (
-    <div>
+    <div className={customClass}>
       <div className='header'>
-        <h2>New Address</h2>
+        <h2>{header ? header : 'New Address'}</h2>
       </div>
       <form id='address-form' onSubmit={handleSubmit(onSubmit)}>
         <div className='input-group-wrapper'>
           <Input
-            attribute='name'
+            attribute={`${attr}.name`}
             label="Name"
             register={register}
             isRequired={true}
             errors={errors}
           />
           <Input
-            attribute='street'
+            attribute={`${attr}.street`}
             label="Street"
             register={register}
             isRequired={true}
             errors={errors}
           />
           <Input
-            attribute='unitOrSuite'
+            attribute={`${attr}.unitOrSuite`}
             label="Unit or Suite #"
             register={register}
             isRequired={false}
             errors={errors}
           />
           <Input
-            attribute='city'
+            attribute={`${attr}.city`}
             label="City"
             register={register}
             isRequired={true}
             errors={errors}
           />
           <Input
-            attribute='state'
+            attribute={`${attr}.state`}
             label="State"
             register={register}
             isRequired={true}
             errors={errors}
           />
           <Input
-            attribute='zipCode'
+            attribute={`${attr}.zipCode`}
             label="Zip"
             register={register}
             isRequired={true}
             errors={errors}
           />
         </div>
-        <button className='submit-button' type="submit">Submit</button>
-      </form>
+        {onSubmit ? (<button className='submit-button'>Submit</button>) : null}
+        </form>
     </div>
   )
 }
@@ -70,8 +84,8 @@ export const AddressForm = (props) => {
 export type AddressFormAttributes = {
   name: string,
   street: string,
+  unitOrSuite?: string
   city: string,
   state: string,
   zipCode: string,
-  unitOrSuite?: string
 }

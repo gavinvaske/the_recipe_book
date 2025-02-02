@@ -30,10 +30,14 @@ const schema = new Schema<IVendor>({
         type: String,
         required: false
     },
-    address: {
+    primaryAddress: {
         type: addressSchema,
         required: true
     },
+    remittanceAddress: {
+      type: addressSchema,
+      required: false
+  },
     primaryContactName: {
         type: String,
         required: true

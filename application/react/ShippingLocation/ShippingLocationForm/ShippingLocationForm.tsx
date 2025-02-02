@@ -13,7 +13,7 @@ interface Props {
   onSubmit: (data: ShippingLocationFormAttributes) => void
 }
 
-export const ShippingLocationForm = (props: Props) => {
+export const  ShippingLocationForm = (props: Props) => {
   const { 
     onSubmit,
   } = props;

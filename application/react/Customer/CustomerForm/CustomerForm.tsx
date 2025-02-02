@@ -123,11 +123,13 @@ export const CustomerForm = () => {
   const hideContactForm = () => setShowContactForm(false);
 
   const onBillingLocationFormSubmit = (billingLocation: AddressFormAttributes) => {
+    alert('onBillingLocationLocationFormSubmit: ' + JSON.stringify(billingLocation));
     hideBillingLocationForm();
     setBillingLocations([...billingLocations, billingLocation]);
   };
 
   const onShippingLocationFormSubmit = (shippingLocation: ShippingLocationFormAttributes) => {
+    alert('onShippingLocationFormSubmit: ' + JSON.stringify(shippingLocation));
     hideShippingLocationForm();
     setShippingLocations([...shippingLocations, shippingLocation]);
   };
@@ -327,8 +329,10 @@ export const CustomerForm = () => {
           showBillingLocationForm &&
           <FormModal
             Form={AddressForm}
-            onSubmit={onBillingLocationFormSubmit}
+            handleSubmit={handleSubmit}
             onCancel={hideBillingLocationForm}
+            register={register}
+            onSubmit={onBillingLocationFormSubmit}
           />
         }
         {
@@ -345,6 +349,7 @@ export const CustomerForm = () => {
             Form={AddressForm}
             onSubmit={onBusinessLocationFormSubmit}
             onCancel={hideBusinessLocationForm}
+            register={register}
           />
         }
         {

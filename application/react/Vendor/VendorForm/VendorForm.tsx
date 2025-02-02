@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './VendorForm.scss'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
-import { FormModal } from '../../_global/FormModal/FormModal';
 import { AddressForm } from '../../Address/AddressForm/AddressForm';
-import AddressCard from '../../Address/AddressCard/AddressCard';
 import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
@@ -21,15 +19,12 @@ export const VendorForm = () => {
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
-  const [showAddressForm, setShowAddressForm] = useState(false);
-  const [address, setAddress] = useState<AddressFormAttributes | null>();
+  const [isPrimaryAddressSameAsRemittance, setIsPrimaryAddressSameAsRemittance] = useState(true);
 
     const preloadFormData = async () => {  
       if (!isUpdateRequest) return;
 
       const vendor = await getOneVendor(mongooseId);
-  
-      setAddress(vendor.address);
   
       const formValues: VendorFormAttributes = {
         name: vendor.name,
@@ -41,6 +36,12 @@ export const VendorForm = () => {
         primaryContactPhoneNumber: vendor.primaryContactPhoneNumber,
         primaryContactEmail: vendor.primaryContactEmail,
         mfgSpecNumber: vendor.mfgSpecNumber,
+        primaryAddress: vendor.primaryAddress,
+        remittanceAddress: vendor.remittanceAddress || null
+      }
+
+      if (formValues.remittanceAddress) {
+        setIsPrimaryAddressSameAsRemittance(false)
       }
   
       reset(formValues) // Populates the form with loaded values
@@ -54,15 +55,11 @@ export const VendorForm = () => {
   }, [])
 
   const onVendorFormSubmit = (vendor: VendorFormAttributes) => {
-    if (!address) { 
-      setError("address", {
-        type: "manual",
-        message: "Address is required",
-      });
-      return;
+    if (isPrimaryAddressSameAsRemittance) {
+      vendor.remittanceAddress = null;
     }
   
-    vendor.address = address;
+    console.log('Submitting vendor form', vendor);
 
     if (isUpdateRequest) {
       axios.patch(`/vendors/${mongooseId}`, vendor)
@@ -80,11 +77,6 @@ export const VendorForm = () => {
         .catch((error: AxiosError) => useErrorMessage(error))
     }
   }
-
-  const onAddressFormSubmit = (address: AddressFormAttributes) => {
-    setShowAddressForm(false);
-    setAddress(address)
-  };
 
   return (
     <div id='vendor-form-page-wrapper' className='page-wrapper'>
@@ -168,38 +160,21 @@ export const VendorForm = () => {
               </div>
             </div>
 
-            <h3>Address:</h3>
-            <div className='tbl-pri'>
-            <div className='tbl-hdr'>
-              <div className='tbl-cell'>Name</div>
-              <div className='tbl-cell'>Street</div>
-              <div className='tbl-cell'>Apt/Unit</div>
-              <div className='tbl-cell'>City</div>
-              <div className='tbl-cell'>State</div>
-              <div className='tbl-cell'>Zip</div>
-              <div className='tbl-cell'>Action</div>
-            </div>
-            {errors.address && <p style={{ color: "red" }}>{errors.address.message}</p>}
-            {address && <AddressCard 
-              data={address} 
-              onDelete={() => setAddress(null)}
-            />}
-            </div>
-            <button className='add-new-row' type="button" onClick={() => setShowAddressForm(true)}><i className="fa-solid fa-plus"></i> Add Address</button>
+            <label>
+              <input
+                type="checkbox"
+                checked={isPrimaryAddressSameAsRemittance}
+                onChange={(e) => setIsPrimaryAddressSameAsRemittance(e.target.checked)}
+              />
+              Remittance same as Primary Address?
+            </label>
+            <AddressForm attribute={'primaryAddress'} register={register} errors={errors} customClass='primary-address-inputs' header={'Primary Address'}/>
+
+            {!isPrimaryAddressSameAsRemittance && (<AddressForm attribute={'remittanceAddress'} register={register} errors={errors} customClass='remittance-address-inputs' header={'Remittance Address'} />)}
 
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
-
-        {/* Address Modal */}
-        {
-          showAddressForm &&
-          <FormModal
-            Form={AddressForm}
-            onSubmit={onAddressFormSubmit}
-            onCancel={() => setShowAddressForm(false)}
-          />
-        }
       </div>
     </div>
   );
@@ -207,13 +182,14 @@ export const VendorForm = () => {
 
 export type VendorFormAttributes = {
       name: string,
-      phoneNumber?: string,
-      email?: string,
-      notes?: string,
-      website?: string,
-      address: AddressFormAttributes,
+      phoneNumber?: string | undefined,
+      email?: string | undefined,
+      notes?: string | undefined,
+      website?: string | undefined,
+      primaryAddress: AddressFormAttributes,
+      remittanceAddress: AddressFormAttributes | null,
       primaryContactName: string,
       primaryContactPhoneNumber: string,
       primaryContactEmail: string,
-      mfgSpecNumber?: string
+      mfgSpecNumber?: string | undefined
 }

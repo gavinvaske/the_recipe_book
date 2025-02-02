@@ -1,7 +1,19 @@
 import React from 'react'
 import './AddressCard.scss'
 
-const AddressCard = (props) => {
+interface Props {
+  data: {
+    name: string;
+    street: string;
+    unitOrSuite?: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  onDelete: () => void;
+}
+
+const AddressCard = (props: Props) => {
   const { data, onDelete } = props;
   const { name, street, unitOrSuite, city, state, zipCode } = data;
   return (

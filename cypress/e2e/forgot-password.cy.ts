@@ -1,4 +1,4 @@
-describe.only('Reset Password Test Cases', () => {
+describe('Reset Password Test Cases', () => {
   const forgotPasswordUrl = '/react-ui/forgot-password';
 
   it('Login page should have a reset password link that links to the correct page', () => {

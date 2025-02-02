@@ -192,6 +192,9 @@ const schema = new Schema<IDie>({
     arrivalDate: {
         type: Date
     },
+    isLamination: {
+      type: Boolean
+    }
 }, { timestamps: true });
 
 schema.index({ dieNumber: 'text', serialNumber: 'text' });

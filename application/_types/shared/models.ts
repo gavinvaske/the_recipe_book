@@ -109,4 +109,5 @@ export interface IDie extends SchemaTimestampsConfig, Document {
   quantity: number,
   orderDate?: Date,
   arrivalDate?: Date
+  isLamination?: boolean
 }

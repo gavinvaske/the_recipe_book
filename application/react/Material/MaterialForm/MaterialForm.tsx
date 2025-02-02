@@ -9,15 +9,17 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { useAxios } from '../../_hooks/useAxios';
-import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
 
+const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
+
+
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues, control } = useForm<IMaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, setError, reset, control } = useForm<IMaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -52,7 +54,7 @@ export const MaterialForm = () => {
           facesheetWeightPerMsi: data.facesheetWeightPerMsi,
           adhesiveWeightPerMsi: data.adhesiveWeightPerMsi,
           linerWeightPerMsi: data.linerWeightPerMsi,
-          locations: data.locations,
+          locationsAsStr: data.locations.join(', '),
           productNumber: data.productNumber,
           masterRollSize: data.masterRollSize,
           image: data.image,
@@ -61,7 +63,7 @@ export const MaterialForm = () => {
           vendor: data.vendor as MongooseId,
           materialCategory: data.materialCategory,
           lowStockThreshold: data.lowStockThreshold,
-          lowStockBuffer: data.lowStockBuffer,
+          lowStockBuffer: data.lowStockBuffer
         }
 
         reset(formValues) // pre-populate form with existing values from the DB
@@ -122,6 +124,13 @@ export const MaterialForm = () => {
   }, [])
 
   const onSubmit = (formData: IMaterialFormAttributes) => {
+    formData.locations = formData.locationsAsStr?.split(',').map((location) => location.trim().toUpperCase());
+    delete formData.locationsAsStr; // locationsAsStr is not needed in the request body.
+
+    if (!formData.locations?.every((location) => locationRegex.test(location))) {
+      setError('locationsAsStr', { message: 'Must be in the format: A1, B2, C33' });
+      return;
+    }
     if (isUpdateRequest) {
       axios.patch(`/materials/${mongooseId}`, formData)
         .then((_) => {
@@ -180,9 +189,12 @@ export const MaterialForm = () => {
                   errors={errors}
                   control={control}
                 />
-                <MaterialLocationSelector
-                  setValue={setValue}
-                  getValues={getValues}
+                <Input
+                  attribute='locationsAsStr'
+                  label="Locations (comma-separated)"
+                  register={register}
+                  isRequired={false}
+                  errors={errors}
                 />
               </div>
               <div className='input-group-wrapper'>
@@ -369,6 +381,9 @@ export const MaterialForm = () => {
                   control={control}
                 />
               </div>
+
+              <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
+
               <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
             </div>
           </form>
@@ -399,7 +414,8 @@ export interface IMaterialFormAttributes {
   facesheetWeightPerMsi: number;
   adhesiveWeightPerMsi: number;
   linerWeightPerMsi: number;
-  locations: string[];
+  locations?: string[] | undefined;
+  locationsAsStr?: string;
   linerType: MongooseId;
   productNumber: string;
   masterRollSize: number;

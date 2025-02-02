@@ -276,6 +276,9 @@ export const DieForm = () => {
               errors={errors}
               isRequired={true}
             />
+            {/* Let user know some form inputs had errors */}
+            <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
+
             <div className='btn-wrapper'>
               <button className='create-entry submit-button' type='submit'>{isUpdateRequest ? 'Update' : 'Create'}</button>
             </div>

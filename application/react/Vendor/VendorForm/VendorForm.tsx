@@ -186,6 +186,8 @@ export const VendorForm = () => {
             />}
             </div>
             <button className='add-new-row' type="button" onClick={() => setShowAddressForm(true)}><i className="fa-solid fa-plus"></i> Add Address</button>
+            {/* Let user know some form inputs had errors */}
+            <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
 
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>

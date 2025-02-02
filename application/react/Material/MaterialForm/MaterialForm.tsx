@@ -14,9 +14,7 @@ import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
-
 const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
-
 
 export const MaterialForm = () => {
   const { register, handleSubmit, formState: { errors }, setError, reset, control } = useForm<IMaterialFormAttributes>();

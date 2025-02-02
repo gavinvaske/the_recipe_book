@@ -859,15 +859,15 @@ describe('validation', () => {
     });
 
     describe('attribute: isLamination', () => {
-       it('should be a boolean', () => {
-          const boolean = chance.bool();
-          dieAttributes.isLamination = boolean
+        it('should be a boolean', () => {
+            const boolean = chance.bool();
+            dieAttributes.isLamination = boolean;
 
-          const die = new DieModel(dieAttributes);
+            const die = new DieModel(dieAttributes);
 
-          expect(die.isLamination).toEqual(boolean);
-       });
-    })
+            expect(die.isLamination).toEqual(boolean);
+        });
+    });
 
     describe('verify timestamps on created object', () => {
         beforeAll(async () => {

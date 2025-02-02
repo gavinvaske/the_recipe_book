@@ -24,7 +24,8 @@ export const DieForm = () => {
 
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm<DieFormAttributes>({
     defaultValues: {
-      quantity: 1
+      quantity: 1,
+      isLamination: true
     }
   });
 
@@ -61,7 +62,8 @@ export const DieForm = () => {
       specialType: die.specialType || '',
       serialNumber: die.serialNumber,
       status: die.status,
-      quantity: die.quantity
+      quantity: die.quantity,
+      isLamination: die.isLamination
     }
 
     reset(formValues) // Loads data into the form and forces a rerender
@@ -258,6 +260,14 @@ export const DieForm = () => {
                 errors={errors}
                 isRequired={true}
               />
+              <Input
+                  attribute='isLamination'
+                  label="Lamination"
+                  register={register}
+                  isRequired={false}
+                  errors={errors}
+                  fieldType='checkbox'
+              />
             </div>
             <TextArea
               attribute='notes'
@@ -298,4 +308,5 @@ type DieFormAttributes = {
   serialNumber: string;
   status: string;
   quantity: number;
+  isLamination: boolean | undefined;
 }

@@ -192,7 +192,6 @@ export const MaterialOrderForm = () => {
                   register={register}
                   isRequired={false}
                   errors={errors}
-                  className='test'
                   fieldType='checkbox'
               />
               <TextArea

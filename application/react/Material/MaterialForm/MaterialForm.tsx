@@ -122,7 +122,9 @@ export const MaterialForm = () => {
   }, [])
 
   const onSubmit = (formData: IMaterialFormAttributes) => {
-    formData.locations = formData.locationsAsStr?.split(',').map((location) => location.trim().toUpperCase());
+    const locationsAsStr = formData.locationsAsStr?.trim()
+
+    formData.locations =  locationsAsStr?.length ? locationsAsStr.split(',').map((location: string) => location.trim().toUpperCase()) : [];
     delete formData.locationsAsStr; // locationsAsStr is not needed in the request body.
 
     if (!formData.locations?.every((location) => locationRegex.test(location))) {

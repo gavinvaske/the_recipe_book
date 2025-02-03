@@ -105,7 +105,7 @@ export const LinerTypeTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Liner Types</h1>
-          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{linerTypeSearchResults?.totalResults}</p> results.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{linerTypeSearchResults?.totalResults || 0}</p> results.</p>
         </div>
          <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

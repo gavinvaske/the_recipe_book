@@ -13,7 +13,7 @@ const schema = new Schema<ICreditTerm>({
         unique: true,
         index: true
     },
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 schema.index({ description: 'text' });
 

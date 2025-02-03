@@ -2,6 +2,7 @@ import Chance from 'chance';
 import { VendorModel } from '../../application/api/models/vendor.ts';
 import * as databaseService from '../../application/api/services/databaseService';
 import mongoose from 'mongoose';
+import * as testDataGenerator from '../testDataGenerator';
 
 const chance = Chance();
 
@@ -10,15 +11,6 @@ describe('validation', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-
-        const addressAttributes = {
-            name: chance.string(),
-            street: chance.string(),
-            unitOrSuite: chance.string(),
-            city: chance.string(),
-            state: chance.string(),
-            zipCode: '80426',
-        };
 
         vendorAttributes = {
             name: chance.string(),
@@ -29,7 +21,8 @@ describe('validation', () => {
             primaryContactName: chance.string(),
             primaryContactPhoneNumber: chance.phone(),
             primaryContactEmail: chance.email(),
-            address: addressAttributes
+            primaryAddress: testDataGenerator.mockData.Address(),
+            remittanceAddress: chance.pickone([testDataGenerator.mockData.Address(), undefined])
         };
     });
 
@@ -185,9 +178,9 @@ describe('validation', () => {
         });
     });
 
-    describe('attribute: address', () => {
+    describe('attribute: primaryAddress', () => {
         it('should be required', () => {
-            delete vendorAttributes.address;
+            delete vendorAttributes.primaryAddress;
             const vendor = new VendorModel(vendorAttributes);
             
             const error = vendor.validateSync();
@@ -198,10 +191,28 @@ describe('validation', () => {
         it('should be an instance of a mongoose object', () => {
             const vendor = new VendorModel(vendorAttributes);
 
-            expect(vendor.address._id).toEqual(expect.any(mongoose.Types.ObjectId));
-            expect(vendor.address.street.toUpperCase()).toEqual(vendorAttributes.address.street.toUpperCase());
+            expect(vendor.primaryAddress._id).toEqual(expect.any(mongoose.Types.ObjectId));
+            expect(vendor.primaryAddress.street.toUpperCase()).toEqual(vendorAttributes.primaryAddress.street.toUpperCase());
         });
     });
+
+    describe('attribute: remittanceAddress', () => {
+      it('should not be required', () => {
+        delete vendorAttributes.remittanceAddress;
+        const vendor = new VendorModel(vendorAttributes);
+
+        const error = vendor.validateSync();
+
+        expect(error).not.toBeDefined();
+    });
+
+    it('should be an instance of a mongoose object', () => {
+      const vendor = new VendorModel(vendorAttributes);
+
+      expect(vendor.remittanceAddress._id).toEqual(expect.any(mongoose.Types.ObjectId));
+      expect(vendor.remittanceAddress.street.toUpperCase()).toEqual(vendorAttributes.remittanceAddress.street.toUpperCase());
+  });
+  });
 
     describe('attribute: primaryContactName', () => {
         it('should be required', () => {

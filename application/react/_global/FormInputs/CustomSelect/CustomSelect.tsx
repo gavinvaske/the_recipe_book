@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CustomSelect.scss';
 import { FieldErrors, FieldValues, UseFormRegister, Path, Controller, Control } from 'react-hook-form';
-import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage.js';
+import FormErrorMessage from '../../FormErrorMessage/FormErrorMessage.tsx';
 
 export type SelectOption = {
   displayName: string,

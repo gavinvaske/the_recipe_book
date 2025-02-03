@@ -111,7 +111,7 @@ const schema = new Schema({
         set: convertDollarsToPennies,
         min: 0
     }
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 schema.index({ 
     'purchaseOrderNumber': 'text',

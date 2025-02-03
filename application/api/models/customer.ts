@@ -62,6 +62,6 @@ const schema = new Schema<ICustomer>({
         type: Number,
         required: true
     }
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 export const CustomerModel = mongoose.model<ICustomer>('Customer', schema);

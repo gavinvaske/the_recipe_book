@@ -10,6 +10,6 @@ const schema = new Schema<IAdhesiveCategory>({
         type: String,
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 export const AdhesiveCategoryModel = mongoose.model<IAdhesiveCategory>('AdhesiveCategory', schema);

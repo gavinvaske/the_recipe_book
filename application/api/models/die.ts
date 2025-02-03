@@ -195,7 +195,7 @@ const schema = new Schema<IDie>({
     isLamination: {
       type: Boolean
     }
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 schema.index({ dieNumber: 'text', serialNumber: 'text' });
 

@@ -40,7 +40,8 @@ export interface IVendor extends SchemaTimestampsConfig, Document  {
   email?: string;
   notes?: string;
   website?: string;
-  address: IAddress;
+  primaryAddress: IAddress;
+  remittanceAddress: IAddress;
   primaryContactName: string;
   primaryContactPhoneNumber: string;
   primaryContactEmail: string;

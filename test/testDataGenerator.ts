@@ -47,7 +47,8 @@ function getDie() {
         specialType: chance.string(),
         serialNumber: chance.string(),
         status: chance.pickone(dieStatuses),
-        quantity: chance.d100()
+        quantity: chance.d100(),
+        isLamination: chance.pickone([chance.bool(), undefined])
     };
 }
 

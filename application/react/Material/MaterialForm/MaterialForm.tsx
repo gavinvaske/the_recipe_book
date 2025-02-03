@@ -9,15 +9,15 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { MongooseId } from '../../_types/typeAliases';
 import { useAxios } from '../../_hooks/useAxios';
-import { MaterialLocationSelector } from './MaterialLocationSelector/MaterialLocationSelector.tsx';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 
 const materialTableUrl = '/react-ui/tables/material'
+const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues, control } = useForm<IMaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, setError, reset, control } = useForm<IMaterialFormAttributes>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -52,7 +52,7 @@ export const MaterialForm = () => {
           facesheetWeightPerMsi: data.facesheetWeightPerMsi,
           adhesiveWeightPerMsi: data.adhesiveWeightPerMsi,
           linerWeightPerMsi: data.linerWeightPerMsi,
-          locations: data.locations,
+          locationsAsStr: data.locations.join(', '),
           productNumber: data.productNumber,
           masterRollSize: data.masterRollSize,
           image: data.image,
@@ -61,7 +61,7 @@ export const MaterialForm = () => {
           vendor: data.vendor as MongooseId,
           materialCategory: data.materialCategory,
           lowStockThreshold: data.lowStockThreshold,
-          lowStockBuffer: data.lowStockBuffer,
+          lowStockBuffer: data.lowStockBuffer
         }
 
         reset(formValues) // pre-populate form with existing values from the DB
@@ -122,6 +122,15 @@ export const MaterialForm = () => {
   }, [])
 
   const onSubmit = (formData: IMaterialFormAttributes) => {
+    const locationsAsStr = formData.locationsAsStr?.trim()
+
+    formData.locations =  locationsAsStr?.length ? locationsAsStr.split(',').map((location: string) => location.trim().toUpperCase()) : [];
+    delete formData.locationsAsStr; // locationsAsStr is not needed in the request body.
+
+    if (!formData.locations?.every((location) => locationRegex.test(location))) {
+      setError('locationsAsStr', { message: 'Must be in the format: A1, B2, C33' });
+      return;
+    }
     if (isUpdateRequest) {
       axios.patch(`/materials/${mongooseId}`, formData)
         .then((_) => {
@@ -148,7 +157,7 @@ export const MaterialForm = () => {
         <div className='form-wrapper'>
           <form id='material-form' className='material-form' onSubmit={handleSubmit(onSubmit)} data-test='material-form'>
             <div className='form-elements-wrapper'>
-              <div className='group-field-wrapper'>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='name'
                   label="Name"
@@ -163,6 +172,32 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
+                <Input
+                  attribute='width'
+                  label="Width"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  unit='@storm'
+                />
+                <CustomSelect
+                  attribute='vendor'
+                  label="Vendor"
+                  options={vendors}
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
+                  control={control}
+                />
+                <Input
+                  attribute='locationsAsStr'
+                  label="Locations (comma-separated)"
+                  register={register}
+                  isRequired={false}
+                  errors={errors}
+                />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='thickness'
                   label="Thickness"
@@ -180,13 +215,21 @@ export const MaterialForm = () => {
                   unit='@storm'
                 />
                 <Input
-                  attribute='costPerMsi'
-                  label="Cost (per MSI)"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                  fieldType='currency'
-                />
+                    attribute='faceColor'
+                    label="Face Color"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+                  <Input
+                    attribute='adhesive'
+                    label="Adhesive"
+                    register={register}
+                    isRequired={true}
+                    errors={errors}
+                  />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='freightCostPerMsi'
                   label="Freight Cost (per MSI)"
@@ -196,26 +239,12 @@ export const MaterialForm = () => {
                   fieldType='currency'
                 />
                 <Input
-                  attribute='width'
-                  label="Width"
+                  attribute='costPerMsi'
+                  label="Cost (per MSI)"
                   register={register}
                   isRequired={true}
                   errors={errors}
-                  unit='@storm'
-                />
-                <Input
-                  attribute='faceColor'
-                  label="Face Color"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                />
-                <Input
-                  attribute='adhesive'
-                  label="Adhesive"
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
+                  fieldType='currency'
                 />
                 <Input
                   attribute='quotePricePerMsi'
@@ -225,6 +254,8 @@ export const MaterialForm = () => {
                   errors={errors}
                   fieldType='currency'
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='lowStockThreshold'
                   label="Low Stock Threshold"
@@ -241,6 +272,8 @@ export const MaterialForm = () => {
                   errors={errors}
                   unit='@storm'
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='description'
                   label="Description"
@@ -248,6 +281,8 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='whenToUse'
                   label="When-to-use"
@@ -262,6 +297,8 @@ export const MaterialForm = () => {
                   isRequired={false}
                   errors={errors}
                 />
+              </div>
+              <div className='input-group-wrapper'>
                 <Input
                   attribute='length'
                   label="Length"
@@ -293,10 +330,6 @@ export const MaterialForm = () => {
                   isRequired={true}
                   errors={errors}
                   unit='@storm'
-                />
-                <MaterialLocationSelector
-                  setValue={setValue}
-                  getValues={getValues}
                 />
                 <Input
                   attribute='productNumber'
@@ -339,15 +372,6 @@ export const MaterialForm = () => {
                   control={control}
                 />
                 <CustomSelect
-                  attribute='vendor'
-                  label="Vendor"
-                  options={vendors}
-                  register={register}
-                  isRequired={true}
-                  errors={errors}
-                  control={control}
-                />
-                <CustomSelect
                   attribute='materialCategory'
                   label="Material Category"
                   options={materialCategories}
@@ -357,6 +381,9 @@ export const MaterialForm = () => {
                   control={control}
                 />
               </div>
+              {/* Let user know some form inputs had errors */}
+              <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
+
               <button className='create-entry submit-button' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
             </div>
           </form>
@@ -387,7 +414,8 @@ export interface IMaterialFormAttributes {
   facesheetWeightPerMsi: number;
   adhesiveWeightPerMsi: number;
   linerWeightPerMsi: number;
-  locations: string[];
+  locations?: string[] | undefined;
+  locationsAsStr?: string;
   linerType: MongooseId;
   productNumber: string;
   masterRollSize: number;

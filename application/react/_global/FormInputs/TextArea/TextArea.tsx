@@ -23,7 +23,7 @@ export const TextArea = <T extends FieldValues>(props: Props<T>) => {
   );
 
   return (
-    <div className='input-wrapper'>
+    <div className='input-wrapper text-area'>
       <label>{label}<span className='red'>{isRequired ? '*' : ''}</span>:</label>
       <textarea
         {...register(attribute,

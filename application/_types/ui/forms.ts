@@ -144,3 +144,28 @@ export type IAdhesiveCategoryForm = {
 export type IMaterialCategoryForm = {
   name: string;
 };
+
+export type IProductForm = {
+  productDescription: string;
+  unwindDirection: number;
+  ovOrEpm: string;
+  artNotes: string;
+  pressNotes: string;
+  finishType: string;
+  coreDiameter: number;
+  labelsPerRoll: number;
+  dieCuttingNotes: string;
+  overun: number;
+  spotPlate: boolean;
+  numberOfColors: number;
+  die: MongooseId;
+  primaryMaterial: MongooseId;
+  secondaryMaterial: MongooseId;
+  finish: MongooseId;
+  customer: MongooseId;
+};
+
+export type IDeliveryMethodForm = {
+  name: string;
+};
+

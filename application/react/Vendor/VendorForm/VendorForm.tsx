@@ -8,6 +8,10 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneVendor } from '../../_queries/vendors';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { IAddress } from '@shared/types/schemas';
+import { VendorContactForm, VendorContactFormValues } from './VendorContactForm/VendorContactForm';
+import { FormModal } from '../../_global/FormModal/FormModal';
+import { VendorContacts } from './VendorContacts/VendorContacts';
 import { IVendorForm } from '@ui/types/forms';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
@@ -19,6 +23,8 @@ export const VendorForm = () => {
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
   const [isPrimaryAddressSameAsRemittance, setIsPrimaryAddressSameAsRemittance] = useState(true);
+  const [contacts, setContacts] = useState<VendorContactFormValues[]>([])
+  const [showContactForm, setShowContactForm] = useState(false);
 
   const preloadFormData = async () => {
     if (!isUpdateRequest) return;
@@ -73,6 +79,15 @@ export const VendorForm = () => {
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }
+  }
+
+  const onContactFormSubmit = (contact: VendorContactFormValues) => {
+    hideContactForm();
+    setContacts(prev => [...prev, contact])
+  }
+
+  const hideContactForm = () => {
+    setShowContactForm(false)
   }
 
   return (
@@ -174,12 +189,24 @@ export const VendorForm = () => {
             )
             }
 
+            <VendorContacts contacts={contacts} setContacts={setContacts} />
+            <button className='add-new-row' type="button" onClick={() => setShowContactForm(true)}><i className="fa-solid fa-plus"></i> Add Contact</button>
+
             {/* Let user know some form inputs had errors */}
             <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
 
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
+
+        {
+          showContactForm &&
+          <FormModal
+            Form={VendorContactForm}
+            onSubmit={onContactFormSubmit}
+            onCancel={hideContactForm}
+          />
+        }
       </div>
     </div>
   );

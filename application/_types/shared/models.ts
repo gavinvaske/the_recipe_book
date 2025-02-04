@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 import { SchemaTimestampsConfig } from "mongoose";
-import { IAddress, IContact, IShippingLocation } from "./schemas.ts";
+import { IAddress, IContact, IShippingLocation, IVendorContact } from "./schemas.ts";
 
 export interface IDeliveryMethod extends SchemaTimestampsConfig, Document {
   name: string;
@@ -110,5 +110,6 @@ export interface IDie extends SchemaTimestampsConfig, Document {
   quantity: number,
   orderDate?: Date,
   arrivalDate?: Date
-  isLamination?: boolean
+  isLamination?: boolean,
+  contacts: IVendorContact[]
 }

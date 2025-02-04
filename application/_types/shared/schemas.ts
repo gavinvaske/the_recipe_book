@@ -25,3 +25,14 @@ export interface IAddress extends SchemaTimestampsConfig, Document {
   state: string;
   zipCode: string;
 }
+
+// TODO: add optional fields
+export interface IVendorContact extends SchemaTimestampsConfig, Document {
+  fullName: string;
+  cellPhone: string;
+  workPhone: string;
+  ext: string;
+  title: string;
+  email: string;
+  notes: string;
+}

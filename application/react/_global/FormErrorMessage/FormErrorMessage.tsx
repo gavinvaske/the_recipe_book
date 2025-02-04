@@ -1,21 +1,24 @@
 import React from 'react';
 import './FormErrorMessage.scss'
+import { FieldErrors, FieldValues } from 'react-hook-form';
 
-interface Props {
-  errors: any,  // TODO: type this
+interface Props<T extends FieldValues> {
+  errors: FieldErrors<T>,  // TODO: type this
   name: string,
 }
 
-const FormErrorMessage = ({ errors, name }: Props) => {
-  const errorMessage = name.split('.').reduce((obj, key) => obj && obj[key], errors);
+const FormErrorMessage = <T extends FieldValues>({ errors, name }: Props<T>) => {
+  const errorMessage = name.split('.').reduce((obj, key) => {
+    return obj && typeof obj === 'object' ? (obj as Record<string, any>)[key] : undefined;
+  }, errors as Record<string, any>);
 
-  if (!Object.keys(errors).length || !errorMessage) {
-    return null
-  }
+  const message = typeof errorMessage === 'object' && 'message' in errorMessage
+    ? String(errorMessage.message)
+    : undefined;
 
   return (
     <div className="form-error-message">
-      {errorMessage?.message || 'Unknown Error'}
+      {message || 'Uh oh, unknown error'}
 
     </div>
   );

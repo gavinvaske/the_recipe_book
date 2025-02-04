@@ -8,7 +8,6 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneVendor } from '../../_queries/vendors';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
-import FormErrorMessage from '../../_global/FormErrorMessage/FormErrorMessage';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
 
@@ -54,7 +53,6 @@ export const VendorForm = () => {
   }, [])
 
   const onVendorFormSubmit = (vendor: VendorFormAttributes) => {
-    console.log('Submitting vendor form', vendor);
     if (isPrimaryAddressSameAsRemittance) {
       vendor.remittanceAddress = null;
     }
@@ -195,17 +193,11 @@ interface AddressInputFieldProps {
 const AddressFormAttributes = (props: AddressInputFieldProps) => {
   const { attribute, register, errors, label } = props;
 
-  if (Object.keys(errors).length > 0) {
-    console.log(errors)
-  }
-
-
   return (
     <div>
       <div className='header'>
         <h2>{label}</h2>
       </div>
-      <FormErrorMessage errors={errors} name={attribute}/>
       <div className='input-group-wrapper'>
         <Input
           attribute={`${attribute}.name`}

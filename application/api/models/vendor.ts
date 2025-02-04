@@ -30,10 +30,14 @@ const schema = new Schema<IVendor>({
         type: String,
         required: false
     },
-    address: {
+    primaryAddress: {
         type: addressSchema,
         required: true
     },
+    remittanceAddress: {
+      type: addressSchema,
+      required: false
+  },
     primaryContactName: {
         type: String,
         required: true
@@ -52,7 +56,7 @@ const schema = new Schema<IVendor>({
         type: String,
         required: false
     }
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 
 schema.index({ name: 'text', mfgSpecNumber: 'text' });

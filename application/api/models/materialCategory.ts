@@ -11,7 +11,7 @@ const schema = new Schema<IMaterialCategory>({
         required: true,
         uppercase: true
     }
-}, { timestamps: true });
+}, { timestamps: true, strict: 'throw' });
 
 
 export const MaterialCategoryModel = mongoose.model<IMaterialCategory>('MaterialCategory', schema);

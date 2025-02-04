@@ -1,9 +1,9 @@
+import { IVendor } from '@shared/types/models.ts';
 import axios, { AxiosResponse } from 'axios';
-import { Vendor } from '../_types/databasemodels/vendor.ts';
 
-export const getOneVendor = async (mongooseId: string): Promise<Vendor> => {
+export const getOneVendor = async (mongooseId: string): Promise<IVendor> => {
   const response : AxiosResponse = await axios.get(`/vendors/${mongooseId}`);
-  const vendor: Vendor = response.data;
+  const vendor: IVendor = response.data;
 
   return vendor;
 }

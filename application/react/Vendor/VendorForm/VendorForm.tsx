@@ -2,67 +2,61 @@ import React, { useEffect, useState } from 'react';
 import './VendorForm.scss'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useForm } from 'react-hook-form';
-import { FormModal } from '../../_global/FormModal/FormModal';
-import { AddressForm } from '../../Address/AddressForm/AddressForm';
-import AddressCard from '../../Address/AddressCard/AddressCard';
-import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneVendor } from '../../_queries/vendors';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { IAddress } from '@shared/types/schemas';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
 
 export const VendorForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, setError, reset } = useForm<VendorFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<VendorFormAttributes>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
-  const [showAddressForm, setShowAddressForm] = useState(false);
-  const [address, setAddress] = useState<AddressFormAttributes | null>();
+  const [isPrimaryAddressSameAsRemittance, setIsPrimaryAddressSameAsRemittance] = useState(true);
 
-    const preloadFormData = async () => {  
-      if (!isUpdateRequest) return;
+  const preloadFormData = async () => {
+    if (!isUpdateRequest) return;
 
-      const vendor = await getOneVendor(mongooseId);
-  
-      setAddress(vendor.address);
-  
-      const formValues: VendorFormAttributes = {
-        name: vendor.name,
-        phoneNumber: vendor.phoneNumber,
-        email: vendor.email,
-        notes: vendor.notes,
-        website: vendor.website,
-        primaryContactName: vendor.primaryContactName,
-        primaryContactPhoneNumber: vendor.primaryContactPhoneNumber,
-        primaryContactEmail: vendor.primaryContactEmail,
-        mfgSpecNumber: vendor.mfgSpecNumber,
-      }
-  
-      reset(formValues) // Populates the form with loaded values
+    const vendor = await getOneVendor(mongooseId);
+
+    const formValues: VendorFormAttributes = {
+      name: vendor.name,
+      phoneNumber: vendor.phoneNumber,
+      email: vendor.email,
+      notes: vendor.notes,
+      website: vendor.website,
+      primaryContactName: vendor.primaryContactName,
+      primaryContactPhoneNumber: vendor.primaryContactPhoneNumber,
+      primaryContactEmail: vendor.primaryContactEmail,
+      mfgSpecNumber: vendor.mfgSpecNumber,
+      primaryAddress: vendor.primaryAddress,
+      remittanceAddress: vendor.remittanceAddress
     }
+
+    if (formValues.remittanceAddress) {
+      setIsPrimaryAddressSameAsRemittance(false)
+    }
+
+    reset(formValues) // Populates the form with loaded values
+  }
 
   useEffect(() => {
     preloadFormData()
-     .catch((error) => {
+      .catch((error) => {
         useErrorMessage(error)
       })
   }, [])
 
   const onVendorFormSubmit = (vendor: VendorFormAttributes) => {
-    if (!address) { 
-      setError("address", {
-        type: "manual",
-        message: "Address is required",
-      });
-      return;
+    if (isPrimaryAddressSameAsRemittance) {
+      vendor.remittanceAddress = null;
     }
-  
-    vendor.address = address;
 
     if (isUpdateRequest) {
       axios.patch(`/vendors/${mongooseId}`, vendor)
@@ -73,18 +67,13 @@ export const VendorForm = () => {
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/vendors', vendor)
-        .then((_ : AxiosResponse) => {
+        .then((_: AxiosResponse) => {
           navigate(vendorTableUrl)
           useSuccessMessage('Creation was successful')
         })
         .catch((error: AxiosError) => useErrorMessage(error))
     }
   }
-
-  const onAddressFormSubmit = (address: AddressFormAttributes) => {
-    setShowAddressForm(false);
-    setAddress(address)
-  };
 
   return (
     <div id='vendor-form-page-wrapper' className='page-wrapper'>
@@ -99,11 +88,11 @@ export const VendorForm = () => {
                 <div className='triple-column-container'>
                   <div className='input-group-wrapper'>
                     <Input
-                        attribute='name'
-                        label="Name"
-                        register={register}
-                        isRequired={true}
-                        errors={errors}
+                      attribute='name'
+                      label="Name"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
                     />
                     <Input
                       attribute='phoneNumber'
@@ -113,11 +102,11 @@ export const VendorForm = () => {
                       errors={errors}
                     />
                     <Input
-                        attribute='email'
-                        label="Email"
-                        register={register}
-                        isRequired={true}
-                        errors={errors}
+                      attribute='email'
+                      label="Email"
+                      register={register}
+                      isRequired={true}
+                      errors={errors}
                     />
                     <Input
                       attribute='website'
@@ -168,54 +157,108 @@ export const VendorForm = () => {
               </div>
             </div>
 
-            <h3>Address:</h3>
-            <div className='tbl-pri'>
-            <div className='tbl-hdr'>
-              <div className='tbl-cell'>Name</div>
-              <div className='tbl-cell'>Street</div>
-              <div className='tbl-cell'>Apt/Unit</div>
-              <div className='tbl-cell'>City</div>
-              <div className='tbl-cell'>State</div>
-              <div className='tbl-cell'>Zip</div>
-              <div className='tbl-cell'>Action</div>
-            </div>
-            {errors.address && <p style={{ color: "red" }}>{errors.address.message}</p>}
-            {address && <AddressCard 
-              data={address} 
-              onDelete={() => setAddress(null)}
-            />}
-            </div>
-            <button className='add-new-row' type="button" onClick={() => setShowAddressForm(true)}><i className="fa-solid fa-plus"></i> Add Address</button>
+            <label>
+              <input
+                type="checkbox"
+                checked={isPrimaryAddressSameAsRemittance}
+                onChange={(e) => setIsPrimaryAddressSameAsRemittance(e.target.checked)}
+              />
+              Remittance same as Primary Address?
+            </label>
+
+            {/* Primary Address Input Fields */}
+            <AddressFormAttributes label='Primary Address' attribute='primaryAddress' register={register} errors={errors} />
+            {/* Remittance Address Input Fields */}
+            {!isPrimaryAddressSameAsRemittance && (
+              <AddressFormAttributes label='Remittance Address' attribute='remittanceAddress' register={register} errors={errors} />
+            )
+            }
+
             {/* Let user know some form inputs had errors */}
             <p className='red'>{Object.keys(errors).length ? 'Some inputs had errors, please fix before attempting resubmission' : ''}</p>
 
             <button className='btn-primary' type="submit">{isUpdateRequest ? 'Update' : 'Create'}</button>
           </form>
         </div>
-
-        {/* Address Modal */}
-        {
-          showAddressForm &&
-          <FormModal
-            Form={AddressForm}
-            onSubmit={onAddressFormSubmit}
-            onCancel={() => setShowAddressForm(false)}
-          />
-        }
       </div>
     </div>
   );
 }
 
+interface AddressProps {
+  attribute: string;
+  label: string;
+  register: any;
+  errors: any
+}
+const AddressFormAttributes = (props: AddressProps) => {
+  const { attribute, register, errors, label } = props;
+
+  return (
+    <div>
+      <div className='header'>
+        <h2>{label}</h2>
+      </div>
+      <div className='input-group-wrapper'>
+        <Input
+          attribute={`${attribute}.name`}
+          label="Name"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+        <Input
+          attribute={`${attribute}.street`}
+          label="Street"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+        <Input
+          attribute={`${attribute}.unitOrSuite`}
+          label="Unit or Suite #"
+          register={register}
+          isRequired={false}
+          errors={errors}
+        />
+        <Input
+          attribute={`${attribute}.city`}
+          label="City"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+        <Input
+          attribute={`${attribute}.state`}
+          label="State"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+        <Input
+          attribute={`${attribute}.zipCode`}
+          label="Zip"
+          register={register}
+          isRequired={true}
+          errors={errors}
+        />
+      </div>
+    </div>
+  )
+}
+
+type AddressFormValues = Pick<IAddress, 'name' | 'street' | 'unitOrSuite' | 'city' | 'state' | 'zipCode'>;
+
 export type VendorFormAttributes = {
-      name: string,
-      phoneNumber?: string,
-      email?: string,
-      notes?: string,
-      website?: string,
-      address: AddressFormAttributes,
-      primaryContactName: string,
-      primaryContactPhoneNumber: string,
-      primaryContactEmail: string,
-      mfgSpecNumber?: string
+  name: string,
+  phoneNumber?: string | undefined,
+  email?: string | undefined,
+  notes?: string | undefined,
+  website?: string | undefined,
+  primaryAddress: AddressFormValues,
+  remittanceAddress: AddressFormValues | null,
+  primaryContactName: string,
+  primaryContactPhoneNumber: string,
+  primaryContactEmail: string,
+  mfgSpecNumber?: string | undefined
 }

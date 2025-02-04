@@ -207,6 +207,7 @@ describe('validation', () => {
         });
 
         it('should be an instance of a mongoose object', () => {
+            vendorAttributes.remittanceAddress = testDataGenerator.mockData.Address();
             const vendor = new VendorModel(vendorAttributes);
 
             expect(vendor.remittanceAddress._id).toEqual(expect.any(mongoose.Types.ObjectId));

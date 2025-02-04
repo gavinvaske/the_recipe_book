@@ -1,16 +1,16 @@
 import React from 'react';
 import { useForm } from'react-hook-form';
 import './ContactForm.scss'
-import { AddressFormAttributes } from '../../../Address/AddressForm/AddressForm';
+import { IContactForm, IAddressForm } from '@ui/types/forms';
 import { Input } from '../../../_global/FormInputs/Input/Input';
-import { ShippingLocationFormAttributes } from '../../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
+import { IShippingLocationForm } from '@ui/types/forms';
 import { CustomSelect, SelectOption } from '../../../_global/FormInputs/CustomSelect/CustomSelect';
 import { TextArea } from '../../../_global/FormInputs/TextArea/TextArea';
 
 interface Props {
   onSubmit: (contact: any) => void, 
   onCancel: () => void, 
-  locations: (AddressFormAttributes | ShippingLocationFormAttributes)[]
+  locations: (IAddressForm | IShippingLocationForm)[]
 }
 export const ContactForm = (props: Props) => {
   const { 
@@ -18,14 +18,14 @@ export const ContactForm = (props: Props) => {
     locations
   } = props;
 
-  const selectableLocations: SelectOption[] = locations.map((address: AddressFormAttributes | ShippingLocationFormAttributes, index: number) => {
+  const selectableLocations: SelectOption[] = locations.map((address: IAddressForm | IShippingLocationForm, index: number) => {
     return {
       displayName: `${address.name}: ${address.street}, ${address.city}, ${address.state}, ${address.zipCode}`,
       value: `${index}`
     }
   });
 
-  const { register, handleSubmit, formState: { errors }, control } = useForm<ContactFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IContactForm>();
 
   return (
     <div className='modal-content'>
@@ -99,15 +99,4 @@ export const ContactForm = (props: Props) => {
     </form>
   </div>
   )
-}
-
-export type ContactFormAttributes = {
-  fullName: string,
-  phoneNumber: string,
-  phoneExtension: string,
-  email: string,
-  contactStatus: string,
-  notes: string,
-  position: string,
-  location: AddressFormAttributes
 }

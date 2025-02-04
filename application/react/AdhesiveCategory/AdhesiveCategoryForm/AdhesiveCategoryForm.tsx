@@ -8,12 +8,13 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneAdhesiveCategory } from '../../_queries/adhesiveCategory';
 import { IAdhesiveCategory } from '@shared/types/models.ts';
+import { IAdhesiveCategoryForm } from '@ui/types/forms';
 
 const adhesiveCategoryTableUrl = '/react-ui/tables/adhesive-category'
 
 export const AdhesiveCategoryForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<AdhesiveCategoryFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IAdhesiveCategoryForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -23,7 +24,7 @@ export const AdhesiveCategoryForm = () => {
 
     getOneAdhesiveCategory(mongooseId)
       .then((adhesiveCategory: IAdhesiveCategory) => {
-        const formValues: AdhesiveCategoryFormAttributes = {
+        const formValues: IAdhesiveCategoryForm = {
           name: adhesiveCategory.name
         }
         reset(formValues)
@@ -34,7 +35,7 @@ export const AdhesiveCategoryForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: AdhesiveCategoryFormAttributes) => {
+  const onSubmit = (formData: IAdhesiveCategoryForm) => {
     if (isUpdateRequest) {
       axios.patch(`/adhesive-categories/${mongooseId}`, formData)
         .then((_) => {
@@ -76,8 +77,4 @@ export const AdhesiveCategoryForm = () => {
       </div>
     </div>
   )
-}
-
-export type AdhesiveCategoryFormAttributes = {
-  name: string; 
 }

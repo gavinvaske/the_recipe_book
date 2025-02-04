@@ -1,9 +1,9 @@
 import React from 'react';
 import './ContactCard.scss';
-import { ContactFormAttributes } from '../ContactForm/ContactForm';
+import { IContactForm } from '@ui/types/forms';
 
 type Props = {
-  data: ContactFormAttributes,
+  data: IContactForm,
   onDelete: () => void
 }
 

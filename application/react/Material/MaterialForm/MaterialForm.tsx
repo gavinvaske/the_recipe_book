@@ -7,17 +7,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IAdhesiveCategory, ILinerType, IMaterial, IMaterialCategory, IVendor } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
-import { MongooseId } from '../../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { useAxios } from '../../_hooks/useAxios';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
+import { IMaterialForm } from '@ui/types/forms.ts';
 
 const materialTableUrl = '/react-ui/tables/material'
 const locationRegex = /^[a-zA-Z][1-9][0-9]?$/;
 
 export const MaterialForm = () => {
-  const { register, handleSubmit, formState: { errors }, setError, reset, control } = useForm<IMaterialFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, setError, reset, control } = useForm<IMaterialForm>();
   const navigate = useNavigate();
   const { mongooseId } = useParams();
   const axios = useAxios();
@@ -34,7 +35,7 @@ export const MaterialForm = () => {
 
     axios.get('/materials/' + mongooseId)
       .then(({ data }: { data: IMaterial }) => {
-        const formValues: IMaterialFormAttributes = {
+        const formValues: IMaterialForm = {
           name: data.name,
           materialId: data.materialId,
           thickness: data.thickness,
@@ -121,7 +122,7 @@ export const MaterialForm = () => {
       .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
 
-  const onSubmit = (formData: IMaterialFormAttributes) => {
+  const onSubmit = (formData: IMaterialForm) => {
     const locationsAsStr = formData.locationsAsStr?.trim()
 
     formData.locations =  locationsAsStr?.length ? locationsAsStr.split(',').map((location: string) => location.trim().toUpperCase()) : [];
@@ -391,35 +392,4 @@ export const MaterialForm = () => {
       </div>
     </div>
   )
-}
-
-export interface IMaterialFormAttributes {
-  name: string;
-  materialId: string;
-  vendor: MongooseId;
-  materialCategory: MongooseId;
-  thickness: number;
-  weight: number;
-  costPerMsi: number;
-  freightCostPerMsi: number;
-  width: number;
-  faceColor: string;
-  adhesive: string;
-  adhesiveCategory: MongooseId;
-  quotePricePerMsi: number;
-  description: string;
-  whenToUse: string;
-  alternativeStock?: string;
-  length: number;
-  facesheetWeightPerMsi: number;
-  adhesiveWeightPerMsi: number;
-  linerWeightPerMsi: number;
-  locations?: string[] | undefined;
-  locationsAsStr?: string;
-  linerType: MongooseId;
-  productNumber: string;
-  masterRollSize: number;
-  image: string;
-  lowStockThreshold: number;
-  lowStockBuffer: number;
 }

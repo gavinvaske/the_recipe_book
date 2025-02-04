@@ -2,34 +2,36 @@ import React, { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import './CustomerForm.scss'
 import { useForm } from 'react-hook-form';
-import { ShippingLocationForm, ShippingLocationFormAttributes } from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
+import { ShippingLocationForm } from '../../ShippingLocation/ShippingLocationForm/ShippingLocationForm';
+import { IShippingLocationForm } from '@ui/types/forms';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import { AddressForm } from '../../Address/AddressForm/AddressForm';
-import AddressCard from '../../Address/AddressCard/AddressCard';
 import { ContactForm } from '../Contact/ContactForm/ContactForm';
 import ShippingLocationCard from '../../ShippingLocation/ShippingLocationCard/ShippingLocationCard';
 import { removeElementFromArray } from '../../utils/state-service';
 import ContactCard from '../Contact/ContactCard/ContactCard';
 
-import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
-import { ContactFormAttributes } from '../Contact/ContactForm/ContactForm';
+import { ICustomerForm, IAddressForm } from '@ui/types/forms';
+import { IContactForm } from '@ui/types/forms';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
-import { MongooseId } from '../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { performTextSearch } from '../../_queries/_common';
 import { ICreditTerm } from '@shared/types/models';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import AddressListItem from './AddressListItem/AddressListItem';
+
 
 const customerTableUrl = '/react-ui/tables/customer'
 
 export const CustomerForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<CustomerFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<ICustomerForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -40,11 +42,11 @@ export const CustomerForm = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [creditTerms, setCreditTerms] = useState<SelectOption[]>([])
 
-  const [shippingLocations, setShippingLocations] = useState<ShippingLocationFormAttributes[]>([])
-  const [billingLocations, setBillingLocations] = useState<AddressFormAttributes[]>([])
-  const [businessLocations, setBusinessLocations] = useState<AddressFormAttributes[]>([])
-  const [locations, setLocations] = useState<(AddressFormAttributes)[]>([])
-  const [contacts, setContacts] = useState<ContactFormAttributes[]>([])
+  const [shippingLocations, setShippingLocations] = useState<IShippingLocationForm[]>([])
+  const [billingLocations, setBillingLocations] = useState<IAddressForm[]>([])
+  const [businessLocations, setBusinessLocations] = useState<IAddressForm[]>([])
+  const [locations, setLocations] = useState<(IAddressForm)[]>([])
+  const [contacts, setContacts] = useState<IContactForm[]>([])
 
   useEffect(() => {
     setLocations([
@@ -57,8 +59,8 @@ export const CustomerForm = () => {
   const preloadFormData = async () => {
     const creditTermSearchResults = await performTextSearch<ICreditTerm>('/credit-terms/search', { query: '', limit: '100' })
     const creditTerms = creditTermSearchResults.results
-  
-    setCreditTerms(creditTerms.map((creditTerm : ICreditTerm) => (
+
+    setCreditTerms(creditTerms.map((creditTerm: ICreditTerm) => (
       {
         displayName: creditTerm.description,
         value: creditTerm._id as string
@@ -69,7 +71,7 @@ export const CustomerForm = () => {
 
     const customer = await getOneCustomer(mongooseId);
 
-    const formValues: CustomerFormAttributes = {
+    const formValues: ICustomerForm = {
       customerId: customer.customerId,
       name: customer.name,
       overun: customer.overun ? String(customer.overun) : '',
@@ -79,10 +81,10 @@ export const CustomerForm = () => {
 
     reset(formValues) // Populates the form with loaded values
 
-    setBusinessLocations(customer.businessLocations as AddressFormAttributes[])
-    setBillingLocations(customer.billingLocations as AddressFormAttributes[])
-    setShippingLocations(customer.shippingLocations as ShippingLocationFormAttributes[])
-    setContacts(customer.contacts as unknown as ContactFormAttributes[])
+    setBusinessLocations(customer.businessLocations as IAddressForm[])
+    setBillingLocations(customer.billingLocations as IAddressForm[])
+    setShippingLocations(customer.shippingLocations as IShippingLocationForm[])
+    setContacts(customer.contacts as unknown as IContactForm[])
   }
 
   useEffect(() => {
@@ -93,7 +95,7 @@ export const CustomerForm = () => {
       })
   }, [])
 
-  const onCustomerFormSubmit = (customer: CustomerFormAttributes) => {
+  const onCustomerFormSubmit = (customer: ICustomerForm) => {
     customer.businessLocations = businessLocations;
     customer.shippingLocations = shippingLocations;
     customer.contacts = contacts;
@@ -108,7 +110,7 @@ export const CustomerForm = () => {
         .catch((error: AxiosError) => useErrorMessage(error));
     } else {
       axios.post('/customers', customer)
-        .then((_ : AxiosResponse) => {
+        .then((_: AxiosResponse) => {
           navigate(customerTableUrl)
           useSuccessMessage('Creation was successful')
         })
@@ -122,24 +124,24 @@ export const CustomerForm = () => {
   const hideBusinessLocationForm = () => setShowBusinessLocationForm(false);
   const hideContactForm = () => setShowContactForm(false);
 
-  const onBillingLocationFormSubmit = (billingLocation: AddressFormAttributes) => {
+  const onBillingLocationFormSubmit = (billingLocation: IAddressForm) => {
     hideBillingLocationForm();
     setBillingLocations([...billingLocations, billingLocation]);
   };
 
-  const onShippingLocationFormSubmit = (shippingLocation: ShippingLocationFormAttributes) => {
+  const onShippingLocationFormSubmit = (shippingLocation: IShippingLocationForm) => {
     hideShippingLocationForm();
     setShippingLocations([...shippingLocations, shippingLocation]);
   };
 
-  const onBusinessLocationFormSubmit = (businessLocation: AddressFormAttributes) => {
+  const onBusinessLocationFormSubmit = (businessLocation: IAddressForm) => {
     hideBusinessLocationForm();
     setBusinessLocations([...businessLocations, businessLocation]);
   };
 
   const onContactFormSubmit = (contact: any) => {
     hideContactForm();
-    const contactForm: ContactFormAttributes = {
+    const contactForm: IContactForm = {
       ...contact,
       location: locations[contact.location]
     }
@@ -157,11 +159,11 @@ export const CustomerForm = () => {
             <div className='form-elements-wrapper'>
               <div className='input-group-wrapper'>
                 <Input
-                    attribute='customerId'
-                    label="Customer ID"
-                    register={register}
-                    isRequired={true}
-                    errors={errors}
+                  attribute='customerId'
+                  label="Customer ID"
+                  register={register}
+                  isRequired={true}
+                  errors={errors}
                 />
                 <Input
                   attribute='name'
@@ -180,12 +182,12 @@ export const CustomerForm = () => {
                 />
               </div>
               <TextArea
-                  attribute='notes'
-                  label="Notes"
-                  register={register}
-                  isRequired={false}
-                  errors={errors}
-                />
+                attribute='notes'
+                label="Notes"
+                register={register}
+                isRequired={false}
+                errors={errors}
+              />
               <CustomSelect
                 attribute='creditTerms'
                 label="Credit Term"
@@ -214,8 +216,8 @@ export const CustomerForm = () => {
                   businessLocations.map((businessLocation, index) => {
                     return (
                       <div className='table-row' key={index}>
-                        <AddressCard 
-                          data={businessLocation} 
+                        <AddressListItem
+                          data={businessLocation}
                           onDelete={() => removeElementFromArray(index, businessLocations, setBusinessLocations)}
                         />
                       </div>
@@ -231,24 +233,24 @@ export const CustomerForm = () => {
             </div>
             <div id='shipping-location-cards' className='tbl-pri'>
               <div className='tbl-hdr'>
-                  <div className='tbl-cell'>Freight Acct #:</div>
-                  <div className='tbl-cell'>Delivery Method</div>
-                  <div className='tbl-cell'>Name</div>
-                  <div className='tbl-cell'>Street</div>
-                  <div className='tbl-cell'>Unit</div>
-                  <div className='tbl-cell'>City</div>
-                  <div className='tbl-cell'>State</div>
-                  <div className='tbl-cell'>Zip</div>
-                  <div className='tbl-cell'>Delete</div>
-                </div>
+                <div className='tbl-cell'>Freight Acct #:</div>
+                <div className='tbl-cell'>Delivery Method</div>
+                <div className='tbl-cell'>Name</div>
+                <div className='tbl-cell'>Street</div>
+                <div className='tbl-cell'>Unit</div>
+                <div className='tbl-cell'>City</div>
+                <div className='tbl-cell'>State</div>
+                <div className='tbl-cell'>Zip</div>
+                <div className='tbl-cell'>Delete</div>
+              </div>
               <div className='table'>
                 {
                   shippingLocations.map((shippingLocation, index) => {
                     return (
                       <div key={index}>
                         <ShippingLocationCard
-                          data={shippingLocation} 
-                          onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)} 
+                          data={shippingLocation}
+                          onDelete={() => removeElementFromArray(index, shippingLocations, setShippingLocations)}
                         />
                       </div>
                     )
@@ -262,22 +264,22 @@ export const CustomerForm = () => {
               <h3>Billing Locations:</h3>
             </div>
             <div id='billing-location-cards' className='tbl-pri'>
-            <div className='tbl-hdr'>
-                  <div className='tbl-cell'>Name</div>
-                  <div className='tbl-cell'>Street</div>
-                  <div className='tbl-cell'>Unit</div>
-                  <div className='tbl-cell'>City</div>
-                  <div className='tbl-cell'>State</div>
-                  <div className='tbl-cell'>Zip</div>
-                  <div className='tbl-cell'>Delete</div>
-                </div>
+              <div className='tbl-hdr'>
+                <div className='tbl-cell'>Name</div>
+                <div className='tbl-cell'>Street</div>
+                <div className='tbl-cell'>Unit</div>
+                <div className='tbl-cell'>City</div>
+                <div className='tbl-cell'>State</div>
+                <div className='tbl-cell'>Zip</div>
+                <div className='tbl-cell'>Delete</div>
+              </div>
               <div className='table'>
                 {
                   billingLocations.map((billingLocation, index) => {
                     return (
                       <div key={index}>
-                        <AddressCard 
-                          data={billingLocation} 
+                        <AddressListItem
+                          data={billingLocation}
                           onDelete={() => removeElementFromArray(index, billingLocations, setBillingLocations)}
                         />
                       </div>
@@ -308,8 +310,8 @@ export const CustomerForm = () => {
                   contacts.map((contact, index) => {
                     return (
                       <div key={index}>
-                        <ContactCard 
-                          data={contact} 
+                        <ContactCard
+                          data={contact}
                           onDelete={() => removeElementFromArray(index, contacts, setContacts)}
                         />
                       </div>
@@ -362,16 +364,4 @@ export const CustomerForm = () => {
       </div>
     </div>
   );
-}
-
-export type CustomerFormAttributes = {
-  customerId: string,
-  name: string,
-  businessLocations?: AddressFormAttributes[],
-  shippingLocations?: ShippingLocationFormAttributes[],
-  billingLocations?: AddressFormAttributes[],
-  contacts?: ContactFormAttributes[],
-  overun: string,
-  notes?: string,
-  creditTerms?: MongooseId[]
 }

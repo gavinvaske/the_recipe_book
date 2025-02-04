@@ -2,7 +2,7 @@ import React from 'react';
 import './LinerTypeRowActions.scss';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { useNavigate } from "react-router-dom";
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { Row } from '@tanstack/react-table';

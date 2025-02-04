@@ -8,7 +8,6 @@ import { getUsers } from '../../_queries/users';
 import { User } from '../../_types/databasemodels/user.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
-import { MongooseId } from '../../_types/typeAliases';
 import { getOneMaterialOrder } from '../../_queries/materialOrder';
 import { convertDateStringToFormInputDateString } from '../../_helperFunctions/dateTime';
 import { IMaterialOrder } from '../../../api/models/materialOrder'
@@ -16,11 +15,12 @@ import { performTextSearch } from '../../_queries/_common.ts';
 import { IMaterial, IVendor } from '@shared/types/models.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea.tsx';
+import { IMaterialOrderForm } from '@ui/types/forms.ts';
 
 const materialOrderTableUrl = '/react-ui/tables/material-order'
 
 export const MaterialOrderForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<MaterialOrderFormAttributes>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<IMaterialOrderForm>({
     defaultValues: {
       freightCharge: 0,
       fuelCharge: 0
@@ -65,7 +65,7 @@ export const MaterialOrderForm = () => {
 
     const materialOrder: IMaterialOrder = await getOneMaterialOrder(mongooseId)
 
-    const formValues: MaterialOrderFormAttributes = {
+    const formValues: IMaterialOrderForm = {
       author: materialOrder.author,
       material: materialOrder.material,
       vendor: materialOrder.vendor,
@@ -92,7 +92,7 @@ export const MaterialOrderForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: MaterialOrderFormAttributes) => {
+  const onSubmit = (formData: IMaterialOrderForm) => {
     if (isUpdateRequest) {
       axios.patch(`/material-orders/${mongooseId}`, formData)
         .then((_) => {
@@ -234,20 +234,4 @@ export const MaterialOrderForm = () => {
       </div>
     </div>
   )
-}
-
-type MaterialOrderFormAttributes = {
-  author: MongooseId;
-  material: MongooseId;
-  vendor: MongooseId;
-  purchaseOrderNumber: string;
-  orderDate: string;
-  feetPerRoll: number;
-  totalRolls: number;
-  totalCost: number;
-  hasArrived?: boolean;
-  notes?: string;
-  arrivalDate: string;
-  freightCharge: number;
-  fuelCharge: number;
 }

@@ -8,12 +8,13 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCreditTerm } from '../../_queries/creditTerm';
 import { ICreditTerm } from '@shared/types/models';
+import { ICreditTermForm } from '@ui/types/forms';
 
 const creditTermTableUrl = '/react-ui/tables/credit-term'
 
 export const CreditTermForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreditTermFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ICreditTermForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -23,7 +24,7 @@ export const CreditTermForm = () => {
 
     getOneCreditTerm(mongooseId)
       .then((creditTerm: ICreditTerm) => {
-        const formValues: CreditTermFormAttributes = {
+        const formValues: ICreditTermForm = {
           description: creditTerm.description
         }
         reset(formValues)
@@ -34,7 +35,7 @@ export const CreditTermForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: CreditTermFormAttributes) => {
+  const onSubmit = (formData: ICreditTermForm) => {
     if (isUpdateRequest) {
       axios.patch(`/credit-terms/${mongooseId}`, formData)
         .then((_) => {
@@ -77,8 +78,4 @@ export const CreditTermForm = () => {
       </div>
     </div>
   )
-}
-
-export type CreditTermFormAttributes = {
-  description: string
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import './MaterialLengthAdjustmentRowActions.scss'
 import { Row } from '@tanstack/react-table';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';

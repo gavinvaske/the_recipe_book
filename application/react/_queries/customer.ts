@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { MongooseId } from "../_types/typeAliases";
+import { MongooseId } from "@ui/types/typeAliases";
 import { ICustomer } from '@shared/types/models.ts';
 
 export const getCustomers = async (): Promise<ICustomer[]> => {

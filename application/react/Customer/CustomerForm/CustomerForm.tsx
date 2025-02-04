@@ -19,7 +19,7 @@ import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneCustomer } from '../../_queries/customer';
-import { MongooseId } from '../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { performTextSearch } from '../../_queries/_common';
 import { ICreditTerm } from '@shared/types/models';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';

@@ -5,7 +5,7 @@ import './MaterialOrderRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';

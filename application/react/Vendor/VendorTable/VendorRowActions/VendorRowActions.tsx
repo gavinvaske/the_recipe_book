@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useSuccessMessage } from '../../../_hooks/useSuccessMessage';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { Row } from '@tanstack/react-table';
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';

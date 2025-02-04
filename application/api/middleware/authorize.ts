@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express'
-import { MongooseId } from '../../react/_types/typeAliases.ts';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { FORBIDDEN, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 
 export function verifyBearerToken(request: Request, response: Response, next) {

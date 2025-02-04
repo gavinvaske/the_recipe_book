@@ -1,4 +1,4 @@
-import { MongooseId } from "../../react/_types/typeAliases";
+import { MongooseId } from "./typeAliases";
 
 export type IAddressForm = {
   name: string;

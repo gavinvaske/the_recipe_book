@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IAdhesiveCategory, ILinerType, IMaterial, IMaterialCategory, IVendor } from '@shared/types/models.ts';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
-import { MongooseId } from '../../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { useAxios } from '../../_hooks/useAxios';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';

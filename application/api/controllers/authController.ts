@@ -2,7 +2,7 @@ import { Router, Request, Response, response } from 'express';
 import { UserModel } from '../models/user.ts';
 import { BAD_REQUEST, CREATED_SUCCESSFULLY, FORBIDDEN, NOT_FOUND, SERVER_ERROR, SUCCESS, UNAUTHORIZED } from '../enums/httpStatusCodes.ts';
 import { generateRefreshToken, generateAccessToken, TokenPayload, verifyBearerToken } from '../middleware/authorize.ts';
-import { MongooseId } from '../../react/_types/typeAliases.ts';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { sendPasswordResetEmail } from '../services/emailService.ts';

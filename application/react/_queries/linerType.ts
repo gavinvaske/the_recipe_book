@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { MongooseId } from '../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { ILinerType } from '@shared/types/models';
 
 export const getOneLinerType = async (mongooseId: MongooseId) : Promise<ILinerType> => {

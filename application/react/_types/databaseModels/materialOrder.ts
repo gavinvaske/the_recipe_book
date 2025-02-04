@@ -1,4 +1,4 @@
-import { MongooseId } from '../typeAliases'
+import { MongooseId } from "@ui/types/typeAliases"
 import { MongooseAttributes } from './_sharedMongooseAttributes'
 
 export type MaterialOrder = MongooseAttributes & {

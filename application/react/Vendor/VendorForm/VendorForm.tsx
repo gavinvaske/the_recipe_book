@@ -8,6 +8,7 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { getOneVendor } from '../../_queries/vendors';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { IAddress } from '@shared/types/schemas';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
 
@@ -170,7 +171,7 @@ export const VendorForm = () => {
             {/* Remittance Address Input Fields */}
             {!isPrimaryAddressSameAsRemittance && (
               <AddressFormAttributes label='Remittance Address' attribute='remittanceAddress' register={register} errors={errors} />
-              )
+            )
             }
 
             {/* Let user know some form inputs had errors */}
@@ -184,13 +185,13 @@ export const VendorForm = () => {
   );
 }
 
-interface AddressInputFieldProps {
+interface AddressProps {
   attribute: string;
   label: string;
   register: any;
   errors: any
 }
-const AddressFormAttributes = (props: AddressInputFieldProps) => {
+const AddressFormAttributes = (props: AddressProps) => {
   const { attribute, register, errors, label } = props;
 
   return (
@@ -246,14 +247,16 @@ const AddressFormAttributes = (props: AddressInputFieldProps) => {
   )
 }
 
+type AddressFormValues = Pick<IAddress, 'name' | 'street' | 'unitOrSuite' | 'city' | 'state' | 'zipCode'>;
+
 export type VendorFormAttributes = {
   name: string,
   phoneNumber?: string | undefined,
   email?: string | undefined,
   notes?: string | undefined,
   website?: string | undefined,
-  primaryAddress: AddressInputFieldProps,
-  remittanceAddress: AddressInputFieldProps | null,
+  primaryAddress: AddressFormValues,
+  remittanceAddress: AddressFormValues | null,
   primaryContactName: string,
   primaryContactPhoneNumber: string,
   primaryContactEmail: string,

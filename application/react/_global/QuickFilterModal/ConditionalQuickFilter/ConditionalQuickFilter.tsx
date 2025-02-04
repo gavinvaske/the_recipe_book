@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import './ConditionalQuickFilter.scss'
-import { ConditionalFilterFunction } from '../../../_types/Filters';
+import { ConditionalFilterFunction } from "@ui/types/filters";
 
 type Props<T> = {
   uuid: string,

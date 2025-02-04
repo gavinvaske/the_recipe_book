@@ -2,7 +2,7 @@ import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
-import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "../_types/Filters";
+import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "@ui/types/filters";
 import { useErrorMessage } from "../_hooks/useErrorMessage";
 
 /* Mobx Store */

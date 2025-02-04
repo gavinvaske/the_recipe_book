@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { ErrorFlashMessage, SuccessFlashMessage, FlashMessage } from '../_types/FlashMessage';
+import { ErrorFlashMessage, SuccessFlashMessage, FlashMessageOption } from "@ui/types/flashMessage";
 import { v4 as uuidv4 } from 'uuid';
 
 /* 
@@ -15,7 +15,7 @@ class FlashMessageStore {
   }
 
   getFlashMessages() {
-    const flashMessages: FlashMessage[] = [...this.errorMessages]
+    const flashMessages: FlashMessageOption[] = [...this.errorMessages]
 
     if (this.successMessage) flashMessages.push(this.successMessage)
 

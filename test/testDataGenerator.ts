@@ -20,7 +20,8 @@ export const mockData = {
     Contact: getContact,
     User: getUser,
     BaseProduct: getBaseProduct,
-    Address: getAddress
+    Address: getAddress,
+    Vendor: getVendor
 };
 
 function getDie() {
@@ -159,4 +160,19 @@ function getAddress() {
         state: chance.state(),
         zipCode: chance.zip()
     };
+}
+
+function getVendor() {
+  return {
+    name: chance.string(),
+    phoneNumber: chance.phone(),
+    email: chance.email(),
+    notes: chance.paragraph(),
+    website: chance.url(),
+    primaryContactName: chance.string(),
+    primaryContactPhoneNumber: chance.phone(),
+    primaryContactEmail: chance.email(),
+    primaryAddress: mockData.Address(),
+    remittanceAddress: chance.pickone([mockData.Address(), undefined])
+  }
 }

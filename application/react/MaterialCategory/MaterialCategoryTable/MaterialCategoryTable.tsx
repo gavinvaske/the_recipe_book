@@ -99,7 +99,7 @@ export const MaterialCategoryTable = () => {
       <div className='card table-card'>
         <div className="header-description">
           <h1 className="text-blue">Material Categories</h1>
-          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialCategorySearchResults?.totalResults}</p> results.</p>
+          <p>Viewing <p className='text-blue'>{rows.length}</p> of <p className='text-blue'>{materialCategorySearchResults?.totalResults || 0}</p> results.</p>
         </div>
         <SearchBar value={globalSearch} performSearch={(value: string) => {
           setGlobalSearch(value)

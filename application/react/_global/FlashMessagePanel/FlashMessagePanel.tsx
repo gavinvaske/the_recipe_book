@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './FlashMessagePanel.scss';
 import flashMessageStore from '../../stores/flashMessageStore';
-import { FlashMessage } from '../../_types/FlashMessage';
+import { FlashMessageOption } from "@ui/types/flashMessage";
 import { observer } from 'mobx-react-lite';
 
 type FlashMessageProps = {
-  flashMessage: FlashMessage
+  flashMessage: FlashMessageOption
 }
 
 export const FlashMessagePanel = observer(() => {

@@ -3,7 +3,7 @@ import './CreditTermRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom'
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';
 import { CreditTerm } from '../../../_types/databasemodels/creditTerm.ts';

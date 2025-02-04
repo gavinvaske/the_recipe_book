@@ -1,7 +1,12 @@
 import React from 'react'
-import './AddressCard.scss'
+import './AddressListItem.scss'
+import { IAddressForm } from '@ui/types/forms';
 
-const AddressCard = (props) => {
+interface Props {
+  onDelete: () => void;
+  data: IAddressForm
+}
+const AddressListItem = (props: Props) => {
   const { data, onDelete } = props;
   const { name, street, unitOrSuite, city, state, zipCode } = data;
   return (
@@ -18,4 +23,4 @@ const AddressCard = (props) => {
   )
 }
 
-export default AddressCard;
+export default AddressListItem;

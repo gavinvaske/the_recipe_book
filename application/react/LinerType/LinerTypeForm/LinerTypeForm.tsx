@@ -8,12 +8,13 @@ import { getOneLinerType } from '../../_queries/linerType';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { ILinerType } from '@shared/types/models';
+import { ILinerTypeForm } from '@ui/types/forms';
 
 const linerTypeTableUrl = '/react-ui/tables/liner-type'
 
 export const LinerTypeForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<LinerTypeFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ILinerTypeForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -23,7 +24,7 @@ export const LinerTypeForm = () => {
 
     getOneLinerType(mongooseId)
       .then((linerType: ILinerType) => {
-        const formValues: LinerTypeFormAttributes = {
+        const formValues: ILinerTypeForm = {
           name: linerType.name
         }
         reset(formValues)
@@ -34,7 +35,7 @@ export const LinerTypeForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: LinerTypeFormAttributes) => {
+  const onSubmit = (formData: ILinerTypeForm) => {
     if (isUpdateRequest) {
       axios.patch(`/liner-types/${mongooseId}`, formData)
         .then((_) => {
@@ -76,8 +77,4 @@ export const LinerTypeForm = () => {
       </div>
     </div>
   )
-}
-
-export type LinerTypeFormAttributes = {
-  name: String
 }

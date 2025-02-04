@@ -12,12 +12,13 @@ import { IAddress } from '@shared/types/schemas';
 import { VendorContactForm, VendorContactFormValues } from './VendorContactForm/VendorContactForm';
 import { FormModal } from '../../_global/FormModal/FormModal';
 import { VendorContacts } from './VendorContacts/VendorContacts';
+import { IVendorForm } from '@ui/types/forms';
 
 const vendorTableUrl = '/react-ui/tables/vendor'
 
 export const VendorForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<VendorFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IVendorForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -30,7 +31,7 @@ export const VendorForm = () => {
 
     const vendor = await getOneVendor(mongooseId);
 
-    const formValues: VendorFormAttributes = {
+    const formValues: IVendorForm = {
       name: vendor.name,
       phoneNumber: vendor.phoneNumber,
       email: vendor.email,
@@ -58,7 +59,7 @@ export const VendorForm = () => {
       })
   }, [])
 
-  const onVendorFormSubmit = (vendor: VendorFormAttributes) => {
+  const onVendorFormSubmit = (vendor: IVendorForm) => {
     if (isPrimaryAddressSameAsRemittance) {
       vendor.remittanceAddress = null;
     }
@@ -217,6 +218,7 @@ interface AddressProps {
   register: any;
   errors: any
 }
+
 const AddressFormAttributes = (props: AddressProps) => {
   const { attribute, register, errors, label } = props;
 
@@ -273,18 +275,3 @@ const AddressFormAttributes = (props: AddressProps) => {
   )
 }
 
-type AddressFormValues = Pick<IAddress, 'name' | 'street' | 'unitOrSuite' | 'city' | 'state' | 'zipCode'>;
-
-export type VendorFormAttributes = {
-  name: string,
-  phoneNumber?: string | undefined,
-  email?: string | undefined,
-  notes?: string | undefined,
-  website?: string | undefined,
-  primaryAddress: AddressFormValues,
-  remittanceAddress: AddressFormValues | null,
-  primaryContactName: string,
-  primaryContactPhoneNumber: string,
-  primaryContactEmail: string,
-  mfgSpecNumber?: string | undefined
-}

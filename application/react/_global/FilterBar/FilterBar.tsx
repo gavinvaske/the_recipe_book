@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './FilterBar.scss';
 import { observer } from 'mobx-react-lite';
-import { ConditionalFilter, ConditionalFilterFunction, Filter, TextFilter, TextFilterOption } from '../../_types/Filters';
+import { ConditionalFilter, ConditionalFilterFunction, Filter, TextFilter, TextFilterOption } from "@ui/types/filters";
 import { ConditionalQuickFilter } from '../QuickFilterModal/ConditionalQuickFilter/ConditionalQuickFilter';
 import { TextQuickFilter } from '../QuickFilterModal/TextQuickFilter/QuickFilterButton';
 import SearchBar from '../SearchBar/SearchBar';

@@ -1,4 +1,4 @@
-import { TextFilter, ConditionalFilter } from "../../_types/Filters"
+import { TextFilter, ConditionalFilter } from "@ui/types/filters";
 import { MaterialInventory } from "../Inventory"
 import { v4 as uuidv4 } from 'uuid';
 

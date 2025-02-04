@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { MongooseId } from "../_types/typeAliases";
+import { MongooseId } from "@ui/types/typeAliases";
 import { IMaterialOrder } from "../../api/models/materialOrder";
 import { SearchQuery, SearchResult } from "@shared/types/http";
 

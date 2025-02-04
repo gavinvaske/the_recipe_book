@@ -4,13 +4,12 @@ import { useForm } from 'react-hook-form';
 import './ShippingLocationForm.scss'
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
-import { AddressFormAttributes } from '../../Address/AddressForm/AddressForm';
-import { MongooseId } from '../../_types/typeAliases';
+import { IShippingLocationForm } from '@ui/types/forms.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 import { IDeliveryMethod } from '@shared/types/models.ts';
 
 interface Props {
-  onSubmit: (data: ShippingLocationFormAttributes) => void
+  onSubmit: (data: IShippingLocationForm) => void
 }
 
 export const ShippingLocationForm = (props: Props) => {
@@ -35,7 +34,7 @@ export const ShippingLocationForm = (props: Props) => {
       .catch((error: AxiosError) => useErrorMessage(error))
   }, [])
   
-  const { register, handleSubmit, formState: { errors }, control } = useForm<ShippingLocationFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, control } = useForm<IShippingLocationForm>();
 
   return (
     <div className=''>
@@ -107,9 +106,4 @@ export const ShippingLocationForm = (props: Props) => {
       </form>
     </div>
   )
-}
-
-export type ShippingLocationFormAttributes = AddressFormAttributes & {
-  freightAccountNumber?: string,
-  deliveryMethod?: MongooseId
 }

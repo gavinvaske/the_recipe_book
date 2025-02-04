@@ -6,16 +6,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
-import { MongooseId } from '../../_types/typeAliases';
 import { IMaterial, IMaterialLengthAdjustment } from '@shared/types/models.ts';
 import { performTextSearch } from '../../_queries/_common.ts';
 import { SearchResult } from '@shared/types/http.ts';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect.tsx';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea.tsx';
-
+import { IMaterialLengthAdjustmentForm } from '@ui/types/forms.ts';
 
 export const MaterialLengthAdjustmentForm = () => {
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<MaterialLengthAdjustmentFormFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<IMaterialLengthAdjustmentForm>();
   const navigate = useNavigate();
   const [materials, setMaterials] = useState<SelectOption[]>([])
   const { mongooseId } = useParams();
@@ -54,7 +53,7 @@ export const MaterialLengthAdjustmentForm = () => {
       .catch((error: AxiosError) => useErrorMessage(error))
     }, []);
 
-  const onFormSubmit = (formData: MaterialLengthAdjustmentFormFormAttributes) => {
+  const onFormSubmit = (formData: IMaterialLengthAdjustmentForm) => {
     if (isUpdateRequest) {
       axios.patch(`/material-length-adjustments/${mongooseId}`, formData)
         .then((_) => {
@@ -113,10 +112,4 @@ export const MaterialLengthAdjustmentForm = () => {
       </div>
     </div>
   )
-}
-
-export type MaterialLengthAdjustmentFormFormAttributes = {
-  material: MongooseId,
-  length: number,
-  notes?: string
 }

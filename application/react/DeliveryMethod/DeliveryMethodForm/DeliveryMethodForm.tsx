@@ -8,12 +8,13 @@ import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { getOneDeliveryMethod } from '../../_queries/deliveryMethod';
 import { DeliveryMethod } from '../../_types/databasemodels/deliveryMethod.ts';
 import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
+import { IDeliveryMethodForm } from '@ui/types/forms.ts';
 
 const deliveryMethodTableUrl = '/react-ui/tables/delivery-method'
 
 export const DeliveryMethodForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<DeliveryMethodFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IDeliveryMethodForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -23,7 +24,7 @@ export const DeliveryMethodForm = () => {
 
     getOneDeliveryMethod(mongooseId)
       .then((deliveryMethod: DeliveryMethod) => {
-        const formValues: DeliveryMethodFormAttributes = {
+        const formValues: IDeliveryMethodForm = {
           name: deliveryMethod.name
         }
         reset(formValues)
@@ -34,7 +35,7 @@ export const DeliveryMethodForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: DeliveryMethodFormAttributes) => {
+  const onSubmit = (formData: IDeliveryMethodForm) => {
     if (isUpdateRequest) {
       axios.patch(`/delivery-methods/${mongooseId}`, formData)
         .then((_) => {
@@ -73,8 +74,4 @@ export const DeliveryMethodForm = () => {
       </div>
     </div>
   )
-}
-
-export type DeliveryMethodFormAttributes = {
-  name: string
 }

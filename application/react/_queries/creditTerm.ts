@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { MongooseId } from '../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { ICreditTerm } from '../../api/models/creditTerm.ts';
 
 export const getCreditTerms = async (): Promise<ICreditTerm[]> => {

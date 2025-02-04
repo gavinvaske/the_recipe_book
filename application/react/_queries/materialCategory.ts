@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { MongooseId } from '../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { IMaterialCategory } from '@shared/types/models';
 
 export const getOneMaterialCategory = async (mongooseId: MongooseId) : Promise<IMaterialCategory> => {

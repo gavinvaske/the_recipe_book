@@ -14,6 +14,7 @@ import { dieMagCylinders } from '../../../api/enums/dieMagCylindersEnum';
 import { dieStatuses } from '../../../api/enums/dieStatusesEnum';
 import { CustomSelect } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
+import { IDieForm } from '@ui/types/forms';
 
 const dieTableUrl = '/react-ui/tables/die'
 
@@ -22,7 +23,7 @@ export const DieForm = () => {
   const { mongooseId } = useParams();
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
 
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<DieFormAttributes>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<IDieForm>({
     defaultValues: {
       quantity: 1,
       isLamination: true
@@ -41,7 +42,7 @@ export const DieForm = () => {
 
     const die = await getOneDie(mongooseId);
 
-    const formValues: DieFormAttributes = {
+    const formValues: IDieForm = {
       dieNumber: die.dieNumber,
       shape: die.shape,
       sizeAcross: die.sizeAcross,
@@ -69,7 +70,7 @@ export const DieForm = () => {
     reset(formValues) // Loads data into the form and forces a rerender
   }
 
-  const onSubmit = (formData: DieFormAttributes) => {
+  const onSubmit = (formData: IDieForm) => {
     if (isUpdateRequest) {
       axios.patch(`/dies/${mongooseId}`, formData)
         .then((_) => {
@@ -287,29 +288,4 @@ export const DieForm = () => {
       </div>
     </div>
   )
-}
-
-type DieFormAttributes = {
-  dieNumber: string;
-  shape: string;
-  sizeAcross: number;
-  sizeAround: number;
-  numberAcross: number;
-  numberAround: number;
-  gear: number;
-  toolType: string;
-  notes: string;
-  cost: number;
-  vendor: string;
-  magCylinder: number;
-  cornerRadius: number;
-  topAndBottom: number;
-  leftAndRight: number;
-  facestock: string;
-  liner: string;
-  specialType?: string;
-  serialNumber: string;
-  status: string;
-  quantity: number;
-  isLamination: boolean | undefined;
 }

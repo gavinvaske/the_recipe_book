@@ -8,12 +8,13 @@ import { useSuccessMessage } from '../../_hooks/useSuccessMessage';
 import { useErrorMessage } from '../../_hooks/useErrorMessage';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { getOneMaterialCategory } from '../../_queries/materialCategory';
+import { IMaterialCategoryForm } from '@ui/types/forms';
 
 const materialCategoryTableUrl = '/react-ui/tables/material-category'
 
 export const MaterialCategoryForm = () => {
   const { mongooseId } = useParams();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<MaterialCategoryFormAttributes>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IMaterialCategoryForm>();
   const navigate = useNavigate();
 
   const isUpdateRequest = mongooseId && mongooseId.length > 0;
@@ -23,7 +24,7 @@ export const MaterialCategoryForm = () => {
 
     getOneMaterialCategory(mongooseId)
       .then((materialCategory: IMaterialCategory) => {
-        const formValues: MaterialCategoryFormAttributes = {
+        const formValues: IMaterialCategoryForm = {
           name: materialCategory.name
         }
         reset(formValues)
@@ -34,7 +35,7 @@ export const MaterialCategoryForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: MaterialCategoryFormAttributes) => {
+  const onSubmit = (formData: IMaterialCategoryForm) => {
     if (isUpdateRequest) {
       axios.patch(`/material-categories/${mongooseId}`, formData)
         .then((_) => {
@@ -76,8 +77,4 @@ export const MaterialCategoryForm = () => {
       </div>
     </div>
   )
-}
-
-export type MaterialCategoryFormAttributes = {
-  name: String
 }

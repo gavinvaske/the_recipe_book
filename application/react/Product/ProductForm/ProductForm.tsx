@@ -3,7 +3,6 @@ import './ProductForm.scss';
 import { Input } from '../../_global/FormInputs/Input/Input';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { MongooseId } from '../../_types/typeAliases';
 import { unwindDirections } from '../../../api/enums/unwindDirectionsEnum';
 import { ovOrEpmOptions } from '../../../api/enums/ovOrEpmEnum';
 import { defaultFinishType, finishTypes } from '../../../api/enums/finishTypesEnum';
@@ -19,6 +18,7 @@ import { TextArea } from '../../_global/FormInputs/TextArea/TextArea';
 import { CustomSelect, SelectOption } from '../../_global/FormInputs/CustomSelect/CustomSelect';
 import { performTextSearch } from '../../_queries/_common';
 import { IDie, IMaterial } from '@shared/types/models';
+import { IProductForm } from '@ui/types/forms';
 
 const productTableUrl = '/react-ui/tables/product'
 
@@ -32,7 +32,7 @@ export const ProductForm = () => {
   const [finishes, setFinishes ] = useState<SelectOption[]>([])
   const [customers, setCustomers ] = useState<SelectOption[]>([])
 
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<ProductFormAttributes>({
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<IProductForm>({
     defaultValues: {
       unwindDirection: defaultUnwindDirection,
       ovOrEpm: defaultOvOrEpm,
@@ -60,7 +60,7 @@ export const ProductForm = () => {
 
     const product = await getOneProduct(mongooseId)
 
-    const formValues: ProductFormAttributes = {
+    const formValues: IProductForm = {
       productDescription: product.productDescription,
       unwindDirection: product.unwindDirection,
       ovOrEpm: product.ovOrEpm,
@@ -91,7 +91,7 @@ export const ProductForm = () => {
       })
   }, [])
 
-  const onSubmit = (formData: ProductFormAttributes) => {
+  const onSubmit = (formData: IProductForm) => {
     if (isUpdateRequest) {
       axios.patch(`/products/${mongooseId}`, formData)
         .then((_) => {
@@ -259,24 +259,4 @@ export const ProductForm = () => {
       </div>
     </div>
   )
-}
-
-type ProductFormAttributes = {
-  productDescription: string;
-  unwindDirection: number;
-  ovOrEpm: string;
-  artNotes: string;
-  pressNotes: string;
-  finishType: string;
-  coreDiameter: number;
-  labelsPerRoll: number;
-  dieCuttingNotes: string;
-  overun: number;
-  spotPlate: boolean;
-  numberOfColors: number;
-  die: MongooseId;
-  primaryMaterial: MongooseId;
-  secondaryMaterial: MongooseId;
-  finish: MongooseId;
-  customer: MongooseId;
 }

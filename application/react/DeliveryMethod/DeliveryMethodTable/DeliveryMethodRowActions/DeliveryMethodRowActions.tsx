@@ -1,7 +1,7 @@
 import React from 'react'
 import './DeliveryMethodRowActions.scss'
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@shared/types/typeAliases.ts";
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorMessage } from '../../../_hooks/useErrorMessage';

@@ -3,7 +3,7 @@ import './QuoteRowActions'
 import { Row } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { MongooseId } from '../../../_types/typeAliases';
+import { MongooseId } from "@ui/types/typeAliases";
 import { RowActions } from '../../../_global/Table/RowActions/RowActions';
 
 type TODO = any;

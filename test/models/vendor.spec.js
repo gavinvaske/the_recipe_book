@@ -197,22 +197,22 @@ describe('validation', () => {
     });
 
     describe('attribute: remittanceAddress', () => {
-      it('should not be required', () => {
-        delete vendorAttributes.remittanceAddress;
-        const vendor = new VendorModel(vendorAttributes);
+        it('should not be required', () => {
+            delete vendorAttributes.remittanceAddress;
+            const vendor = new VendorModel(vendorAttributes);
 
-        const error = vendor.validateSync();
+            const error = vendor.validateSync();
 
-        expect(error).not.toBeDefined();
+            expect(error).not.toBeDefined();
+        });
+
+        it('should be an instance of a mongoose object', () => {
+            const vendor = new VendorModel(vendorAttributes);
+
+            expect(vendor.remittanceAddress._id).toEqual(expect.any(mongoose.Types.ObjectId));
+            expect(vendor.remittanceAddress.street.toUpperCase()).toEqual(vendorAttributes.remittanceAddress.street.toUpperCase());
+        });
     });
-
-    it('should be an instance of a mongoose object', () => {
-      const vendor = new VendorModel(vendorAttributes);
-
-      expect(vendor.remittanceAddress._id).toEqual(expect.any(mongoose.Types.ObjectId));
-      expect(vendor.remittanceAddress.street.toUpperCase()).toEqual(vendorAttributes.remittanceAddress.street.toUpperCase());
-  });
-  });
 
     describe('attribute: primaryContactName', () => {
         it('should be required', () => {

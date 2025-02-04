@@ -3,7 +3,7 @@ import './FormErrorMessage.scss'
 import { FieldErrors, FieldValues } from 'react-hook-form';
 
 interface Props<T extends FieldValues> {
-  errors: FieldErrors<T>,  // TODO: type this
+  errors: FieldErrors<T>,
   name: string,
 }
 

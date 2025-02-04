@@ -8,6 +8,10 @@ interface Props<T extends FieldValues> {
 }
 
 const FormErrorMessage = <T extends FieldValues>({ errors, name }: Props<T>) => {
+  if (!Object.keys(errors).length) {
+    return null
+  }
+
   const errorMessage = name.split('.').reduce((obj, key) => {
     return obj && typeof obj === 'object' ? (obj as Record<string, any>)[key] : undefined;
   }, errors as Record<string, any>);
@@ -16,9 +20,11 @@ const FormErrorMessage = <T extends FieldValues>({ errors, name }: Props<T>) => 
     ? String(errorMessage.message)
     : undefined;
 
+    if (!message) return null;
+
   return (
     <div className="form-error-message">
-      {message || 'Uh oh, unknown error'}
+      {message}
 
     </div>
   );

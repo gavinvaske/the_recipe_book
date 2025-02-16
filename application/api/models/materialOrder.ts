@@ -1,4 +1,4 @@
-import mongoose, { SchemaTimestampsConfig } from 'mongoose';
+import mongoose from 'mongoose';
 import { convertDollarsToPennies, convertPenniesToDollars, PENNIES_PER_DOLLAR } from '../services/currencyService.ts';
 mongoose.Schema.Types.String.set('trim', true);
 const Schema = mongoose.Schema;
@@ -17,22 +17,6 @@ const validatePurchaseOrderNumber = function(text) {
     }
     return ONLY_NUMBERS_REGEX.test(text);
 };
-
-export interface IMaterialOrder extends SchemaTimestampsConfig, mongoose.Document  {
-    author: mongoose.Types.ObjectId,
-    material: mongoose.Types.ObjectId,
-    purchaseOrderNumber: string,
-    orderDate: Date,
-    arrivalDate: Date,
-    feetPerRoll: number,
-    totalRolls: number,
-    totalCost: number,
-    vendor: mongoose.Types.ObjectId,
-    hasArrived?: boolean,
-    notes?: string
-    freightCharge: number,
-    fuelCharge: number,
-}
 
 const schema = new Schema({
     author: {

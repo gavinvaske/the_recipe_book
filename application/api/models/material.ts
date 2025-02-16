@@ -202,7 +202,22 @@ const schema = new Schema<IMaterial>({
             validator : Number.isInteger,
             message: '{VALUE} is not an integer'
         },
+    },
+  inventory: {  // Denormalized attribute to optimize query performance
+    lengthArrived: {
+      type: Number
+    },
+    lengthNotArrived: {
+      type: Number
+    },
+    materialOrders: {
+      ref: 'MaterialOrder',
+      type: [Schema.Types.ObjectId],
+    },
+    manualLengthAdjustment: {
+      type: Number
     }
+  }
 }, {
     timestamps: true,
     strict: 'throw'

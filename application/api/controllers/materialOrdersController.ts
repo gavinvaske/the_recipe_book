@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 const router = Router();
-import { IMaterialOrder, MaterialOrderModel } from '../models/materialOrder.ts';
+import { MaterialOrderModel } from '../models/materialOrder.ts';
+import { IMaterialOrder } from '@shared/types/models.ts';
 import { MaterialModel } from '../models/material.ts';
 import { VendorModel } from '../models/vendor.ts';
 import { verifyBearerToken } from '../middleware/authorize.ts';

@@ -31,6 +31,7 @@ import customerEndpoints from './controllers/customerController.ts';
 import deliveryMethodEndpoints from './controllers/deliveryMethodController.ts';
 import creditTermEndpoints from './controllers/creditTermsController.ts';
 import authEndpoints from './controllers/authController.ts'
+import inventoryEndpoints from './controllers/inventoryController.ts'
 import { Application } from 'express';
 
 export const setupApiRoutes = (app: Application) => {
@@ -66,4 +67,5 @@ export const setupApiRoutes = (app: Application) => {
   app.use('/customers', customerEndpoints);
   app.use('/delivery-methods', deliveryMethodEndpoints);
   app.use('/credit-terms', creditTermEndpoints);
+  app.use('/inventories', inventoryEndpoints);
 }

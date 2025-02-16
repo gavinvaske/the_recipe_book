@@ -248,7 +248,6 @@ router.get('/inventory', async (request, response) => {
             .exec();
 
         const distinctMaterialObjectIds = mongooseService.getObjectIds(allMaterials);
-        const distinctMaterialIds = materialService.getMaterialIds(allMaterials);
 
         const materialIdToNetLengthAdjustment = await materialInventoryService.groupLengthAdjustmentsByMaterial();
 
@@ -258,17 +257,14 @@ router.get('/inventory', async (request, response) => {
         const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrders);
         const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrders);
 
-        const lengthOfAllMaterialsInInventory = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveArrived);
-        const lengthOfAllMaterialsOrdered = purchaseOrderService.computeLengthOfMaterial(purchaseOrdersThatHaveNotArrived);
-
-        const materialObjectIdToLengthUsedByTickets = await ticketService.getLengthOfEachMaterialUsedByTickets(distinctMaterialIds);
+        const lengthOfAllMaterialsInInventory = purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveArrived);
+        const lengthOfAllMaterialsOrdered = purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveNotArrived);
 
         const materialInventories = allMaterials.map((material) => {
-            const feetOfMaterialAlreadyUsedByTickets = materialObjectIdToLengthUsedByTickets[material.materialId] || 0;
             const purchaseOrdersForMaterial = materialIdToPurchaseOrders[material._id];
             const materialNetLengthAdjustment = materialIdToNetLengthAdjustment[material._id] || 0;
 
-            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, feetOfMaterialAlreadyUsedByTickets, materialNetLengthAdjustment);
+            return materialInventoryService.buildMaterialInventory(material, purchaseOrdersForMaterial, materialNetLengthAdjustment);
         });
 
         const netLengthOfMaterialInInventory = materialInventoryService.computeNetLengthOfMaterialInInventory(materialInventories);

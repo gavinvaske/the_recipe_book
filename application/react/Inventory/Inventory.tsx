@@ -8,7 +8,10 @@ import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
 import { IMaterial } from '@shared/types/models.ts';
-import { IMaterialOrder } from '../../api/models/materialOrder.ts';
+import { IMaterialOrder } from '@shared/types/models.ts';
+import axios from 'axios';
+import { useSuccessMessage } from '../_hooks/useSuccessMessage.ts';
+import { useErrorMessage } from '../_hooks/useErrorMessage.ts';
 
 const socket = io();
 
@@ -51,8 +54,15 @@ const Inventory = observer(() => {
     setClickedMaterial(null)
   }
 
+  function calculateInventory() {
+    axios.get('/inventories/all')
+      .then(() => useSuccessMessage('Inventory successfully calculated!'))
+      .catch((error) => useErrorMessage(new Error(`Error calculating inventory: ${error.message}`)))
+  }
+
   return (
     <div id='inventory-page' className='page-wrapper' data-test='inventory-page'>
+      <button onClick={calculateInventory}>Calculate Inventory</button>
       {
         clickedMaterial && 
         (<MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />)

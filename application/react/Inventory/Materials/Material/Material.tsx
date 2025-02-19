@@ -53,20 +53,19 @@ function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
       </div>
 
       <div className='po-list-container'>
-        {renderPurchaseOrders(materialInventory)}
+        {/* {renderPurchaseOrders(materialInventory)} */}
       </div>
     </div>
   )
 }
 
 type Props = {
-  materialInventory: MaterialInventory,
+  material: IMaterial,
   onClick: () => void
 }
 
 const Material = observer((props: Props) => {
-  const { materialInventory, onClick } = props;
-  const material: IMaterial = materialInventory.material;
+  const { material, onClick } = props;
   const [shouldShowPoModal, setShouldShowPoModal] = useState(false);
 
   const showPurchaseOrderModal = (e) => {
@@ -79,7 +78,7 @@ const Material = observer((props: Props) => {
   };
 
   return (
-    <div id={material._id} className={`card ${getLowInventoryClass(material.lowStockThreshold, material.lowStockBuffer, materialInventory)}`} onClick={() => onClick()} data-test='material-inventory-card'>
+    <div id={material._id as string} className={`card`} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>
@@ -90,16 +89,16 @@ const Material = observer((props: Props) => {
         </div>
         <div className='col col-right'>
           <div className='material-card-options-container'>
-            <div className={`material-option po-container tooltip-top ${materialInventory.purchaseOrdersForMaterial.length === 0 ? 'disabled' : 'enabled'}`} onClick={(e) => showPurchaseOrderModal(e)}>
-              <span className='tooltiptext'>{materialInventory.purchaseOrdersForMaterial.length === 0 ? 'No purchase orders' : `View ${materialInventory.purchaseOrdersForMaterial.length} purchase orders`}</span>
+            <div className={`material-option po-container tooltip-top ${true ? 'disabled' : 'enabled'}`} onClick={(e) => showPurchaseOrderModal(e)}>
+              <span className='tooltiptext'>{true ? 'No purchase orders' : `View ${0} purchase orders`}</span>
               <div className='icon-container'>
-                <div className='po-counter'>{materialInventory.purchaseOrdersForMaterial.length === 0 ? '0' : `${materialInventory.purchaseOrdersForMaterial.length}`}</div>
+                <div className='po-counter'>{true ? '0' : `${0}`}</div>
               </div>
 
-              {
+              {/* {
                 shouldShowPoModal && 
                 <PurchaseOrderModal material={material} materialInventory={materialInventory} onClose={() => setShouldShowPoModal(!shouldShowPoModal)}/>
-              }
+              } */}
 
             </div>
             <div className='material-option open-ticket-container tooltip-top enabled'>
@@ -124,22 +123,23 @@ const Material = observer((props: Props) => {
       </div>
       <div className='actual-vs-ordered-container'>
 
-        {renderPurchaseOrderContainer(materialInventory)}
+        {/* {renderPurchaseOrderContainer(materialInventory)} */}
 
         <div className='col col-left'>
           <span>Actual</span>
-          <h2 className='material-length-in-stock'>{materialInventory.lengthOfMaterialInStock}</h2>
+          <h2 className='material-length-in-stock'>{material.inventory.lengthArrived}</h2>
         </div>
         <div className='divide-line'></div>
         <div className='col col-right'>
           <span>Ordered</span>
-          <h2 className='material-length-ordered'>{materialInventory.lengthOfMaterialOrdered}</h2>
+          <h2 className='material-length-ordered'>{material.inventory.lengthNotArrived}</h2>
         </div>
         <div className='divide-line'></div>
         <div className='col col-right'>
           <span>Net</span>
-          <h2 className='material-length-ordered'>{materialInventory.netLengthOfMaterialInStock}</h2>
+          <h2 className='material-length-ordered'>{material.inventory.lengthArrived + material.inventory.lengthNotArrived + material.inventory.manualLengthAdjustment}</h2>
         </div>
+
       </div>
       <div className='material-location-container tooltip-top'>
         <span className='tooltiptext'>Location of material</span>
@@ -153,12 +153,11 @@ const Material = observer((props: Props) => {
 
 type PurchaseOrderModalProps = {
   material: IMaterial, 
-  materialInventory: MaterialInventory,
   onClose: () => void
 }
 
 const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
-  const { material, materialInventory, onClose} = props;
+  const { material, onClose} = props;
 
   return (
     <Modal onClose={() => onClose()}>
@@ -183,7 +182,7 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
                 Total Feet
               </div>
             </div>
-            {renderPurchaseOrders(materialInventory)}
+            {/* {renderPurchaseOrders(materialInventory)} */}
           </div>
         </div>
       </div>

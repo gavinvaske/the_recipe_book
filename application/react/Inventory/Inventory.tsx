@@ -12,6 +12,10 @@ import { IMaterialOrder } from '@shared/types/models.ts';
 import axios from 'axios';
 import { useSuccessMessage } from '../_hooks/useSuccessMessage.ts';
 import { useErrorMessage } from '../_hooks/useErrorMessage.ts';
+import { useQuery } from '@tanstack/react-query';
+import { getMaterials } from '../_queries/material.ts';
+import { MongooseIdStr } from '@shared/types/typeAliases.ts';
+import { LoadingIndicator } from '../_global/LoadingIndicator/LoadingIndicator.tsx';
 
 const socket = io();
 
@@ -33,26 +37,36 @@ export type MaterialInventorySummary = {
 const Inventory = observer(() => {
   const inventorySummary: Partial<MaterialInventorySummary> = inventorySummaryStore.getInventorySummary()
   const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
-  
+
+  const materials = inventorySummaryStore.getMaterials()
+
+  const { isPending } = useQuery({
+    queryKey: ['get-materials'],
+    queryFn: async () => {
+      const materials = await getMaterials();
+      inventorySummaryStore.setMaterials(materials)
+    },
+  })
+
   useEffect(() => {
-    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
-  }, []);
+    socket.on('MATERIAL:CREATED', (material: IMaterial) => {
+      inventorySummaryStore.setMaterial(material)
+    })
 
-  socket.on('MATERIAL:CHANGED', (_: IMaterial) => {
-    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
-  })
+    socket.on('MATERIAL:UPDATED', (material: IMaterial) => {
+      inventorySummaryStore.setMaterial(material)
+    })
+  
+    socket.on('MATERIAL:DELETED', (materialMongooseId: MongooseIdStr) => {
+      inventorySummaryStore.removeMaterial(materialMongooseId)
+    })
 
-  socket.on('MATERIAL_ORDER:CHANGED', (_: IMaterialOrder) => {
-    inventorySummaryStore.recalculateInventorySummary() /* Populates the mobx store with Inventory data which is then auto-rendered on screen */
-  })
-
-  function displayMaterialInventoryDetailsModal(materialInventory: MaterialInventory) {
-    setClickedMaterial(materialInventory)
-  }
-
-  function closeMaterialInventoryDetailsModal() {
-    setClickedMaterial(null)
-  }
+    return () => {
+      socket.off('MATERIAL:CREATED')
+      socket.off('MATERIAL:UPDATED')
+      socket.off('MATERIAL:DELETED')
+    }
+  }, [])
 
   function calculateInventory() {
     axios.get('/inventories/all')
@@ -60,13 +74,11 @@ const Inventory = observer(() => {
       .catch((error) => useErrorMessage(new Error(`Error calculating inventory: ${error.message}`)))
   }
 
+  if (isPending) return (<LoadingIndicator />);
+
   return (
     <div id='inventory-page' className='page-wrapper' data-test='inventory-page'>
       <button onClick={calculateInventory}>Calculate Inventory</button>
-      {
-        clickedMaterial && 
-        (<MaterialDetailsModal materialInventory={clickedMaterial} onClose={() => closeMaterialInventoryDetailsModal()} />)
-      }
       
       {
         inventorySummary &&
@@ -77,10 +89,9 @@ const Inventory = observer(() => {
       
       {
         inventorySummary &&
-          <Materials
-            inventorySummaryStore={inventorySummaryStore}
-            onMaterialClicked={(materialInventory: MaterialInventory) => displayMaterialInventoryDetailsModal(materialInventory)}
-          />
+        <Materials
+          materials={materials}
+        />
       }
     </div>
   )

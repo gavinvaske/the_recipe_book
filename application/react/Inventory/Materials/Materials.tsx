@@ -1,26 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './Materials.scss'
 import { observer } from 'mobx-react-lite';
 import Material from './Material/Material';
-import { MaterialInventory } from '../Inventory';
-
+import { IMaterial } from '@shared/types/models';
 
 type Props = {
-  inventorySummaryStore: any,
-  onMaterialClicked: (materialInventory: MaterialInventory) => void
+  materials: IMaterial[],
 }
 
 const Materials = observer((props: Props) => {
-  const { inventorySummaryStore, onMaterialClicked } = props;
-  const materialInventories : MaterialInventory[] = inventorySummaryStore.getFilteredMaterialInventories() || [];
+  const { materials } = props;
 
   return (
     <div className='material-card-section full-width'>
-      {materialInventories.map((materialInventory) =>
+      {materials.map((material) =>
         <Material 
-          materialInventory={materialInventory} 
-          key={materialInventory.material._id as string}
-          onClick={() => onMaterialClicked(materialInventory)}
+          material={material}
+          key={material._id as string}
+          onClick={useCallback(() => {}, [])} // TODO: Implement this hook properly for state updates in Material component
         />
       )}
     </div>

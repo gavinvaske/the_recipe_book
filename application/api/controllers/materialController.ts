@@ -297,4 +297,18 @@ router.get('/:mongooseId', async (request, response) => {
     }
 });
 
+router.get('/', async (_: Request, response: Response) => {
+  try {
+      const materials = await MaterialModel.find().exec();
+
+      return response.json(materials);
+  } catch (error) {
+      console.error('Error searching for materials: ', error);
+
+      return response
+          .status(SERVER_ERROR)
+          .send(error.message);
+  }
+});
+
 export default router;

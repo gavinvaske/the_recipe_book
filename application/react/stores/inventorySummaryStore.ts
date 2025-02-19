@@ -59,29 +59,25 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     this.inventorySummary = inventorySummary;
   }
 
-  calculateLengthOfArrivedMaterials() {
-    return Object.values(this.materials).reduce((sum, material) => sum + material.inventory.lengthArrived, 0)
+  getArrivedMaterialsLength() {
+
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.lengthArrived || 0), 0)
   }
 
-  calculateLengthOfNotArrivedMaterials() {
-    return Object.values(this.materials).reduce((sum, material) => sum + material.inventory.lengthNotArrived, 0)
+  getNotArrivedMaterialsLength() {
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.lengthNotArrived || 0), 0)
   }
 
-  calculateNetLengthAdjustments() {
-    return Object.values(this.materials).reduce((sum, material) => sum + material.inventory.manualLengthAdjustment, 0)
+  getNetLengthAdjustments() {
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.manualLengthAdjustment || 0), 0)
   }
 
-  getInventorySummary(): Partial<MaterialInventorySummary> {
-    const lengthOfArrivedMaterials = this.calculateLengthOfArrivedMaterials()
-    const lengthOfNotArrivedMaterials = this.calculateLengthOfNotArrivedMaterials()
-    const netLengthAdjustments = this.calculateNetLengthAdjustments()
-    const netLengthOfMaterialInInventory = lengthOfArrivedMaterials + netLengthAdjustments - lengthOfNotArrivedMaterials
-    
-    return {
-      lengthOfAllMaterialsInInventory: lengthOfArrivedMaterials,
-      lengthOfAllMaterialsOrdered: lengthOfNotArrivedMaterials,
-      netLengthOfMaterialInInventory: netLengthOfMaterialInInventory
-    }
+  getNetLengthOfMaterialsInInventory() {
+    const lengthOfArrivedMaterials = this.getArrivedMaterialsLength()
+    const lengthOfNotArrivedMaterials = this.getNotArrivedMaterialsLength()
+    const netLengthAdjustments = this.getNetLengthAdjustments()
+
+    return lengthOfArrivedMaterials + netLengthAdjustments - lengthOfNotArrivedMaterials
   }
 
   generateSearchQuery(searchBarInput: string, textQuickFilters: UuidToTextFilter): string {

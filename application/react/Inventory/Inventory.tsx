@@ -35,18 +35,7 @@ export type MaterialInventorySummary = {
 }
 
 const Inventory = observer(() => {
-  const inventorySummary: Partial<MaterialInventorySummary> = inventorySummaryStore.getInventorySummary()
   const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
-
-  const materials = inventorySummaryStore.getMaterials()
-
-  const { isPending } = useQuery({
-    queryKey: ['get-materials'],
-    queryFn: async () => {
-      const materials = await getMaterials();
-      inventorySummaryStore.setMaterials(materials)
-    },
-  })
 
   useEffect(() => {
     socket.on('MATERIAL:CREATED', (material: IMaterial) => {
@@ -74,25 +63,14 @@ const Inventory = observer(() => {
       .catch((error) => useErrorMessage(new Error(`Error calculating inventory: ${error.message}`)))
   }
 
-  if (isPending) return (<LoadingIndicator />);
-
   return (
     <div id='inventory-page' className='page-wrapper' data-test='inventory-page'>
       <button onClick={calculateInventory}>Calculate Inventory</button>
       
-      {
-        inventorySummary &&
-        <Summary inventorySummaryStore={inventorySummaryStore} />
-      }
-
+      <Summary />
       <InventoryFilterBar />
-      
-      {
-        inventorySummary &&
-        <Materials
-          materials={materials}
-        />
-      }
+      <Materials />
+
     </div>
   )
 });

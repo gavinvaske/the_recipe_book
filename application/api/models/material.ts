@@ -204,6 +204,9 @@ const schema = new Schema<IMaterial>({
         },
     },
   inventory: {  // Denormalized attribute to optimize query performance
+    netLengthAvailable: {
+      type: Number
+    },
     lengthArrived: {
       type: Number
     },

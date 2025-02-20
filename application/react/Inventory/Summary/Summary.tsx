@@ -1,7 +1,7 @@
 import React from 'react';
 import './Summary.scss'
 import { observer } from 'mobx-react-lite';
-import inventorySummaryStore from '../../stores/inventorySummaryStore';
+import inventoryStore from '../../stores/inventoryStore';
 
 const Summary = observer(() => {
 
@@ -12,15 +12,15 @@ const Summary = observer(() => {
       </div>
       <div className='card col col-two'>
         <span>Feet On Hand</span>
-        <h2 className='total-length-of-material-in-inventory'>{inventorySummaryStore.getArrivedMaterialsLength()}</h2>
+        <h2 className='total-length-of-material-in-inventory'>{inventoryStore.getArrivedMaterialsLength()}</h2>
       </div>
       <div className='card col col-three'>
         <span>Net Feet</span>
-        <h2 className='net-length-of-material-in-inventory'>{inventorySummaryStore.getNetLengthOfMaterialsInInventory()}</h2>
+        <h2 className='net-length-of-material-in-inventory'>{inventoryStore.getNetLengthOfMaterialsInInventory()}</h2>
       </div>
       <div className='card col col-four'>
         <span>Feet On Order</span>
-        <h2 className='total-length-of-material-ordered'>{inventorySummaryStore.getNotArrivedMaterialsLength()}</h2>
+        <h2 className='total-length-of-material-ordered'>{inventoryStore.getNotArrivedMaterialsLength()}</h2>
       </div>
     </div>
   )

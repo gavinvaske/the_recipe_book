@@ -61,8 +61,10 @@ export function getInventoryForMaterial(purchaseOrdersForMaterial: IMaterialOrde
   const lengthArrived = purchaseOrderService.computeLengthOfMaterialOrders(arrivedOrders);
   const lengthNotArrived = purchaseOrderService.computeLengthOfMaterialOrders(notArrivedOrders);
   const materialOrderIds = purchaseOrdersForMaterial.map((purchaseOrder) => purchaseOrder._id);
+  const netLengthAvailable = lengthArrived + materialLengthAdjustment
 
   return {
+    netLengthAvailable: netLengthAvailable,
     lengthNotArrived: lengthNotArrived,
     lengthArrived: lengthArrived,
     materialOrders: materialOrderIds,

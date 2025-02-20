@@ -6,7 +6,7 @@ import { IMaterial } from "@shared/types/models";
 import { MongooseIdStr } from "@shared/types/typeAliases";
 
 /* Mobx Store */
-class InventorySummaryStore implements Filter<MaterialInventory> {
+class InventoryStore implements Filter<MaterialInventory> {
   inventorySummary: Partial<MaterialInventorySummary> = {};
   searchBarInput: string = ''
   textQuickFilters: UuidToTextFilter = {}
@@ -60,7 +60,6 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
   }
 
   getArrivedMaterialsLength() {
-
     return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.lengthArrived || 0), 0)
   }
 
@@ -128,8 +127,14 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     return this.inventorySummary.materialInventories || [];
   }
 
-  getMaterials(): IMaterial[] {
-    return Object.values(this.materials)
+  getSortedMaterials(): IMaterial[] {
+    // return materials sorted by netLength or by name if lengths are equal
+    return Object.values(this.materials).sort((a, b) => {
+      if (a.inventory.netLengthAvailable !== b.inventory.netLengthAvailable) {
+        return a.inventory.netLengthAvailable - b.inventory.netLengthAvailable;
+      }
+      return a.name.localeCompare(b.name);
+    });
   }
 
   setMaterial(material: IMaterial): void {
@@ -148,4 +153,4 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
   }
 }
 
-export default new InventorySummaryStore();
+export default new InventoryStore();

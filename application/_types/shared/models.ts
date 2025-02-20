@@ -85,6 +85,7 @@ export interface IMaterial extends SchemaTimestampsConfig, Document<MongooseId> 
   lowStockThreshold: number;
   lowStockBuffer: number;
   inventory: {
+    netLengthAvailable: number,
     lengthArrived: number,
     lengthNotArrived: number,
     materialOrders: MongooseId[] | IMaterialOrder,

@@ -3,7 +3,7 @@ import './Inventory.scss'
 import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
 import Materials from './Materials/Materials';
-import inventorySummaryStore from '../stores/inventorySummaryStore';
+import inventoryStore from '../stores/inventoryStore.ts';
 import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
@@ -39,15 +39,15 @@ const Inventory = observer(() => {
 
   useEffect(() => {
     socket.on('MATERIAL:CREATED', (material: IMaterial) => {
-      inventorySummaryStore.setMaterial(material)
+      inventoryStore.setMaterial(material)
     })
 
     socket.on('MATERIAL:UPDATED', (material: IMaterial) => {
-      inventorySummaryStore.setMaterial(material)
+      inventoryStore.setMaterial(material)
     })
   
     socket.on('MATERIAL:DELETED', (materialMongooseId: MongooseIdStr) => {
-      inventorySummaryStore.removeMaterial(materialMongooseId)
+      inventoryStore.removeMaterial(materialMongooseId)
     })
 
     return () => {

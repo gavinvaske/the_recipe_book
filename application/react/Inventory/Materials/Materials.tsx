@@ -2,20 +2,20 @@ import React, { useCallback } from 'react';
 import './Materials.scss'
 import { observer } from 'mobx-react-lite';
 import Material from './Material/Material';
-import inventorySummaryStore from '../../stores/inventorySummaryStore';
+import inventoryStore from '../../stores/inventoryStore';
 import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../../_queries/material';
 import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator';
 
 const Materials = observer(() => {
-  const materials = inventorySummaryStore.getMaterials() || []
+  const materials = inventoryStore.getSortedMaterials()
   const callback = useCallback(() => {}, []) // TODO: Implement this hook properly for state updates in Materials component
 
   const { isPending } = useQuery({
     queryKey: ['get-materials'],
     queryFn: async () => {
       const materials = await getMaterials();
-      inventorySummaryStore.setMaterials(materials)
+      inventoryStore.setMaterials(materials)
 
       return materials
     },

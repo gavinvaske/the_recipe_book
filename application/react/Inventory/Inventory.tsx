@@ -58,7 +58,7 @@ const Inventory = observer(() => {
   }, [])
 
   function calculateInventory() {
-    axios.get('/inventories/all')
+    axios.get('/materials/recalculate-inventory')
       .then(() => useSuccessMessage('Inventory successfully calculated!'))
       .catch((error) => useErrorMessage(new Error(`Error calculating inventory: ${error.message}`)))
   }

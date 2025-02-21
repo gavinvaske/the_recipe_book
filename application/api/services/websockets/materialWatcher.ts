@@ -1,14 +1,7 @@
 import { IMaterial } from '@shared/types/models.ts';
 import { MaterialModel } from '../../models/material.ts';
 import { ChangeStreamDocument } from 'mongodb'
-
-const OperationTypes = {
-  INSERT: 'insert',
-  UPDATE: 'update',
-  DELETE: 'delete',
-  REPLACE: 'replace'
-};
-
+import { OperationTypes } from '../../constants/mongoDb.ts';
 
 export function materialWatcher(socket) {
     MaterialModel.watch().on('change', async (change: ChangeStreamDocument<IMaterial>) => {

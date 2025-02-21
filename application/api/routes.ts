@@ -67,5 +67,4 @@ export const setupApiRoutes = (app: Application) => {
   app.use('/customers', customerEndpoints);
   app.use('/delivery-methods', deliveryMethodEndpoints);
   app.use('/credit-terms', creditTermEndpoints);
-  app.use('/inventories', inventoryEndpoints);
 }

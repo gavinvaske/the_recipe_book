@@ -1,7 +1,10 @@
 import * as purchaseOrderService from './purchaseOrderService.ts';
 import { MaterialLengthAdjustmentModel } from '../models/materialLengthAdjustment.ts';
-import { MongooseId } from '@shared/types/typeAliases.ts';
+import { MongooseId, MongooseIdStr } from '@shared/types/typeAliases.ts';
 import { IMaterial, IMaterialOrder } from '@shared/types/models.ts';
+import { MaterialModel } from '../models/material.ts';
+import * as mongooseService from '../services/mongooseService.ts';
+import * as materialInventoryService from '../services/materialInventoryService.ts';
 
 /* 
   @See: 
@@ -17,42 +20,42 @@ import { IMaterial, IMaterialOrder } from '@shared/types/models.ts';
     }
 */
 export async function groupLengthAdjustmentsByMaterial(): Promise<Record<string, number>> {
-    const materialIdsWithTotalLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate([
-        {
-            $group: {
-                _id: '$material',
-                totalLength: {
-                    $sum: {
-                        '$toDouble': '$length'
-                    }
-                }
-            }
+  const materialIdsWithTotalLengthAdjustments = await MaterialLengthAdjustmentModel.aggregate([
+    {
+      $group: {
+        _id: '$material',
+        totalLength: {
+          $sum: {
+            '$toDouble': '$length'
+          }
         }
-    ]);
+      }
+    }
+  ]);
 
-    const materialIdToTotalLengthAdjustment = {};
+  const materialIdToTotalLengthAdjustment = {};
 
-    materialIdsWithTotalLengthAdjustments.forEach(({_id, totalLength}) => {
-        materialIdToTotalLengthAdjustment[_id] = totalLength; 
-    });
+  materialIdsWithTotalLengthAdjustments.forEach(({ _id, totalLength }) => {
+    materialIdToTotalLengthAdjustment[_id] = totalLength;
+  });
 
-    return materialIdToTotalLengthAdjustment;
+  return materialIdToTotalLengthAdjustment;
 }
 
 export function mapMaterialIdToPurchaseOrders(materialIds: MongooseId[], purchaseOrders: IMaterialOrder[]): Record<string, IMaterialOrder[]> {
-    const materialIdToPurchaseOrders = {};
+  const materialIdToPurchaseOrders = {};
 
-    materialIds.forEach((materialId) => {
-        materialIdToPurchaseOrders[materialId as string] = [];
-    });
+  materialIds.forEach((materialId) => {
+    materialIdToPurchaseOrders[materialId as string] = [];
+  });
 
-    purchaseOrders.forEach((purchaseOrder) => {
-        const materialId = purchaseOrder.material;
-        
-        materialIdToPurchaseOrders[materialId as string].push(purchaseOrder);
-    });
+  purchaseOrders.forEach((purchaseOrder) => {
+    const materialId = purchaseOrder.material;
 
-    return materialIdToPurchaseOrders;
+    materialIdToPurchaseOrders[materialId as string].push(purchaseOrder);
+  });
+
+  return materialIdToPurchaseOrders;
 }
 
 export function getInventoryForMaterial(purchaseOrdersForMaterial: IMaterialOrder[], materialLengthAdjustment: number): IMaterial['inventory'] {
@@ -73,23 +76,56 @@ export function getInventoryForMaterial(purchaseOrdersForMaterial: IMaterialOrde
 }
 
 export function buildMaterialInventory(material, allPurchaseOrdersForMaterial, materialLengthAdjustments) {
-    const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
-    const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
-    const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveArrived);
+  const purchaseOrdersThatHaveArrived = purchaseOrderService.findPurchaseOrdersThatHaveArrived(allPurchaseOrdersForMaterial);
+  const purchaseOrdersThatHaveNotArrived = purchaseOrderService.findPurchaseOrdersThatHaveNotArrived(allPurchaseOrdersForMaterial);
+  const lengthOfMaterialInStock = purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveArrived);
 
-    return {
-        material,
-        lengthOfMaterialOrdered: purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveNotArrived),
-        lengthOfMaterialInStock: lengthOfMaterialInStock,
-        netLengthOfMaterialInStock: lengthOfMaterialInStock + materialLengthAdjustments,
-        purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
-    };
+  return {
+    material,
+    lengthOfMaterialOrdered: purchaseOrderService.computeLengthOfMaterialOrders(purchaseOrdersThatHaveNotArrived),
+    lengthOfMaterialInStock: lengthOfMaterialInStock,
+    netLengthOfMaterialInStock: lengthOfMaterialInStock + materialLengthAdjustments,
+    purchaseOrdersForMaterial: purchaseOrdersThatHaveNotArrived
+  };
 }
 
 export function computeNetLengthOfMaterialInInventory(materialInventories) {
-    const initialValue = 0;
+  const initialValue = 0;
 
-    return materialInventories.reduce((accumulator, currentMaterialInventory) => {
-        return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
-    }, initialValue);
+  return materialInventories.reduce((accumulator, currentMaterialInventory) => {
+    return accumulator + currentMaterialInventory.netLengthOfMaterialInStock;
+  }, initialValue);
+}
+
+export async function populateMaterialInventory(materialId?: MongooseIdStr) {
+  const filter = materialId ? { _id: materialId } : {};
+  const materials: IMaterial[] = await MaterialModel
+    .find(filter)
+    .populate({ path: 'materialCategory' })
+    .populate({ path: 'vendor' })
+    .populate({ path: 'adhesiveCategory' })
+    .exec();
+
+  const distinctMaterialObjectIds = mongooseService.getObjectIds<IMaterial>(materials);
+  const materialIdToNetLengthAdjustment = await materialInventoryService.groupLengthAdjustmentsByMaterial();
+  const allPurchaseOrders = await purchaseOrderService.getPurchaseOrdersForMaterials(distinctMaterialObjectIds);
+  const materialIdToPurchaseOrders = materialInventoryService.mapMaterialIdToPurchaseOrders(distinctMaterialObjectIds, allPurchaseOrders);
+
+  const materialIdToInventory: Record<string, IMaterial['inventory']> = {};
+
+  materials.forEach((material) => {
+    const materialOrders = materialIdToPurchaseOrders[material._id as string] || [];
+    const materialNetLengthAdjustment = materialIdToNetLengthAdjustment[material._id as string] || 0;
+    materialIdToInventory[material._id as string] = materialInventoryService.getInventoryForMaterial(materialOrders, materialNetLengthAdjustment)
+  });
+
+  const bulkOps = Object.keys(materialIdToInventory).map((materialId) => ({
+    updateOne: {
+      filter: { _id: materialId },
+      update: { $set: { inventory: materialIdToInventory[materialId] } },
+      upsert: false
+    }
+  }))
+
+  await MaterialModel.bulkWrite(bulkOps)
 }

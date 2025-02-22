@@ -97,8 +97,8 @@ export function computeNetLengthOfMaterialInInventory(materialInventories) {
   }, initialValue);
 }
 
-export async function populateMaterialInventory(materialId?: MongooseIdStr) {
-  const filter = materialId ? { _id: materialId } : {};
+export async function populateMaterialInventories(materialIds?: MongooseIdStr[]) {
+  const filter = !!materialIds ? { _id: { $in: [materialIds] } } : {};
   const materials: IMaterial[] = await MaterialModel
     .find(filter)
     .populate({ path: 'materialCategory' })

@@ -6,9 +6,6 @@ import { VendorModel } from '../models/vendor.ts';
 import { MaterialCategoryModel } from '../models/materialCategory.ts';
 
 import * as materialInventoryService from '../services/materialInventoryService.ts';
-import * as materialService from '../services/materialService.ts';
-import * as purchaseOrderService from '../services/purchaseOrderService.ts';
-import * as ticketService from '../services/ticketService.ts';
 import * as mongooseService from '../services/mongooseService.ts';
 
 const SHOW_ALL_MATERIALS_ENDPOINT = '/materials';
@@ -240,7 +237,7 @@ router.get('/delete/:id', async (request, response) => {
 
 router.get('/recalculate-inventory', async (_: Request, response: Response) => {
   try {
-    await materialInventoryService.populateMaterialInventory();
+    await materialInventoryService.populateMaterialInventories();
 
     return response.sendStatus(SUCCESS)
   } catch (error) {

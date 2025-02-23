@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 import { Decimal } from 'decimal.js';
 import mongooseDelete from 'mongoose-delete';
 import { IMaterial } from '@shared/types/models.ts';
+import { MongooseHooks } from '../constants/mongoose.ts';
+import { populateMaterialInventories } from '../services/materialInventoryService.ts';
 
 mongoose.plugin(mongooseDelete, {overrideMethods: true});
 
@@ -225,6 +227,8 @@ const schema = new Schema<IMaterial>({
     timestamps: true,
     strict: 'throw'
 });
+
+schema.post(MongooseHooks.Save, (doc: IMaterial) => populateMaterialInventories([doc._id.toString()]))
 
 schema.index({ name: 'text', materialId: 'text' });
 

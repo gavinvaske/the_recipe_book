@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
 import Materials from './Materials/Materials';
 import inventoryStore from '../stores/inventoryStore.ts';
-import { io } from 'socket.io-client';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { MaterialDetailsModal } from './MaterialDetailsModal/MaterialDetailsModal';
 import { IMaterial } from '@shared/types/models.ts';
@@ -16,8 +15,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getMaterials } from '../_queries/material.ts';
 import { MongooseIdStr } from '@shared/types/typeAliases.ts';
 import { LoadingIndicator } from '../_global/LoadingIndicator/LoadingIndicator.tsx';
+import { useWebsocket } from '../_hooks/useWebsocket.ts';
 
-const socket = io();
 
 export type MaterialInventory = {
   lengthOfMaterialInStock: number
@@ -37,25 +36,17 @@ export type MaterialInventorySummary = {
 const Inventory = observer(() => {
   const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
 
-  useEffect(() => {
-    socket.on('MATERIAL:CREATED', (material: IMaterial) => {
-      inventoryStore.setMaterial(material)
-    })
+  useWebsocket('MATERIAL:CREATED', (material: IMaterial) => {
+    inventoryStore.setMaterial(material)
+  })
 
-    socket.on('MATERIAL:UPDATED', (material: IMaterial) => {
-      inventoryStore.setMaterial(material)
-    })
-  
-    socket.on('MATERIAL:DELETED', (materialMongooseId: MongooseIdStr) => {
-      inventoryStore.removeMaterial(materialMongooseId)
-    })
+  useWebsocket('MATERIAL:UPDATED', (material: IMaterial) => {
+    inventoryStore.setMaterial(material)
+  })
 
-    return () => {
-      socket.off('MATERIAL:CREATED')
-      socket.off('MATERIAL:UPDATED')
-      socket.off('MATERIAL:DELETED')
-    }
-  }, [])
+  useWebsocket('MATERIAL:DELETED', (materialMongooseId: MongooseIdStr) => {
+    inventoryStore.removeMaterial(materialMongooseId)
+  })
 
   function calculateInventory() {
     axios.get('/materials/recalculate-inventory')

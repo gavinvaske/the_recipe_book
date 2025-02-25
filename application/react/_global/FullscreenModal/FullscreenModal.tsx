@@ -1,12 +1,12 @@
 import React from 'react';
-import './FullscreenModal.scss';
+import './FullScreenModal.scss';
 
 type Props = {
   onClose: () => void,
   children: React.ReactNode
 }
 
-export const FullscreenModal = (props: Props) => {
+export const FullScreenModal = (props: Props) => {
   const { onClose, children } = props;
 
   const fullScreenModalBackgroundClassName = 'fullscreen-modal-background'

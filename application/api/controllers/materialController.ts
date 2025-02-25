@@ -263,7 +263,12 @@ router.get('/:mongooseId', async (request, response) => {
 
 router.get('/', async (_: Request, response: Response) => {
   try {
-    const materials = await MaterialModel.find().exec();
+    const materials = await MaterialModel.find()
+      .populate('vendor')
+      .populate('materialCategory')
+      .populate('adhesiveCategory')
+      .populate('linerType')
+      .exec();
 
     return response.json(materials);
   } catch (error) {

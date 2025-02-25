@@ -10,8 +10,11 @@ export function materialWatcher(socket) {
     }
 
     const mongooseObjectId = change.documentKey._id;
-    const material = await MaterialModel
-      .findById(mongooseObjectId)
+    const material = await MaterialModel.findById(mongooseObjectId)
+      .populate('vendor')
+      .populate('materialCategory')
+      .populate('adhesiveCategory')
+      .populate('linerType')
       .lean()
       .exec();
 

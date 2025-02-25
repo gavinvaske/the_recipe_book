@@ -9,10 +9,12 @@ import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicato
 import { useWebsocket } from '../../_hooks/useWebsocket';
 import { IMaterial } from '@shared/types/models';
 import { MongooseIdStr } from '@shared/types/typeAliases';
+import { useModal } from '../../_context/modalProvider';
+import { MaterialDetailsModal } from '../MaterialDetailsModal/MaterialDetailsModal';
 
 const Materials = observer(() => {
   const materials = inventoryStore.getSortedMaterials()
-  const callback = useCallback(() => {}, []) // TODO: Implement this hook properly for state updates in Materials component
+  const { openModal } = useModal();
 
   useWebsocket('MATERIAL:CREATED', (material: IMaterial) => {
     inventoryStore.setMaterial(material)
@@ -41,13 +43,13 @@ const Materials = observer(() => {
 
   return (
     <div className='material-card-section full-width'>
-      {materials.map((material) =>
+      {materials.map((material) => (
         <Material 
           material={material}
           key={material._id as string}
-          onClick={callback} // TODO: Implement this hook properly for state updates in Material component
+          onClick={() => openModal(MaterialDetailsModal, { material })}
         />
-      )}
+      ))}
     </div>
   )
 });

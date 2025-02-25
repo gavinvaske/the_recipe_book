@@ -11,11 +11,6 @@ import { IMaterialOrder } from '@shared/types/models.ts';
 import axios from 'axios';
 import { useSuccessMessage } from '../_hooks/useSuccessMessage.ts';
 import { useErrorMessage } from '../_hooks/useErrorMessage.ts';
-import { useQuery } from '@tanstack/react-query';
-import { getMaterials } from '../_queries/material.ts';
-import { MongooseIdStr } from '@shared/types/typeAliases.ts';
-import { LoadingIndicator } from '../_global/LoadingIndicator/LoadingIndicator.tsx';
-import { useWebsocket } from '../_hooks/useWebsocket.ts';
 
 
 export type MaterialInventory = {
@@ -36,18 +31,6 @@ export type MaterialInventorySummary = {
 const Inventory = observer(() => {
   const [clickedMaterial, setClickedMaterial] = useState<MaterialInventory | null>(null);
 
-  useWebsocket('MATERIAL:CREATED', (material: IMaterial) => {
-    inventoryStore.setMaterial(material)
-  })
-
-  useWebsocket('MATERIAL:UPDATED', (material: IMaterial) => {
-    inventoryStore.setMaterial(material)
-  })
-
-  useWebsocket('MATERIAL:DELETED', (materialMongooseId: MongooseIdStr) => {
-    inventoryStore.removeMaterial(materialMongooseId)
-  })
-
   function calculateInventory() {
     axios.get('/materials/recalculate-inventory')
       .then(() => useSuccessMessage('Inventory successfully calculated!'))
@@ -57,11 +40,9 @@ const Inventory = observer(() => {
   return (
     <div id='inventory-page' className='page-wrapper' data-test='inventory-page'>
       <button onClick={calculateInventory}>Calculate Inventory</button>
-      
       <Summary />
       <InventoryFilterBar />
       <Materials />
-
     </div>
   )
 });

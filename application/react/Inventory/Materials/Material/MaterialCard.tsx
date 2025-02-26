@@ -1,35 +1,51 @@
 import React, { useState } from 'react';
-import './Material.scss'
+import './MaterialCard.scss'
 import { observer } from 'mobx-react-lite';
-import { MaterialInventory } from '../../Inventory';
-import { Modal } from '../../../_global/Modal/Modal';
+import { MaterialInventory } from '../../Inventory.tsx';
+import { Modal } from '../../../_global/Modal/Modal.tsx';
 import { Link } from 'react-router-dom';
-import { getDayMonthYear } from '../../../_helperFunctions/dateTime';
+import { getDayMonthYear } from '../../../_helperFunctions/dateTime.ts';
 import { IMaterial } from '@shared/types/models.ts';
+import { useQuery } from '@tanstack/react-query';
+import { getMaterialOrdersByIds } from '../../../_queries/materialOrder.ts';
+import { LoadingIndicator } from '../../../_global/LoadingIndicator/LoadingIndicator.tsx';
+import { useErrorMessage } from '../../../_hooks/useErrorMessage.ts';
 
-function renderPurchaseOrders(materialInventory: MaterialInventory) {
-  const { purchaseOrdersForMaterial } = materialInventory
+function renderPurchaseOrders(material: IMaterial) {
+  const { isPending, isFetching, data: materialOrders, isError, error } = useQuery({
+    queryKey: ['get-material-orders', JSON.stringify(material.inventory.materialOrders)],
+    queryFn: async () => {
+      const materials = await getMaterialOrdersByIds(material.inventory.materialOrders);
 
-  if (!purchaseOrdersForMaterial) return null;
+      return materials
+    },
+    initialData: []
+  })
+
+  if (isPending || isFetching) return (<LoadingIndicator />)
+
+  if (isError) {
+    useErrorMessage(error)
+  }
 
   return (
-    purchaseOrdersForMaterial.map((purchaseOrder, index: number) => (
+    materialOrders.map((mo, index: number) => (
       <div className='tb-row' key={index}>
         <div className='tb-cell cell-one'>
           <div className='pulse-indicator'></div>
-          {purchaseOrder.purchaseOrderNumber}
+          {mo.purchaseOrderNumber}
         </div>
         <div className='tb-cell cell-two'>
           <div className='pulse-indicator'></div>
-          {getDayMonthYear(purchaseOrder.orderDate)}
+          {getDayMonthYear(mo.orderDate)}
         </div>
         <div className='tb-cell cell-three'>
           <div className='pulse-indicator'></div>
-          {getDayMonthYear(purchaseOrder.arrivalDate)}
+          {getDayMonthYear(mo.arrivalDate)}
         </div>
         <div className='tb-cell cell-four'>
           <div className='pulse-indicator'></div>
-          {(purchaseOrder.feetPerRoll * purchaseOrder.totalRolls)}
+          {(mo.feetPerRoll * mo.totalRolls)}
         </div>
       </div>
     ))
@@ -64,9 +80,10 @@ type Props = {
   onClick: () => void
 }
 
-const Material = observer((props: Props) => {
+const MaterialCard = observer((props: Props) => {
   const { material, onClick } = props;
   const [shouldShowPoModal, setShouldShowPoModal] = useState(false);
+  const numMaterialOrders = material.inventory.materialOrders?.length || 0;
 
   const showPurchaseOrderModal = (e) => {
     if (e.currentTarget.classList.contains('disabled')) {
@@ -89,26 +106,26 @@ const Material = observer((props: Props) => {
         </div>
         <div className='col col-right'>
           <div className='material-card-options-container'>
-            <div className={`material-option po-container tooltip-top ${true ? 'disabled' : 'enabled'}`} onClick={(e) => showPurchaseOrderModal(e)}>
-              <span className='tooltiptext'>{true ? 'No purchase orders' : `View ${0} purchase orders`}</span>
+            <div className={`material-option po-container tooltip-top ${numMaterialOrders === 0 ? 'disabled' : 'enabled'}`} onClick={(e) => showPurchaseOrderModal(e)}>
+              <span className='tooltiptext'>{numMaterialOrders === 0 ? 'No purchase orders' : `View ${numMaterialOrders} purchase orders`}</span>
               <div className='icon-container'>
-                <div className='po-counter'>{true ? '0' : `${0}`}</div>
+                <div className='po-counter'>{`${numMaterialOrders}`}</div>
               </div>
 
-              {/* {
+              {
                 shouldShowPoModal && 
-                <PurchaseOrderModal material={material} materialInventory={materialInventory} onClose={() => setShouldShowPoModal(!shouldShowPoModal)}/>
-              } */}
+                <PurchaseOrderModal material={material} onClose={() => setShouldShowPoModal(!shouldShowPoModal)}/>
+              }
 
             </div>
             <div className='material-option open-ticket-container tooltip-top enabled'>
-              <div className='icon-container'>
+              <div className='icon-container' onClick={(e) => e.stopPropagation()}>
                 <i className="fa-regular fa-memo"></i>
               </div>
               <span className='tooltiptext'>View open tickets</span>
             </div>
             <div className='material-option edit-container tooltip-top'>
-              <Link to={`/react-ui/forms/material/${material._id}`}>
+              <Link to={`/react-ui/forms/material/${material._id}`} onClick={(e) => e.stopPropagation()}>
                 <div className='icon-container'>
                   <i className="fa-regular fa-pen-to-square"></i>
                 </div>
@@ -157,7 +174,7 @@ type PurchaseOrderModalProps = {
 }
 
 const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
-  const { material, onClose} = props;
+  const { material, onClose } = props;
 
   return (
     <Modal onClose={() => onClose()}>
@@ -182,7 +199,7 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
                 Total Feet
               </div>
             </div>
-            {/* {renderPurchaseOrders(materialInventory)} */}
+            {renderPurchaseOrders(material)}
           </div>
         </div>
       </div>
@@ -204,4 +221,4 @@ function getLowInventoryClass(lowStockThreshold: number | undefined, lowStockBuf
   return '';
 }
 
-export default Material;
+export default MaterialCard;

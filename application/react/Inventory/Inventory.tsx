@@ -2,7 +2,7 @@ import React from 'react';
 import './Inventory.scss'
 import { observer } from 'mobx-react-lite';
 import Summary from './Summary/Summary';
-import Materials from './Materials/Materials';
+import MaterialCards from './Materials/MaterialCards.tsx';
 import InventoryFilterBar from './InventoryFilterBar/InventoryFilterBar';
 import { IMaterial } from '@shared/types/models.ts';
 import { IMaterialOrder } from '@shared/types/models.ts';
@@ -37,7 +37,7 @@ const Inventory = observer(() => {
       <button onClick={calculateInventory}>Calculate Inventory</button>
       <Summary />
       <InventoryFilterBar />
-      <Materials />
+      <MaterialCards />
     </div>
   )
 });

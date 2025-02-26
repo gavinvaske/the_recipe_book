@@ -123,8 +123,6 @@ router.delete('/:mongooseId', async (request, response) => {
     }
 });
 
-
-
 router.patch('/:mongooseId', async (request, response) => {
     try {
         const updatedMaterialOrder = await MaterialOrderModel.findOneAndUpdate(
@@ -156,6 +154,24 @@ router.post('/', async (request, response) => {
         return response.status(BAD_REQUEST).send(error.message);
     }
 });
+
+router.post('/batch', async (request: Request, response: Response) => {
+  try {
+    const { ids } = request.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return response.status(400).json({ error: "Invalid order IDs" });
+    }
+
+    const orders = await MaterialOrderModel.find({ _id: { $in: ids } });
+
+    return response.json(orders)
+  } catch (error) {
+    console.error('Failed to fetch materialOrders by ids', error);
+
+    return response.status(BAD_REQUEST).send(error.message);
+  }
+})
 
 // @deprecated
 router.post('/create', async (request, response) => {

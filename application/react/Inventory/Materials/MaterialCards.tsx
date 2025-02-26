@@ -1,18 +1,18 @@
 import React, { useCallback } from 'react';
-import './Materials.scss'
+import './MaterialCards.scss'
 import { observer } from 'mobx-react-lite';
-import Material from './Material/Material';
-import inventoryStore from '../../stores/inventoryStore';
+import MaterialCard from './Material/MaterialCard.tsx';
+import inventoryStore from '../../stores/inventoryStore.ts';
 import { useQuery } from '@tanstack/react-query';
-import { getMaterials } from '../../_queries/material';
-import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator';
-import { useWebsocket } from '../../_hooks/useWebsocket';
+import { getMaterials } from '../../_queries/material.ts';
+import { LoadingIndicator } from '../../_global/LoadingIndicator/LoadingIndicator.tsx';
+import { useWebsocket } from '../../_hooks/useWebsocket.ts';
 import { IMaterial } from '@shared/types/models';
 import { MongooseIdStr } from '@shared/types/typeAliases';
-import { useModal } from '../../_context/modalProvider';
-import { MaterialDetailsModal } from '../MaterialDetailsModal/MaterialDetailsModal';
+import { useModal } from '../../_context/modalProvider.tsx';
+import { MaterialDetailsModal } from '../MaterialDetailsModal/MaterialDetailsModal.tsx';
 
-const Materials = observer(() => {
+const MaterialCards = observer(() => {
   const materials = inventoryStore.getSortedMaterials()
   const { openModal } = useModal();
 
@@ -28,7 +28,7 @@ const Materials = observer(() => {
     inventoryStore.removeMaterial(materialMongooseId)
   })
 
-  const { isPending } = useQuery({
+  const { isPending, isFetching } = useQuery({
     queryKey: ['get-materials'],
     queryFn: async () => {
       const materials = await getMaterials();
@@ -39,12 +39,12 @@ const Materials = observer(() => {
     initialData: []
   })
 
-  if (isPending) return <LoadingIndicator />;
+  if (isPending || isFetching) return <LoadingIndicator />;
 
   return (
     <div className='material-card-section full-width'>
       {materials.map((material) => (
-        <Material 
+        <MaterialCard 
           material={material}
           key={material._id as string}
           onClick={() => openModal(MaterialDetailsModal, { material })}
@@ -54,4 +54,4 @@ const Materials = observer(() => {
   )
 });
 
-export default Materials;
+export default MaterialCards;

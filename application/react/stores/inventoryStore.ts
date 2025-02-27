@@ -128,12 +128,14 @@ class InventoryStore implements Filter<MaterialInventory> {
   }
 
   getSortedMaterials(): IMaterial[] {
-    // return materials sorted by netLength or by name if lengths are equal
     return Object.values(this.materials).sort((a, b) => {
-      if (a.inventory.netLengthAvailable !== b.inventory.netLengthAvailable) {
-        return a.inventory.netLengthAvailable - b.inventory.netLengthAvailable;
-      }
-      return a.name.localeCompare(b.name);
+      const aValue = (a.inventory.netLengthAvailable < a.lowStockThreshold) 
+        ? 0 : a.inventory.netLengthAvailable < a.lowStockThreshold + a.lowStockBuffer 
+        ? 1 : 2;
+      const bValue = (b.inventory.netLengthAvailable < b.lowStockThreshold) 
+        ? 0 : b.inventory.netLengthAvailable < b.lowStockThreshold + b.lowStockBuffer 
+        ? 1 : 2;
+      return aValue - bValue || a.name.localeCompare(b.name);
     });
   }
 

@@ -55,29 +55,6 @@ function renderPurchaseOrders(material: IMaterial) {
   )
 }
 
-
-function renderPurchaseOrderContainer(materialInventory: MaterialInventory) {
-  return (
-    <div className='po-date-container'>
-      <div className='po-list-header'>
-        <div className='col col-one'>
-          PO #
-        </div>
-        <div className='col col-two'>
-          Arrival Date
-        </div>
-        <div className='col col-three'>
-          Feet
-        </div>
-      </div>
-
-      <div className='po-list-container'>
-        {/* {renderPurchaseOrders(materialInventory)} */}
-      </div>
-    </div>
-  )
-}
-
 type Props = {
   material: IMaterial,
   onClick: () => void
@@ -98,7 +75,7 @@ const MaterialCard = observer((props: Props) => {
   };
 
   return (
-    <div id={material._id as string} className={`card`} onClick={() => onClick()} data-test='material-inventory-card'>
+    <div id={material._id as string} className={`card ${getLowInventoryClass(material)}`} onClick={() => onClick()} data-test='material-inventory-card'>
       <div className='card-header flex-center-center-row'>
         <div className='col col-left'>
           <h2 className='material-id'>{material.materialId}</h2>
@@ -142,9 +119,6 @@ const MaterialCard = observer((props: Props) => {
         <span className='material-name'>{material.name || 'N/A'}</span>
       </div>
       <div className='actual-vs-ordered-container'>
-
-        {/* {renderPurchaseOrderContainer(materialInventory)} */}
-
         <div className='col col-left'>
           <span>Actual</span>
           <h2 className='material-length-in-stock'>{material.inventory.lengthArrived}</h2>
@@ -210,14 +184,14 @@ const PurchaseOrderModal = (props: PurchaseOrderModalProps) => {
   )
 }
 
-function getLowInventoryClass(lowStockThreshold: number | undefined, lowStockBuffer: number | undefined, materialInventory: MaterialInventory): string {
+function getLowInventoryClass({lowStockThreshold, lowStockBuffer, inventory}: IMaterial): string {
   if (!lowStockThreshold || !lowStockBuffer) return 'low-inventory';
 
-  if (materialInventory.netLengthOfMaterialInStock < lowStockThreshold) {
+  if (inventory.netLengthAvailable < lowStockThreshold) {
     return 'low-inventory';
   }
 
-  if (materialInventory.netLengthOfMaterialInStock < lowStockThreshold + lowStockBuffer) {
+  if (inventory.netLengthAvailable < lowStockThreshold + lowStockBuffer) {
     return 'low-inventory-warning';
   }
 

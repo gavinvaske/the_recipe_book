@@ -127,6 +127,7 @@ export const MaterialForm = () => {
 
     formData.locations =  locationsAsStr?.length ? locationsAsStr.split(',').map((location: string) => location.trim().toUpperCase()) : [];
     delete formData.locationsAsStr; // locationsAsStr is not needed in the request body.
+    formData.locations.sort()
 
     if (!formData.locations?.every((location) => locationRegex.test(location))) {
       setError('locationsAsStr', { message: 'Must be in the format: A1, B2, C33' });

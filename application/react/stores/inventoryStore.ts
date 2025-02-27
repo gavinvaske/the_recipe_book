@@ -1,16 +1,17 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { MaterialInventory, MaterialInventorySummary } from "../Inventory/Inventory";
-import axios, { AxiosError, AxiosResponse } from "axios";
 import * as JsSearch from 'js-search';
 import { ConditionalFilterFunction, UuidToTextFilter, Filter, UuidToConditionalFilter } from "@ui/types/filters";
-import { useErrorMessage } from "../_hooks/useErrorMessage";
+import { IMaterial } from "@shared/types/models";
+import { MongooseIdStr } from "@shared/types/typeAliases";
 
 /* Mobx Store */
-class InventorySummaryStore implements Filter<MaterialInventory> {
+class InventoryStore implements Filter<MaterialInventory> {
   inventorySummary: Partial<MaterialInventorySummary> = {};
   searchBarInput: string = ''
   textQuickFilters: UuidToTextFilter = {}
   conditionalQuickFilters: UuidToConditionalFilter<MaterialInventory> = {}
+  materials: Record<MongooseIdStr, IMaterial> = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -58,8 +59,24 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     this.inventorySummary = inventorySummary;
   }
 
-  getInventorySummary(): Partial<MaterialInventorySummary> {
-    return this.inventorySummary;
+  getArrivedMaterialsLength() {
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.lengthArrived || 0), 0)
+  }
+
+  getNotArrivedMaterialsLength() {
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.lengthNotArrived || 0), 0)
+  }
+
+  getNetLengthAdjustments() {
+    return Object.values(this.materials).reduce((sum, material) => sum + (material.inventory.manualLengthAdjustment || 0), 0)
+  }
+
+  getNetLengthOfMaterialsInInventory() {
+    const lengthOfArrivedMaterials = this.getArrivedMaterialsLength()
+    const lengthOfNotArrivedMaterials = this.getNotArrivedMaterialsLength()
+    const netLengthAdjustments = this.getNetLengthAdjustments()
+
+    return lengthOfArrivedMaterials + netLengthAdjustments - lengthOfNotArrivedMaterials
   }
 
   generateSearchQuery(searchBarInput: string, textQuickFilters: UuidToTextFilter): string {
@@ -110,15 +127,32 @@ class InventorySummaryStore implements Filter<MaterialInventory> {
     return this.inventorySummary.materialInventories || [];
   }
 
-  async recalculateInventorySummary() {
-    axios.get('/materials/inventory')
-      .then((response: AxiosResponse) => {
-        const { data: materialInventorySummary}: { data: MaterialInventorySummary } = response;
-        
-        this.setInventorySummary(materialInventorySummary);
-      })
-      .catch((error: AxiosError) => useErrorMessage(error))
+  getSortedMaterials(): IMaterial[] {
+    return Object.values(this.materials).sort((a, b) => {
+      const aValue = (a.inventory.netLengthAvailable < a.lowStockThreshold) 
+        ? 0 : a.inventory.netLengthAvailable < a.lowStockThreshold + a.lowStockBuffer 
+        ? 1 : 2;
+      const bValue = (b.inventory.netLengthAvailable < b.lowStockThreshold) 
+        ? 0 : b.inventory.netLengthAvailable < b.lowStockThreshold + b.lowStockBuffer 
+        ? 1 : 2;
+      return aValue - bValue || a.name.localeCompare(b.name);
+    });
+  }
+
+  setMaterial(material: IMaterial): void {
+    this.materials[material._id as string] = material;
+  }
+
+  setMaterials(materials: IMaterial[]): void {
+    this.materials = materials.reduce((acc, material) => {
+      acc[material._id as string] = material;
+      return acc;
+    }, {} as Record<MongooseIdStr, IMaterial>);
+  }
+
+  removeMaterial(id: MongooseIdStr): void {
+    delete this.materials[id];
   }
 }
 
-export default new InventorySummaryStore();
+export default new InventoryStore();

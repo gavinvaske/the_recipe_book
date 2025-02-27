@@ -3,7 +3,7 @@ import './MaterialCard.scss'
 import { observer } from 'mobx-react-lite';
 import { MaterialInventory } from '../../Inventory.tsx';
 import { Modal } from '../../../_global/Modal/Modal.tsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getDayMonthYear } from '../../../_helperFunctions/dateTime.ts';
 import { IMaterial } from '@shared/types/models.ts';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +12,7 @@ import { LoadingIndicator } from '../../../_global/LoadingIndicator/LoadingIndic
 import { useErrorMessage } from '../../../_hooks/useErrorMessage.ts';
 
 function renderPurchaseOrders(material: IMaterial) {
+  const navigate = useNavigate();
   const { isPending, isFetching, data: materialOrders, isError, error } = useQuery({
     queryKey: ['get-material-orders', JSON.stringify(material.inventory.materialOrders)],
     queryFn: async () => {
@@ -28,9 +29,11 @@ function renderPurchaseOrders(material: IMaterial) {
     useErrorMessage(error)
   }
 
+  materialOrders.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+
   return (
     materialOrders.map((mo, index: number) => (
-      <div className='tb-row' key={index}>
+      <div className='tb-row' key={index} onClick={() => navigate(`/react-ui/forms/material-order/${mo._id}`)}>
         <div className='tb-cell cell-one'>
           <div className='pulse-indicator'></div>
           {mo.purchaseOrderNumber}
